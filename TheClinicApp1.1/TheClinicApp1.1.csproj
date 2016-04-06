@@ -140,7 +140,6 @@
     <Content Include="css\normalize.min.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
-    <Content Include="Global.asax" />
     <Content Include="images\accordion_arrow.png" />
     <Content Include="images\add_medicine.png" />
     <Content Include="images\back.png" />
@@ -197,6 +196,8 @@
     <Content Include="css\fonts\roboto-light_gdi.eot" />
     <Content Include="css\fonts\roboto-light_gdi.ttf" />
     <Content Include="css\fonts\roboto-light_gdi.woff" />
+    <Content Include="Masters\Main.Master" />
+    <Content Include="Masters\popup.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -212,8 +213,19 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
+    <Compile Include="Masters\Main.Master.cs">
+      <DependentUpon>Main.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Masters\Main.Master.designer.cs">
+      <DependentUpon>Main.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Masters\popup.Master.cs">
+      <DependentUpon>popup.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Masters\popup.Master.designer.cs">
+      <DependentUpon>popup.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -224,7 +236,7 @@
     <Folder Include="Content\" />
     <Folder Include="Doctor\" />
     <Folder Include="Handlers\" />
-    <Folder Include="Masters\" />
+    <Folder Include="Login\" />
     <Folder Include="Pharmacy\" />
     <Folder Include="Registration\" />
     <Folder Include="Stock\" />
