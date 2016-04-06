@@ -16,6 +16,7 @@ namespace TheClinicApp.UIClasses
             get
             {
                 return "LoginDetails";
+
             }
         }
 
