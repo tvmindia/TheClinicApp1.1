@@ -212,6 +212,8 @@
     <Content Include="css\fonts\roboto-light_gdi.woff" />
     <Content Include="Masters\Main.Master" />
     <Content Include="Masters\popup.Master" />
+    <None Include="Properties\PublishProfiles\ClinicAppProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\sree.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
