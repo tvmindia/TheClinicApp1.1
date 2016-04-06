@@ -1,0 +1,363 @@
+﻿
+.Semitransparent_1 {
+    background: rgb(34,34,34); /* for IE */
+    background: rgba(34,34,34,0.75);
+    background-image: url('../Images/HerbeInWhite.jpg');
+    background-size: 100%;
+}
+
+.login {
+    border-width: thin;
+    padding: 15px 30px 20px 30px;
+    background: rgb(34,34,34); /* for IE */
+    background: rgba(235, 249, 210, 0.71);
+    width: 35%;
+    height: 35%;
+    position: absolute;
+    top: 35%;
+    left: 30%;
+    border-radius: 20px;
+    text-align: center;
+    vertical-align: middle;
+    opacity:3.5;
+}
+
+.captions {
+    color:#28ADA1 !important;
+   
+}
+ 
+
+.LoginCaption {
+    color: #EFF8F8;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: #003399;
+}
+
+.logo {
+    font-family: 'Segoe UI';
+    font-style: italic;
+    color: #0078D7;
+}
+
+html, body {
+    height: 100%;
+    background-image: url('../Images/HerbeInWhite.jpg');
+    background-size: 100%;
+}
+
+.outer {
+    height: 95%;
+    top: 4.5%;
+    left:.5%;
+    background: rgba(255,255,255, 0.45);
+    position: fixed;
+    width: 99%;
+    border-radius: 0px 0px 10px 0px;
+}
+
+.outerTop {
+    top:.5%;
+    height: 4%;
+    left:.5%;
+    background: rgba(255,255,255, 0.45);
+    position: fixed;
+    width: 99%;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.left {
+    height: 100%;
+    width: 20%;
+    float: left;
+
+    /*background: rgba(34,34,34, .1);*/
+   
+    
+}
+
+.right {
+    height: 100%;
+    width: 80%;
+     background: rgba(255,255,255, 0.65);
+       left:20%;
+        position:absolute;
+        border-radius:0 0 2% 0%;
+        
+      
+    
+      
+}
+
+.AppBgTable {
+    width: 98%;
+    height: 97%;
+    font-family: Tahoma;
+    font-size: medium;
+}
+
+.LeftLogo {
+    width: 20%;
+}
+
+.RightLogo {
+    text-align: right;
+    vertical-align: top;
+    font-family: 'segoe UI' , Tahoma, Geneva, Verdana, sans-serif;
+    color: whitesmoke;
+    font-size:small;
+}
+
+.logoRow {
+    height: 8%;
+    background: rgba(34,34,34, .2);
+}
+
+.loginerrormessage {
+    width: 35%;
+    height: 5%;
+    position: absolute;
+    top: 70%;
+    left: 30%;
+    font-family: Tahoma;
+    font-size: large;
+    color: #FF5050;
+    text-align: center;
+}
+
+.tiles {
+    width: 100%;
+    color: white;
+    font-size: large;
+    font-family: Tahoma;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+    /*----------------------1-----------------------*/
+    .tiles .dashboard {
+    background-color: #00CC99;
+    height: 15%;
+    margin: 3%;
+}
+
+    .tiles .dashboard_selected {
+        color: black;
+        height: 15%;
+        margin: 3%;
+         background: rgba(255,255,255, 0.65);
+        margin-right: 0%;
+        margin-top: 0%;
+        text-decoration: underline;
+        border-radius: 0 0 0 5%;
+    }
+
+    .tiles .dashboard:hover {
+    background-color: #00B386;
+    cursor: pointer;
+    -webkit-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    transform: scale(1.03);
+    transition: .25s ease;
+}
+
+    /*---------------------2------------------------*/
+    .tiles .patient {
+        background-color: #00CC99;
+        height: 15%;
+        margin: 3%;
+    }
+
+    .tiles .patient_selected {
+        background-color: transparent;
+        color: black;
+        height: 15%;
+        margin: 3%;
+        background: rgba(255,255,255, 0.65);
+        margin-right: 0%;
+       
+        text-decoration: underline;
+        border-radius: 5% 0 0 5%;
+    }
+
+    .tiles .patient:hover {
+        background-color: #00B386;
+        cursor: pointer;
+        -webkit-transform: scale(1.03);
+        -ms-transform: scale(1.03);
+        transform: scale(1.03);
+        transition: .25s ease;
+    }
+
+    /*----------------------3-----------------------*/
+    .tiles .token {
+        background-color: #00CC99;
+        height: 15%;
+        margin: 3%;
+    }
+
+    .tiles .token_selected {
+        background-color: transparent;
+        color: black;
+        height: 15%;
+        margin: 3%;
+        text-decoration: underline;
+         background: rgba(255,255,255, 0.65);
+        margin-right: 0%;
+       
+        text-decoration: underline;
+        border-radius: 5% 0 0 5%;
+    }
+
+    .tiles .token:hover {
+        background-color: #00B386;
+        cursor: pointer;
+        -webkit-transform: scale(1.03);
+        -ms-transform: scale(1.03);
+        transform: scale(1.03);
+        transition: .25s ease;
+    }
+
+    /*-------------------4--------------------------*/
+    .tiles .doctor {
+        background-color: #00CC99;
+        height: 15%;
+        margin: 3%;
+    }
+
+    .tiles .doctor_selected {
+        background-color: transparent;
+        color: black;
+        height: 15%;
+        margin: 3%;
+        text-decoration: underline;
+         background: rgba(255,255,255, 0.65);
+        margin-right: 0%;
+       
+        text-decoration: underline;
+        border-radius: 5% 0 0 5%;
+    }
+
+    .tiles .doctor:hover {
+        background-color: #00B386;
+        cursor: pointer;
+        -webkit-transform: scale(1.03);
+        -ms-transform: scale(1.03);
+        transform: scale(1.03);
+        transition: .25s ease;
+    }
+
+    /*--------------------5-------------------------*/
+    .tiles .pharmacy {
+        background-color: #00CC99;
+        height: 15%;
+        margin: 3%;
+    }
+
+    .tiles .pharmacy_selected {
+        background-color: transparent;
+        color: black;
+        height: 15%;
+        margin: 3%;
+        text-decoration: underline;
+         background: rgba(255,255,255, 0.65);
+        margin-right: 0%;
+       
+        text-decoration: underline;
+        border-radius: 5% 0 0 5%;
+    }
+
+    .tiles .pharmacy:hover {
+        background-color: #00B386;
+        cursor: pointer;
+        -webkit-transform: scale(1.03);
+        -ms-transform: scale(1.03);
+        transform: scale(1.03);
+        transition: .25s ease;
+    }
+
+    /*---------------------6------------------------*/
+    .tiles .stock {
+        background-color: #00CC99;
+        height: 15%;
+        margin: 3%;
+    }
+
+    .tiles .stock_selected {
+        background-color: transparent;
+        color: black;
+        height: 15%;
+        margin: 3%;
+        text-decoration: underline;
+         background: rgba(255,255,255, 0.65);
+        margin-right: 0%;
+        margin-bottom: 0%;
+        text-decoration: underline;
+        border-radius: 5% 0 0 5%;
+    }
+
+    .tiles .stock:hover {
+        background-color: #00B386;
+        cursor: pointer;
+        -webkit-transform: scale(1.03);
+        -ms-transform: scale(1.03);
+        transform: scale(1.03);
+        transition: .25s ease;
+    }
+
+
+.TileContent {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    line-height:100%;
+}
+
+
+.fullsizeDiv {
+    height: 100%;
+    width: 100%;
+}
+
+
+.mainIframe {
+    height:98%;
+    width:98%;
+    background:transparent;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+
+
+
+.settingsLogo {
+    width:15px;
+    cursor:pointer;
+}
+
+
+.settings {
+    width:10%;
+    height:30%;
+    display:none;
+    background:rgba(34,34,34,0.25);
+    box-shadow:rgba(34,34,34,0.45) 2px 2px;
+    position:fixed;
+    border-radius:5px;
+    top:6%;
+    left:87%;
+    text-align:left;
+    padding:15px;
+    font-family:'Segoe UI';
+    font-size:medium;
+        
+}
+.validate
+{
+    text-decoration-color:white;
+    color:white;
+}

@@ -10,15 +10,33 @@ namespace TheClinicApp.ClinicDAL
 {
     public class Clinic
     {
+        #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
+        #endregion Global Variables
+
+        #region constructor
+
+        public Clinic()
+        {
+
+            ClinicID = Guid.NewGuid();
+
+        }
+        public Clinic(Guid ClinicID1)
+        {
+            ClinicID = ClinicID1;
+            
+        }
+
+        #endregion constructor
 
         #region Property
-        public string ClinicID
+        public Guid ClinicID
         {
             set;
             get;
         }
-        public string GroupID
+        public Guid GroupID
         {
             set;
             get;
@@ -89,19 +107,14 @@ namespace TheClinicApp.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[InsertClinics]";
 
-
-                cmd.Parameters.Add("@GroupID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(GroupID);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                cmd.Parameters.Add("@GroupID", SqlDbType.UniqueIdentifier).Value = GroupID;
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = Name;
                 cmd.Parameters.Add("@Location", SqlDbType.NVarChar, 255).Value = Location;
                 cmd.Parameters.Add("@Address", SqlDbType.NVarChar, 255).Value = Address;
                 cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 255).Value = Phone;
 
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-
-
-                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = UpdatedDate;
-
 
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
@@ -169,17 +182,14 @@ namespace TheClinicApp.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[UpdateClinics]";
 
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
-                // cmd.Parameters.Add("@GroupID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(GroupID);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value =ClinicID;
+              
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = Name;
                 cmd.Parameters.Add("@Location", SqlDbType.NVarChar, 255).Value = Location;
                 cmd.Parameters.Add("@Address", SqlDbType.NVarChar, 255).Value = Address;
                 cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 255).Value = Phone;
 
-                // cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-
-
+              
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = UpdatedDate;
 
@@ -228,7 +238,7 @@ namespace TheClinicApp.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[DeleteClinics]";
 
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value =  ClinicID;
 
 
                 cmd.ExecuteNonQuery();
@@ -275,7 +285,7 @@ namespace TheClinicApp.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[ViewClinic]";
 
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value =ClinicID;
 
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();

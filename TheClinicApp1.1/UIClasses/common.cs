@@ -25,7 +25,7 @@ namespace TheClinicApp.UIClasses
         {
             get
             {
-                return "Home.aspx";
+                return "../Registration/test Page.txt";
             }
         }
 

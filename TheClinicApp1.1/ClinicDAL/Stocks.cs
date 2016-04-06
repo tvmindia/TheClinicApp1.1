@@ -4,11 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.UI;
 
 namespace TheClinicApp.ClinicDAL
 {
     public class Stocks
     {
+        #region Global Variables
+        ErrorHandling eObj = new ErrorHandling();
+        #endregion Global Variables
 
         #region constructor
 
@@ -28,7 +32,6 @@ namespace TheClinicApp.ClinicDAL
         }
 
         #endregion constructor
-
 
         #region Property
         public Guid MedicineID
@@ -267,7 +270,10 @@ namespace TheClinicApp.ClinicDAL
 
                 if (Outputval == 1)
                {
-                    //Success
+                   //Success
+                   
+                   var page = HttpContext.Current.CurrentHandler as Page;
+                   //eObj.InsertionSuccessMessage(page);
                }
                 else
                 {
@@ -280,8 +286,10 @@ namespace TheClinicApp.ClinicDAL
 
             catch (Exception ex)
             {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
 
-                throw ex;
+                //throw ex;
             }
 
             finally

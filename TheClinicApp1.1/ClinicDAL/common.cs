@@ -82,7 +82,6 @@ namespace TheClinicApp.ClinicDAL
          
         #endregion Property
 
-
         #region Methods
 
         #region InsertErrorLog

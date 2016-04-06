@@ -194,11 +194,10 @@ namespace TheClinicApp.ClinicDAL
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "[InsertTokens]";
 
-          // Guid UniqueID = Guid.NewGuid();
-          //  cmd.Parameters.Add("@Unique", SqlDbType.UniqueIdentifier).Value = UniqueID;
+          
             cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
             cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PatientID);
-         //cmd.Parameters.Add("@DateTime", SqlDbType.DateTime).Value = DateTime;
+        
             cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
             cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;

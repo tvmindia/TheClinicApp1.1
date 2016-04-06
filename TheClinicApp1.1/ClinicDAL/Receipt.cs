@@ -4,12 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Data;
+using System.Web.UI;
 
 namespace TheClinicApp.ClinicDAL
 {
     public class Receipt
     {
 
+        #region Global Variables
+        ErrorHandling eObj = new ErrorHandling();
+       
+
+
+        #endregion Global Variables
 
         #region constructor
         public Receipt()
@@ -89,9 +96,7 @@ namespace TheClinicApp.ClinicDAL
         #region InsertReceiptHeader
         public void InsertReceiptHeader()
         {
-
             dbConnection dcon = null;
-
             try
             {
                 dcon = new dbConnection();
@@ -106,15 +111,29 @@ namespace TheClinicApp.ClinicDAL
                 cmd.Parameters.Add("@RefNo2", SqlDbType.NVarChar, 255).Value = RefNo2;
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
-
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
+                if (Outputval == 1)
+                {
+                    //Success
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    //eObj.InsertionSuccessMessage(page);
+                }
+                else
+                {
+                    if (Outputval == 0)
+                    {
+                        //Already exists!
+                    }
+                }
             }
 
             catch (Exception ex)
             {
-
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
             }
 
             finally
@@ -134,7 +153,6 @@ namespace TheClinicApp.ClinicDAL
         public void UpdateReceiptHeader(string ReceiptID)
         {
             dbConnection dcon = null;
-
             try
             {
                 DateTime now = DateTime.Now;
@@ -144,24 +162,40 @@ namespace TheClinicApp.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[UpdateReceiptHeader]";
-
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                cmd.Parameters.Add("@ReceiptID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ReceiptID);
-
-                //  cmd.Parameters.Add("@RefNo1", SqlDbType.NVarChar, 255).Value = RefNo1;
+                cmd.Parameters.Add("@ReceiptID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ReceiptID);             
                 cmd.Parameters.Add("@RefNo2", SqlDbType.NVarChar, 255).Value = RefNo2;
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
-
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
 
                 cmd.ExecuteNonQuery();
+
+                if (Outputval == 1)
+                {
+                    //Success
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    //eObj.UpdationSuccessMessage(page);
+                }
+                else
+                {
+                    if (Outputval == 0)
+                    {
+                        //Already exists!
+                    }
+                }
 
             }
 
             catch (Exception ex)
             {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.UpdationNotSuccessMessage(ex, page);
 
-                throw ex;
+                //throw ex;
             }
 
             finally
@@ -279,6 +313,60 @@ namespace TheClinicApp.ClinicDAL
 
         #endregion InsertReceiptHeader
 
+
+        // Reload the inserted datats into controls
+
+        #region ReloadInsertData
+
+        public DataSet InsertReloaded()
+        {
+            dbConnection dcon = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetReceiptInsertReload]";
+
+
+                cmd.Parameters.Add("@ReceiptID", SqlDbType.UniqueIdentifier).Value = ReceiptID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds, "Medicines");
+
+                return ds;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+        }
+
+
+        #endregion ReloadInsertData
+
         //Get Recipt Details by Passing Reference Number
         #region GetReceiptDetailsByReceiptID
 
@@ -343,6 +431,10 @@ namespace TheClinicApp.ClinicDAL
 
     public class ReceiptDetails
     {
+        #region Global Variables
+        ErrorHandling eObj = new ErrorHandling();
+        #endregion Global Variables
+
         #region constructor
         public ReceiptDetails()
         {
@@ -479,8 +571,7 @@ namespace TheClinicApp.ClinicDAL
         }
 
 
-        #endregion autofill
-
+        #endregion autofill        
 
 
         #region InsertReceiptDetails
@@ -516,13 +607,15 @@ namespace TheClinicApp.ClinicDAL
 
                 if (Outputval == 1)
                 {
-                    Console.Write("sucess");
+                    //Success
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    //eObj.InsertionSuccessMessage(page);
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
-                        Console.Write("failed");
+                        //Already exists!
                     }
                 }
 
@@ -530,6 +623,8 @@ namespace TheClinicApp.ClinicDAL
 
             catch (Exception ex)
             {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
 
                 throw ex;
             }
@@ -571,15 +666,37 @@ namespace TheClinicApp.ClinicDAL
                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;
                 cmd.Parameters.Add("@UpdateBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@QTY", SqlDbType.Real).Value = QTY;
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
+
+                cmd.ExecuteNonQuery();
+
+                if (Outputval == 1)
+                {
+                    //Success
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    //eObj.UpdationSuccessMessage(page);
+                }
+                else
+                {
+                    if (Outputval == 0)
+                    {
+                        //Already exists!
+                    }
+                }
 
             }
 
             catch (Exception ex)
             {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.UpdationNotSuccessMessage(ex, page);
 
-                throw ex;
+                //throw ex;
             }
+
 
             finally
             {
@@ -692,6 +809,8 @@ namespace TheClinicApp.ClinicDAL
 
         #endregion DeleteReceiptDetails
 
+
+        
 
         #endregion Methods
 

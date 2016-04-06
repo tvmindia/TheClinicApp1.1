@@ -1,4 +1,17 @@
-﻿using System;
+﻿
+#region CopyRight
+
+//Author      :
+//Created Date: 
+
+//Modified By : SHAMILA T P
+//Modified Date : Mar-24-2016
+
+#endregion CopyRight
+
+#region Included Namespaces
+
+ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -7,6 +20,10 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using TheClinicApp.ClinicDAL;
+
+#endregion Included Namespaces
+
 namespace TheClinicApp.ClinicDAL
 {
     public class Security
@@ -21,7 +38,14 @@ namespace TheClinicApp.ClinicDAL
 
     public class UserAuthendication
     {
+        
         #region Global Variables
+
+        CryptographyFunctions CryptObj = new CryptographyFunctions();
+
+        #endregion Global Variables
+
+        #region Properties
 
         private string userN;
         private string GroupName;
@@ -29,7 +53,7 @@ namespace TheClinicApp.ClinicDAL
         private string ClinicName;
         private Guid Clinic_ID;
         private Boolean isValidUser;
-        
+
 
         public string userName
         {
@@ -84,36 +108,12 @@ namespace TheClinicApp.ClinicDAL
             }
         }
 
-        #endregion Global Variables
-
-        #region Encrypt Password
-        private string Encrypt(string clearText)
-        {
-            string EncryptionKey = "MAKV2SPBNI99212";
-            byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
-            using (Aes encryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(clearBytes, 0, clearBytes.Length);
-                        cs.Close();
-                    }
-                    clearText = Convert.ToBase64String(ms.ToArray());
-                }
-            }
-            return clearText;
-        }
-
-        #endregion Encrypt Password
+        #endregion Properties
 
         #region User Authentication
         public UserAuthendication(String userName, String password)
         {
+            //object o = CryptObj.Encrypt(password);
             DataTable dt = GetLoginDetails(userName);
 
             if (dt.Rows.Count > 0)
@@ -121,15 +121,18 @@ namespace TheClinicApp.ClinicDAL
                 string Name = dt.Rows[0]["LoginName"].ToString();
                 string Passwd = dt.Rows[0]["Password"].ToString();
 
-                if (userName == Name && (Encrypt(password) == Passwd) )
+                if (userName == Name && (CryptObj.Encrypt(password) == Passwd))
                 {
                     isValidUser = true;
                     userN = userName;
-                    ClinicName = " Clinic 1";
-                    GroupName = "Thrithvam Ayurveda";
-                    //Clinic_ID = new Guid("C0946CD5-EBB4-44CE-9DFC-349BB4D32761");
-                    Clinic_ID = new Guid(dt.Rows[0]["ClinicID"].ToString());
-                    Group_ID = new Guid("ED6A102A-E904-4471-BF9A-F6BEDB2F36FB");
+
+                    ClinicName = dt.Rows[0]["Clinic Name"].ToString();
+                    Clinic_ID = new Guid(dt.Rows[0]["Clinic ID"].ToString());
+
+                    GroupName = dt.Rows[0]["Group Name"].ToString();
+                    Group_ID = new Guid(dt.Rows[0]["Group ID"].ToString());
+
+
                 }
 
                 else
@@ -171,7 +174,7 @@ namespace TheClinicApp.ClinicDAL
                 DataTable dt = new DataTable();
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetPassword", con);
+                SqlCommand cmd = new SqlCommand("GetLoginDetails", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@LoginName", SqlDbType.NVarChar, 50).Value = LoginName;
                 SqlDataAdapter adapter = new SqlDataAdapter();
@@ -200,6 +203,80 @@ namespace TheClinicApp.ClinicDAL
         }
        
         #endregion Get Login Details
+
+        #region Get RoleID
+        public string GetRoleName(string LoginName)
+        {
+            string Role="";
+            SqlConnection con = null;
+
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand pud = new SqlCommand();
+                pud.Connection = con;
+                pud.CommandType = System.Data.CommandType.StoredProcedure;
+                pud.CommandText = "GetUserandRolesJoined";
+                pud.Parameters.Add("@LoginName", SqlDbType.NVarChar, 50).Value = LoginName;
+                SqlParameter OutparamId = pud.Parameters.Add("@OutRole", SqlDbType.NVarChar,255);
+                OutparamId.Direction = ParameterDirection.Output;
+                pud.ExecuteNonQuery();
+               if (OutparamId.Value != null)
+                
+                {
+                    Role=OutparamId.Value.ToString();
+                    
+                }
+             
+                
+            }
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+                //throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return Role;
+            }
+           
+                
+        #endregion Get RoleID
+
+
+        //#region Encrypt Password
+        //private string Encrypt(string clearText)
+        //{
+        //    string EncryptionKey = "MAKV2SPBNI99212";
+        //    byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
+        //    using (Aes encryptor = Aes.Create())
+        //    {
+        //        Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+        //        encryptor.Key = pdb.GetBytes(32);
+        //        encryptor.IV = pdb.GetBytes(16);
+        //        using (MemoryStream ms = new MemoryStream())
+        //        {
+        //            using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+        //            {
+        //                cs.Write(clearBytes, 0, clearBytes.Length);
+        //                cs.Close();
+        //            }
+        //            clearText = Convert.ToBase64String(ms.ToArray());
+        //        }
+        //    }
+        //    return clearText;
+        //}
+
+        //#endregion Encrypt Password
+
     }
 
     public class CryptographyFunctions

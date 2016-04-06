@@ -11,12 +11,29 @@ namespace TheClinicApp.ClinicDAL
     public class Group
     {
 
+        #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
+        #endregion Global Variables
 
+        #region constructor
+
+        public Group()
+        {
+
+            GroupID = Guid.NewGuid();
+
+        }
+        public Group(Guid GroupID1)
+        {
+            GroupID = GroupID1;
+            
+        }
+
+        #endregion constructor
 
         #region Property
 
-        public string GroupID
+        public Guid GroupID
         {
             set;
             get;
@@ -78,16 +95,15 @@ namespace TheClinicApp.ClinicDAL
                 cmd.CommandText = "[InsertGroup]";
 
 
-
+                cmd.Parameters.Add("@GroupID", SqlDbType.UniqueIdentifier).Value = GroupID;
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = Name;
-
 
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
 
-                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = UpdatedDate;
+                //cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
+                //cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = UpdatedDate;
                 //logo image
-                cmd.Parameters.Add("@UpdatedBy", SqlDbType.VarBinary).Value = Logo;
+                cmd.Parameters.Add("@Logo", SqlDbType.VarBinary).Value = Logo;
 
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
@@ -157,7 +173,7 @@ namespace TheClinicApp.ClinicDAL
 
 
 
-                cmd.Parameters.Add("@GroupID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(GroupID);
+                cmd.Parameters.Add("@GroupID", SqlDbType.UniqueIdentifier).Value = GroupID;
 
 
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = Name;
