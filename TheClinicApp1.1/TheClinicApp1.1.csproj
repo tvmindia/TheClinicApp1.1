@@ -145,6 +145,7 @@
     <Content Include="css\normalize.css" />
     <Content Include="css\normalize.min.css" />
     <Content Include="css\TheClinicApp.css" />
+    <Content Include="css\uniform.default.css" />
     <Content Include="Default.aspx" />
     <Content Include="Doctor\Doctors.aspx" />
     <Content Include="Doctor\test page.txt" />
@@ -183,9 +184,11 @@
     <Content Include="images\token-hover.png" />
     <Content Include="images\token.png" />
     <Content Include="images\tokens.png" />
+    <Content Include="images\UploadPic.png" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\DeletionConfirmation.js" />
     <Content Include="js\fileinput.js" />
+    <Content Include="js\JavaScript_selectnav.js" />
     <Content Include="js\jquery-1.12.0.min.js" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\jquery.spinner.js" />
@@ -201,6 +204,9 @@
     <Content Include="Registration\Patients.aspx" />
     <Content Include="Registration\test page.txt" />
     <Content Include="Stock\Stock.aspx" />
+    <Content Include="Stock\StockDetails.aspx" />
+    <Content Include="Stock\StockIn.aspx" />
+    <Content Include="Stock\StockOut.aspx" />
     <Content Include="Stock\test page.txt" />
     <Content Include="Token\test page.txt" />
     <Content Include="Token\Tokens.aspx" />
@@ -318,6 +324,27 @@
     </Compile>
     <Compile Include="Stock\Stock.aspx.designer.cs">
       <DependentUpon>Stock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stock\StockDetails.aspx.cs">
+      <DependentUpon>StockDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stock\StockDetails.aspx.designer.cs">
+      <DependentUpon>StockDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stock\StockIn.aspx.cs">
+      <DependentUpon>StockIn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stock\StockIn.aspx.designer.cs">
+      <DependentUpon>StockIn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stock\StockOut.aspx.cs">
+      <DependentUpon>StockOut.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stock\StockOut.aspx.designer.cs">
+      <DependentUpon>StockOut.aspx</DependentUpon>
     </Compile>
     <Compile Include="Token\Tokens.aspx.cs">
       <DependentUpon>Tokens.aspx</DependentUpon>

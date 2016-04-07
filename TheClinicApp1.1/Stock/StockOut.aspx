@@ -1,29 +1,28 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="Stock.aspx.cs" Inherits="TheClinicApp1._1.Stock.Stock" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockOut.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockOut" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-       
+      
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- FAVICON -->
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
+    
     <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/jquery-ui.css" rel="stylesheet" />
     <link href="../css/normalize.min.css" rel="stylesheet" />
     <link href="../css/main.css" rel="stylesheet" />
 
+
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
-     <div class="main_body">
-
+    <!-- #main-container -->
          
+          
+         <div class="main_body">
 
-         
+    
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
          <ul class="menu">
@@ -31,7 +30,7 @@
          <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
          <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
          <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
-         <li id="stocks"  class="active"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
+         <li id="stock" class="active"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
          </ul>
          
          <p class="copy">&copy;Trithvam Ayurveda</p>
@@ -40,8 +39,8 @@
          
          <div class="right_part">
          <div class="tagline">
-         <a class="nav_menu">Menu</a>
-         Stock</div>
+         <a class="nav_menu">nav</a>
+         Tagline will be here...</div>        
          <div class="icon_box">
          <a class="add_medicine" data-toggle="modal" data-target="#add_medicine" ><span title="All Medicine" data-toggle="tooltip" data-placement="left"><img src="../images/add_medicine.png"/></span></a>
          </div>
@@ -50,13 +49,14 @@
          <div class="page_tab">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="Stock.aspx">Stock</a></li>
+        <li role="presentation"><a href="Stock.aspx">Stock</a></li>
         <li role="presentation"><a href="StockIn.aspx">Stock In</a></li>
-        <li role="presentation"><a href="StockOut.aspx">Stock Out</a></li>
+        <li role="presentation" class="active"><a href="StockOut.aspx">Stock Out</a></li>
       </ul>    
       <!-- Tab panes -->
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="stock">
+                
+        <div role="tabpanel" class="tab-pane active" id="stock_out">
         <div class="grey_sec">
          <div class="search_div">
          <input class="field" type="search" placeholder="Search here...">
@@ -69,43 +69,34 @@
          
          <table class="table" width="100%" border="0">
           <tr>
-            <th>Code</th>
-            <th>Med Name</th>
-            <th>Category</th>
-            <th>Qty</th>
-            <th>Unit</th>
-            <th>Reorder Qty</th>
+            <td>Bill No</td>
+            <td>Bill No2</td>
+            <td>Date</td>
+            <td><a class="deatils" href="#">Details</a></td>
+          </tr>          
+          <tr>
+            <td>Bill No</td>
+            <td>Bill No2</td>
+            <td>Date</td>
+            <td><a class="deatils" href="#">Details</a></td>
           </tr>
           <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
+            <td>Bill No</td>
+            <td>Bill No2</td>
+            <td>Date</td>
+            <td><a class="deatils" href="#">Details</a></td>
+          </tr>          
           <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
+            <td>Bill No</td>
+            <td>Bill No2</td>
+            <td>Date</td>
+            <td><a class="deatils" href="#">Details</a></td>
+          </tr>          
         </table>
          
          </div>
+         
         </div>
-        
-        
       </div>    
     </div>
          
@@ -165,17 +156,16 @@
   </div>
 </div>         
          
+         
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-
+         
     <script src="../js/bootstrap.min.js"></script>
-        
+
     <script src="../js/JavaScript_selectnav.js"></script>
-      
-        
                 
         <script>
 			var test=jQuery.noConflict();
-				test(document).ready(function(){				
+				test(document).ready(function(){
 					
 				test('.nav_menu').click(function(){
 					test(".main_body").toggleClass("active_close");
@@ -183,4 +173,5 @@
 			
 			});			
 		</script>
+
 </asp:Content>
