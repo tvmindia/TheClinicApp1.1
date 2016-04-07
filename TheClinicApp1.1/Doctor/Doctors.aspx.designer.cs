@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TheClinicApp1._1.Login
+namespace TheClinicApp1._1.Doctor
 {
 
 
-    public partial class AccessDenied
+    public partial class Doctors
     {
     }
 }

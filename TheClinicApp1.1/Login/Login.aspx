@@ -1,16 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="TheClinicApp1._1.Login.Login" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script src="../js/jquery-1.12.0.min.js"></script>
-    <script src="../js/materialize.min.js"></script>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="TheClinicApp1._1.Login.Login" %>
 
-    <link href="../css/TheClinicApp.css" rel="stylesheet" />
-    <link href="../css/materialize.min.css" rel="stylesheet" />
-    <link href="../css/Masterw3.css" rel="stylesheet" />
+<!DOCTYPE html>
 
-     <style type="text/css">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <style type="text/css">
         .auto-style1 {
             width: 203px;
             height: 117px;
@@ -36,11 +31,18 @@
          
            }
     </style>
-    
-    <div class="Semitransparent_1">
-     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="../js/jquery-1.12.0.min.js"></script>
+    <script src="../js/materialize.min.js"></script>
+
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
+    <link href="../css/materialize.min.css" rel="stylesheet" />
+    <link href="../css/Masterw3.css" rel="stylesheet" />
+</head>
+<body class="Semitransparent_1">
+     <form id="form1" runat="server">
     <div class="logo" >
-        <img src="../favicon.ico"  style="width:50px"/>        
+        <img src="Images/LOGO.png"  style="width:50px"/>        
     </div>    
     <div class="login">         
         <div class="input-field ">
@@ -54,7 +56,10 @@
        
      <div style="text-align:right">
 
-          <button class="btn waves-effect waves-light" type="submit" name="action"  >Login</button>       
+          <button class="btn waves-effect waves-light" type="submit" name="action"  >Login
+    <i class="material-icons right" >
+        <img style="width:80%" src="Images/arrowR.png" /></i>
+         </button>       
      </div>  
  
 
@@ -64,21 +69,17 @@
         </div>     
 </div>
 
-<button id="bt_forgot" onclick="document.getElementById('id01').style.display='block';" class="w3-btn" style="background-color:transparent;color:blueviolet;">Forget Password?</button> 
+    </form>
+    <button id="bt_forgot" onclick="document.getElementById('id01').style.display='block'" class="w3-btn" style="background-color:transparent;color:blueviolet;">Forget Password?</button> 
         <div id="id01" class="w3-modal" runat="server">
-  <span onclick="document.getElementById('id01').style.display='none'" class="w3-closebtn w3-hover-red w3-container w3-padding-16 w3-display-topright w3-xxlarge">×</span>
+  <span onclick="document.getElementById('id01').style.display='none'" 
+  class="w3-closebtn w3-hover-red w3-container w3-padding-16 w3-display-topright w3-xxlarge">×</span>
   <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px;height:372px;">  
-      
-        <iframe src="../Login/Forgot.aspx" style="width:100%;height:100%;"></iframe>
- 
+              <iframe src="Forgot.aspx" style="width:100%;height:100%;"></iframe> 
   </div>
         <asp:Label ID="lblError" runat="server" Text=""></asp:Label>
      
 </div>
    
-        
-   
-</div>
-    
-</asp:Content>
-
+</body>
+</html>

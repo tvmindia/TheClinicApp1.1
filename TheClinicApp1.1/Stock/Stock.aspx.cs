@@ -5,13 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace TheClinicApp1._1.Login
+namespace TheClinicApp1._1.Stock
 {
-    public partial class AccessDenied : System.Web.UI.Page
+    public partial class Stock : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

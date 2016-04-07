@@ -146,6 +146,7 @@
     <Content Include="css\normalize.min.css" />
     <Content Include="css\TheClinicApp.css" />
     <Content Include="Default.aspx" />
+    <Content Include="Doctor\Doctors.aspx" />
     <Content Include="Doctor\test page.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Handlers\test page.txt" />
@@ -195,10 +196,14 @@
     <Content Include="Login\Forgot.aspx" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Login\Reset.aspx" />
+    <Content Include="Pharmacy\Pharmacy.aspx" />
     <Content Include="Pharmacy\test page.txt" />
+    <Content Include="Registration\Patients.aspx" />
     <Content Include="Registration\test page.txt" />
+    <Content Include="Stock\Stock.aspx" />
     <Content Include="Stock\test page.txt" />
     <Content Include="Token\test page.txt" />
+    <Content Include="Token\Tokens.aspx" />
     <Content Include="UnderConstruction.aspx" />
     <Content Include="packages.config" />
     <Content Include="Web.config" />
@@ -258,6 +263,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Doctor\Doctors.aspx.cs">
+      <DependentUpon>Doctors.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Doctor\Doctors.aspx.designer.cs">
+      <DependentUpon>Doctors.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login\AccessDenied.aspx.cs">
       <DependentUpon>AccessDenied.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -286,6 +298,34 @@
     <Compile Include="Login\Reset.aspx.designer.cs">
       <DependentUpon>Reset.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pharmacy\Pharmacy.aspx.cs">
+      <DependentUpon>Pharmacy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pharmacy\Pharmacy.aspx.designer.cs">
+      <DependentUpon>Pharmacy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Registration\Patients.aspx.cs">
+      <DependentUpon>Patients.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Registration\Patients.aspx.designer.cs">
+      <DependentUpon>Patients.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stock\Stock.aspx.cs">
+      <DependentUpon>Stock.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stock\Stock.aspx.designer.cs">
+      <DependentUpon>Stock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Token\Tokens.aspx.cs">
+      <DependentUpon>Tokens.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Token\Tokens.aspx.designer.cs">
+      <DependentUpon>Tokens.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UIClasses\common.cs" />
     <Compile Include="UIClasses\Messages.cs" />
     <Compile Include="UnderConstruction.aspx.cs">
@@ -312,6 +352,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Webservices\WebServices.asmx.cs">
       <DependentUpon>WebServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
