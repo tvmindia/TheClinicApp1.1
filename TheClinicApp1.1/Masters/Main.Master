@@ -6,6 +6,7 @@
 <head runat="server">
     
     <asp:ContentPlaceHolder ID="head" runat="server">
+
     </asp:ContentPlaceHolder>
     <!-- Device Responsivness -->
     <meta charset="utf-8" />
@@ -23,6 +24,8 @@
     <link href="../css/main.css" rel="stylesheet" />
     <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
     <link href="../css/mui.css" rel="stylesheet" />
+    <link href="../css/jquery-ui.css" rel="stylesheet" />
+         
 
 </head>
 <body>

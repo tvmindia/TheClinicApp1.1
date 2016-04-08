@@ -261,7 +261,6 @@
     <Compile Include="ClinicDAL\RoleAssign.cs" />
     <Compile Include="ClinicDAL\Security.cs" />
     <Compile Include="ClinicDAL\Stocks.cs" />
-    <Compile Include="ClinicDAL\Test.cs" />
     <Compile Include="ClinicDAL\TokensBooking.cs" />
     <Compile Include="ClinicDAL\User.cs" />
     <Compile Include="Default.aspx.cs">
