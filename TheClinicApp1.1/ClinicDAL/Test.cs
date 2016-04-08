@@ -5,14 +5,7 @@ using System.Web;
 
 namespace TheClinicApp1._1.ClinicDAL
 {
-    public class CaseSheet
+    public class Test
     {
-
-
-
-        public class FollowUps { 
-        
-        
-        }
     }
 }

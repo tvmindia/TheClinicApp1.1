@@ -1,24 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <!-- Device Responsivness -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-   <!-- FAVICON -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <!-- Css Files -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
-    <link href="../css/fileinput.css" rel="stylesheet" />
-    <link href="../css/normalize.min.css" rel="stylesheet" />
-    <link href="../css/main.css" rel="stylesheet" />
     <!-- Script Files -->
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../js/vendor/jquery-1.11.1.min.js"></script>        
+    <script src="../js/bootstrap.min.js"></script>    
+    <script src="../js/fileinput.js"></script>
+    <script src="../js/JavaScript_selectnav.js"></script>
+		    
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <!-- Main Container -->
+  <!-- Main Container -->
   <div class="main_body">   
       
       <!-- Left Navigation Bar -->  
@@ -32,7 +24,7 @@
          <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
          </ul>
          
-         <p class="copy">&copy;Tritham Ayurveda</p>
+         <p class="copy">&copy;Trithvam Ayurveda</p>
          </div>
          
          <!-- Right Main Section -->
@@ -42,7 +34,7 @@
          Patients Registration</div>
          <div class="icon_box">
          <a class="all_registration_link" data-toggle="modal" data-target="#ViewAllregistration" ><span title="All Registerd" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
-             <a class="all_registration_link" data-toggle="modal" data-target="#ViewTodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
+         <a class="all_registration_link" data-toggle="modal" data-target="#ViewTodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
          <div class="search_div">
@@ -50,14 +42,11 @@
          <input class="button" type="submit" value="Search" />
          </div>
          <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" ><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
-         </div>
-         
-         <div class="right_form">
-         
+         </div>        
+         <div class="right_form">         
          <div class="alert alert-success" style="display:none">
           <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-        </div>
-        
+        </div>        
         <div class="alert alert-info" style="display:none">
           <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
         </div>
@@ -70,8 +59,7 @@
           <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
         </div>
          
-       <div class="registration_form">
-         
+      <div class="registration_form">        
       <div class="row field_row">  
       <div class="col-lg-8">
       <div class="row"> 
@@ -133,12 +121,7 @@
          
          </div>  
       </div>
-         
-    
-         
-         
-         
-         
+                 
 <!-- All Registration Modal -->
 <div id="ViewAllregistration" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -178,43 +161,35 @@
   </div>
 
 </div>
-         
-
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script>        
-    <script src="../js/bootstrap.min.js"></script>    
-    <script src="../js/fileinput.js"></script>
-		
-        
-	 <script>
-			var test=jQuery.noConflict();
-			test(document).on('ready', function() {
-				test("#FileUpload").fileinput({
-					browseLabel: 'Upload'
-				});
-			});
+     <script>
+         var test = jQuery.noConflict();
+         test(document).on('ready', function () {
+             test("#FileUpload").fileinput({
+                 browseLabel: 'Upload'
+             });
+         });
         </script>      
      <script>
-			var test=jQuery.noConflict();
-			test(document).ready(function(){
-					
-			
-			test('.alert_close').click(function(){
-				test(this).parent(".alert").hide();
-			});
-			
-			test('[data-toggle="tooltip"]').tooltip();  	
-			
-			        
-     			
-			test('.nav_menu').click(function(){
-				test(".main_body").toggleClass("active_close");
-			});
-								
+         var test = jQuery.noConflict();
+         test(document).ready(function () {
 
-			
-			});
-			
+
+             test('.alert_close').click(function () {
+                 test(this).parent(".alert").hide();
+             });
+
+             test('[data-toggle="tooltip"]').tooltip();
+
+
+
+             test('.nav_menu').click(function () {
+                 test(".main_body").toggleClass("active_close");
+             });
+
+
+
+         });
+
 		</script>
-    <script src="../js/JavaScript_selectnav.js"></script>
-    
+           
 </asp:Content>

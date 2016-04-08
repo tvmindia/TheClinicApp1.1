@@ -2,21 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-       
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- FAVICON -->
-<link rel="shortcut icon" href="favicon.ico" type="../image/x-icon" />
-
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
-    <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
-    <link href="../css/jquery-ui.css" rel="stylesheet" />
-    <link href="../css/normalize.min.css" rel="stylesheet" />
-    <link href="../css/main.css" rel="stylesheet" />
-
+    
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
      <!-- #main-container -->

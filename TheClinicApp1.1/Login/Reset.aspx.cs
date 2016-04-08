@@ -4,17 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using TheClinicApp.ClinicDAL;
+using TheClinicApp1._1.ClinicDAL;
 
 namespace TheClinicApp1._1.Login
 {
     public partial class Reset : System.Web.UI.Page
     {
         #region Global Variables
-        TheClinicApp.ClinicDAL.CryptographyFunctions CrypObj = new CryptographyFunctions();
+        ClinicDAL.CryptographyFunctions CrypObj = new CryptographyFunctions();
         Guid UserID;
-        TheClinicApp.ClinicDAL.User userObj = new TheClinicApp.ClinicDAL.User();
-        TheClinicApp.UIClasses.Const Const = new TheClinicApp.UIClasses.Const();
+        ClinicDAL.User userObj = new ClinicDAL.User();
+        UIClasses.Const Const = new UIClasses.Const();
 
 
         #endregion Global Variables

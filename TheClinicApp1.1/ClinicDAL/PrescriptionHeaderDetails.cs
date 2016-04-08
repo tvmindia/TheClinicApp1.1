@@ -5,7 +5,7 @@ using System.Web;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace TheClinicApp.ClinicDAL
+namespace TheClinicApp1._1.ClinicDAL
 {
     public class PrescriptionHeaderDetails
     {

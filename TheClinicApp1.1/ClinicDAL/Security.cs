@@ -20,11 +20,11 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using TheClinicApp.ClinicDAL;
+using TheClinicApp1._1.ClinicDAL;
 
 #endregion Included Namespaces
 
-namespace TheClinicApp.ClinicDAL
+namespace TheClinicApp1._1.ClinicDAL
 {
     public class Security
     {

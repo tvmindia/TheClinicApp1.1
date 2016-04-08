@@ -17,7 +17,7 @@ using System.Data.SqlClient;
 
 #endregion Included Namespaces
 
-namespace TheClinicApp.ClinicDAL
+namespace TheClinicApp1._1.ClinicDAL
 {
     public class Category
     {

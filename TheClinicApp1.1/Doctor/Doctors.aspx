@@ -2,19 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-       
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- FAVICON -->
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
-    <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
-    <link href="../css/jquery-ui.css" rel="stylesheet" />
-    <link href="../css/normalize.min.css" rel="stylesheet" />
-    <link href="../css/main.css" rel="stylesheet" />
+    
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -41,7 +29,7 @@
          
          <div class="right_part">         
          <div class="tagline">
-         <a class="nav_menu">nav</a>
+         <a class="nav_menu">Menu</a>
          <span>Doctors...</span>
          </div>
          <div class="icon_box">
@@ -54,12 +42,12 @@
          <input class="field" type="search" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div>
-         <ul class="top_right_links"><li><a class="save" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          <div class="right_form">
          
          <div class="token_id_card">
-             <div class="name_field"><img src="../images/UploadPic.png" width="80" height="80" /> Lorem Ipsum </div>
+             <div class="name_field"><img src="../images/UploadPic.png" width="80" height="80" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label></div>
                  <div class="light_grey">
                      <div class="col3_div">25yrs<span>Age</span></div>
                      <div class="col3_div">Female<span>Gender</span></div>
@@ -81,14 +69,14 @@
   <div class="row">
   <div class="col-lg-8"><label for="height">Height</label>  
   <div class="input-group spinner height" data-trigger="spinner" id="customize-spinner">
-          <input type="text" class="form-control text-center" value="1" data-max="200" data-min="1" data-step="1">
+          <input type="text" class="form-control text-center" id="txtHeightFeet" runat="server" value="1" data-max="200" data-min="1" data-step="1" />
           <div class="input-group-addon">
             <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
             <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
           </div>
         </div>
         <div class="input-group spinner height" data-trigger="spinner" id="customize-spinner">
-          <input type="text" class="form-control text-center" value="1" data-max="200" data-min="1" data-step="1">
+          <input type="text" class="form-control text-center" id="txtHeightInch" runat="server" value="1" data-max="200" data-min="1" data-step="1" />
           <div class="input-group-addon">
             <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
             <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
@@ -97,7 +85,7 @@
   </div>
   <div class="col-lg-4"><label for="weight">Weight</label>
   <div class="input-group spinner weight" data-trigger="spinner" id="customize-spinner">
-          <input type="text" class="form-control text-center" value="1" data-max="200" data-min="1" data-step="1">
+          <input type="text" class="form-control text-center" id="txtWeight" runat="server" value="1" data-max="200" data-min="1" data-step="1" />
           <div class="input-group-addon">
             <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
             <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
@@ -106,110 +94,100 @@
   </div>
   </div>
   </div>
-  <div class="col-lg-4"><label for="bowel">Bowel</label><input id="bowel" type="text" name="bowel"></div>
-  <div class="col-lg-4"><label for="appettie">Appettie</label><input id="appettie" type="text" name="appettie"></div>
+   <div class="col-lg-4"><label for="bowel">Bowel</label><input id="bowel" type="text" name="bowel" runat="server" /></div>
+  <div class="col-lg-4"><label for="appettie">Appettie</label><input id="appettie" type="text" name="appettie"  runat="server" /></div>
   </div>
   
   <div class="row field_row">  
-  <div class="col-lg-4"><label for="micturation">Micturation</label><input id="micturation" type="text" name="micturation"></div>
-  <div class="col-lg-4"><label for="sleep">Sleep</label><input id="sleep" type="text" name="sleep"></div>  
+  <div class="col-lg-4"><label for="micturation">Micturation</label><input id="micturation" type="text" name="micturation" runat="server" /></div>
+  <div class="col-lg-4"><label for="sleep">Sleep</label><input id="sleep" type="text" name="sleep" runat="server" /></div>  
   </div>
   
   <div class="row">  
-  <div class="col-lg-12"><label for="symptoms">Symptoms</label><textarea id="symptoms"></textarea></div>
+  <div class="col-lg-12"><label for="symptoms">Symptoms</label><textarea id="symptoms" runat="server"></textarea></div>
   </div>
   
   </div>
   
-  <h3>Sys ex</h3>
+  <h3>Systematic Examination</h3>
   <div>
   <div class="row">  
-  <div class="col-lg-4"><label for="cardiovascular">Cardiovascular</label><input id="cardiovascular" type="text" name="cardiovascular"></div>
-  <div class="col-lg-4"><label for="nervoussystem">Nervoussystem</label><input id="nervoussystem" type="text" name="nervoussystem"></div>  
-  <div class="col-lg-4"><label for="musculoskeletal">Musculoskeletal</label><input id="musculoskeletal" type="text" name="musculoskeletal"></div>  
+  <div class="col-lg-4"><label for="cardiovascular">Cardiovascular</label><input id="cardiovascular" type="text" name="cardiovascular" runat="server" /></div>
+  <div class="col-lg-4"><label for="nervoussystem">Nervoussystem</label><input id="nervoussystem" type="text" name="nervoussystem" runat="server" /></div>  
+  <div class="col-lg-4"><label for="musculoskeletal">Musculoskeletal</label><input id="musculoskeletal" type="text" name="musculoskeletal" runat="server" /></div>  
   </div>
   </div>
   
-  <h3>Gen</h3>
+  <h3>General Examination</h3>
   <div>
   <div class="row field_row">  
-  <div class="col-lg-4"><label for="palloe">Palloe</label><input id="palloe" type="text" name="palloe"></div>
-  <div class="col-lg-4"><label for="icterus">Icterus</label><input id="icterus" type="text" name="icterus"></div>  
-  <div class="col-lg-4"><label for="clubbing">Clubbing</label><input id="clubbing" type="text" name="clubbing"></div>  
+  <div class="col-lg-4"><label for="palloe">Palloe</label><input id="palloe" type="text" name="palloe" runat="server" /></div>
+  <div class="col-lg-4"><label for="icterus">Icterus</label><input id="icterus" type="text" name="icterus" runat="server" /></div>  
+  <div class="col-lg-4"><label for="clubbing">Clubbing</label><input id="clubbing" type="text" name="clubbing" runat="server" /></div>  
   </div>
   <div class="row">  
-  <div class="col-lg-4"><label for="cyanasis">Cyanasis</label><input id="cyanasis" type="text" name="cyanasis"></div>
-  <div class="col-lg-4"><label for="lymphnodes">Lymphnodes</label><input id="lymphnodes" type="text" name="lymphnodes"></div>  
-  <div class="col-lg-4"><label for="edima">Edima</label><input id="edima" type="text" name="edima"></div>  
+  <div class="col-lg-4"><label for="cyanasis">Cyanasis</label><input id="cyanasis" type="text" name="cyanasis" runat="server" /></div>
+  <div class="col-lg-4"><label for="lymphnodes">Lymphnodes</label><input id="lymphGen" type="text" name="lymphGen" runat="server" /></div>  
+  <div class="col-lg-4"><label for="edima">Edima</label><input id="edima" type="text" name="edima" runat="server" /></div>  
   </div>
   </div>
   
   <h3>Diagnosys</h3>
   <div>
   <div class="row">  
-  <div class="col-lg-12"><label for="diagnosys">Diagnosys</label><textarea id="diagnosys"></textarea></div>
+  <div class="col-lg-12"><label for="diagnosys">Diagnosys</label><textarea id="diagnosys" runat="server"></textarea></div>
   </div>
   </div>
   
   <h3>Remarks</h3>
   <div>
   <div class="row">  
-  <div class="col-lg-6"><label for="remarks">Remarks</label><input id="remarks" type="text" name="remarks"></div>
+  <div class="col-lg-6"><label for="remarks">Remarks</label><input id="remarks" type="text" name="remarks" runat="server" /></div>
   </div>
   </div>
   
-  <h3>Clinical</h3>
+  <h3>Clinical Details</h3>
   <div>
   <div class="row field_row">  
-  <div class="col-lg-4"><label for="pulse">Pulse</label><input id="pulse" type="text" name="pulse"></div>
-  <div class="col-lg-4"><label for="bp">Bp</label><input id="bp" type="text" name="bp"></div>  
-  <div class="col-lg-4"><label for="tounge">Tounge</label><input id="tounge" type="text" name="tounge"></div>  
+  <div class="col-lg-4"><label for="pulse">Pulse</label><input id="pulse" type="text" name="pulse" runat="server" /></div>
+  <div class="col-lg-4"><label for="bp">Bp</label><input id="bp" type="text" name="bp" runat="server" /></div>  
+  <div class="col-lg-4"><label for="tounge">Tounge</label><input id="tounge" type="text" name="tounge" runat="server" /></div>  
   </div>
   <div class="row field_row">  
-  <div class="col-lg-4"><label for="heart">Heart</label><input id="heart" type="text" name="heart"></div>
-  <div class="col-lg-4"><label for="lymphnodes">Lymphnodes</label><input id="lymphnodes" type="text" name="lymphnodes"></div>  
-  <div class="col-lg-4"><label for="resp_rate">Resp rate</label><input id="resp_rate" type="text" name="resp_rate"></div>  
+  <div class="col-lg-4"><label for="heart">Heart</label><input id="heart" type="text" name="heart" runat="server" /></div>
+  <div class="col-lg-4"><label for="lymphnodes">Lymphnodes</label><input id="lymphnodes" type="text" name="lymphnodes" runat="server" /></div>  
+  <div class="col-lg-4"><label for="resp_rate">Resp rate</label><input id="resp_rate" type="text" name="resp_rate" runat="server" /></div>  
   </div>
   <div class="row">  
-  <div class="col-lg-12"><label for="others">Others</label><textarea id="others"></textarea></div>
+  <div class="col-lg-12"><label for="others">Others</label><textarea id="others" runat="server"></textarea></div>
   </div>
   </div>
   
-  <h3>Prescription</h3>
+  <h3>Prescription Section</h3>
   <div>  
-  <table class="table" width="100%" border="0">
-  <tr>
+  <table class="table" style="width:100%;border:0;" >
+  <tbody><tr>
     <th>Medicine</th>
     <th>Dozage</th>
     <th>Qty</th>
     <th>Unit</th>
   </tr>
   <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+     <td ><input id="Text4" type="text" placeholder="Medicine" class="input"/></td><td ><input id="txtMedname4" class="input" type="text" placeholder="Timing" /></td><td ><input id="txtMeddoz4" type="text" placeholder="Dozage" class="input"/></td><td ><input id="txtMedprescription4" type="text" placeholder="Days" class="input"/></td><td style="background:#E6E5E5">
+    <input type="button" value="-" class="bt1" style="width:20px;"/></td><td style="background:#E6E5E5">
+         <input type="button" id="btAdd" onclick="this.style.visibility = 'hidden';" value="+" class="bt1" style="width:20px" />         
+         </td>
   </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-</table>
-
+  </tbody>      
+  </table>
+ <div id="maindiv"> 
+  </div>
   
   </div>
   
 </div>
          
-         
+         <asp:HiddenField ID="HiddenField1" runat="server"></asp:HiddenField>
          </div>
          
          </div>         
@@ -365,8 +343,8 @@
 				
 			});
             
-		
 			
 			
-			</script>
+			
+            </script>
 </asp:Content>

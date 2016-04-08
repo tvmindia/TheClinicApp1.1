@@ -9,7 +9,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Messages = TheClinicApp.UIClasses.Messages;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 
 namespace TheClinicApp1._1.Login
 {
@@ -22,7 +22,7 @@ namespace TheClinicApp1._1.Login
 
                 if (username.Value.ToString().Trim() != "")
                 {
-                    TheClinicApp.UIClasses.Const constants = new TheClinicApp.UIClasses.Const();
+                    UIClasses.Const constants = new UIClasses.Const();
 
                     //if (username.Value != password.Value)
                     //{
@@ -31,7 +31,7 @@ namespace TheClinicApp1._1.Login
 
                     //ClinicDAL.UserAuthendication UA = new ClinicDAL.UserAuthendication(username.Value, password.Value);
 
-                    TheClinicApp.ClinicDAL.UserAuthendication UA = new TheClinicApp.ClinicDAL.UserAuthendication(username.Value, password.Value);
+                    ClinicDAL.UserAuthendication UA = new ClinicDAL.UserAuthendication(username.Value, password.Value);
 
                     if (UA.ValidUser)
                     {

@@ -18,11 +18,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using Messages = TheClinicApp.UIClasses.Messages;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 
 #endregion Included Namespaces
 
-namespace TheClinicApp.ClinicDAL
+namespace TheClinicApp1._1.ClinicDAL
 {
     public class ErrorHandling
     {

@@ -6,7 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
 
-namespace TheClinicApp.ClinicDAL
+namespace TheClinicApp1._1.ClinicDAL
 {
     public class Clinic
     {

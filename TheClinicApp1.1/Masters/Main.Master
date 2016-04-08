@@ -7,6 +7,23 @@
     
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <!-- Device Responsivness -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Main-Pages</title>
+   <!-- FAVICON -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <!-- Css Files -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="../css/fileinput.css" rel="stylesheet" />
+    <link href="../css/normalize.min.css" rel="stylesheet" />
+    <link href="../css/main.css" rel="stylesheet" />
+    <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
+    <link href="../css/mui.css" rel="stylesheet" />
+
 </head>
 <body>
     <form id="form1" runat="server">

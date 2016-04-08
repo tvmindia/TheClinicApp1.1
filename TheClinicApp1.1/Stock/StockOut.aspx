@@ -2,20 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-      
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
     
-    <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
-    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../css/jquery-ui.css" rel="stylesheet" />
-    <link href="../css/normalize.min.css" rel="stylesheet" />
-    <link href="../css/main.css" rel="stylesheet" />
-
-
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <!-- #main-container -->
          
@@ -40,7 +27,7 @@
          <div class="right_part">
          <div class="tagline">
          <a class="nav_menu">nav</a>
-         Tagline will be here...</div>        
+         Stock Out...</div>        
          <div class="icon_box">
          <a class="add_medicine" data-toggle="modal" data-target="#add_medicine" ><span title="All Medicine" data-toggle="tooltip" data-placement="left"><img src="../images/add_medicine.png"/></span></a>
          </div>
@@ -67,31 +54,14 @@
          
          <div class="tab_table">         
          
-         <table class="table" width="100%" border="0">
+         <table class="table" style="width:100%;border:0;" >
           <tr>
             <td>Bill No</td>
             <td>Bill No2</td>
             <td>Date</td>
-            <td><a class="deatils" href="#">Details</a></td>
+            <td><a class="deatils" href="StockOutDetails.aspx">Details</a></td>
           </tr>          
-          <tr>
-            <td>Bill No</td>
-            <td>Bill No2</td>
-            <td>Date</td>
-            <td><a class="deatils" href="#">Details</a></td>
-          </tr>
-          <tr>
-            <td>Bill No</td>
-            <td>Bill No2</td>
-            <td>Date</td>
-            <td><a class="deatils" href="#">Details</a></td>
-          </tr>          
-          <tr>
-            <td>Bill No</td>
-            <td>Bill No2</td>
-            <td>Date</td>
-            <td><a class="deatils" href="#">Details</a></td>
-          </tr>          
+                
         </table>
          
          </div>

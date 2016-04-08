@@ -18,7 +18,7 @@ using System.Web;
 
 #endregion Included Namespaces
 
-namespace TheClinicApp.UIClasses
+namespace TheClinicApp1._1.UIClasses
 {
     public class Messages
     {

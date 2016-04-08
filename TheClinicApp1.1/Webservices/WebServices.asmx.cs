@@ -8,7 +8,7 @@ using System.Text;
 using System.Web;
 using System.Web.Services;
 
-namespace TheClinicApp.Webservices
+namespace TheClinicApp1._1.Webservices
 {
     /// <summary>
     /// Summary description for WebServices

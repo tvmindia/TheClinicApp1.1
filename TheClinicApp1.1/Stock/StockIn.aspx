@@ -2,17 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-      
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
-    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
-    <link href="../css/jquery-ui.css" rel="stylesheet" />
-    <link href="../css/main.css" rel="stylesheet" />
-    <link href="../css/normalize.min.css" rel="stylesheet" />
+     
 
 
 
@@ -67,31 +57,14 @@
          
          <div class="tab_table">         
          
-         <table class="table" width="100%" border="0">
+         <table class="table" style="width:100%;border:0;">
           <tr>
             <td>Bill No</td>
             <td>Bill No2</td>
             <td>Date</td>
-            <td><a class="deatils" href="details.html">Details</a></td>
+            <td><a class="deatils" href="StockInDetails.aspx">Details</a></td>
           </tr>          
-          <tr>
-            <td>Bill No</td>
-            <td>Bill No2</td>
-            <td>Date</td>
-            <td><a class="deatils" href="#">Details</a></td>
-          </tr>
-          <tr>
-            <td>Bill No</td>
-            <td>Bill No2</td>
-            <td>Date</td>
-            <td><a class="deatils" href="#">Details</a></td>
-          </tr>          
-          <tr>
-            <td>Bill No</td>
-            <td>Bill No2</td>
-            <td>Date</td>
-            <td><a class="deatils" href="#">Details</a></td>
-          </tr>          
+                   
         </table>
          
          </div>

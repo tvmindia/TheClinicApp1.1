@@ -204,9 +204,10 @@
     <Content Include="Registration\Patients.aspx" />
     <Content Include="Registration\test page.txt" />
     <Content Include="Stock\Stock.aspx" />
-    <Content Include="Stock\StockDetails.aspx" />
+    <Content Include="Stock\StockInDetails.aspx" />
     <Content Include="Stock\StockIn.aspx" />
     <Content Include="Stock\StockOut.aspx" />
+    <Content Include="Stock\StockOutDetails.aspx" />
     <Content Include="Stock\test page.txt" />
     <Content Include="Token\test page.txt" />
     <Content Include="Token\Tokens.aspx" />
@@ -260,6 +261,7 @@
     <Compile Include="ClinicDAL\RoleAssign.cs" />
     <Compile Include="ClinicDAL\Security.cs" />
     <Compile Include="ClinicDAL\Stocks.cs" />
+    <Compile Include="ClinicDAL\Test.cs" />
     <Compile Include="ClinicDAL\TokensBooking.cs" />
     <Compile Include="ClinicDAL\User.cs" />
     <Compile Include="Default.aspx.cs">
@@ -325,12 +327,12 @@
     <Compile Include="Stock\Stock.aspx.designer.cs">
       <DependentUpon>Stock.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Stock\StockDetails.aspx.cs">
-      <DependentUpon>StockDetails.aspx</DependentUpon>
+    <Compile Include="Stock\StockInDetails.aspx.cs">
+      <DependentUpon>StockInDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Stock\StockDetails.aspx.designer.cs">
-      <DependentUpon>StockDetails.aspx</DependentUpon>
+    <Compile Include="Stock\StockInDetails.aspx.designer.cs">
+      <DependentUpon>StockInDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stock\StockIn.aspx.cs">
       <DependentUpon>StockIn.aspx</DependentUpon>
@@ -345,6 +347,13 @@
     </Compile>
     <Compile Include="Stock\StockOut.aspx.designer.cs">
       <DependentUpon>StockOut.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stock\StockOutDetails.aspx.cs">
+      <DependentUpon>StockOutDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stock\StockOutDetails.aspx.designer.cs">
+      <DependentUpon>StockOutDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Token\Tokens.aspx.cs">
       <DependentUpon>Tokens.aspx</DependentUpon>
