@@ -2,7 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
+
+    <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
      <!-- #main-container -->
@@ -36,12 +37,12 @@
          <input class="field" type="search" placeholder="Search here...">
          <input class="button" type="submit" value="Search">
          </div>
-         <ul class="top_right_links"><li><a class="save" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          <div class="right_form">
          
          <div class="token_id_card">
-             <div class="name_field"><img src="../images/UploadPic.png" width="80" height="80"> Lorem Ipsum </div>
+             <div class="name_field"><img src="../images/UploadPic.png" width="80" height="80" />Patient_Name</div>
                  <div class="light_grey">
                      <div class="col3_div">25yrs<span>Age</span></div>
                      <div class="col3_div">Male<span>Gender</span></div>
@@ -53,29 +54,31 @@
              </div>
          
          
-         <div class="prescription_grid">
-         <table class="table" width="100%" border="0">
-          <tr>
-            <th>Sl No.</th>
-            <th>Date</th>
-            <th>Remarks</th>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-        </table>
+         <div class="prescription_grid" >
+        <table class="table" style="width:100%;border:0;" >
+  <tbody><tr>
+    <th>Medicine</th>
+    <th>Quantity</th>
+    <th>Unit</th>
+    <th>Dosage</th>
+    <th>Timing</th>
+    <th>Days</th>
+  </tr>
+  <tr>
+     <td ><input id="txtMedName" type="text" placeholder="Medicine" class="input"/></td>
+      <td ><input id="txtMedQty" type="text" placeholder="Qty" class="input"/></td>
+      <td ><input id="txtMedUnit" class="input" type="text" placeholder="Unit" /></td>
+      <td ><input id="txtMedDos" type="text" placeholder="Dosage" class="input"/></td>
+      <td><input id="txtMedTime" type="text" placeholder="Timing" class="input"/></td>
+      <td><input id="txtMedDay" type="text" placeholder="Days" class="input"/></td><td style="background:#E6E5E5">
+    <input type="button" value="-" class="bt1" style="width:20px;"/></td><td style="background:#E6E5E5">
+         <input type="button" id="btAdd" onclick="clickAdd(); this.style.visibility = 'hidden';" value="+" class="bt1" style="width:20px" />         
+         </td>
+  </tr>
+  </tbody>      
+  </table>
+ <div id="maindiv"> 
+  </div>
          </div>
          
          </div>
@@ -132,7 +135,7 @@
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
-
+    <script src="../js/Dynamicgrid.js"></script>
                 
         <script>
 			var test=jQuery.noConflict();

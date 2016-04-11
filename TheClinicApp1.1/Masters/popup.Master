@@ -18,6 +18,25 @@
         <link href="../css/jquery-ui.css" rel="stylesheet" />
         <link href="../css/normalize.min.css" rel="stylesheet" />
         <link href="../css/main.css" rel="stylesheet" />
+     <style>
+       
+    .bt,.bt1 {
+   border: 2px solid  #f2f2f2;
+   background: #666666;
+   color: #ffffff;
+   font-size: 12px;
+   font-family: helvetica, serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+    
+    .table {
+    margin-bottom: 5px;
+    background-color:transparent;
+    max-width: 100%;
+    width: 100%;
+    border-color:white;
+   }        </style>  
     <asp:ContentPlaceHolder ID="head" runat="server">
         
     </asp:ContentPlaceHolder>

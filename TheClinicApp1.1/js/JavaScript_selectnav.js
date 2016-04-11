@@ -1,8 +1,8 @@
 ﻿var settingOpen = 0;
 function selectTile(id) {
-    debugger;
+  
     var Role = 'Doctor';
-    debugger;
+   
     var tileList = ['patients', 'token', 'doctor', 'pharmacy', 'stock'];
     if (Role == 'Doctor') {
         var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Doctor/Doctors.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];

@@ -3,24 +3,7 @@
       
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<style>
-       
-    .bt,.bt1 {
-   border: 2px solid #66ff66;
-   background: #666666;
-   color: #ffffff;
-   font-size: 12px;
-   font-family: helvetica, serif;
-   text-decoration: none;
-   vertical-align: middle;
-   }
-    
-    .table {
-    margin-bottom: 5px;
-    max-width: 100%;
-    width: 100%;
-}
-        </style>    
+ 
      <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -57,7 +40,7 @@
          </div>
          <div class="grey_sec">
          <div class="search_div">
-         <input class="field" id="txtSearch" type="search" placeholder="Search here..." />
+         <input class="field" id="txtSearch" name="txtSearch" type="search" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div>
          <ul class="top_right_links"><li><a class="save" id="btnSave" runat="server" onclick="GetTextValue();" onserverclick="btnSave_ServerClick"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
@@ -200,7 +183,7 @@
       <td><input id="txtMedTime" type="text" placeholder="Timing" class="input"/></td>
       <td><input id="txtMedDay" type="text" placeholder="Days" class="input"/></td><td style="background:#E6E5E5">
     <input type="button" value="-" class="bt1" style="width:20px;"/></td><td style="background:#E6E5E5">
-         <input type="button" id="btAdd" onclick="this.style.visibility = 'hidden';" value="+" class="bt1" style="width:20px" />         
+         <input type="button" id="btAdd" onclick="clickAdd();this.style.visibility = 'hidden';" value="+" class="bt1" style="width:20px" />         
          </td>
   </tr>
   </tbody>      
@@ -266,7 +249,7 @@
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/jquery.spinner.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
-                  
+    <script src="../js/Dynamicgrid.js"></script>
        
         
         
@@ -284,7 +267,7 @@
             <script>
 			var test=jQuery.noConflict();
 			test(document).ready(function () {
-			    debugger;
+			   
 				
 							
 			test('[data-toggle="tooltip"]').tooltip(); 	
@@ -323,80 +306,7 @@
 				test('.nav_menu').click(function(){
 					test(".main_body").toggleClass("active_close");
 				});
-			
-				var iCnt = 0;
-
-			    //Removing Div on btRemove button click
-				$("body").on("click", "#btRemove", function () 
-				{
-				    debugger;
-				    if (iCnt > 1)
-				    {
-				        $(this).closest("div").remove();
-
-				        if ($('#btAdd' + (iCnt) + '').css('visibility') == 'visible')
-				        {
-				            debugger;
-				            //alert(0010);
-				            //Nothing doing
-				        }
-				        else
-				        {
-
-				            $('#btAdd' + (iCnt - 1) + '').css('visibility', 'visible')
-				            iCnt = iCnt - 1;
-
-				        }
-                                                
-				    }
-
-				});
-
-
-			    // CREATE A "DIV" ELEMENT AND DESIGN IT USING JQUERY ".css()" CLASS.
-				var container = $(document.createElement('div')).css({
-				    width: '100%',
-				    borderTopColor: '#FFFFFF', borderBottomColor: '#FFFFFF',
-				    borderLeftColor: '#FFFFFF', borderRightColor: '#FFFFFF'
-				});
-
-			    //Onclick function for Adding Controls and Textboxes
-				$('body').on('click', ('#btAdd,.bt'), function () {
-
-				    if (iCnt <= 100) {
-				        iCnt = iCnt + 1;
-
-				        // ADD TEXTBOX And Controls
-				        $(container).append('<div><table class="table" style="width:100%;border:0;">'
-                       +' <td ><input id="txtMedName'+iCnt+'" type="text" placeholder="Medicine'+iCnt+'" class="input"/></td>'
-                        +'<td ><input id="txtMedQty'+iCnt+'" type="text" placeholder="Qty'+iCnt+'" class="input"/></td>'
-                        +'<td ><input id="txtMedUnit'+iCnt+'" class="input" type="text" placeholder="Unit'+iCnt+'" /></td>'
-                        +'<td ><input id="txtMedDos'+iCnt+'" type="text" placeholder="Dosage'+iCnt+'" class="input"/></td>'
-                        +'<td><input id="txtMedTime'+iCnt+'" type="text" placeholder="Timing'+iCnt+'" class="input"/></td>'
-                         +'<td><input id="txtMedDay'+iCnt+'" type="text" placeholder="Days'+iCnt+'" class="input"/></td>'
-                         +'<td style="background:#E6E5E5">'
-                         +'<input type="button" id="btRemove" class="bt1" value="-" style="width:20px" /></td>'
-                         +'<td style="background:#E6E5E5">'
-                         +'<input type="button" id="btAdd' + (iCnt) + '" value="+" onclick=this.style="visibility:hidden;" class="bt" style="width:20px" /></td>'
-                         +'</tr></table><div>');
-
-				        // ADD THE DIV ELEMENTS TO THE "Prescription" CONTAINER.
-
-				        $('#maindiv').after(container);
-
-				    }
-
-				        // AFTER REACHING THE SPECIFIED LIMIT, DISABLE THE "ADD" BUTTON.
-				        // (20 IS THE LIMIT WE HAVE SET)
-				    else {
-				        $(container).append('<label>Reached the limit</label>');
-				        $('#btAdd').attr('class', 'bt-disable');
-				        $('#btAdd').attr('disabled', 'disabled');
-
-				    }
-
-				});
-				
+					
 				var ac=null;
 				ac = <%=listFilter %>;
 				$( "#txtSearch" ).autocomplete({
@@ -404,27 +314,8 @@
 				})
 
 			});
-                // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
-                var divValue, values = '';
-
-                function GetTextValue() {
-                    alert(values);
-                    $(divValue)
-                        .empty()
-                        .remove();
-                    values = '';
-                    $('.input').each(function () {
-                        divValue = $(document.createElement('div')).css({
-                            padding: '5px', width: '200px'
-                        });
-                        var datas = document.getElementById('<%=HiddenField1.ClientID%>');
-                        values += this.value + '|';
-                        alert(values);
-                        datas.value = values;
-                    });
-
-                }
-            			
-            </script>
+               
+        
+    </script>
    
 </asp:Content>
