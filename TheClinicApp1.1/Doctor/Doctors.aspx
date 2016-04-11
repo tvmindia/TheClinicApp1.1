@@ -175,7 +175,7 @@
     <th>Timing</th>
     <th>Days</th>
   </tr>
-  <tr>
+  <tr> 
      <td ><input id="txtMedName" type="text" placeholder="Medicine" class="input"/></td>
       <td ><input id="txtMedQty" type="text" placeholder="Qty" class="input"/></td>
       <td ><input id="txtMedUnit" class="input" type="text" placeholder="Unit" /></td>
