@@ -1,18 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockIn.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockIn" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockOutDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockOutDetails" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     
 
-
-
-    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
-    <!-- #main-container -->
-         
-            
-         <div class="main_body">
-        
+     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../js/jquery-1.12.0.min.js"></script>
+          <script src="../js/JavaScript_selectnav.js"></script>
+  <div class="main_body">
+          
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
          <ul class="menu">
@@ -29,8 +24,8 @@
          
          <div class="right_part">
          <div class="tagline">
-         <a class="nav_menu">Menu</a>
-         Stock In</div>         
+         <a class="nav_menu">nav</a>
+         Stock Out Details...</div>   
          <div class="icon_box">
          <a class="add_medicine" data-toggle="modal" data-target="#add_medicine" ><span title="All Medicine" data-toggle="tooltip" data-placement="left"><img src="../images/add_medicine.png"/></span></a>
          </div>
@@ -39,9 +34,9 @@
          <div class="page_tab">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"><a href="Stock.aspx">Stock</a></li>
-        <li role="presentation" class="active"><a href="StockIn.aspx">Stock In</a></li>
-        <li role="presentation"><a href="StockOut.aspx">Stock Out</a></li>
+         <li role="presentation"><a href="Stock.aspx">Stock</a></li>
+        <li role="presentation"><a href="StockIn.aspx">Stock In</a></li>
+        <li role="presentation" class="active"><a href="StockOut.aspx">Stock Out</a></li>
       </ul>    
       <!-- Tab panes -->
       <div class="tab-content">
@@ -49,24 +44,47 @@
         <div role="tabpanel" class="tab-pane active" id="stock_in">
         <div class="grey_sec">
          <div class="search_div">
-         <input class="field" type="search" placeholder="Search here...">
-         <input class="button" type="submit" value="Search">
+         <input class="field" type="search" placeholder="Search here..." />
+         <input class="button" type="submit" value="Search" />
          </div> 
-         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="back" href="StockOut.aspx"><span></span>Back</a></li><li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         
          
-         <table class="table" style="width:100%;border:0;">
+         <table class="details_table" width="100%" border="0">
           <tr>
             <td>Bill No</td>
-            <td>Bill No2</td>
             <td>Date</td>
-            <td><a class="deatils" href="StockInDetails.aspx">Details</a></td>
-          </tr>          
-                   
+          </tr>
+          <tr>
+            <td colspan="2">Bill No2</td>
+          </tr>  
         </table>
-         
+      <div class="prescription_grid"> 
+          <table class="table" style="width:100%;border:0;padding-left:2%;" >
+  <tbody><tr>
+    <th>Medicine</th>
+    <th>Unit</th>
+    <th>Code</th>
+    <th>Category</th>
+    <th>Quantity</th>
+  </tr>
+  <tr>
+     <td ><input id="txtMedName" type="text" placeholder="Medicine" class="input"/></td>
+      <td ><input id="txtMedUnit" class="input" type="text" placeholder="Unit" /></td>
+      <td ><input id="txtMedCode" type="text" placeholder="Code" class="input"/></td>
+      <td><input id="txtMedCat" type="text" placeholder="Category" class="input"/></td>
+      <td><input id="txtMedQty" type="text" placeholder="Quantity" class="input"/></td><td style="background:#E6E5E5">
+    <input type="button" value="-" class="bt1" style="width:20px;"/></td><td style="background:#E6E5E5">
+         <input type="button" id="btAdd" onclick="clickStockAdd(); this.style.visibility = 'hidden';" value="+" class="bt1" style="width:20px" />         
+         </td>
+  </tr>
+  </tbody>      
+  </table>
+ <div id="maindiv"> 
+  </div>
+         </div>
          </div>
          
         </div>
@@ -131,20 +149,20 @@
 </div>         
          
          
+
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/JavaScript_selectnav.js"></script>
-
+    <script src="../js/Dynamicgrid.js"></script>
+       
+                        
         <script>
 			var test=jQuery.noConflict();
 				test(document).ready(function(){
-								
+					
 				test('.nav_menu').click(function(){
 					test(".main_body").toggleClass("active_close");
 				});
 			
 			});			
 		</script>
-
-
 </asp:Content>

@@ -8,6 +8,7 @@ var container = $(document.createElement('div')).css({
     borderTopColor: '#FFFFFF', borderBottomColor: '#FFFFFF',
     borderLeftColor: '#FFFFFF', borderRightColor: '#FFFFFF'
 });
+
 function clickStockAdd(id) {
     iCnt = iCnt + 1;
 

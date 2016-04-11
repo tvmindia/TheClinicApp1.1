@@ -200,13 +200,15 @@
     <Content Include="Login\Forgot.aspx" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Login\Reset.aspx" />
+    <Content Include="Masters\Main.Master" />
+    <Content Include="Masters\popup.Master" />
     <Content Include="Pharmacy\Pharmacy.aspx" />
     <Content Include="Pharmacy\test page.txt" />
     <Content Include="Registration\Patients.aspx" />
     <Content Include="Registration\test page.txt" />
     <Content Include="Stock\Stock.aspx" />
-    <Content Include="Stock\StockInDetails.aspx" />
     <Content Include="Stock\StockIn.aspx" />
+    <Content Include="Stock\StockInDetails.aspx" />
     <Content Include="Stock\StockOut.aspx" />
     <Content Include="Stock\StockOutDetails.aspx" />
     <Content Include="Stock\test page.txt" />
@@ -233,8 +235,6 @@
     <Content Include="css\fonts\roboto-light_gdi.eot" />
     <Content Include="css\fonts\roboto-light_gdi.ttf" />
     <Content Include="css\fonts\roboto-light_gdi.woff" />
-    <Content Include="Masters\Main.Master" />
-    <Content Include="Masters\popup.Master" />
     <None Include="Properties\PublishProfiles\ClinicAppProfile.pubxml" />
     <None Include="Properties\PublishProfiles\sree.pubxml" />
     <None Include="Web.Debug.config">
@@ -306,6 +306,20 @@
     <Compile Include="Login\Reset.aspx.designer.cs">
       <DependentUpon>Reset.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Masters\Main.Master.cs">
+      <DependentUpon>Main.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Masters\Main.Master.designer.cs">
+      <DependentUpon>Main.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Masters\popup.Master.cs">
+      <DependentUpon>popup.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Masters\popup.Master.designer.cs">
+      <DependentUpon>popup.Master</DependentUpon>
+    </Compile>
     <Compile Include="Pharmacy\Pharmacy.aspx.cs">
       <DependentUpon>Pharmacy.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -327,19 +341,19 @@
     <Compile Include="Stock\Stock.aspx.designer.cs">
       <DependentUpon>Stock.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Stock\StockInDetails.aspx.cs">
-      <DependentUpon>StockInDetails.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Stock\StockInDetails.aspx.designer.cs">
-      <DependentUpon>StockInDetails.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Stock\StockIn.aspx.cs">
       <DependentUpon>StockIn.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Stock\StockIn.aspx.designer.cs">
       <DependentUpon>StockIn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stock\StockInDetails.aspx.cs">
+      <DependentUpon>StockInDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stock\StockInDetails.aspx.designer.cs">
+      <DependentUpon>StockInDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stock\StockOut.aspx.cs">
       <DependentUpon>StockOut.aspx</DependentUpon>
@@ -370,20 +384,6 @@
     </Compile>
     <Compile Include="UnderConstruction.aspx.designer.cs">
       <DependentUpon>UnderConstruction.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Masters\Main.Master.cs">
-      <DependentUpon>Main.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Masters\Main.Master.designer.cs">
-      <DependentUpon>Main.Master</DependentUpon>
-    </Compile>
-    <Compile Include="Masters\popup.Master.cs">
-      <DependentUpon>popup.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Masters\popup.Master.designer.cs">
-      <DependentUpon>popup.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Webservices\WebServices.asmx.cs">

@@ -8,7 +8,7 @@
          
           
          <div class="main_body">
-
+              
     
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>

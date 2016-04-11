@@ -16,7 +16,7 @@ namespace TheClinicApp1._1.Pharmacy
 
         protected void btSave_ServerClick(object sender, EventArgs e)
         {
-
+             
         }
     }
 }

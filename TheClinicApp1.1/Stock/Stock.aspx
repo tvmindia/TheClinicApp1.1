@@ -7,10 +7,10 @@
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
      <div class="main_body">
-
+          
          
 
-         
+          
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
          <ul class="menu">

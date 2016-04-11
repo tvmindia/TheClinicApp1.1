@@ -9,7 +9,7 @@
 
 namespace TheClinicApp1._1.Stock {
     
-    
+     
     public partial class StockOut {
         
         /// <summary>

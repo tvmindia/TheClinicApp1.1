@@ -9,7 +9,7 @@
 
 namespace TheClinicApp1._1.Registration {
     
-    
+     
     public partial class Patients {
         
         /// <summary>
