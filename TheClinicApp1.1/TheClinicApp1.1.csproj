@@ -187,12 +187,12 @@
     <Content Include="images\UploadPic.png" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\DeletionConfirmation.js" />
+    <Content Include="js\Dynamicgrid.js" />
     <Content Include="js\fileinput.js" />
     <Content Include="js\JavaScript_selectnav.js" />
     <Content Include="js\jquery-1.12.0.min.js" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\jquery.spinner.js" />
-    <Content Include="js\Dynamicgrid.js" />
     <Content Include="js\materialize.min.js" />
     <Content Include="js\vendor\jquery-1.11.1.min.js" />
     <Content Include="js\vendor\modernizr-2.6.2-respond-1.1.0.min.js" />

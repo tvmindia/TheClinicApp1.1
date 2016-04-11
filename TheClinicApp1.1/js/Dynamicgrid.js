@@ -1,6 +1,6 @@
 ﻿/*! jQuery Dynamic Grid using TextBoxes| (c) Author: Thomson Kattingal | /www.thrithvam.com */
 /*!No Modifications are allowed without permission*/
-
+  
 var iCnt = 0;
 // CREATE A "DIV" ELEMENT AND DESIGN IT USING JQUERY ".css()" CLASS.
 var container = $(document.createElement('div')).css({
