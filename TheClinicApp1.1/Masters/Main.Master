@@ -25,6 +25,7 @@
     <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
     <link href="../css/mui.css" rel="stylesheet" />
     <link href="../css/jquery-ui.css" rel="stylesheet" />
+    <!------Other Styles----->
       <style>
        
     .bt,.bt1 {

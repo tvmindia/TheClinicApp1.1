@@ -18,6 +18,7 @@
         <link href="../css/jquery-ui.css" rel="stylesheet" />
         <link href="../css/normalize.min.css" rel="stylesheet" />
         <link href="../css/main.css" rel="stylesheet" />
+    <!--Other Style----->
      <style>
        
     .bt,.bt1 {
