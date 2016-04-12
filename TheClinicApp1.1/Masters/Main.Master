@@ -44,7 +44,25 @@
     max-width: 100%;
     width: 100%;
    }
-        </style>           
+        </style>    
+    <style>
+.ui-autocomplete {
+background: fixed;
+font-size:small;
+font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+background-color: ghostwhite;
+ box-shadow:1px 1px 1px 1px #f3e6d8;
+}
+#divDisplayNumber{
+    background-color:ghostwhite;
+   
+}
+.modal-lg1{
+    width:30%;
+    overflow-x:hidden;
+    overflow-y:hidden;
+}
+</style>       
 
 </head>
 <body>

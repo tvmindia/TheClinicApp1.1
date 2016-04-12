@@ -36,6 +36,8 @@ namespace TheClinicApp1._1.Registration
         protected void Page_Load(object sender, EventArgs e)
         {
             gridDataBind();
+            listFilter = null;
+            listFilter = BindName();
         }
 
         
@@ -54,10 +56,10 @@ namespace TheClinicApp1._1.Registration
                 PatientObj.DOB = DateTime.Parse(DOB + "-01-01");
             }
             string clinID = UA.ClinicID.ToString();
-            PatientObj.Name = txtName.Value;
-            PatientObj.Address = txtAddress.Value;
-            PatientObj.Phone = txtMobile.Value;
-            PatientObj.Email = txtEmail.Value;
+            PatientObj.Name = (txtName.Value != "") ? txtName.Value.ToString() : null;
+            PatientObj.Address = (txtAddress.Value!="")?txtAddress.Value.ToString():null;
+            PatientObj.Phone = (txtMobile.Value != "") ? txtMobile.Value.ToString() : null;
+            PatientObj.Email = (txtEmail.Value != "") ? txtEmail.Value.ToString() : null;
             if (rdoMale.Checked == true)
             {
                 PatientObj.Gender = "Male";
@@ -70,42 +72,45 @@ namespace TheClinicApp1._1.Registration
                 }
             }
 
-            PatientObj.Occupation = "BUSINESS";
+            PatientObj.Occupation = (txtOccupation.Value!="") ? txtOccupation.Value.ToString() : null;
             PatientObj.CreatedBy = UA.userName;
             PatientObj.UpdatedBy = UA.userName;
-            string filenum = "F" + clinID.Substring(0, 4) + txtName.Value.Substring(0, 3) + txtMobile.Value.Substring(7, 3);
-            PatientObj.FileNumber = filenum.Trim();
-
-            if (HiddenField1.Value == "")
+            if ((PatientObj.Name != null) && (PatientObj.Address != null))
             {
-                if (FileUpload1.HasFile)
+                string filenum = "F" + clinID.Substring(0, 4) + txtName.Value.Substring(0, 3) + txtMobile.Value.Substring(7, 3);
+                PatientObj.FileNumber = filenum.Trim();
+
+                if (HiddenField1.Value == "")
                 {
-                    byte[] ImageByteArray = null;
-                    ImageByteArray = ConvertImageToByteArray(FileUpload1);
-                    PatientObj.Picupload = ImageByteArray;
-                    PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
+                    if (FileUpload1.HasFile)
+                    {
+                        byte[] ImageByteArray = null;
+                        ImageByteArray = ConvertImageToByteArray(FileUpload1);
+                        PatientObj.Picupload = ImageByteArray;
+                        PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
+
+                    }
+                    Guid g = Guid.NewGuid();
+                    PatientObj.PatientID = g;
+                    PatientObj.AddPatientDetails();
+                    PatientObj.AddFile();
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
 
                 }
-                Guid g = Guid.NewGuid();
-                PatientObj.PatientID = g;
-                PatientObj.AddPatientDetails();
-                PatientObj.AddFile();
-
-                var page = HttpContext.Current.CurrentHandler as Page;
-
-            }
-            else
-            {
-                PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
-                PatientObj.UpdatePatientDetails();
-                var page = HttpContext.Current.CurrentHandler as Page;
+                else
+                {
+                    PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
+                    PatientObj.UpdatePatientDetails();
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                }
             }
             gridDataBind();
             lblFileCount.Text = PatientObj.FileNumber;
-            lblFile.Text = PatientObj.FileNumber;
-            lblName.Text = txtName.Value;
-            lblAge.Text = txtAge.Value;
-            lblPhone.Text = txtMobile.Value;
+            //lblFile.Text = PatientObj.FileNumber;
+            //lblName.Text = txtName.Value;
+            //lblAge.Text = txtAge.Value;
+            //lblPhone.Text = txtMobile.Value;
             ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
         }
         #region Methods
@@ -293,7 +298,7 @@ namespace TheClinicApp1._1.Registration
             tok.CreatedBy = UA.userName;
             int tokenNo = tok.InsertToken();
             lblTokencount.Text = ":" + tokenNo.ToString();
-            lblToken.Visible = true;
+            //lblToken.Visible = true;
             divDisplayNumber.Visible = true;
         }
         #endregion BookingToken

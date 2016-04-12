@@ -242,7 +242,8 @@ border-radius: 50%;
 a.casehistory_link {position: fixed; top: 364px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 a.tokens_link {position: fixed; top: 428px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 
-a.all_registration_link {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 201px;}
+a.all_registration_link {position: fixed; top: 300px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 201px;}
+a.Todays_registration_link {position: fixed; top: 364px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 201px;}
 
 a.all_token_link {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 
@@ -815,6 +816,7 @@ a.casehistory_link { position: relative;right: 0; top: auto; width: 50px; height
 a.tokens_link { position: relative;right: 0; top: auto; width: 50px; height: 50px;}	
 
 a.all_registration_link { position: relative; right: 0; top: auto; width: 50px; height: 50px;}	
+a.Todays_registration_link { position: relative; right: 0; top: auto; width: 50px; height: 50px;}
 
 a.all_token_link { position: relative; right: 0; top: auto; width: 50px; height: 50px;}
 
@@ -931,6 +933,7 @@ a.casehistory_link {right: 0; top: 361px; width: 60px; height: 60px;}
 a.tokens_link {right: 0; top: 422px; width: 60px; height: 60px;}
 
 a.all_registration_link {right: 0; top: 300px; width: 60px; height: 60px;}
+a.Todays_registration_link {right: 0; top: 361px; width: 60px; height: 60px;}
 
 a.all_token_link {right: 0; top: 300px; width: 60px; height: 60px;}		
 
