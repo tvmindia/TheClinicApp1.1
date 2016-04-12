@@ -56,33 +56,16 @@ function clickdelete(id) {
     if (iCnt > 1)
     {
 
-        if ((id == iCnt) && (Removecount == 0))
+        if (id == iCnt)
         {
             $('#btAdd' + (iCnt - 1) + '').css('visibility', 'visible')
             $('#btRemove' + id).closest("div").remove();
             iCnt = iCnt - 1;
         }
-        else if ((id <= iCnt) && (Removecount != 0))
-        {
-            $('#btAdd' + (iCnt - 2) + '').css('visibility', 'visible')
-            $('#btRemove' + id).closest("div").remove();
-            iCnt = iCnt - 1;
-        }
-        else if((id == iCnt) && (Removecount != 0))
-        {
-            $('#btAdd' + (iCnt - 2) + '').css('visibility', 'visible')
-            $('#btRemove' + id).closest("div").remove();
-            iCnt = iCnt - 1;
-        }
-        else if ((id == (iCnt - 1))&&(Removecount==0))
-        {        
-            $('#btRemove' + id).closest("div").remove();        
-            Removecount = Removecount + 1;
-        }
+        
         else
         {
             $('#btRemove' + id).closest("div").remove();
-            $('#btAdd' + (iCnt - 2) + '').css('visibility', 'visible')
             iCnt = iCnt - 1;
         }
     }
