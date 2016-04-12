@@ -210,6 +210,7 @@
     <Content Include="Pharmacy\test page.txt" />
     <Content Include="Registration\Patients.aspx" />
     <Content Include="Registration\test page.txt" />
+    <Content Include="Stock\AddNewMedicine.aspx" />
     <Content Include="Stock\Stock.aspx" />
     <Content Include="Stock\StockIn.aspx" />
     <Content Include="Stock\StockInDetails.aspx" />
@@ -337,6 +338,13 @@
     </Compile>
     <Compile Include="Registration\Patients.aspx.designer.cs">
       <DependentUpon>Patients.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stock\AddNewMedicine.aspx.cs">
+      <DependentUpon>AddNewMedicine.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stock\AddNewMedicine.aspx.designer.cs">
+      <DependentUpon>AddNewMedicine.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stock\Stock.aspx.cs">
       <DependentUpon>Stock.aspx</DependentUpon>
