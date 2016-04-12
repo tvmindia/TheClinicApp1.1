@@ -46,10 +46,10 @@
         <div role="tabpanel" class="tab-pane active" id="stock">
         <div class="grey_sec">
          <div class="search_div">
-         <input class="field" type="search" placeholder="Search here...">
-         <input class="button" type="submit" value="Search">
+         <input class="field" type="search" placeholder="Search here..." />
+         <input class="button" type="submit" value="Search" />
          </div> 
-         <ul class="top_right_links"><li><a class="save" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links" style="visibility:hidden" ><li><a class="save" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         
