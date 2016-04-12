@@ -10,7 +10,7 @@
           </style>
 
 
-     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
 
@@ -19,7 +19,53 @@
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
         
-                
+      
+    <script>
+
+
+        //---------------* Function to check medicine name duplication *-----------------//
+
+        function CheckMedicineNameDuplication(txtmedicineName) {
+            debugger;
+            var name = document.getElementById('<%=txtmedicineName.ClientID %>').value;
+            name = name.replace(/\s/g, '');
+
+            PageMethods.ValidateMedicineName(name, OnSuccess, onError);
+
+            function OnSuccess(response, userContext, methodName) {
+
+                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                if (response == false) {
+
+                    LnameImage.style.display = "block";
+                    errLname.style.display = "none";
+
+                }
+                if (response == true) {
+                    errLname.style.display = "block";
+                    errLname.style.color = "Red";
+                    errLname.innerHTML = "Name Alreay Exists"
+                    LnameImage.style.display = "none";
+
+                }
+            }
+            function onError(response, userContext, methodName) {
+
+            }
+        }
+
+
+
+
+
+       </script>
+  
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    
+              
         <script>
             var test = jQuery.noConflict();
             test(document).ready(function () {
@@ -28,6 +74,13 @@
                     test(".main_body").toggleClass("active_close");
                 });
 
+                //images that represents medicine name duplication hide and show
+                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                LnameImage.style.display = "none";
+                var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                errLname.style.display = "none";
+
+
             });
 		</script>
 
@@ -35,11 +88,7 @@
     <script src="../js/jquery-1.8.3.min.js"></script>
     
     <script src="../js/ASPSnippets_Pager.min.js"></script>
-  
 
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
     <script type="text/javascript">
 
 
@@ -60,7 +109,7 @@
         function GetMedicines(pageIndex) {
             debugger;
             $.ajax({
-              
+
                 type: "POST",
                 url: "../Stock/Stock.aspx/GetMedicines",
                 data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
@@ -125,8 +174,10 @@
                 $("[id*=gvMedicines]").append(empty_row);
             }
         };
-    </script>
 
+
+ 
+        </script>
 
      <div class="main_body">
           
@@ -171,7 +222,7 @@
          <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
          <input class="button" type="submit" value="Search" />
          </div> 
-         <ul class="top_right_links" style="visibility:hidden" ><li><a class="save" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links" style="visibility:hidden"  ><li><a class="save" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         
@@ -213,6 +264,7 @@
         </asp:GridView>
 
         <div class="Pager">
+
 
 
          <%--<table class="table" width="100%" border="0">
@@ -285,7 +337,56 @@
         <h4 class="modal-title">Add New Medicine</h4>
       </div>
       <div class="modal-body">
-        <table class="table" width="100%" border="0">
+
+            <div class="grey_sec">
+           <ul class="top_right_links"  ><li><a class="save" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+
+</div>
+           <div class="tab_table">   
+
+
+          <table class="table"  border="0" style="width:100%">
+
+               <tr>
+            <th>Medicine Name</th>
+            <th>Medicine Code</th>
+            <th>Category</th>
+                   <th>Unit</th>
+                   <th>Reorder Quantity</th>
+          </tr>
+
+
+        <tr>
+          
+            <td><asp:TextBox ID="txtmedicineName" runat="server" onchange="CheckMedicineNameDuplication(this)"></asp:TextBox>
+                <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login Name is Available" ImageUrl="~/Images/Check.png" Width="10%" Height="10%"  />
+                                        
+      <asp:Image ID="errorLnames" runat="server" ToolTip="Login Name is Unavailable" ImageUrl="~/Images/newClose.png"  />
+            </td>
+
+
+            
+       
+
+
+      
+            <td><asp:TextBox ID="txtCode" runat="server"></asp:TextBox></td>
+          
+        
+            <td><asp:DropDownList ID="ddlCategory" runat="server" AutoPostBack="true"></asp:DropDownList></td>
+       
+            <td><asp:TextBox ID="txtUnit" runat="server"></asp:TextBox></td>
+            
+
+        
+           
+            <td><asp:TextBox ID="txtOrderQuantity" runat="server"></asp:TextBox></td>
+            
+        </tr>
+              
+    </table>
+           </div>
+        <%--<table class="table" width="100%" border="0">
           <tr>
             <th>Sl No.</th>
             <th>Date</th>
@@ -306,7 +407,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
-        </table>
+        </table>--%>
       </div>      
     </div>
 
