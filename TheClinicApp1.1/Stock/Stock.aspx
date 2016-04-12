@@ -23,36 +23,15 @@
     <script>
 
 
-        //---------------* Function to check medicine name duplication *-----------------//
 
-        function CheckMedicineNameDuplication(txtmedicineName) {
+        function SetIframeSrc(HyperlinkID) {
             debugger;
-            var name = document.getElementById('<%=txtmedicineName.ClientID %>').value;
-            name = name.replace(/\s/g, '');
-
-            PageMethods.ValidateMedicineName(name, OnSuccess, onError);
-
-            function OnSuccess(response, userContext, methodName) {
-
-                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-                var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                if (response == false) {
-
-                    LnameImage.style.display = "block";
-                    errLname.style.display = "none";
-
-                }
-                if (response == true) {
-                    errLname.style.display = "block";
-                    errLname.style.color = "Red";
-                    errLname.innerHTML = "Name Alreay Exists"
-                    LnameImage.style.display = "none";
-
-                }
+            if (HyperlinkID == "NewMedicineIframe") {
+                var OutOfStockIframe = document.getElementById('OutOfStockIframe');
+                OutOfStockIframe.src = "../Stock/AddNewMedicine.aspx";
+                //$('#OutOfStock').modal('show');
             }
-            function onError(response, userContext, methodName) {
 
-            }
         }
 
 
@@ -64,7 +43,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
+   
               
         <script>
             var test = jQuery.noConflict();
@@ -74,11 +53,7 @@
                     test(".main_body").toggleClass("active_close");
                 });
 
-                //images that represents medicine name duplication hide and show
-                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-                LnameImage.style.display = "none";
-                var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                errLname.style.display = "none";
+                
 
 
             });
@@ -322,9 +297,6 @@
          
          
          
-         
-         
-         
 <!-- Modal -->
 <div id="add_medicine" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -338,54 +310,7 @@
       </div>
       <div class="modal-body">
 
-            <div class="grey_sec">
-           <ul class="top_right_links"  ><li><a class="save" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
-
-</div>
-           <div class="tab_table">   
-
-
-          <table class="table"  border="0" style="width:100%">
-
-               <tr>
-            <th>Medicine Name</th>
-            <th>Medicine Code</th>
-            <th>Category</th>
-                   <th>Unit</th>
-                   <th>Reorder Quantity</th>
-          </tr>
-
-
-        <tr>
-          
-            <td><asp:TextBox ID="txtmedicineName" runat="server" onchange="CheckMedicineNameDuplication(this)"></asp:TextBox>
-                <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login Name is Available" ImageUrl="~/Images/Check.png" Width="10%" Height="10%"  />
-                                        
-      <asp:Image ID="errorLnames" runat="server" ToolTip="Login Name is Unavailable" ImageUrl="~/Images/newClose.png"  />
-            </td>
-
-
-            
-       
-
-
-      
-            <td><asp:TextBox ID="txtCode" runat="server"></asp:TextBox></td>
-          
-        
-            <td><asp:DropDownList ID="ddlCategory" runat="server" AutoPostBack="true"></asp:DropDownList></td>
-       
-            <td><asp:TextBox ID="txtUnit" runat="server"></asp:TextBox></td>
-            
-
-        
-           
-            <td><asp:TextBox ID="txtOrderQuantity" runat="server"></asp:TextBox></td>
-            
-        </tr>
-              
-    </table>
-           </div>
+             <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" src="AddNewMedicine.aspx"></iframe>
         <%--<table class="table" width="100%" border="0">
           <tr>
             <th>Sl No.</th>

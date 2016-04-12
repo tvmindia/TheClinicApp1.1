@@ -161,6 +161,7 @@
     <Content Include="images\calendar4.png" />
     <Content Include="images\Cancel.png" />
     <Content Include="images\case-history.png" />
+    <Content Include="images\Check.png" />
     <Content Include="images\doctor-hover.png" />
     <Content Include="images\doctor.png" />
     <Content Include="images\HerbeInWhite.jpg" />
@@ -169,6 +170,7 @@
     <Content Include="images\menu_separator.png" />
     <Content Include="images\nav.png" />
     <Content Include="images\new.png" />
+    <Content Include="images\newClose.png" />
     <Content Include="images\patient_list.png" />
     <Content Include="images\Pencil-01.png" />
     <Content Include="images\pharmacy-hover.png" />
