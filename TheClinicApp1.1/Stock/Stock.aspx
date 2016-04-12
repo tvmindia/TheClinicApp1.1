@@ -10,7 +10,7 @@
           </style>
 
 
-     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
 
@@ -19,7 +19,53 @@
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
         
-                
+      
+    <script>
+
+
+        //---------------* Function to check medicine name duplication *-----------------//
+
+        function CheckMedicineNameDuplication(txtmedicineName) {
+            debugger;
+            var name = document.getElementById('<%=txtmedicineName.ClientID %>').value;
+            name = name.replace(/\s/g, '');
+
+            PageMethods.ValidateMedicineName(name, OnSuccess, onError);
+
+            function OnSuccess(response, userContext, methodName) {
+
+                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                if (response == false) {
+
+                    LnameImage.style.display = "block";
+                    errLname.style.display = "none";
+
+                }
+                if (response == true) {
+                    errLname.style.display = "block";
+                    errLname.style.color = "Red";
+                    errLname.innerHTML = "Name Alreay Exists"
+                    LnameImage.style.display = "none";
+
+                }
+            }
+            function onError(response, userContext, methodName) {
+
+            }
+        }
+
+
+
+
+
+       </script>
+  
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    
+              
         <script>
             var test = jQuery.noConflict();
             test(document).ready(function () {
@@ -29,7 +75,7 @@
                 });
 
                 //images that represents medicine name duplication hide and show
-               var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
                 LnameImage.style.display = "none";
                 var errLname = document.getElementById('<%=errorLnames.ClientID %>');
                 errLname.style.display = "none";
@@ -42,11 +88,7 @@
     <script src="../js/jquery-1.8.3.min.js"></script>
     
     <script src="../js/ASPSnippets_Pager.min.js"></script>
-  
 
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
     <script type="text/javascript">
 
 
@@ -67,7 +109,7 @@
         function GetMedicines(pageIndex) {
             debugger;
             $.ajax({
-              
+
                 type: "POST",
                 url: "../Stock/Stock.aspx/GetMedicines",
                 data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
@@ -134,48 +176,8 @@
         };
 
 
-
-        //---------------* Function to check medicine name duplication *-----------------//
-
-        function CheckMedicineNameDuplication(txtmedicineName) {
-            debugger;
-            var name = document.getElementById('<%=txtmedicineName.ClientID %>').value;
-            name = name.replace(/\s/g, '');
-
-            PageMethods.ValidateMedicineName(name, OnSuccess, onError);
-
-            function OnSuccess(response, userContext, methodName) {
-
-                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-                var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                if (response == false) {
-
-                    LnameImage.style.display = "block";
-                    errLname.style.display = "none";
-
-                }
-                if (response == true) {
-                    errLname.style.display = "block";
-                    errLname.style.color = "Red";
-                    errLname.innerHTML = "Name Alreay Exists"
-                    LnameImage.style.display = "none";
-
-                }
-            }
-            function onError(response, userContext, methodName) {
-
-            }
-        }
-
-
-   
-
-
-       </script>
-
-
  
-
+        </script>
 
      <div class="main_body">
           
