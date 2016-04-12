@@ -156,6 +156,8 @@
     <Content Include="images\add_medicine.png" />
     <Content Include="images\back.png" />
     <Content Include="images\book_token.png" />
+    <Content Include="images\calendar 32x32.png" />
+    <Content Include="images\calendar4.png" />
     <Content Include="images\case-history.png" />
     <Content Include="images\doctor-hover.png" />
     <Content Include="images\doctor.png" />

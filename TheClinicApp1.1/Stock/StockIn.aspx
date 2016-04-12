@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockIn.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockIn" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      
@@ -52,21 +54,13 @@
          <input class="field" type="search" placeholder="Search here...">
          <input class="button" type="submit" value="Search">
          </div> 
-         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" style="visibility:hidden" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" style="visibility:hidden" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" style="visibility:hidden" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new"  href="#"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         
          
          <table class="table" style="width:100%;border:0;">
-          <tr>
-            <td>Bill No</td>
-           
-            <td>Bill No2</td>
-             
-            <td>Date</td>
-                
-            <td><a class="deatils" href="StockInDetails.aspx">Details</a></td>
-          </tr>          
+        
                 <tr>
    <asp:GridView ID="GridViewStockin" runat="server" Width="100%" AutoGenerateColumns="False">
                     <Columns>
@@ -74,7 +68,8 @@
                         <asp:BoundField DataField="RefNo1" HeaderText="Bill Number" />
                         <asp:BoundField DataField="RefNo2" HeaderText="Reference Number" />
                         <asp:BoundField HeaderText="Date"  DataFormatString="{0:dd/MM/yyyy}"   DataField="Date" />
-                         <asp:HyperLinkField DataTextField="Details" HeaderText="CLick Here" DataNavigateUrlFields="ReceiptID" DataNavigateUrlFormatString="~/Stock/ExistingStockIn.aspx?ReceiptID={0}" />
+                        <asp:HyperLinkField  Text="Details" HeaderText="Click Here" DataNavigateUrlFields="ReceiptID" DataNavigateUrlFormatString="~/Stock/StockInDetails.aspx?ReceiptID={0}" />
+                                               
                     </Columns>
                 </asp:GridView>
                 </tr>   

@@ -1,6 +1,61 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockInDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+        <script>
+            $(document).ready(function () {
+                $(function () {
+                    $("[id$=txtDate]").datepicker({
+                        dateFormat: 'dd-m-yy',
+                        showOn: 'button',
+
+                        buttonImageOnly: true,
+                        buttonImage: '../Images/calendar4.png',
+
+
+                    });
+
+
+                });
+
+                function RemoveWarning(ControlNo) {
+
+                    //--------------* To remove warning msg from textbox if the medicine is not out of stock , and is called onfocus event of quantity textbox *-------------------//
+                    $("#txtQuantity" + ControlNo).removeClass("warning");
+                    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
+                    $("#txtQuantity" + ControlNo).attr('type', 'number');
+                }
+
+
+            });
+
+
+    </script>
+    <%--Date picker styles--%>
+    <style>
+        .ui-autocomplete {
+            background: fixed;
+            background-color: ghostwhite;
+            box-shadow: 1px 5px 10px 5px #4d3319;
+        }
+
+        .ui-datepicker {
+            background: fixed;
+            background-color: ghostwhite;
+            box-shadow: 1px 5px 10px 5px #4d3319;
+        }
+   
+       .warning{
+            
+             background: url(../Images/Button-Warning-icon.png) no-repeat;
+            
+             background-size:9% 90%;
+           padding-left:1%;
+            text-indent: 11%;
+            border:1px solid #ccc;
+           
+        }
+    </style>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -91,15 +146,15 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <input id="txtMedicine" type="text" placeholder="Medicine" class="input" /></td>
+                                                    <input id="txtMedicine0" type="text" placeholder="Medicine0" class="input" /></td>
                                                 <td>
-                                                    <input id="txtUnit" class="input" type="text" placeholder="Unit" /></td>
+                                                    <input id="txtUnit0" class="input" type="text" placeholder="Unit0" /></td>
                                                 <td>
-                                                    <input id="txtCode" type="text" placeholder="Code" class="input" /></td>
+                                                    <input id="txtCode0" type="text" placeholder="Code0" class="input" /></td>
                                                 <td>
-                                                    <input id="txtCategory" type="text" placeholder="Category" class="input" /></td>
+                                                    <input id="txtCategory0" type="text" placeholder="Category0" class="input" /></td>
                                                 <td>
-                                                    <input id="txtQuantity" type="text" placeholder="Quantity" class="input" /></td>
+                                                    <input id="txtQuantity0" type="text" placeholder="Quantity0" class="input" /></td>
                                                 <td style="background-color: transparent">
                                                     <input type="button" value="-" class="bt1" style="width: 20px;" /></td>
                                                 <td style="background-color: transparent">
