@@ -155,9 +155,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@Gender", SqlDbType.NVarChar, 50).Value = Gender;
                 pud.Parameters.Add("@MaritalStatus", SqlDbType.NVarChar, 50).Value = MaritalStatus;
                 pud.Parameters.Add("@Occupation", SqlDbType.NVarChar, 255).Value = Occupation;
-                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = UA.userName;
+                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = CreatedBy;
                 pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UA.userName;
+                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 pud.Parameters.Add("@image", SqlDbType.Image,0).Value =Picupload;
                 pud.Parameters.Add("@ImageType", SqlDbType.NVarChar, 6).Value = ImageType;               
@@ -464,9 +464,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
                 pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 pud.Parameters.Add("@FileDate", SqlDbType.DateTime).Value = DateTime.Now;               
-                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = UA.userName;
+                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = CreatedBy;
                 pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UA.userName;
+                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 pud.Parameters.Add("@FileNumber", SqlDbType.NVarChar, 50).Value = FileNumber;
                 SqlParameter OutputFileNumber = pud.Parameters.Add("@OutFileNumber", SqlDbType.NVarChar, 50);

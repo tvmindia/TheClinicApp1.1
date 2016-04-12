@@ -62,7 +62,7 @@ namespace TheClinicApp1._1.ClinicDAL
             lblMsgges.Text = msg;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
 
-            divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
+            divMask1.Attributes["class"] = "alert alert-success";
 
         }
         public void UpdationSuccessMessage(Page pg)
