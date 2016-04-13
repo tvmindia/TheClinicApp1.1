@@ -181,7 +181,7 @@ namespace TheClinicApp1._1.ClinicDAL
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
             lblErrorCaption.Text = Messages.AlreadyExistsMsgCaption;
-            divMask1.Attributes["class"] = "alert lblErrorCaptionDanger fade in";
+            divMask1.Attributes["class"] = "alert alert-warning";
         }
     }
 }

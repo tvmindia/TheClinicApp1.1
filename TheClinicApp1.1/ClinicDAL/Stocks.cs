@@ -280,6 +280,8 @@ namespace TheClinicApp1._1.ClinicDAL
                     if(Outputval == 0)
                     {
                         //Already exists!
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
                     }
                 }
             }

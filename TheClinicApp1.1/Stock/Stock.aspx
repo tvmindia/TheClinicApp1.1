@@ -354,7 +354,7 @@
       </div>
       <div class="modal-body">
 
-              <asp:GridView ID="gvOutOfStock" runat="server"  AutoGenerateColumns="False" class="table">
+              <asp:GridView ID="gvOutOfStock1" runat="server"  AutoGenerateColumns="False" class="table">
                                     <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                                     <Columns>
                                         <%--  <asp:BoundField DataField="MedicineID" HeaderText="MedicineID" />--%>
