@@ -25,10 +25,10 @@
 
 
         function SetIframeSrc(HyperlinkID) {
-            debugger;
+          
             if (HyperlinkID == "NewMedicineIframe") {
-                var OutOfStockIframe = document.getElementById('OutOfStockIframe');
-                OutOfStockIframe.src = "../Stock/AddNewMedicine.aspx";
+                var NewMedicineIframe = document.getElementById('NewMedicineIframe');
+                NewMedicineIframe.src = "AddNewMedicine.aspx";
                 //$('#OutOfStock').modal('show');
             }
 
@@ -68,11 +68,11 @@
 
 
         $(function () {
-            debugger;
+           
             GetMedicines(1);
         });
         $("[id*=txtSearch]").live("keyup", function () {
-            debugger;
+           
             GetMedicines(parseInt(1));
         });
         $(".Pager .page").live("click", function () {
@@ -82,7 +82,7 @@
             return jQuery.trim($("[id*=txtSearch]").val());
         };
         function GetMedicines(pageIndex) {
-            debugger;
+           
             $.ajax({
 
                 type: "POST",
@@ -92,18 +92,18 @@
                 dataType: "json",
                 success: OnSuccess,
                 failure: function (response) {
-                    debugger;
+                   
                     alert(response.d);
                 },
                 error: function (response) {
-                    debugger;
+                   
                     alert(response.d);
                 }
             });
         }
         var row;
         function OnSuccess(response) {
-            debugger;
+            
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
             var Medicines = xml.find("Medicines");
@@ -156,8 +156,6 @@
 
      <div class="main_body">
           
-       
-
           
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
@@ -177,9 +175,13 @@
          <div class="tagline">
          <a class="nav_menu">Menu</a>
          Stock</div>
+
          <div class="icon_box">
-         <a class="add_medicine" data-toggle="modal" data-target="#add_medicine" ><span title="All Medicine" data-toggle="tooltip" data-placement="left"><img src="../images/add_medicine.png"/></span></a>
+         <a class="add_medicine" data-toggle="modal" data-target="#add_medicine" ><span title="All Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')"><img src="../images/add_medicine.png"/></span></a>
+        
+         <a class="View_OutOfStock" data-toggle="modal" data-target="#View_OutOfStock" ><span title="Out Of Stock Medicines" data-toggle="tooltip" data-placement="left" ><img src="../images/add_medicine.png"/></span></a>
          </div>
+
          <div class="right_form tab_right_form">
          
          <div class="page_tab">
@@ -299,7 +301,7 @@
          
 <!-- Modal -->
 <div id="add_medicine" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="height:600px;">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -308,9 +310,9 @@
         
         <h4 class="modal-title">Add New Medicine</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="height:400px;">
 
-             <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" src="AddNewMedicine.aspx"></iframe>
+             <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" ></iframe>
         <%--<table class="table" width="100%" border="0">
           <tr>
             <th>Sl No.</th>
@@ -337,7 +339,59 @@
     </div>
 
   </div>
-</div>         
+</div> 
+         
+    <div id="View_OutOfStock" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+        <h4 class="modal-title">Out Of Stock Medicines</h4>
+      </div>
+      <div class="modal-body">
+
+              <asp:GridView ID="gvOutOfStock" runat="server"  AutoGenerateColumns="False" class="table">
+                                    <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+                                    <Columns>
+                                        <%--  <asp:BoundField DataField="MedicineID" HeaderText="MedicineID" />--%>
+                                        <asp:BoundField DataField="MedicineName" HeaderText="Medicine Name" />
+                                        <asp:BoundField DataField="Unit" HeaderText="Unit" />
+                                        <asp:BoundField DataField="Qty" HeaderText="Quantity" />
+                                        <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" />
+                                        <asp:BoundField DataField="CategoryName" HeaderText="Category Name"/>
+                                    </Columns>
+                                    <EditRowStyle BackColor="#0080AA"></EditRowStyle>
+
+                                    <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
+
+                                    <HeaderStyle BackColor="#3FBF7F" Font-Bold="True" ForeColor="White"></HeaderStyle>
+
+                                    <PagerStyle HorizontalAlign="Center" ForeColor="White" BackColor="#2461BF"></PagerStyle>
+
+                                    <RowStyle BackColor="#EFF3FB"></RowStyle>
+
+                                    <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
+
+                                    <SortedAscendingCellStyle BackColor="#F5F7FB"></SortedAscendingCellStyle>
+
+                                    <SortedAscendingHeaderStyle BackColor="#6D95E1"></SortedAscendingHeaderStyle>
+
+                                    <SortedDescendingCellStyle BackColor="#E9EBEF"></SortedDescendingCellStyle>
+
+                                    <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
+                                </asp:GridView>
+      </div>      
+    </div>
+
+  </div>
+</div>     
+          
+         
+   
+                
          
    </div>
 </asp:Content>

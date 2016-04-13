@@ -46,7 +46,8 @@ namespace TheClinicApp1._1.ClinicDAL
             lblMsgges.Text = Messages.InsertionSuccessFull;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
 
-            divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
+            //divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
+            divMask1.Attributes["class"] = "alert alert-success";
             // Success.Text = "Successfully Inserted"; 
 
         }

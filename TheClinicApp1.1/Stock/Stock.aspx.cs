@@ -1,4 +1,13 @@
-﻿using System;
+﻿
+
+#region CopyRight
+
+//Author      : SHAMILA T P
+//Created Date: April-12-2016
+
+#endregion CopyRight
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -26,6 +35,22 @@ namespace TheClinicApp1._1.Stock
 
         #endregion Global Variables
 
+
+        #region Bind Out Of Stock Gridview
+        public void BindOutOfStockGridview()
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            stockObj.ClinicID = UA.ClinicID.ToString();
+            //gridview binding for listing the Out of Stock Medicines 
+            DataSet gds = stockObj.ViewOutofStockMedicines();
+            gvOutOfStock.EmptyDataText = "No Records Found";
+            gvOutOfStock.DataSource = gds;
+            gvOutOfStock.DataBind();
+        }
+
+        #endregion Bind Out Of Stock Gridview
+
+
         #region Bind Dummy Row
 
         private void BindDummyRow()
@@ -50,7 +75,7 @@ namespace TheClinicApp1._1.Stock
             if (!IsPostBack)
             {
                 BindDummyRow();
-
+                BindOutOfStockGridview();
             }
         }
 
