@@ -1,6 +1,6 @@
 ﻿/*! jQuery Dynamic Grid using TextBoxes| (c) Author: Thomson Kattingal | /www.thrithvam.com */
 /*!No Modifications are allowed without permission*/
-  
+var last = 0;
 var iCnt = 0;
 var ExistingRowCount = 0;
 // CREATE A "DIV" ELEMENT AND DESIGN IT USING JQUERY ".css()" CLASS.
@@ -15,7 +15,7 @@ function clickStockAdd(id) {
 
      //ADD new row with fields needed.
    
-    $(container).append('<div><table class="table" style="width:100%;border:0;"><tr>'
+    $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;border:0;"><tr>'
        + '<td><input id="txtMedicine' + iCnt + '" class="input" type="text" placeholder="Medicine' + iCnt + '" onblur="BindControlsByMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
        + '<td><input id="txtUnit' + iCnt + '" readonly="true" class="input "  type="text" placeholder="Unit' + iCnt + '" /></td>'
        + '<td><input id="txtCode' + iCnt + '" readonly="true" class="input "  type="text" placeholder="Med Code' + iCnt + '"/></td>'
@@ -32,6 +32,7 @@ function clickStockAdd(id) {
     $('#btAdd' + id).css("visibility", "hidden");
 
     ExistingRowCount = ExistingRowCount + 1;
+    last = last + 1;
 }
 
 function clickAdd(id) {
@@ -58,21 +59,75 @@ function clickAdd(id) {
 
 //Delete Div where the remove button contain.
 var Removecount = 0;
+
 function clickdelete(id) {
     debugger;
-    if (iCnt > 1)
+    if (ExistingRowCount > 1)
     {
-
-        if (id == iCnt)
+         
+        if (id == iCnt && id==ExistingRowCount)
         {
             $('#btAdd' + (iCnt - 1) + '').css('visibility', 'visible')
+            last = id - 1;
             $('#btRemove' + id).closest("div").remove();
             //iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
         }
-        
-        else
-        {
+//***********************************************************************************
+
+        if (id == iCnt) {
+            var loc = id;
+            //find the id before this control
+            while (id > 0) {
+                var myElem = document.getElementById('div' + (id - 1) + '')
+                if (myElem != null) {
+                    $('#btAdd' + (id - 1) + '').css('visibility', 'visible')
+                    last = id - 1;
+                    id = 0;
+
+                }
+                else {
+                    id--
+                }
+            }
+
+            $('#btRemove' + loc).closest("div").remove();
+            //iCnt = iCnt - 1;
+            ExistingRowCount = ExistingRowCount - 1;
+
+
+
+
+
+        }
+
+//***********************************************************************************
+     
+
+        else if (last == id) {
+            var loc = id;
+            //find the id before this control
+            while (id > 0) {
+                var myElem = document.getElementById('div' + (id - 1) + '')
+                if (myElem != null) {
+                    $('#btAdd' + (id - 1) + '').css('visibility', 'visible')
+                    last = id - 1;
+                    id = 0;
+
+                }
+                else {
+                    id--
+                }
+            }
+
+            $('#btRemove' + loc).closest("div").remove();
+            //iCnt = iCnt - 1;
+            ExistingRowCount = ExistingRowCount - 1;
+
+        }
+
+
+        else {
             $('#btRemove' + id).closest("div").remove();
             // iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
@@ -83,7 +138,9 @@ function clickdelete(id) {
     {
         $('#btAdd').css('visibility', 'visible')
         $('#btRemove' + id).closest("div").remove();
-        iCnt = 0;
+        ExistingRowCount = ExistingRowCount - 1;
+        last = iCnt;
+        
     }
 
 }
