@@ -10,6 +10,7 @@
           </style>
 
 
+
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
@@ -177,9 +178,9 @@
          Stock</div>
 
          <div class="icon_box">
-         <a class="add_medicine" data-toggle="modal" data-target="#add_medicine" ><span title="All Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')"><img src="../images/add_medicine.png"/></span></a>
+         <a class="all_registration_link" data-toggle="modal" data-target="#add_medicine" ><span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')"><img src="../images/add_medicine.png"/></span></a>
         
-         <a class="View_OutOfStock" data-toggle="modal" data-target="#View_OutOfStock" ><span title="Out Of Stock Medicines" data-toggle="tooltip" data-placement="left" ><img src="../images/add_medicine.png"/></span></a>
+         <a class="Todays_registration_link" data-toggle="modal" data-target="#View_OutOfStock" ><span title="Out Of Stock Medicines" data-toggle="tooltip" data-placement="left" ><img src="../images/add_medicine.png"/></span></a>
          </div>
 
          <div class="right_form tab_right_form">
@@ -353,7 +354,7 @@
       </div>
       <div class="modal-body">
 
-              <asp:GridView ID="gvOutOfStock" runat="server"  AutoGenerateColumns="False" class="table">
+              <asp:GridView ID="gvOutOfStock1" runat="server"  AutoGenerateColumns="False" class="table">
                                     <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                                     <Columns>
                                         <%--  <asp:BoundField DataField="MedicineID" HeaderText="MedicineID" />--%>

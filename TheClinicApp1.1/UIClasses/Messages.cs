@@ -50,6 +50,12 @@ namespace TheClinicApp1._1.UIClasses
             get { return "Failure!"; }
         }
 
+        public static string AlreadyExistsMsgCaption
+        {
+            get { return "Already exists!"; }
+        }
+
+
 //----------------* Success Messages *--------------//
         public static string LoginSuccess
         {

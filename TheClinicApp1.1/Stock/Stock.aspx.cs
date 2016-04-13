@@ -46,9 +46,9 @@ namespace TheClinicApp1._1.Stock
             stockObj.ClinicID = UA.ClinicID.ToString();
             //gridview binding for listing the Out of Stock Medicines 
             DataSet gds = stockObj.ViewOutofStockMedicines();
-            //gvOutOfStock.EmptyDataText = "No Records Found";
-            //gvOutOfStock.DataSource = gds;
-            //gvOutOfStock.DataBind();
+            gvOutOfStock1.EmptyDataText = "No Records Found";
+            gvOutOfStock1.DataSource = gds;
+            gvOutOfStock1.DataBind();
         }
 
         #endregion Bind Out Of Stock Gridview
