@@ -1,9 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-   
-    
-		     
-</asp:Content>
+  </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
      <!-- Script Files -->
@@ -16,11 +13,50 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
 
+    <script>
+        var test = jQuery.noConflict();
+        test(document).ready(function () {
 
-   
-        
 
-   
+            test('.alert_close').click(function () {
+                test(this).parent(".alert").hide();
+            });
+
+            test('[data-toggle="tooltip"]').tooltip();
+
+
+
+            test('.nav_menu').click(function () {
+                test(".main_body").toggleClass("active_close");
+            });
+
+            
+
+        });
+
+		</script>
+      <script>
+          var test = jQuery.noConflict();
+          test(document).on('ready', function () {
+              test("#FileUpload").fileinput({
+                  browseLabel: 'Upload'
+              });
+              
+         });
+        </script>    
+    <script>
+        var test=jQuery.noConflict();
+        test(document).on('ready',function(){
+            debugger;
+            var ac=null;
+            ac = <%=listFilter %>;
+            $( "#txtSearch" ).autocomplete({
+                source: ac
+            });
+        });
+             
+    </script>
+  
   <!-- Main Container -->
   <div class="main_body">   
       
@@ -28,14 +64,14 @@
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
          <ul class="menu">
-         <li  id="patients" class="active"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
-         <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
-         <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
-         <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
-         <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
+         <li  id="patients" class="active"><a name="hello" onclick="selectTile('patients','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+         <li id="token"><a name="hello" onclick="selectTile('token','<%=RoleName %>')"><span class="icon token"></span><span class="text">Token</span></a></li>
+         <li id="doctor"><a name="hello" onclick="selectTile('doctor','<%=RoleName %>')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+         <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName %>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
+         <li id="stock"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
          </ul>
          
-         <p class="copy"><asp:Label ID="Label1" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
+         <p class="copy"><asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
          </div>
          
          <!-- Right Main Section -->
@@ -55,15 +91,15 @@
          <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" ><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>        
          <div class="right_form">         
-                <div id="Errorbox"  style="height:25%;  display:none;"  runat="server" ><a class="alert_close">X</a>
-                    <div>
-                            <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
-                                 <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+         <div id="Errorbox"  style="height:25%;  display:none;"  runat="server" ><a class="alert_close">X</a>
+         <div>
+         <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
+         <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
 
-                            </div>
+         </div>
 
-                            </div>                     
-
+         </div>
+             
          <div class="alert alert-success" style="display:none">
           <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
         </div>        
@@ -83,7 +119,7 @@
       <div class="row field_row">  
       <div class="col-lg-8">
       <div class="row"> 
-      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" /></div>
+      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required /></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
       <img id="ProfilePic" runat="server" src="../images/UploadPic.png" />
@@ -97,14 +133,14 @@
           <asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" />
           <asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" />
       </div>
-      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="text" name="age" /></div>
+      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="text" name="age" required /></div>
       </div>
       </div>            
       </div>
       
       <div class="row field_row">  
       <div class="col-lg-12">
-      <label for="address">Address</label><textarea id="txtAddress" runat="server" style="width:43%"></textarea>
+      <label for="address">Address</label><textarea id="txtAddress" runat="server" style="width:43%" required></textarea>
       </div>
       </div>
       
@@ -487,47 +523,14 @@
   </div>
 
 </div>--%>
-     <script>
-         var test = jQuery.noConflict();
-         test(document).on('ready', function () {
-             test("#FileUpload").fileinput({
-                 browseLabel: 'Upload'
-             });
-            
-<%--                 var ac=null;
-                 ac = <%=listFilter %>;
-                 $( "#txtSearch" ).autocomplete({
-                     source: ac
-                 });--%>
-         });
-        </script>      
-     <script>
-         var test = jQuery.noConflict();
-         test(document).ready(function () {
+     
+     
 
-
-             test('.alert_close').click(function () {
-                 test(this).parent(".alert").hide();
-             });
-
-             test('[data-toggle="tooltip"]').tooltip();
-
-
-
-             test('.nav_menu').click(function () {
-                 test(".main_body").toggleClass("active_close");
-             });
-
-
-
-         });
-
-		</script>
-
-   <asp:ScriptManager runat="server"></asp:ScriptManager>
+   
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
-    <script src="../js/bootstrap.min.js"></script>   
+    <script src="../js/bootstrap.min.js"></script>
+    <asp:ScriptManager runat="server"></asp:ScriptManager>   
     <script type="text/javascript">
        
         function openModal() {
@@ -536,5 +539,6 @@
            
         }
         </script>
+   
             
 </asp:Content>
