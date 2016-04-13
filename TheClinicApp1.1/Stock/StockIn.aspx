@@ -144,14 +144,14 @@
     <script src="../js/JavaScript_selectnav.js"></script>
 
         <script>
-			var test=jQuery.noConflict();
-				test(document).ready(function(){
-								
-				test('.nav_menu').click(function(){
-					test(".main_body").toggleClass("active_close");
-				});
-			
-			});			
+            var test = jQuery.noConflict();
+            test(document).ready(function () {
+
+                test('.nav_menu').click(function () {
+                    test(".main_body").toggleClass("active_close");
+                });
+
+            });
 		</script>
 
 

@@ -1,35 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockInDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-        <script>
-            $(document).ready(function () {
-                $(function () {
-                    $("[id$=txtDate]").datepicker({
-                        dateFormat: 'dd-m-yy',
-                        showOn: 'button',
-
-                        buttonImageOnly: true,
-                        buttonImage: '../Images/calendar4.png',
-
-
-                    });
-
-
-                });
-
-                function RemoveWarning(ControlNo) {
-
-                    //--------------* To remove warning msg from textbox if the medicine is not out of stock , and is called onfocus event of quantity textbox *-------------------//
-                    $("#txtQuantity" + ControlNo).removeClass("warning");
-                    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
-                    $("#txtQuantity" + ControlNo).attr('type', 'number');
-                }
-
-
-            });
-
-
-    </script>
+        
     <%--Date picker styles--%>
     <style>
         .ui-autocomplete {
