@@ -1,34 +1,25 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <!-- Script Files -->
-    <script src="../js/jquery-1.12.0.min.js"></script>
-    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script>        
-    <script src="../js/bootstrap.min.js"></script>    
-    <script src="../js/fileinput.js"></script>
-    <script src="../js/JavaScript_selectnav.js"></script>
+   
     
 		     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
-.ui-autocomplete {
-background: fixed;
-font-size:small;
-font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
-background-color: ghostwhite;
- box-shadow:1px 1px 1px 1px #f3e6d8;
-}
-#divDisplayNumber{
-    background-color:ghostwhite;
+
+     <!-- Script Files -->
+  
+    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
    
-}
-.modal-lg1{
-    width:40%;
-    overflow-x:hidden;
-    overflow-y:hidden;
-}
-</style>
+    <script src="../js/jquery-1.12.0.min.js"></script>
+     
+    <script src="../js/bootstrap.min.js"></script>  
+    <script src="../js/fileinput.js"></script>
+    <script src="../js/JavaScript_selectnav.js"></script>
+
+
+   
+        
+
    
   <!-- Main Container -->
   <div class="main_body">   
@@ -44,7 +35,7 @@ background-color: ghostwhite;
          <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
          </ul>
          
-         <p class="copy">&copy;Trithvam Ayurveda</p>
+         <p class="copy"><asp:Label ID="Label1" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
          </div>
          
          <!-- Right Main Section -->
@@ -54,11 +45,11 @@ background-color: ghostwhite;
          Patients Registration</div>
          <div class="icon_box">
          <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
-         <a class="all_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
+         <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
          <div class="search_div">
-         <input class="field" type="search" placeholder="Search here..." />
+         <input class="field" type="search" id="txtSearch" name="txtSearch" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div>
          <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" ><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
@@ -167,27 +158,27 @@ background-color: ghostwhite;
          </div>
          
          </div>  
-      
+    </div>  
         <!---------------------------------- Modal Section --------------------------------------->
         <div class="modal fade" id="TokenRegistration" role="dialog">
-            <div class="modal-dialog modal-lg1">
+            <div class="modal-dialog modal-lg1" style="width:400px;">
 
                 <!-- Modal content-->
                 
-                <div class="modal-content" style="height:60%;overflow-y:no-display;">
-                    <div class="modal-header" style="background-color:#00CC99">
+                <div class="modal-content" style="height:100%;overflow-y:no-display;">
+                    <div class="modal-header" style="background-color:royalblue">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" style="font-size:20px;color:white">Token Registration</h4>
+                        <h4 class="modal-title" style="font-size:20px;color:white;font-family:Castellar;">Token Registration</h4>
 
                     </div>
-                    <div class="modal-body" style="background-color:lightgoldenrodyellow;overflow-x:hidden;overflow-y:hidden;">
-                        <div class="col-md-12">
+                    <div class="modal-body" style="background-color:white;overflow-x:hidden;overflow-y:hidden;">
+                        <div class="col-lg-12" style="color:brown;">
                             Would You Like to Book A Token ?
                         </div>
-                         <div class="col-md-12">
-                           <button type="button" class="close" data-dismiss="modal" style="color:green">>>>Skip</button>
+                         <div class="col-lg-10">
+                           <button type="button" class="close" data-dismiss="modal" style="color:royalblue;font-size:25px;">>>>Skip</button>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-lg-12">
                             
                      <asp:Label Text="Select Your Doctor" Font-Size="Large" Font-Bold="true"  runat="server"></asp:Label>
                             <asp:DropDownList ID="ddlDoctorName" Height="40%" Width="100%" runat="server"></asp:DropDownList>
@@ -227,7 +218,7 @@ background-color: ghostwhite;
                         <%-- Patient Details Diplay region --%>
                         
                       
-                   <table class="tokenPatientDetailsTable TileContent" id="divContainer" style="display:none" >
+               <%--    <table class="tokenPatientDetailsTable TileContent" id="divContainer" style="display:none" >
                        <tr>
                            <td class="tokenPatientDetailsTableColumn">
                                        <label  class="subheadingLabel" style="text-align:center" >Patient Details</label>
@@ -274,7 +265,7 @@ background-color: ghostwhite;
                            </td>
                        </tr>
                         
-                   </table>
+                   </table>--%>
                                      
 
                             <div class="col-md-12 Span-One">
@@ -299,18 +290,8 @@ background-color: ghostwhite;
 
                         </div>
                     </div>
-                    <div class="modal-footer" style="background-color:lightgoldenrodyellow">
-                       <table class="footerTable" style="width:100%; margin-left:0px;padding-left:0px;padding-top:0%; margin-top:3%;  ">
-                                <tr>
-                                    <td style="width:90%;">
-                                         <div class="form-group">
-                                        <asp:Button ID="btntokenbooking" runat="server" Text="BOOK TOKEN"  type="submit" CssClass="button" OnClick="btntokenbooking_Click" BorderColor="DarkSeaGreen" BackColor="wheat" ValidationGroup="Submit" formnovalidate />
-</div>
-                                    </td>
-                                    <td>
-                                       </td>
-                                </tr>
-                            </table>
+                    <div class="modal-footer" style="background-color:white;">
+                      <asp:Button ID="btntokenbooking" runat="server" Text="BOOK TOKEN"  type="submit" CssClass="button" OnClick="btntokenbooking_Click" BorderColor="DarkSeaGreen" ForeColor="White" BackColor="#3366ff" ValidationGroup="Submit" formnovalidate />
                         ....
                     </div>
                 </div>
@@ -466,7 +447,7 @@ background-color: ghostwhite;
             </div>
         </div>
         <!------------------------------------------------------------------------------------------>   
-      </div>              
+                    
 <!-- All Registration Modal -->
 <%--<div id="ViewAllregistration" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -512,6 +493,12 @@ background-color: ghostwhite;
              test("#FileUpload").fileinput({
                  browseLabel: 'Upload'
              });
+            
+<%--                 var ac=null;
+                 ac = <%=listFilter %>;
+                 $( "#txtSearch" ).autocomplete({
+                     source: ac
+                 });--%>
          });
         </script>      
      <script>
@@ -536,16 +523,18 @@ background-color: ghostwhite;
          });
 
 		</script>
-     <asp:ScriptManager runat="server"></asp:ScriptManager>
-        <script type="text/javascript">
-            debugger;
-            function openModal() {
-                $('#TokenRegistration').modal('show');
-            }
-            function openmyModal() {
-                $('#myModal').modal('show');
-            }
-        </script>
 
+   <asp:ScriptManager runat="server"></asp:ScriptManager>
+    <script src="../js/jquery-1.12.0.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/bootstrap.min.js"></script>   
+    <script type="text/javascript">
+       
+        function openModal() {
+            debugger;
+             $('#TokenRegistration').modal('show');
            
+        }
+        </script>
+            
 </asp:Content>
