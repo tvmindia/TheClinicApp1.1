@@ -30,6 +30,7 @@ namespace TheClinicApp1._1.Stock
         Stocks StockObj = new Stocks();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
+        ErrorHandling eObj = new ErrorHandling();
 
         #endregion Global Variables
 
@@ -55,10 +56,43 @@ namespace TheClinicApp1._1.Stock
         #region Add New Medicine
         public void AddMedicine()
         {
-            if (txtmedicineName.Text.Contains("$") || txtmedicineName.Text.Contains("|"))
+            string msg = string.Empty;
+
+              var page = HttpContext.Current.CurrentHandler as Page;
+
+            
+
+
+              if (ddlCategory.SelectedItem.Text == "--Select--")
+              {
+                   msg = "Please select a category ! ";
+
+                eObj.InsertionNotSuccessMessage(page, msg);
+              }
+
+              else  if (txtmedicineName.Text.Contains("$") )
             {
+                msg = "Medicine Name is not valid as it contains $";
+
+                eObj.InsertionNotSuccessMessage(page, msg);
                 //Medicine Name is not valid as it contains $ ,|
             }
+
+              else if (txtmedicineName.Text.Contains("|"))
+            {
+                msg = "Medicine Name is not valid as it contains |";
+
+                eObj.InsertionNotSuccessMessage(page, msg);
+            }
+
+              else if(Convert.ToInt32(txtOrderQuantity.Text) <= 0)
+            {
+                msg = "Please enter a quantity greater than 0";
+
+                eObj.InsertionNotSuccessMessage(page, msg);
+            }
+
+           
             else
             {
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -111,11 +145,21 @@ namespace TheClinicApp1._1.Stock
 
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
-            AddMedicine();
+           
 
         }
 
         protected void btnNew_ServerClick(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            AddMedicine();
+        }
+
+        protected void btnNew_Click(object sender, EventArgs e)
         {
 
         }

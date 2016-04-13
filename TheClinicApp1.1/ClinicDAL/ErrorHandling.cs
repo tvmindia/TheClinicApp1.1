@@ -51,7 +51,7 @@ namespace TheClinicApp1._1.ClinicDAL
             // Success.Text = "Successfully Inserted"; 
 
         }
-        public void InsertionSuccessMessage(Page pg, string msg)//if insert does not happend becasue of already existing
+        public void InsertionSuccessMessage(Page pg, string msg)
         {
             var master1 = pg.Master;
             ContentPlaceHolder mpContentPlaceHolder1;
@@ -124,7 +124,8 @@ namespace TheClinicApp1._1.ClinicDAL
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
             //lblErrorCaption.Text = "Danger!";
             lblErrorCaption.Text = Messages.ExceptionMsgCaption;
-            divMask1.Attributes["class"] = "alert lblErrorCaptionDanger fade in";
+            //divMask1.Attributes["class"] = "alert lblErrorCaptionDanger fade in";
+            divMask1.Attributes["class"] = "alert alert-danger";
 
 
         }
@@ -181,7 +182,22 @@ namespace TheClinicApp1._1.ClinicDAL
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
             lblErrorCaption.Text = Messages.AlreadyExistsMsgCaption;
-            divMask1.Attributes["class"] = "alert alert-warning";
+            divMask1.Attributes["class"] = "alert alert-danger";
+        }
+
+        public void InsertionNotSuccessMessage(Page pg,string msg)
+        {
+            var master1 = pg.Master;
+            ContentPlaceHolder mpContentPlaceHolder1;
+            mpContentPlaceHolder1 = (ContentPlaceHolder)master1.FindControl("ContentPlaceHolder1");
+            HtmlControl divMask1 = (HtmlControl)mpContentPlaceHolder1.FindControl("Errorbox") as HtmlControl;
+            Label lblMsgges = mpContentPlaceHolder1.FindControl("lblMsgges") as Label;
+            lblMsgges.Text = msg;
+            divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
+            Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
+            lblErrorCaption.Text = Messages.FailureMsgCaption;
+            divMask1.Attributes["class"] = "alert alert-danger";
+
         }
     }
 }
