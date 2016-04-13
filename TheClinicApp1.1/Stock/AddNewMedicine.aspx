@@ -2,6 +2,22 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/Masterw3.css" rel="stylesheet" />
 
+    <style>
+
+        .Dropdown
+        {
+        display: block; padding: 5px; width: 100%; border: 1px solid #dbdbdb; height: 41px; font-family:'roboto-light'; font-weight: bold; font-size: 14px; 
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        }
+
+
+
+
+    </style>
+
+
     <script src="../js/jquery-1.12.0.min.js"></script>
     
     <script>  
@@ -55,15 +71,45 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+   
+
  
         <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
-    <div class="main_body">
 
+   <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>--%>
+ <div class="main_body">
+
+          <div id="Errorbox"  style="display:none;"  runat="server" ><a class="alert_close">X</a>
+                    <div>
+                            <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
+                                 <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+
+                            </div>
+
+                            </div>                     
+
+         <div class="alert alert-success" style="display:none">
+          <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+        </div>        
+        <div class="alert alert-info" style="display:none">
+          <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+        </div>
         
-
-
+        <div class="alert alert-warning" style="display:none">
+          <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+        </div>
         
-        <table class="table" border="0" style="width:90%">
+        <div class="alert alert-danger" style="display:none">
+          <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+        </div>
+
+       <%-- <div class="prescription_grid" >--%>
+        
+        <table class="table" border="0" style="width:100%">
+            <tbody>
+
         <tr>
             <td>Medicine Name </td>
             <td><asp:TextBox ID="txtmedicineName" runat="server" onchange="CheckMedicineNameDuplication(this)"></asp:TextBox>
@@ -85,7 +131,16 @@
         </tr>
         <tr>
             <td>Category</td>
-            <td><asp:DropDownList ID="ddlCategory" runat="server" AutoPostBack="true"></asp:DropDownList></td>
+            <td>
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+                <asp:DropDownList ID="ddlCategory" CssClass="Dropdown"  runat="server" AutoPostBack="true">
+
+                </asp:DropDownList>
+            </ContentTemplate>
+                    </asp:UpdatePanel>
+
+            </td>
             
         </tr>
 
@@ -100,13 +155,23 @@
             <td><asp:TextBox ID="txtOrderQuantity" runat="server"></asp:TextBox></td>
            
         </tr>
-            <tr><td> <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnSave" onclick="this.style.visibility='hidden';" onserverclick="btnSave_ServerClick"> Save </button>
-            </td>
-</tr>
-    </table>
-       
 
+            <%--<tr>
+                <td>  <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnSave" onclick="this.style.visibility='hidden';" onserverclick="btnSave_ServerClick"> Save </button></td>
+                <td>  <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnNew" onclick="this.style.visibility='hidden';" onserverclick="btnNew_ServerClick" > New </button></td>
+            </tr>--%>
+</tbody>
+    </table>
+
+         
+        <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnSave" onclick="this.style.visibility='hidden';" onserverclick="btnSave_ServerClick"> Save </button>
+        <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnNew" onclick="this.style.visibility='hidden';" onserverclick="btnNew_ServerClick" > New </button>
+          
         </div>
+       <%-- </ContentTemplate>
+    </asp:UpdatePanel>--%>
+
+   
 
 
 </asp:Content>

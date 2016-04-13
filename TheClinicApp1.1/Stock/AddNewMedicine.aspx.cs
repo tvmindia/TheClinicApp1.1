@@ -114,5 +114,10 @@ namespace TheClinicApp1._1.Stock
             AddMedicine();
 
         }
+
+        protected void btnNew_ServerClick(object sender, EventArgs e)
+        {
+
+        }
     }
 }
