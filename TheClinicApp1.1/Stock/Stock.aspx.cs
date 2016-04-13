@@ -32,7 +32,7 @@ namespace TheClinicApp1._1.Stock
         Stocks stockObj = new Stocks();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
-
+        public string RoleName = null;
         #endregion Global Variables
 
 
@@ -40,6 +40,9 @@ namespace TheClinicApp1._1.Stock
         public void BindOutOfStockGridview()
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            lblClinicName.Text = UA.Clinic;
+            string Login = UA.userName;
+            RoleName = UA.GetRoleName(Login);
             stockObj.ClinicID = UA.ClinicID.ToString();
             //gridview binding for listing the Out of Stock Medicines 
             DataSet gds = stockObj.ViewOutofStockMedicines();

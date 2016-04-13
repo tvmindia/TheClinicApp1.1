@@ -16,10 +16,15 @@ namespace TheClinicApp1._1.Doctor
         ClinicDAL.UserAuthendication UA;
         ClinicDAL.Patient PatientObj = new ClinicDAL.Patient();
         public string listFilter=null;
+        public string RoleName = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             listFilter = null;
             listFilter = BindName();
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            lblClinicName.Text = UA.Clinic;
+            string Login = UA.userName;
+            RoleName = UA.GetRoleName(Login);
         }
 
         #region BindSearch

@@ -31,10 +31,16 @@ namespace TheClinicApp1._1.Registration
         TokensBooking tok = new TokensBooking();
         ErrorHandling eObj = new ErrorHandling();
         public string listFilter = null;
+        public string RoleName = null;
         #endregion GlobalVariables
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            lblClinicName.Text = UA.Clinic;
+            string Login = UA.userName;
+            RoleName = UA.GetRoleName(Login);
+            
             gridDataBind();
             listFilter = null;
             listFilter = BindName();
@@ -42,77 +48,7 @@ namespace TheClinicApp1._1.Registration
 
         
 
-        protected void btSave_ServerClick(object sender, EventArgs e)
-        {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            PatientObj.ClinicID = UA.ClinicID;
-            DateTime _date = DateTime.Now;
-            if (txtAge.Value != "")
-            {
-
-                int age = Convert.ToInt32(txtAge.Value);
-                int year = _date.Year;
-                int DOB = year - age;
-                PatientObj.DOB = DateTime.Parse(DOB + "-01-01");
-            }
-            string clinID = UA.ClinicID.ToString();
-            PatientObj.Name = (txtName.Value != "") ? txtName.Value.ToString() : null;
-            PatientObj.Address = (txtAddress.Value!="")?txtAddress.Value.ToString():null;
-            PatientObj.Phone = (txtMobile.Value != "") ? txtMobile.Value.ToString() : null;
-            PatientObj.Email = (txtEmail.Value != "") ? txtEmail.Value.ToString() : null;
-            if (rdoMale.Checked == true)
-            {
-                PatientObj.Gender = "Male";
-            }
-            else
-            {
-                if (rdoFemale.Checked == true)
-                {
-                    PatientObj.Gender = "Female";
-                }
-            }
-
-            PatientObj.Occupation = (txtOccupation.Value!="") ? txtOccupation.Value.ToString() : null;
-            PatientObj.CreatedBy = UA.userName;
-            PatientObj.UpdatedBy = UA.userName;
-            if ((PatientObj.Name != null) && (PatientObj.Address != null))
-            {
-                string filenum = "F" + clinID.Substring(0, 4) + txtName.Value.Substring(0, 3) + txtMobile.Value.Substring(7, 3);
-                PatientObj.FileNumber = filenum.Trim();
-
-                if (HiddenField1.Value == "")
-                {
-                    if (FileUpload1.HasFile)
-                    {
-                        byte[] ImageByteArray = null;
-                        ImageByteArray = ConvertImageToByteArray(FileUpload1);
-                        PatientObj.Picupload = ImageByteArray;
-                        PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
-
-                    }
-                    Guid g = Guid.NewGuid();
-                    PatientObj.PatientID = g;
-                    PatientObj.AddPatientDetails();
-                    PatientObj.AddFile();
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-
-                }
-                else
-                {
-                    PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
-                    PatientObj.UpdatePatientDetails();
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                }
-            }
-            gridDataBind();
-            lblFileCount.Text = PatientObj.FileNumber;
-            //lblFile.Text = PatientObj.FileNumber;
-            //lblName.Text = txtName.Value;
-            //lblAge.Text = txtAge.Value;
-            //lblPhone.Text = txtMobile.Value;
-            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
-        }
+       
         #region Methods
 
         #region GridBind
@@ -197,7 +133,7 @@ namespace TheClinicApp1._1.Registration
             txtAddress.Value = Patient[2];
             txtMobile.Value = Patient[3];
             txtEmail.Value = Patient[4];
-            ddlMarital.SelectedValue = Patient[5];
+            ddlMarital.SelectedValue = Patient[7];
                         
             ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
             ProfilePic.Visible = true;
@@ -318,7 +254,7 @@ namespace TheClinicApp1._1.Registration
         {
             dtgViewAllRegistration.PageIndex = e.NewPageIndex;
             dtgViewAllRegistration.DataBind();
-            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openmyModal();", true);
+            
         }
 
         #endregion Paging
@@ -339,6 +275,95 @@ namespace TheClinicApp1._1.Registration
             }
         }
         #endregion convertImage
+
+       
         #endregion Methods
+
+        
+       
+
+        protected void btSave_ServerClick(object sender, EventArgs e)
+        {
+            try
+            {
+
+                UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+                PatientObj.ClinicID = UA.ClinicID;
+                DateTime _date = DateTime.Now;
+                if (txtAge.Value != "")
+                {
+
+                    int age = Convert.ToInt32(txtAge.Value);
+                    int year = _date.Year;
+                    int DOB = year - age;
+                    PatientObj.DOB = DateTime.Parse(DOB + "-01-01");
+                }
+                string clinID = UA.ClinicID.ToString();
+                PatientObj.Name = (txtName.Value != "") ? txtName.Value.ToString() : null;
+                PatientObj.Address = (txtAddress.Value != "") ? txtAddress.Value.ToString() : null;
+                PatientObj.Phone = (txtMobile.Value != "") ? txtMobile.Value.ToString() : null;
+                PatientObj.Email = (txtEmail.Value != "") ? txtEmail.Value.ToString() : null;
+                if (rdoMale.Checked == true)
+                {
+                    PatientObj.Gender = "Male";
+                }
+                else
+                {
+                    if (rdoFemale.Checked == true)
+                    {
+                        PatientObj.Gender = "Female";
+                    }
+                }
+
+                PatientObj.Occupation = (txtOccupation.Value != "") ? txtOccupation.Value.ToString() : null;
+                PatientObj.CreatedBy = UA.userName;
+                PatientObj.UpdatedBy = UA.userName;
+                if ((PatientObj.Name != null) && (PatientObj.Address != null))
+                {
+                    string filenum = "F" + clinID.Substring(0, 4) + txtName.Value.Substring(0, 3) + txtMobile.Value.Substring(7, 3);
+                    PatientObj.FileNumber = filenum.Trim();
+
+                    if (HiddenField1.Value == "")
+                    {
+                        if (FileUpload1.HasFile)
+                        {
+                            byte[] ImageByteArray = null;
+                            ImageByteArray = ConvertImageToByteArray(FileUpload1);
+                            PatientObj.Picupload = ImageByteArray;
+                            PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
+
+                        }
+                        Guid g = Guid.NewGuid();
+                        PatientObj.PatientID = g;
+                        PatientObj.AddPatientDetails();
+                        PatientObj.AddFile();
+
+                        var page = HttpContext.Current.CurrentHandler as Page;
+
+                    }
+                    else
+                    {
+                        PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
+                        PatientObj.UpdatePatientDetails();
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                    }
+                }
+                gridDataBind();
+                lblFileCount.Text = PatientObj.FileNumber;
+                //lblFile.Text = PatientObj.FileNumber;
+                //lblName.Text = txtName.Value;
+                //lblAge.Text = txtAge.Value;
+                //lblPhone.Text = txtMobile.Value;
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
+            }
+            catch
+            {
+                Response.Redirect("../Registration/Patients.aspx");
+            }
+        }
+
+       
+
+       
     }
 }

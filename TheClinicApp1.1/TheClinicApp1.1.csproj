@@ -150,7 +150,6 @@
     <Content Include="Doctor\Doctors.aspx" />
     <Content Include="Doctor\test page.txt" />
     <Content Include="favicon.ico" />
-    <Content Include="Handlers\test page.txt" />
     <Content Include="Handler\ImageHandler.ashx" />
     <Content Include="images\403.png" />
     <Content Include="images\accordion_arrow.png" />
