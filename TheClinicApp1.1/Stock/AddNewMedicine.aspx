@@ -59,7 +59,7 @@
         //---------------* Function to check medicine name duplication *-----------------//
 
         function CheckMedicineNameDuplication(txtmedicineName) {
-            debugger;
+            
             var name = document.getElementById('<%=txtmedicineName.ClientID %>').value;
             name = name.replace(/\s/g, '');
 
@@ -85,6 +85,38 @@
             }
             function onError(response, userContext, methodName) {
 
+            }
+        }
+
+
+        function HideErrorMsg()
+        {
+            debugger;
+
+
+            
+            var Errorbox = document.getElementById('<%=Errorbox.ClientID %>');
+            var errorCaption = document.getElementById('<%=lblErrorCaption.ClientID %>');
+            var errorMsg = document.getElementById('<%=lblMsgges.ClientID %>');
+
+            if (Errorbox != null) {
+                document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+            }
+
+
+            if(errorCaption != null)
+            {
+                errorCaption.innerText = '';
+                
+                document.getElementById('<%=lblErrorCaption.ClientID %>').style.display = "none";
+            }
+
+            if (errorMsg != null)
+            {
+                errorMsg.innerText = '';
+               
+
+                document.getElementById('<%=lblMsgges.ClientID %>').style.display = "none"; 
             }
         }
 
@@ -241,7 +273,7 @@
 
          
           <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnSave_Click" ValidationGroup="Required" />
-        <asp:Button ID="btnNew" runat="server" Text="New" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnNew_Click" ValidationGroup="Required" />
+        <asp:Button ID="btnNew" runat="server" Text="New" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnNew_Click" ValidationGroup="Required" OnClientClick="HideErrorMsg();" />
         </div>
        <%-- </ContentTemplate>
     </asp:UpdatePanel>--%>
