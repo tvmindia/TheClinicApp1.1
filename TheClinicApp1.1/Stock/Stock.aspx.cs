@@ -93,8 +93,8 @@ namespace TheClinicApp1._1.Stock
             SqlCommand cmd = new SqlCommand(query);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
-            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
+            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
+            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
 
             cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
             cmd.Parameters.AddWithValue("@PageIndex", pageIndex);

@@ -231,16 +231,16 @@
                     <td>
                         <asp:TextBox ID="txtUnit" runat="server" required></asp:TextBox>
 
-                        <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator2"
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator2"
                             ControlToValidate="txtUnit"
-                            ValidationExpression="/^[A-z]+$/"
+                            ValidationExpression="^[a-zA-Z ]+$"
                             Display="Static"
                             EnableClientScript="true"
                             ForeColor="Red"
                             MinimumValue="1"
                             Type="text"
                             Text="Please enter a valid unit!"
-                            runat="server" />--%>
+                            runat="server" />
                     </td>
                    <td></td>
                 </tr>
@@ -248,10 +248,10 @@
                 <tr>
                     <td>Reorder Quantity</td>
                     <td>
-                        <asp:TextBox ID="txtOrderQuantity" runat="server" required TextMode="Number" Text="0"></asp:TextBox>
+                        <asp:TextBox ID="txtOrderQuantity" runat="server" required TextMode="Number" Text="1"></asp:TextBox>
                         <asp:RegularExpressionValidator ID="RegularExpressionValidator1"
                             ControlToValidate="txtOrderQuantity"
-                            ValidationExpression="\d+"
+                            ValidationExpression="[1-9]\d{0,5}" 
                             Display="Static"
                             EnableClientScript="true"
                             ForeColor="Red"
