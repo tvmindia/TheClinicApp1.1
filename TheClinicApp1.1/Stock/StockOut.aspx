@@ -5,14 +5,9 @@
            .highlight {
             background-color: #FFFFAF;
         }
-            .CursorShow
-            {
-            cursor: pointer;
-            text-decoration: underline;
-            color:royalblue;
-            
-            }
-                      </style>
+
+
+          </style>
 
 
      <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -115,7 +110,7 @@
 
                         issueID = $(this).closest('tr').find('td:eq(2)').text();
                         window.location = "StockOutDetails.aspx?issueID=" + issueID;
-                    }).addClass('CursorShow');
+                    }); 
 
                     $("td", row).eq(4).html($(this).find("IssueID").text());
 
@@ -216,7 +211,7 @@
          
          <div class="tab_table">         
          
-<asp:GridView ID="gvIssueHD" runat="server" Style="width: 100%" AutoGenerateColumns="False" class="table">
+<asp:GridView ID="gvIssueHD" runat="server" Style="width: 400px" AutoGenerateColumns="False" class="table">
             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
             <Columns>
             
