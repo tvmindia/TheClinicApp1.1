@@ -14,7 +14,7 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
 
-    <script>
+    <script> 
         function getPatientId(Patient)
         {
             var PatientDetails=Patient;

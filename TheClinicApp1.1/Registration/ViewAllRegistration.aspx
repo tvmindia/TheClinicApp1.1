@@ -5,7 +5,7 @@
   <script>
       function fill(Patient) {
           debugger;
-          parent.getPatientId(Patient);
+          parent.getPatientId(Patient); 
       }
   </script>
     <div class="main_body">

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
-
+ 
 namespace TheClinicApp1._1.Registration
 {
     public partial class ViewAllRegistration : System.Web.UI.Page
