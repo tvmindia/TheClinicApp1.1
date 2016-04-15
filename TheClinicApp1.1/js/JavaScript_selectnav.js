@@ -1,14 +1,12 @@
 ﻿var settingOpen = 0;
-function selectTile(id) {
-  
-    var Role = 'Doctor';
-   
+function selectTile(id, RoleName) {
+
     var tileList = ['patients', 'token', 'doctor', 'pharmacy', 'stock'];
-    if (Role == 'Doctor') {
+    if (RoleName == 'Doctor') {
         var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Doctor/Doctors.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
 
     }
-    else if (Role == 'pharmacist') {
+    else if (RoleName == 'pharmacist') {
         var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '..Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
     }
     else {
@@ -29,7 +27,6 @@ function selectTile(id) {
     }
 
 }
-
 
 function openSettings() {
     if (settingOpen == 0) {
