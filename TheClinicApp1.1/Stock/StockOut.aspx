@@ -5,39 +5,9 @@
            .highlight {
             background-color: #FFFFAF;
         }
-            .CursorShow
-            {
-            cursor: pointer;
-            text-decoration: underline;
-            color:royalblue;
-            
-            }
 
-             .Pager span {
-            color: #333;
-            background-color: #F7F7F7;
-            font-weight: bold;
-            text-align: center;
-            display: inline-block;
-            width: 20px;
-            margin-right: 3px;
-            line-height: 150%;
-            border: 1px solid #ccc;
-        }
 
-        .Pager a {
-            text-align: center;
-            display: inline-block;
-            width: 20px;
-            border: 1px solid #ccc;
-            color: #fff;
-            color: #333;
-            margin-right: 3px;
-            line-height: 150%;
-            text-decoration: none;
-        }
-
-                      </style>
+          </style>
 
 
      <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -140,7 +110,7 @@
 
                         issueID = $(this).closest('tr').find('td:eq(2)').text();
                         window.location = "StockOutDetails.aspx?issueID=" + issueID;
-                    }).addClass('CursorShow');
+                    }); 
 
                     $("td", row).eq(4).html($(this).find("IssueID").text());
 
@@ -236,12 +206,12 @@
          <input class="field" type="search" placeholder="Search here..." id="txtSearch">
          <input class="button" type="submit" value="Search">
          </div> 
-         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="StockOutDetails.aspx"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         
          
-<asp:GridView ID="gvIssueHD" runat="server" Style="width: 100%" AutoGenerateColumns="False" class="table">
+<asp:GridView ID="gvIssueHD" runat="server" Style="width: 400px" AutoGenerateColumns="False" class="table">
             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
             <Columns>
             
@@ -249,7 +219,7 @@
               <%--<asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow" />--%>
                   <asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-CssClass="Match"  />
                 <asp:BoundField DataField="IssuedTo" HeaderText="IssuedTo"  ItemStyle-CssClass="Match"  />
-               <asp:BoundField DataField="Date" HeaderText="Date" DataFormatString="{0:dd/MM/yyyy}"  ItemStyle-CssClass="Match"  /> 
+               <asp:BoundField DataField="Date" HeaderText="Date"  ItemStyle-CssClass="Match"  /> 
                 <asp:BoundField  HeaderText="Details"  ItemStyle-CssClass="Match"  /> 
                    <asp:BoundField DataField="IssueID" HeaderText="IssueID"  ItemStyle-CssClass="Match"  />
                 

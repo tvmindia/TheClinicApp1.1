@@ -6,29 +6,7 @@
             background-color: #FFFFAF;
         }
 
-  .Pager span {
-            color: #333;
-            background-color: #F7F7F7;
-            font-weight: bold;
-            text-align: center;
-            display: inline-block;
-            width: 20px;
-            margin-right: 3px;
-            line-height: 150%;
-            border: 1px solid #ccc;
-        }
 
-        .Pager a {
-            text-align: center;
-            display: inline-block;
-            width: 20px;
-            border: 1px solid #ccc;
-            color: #fff;
-            color: #333;
-            margin-right: 3px;
-            line-height: 150%;
-            text-decoration: none;
-        }
           </style>
 
 
