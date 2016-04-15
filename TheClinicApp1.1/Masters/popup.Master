@@ -37,7 +37,27 @@
     max-width: 100%;
     width: 100%;
     border-color:white;
-   }        </style>  
+   }
+    .button1{
+        background: url("../images/save.png") no-repeat 0 0;
+        height: 31px;
+        width: 60px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px 10px 7px;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        font-family:'raleway-semibold';
+        min-width: 83px;
+        background-color:#abd357 ;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+
+    }
+     </style>  
     <asp:ContentPlaceHolder ID="head" runat="server">
         
     </asp:ContentPlaceHolder>

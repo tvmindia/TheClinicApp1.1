@@ -282,7 +282,9 @@ namespace TheClinicApp1._1.Registration
         
        
 
-        protected void btSave_ServerClick(object sender, EventArgs e)
+        
+
+        protected void btnSave_Click(object sender, EventArgs e)
         {
             try
             {

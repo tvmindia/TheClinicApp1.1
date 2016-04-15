@@ -98,7 +98,7 @@
          <input class="field" type="search" id="txtSearch" name="txtSearch" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div>
-         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" ><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClick="btnSave_Click" /></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>        
          <div class="right_form">         
          <div id="Errorbox"  style="height:25%;  display:none;"  runat="server" ><a class="alert_close">X</a>
@@ -124,7 +124,7 @@
         <div class="alert alert-danger" style="display:none">
           <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
         </div>
-         
+            
       <div class="registration_form">        
       <div class="row field_row">  
       <div class="col-lg-8">

@@ -2,15 +2,17 @@
 .Semitransparent_1 {
     background: rgb(34,34,34); /* for IE */
     background: rgba(34,34,34,0.75);
-    background-image: url('../Images/HerbeInWhite.jpg');
+    background-image: url('../Images/HerbNew.jpg');
     background-size: 100%;
+    
+
 }
 
 .login {
     border-width: thin;
     padding: 15px 30px 20px 30px;
     background: rgb(34,34,34); /* for IE */
-    background: rgba(235, 249, 210, 0.71);
+    background: rgba(0,255,0,0.19);
     width: 35%;
     height: 35%;
     position: absolute;
@@ -23,7 +25,7 @@
 }
 
 .captions {
-    color:#28ADA1 !important;
+    color:white !important;
    
 }
  
@@ -39,6 +41,8 @@
     font-family: 'Segoe UI';
     font-style: italic;
     color: #0078D7;
+    padding-top:2%;
+    padding-left:5%;
 }
 
 html, body {
