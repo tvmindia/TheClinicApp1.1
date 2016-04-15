@@ -1,9 +1,158 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockOut.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockOut" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <style type="text/css">
+           .highlight {
+            background-color: #FFFFAF;
+        }
+
+
+          </style>
+
+
+     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
+         
+    <script src="../js/bootstrap.min.js"></script>
+
+    <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/jquery-1.12.0.min.js"></script>
+
+      <script>
+          var test = jQuery.noConflict();
+          test(document).ready(function () {
+
+              test('.nav_menu').click(function () {
+                  test(".main_body").toggleClass("active_close");
+              });
+
+          });
+		</script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
-    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+       <%--  //------------- AUTOFILL SCRIPT ---------%>
+    <script src="../js/jquery-1.8.3.min.js"></script>
+    
+    <script src="../js/ASPSnippets_Pager.min.js"></script>
+
+    <script type="text/javascript">
+
+
+        $(function () {
+            GetIssueHD(1);
+        });
+
+        $("[id*=txtSearch]").live("keyup", function () {
+
+            GetIssueHD(parseInt(1));
+        });
+
+        $(".Pager .page").live("click", function () {
+            GetIssueHD(parseInt($(this).attr('page')));
+        });
+
+        function SearchTerm() {
+            return jQuery.trim($("[id*=txtSearch]").val());
+        };
+        function GetIssueHD(pageIndex) {
+
+            $.ajax({
+                type: "POST",
+                url: "../Stock/StockOut.aspx/GetIssueHD",
+                data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+                failure: function (response) {
+                    alert(response.d);
+                },
+                error: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+        var row;
+        var issueID = '';
+
+        function OnSuccess(response) {
+
+
+
+            var xmlDoc = $.parseXML(response.d);
+            var xml = $(xmlDoc);
+            var IssueHD = xml.find("IssueHD");
+            if (row == null) {
+                row = $("[id*=gvIssueHD] tr:last-child").clone(true);
+            }
+            $("[id*=gvIssueHD] tr").not($("[id*=gvIssueHD] tr:first-child")).remove();
+            if (IssueHD.length > 0) {
+                $.each(IssueHD, function () {
+
+                    //$("td", row).eq(0).html('<a href="NewIssue.aspx">' + $(this).find("RefNo1").text() + '</a>');
+
+                    //issueID = $(this).find("IssueID").text();
+
+
+
+                    //$("td", row).eq(0).html($(this).find("IssueNO").text()).click(function () {
+
+                    //    issueID = $(this).closest('tr').find('td:eq(2)').text();
+                    //    window.location = "NewIssue.aspx?issueID=" + issueID;
+                    //});
+
+                    $("td", row).eq(0).html($(this).find("IssueNO").text());
+
+                    $("td", row).eq(1).html($(this).find("IssuedTo").text());
+
+                    $("td", row).eq(2).html($(this).find("IssueID").text());
+
+                    //$("td", row).eq(2).html($(this).find("Date").text());
+                    $("[id*=gvIssueHD]").append(row);
+                    row = $("[id*=gvIssueHD] tr:last-child").clone(true);
+
+
+
+
+                });
+                var pager = xml.find("Pager");
+                $(".Pager").ASPSnippets_Pager({
+                    ActiveCssClass: "current",
+                    PagerCssClass: "pager",
+                    PageIndex: parseInt(pager.find("PageIndex").text()),
+                    PageSize: parseInt(pager.find("PageSize").text()),
+                    RecordCount: parseInt(pager.find("RecordCount").text())
+                });
+
+                $(".Match").each(function () {
+                    var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+                    $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                });
+            } else {
+                var empty_row = row.clone(true);
+                $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                $("td:first-child", empty_row).attr("align", "center");
+                $("td:first-child", empty_row).html("No records found for the search criteria.");
+                $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                $("[id*=gvReceiptHD]").append(empty_row);
+            }
+
+
+            var th = $("[id*=gvIssueHD] th:contains('IssueID')");
+            th.css("display", "none");
+            $("[id*=gvIssueHD] tr").each(function () {
+                $(this).find("td").eq(th.index()).css("display", "none");
+            });
+
+        };
+
+
+
+
+
+    </script>
+
     <!-- #main-container -->
          
           
@@ -46,7 +195,7 @@
         <div role="tabpanel" class="tab-pane active" id="stock_out">
         <div class="grey_sec">
          <div class="search_div">
-         <input class="field" type="search" placeholder="Search here...">
+         <input class="field" type="search" placeholder="Search here..." id="txtSearch">
          <input class="button" type="submit" value="Search">
          </div> 
          <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
@@ -54,7 +203,41 @@
          
          <div class="tab_table">         
          
-         <table class="table" style="width:100%;border:0;" >
+<asp:GridView ID="gvIssueHD" runat="server" Style="width: 400px" AutoGenerateColumns="False" class="table">
+            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+            <Columns>
+            
+            
+              <%--<asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow" />--%>
+                  <asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-CssClass="Match"  />
+                <asp:BoundField DataField="IssuedTo" HeaderText="IssuedTo"  ItemStyle-CssClass="Match"  />
+               
+                   <asp:BoundField DataField="IssueID" HeaderText="IssueID"  ItemStyle-CssClass="Match"  />
+
+            </Columns>
+            <EditRowStyle BackColor="#0080AA"></EditRowStyle>
+
+            <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
+
+            <HeaderStyle BackColor="#3FBF7F" Font-Bold="True" ForeColor="White"></HeaderStyle>
+
+            <PagerStyle HorizontalAlign="Center" ForeColor="White" BackColor="#2461BF"></PagerStyle>
+
+            <RowStyle BackColor="#EFF3FB"></RowStyle>
+
+            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
+
+            <SortedAscendingCellStyle BackColor="#F5F7FB"></SortedAscendingCellStyle>
+
+            <SortedAscendingHeaderStyle BackColor="#6D95E1"></SortedAscendingHeaderStyle>
+
+            <SortedDescendingCellStyle BackColor="#E9EBEF"></SortedDescendingCellStyle>
+
+            <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
+        </asp:GridView>
+              <div class="Pager">
+
+         <%--<table class="table" style="width:100%;border:0;" >
           <tr>
             <td>Bill No</td>
             <td>Bill No2</td>
@@ -62,7 +245,7 @@
             <td><a class="deatils" href="StockOutDetails.aspx">Details</a></td>
           </tr>          
                 
-        </table>
+        </table>--%>
          
          </div>
          
@@ -126,22 +309,5 @@
   </div>
 </div>         
          
-         
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-         
-    <script src="../js/bootstrap.min.js"></script>
-
-    <script src="../js/JavaScript_selectnav.js"></script>
-                
-        <script>
-			var test=jQuery.noConflict();
-				test(document).ready(function(){
-					
-				test('.nav_menu').click(function(){
-					test(".main_body").toggleClass("active_close");
-				});
-			
-			});			
-		</script>
-
+     
 </asp:Content>
