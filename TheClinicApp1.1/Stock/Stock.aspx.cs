@@ -72,6 +72,7 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
+          
             if (!IsPostBack)
             {
                 BindDummyRow();

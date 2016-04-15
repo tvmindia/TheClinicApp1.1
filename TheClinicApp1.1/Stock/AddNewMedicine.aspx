@@ -4,16 +4,22 @@
 
     <style>
 
-        .Dropdown
-        {
-        display: block; padding: 5px; width: 100%; border: 1px solid #dbdbdb; height: 41px; font-family:'roboto-light'; font-weight: bold; font-size: 14px; 
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
+
+        
+        .Dropdown {
+            display: block;
+            padding: 5px;
+            width: 100%;
+            border: 1px solid #dbdbdb;
+            height: 41px;
+            font-family: 'roboto-light';
+            font-weight: bold;
+            font-size: 14px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
         }
-
-
-
+  
 
     </style>
 
@@ -28,6 +34,24 @@
                 LnameImage.style.display = "none";
                 var errLname = document.getElementById('<%=errorLnames.ClientID %>');
                 errLname.style.display = "none";
+
+  $('.alert_close').click(function () {
+                
+                $(this).parent(".alert").hide();
+            });
+
+            //$('[data-toggle="tooltip"]').tooltip();
+
+
+
+            $('.nav_menu').click(function () {
+                
+                $(".main_body").toggleClass("active_close");
+            });
+
+
+
+
                 });
 
 
@@ -107,66 +131,117 @@
 
        <%-- <div class="prescription_grid" >--%>
         
-        <table class="table" border="0" style="width:100%">
+        
+        <table class="table" border="0" style="width: 100%">
             <tbody>
 
-        <tr>
-            <td>Medicine Name </td>
-            <td><asp:TextBox ID="txtmedicineName" runat="server" onchange="CheckMedicineNameDuplication(this)"></asp:TextBox>
+                <tr>
+                    <td>Medicine Name
 
-            </td>
+                        
+
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtmedicineName" runat="server" onchange="CheckMedicineNameDuplication(this)" required></asp:TextBox>
+
+                    </td>
+
+                    <td style="width:10%;">
+
+ <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login Name is Available" ImageUrl="~/Images/Check.png" Width="90%" Height="18%" />
+
+                    <asp:Image ID="errorLnames" runat="server" ToolTip="Login Name is Unavailable" ImageUrl="~/Images/newClose.png" />
+
+                    </td>
+                   
 
 
-            
-       <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login Name is Available" ImageUrl="~/Images/Check.png" Width="10%" Height="10%"  />
-                                        
-      <asp:Image ID="errorLnames" runat="server" ToolTip="Login Name is Unavailable" ImageUrl="~/Images/newClose.png"  />
+                </tr>
 
+                <tr>
+                    <td>Medicine Code 
 
-        </tr>
-        <tr>
-            <td>Medicine Code </td>
-            <td><asp:TextBox ID="txtCode" runat="server"></asp:TextBox></td>
-            
-        </tr>
-        <tr>
-            <td>Category</td>
-            <td>
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
-                <asp:DropDownList ID="ddlCategory" CssClass="Dropdown"  runat="server" AutoPostBack="true">
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtCode" runat="server" required></asp:TextBox>
 
-                </asp:DropDownList>
-            </ContentTemplate>
-                    </asp:UpdatePanel>
+                    </td>
+                    <td></td>
+                </tr>
 
-            </td>
-            
-        </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>
+                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <ContentTemplate>
+                                <asp:DropDownList ID="ddlCategory" CssClass="Dropdown" runat="server" AutoPostBack="true">
+                                </asp:DropDownList>
+                                <%--  <asp:RequiredFieldValidator
+             ID="RequiredFieldValidator1"
+             runat="server"
+             ControlToValidate="ddlCategory"
+             InitialValue="--Select--"
+             ErrorMessage="* Please select an item."
+             ForeColor="Red"
+             Font-Names="Impact"
+             >
+        </asp:RequiredFieldValidator>--%>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
 
-         <tr>
-            <td>Unit</td>
-            <td><asp:TextBox ID="txtUnit" runat="server"></asp:TextBox></td>
-             
-        </tr>
+                    </td>
+                    <td></td>
 
-        <tr>
-            <td>Reorder Quantity</td>
-            <td><asp:TextBox ID="txtOrderQuantity" runat="server"></asp:TextBox></td>
-           
-        </tr>
+                </tr>
 
-            <%--<tr>
+                <tr>
+                    <td>Unit</td>
+                    <td>
+                        <asp:TextBox ID="txtUnit" runat="server" required></asp:TextBox>
+
+                        <%--<asp:RegularExpressionValidator ID="RegularExpressionValidator2"
+                            ControlToValidate="txtUnit"
+                            ValidationExpression="/^[A-z]+$/"
+                            Display="Static"
+                            EnableClientScript="true"
+                            ForeColor="Red"
+                            MinimumValue="1"
+                            Type="text"
+                            Text="Please enter a valid unit!"
+                            runat="server" />--%>
+                    </td>
+                   <td></td>
+                </tr>
+
+                <tr>
+                    <td>Reorder Quantity</td>
+                    <td>
+                        <asp:TextBox ID="txtOrderQuantity" runat="server" required TextMode="Number" Text="0"></asp:TextBox>
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1"
+                            ControlToValidate="txtOrderQuantity"
+                            ValidationExpression="\d+"
+                            Display="Static"
+                            EnableClientScript="true"
+                            ForeColor="Red"
+                            MinimumValue="1"
+                            Type="Integer"
+                            Text="Please enter a quantity greater than 0!"
+                            runat="server" />
+
+                    </td>
+                    <td></td>
+                </tr>
+
+                <%--<tr>
                 <td>  <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnSave" onclick="this.style.visibility='hidden';" onserverclick="btnSave_ServerClick"> Save </button></td>
                 <td>  <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnNew" onclick="this.style.visibility='hidden';" onserverclick="btnNew_ServerClick" > New </button></td>
             </tr>--%>
-</tbody>
-    </table>
+            </tbody>
+        </table>
 
          
-        <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnSave" onclick="this.style.visibility='hidden';" onserverclick="btnSave_ServerClick"> Save </button>
-        <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnNew" onclick="this.style.visibility='hidden';" onserverclick="btnNew_ServerClick" > New </button>
-          
+          <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnSave_Click" ValidationGroup="Required" />
+        <asp:Button ID="btnNew" runat="server" Text="New" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnNew_Click" ValidationGroup="Required" />
         </div>
        <%-- </ContentTemplate>
     </asp:UpdatePanel>--%>
