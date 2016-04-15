@@ -62,7 +62,7 @@
             if (HyperlinkID=="AllRegistrationIframe")
             {
                 var AllRegistrationIframe=document.getElementById('ViewAllRegistration');
-                ViewAllRegistration.src="../Login/Forgot.aspx";
+                AllRegistrationIframe.src="../Registration/ViewAllRegistration.aspx";
             }
         }
     </script>
