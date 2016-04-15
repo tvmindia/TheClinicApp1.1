@@ -70,20 +70,27 @@ namespace TheClinicApp1._1.Stock
                 eObj.InsertionNotSuccessMessage(page, msg);
               }
 
-              else  if (txtmedicineName.Text.Contains("$") )
-            {
-                msg = "Medicine Name is not valid as it contains $";
+            //  else  if (txtmedicineName.Text.Contains("$") )
+            //{
+            //    msg = "Medicine Name is not valid as it contains $";
 
-                eObj.InsertionNotSuccessMessage(page, msg);
-                //Medicine Name is not valid as it contains $ ,|
-            }
+            //    eObj.InsertionNotSuccessMessage(page, msg);
+            //    //Medicine Name is not valid as it contains $ ,|
+            //}
 
-              else if (txtmedicineName.Text.Contains("|"))
-            {
-                msg = "Medicine Name is not valid as it contains |";
+            //  else if (txtmedicineName.Text.Contains("|"))
+            //{
+            //    msg = "Medicine Name is not valid as it contains |";
 
-                eObj.InsertionNotSuccessMessage(page, msg);
-            }
+            //    eObj.InsertionNotSuccessMessage(page, msg);
+            //}
+
+              else if ( (txtmedicineName.Text.Contains("$")) || (txtmedicineName.Text.Contains("|")) )
+              {
+                  msg = "Please enter a valid medicine name";
+                  eObj.InsertionNotSuccessMessage(page, msg);
+              }
+
 
               else if(Convert.ToInt32(txtOrderQuantity.Text) <= 0)
             {

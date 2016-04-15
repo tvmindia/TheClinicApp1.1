@@ -32,7 +32,7 @@ namespace TheClinicApp1._1.Stock
         Stocks stockObj = new Stocks();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
-        public string RoleName = null;
+
         #endregion Global Variables
 
 
@@ -40,9 +40,6 @@ namespace TheClinicApp1._1.Stock
         public void BindOutOfStockGridview()
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            lblClinicName.Text = UA.Clinic;
-            string Login = UA.userName;
-            RoleName = UA.GetRoleName(Login);
             stockObj.ClinicID = UA.ClinicID.ToString();
             //gridview binding for listing the Out of Stock Medicines 
             DataSet gds = stockObj.ViewOutofStockMedicines();
@@ -96,8 +93,8 @@ namespace TheClinicApp1._1.Stock
             SqlCommand cmd = new SqlCommand(query);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
-            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
+            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
+            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
 
             cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
             cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
