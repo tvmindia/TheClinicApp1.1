@@ -35,10 +35,11 @@
          </div>
          <div class="grey_sec">
          <div class="search_div">
-         <input class="field" type="search" placeholder="Search here...">
-         <input class="button" type="submit" value="Search">
+         <input class="field" type="search" placeholder="Search here..." />
+         <input class="button" type="submit" value="Search" />
          </div>
-         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li>
+             <asp:Button ID="btnSave" runat="server" Text="Button" CssClass="button1" OnClick="btnSave_Click"/></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          <div class="right_form">
          

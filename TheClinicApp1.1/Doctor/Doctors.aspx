@@ -43,7 +43,7 @@
          <input class="field" id="txtSearch" name="txtSearch" type="search" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div>
-         <ul class="top_right_links"><li><a class="save" id="btnSave" runat="server" onclick="GetTextValue();" onserverclick="btnSave_ServerClick"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextValue();" OnClick="btnSave_Click" /></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          <div class="right_form">
          

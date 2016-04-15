@@ -164,6 +164,7 @@
     <Content Include="images\doctor-hover.png" />
     <Content Include="images\doctor.png" />
     <Content Include="images\HerbeInWhite.jpg" />
+    <Content Include="images\HerbNew.jpg" />
     <Content Include="images\logo-small.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\menu_separator.png" />
