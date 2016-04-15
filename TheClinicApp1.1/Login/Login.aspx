@@ -34,7 +34,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/materialize.min.js"></script>
-
+       <script>
+        function SetIframeSrc(HyperlinkID){
+            if (HyperlinkID=="AllRegistrationIframe")
+            {
+                var AllRegistrationIframe=document.getElementById('ViewAllRegistration');
+                AllRegistrationIframe.src="../Login/Forgot.aspx";
+            }
+        }
+    </script>
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <link href="../css/materialize.min.css" rel="stylesheet" />
     <link href="../css/Masterw3.css" rel="stylesheet" />
@@ -67,12 +75,12 @@
 </div>
 
     </form>
-    <button id="bt_forgot" onclick="document.getElementById('id01').style.display='block'" class="w3-btn" style="background-color:transparent;color:white;">Forget Password?</button> 
+    <button id="bt_forgot" onclick="SetIframeSrc('AllRegistrationIframe'),document.getElementById('id01').style.display='block'" class="w3-btn" style="background-color:transparent;color:white;">Forget Password?</button> 
         <div id="id01" class="w3-modal" runat="server">
   <span onclick="document.getElementById('id01').style.display='none'" 
   class="w3-closebtn w3-hover-red w3-container w3-padding-16 w3-display-topright w3-xxlarge">×</span>
   <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px;height:372px;">  
-              <iframe src="Forgot.aspx" style="width:100%;height:100%;"></iframe> 
+              <iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>
   </div>
         <asp:Label ID="lblError" runat="server" Text=""></asp:Label>
      
