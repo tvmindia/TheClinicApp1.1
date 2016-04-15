@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
+﻿
+<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
   </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -56,6 +57,15 @@
         });
              
     </script>
+    <script>
+        function SetIframeSrc(HyperlinkID){
+            if (HyperlinkID=="AllRegistrationIframe")
+            {
+                var AllRegistrationIframe=document.getElementById('ViewAllRegistration');
+                AllRegistrationIframe.src="../Registration/ViewAllRegistration.aspx";
+            }
+        }
+    </script>
   
   <!-- Main Container -->
   <div class="main_body">   
@@ -80,7 +90,7 @@
          <a class="nav_menu">Menu</a>
          Patients Registration</div>
          <div class="icon_box">
-         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
+         <a class="all_registration_link" data-toggle="modal" data-target="#add_medicine" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd.png" /></span></a>
          <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
@@ -196,6 +206,25 @@
          </div>  
     </div>  
         <!---------------------------------- Modal Section --------------------------------------->
+
+    <div id="add_medicine" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="height:600px;">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">       
+        <h4 class="modal-title">Add New Medicine</h4>
+      </div>
+      <div class="modal-body" style="height:400px;">
+
+             <iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>
+    
+      </div>      
+    </div>
+
+  </div>
+</div> 
+
         <div class="modal fade" id="TokenRegistration" role="dialog">
             <div class="modal-dialog modal-lg1" style="width:400px;">
 
