@@ -56,7 +56,7 @@
          <input class="field" type="search" placeholder="Search here...">
          <input class="button" type="submit" value="Search">
          </div> 
-         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" style="visibility:hidden" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new"  href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" style="visibility:hidden" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new"  onserverclick="btNew_ServerClick" href="#"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         

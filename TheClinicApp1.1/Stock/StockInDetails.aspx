@@ -1,7 +1,28 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockInDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-        
+
+
+    <%--   //------------- DATEPICKER SCRIPT AND  STYLES---------%>
+
+    <script src="../js/jquery-1.12.0.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="../js/jquery-ui.js"></script>
+    <link href="../css/jquery-ui.css" rel="stylesheet" />
+    <script>
+
+        debugger;
+        $("[id$=txtDate]").datepicker({
+            dateFormat: 'dd-m-yy',
+            showOn: 'button',
+            buttonImageOnly: true,
+            buttonImage: '../images/calendar4.png',
+
+
+        });
+    </script>
+
     <%--Date picker styles--%>
     <style>
         .ui-autocomplete {
@@ -15,30 +36,32 @@
             background-color: ghostwhite;
             box-shadow: 1px 5px 10px 5px #4d3319;
         }
-   
-       .warning{
-            
-             background: url(../Images/Button-Warning-icon.png) no-repeat;
-            
-             background-size:9% 90%;
-           padding-left:1%;
+
+        .warning {
+            background: url(../Images/Button-Warning-icon.png) no-repeat;
+            background-size: 9% 90%;
+            padding-left: 1%;
             text-indent: 11%;
-            border:1px solid #ccc;
-           
+            border: 1px solid #ccc;
         }
     </style>
+
+
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
+
     <div class="main_body">
 
 
         <div class="left_part">
-            <div class="logo"><a href="#">
-                <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
+            <div class="logo">
+                <a href="#">
+                    <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
+            </div>
             <ul class="menu">
                 <li id="patients"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
                 <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
@@ -139,6 +162,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
+
                                     <div id="maindiv">
                                     </div>
                                 </div>
@@ -147,6 +171,14 @@
                         </div>
 
                     </div>
+                    <asp:HiddenField ID="hdnXmlData" runat="server" />
+                    <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
+                    <asp:HiddenField ID="hdnTextboxValues" runat="server" />
+                    <asp:HiddenField ID="hdnManageGridBind" runat="server" Value="False" />
+
+                    <asp:HiddenField ID="hdnHdrInserted" runat="server" />
+                    <asp:HiddenField ID="hdnRemovedIDs" runat="server" />
+
                 </div>
 
             </div>

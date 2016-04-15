@@ -62,5 +62,11 @@ namespace TheClinicApp1._1.Stock
         {
 
         }
+
+
+        protected void btNew_ServerClick(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Stock/StockInDetails.aspx");
+        }
     }
 }
