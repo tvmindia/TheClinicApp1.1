@@ -105,8 +105,16 @@
                     $("td", row).eq(0).html($(this).find("IssueNO").text());
 
                     $("td", row).eq(1).html($(this).find("IssuedTo").text());
+                    $("td", row).eq(2).html($(this).find("Date").text());
+                    $("td", row).eq(3).html('Details').click(function () {
 
-                    $("td", row).eq(2).html($(this).find("IssueID").text());
+                        issueID = $(this).closest('tr').find('td:eq(2)').text();
+                        window.location = "StockOutDetails.aspx?issueID=" + issueID;
+                    }); 
+
+                    $("td", row).eq(4).html($(this).find("IssueID").text());
+
+                   
 
                     //$("td", row).eq(2).html($(this).find("Date").text());
                     $("[id*=gvIssueHD]").append(row);
@@ -135,7 +143,7 @@
                 $("td:first-child", empty_row).attr("align", "center");
                 $("td:first-child", empty_row).html("No records found for the search criteria.");
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
-                $("[id*=gvReceiptHD]").append(empty_row);
+                $("[id*=gvIssueHD]").append(empty_row);
             }
 
 
@@ -211,9 +219,10 @@
               <%--<asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow" />--%>
                   <asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-CssClass="Match"  />
                 <asp:BoundField DataField="IssuedTo" HeaderText="IssuedTo"  ItemStyle-CssClass="Match"  />
-               
+               <asp:BoundField DataField="Date" HeaderText="Date"  ItemStyle-CssClass="Match"  /> 
+                <asp:BoundField  HeaderText="Details"  ItemStyle-CssClass="Match"  /> 
                    <asp:BoundField DataField="IssueID" HeaderText="IssueID"  ItemStyle-CssClass="Match"  />
-
+                
             </Columns>
             <EditRowStyle BackColor="#0080AA"></EditRowStyle>
 
