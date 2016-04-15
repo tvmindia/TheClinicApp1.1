@@ -220,15 +220,6 @@ namespace TheClinicApp1._1.Registration {
         protected global::System.Web.UI.WebControls.Button btntokenbooking;
         
         /// <summary>
-        /// dtgViewAllRegistration control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dtgViewAllRegistration;
-        
-        /// <summary>
         /// dtgViewTodaysRegistration control.
         /// </summary>
         /// <remarks>

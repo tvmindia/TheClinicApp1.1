@@ -44,6 +44,7 @@ namespace TheClinicApp1._1.Registration
             gridDataBind();
             listFilter = null;
             listFilter = BindName();
+            
         }
 
         
@@ -54,22 +55,8 @@ namespace TheClinicApp1._1.Registration
         #region GridBind
         public void gridDataBind()
         {
-
-            
-            #region GridAllRegistration
-            dtgViewAllRegistration.EmptyDataText = "No Records Found";
-            dtgViewAllRegistration.DataSource = PatientObj.GetAllRegistration();
-            dtgViewAllRegistration.DataBind();
-            #endregion GridAllRegistration
-
             listFilter = null;
             listFilter = BindName();
-            #region GridDateRegistration
-            dtgViewTodaysRegistration.EmptyDataText = "....Till Now No Registration....";
-            dtgViewTodaysRegistration.DataSource = PatientObj.GetDateRegistration();
-            dtgViewTodaysRegistration.DataBind();
-            #endregion GridDateRegistration
-
             DropdownDoctors();
         }
         #endregion GridBind
@@ -248,16 +235,6 @@ namespace TheClinicApp1._1.Registration
             divDisplayNumber.Visible = false;
         }
         #endregion ClearScreen
-
-        #region Paging 
-        protected void dtgViewAllRegistration_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            dtgViewAllRegistration.PageIndex = e.NewPageIndex;
-            dtgViewAllRegistration.DataBind();
-            
-        }
-
-        #endregion Paging
 
         #region convertImage
         private byte[] ConvertImageToByteArray(FileUpload fuImage)
