@@ -6,6 +6,37 @@
             background-color: #FFFFAF;
         }
 
+           
+        .Pager span {
+            color: #333;
+            background-color: #F7F7F7;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+            width: 20px;
+            margin-right: 3px;
+            line-height: 150%;
+            border: 1px solid #ccc;
+        }
+
+        .Pager a {
+            text-align: center;
+            display: inline-block;
+            width: 20px;
+            border: 1px solid #ccc;
+            color: #fff;
+            color: #333;
+            margin-right: 3px;
+            line-height: 150%;
+            text-decoration: none;
+        }
+
+
+.CursorShow{
+    color:royalblue;
+    text-decoration:underline;
+    cursor:pointer;
+}
 
           </style>
 
@@ -110,7 +141,7 @@
 
                         issueID = $(this).closest('tr').find('td:eq(2)').text();
                         window.location = "StockOutDetails.aspx?issueID=" + issueID;
-                    }); 
+                    }).addClass('CursorShow');
 
                     $("td", row).eq(4).html($(this).find("IssueID").text());
 
@@ -211,7 +242,7 @@
          
          <div class="tab_table">         
          
-<asp:GridView ID="gvIssueHD" runat="server" Style="width: 400px" AutoGenerateColumns="False" class="table">
+<asp:GridView ID="gvIssueHD" runat="server" Style="width:100%" AutoGenerateColumns="False" class="table">
             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
             <Columns>
             
