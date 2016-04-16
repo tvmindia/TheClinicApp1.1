@@ -3,6 +3,25 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 
+    
+    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
+
+    <script>
+        var test = jQuery.noConflict();
+        test(document).ready(function () {
+
+            test('.nav_menu').click(function () {
+                test(".main_body").toggleClass("active_close");
+            });
+
+        });
+    </script>
+
+     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../js/jquery-1.12.0.min.js"></script>
+    <script src="../js/JavaScript_selectnav.js"></script>
     <%--   //------------- DATEPICKER SCRIPT AND  STYLES---------%>
 
     <script src="../js/jquery-1.12.0.min.js"></script>
@@ -50,9 +69,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="../js/jquery-1.12.0.min.js"></script>
-    <script src="../js/JavaScript_selectnav.js"></script>
+   
 
     <div class="main_body">
 
@@ -237,20 +254,4 @@
         </div>
     </div>
 
-
-
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/Dynamicgrid.js"></script>
-
-    <script>
-        var test = jQuery.noConflict();
-        test(document).ready(function () {
-
-            test('.nav_menu').click(function () {
-                test(".main_body").toggleClass("active_close");
-            });
-
-        });
-    </script>
 </asp:Content>
