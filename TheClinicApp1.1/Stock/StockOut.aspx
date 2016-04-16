@@ -1,45 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockOut.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockOut" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-    <style type="text/css">
-           .highlight {
-            background-color: #FFFFAF;
-        }
-
-           
-        .Pager span {
-            color: #333;
-            background-color: #F7F7F7;
-            font-weight: bold;
-            text-align: center;
-            display: inline-block;
-            width: 20px;
-            margin-right: 3px;
-            line-height: 150%;
-            border: 1px solid #ccc;
-        }
-
-        .Pager a {
-            text-align: center;
-            display: inline-block;
-            width: 20px;
-            border: 1px solid #ccc;
-            color: #fff;
-            color: #333;
-            margin-right: 3px;
-            line-height: 150%;
-            text-decoration: none;
-        }
-
-
-.CursorShow{
-    color:royalblue;
-    text-decoration:underline;
-    cursor:pointer;
-}
-
-          </style>
-
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
      <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
      <script src="../js/vendor/jquery-1.11.1.min.js"></script>
