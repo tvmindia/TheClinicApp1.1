@@ -1,5 +1,10 @@
 ﻿/*! jQuery Dynamic Grid using TextBoxes| (c) Author: Thomson Kattingal | /www.thrithvam.com */
 /*!No Modifications are allowed without permission*/
+
+
+
+
+
 var last = 0;
 var iCnt = 0;
 var ExistingRowCount = 0;
@@ -37,7 +42,7 @@ function clickStockAdd(id) {
 }
 
 function clickAdd(id) {
-    debugger;
+   
     iCnt = iCnt + 1;
 
     // ADD new row with fields needed.
@@ -62,7 +67,7 @@ function clickAdd(id) {
 var Removecount = 0;
 
 function clickdelete(id) {
-    debugger;
+   
     if (ExistingRowCount > 1)
     {
          
@@ -149,8 +154,10 @@ function clickdelete(id) {
 // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
 var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
-function GetTextBoxValues() {
-    debugger;
+function GetTextBoxValues(hdnTextboxValues) {
+
+    
+  
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -191,7 +198,7 @@ function GetTextBoxValues() {
             }
         }
     }
-    document.getElementById('<%=hdnTextboxValues.ClientID%>').value = values;
+    document.getElementById(hdnTextboxValues).value = values;
 
 }
 
@@ -207,11 +214,13 @@ function BindControlsByMedicneName(ControlNo) {
     if (MedicineName != "") {
 
         PageMethods.MedDetails(MedicineName, OnSuccess, onError);
+       
     }
-
+    
     function OnSuccess(response, userContext, methodName) {
-        if (ControlNo >= 1) {
-
+       
+        if (ControlNo >= 0) {
+           
             var MedicineDetails = new Array();
             MedicineDetails = response.split('|');
 
@@ -222,10 +231,10 @@ function BindControlsByMedicneName(ControlNo) {
             document.getElementById('hdnQty' + ControlNo).value = parseInt(MedicineDetails[3]);
 
         }
-
+       
     }
     function onError(response, userContext, methodName) {
-
+       
     }
 
 
@@ -233,7 +242,8 @@ function BindControlsByMedicneName(ControlNo) {
 
 //-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
 function CheckMedicineIsOutOfStock(ControlNo) {
-                 
+       
+    debugger;
     if (document.getElementById('txtMedicine' + ControlNo) != null && document.getElementById('txtQuantity' + ControlNo) != null)
     {
         var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);

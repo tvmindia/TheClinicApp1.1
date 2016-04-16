@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+ <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
@@ -29,6 +29,7 @@
     <script src="../js/jquery-ui.js"></script>
     <link href="../css/jquery-ui.css" rel="stylesheet" />
 
+    
                         
         <script>
            
@@ -137,7 +138,7 @@
          <input class="field" type="search" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div> 
-         <ul class="top_right_links"><li><a class="back" href="StockOut.aspx"><span></span>Back</a></li><li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" href="#" onclick="GetTextBoxValues();"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="back" href="StockOut.aspx"><span></span>Back</a></li><li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" href="#" ><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         
@@ -179,15 +180,19 @@
                                                 <td>
                                                     <input id="txtCategory0" type="text" placeholder="Category0" class="input" /></td>
                                                 <td>
-                                                    <input id="txtQuantity0" type="text" placeholder="Quantity0" class="input" /></td>
+                                                    <input id="txtQuantity0" type="text" placeholder="Quantity0" class="input" onblur="CheckMedicineIsOutOfStock('0')"/></td>
                                                 <td style="background-color: transparent">
                                                     <input type="button" value="-" class="bt1" style="width: 20px;" /></td>
                                                 <td style="background-color: transparent">
                                                     <input type="button" id="btAdd" onclick="clickStockAdd(); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
                                                 </td>
                                                 <td style="background-color: transparent">
-                                                    <input id="hdnDetailID' + iCnt + '" type="hidden" />
-                                                    <input id="hdnQty' + iCnt + '" type="hidden" /></td>
+                                                    <%--<input id="hdnDetailID' + iCnt + '" type="hidden" />
+                                                    <input id="hdnQty' + iCnt + '" type="hidden" />--%>
+                                                    <input id="hdnDetailID0" type="hidden" />
+                                                    <input id="hdnQty0" type="hidden" />
+
+                                                </td>
 
                                             </tr>
                                         </tbody>
