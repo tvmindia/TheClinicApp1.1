@@ -198,7 +198,7 @@
          <input class="field" type="search" placeholder="Search here..." id="txtSearch">
          <input class="button" type="submit" value="Search">
          </div> 
-         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="StockOutDetails.aspx"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         

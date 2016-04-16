@@ -1040,6 +1040,51 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Get MedicineID By UniqueID
 
+        #region Get Quantity In Stock
+
+        public string GetQtyInStock(string MedName)
+        {
+            string Qty = string.Empty;
+            dbConnection dcon = null;
+
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetQtyInStock]";
+
+                cmd.Parameters.Add("@MedName", SqlDbType.NVarChar, 255).Value = MedName;
+
+                object qtyInIssueDT = cmd.ExecuteScalar();
+                if (qtyInIssueDT != null)
+                {
+                    Qty = qtyInIssueDT.ToString();
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+
+            return Qty;
+        }
+        #endregion Get Quantity In Stock
+
         #endregion Methods
 
     }

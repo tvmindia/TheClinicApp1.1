@@ -54,11 +54,19 @@
          
          <table class="details_table" width="100%" border="0">
           <tr>
-            <td>Bill No</td>
+            <td>Issue No</td>
+              <td>
+                <asp:TextBox ID="txtIssueNO" runat="server" ></asp:TextBox></td>
             <td>Date</td>
+               <td>
+                <asp:TextBox ID="txtDate" runat="server"></asp:TextBox></td>
           </tr>
           <tr>
-            <td colspan="2">Bill No2</td>
+            <td colspan="2">Issued To</td>
+              <td>
+                <asp:TextBox ID="txtIssuedTo" runat="server" EnableViewState="false"></asp:TextBox>
+
+            </td>
           </tr>  
         </table>
       <div class="prescription_grid"> 
@@ -89,7 +97,16 @@
          
         </div>
         
-      </div>    
+      </div> 
+             
+              <asp:HiddenField ID="hdnXmlData" runat="server" />
+                    <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
+                    <asp:HiddenField ID="hdnTextboxValues" runat="server" />
+                    <asp:HiddenField ID="hdnManageGridBind" runat="server" Value="False" />
+
+                    <asp:HiddenField ID="hdnHdrInserted" runat="server" />
+                    <asp:HiddenField ID="hdnRemovedIDs" runat="server" /> 
+                
     </div>
          
          </div>
