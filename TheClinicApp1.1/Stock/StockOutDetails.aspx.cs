@@ -226,11 +226,12 @@ namespace TheClinicApp1._1.Stock
         protected void Page_Load(object sender, EventArgs e)
         {
             btnSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "')");
+           
 
             BindListFilter();
 
 
-            txtDate.Attributes.Add("readonly", "readonly");
+            //txtDate.Attributes.Add("readonly", "readonly");
             string issueID = string.Empty;
 
             DataSet dsIssuehdr = null;
@@ -370,11 +371,13 @@ namespace TheClinicApp1._1.Stock
                             if (dtIssuehdr.Rows.Count > 0)
                             {
 
-                                string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
-                                string newDate = txtDate.Text;
+                                //string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
+                                //string newDate = txtDate.Text;
 
-                                if ((txtIssueNO.Text != dtIssuehdr.Rows[0]["IssueNO"].ToString()) || (txtIssuedTo.Text != dtIssuehdr.Rows[0]["IssuedTo"].ToString()) || (oldDate != newDate))
+                                if ((txtIssueNO.Text != dtIssuehdr.Rows[0]["IssueNO"].ToString()) || (txtIssuedTo.Text != dtIssuehdr.Rows[0]["IssuedTo"].ToString()) )
                                 {
+                                    //|| (oldDate != newDate)
+
                                     // ----------------- *  Update header*-----------------------------------//
 
                                     if (hdnTextboxValues.Value != "")

@@ -1,10 +1,6 @@
 ﻿/*! jQuery Dynamic Grid using TextBoxes| (c) Author: Thomson Kattingal | /www.thrithvam.com */
 /*!No Modifications are allowed without permission*/
 
-
-
-
-
 var last = 0;
 var iCnt = 0;
 var ExistingRowCount = 0;
@@ -14,6 +10,19 @@ var container = $(document.createElement('div')).css({
     borderTopColor: '#FFFFFF', borderBottomColor: '#FFFFFF',
     borderLeftColor: '#FFFFFF', borderRightColor: '#FFFFFF'
 });
+
+function RemoveWarning(ControlNo) {
+    //debugger;
+
+    //--------------* To remove warning msg from textbox if the medicine is not out of stock , and is called onfocus event of quantity textbox *-------------------//
+    $("#txtQuantity" + ControlNo).removeClass("warning");
+    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
+    $("#txtQuantity" + ControlNo).attr('type', 'number');
+
+
+}
+
+
 
 
 function clickStockAdd(id) {
@@ -157,7 +166,7 @@ var divValue, values = '';
 function GetTextBoxValues(hdnTextboxValues) {
 
     
-  
+    debugger;
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -205,7 +214,7 @@ function GetTextBoxValues(hdnTextboxValues) {
 //-----* Function to bind textboxes by medicine name -- fills textboxes when focus is lost from medicine textbox  *----//
 function BindControlsByMedicneName(ControlNo) {
    
-    debugger;
+  
     if (ControlNo >= 0) {
         var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
 
@@ -243,7 +252,7 @@ function BindControlsByMedicneName(ControlNo) {
 //-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
 function CheckMedicineIsOutOfStock(ControlNo) {
        
-    debugger;
+ 
     if (document.getElementById('txtMedicine' + ControlNo) != null && document.getElementById('txtQuantity' + ControlNo) != null)
     {
         var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);
@@ -296,10 +305,12 @@ function CheckMedicineIsOutOfStock(ControlNo) {
 
 
 //----------------------------------- * Function to rebind medicine textboxes -- refills controls by retrieving data from xml *--------------------//
-function RefillTextboxesWithXmlData(Medicines) {
-
+function RefillTextboxesWithXmlData(hdnXmlData) {
+    debugger;
    
-    var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
+    //var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
+
+    var XmlDataFromHF = document.getElementById(hdnXmlData).value;
     var xmlDoc = $.parseXML(XmlDataFromHF);
     var xml = $(xmlDoc);
     var Medicines = xml.find("Medicines");

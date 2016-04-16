@@ -1,5 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockOutDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockOutDetails" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <style>
+        
+.warning{
+            
+    background: url(../Images/Button-Warning-icon.png) no-repeat;
+            
+    background-size:6% 80%;
+    padding-left:1%;
+    text-indent: 11%;
+    border:1px solid #ccc;
+           
+}
+
+    </style>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
  <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
@@ -20,7 +36,7 @@
             test('.nav_menu').click(function () {
                 test(".main_body").toggleClass("active_close");
             });
-
+            RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
         });
     </script>
     
