@@ -3,9 +3,99 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
+
+
      <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="../js/jquery-1.12.0.min.js"></script>
+   
           <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
+
+    <script>
+        var test = jQuery.noConflict();
+        test(document).ready(function () {
+
+            test('.nav_menu').click(function () {
+                test(".main_body").toggleClass("active_close");
+            });
+
+        });
+    </script>
+    
+    <script src="../js/jquery-1.12.0.min.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery-ui.js"></script>
+    <link href="../css/jquery-ui.css" rel="stylesheet" />
+
+                        
+        <script>
+           
+
+            function autocompleteonfocus(controlID)
+            {
+                //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
+
+                //debugger;
+                var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
+ 
+                if (topcount==0)
+                {
+                    var ac=null; 
+                    ac = <%=listFilter %>;
+                    $( "#txtMedicine"+controlID).autocomplete({
+                        source: ac
+                    });
+                }
+                else
+                {
+                    var ac=null;
+                    ac = <%=listFilter %>;
+                    var i=1;
+                    while(i<=topcount)
+                    {
+                        if (i==1)
+                        {
+                            var item=  document.getElementById('txtMedicine'+i).value 
+                                 
+                            var result = ac.filter(function(elem){
+                                return elem != item; 
+                            });
+
+                        }
+                        else
+                        {
+                            if (document.getElementById('txtMedicine'+i) != null)
+
+                            {
+                                var item=  document.getElementById('txtMedicine'+i).value 
+                                                           
+
+                                result = result.filter(function(elem){
+                                    return elem != item; 
+                                }); 
+                            }
+                        }
+                        i++;
+                    }
+            
+                            
+                    $( "#txtMedicine"+controlID).autocomplete({
+                        source: result
+                    });
+
+                }
+
+            } 
+
+
+
+
+		</script>
+
+    
+
   <div class="main_body">
           
          <div class="left_part">
@@ -47,7 +137,7 @@
          <input class="field" type="search" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div> 
-         <ul class="top_right_links"><li><a class="back" href="StockOut.aspx"><span></span>Back</a></li><li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="back" href="StockOut.aspx"><span></span>Back</a></li><li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" href="#" onclick="GetTextBoxValues();"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         
@@ -62,37 +152,50 @@
                 <asp:TextBox ID="txtDate" runat="server"></asp:TextBox></td>
           </tr>
           <tr>
-            <td colspan="2">Issued To</td>
+            <td >Issued To</td>
               <td>
                 <asp:TextBox ID="txtIssuedTo" runat="server" EnableViewState="false"></asp:TextBox>
 
             </td>
           </tr>  
         </table>
-      <div class="prescription_grid"> 
-          <table class="table" style="width:100%;border:0;padding-left:2%;" >
-  <tbody><tr>
-    <th>Medicine</th>
-    <th>Unit</th>
-    <th>Code</th>
-    <th>Category</th>
-    <th>Quantity</th>
-  </tr>
-  <tr>
-     <td ><input id="txtMedName" type="text" placeholder="Medicine" class="input"/></td>
-      <td ><input id="txtMedUnit" class="input" type="text" placeholder="Unit" /></td>
-      <td ><input id="txtMedCode" type="text" placeholder="Code" class="input"/></td>
-      <td><input id="txtMedCat" type="text" placeholder="Category" class="input"/></td>
-      <td><input id="txtMedQty" type="text" placeholder="Quantity" class="input"/></td><td style="background:#E6E5E5">
-    <input type="button" value="-" class="bt1" style="width:20px;"/></td><td style="background:#E6E5E5">
-         <input type="button" id="btAdd" onclick="clickStockAdd(); this.style.visibility = 'hidden';" value="+" class="bt1" style="width:20px" />         
-         </td>
-  </tr>
-  </tbody>      
-  </table>
- <div id="maindiv"> 
-  </div>
-         </div>
+      <div class="prescription_grid">
+                                    <table class="table" style="width: 100%; border: 0;">
+                                        <tbody>
+                                            <tr>
+                                                <th>Medicine</th>
+                                                <th>Unit</th>
+                                                <th>Code</th>
+                                                <th>Category</th>
+                                                <th>Quantity</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input id="txtMedicine0" type="text" placeholder="Medicine0" class="input" onblur="BindControlsByMedicneName('0')" onfocus="autocompleteonfocus('0')" /></td>
+                                                <td>
+                                                    <input id="txtUnit0" class="input" type="text" placeholder="Unit0" /></td>
+                                                <td>
+                                                    <input id="txtCode0" type="text" placeholder="Code0" class="input" /></td>
+                                                <td>
+                                                    <input id="txtCategory0" type="text" placeholder="Category0" class="input" /></td>
+                                                <td>
+                                                    <input id="txtQuantity0" type="text" placeholder="Quantity0" class="input" /></td>
+                                                <td style="background-color: transparent">
+                                                    <input type="button" value="-" class="bt1" style="width: 20px;" /></td>
+                                                <td style="background-color: transparent">
+                                                    <input type="button" id="btAdd" onclick="clickStockAdd(); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
+                                                </td>
+                                                <td style="background-color: transparent">
+                                                    <input id="hdnDetailID' + iCnt + '" type="hidden" />
+                                                    <input id="hdnQty' + iCnt + '" type="hidden" /></td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div id="maindiv">
+                                    </div>
+                                </div>
          </div>
          
         </div>
@@ -165,21 +268,5 @@
   </div>
 </div>         
          
-         
-
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/Dynamicgrid.js"></script>
-       
-                        
-        <script>
-			var test=jQuery.noConflict();
-				test(document).ready(function(){
-					
-				test('.nav_menu').click(function(){
-					test(".main_body").toggleClass("active_close");
-				});
-			
-			});			
-		</script>
+     
 </asp:Content>

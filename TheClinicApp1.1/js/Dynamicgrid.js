@@ -10,6 +10,7 @@ var container = $(document.createElement('div')).css({
     borderLeftColor: '#FFFFFF', borderRightColor: '#FFFFFF'
 });
 
+
 function clickStockAdd(id) {
     iCnt = iCnt + 1;
 
@@ -149,7 +150,7 @@ function clickdelete(id) {
 var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
 function GetTextBoxValues() {
- 
+    debugger;
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -157,7 +158,7 @@ function GetTextBoxValues() {
     });
     var NumberOfColumns = i - 1;
     var NumberOfRows = NumberOfColumns / 5;
-    for (var k = 1; k <= NumberOfRows; k++)
+    for (var k = 0; k < NumberOfRows; k++)
     {
         var qty = document.getElementById('txtQuantity' + k).value;
         if (qty.indexOf('Must be') > -1)
@@ -197,8 +198,8 @@ function GetTextBoxValues() {
 //-----* Function to bind textboxes by medicine name -- fills textboxes when focus is lost from medicine textbox  *----//
 function BindControlsByMedicneName(ControlNo) {
    
-
-    if (ControlNo >= 1) {
+    debugger;
+    if (ControlNo >= 0) {
         var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
 
     }
