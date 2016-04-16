@@ -34,7 +34,17 @@ namespace TheClinicApp1._1.Stock
 
         //------------------------------ * MEDICINES  * -------------------------------------------//
 
+        #region Get Quantity In Stock
+        [WebMethod]
 
+        public static string GetQtyInStock(string MedName)
+        {
+            IssueDetails dtlsObj = new IssueDetails();
+            string qty = dtlsObj.GetQtyInStock(MedName);
+            return qty;
+        }
+
+        #endregion Get Quantity In Stock 
 
 
         #region Get MedicineDetails By Medicine Name
@@ -225,7 +235,7 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            btnSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "')");
+            btnSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','"+hdnRemovedIDs.ClientID+"')");
            
 
             BindListFilter();

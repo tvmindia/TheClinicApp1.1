@@ -196,7 +196,7 @@
                                                 <td>
                                                     <input id="txtCategory0" type="text" placeholder="Category0" class="input" /></td>
                                                 <td>
-                                                    <input id="txtQuantity0" type="text" placeholder="Quantity0" class="input" onblur="CheckMedicineIsOutOfStock('0')"/></td>
+                                                    <input id="txtQuantity0" type="text" placeholder="Quantity0" class="input" onblur="CheckMedicineIsOutOfStock('0')" onfocus="RemoveWarning('0')"/></td>
                                                 <td style="background-color: transparent">
                                                     <input type="button" value="-" class="bt1" style="width: 20px;" /></td>
                                                 <td style="background-color: transparent">
