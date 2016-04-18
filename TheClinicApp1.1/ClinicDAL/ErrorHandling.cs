@@ -78,7 +78,7 @@ namespace TheClinicApp1._1.ClinicDAL
             lblMsgges.Text = Messages.UpdationSuccessFull;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
 
-            divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
+            divMask1.Attributes["class"] = "alert alert-success";
 
         }
         public void UpdationNotSuccessMessage(Page pg)
@@ -93,7 +93,7 @@ namespace TheClinicApp1._1.ClinicDAL
             lblMsgges.Text = Messages.UpdationFailure;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
 
-            divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
+            divMask1.Attributes["class"] = "alert alert-info";
 
         }
 
@@ -109,7 +109,7 @@ namespace TheClinicApp1._1.ClinicDAL
             lblMsgges.Text = msg;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
 
-            divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
+            divMask1.Attributes["class"] = "alert alert-info";
         }
 
         public void ErrorData(Exception ex, Page pg)
@@ -140,7 +140,7 @@ namespace TheClinicApp1._1.ClinicDAL
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
             lblErrorCaption.Text = Messages.SuccessMsgCaption;
-            divMask1.Attributes["class"] = "alert lblErrorCaptionDanger fade in";
+            divMask1.Attributes["class"] = "alert alert-success";
         }
 
         public void WarningMessage(Page pg)
@@ -154,7 +154,7 @@ namespace TheClinicApp1._1.ClinicDAL
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
             lblErrorCaption.Text = Messages.WarningMsgCaption;
-            divMask1.Attributes["class"] = "alert lblErrorCaptionWarning fade in";
+            divMask1.Attributes["class"] = "alert alert-warning";
         }
 
         public void InsertionNotSuccessMessage(Page pg)
@@ -168,7 +168,7 @@ namespace TheClinicApp1._1.ClinicDAL
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
             lblErrorCaption.Text = Messages.InsertionFailureMsgCaption;
-            divMask1.Attributes["class"] = "alert lblErrorCaptionDanger fade in";
+            divMask1.Attributes["class"] = "alert alert-info";
         }
 
         public void AlreadyExistsMessage(Page pg)

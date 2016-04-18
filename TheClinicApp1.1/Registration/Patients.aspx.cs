@@ -34,6 +34,7 @@ namespace TheClinicApp1._1.Registration
         public string RoleName = null;
         #endregion GlobalVariables
 
+        #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -46,15 +47,23 @@ namespace TheClinicApp1._1.Registration
             listFilter = BindName();
             
         }
+        #endregion PageLoad
 
-        
-
-       
         #region Methods
 
         #region GridBind
         public void gridDataBind()
         {
+            #region GridAllRegistration
+            dtgViewAllRegistration.EmptyDataText = "No Records Found";
+            dtgViewAllRegistration.DataSource = PatientObj.GetAllRegistration();
+            dtgViewAllRegistration.DataBind();
+            #endregion GridAllRegistration
+            #region GridDateRegistration
+            dtgViewTodaysRegistration.EmptyDataText = "....Till Now No Registration....";
+            dtgViewTodaysRegistration.DataSource = PatientObj.GetDateRegistration();
+            dtgViewTodaysRegistration.DataBind();
+            #endregion GridDateRegistration
             listFilter = null;
             listFilter = BindName();
             DropdownDoctors();
@@ -227,12 +236,12 @@ namespace TheClinicApp1._1.Registration
         #endregion BookingToken
 
         #region ClearScreen
-        protected void btnnew_Click(object sender, EventArgs e)
+        protected void btnNew_ServerClick(object sender, EventArgs e)
         {
             ClearFields();
             ProfilePic.Src = "../Images/UploadPic.png";
-            //btnnew.Visible = false;
             divDisplayNumber.Visible = false;
+            Errorbox.Visible = false;
         }
         #endregion ClearScreen
 
@@ -253,14 +262,18 @@ namespace TheClinicApp1._1.Registration
         }
         #endregion convertImage
 
-       
+        #region Paging
+        protected void dtgViewAllRegistration_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dtgViewAllRegistration.PageIndex = e.NewPageIndex;
+            dtgViewAllRegistration.DataBind();
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openmyModal();", true);
+        }
+
+        #endregion Paging
         #endregion Methods
 
-        
-       
-
-        
-
+        #region MainButton
         protected void btnSave_Click(object sender, EventArgs e)
         {
             try
@@ -301,7 +314,7 @@ namespace TheClinicApp1._1.Registration
                 {
                     string filenum = "F" + clinID.Substring(0, 4) + txtName.Value.Substring(0, 3) + txtMobile.Value.Substring(7, 3);
                     PatientObj.FileNumber = filenum.Trim();
-
+                    
                     if (HiddenField1.Value == "")
                     {
                         if (FileUpload1.HasFile)
@@ -312,6 +325,7 @@ namespace TheClinicApp1._1.Registration
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
 
                         }
+                        
                         Guid g = Guid.NewGuid();
                         PatientObj.PatientID = g;
                         PatientObj.AddPatientDetails();
@@ -340,9 +354,7 @@ namespace TheClinicApp1._1.Registration
                 Response.Redirect("../Registration/Patients.aspx");
             }
         }
+        #endregion MainButton
 
-       
-
-       
     }
 }

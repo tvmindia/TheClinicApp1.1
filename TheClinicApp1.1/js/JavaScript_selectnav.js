@@ -7,7 +7,7 @@ function selectTile(id, RoleName) {
 
     }
     else if (RoleName == 'pharmacist') {
-        var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '..Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
+        var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
     }
     else {
         var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Login/AccessDenied.aspx', '../Login/AccessDenied.aspx'];

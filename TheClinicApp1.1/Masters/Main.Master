@@ -44,8 +44,7 @@
     max-width: 100%;
     width: 100%;
    }
-        </style>    
-    <style>
+       
 .ui-autocomplete {
 background: fixed;
 font-size:small;
@@ -64,7 +63,7 @@ background-color: ghostwhite;
 }
 
     .button1{
-        background: url("../images/save.png") no-repeat 0 0;
+        background: url("../images/save.png") no-repeat 0 center;
         height: 31px;
         width: 60px;
         display: inline-block;

@@ -97,7 +97,7 @@
          <a class="nav_menu">Menu</a>
          Patients Registration</div>
          <div class="icon_box">
-         <a class="all_registration_link" data-toggle="modal" data-target="#add_medicine" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd.png" /></span></a>
+         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd.png" /></span></a>
          <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
@@ -105,10 +105,10 @@
          <input class="field" type="search" id="txtSearch" name="txtSearch" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div>
-         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClick="btnSave_Click" /></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClick="btnSave_Click" /></li><li><a class="new" href="#" runat="server" id="btnNew" onserverclick="btnNew_ServerClick"><span></span>New</a></li></ul>
          </div>        
          <div class="right_form">         
-         <div id="Errorbox"  style="height:25%;  display:none;"  runat="server" ><a class="alert_close">X</a>
+         <div id="Errorbox"  style="height:25%;display:none;"  runat="server" ><a class="alert_close">X</a>
          <div>
          <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
          <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
@@ -373,7 +373,7 @@
         </div>
 
 
-      <%--  <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog  modal-lg">
 
                 <!-- Modal content-->
@@ -427,7 +427,7 @@
 
                             <HeaderStyle BackColor="#0080AA" HorizontalAlign="Center" VerticalAlign="Middle" Font-Bold="True" ForeColor="White"></HeaderStyle>
 
-                            <PagerStyle HorizontalAlign="Center" ForeColor="White" BackColor="#2461BF"></PagerStyle>
+                            <PagerStyle HorizontalAlign="Center" ForeColor="black" BackColor="#2461BF"></PagerStyle>
 
                             <RowStyle BackColor="#EFF3FB"></RowStyle>
 
@@ -450,7 +450,7 @@
                 </div>
 
             </div>
-        </div>--%>
+        </div>
       
         
         <div class="modal fade" id="TodaysRegistration" role="dialog">
@@ -574,6 +574,9 @@
             debugger;
              $('#TokenRegistration').modal('show');
            
+        }
+        function openmyModal() {
+            $('#myModal').modal('show');
         }
         </script>
    
