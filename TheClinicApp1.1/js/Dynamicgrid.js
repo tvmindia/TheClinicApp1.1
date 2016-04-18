@@ -87,6 +87,8 @@ function clickdelete(id) {
             $('#btRemove' + id).closest("div").remove();
             //iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
+
+
         }
 //***********************************************************************************
 
@@ -158,13 +160,22 @@ function clickdelete(id) {
         
     }
 
+      //RemovedIDs += document.getElementById('hdnDetailID' + k).value + ',';
+                
+      //          if (RemovedIDs == ',')
+      //          {
+      //              RemovedIDs = '';
+      //          }
+      //          //document.getElementById('<%=hdnRemovedIDs.ClientID%>').value = RemovedIDs;
+      //          document.getElementById(hdnRemovedIDs).value = RemovedIDs;
+
 }
 
 // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
 var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
 function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
-
+    debugger;
     
    
     values = '';
@@ -195,6 +206,7 @@ function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
 
         if ((document.getElementById('txtQuantity' + k) != null) && ((document.getElementById('txtQuantity' + k).value == '') || (isNaN(document.getElementById('txtQuantity' + k).value) == true)))
         {
+           
             if ((document.getElementById('hdnDetailID' + k) != null) && (document.getElementById('hdnDetailID' + k).value != ''))
             {
                 RemovedIDs += document.getElementById('hdnDetailID' + k).value + ',';
