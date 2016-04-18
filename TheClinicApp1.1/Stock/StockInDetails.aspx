@@ -36,34 +36,34 @@
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
 
-    <script>
-        var test = jQuery.noConflict();
-        test(document).ready(function () {
+ <script src="../js/jquery-1.9.1.min.js"></script>     
+    <script src="../js/jquery-ui.js"></script>
 
-            test('.nav_menu').click(function () {
-                test(".main_body").toggleClass("active_close");
+    <script>
+        $(document).ready(function () {
+
+           $('.nav_menu').click(function () {
+                
+                $(".main_body").toggleClass("active_close");
             });
 
-        });
-    </script>
-    
-     <script src="../js/jquery-1.12.0.min.js"></script>
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <script src="../js/jquery-ui.js"></script>
-    <link href="../css/jquery-ui.css" rel="stylesheet" />
-    
-    <script>
 
-      
+  debugger;
+   
+           
         $("[id$=txtDate]").datepicker({
             dateFormat: 'dd-m-yy',
             showOn: 'button',
             buttonImageOnly: true,
             buttonImage: '../images/calendar4.png',
+        });           
+
 
 
         });
-    </script>
+    </script> 
+ 
+
 
       
                         
@@ -196,7 +196,7 @@
                                         </td>
                                         <td>Date</td>
                                         <td>
-                                            <asp:TextBox ID="txtDate" TabIndex="2" runat="server"></asp:TextBox>
+                                            <asp:TextBox ID="txtDate" Width="80%" TabIndex="2" runat="server"></asp:TextBox>
 
                                         </td>
                                     </tr>
