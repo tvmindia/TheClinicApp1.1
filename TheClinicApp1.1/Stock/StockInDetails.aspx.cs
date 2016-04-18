@@ -227,7 +227,7 @@ namespace TheClinicApp1._1.Stock
                     {
                         txtBillNo.Text = dtReceipthdr.Rows[0]["RefNo1"].ToString();
                         txtRefNo2.Text = dtReceipthdr.Rows[0]["RefNo2"].ToString();
-                        txtDate.Text = ((DateTime)dtReceipthdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
+                        txtDate1.Value = ((DateTime)dtReceipthdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
                     }
 
 
@@ -267,7 +267,7 @@ namespace TheClinicApp1._1.Stock
 
             txtBillNo.Text = gds.Tables[0].Rows[0][0].ToString();
             txtRefNo2.Text = gds.Tables[0].Rows[0][1].ToString();
-            txtDate.Text = gds.Tables[0].Rows[0][2].ToString();
+            txtDate1.Value = gds.Tables[0].Rows[0][2].ToString();
         }
 
         
@@ -314,7 +314,7 @@ namespace TheClinicApp1._1.Stock
                 if (hdnTextboxValues.Value != "")
                 {
 
-                    if ((txtBillNo.Text != string.Empty) && (txtRefNo2.Text != string.Empty) && (txtDate.Text != string.Empty))
+                    if ((txtBillNo.Text != string.Empty) && (txtRefNo2.Text != string.Empty) && (txtDate1.Value != string.Empty))
                     {
 
                         rpt.ClinicID = UA.ClinicID.ToString();
@@ -322,7 +322,7 @@ namespace TheClinicApp1._1.Stock
                         rpt.RefNo2 = txtRefNo2.Text;
                         rpt.CreatedBy = UA.userName;
 
-                        rpt.Date = Convert.ToDateTime(txtDate.Text);
+                        rpt.Date = Convert.ToDateTime(txtDate1.Value);
 
 
 
@@ -352,7 +352,7 @@ namespace TheClinicApp1._1.Stock
                             {
 
                                 string oldDate = ((DateTime)dtReceipthdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
-                                string newDate = txtDate.Text;
+                                string newDate = txtDate1.Value;
 
                                 if ((txtBillNo.Text != dtReceipthdr.Rows[0]["RefNo1"].ToString()) || (txtRefNo2.Text != dtReceipthdr.Rows[0]["RefNo2"].ToString()) || (oldDate != newDate))
                                 {
@@ -364,7 +364,7 @@ namespace TheClinicApp1._1.Stock
                                         rpt.ClinicID = UA.ClinicID.ToString();
                                        
                                         rpt.RefNo2 = txtRefNo2.Text;
-                                      rpt.Date = Convert.ToDateTime(txtDate.Text);
+                                        rpt.Date = Convert.ToDateTime(txtDate1.Value);
                                         rpt.UpdatedBy = UA.userName;
                                          
                                         rpt.UpdateReceiptHeader(ViewState["ReceiptHdrID"].ToString());

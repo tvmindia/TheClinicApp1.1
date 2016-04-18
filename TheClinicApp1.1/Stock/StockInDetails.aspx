@@ -8,19 +8,25 @@
             background: fixed;
             background-color: ghostwhite;
             box-shadow: 1px 5px 10px 5px #4d3319;
-        }
-        .ui-datepicker {
-            background: fixed;
-            background-color: ghostwhite;
-            box-shadow: 1px 5px 10px 5px #4d3319;
-        }
-        .warning {
+        } 
+               .warning {
             background: url(../Images/Button-Warning-icon.png) no-repeat;
             background-size: 9% 90%;
             padding-left: 1%;
             text-indent: 11%;
             border: 1px solid #ccc;
         }
+
+                .txtDate1Class
+        {
+            background: url('../images/calendar4.png') no-repeat right center;
+            padding-right:15px;
+          
+
+            
+        }
+
+
     </style>
 
 </asp:Content>
@@ -51,9 +57,9 @@
   debugger;
    
            
-        $("[id$=txtDate]").datepicker({
+        $("[id$=txtDate1]").datepicker({
             dateFormat: 'dd-m-yy',
-            showOn: 'button',
+           
             buttonImageOnly: true,
             buttonImage: '../images/calendar4.png',
         });           
@@ -188,7 +194,7 @@
 
                             <div class="tab_table">
 
-                                <table class="details_table" width="100%" border="0">
+                                <table class="details_table" style="width:100%"  border="0">
                                     <tr>
                                         <td>Bill No</td>
                                         <td>
@@ -196,7 +202,8 @@
                                         </td>
                                         <td>Date</td>
                                         <td>
-                                            <asp:TextBox ID="txtDate" Width="80%" TabIndex="2" runat="server"></asp:TextBox>
+                                            <%--<asp:TextBox ID="txtDate" style="width:80%" TabIndex="2" runat="server"></asp:TextBox>--%>
+                                            <input id="txtDate1" type="text" style="width:100%" runat="server"  class="txtDate1Class"/>
 
                                         </td>
                                     </tr>
