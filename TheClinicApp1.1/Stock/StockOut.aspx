@@ -100,7 +100,7 @@
                     $("td", row).eq(2).html($(this).find("Date").text());
                     $("td", row).eq(3).html('Details').click(function () {
 
-                        issueID = $(this).closest('tr').find('td:eq(2)').text();
+                        issueID = $(this).closest('tr').find('td:eq(4)').text();
                         window.location = "StockOutDetails.aspx?issueID=" + issueID;
                     }).addClass('CursorShow');
 

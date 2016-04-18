@@ -36,6 +36,20 @@ namespace TheClinicApp1._1.Stock
 
         #region Methods
 
+        #region Clear Controls
+
+        public void ClearControls()
+        {
+            txtmedicineName.Text = "";
+            txtCode.Text = "";
+            txtUnit.Text = "";
+            txtOrderQuantity.Text = "";
+            BindCategory();
+        }
+
+
+        #endregion Clear Controls
+
         #region Bind Category
         public void BindCategory()
         {
@@ -158,7 +172,8 @@ namespace TheClinicApp1._1.Stock
 
         protected void btnNew_ServerClick(object sender, EventArgs e)
         {
-
+            Errorbox.Attributes.Add("style", "display:none");
+            ClearControls();
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -168,7 +183,10 @@ namespace TheClinicApp1._1.Stock
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
-
+            Errorbox.Attributes.Add("style", "display:none");
+            ClearControls();
         }
+
+       
     }
 }

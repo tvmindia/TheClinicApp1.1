@@ -4,6 +4,16 @@
 var last = 0;
 var iCnt = 0;
 var ExistingRowCount = 0;
+var IdToRemove;
+var RemovedIDs = '';
+
+function GetClientIDOfRemovedID(DetailID)
+{
+     debugger;
+     IdToRemove = DetailID;
+}
+
+
 // CREATE A "DIV" ELEMENT AND DESIGN IT USING JQUERY ".css()" CLASS.
 var container = $(document.createElement('div')).css({
     width: '100%',
@@ -77,6 +87,17 @@ var Removecount = 0;
 
 function clickdelete(id) {
    
+    debugger;
+    RemovedIDs += document.getElementById('hdnDetailID' + id).value + ',';
+
+    if (RemovedIDs == ',') {
+        RemovedIDs = '';
+    }
+    //document.getElementById('<%=hdnRemovedIDs.ClientID%>').value = RemovedIDs;
+    document.getElementById(IdToRemove).value = RemovedIDs;
+
+
+
     if (ExistingRowCount > 1)
     {
          
@@ -159,15 +180,8 @@ function clickdelete(id) {
         last = iCnt;
         
     }
-
-      //RemovedIDs += document.getElementById('hdnDetailID' + k).value + ',';
-                
-      //          if (RemovedIDs == ',')
-      //          {
-      //              RemovedIDs = '';
-      //          }
-      //          //document.getElementById('<%=hdnRemovedIDs.ClientID%>').value = RemovedIDs;
-      //          document.getElementById(hdnRemovedIDs).value = RemovedIDs;
+ 
+  
 
 }
 

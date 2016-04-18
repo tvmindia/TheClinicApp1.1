@@ -26,7 +26,7 @@ namespace TheClinicApp1._1.Stock
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
-
+        ErrorHandling eObj = new ErrorHandling();
 
         #endregion Global Variables
 
@@ -306,7 +306,9 @@ namespace TheClinicApp1._1.Stock
 
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
-
+            string msg = string.Empty;
+if ( (txtIssuedTo.Text != "") || (txtDate.Text != "") )
+{
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
 
@@ -354,15 +356,20 @@ namespace TheClinicApp1._1.Stock
                         IssuehdrObj.IssueNO = txtIssueNO.Text;
                         IssuehdrObj.CreatedBy = UA.userName;
 
-                        IssuehdrObj.Date = Convert.ToDateTime(txtDate.Text);
+                         IssuehdrObj.Date = Convert.ToDateTime(txtDate.Text);
 
 
 
                         if ((hdnHdrInserted.Value == "") && (hdnTextboxValues.Value != ""))
                         {
-                            IssuehdrObj.InsertIssueHeader();
-                            hdnHdrInserted.Value = "True";
-                            ViewState["IssueHdrID"] = IssuehdrObj.IssueID;
+                       int result =      IssuehdrObj.InsertIssueHeader();
+
+                       if (result == 1)
+                       {
+                           hdnHdrInserted.Value = "True";
+                           ViewState["IssueHdrID"] = IssuehdrObj.IssueID;
+                       }
+                            
 
                         }
 
@@ -381,13 +388,13 @@ namespace TheClinicApp1._1.Stock
                             if (dtIssuehdr.Rows.Count > 0)
                             {
 
-                                //string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
-                                //string newDate = txtDate.Text;
+                                string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
+                                string newDate = txtDate.Text;
 
                                 if ((txtIssueNO.Text != dtIssuehdr.Rows[0]["IssueNO"].ToString()) || (txtIssuedTo.Text != dtIssuehdr.Rows[0]["IssuedTo"].ToString()) )
                                 {
+                                    
                                     //|| (oldDate != newDate)
-
                                     // ----------------- *  Update header*-----------------------------------//
 
                                     if (hdnTextboxValues.Value != "")
@@ -443,9 +450,10 @@ namespace TheClinicApp1._1.Stock
                                     if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
                                     {
                                         IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
+                                        IssuedtlObj.InsertIssueDetails();
                                     }
 
-                                    IssuedtlObj.InsertIssueDetails();
+                                  
                                 }
                             }
 
@@ -478,6 +486,17 @@ namespace TheClinicApp1._1.Stock
             }
 
             StoreXmlToHiddenField();
+        }
+
+else
+{
+    var page = HttpContext.Current.CurrentHandler as Page;
+
+    msg = "Please fill all the fields";
+
+    eObj.InsertionNotSuccessMessage(page, msg);
+}
+
         }
 
         #endregion Events

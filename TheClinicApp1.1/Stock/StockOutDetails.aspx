@@ -36,8 +36,52 @@
             test('.nav_menu').click(function () {
                 test(".main_body").toggleClass("active_close");
             });
+
+            $('.alert_close').click(function () {
+                
+                $(this).parent(".alert").hide();
+            });
+
+            //$('[data-toggle="tooltip"]').tooltip();
+
+
+
+            $('.nav_menu').click(function () {
+                
+                $(".main_body").toggleClass("active_close");
+            });
+
+            GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>');
             RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
         });
+
+        function ClearControls()
+        {
+            var i = 1;
+            $('.input').each(function () {
+                i++;
+            });
+            var NumberOfColumns = i - 1;
+            var NumberOfRows = NumberOfColumns / 5;
+
+
+            debugger;
+            document.getElementById('<%=txtIssueNO.ClientID%>').value = '';
+            document.getElementById('<%=txtDate.ClientID%>').value = '';
+            document.getElementById('<%=txtIssuedTo.ClientID%>').value = '';
+
+            for (var k = 0; k < NumberOfRows; k++)
+            {
+                document.getElementById('txtMedicine' + k).value = '';
+                document.getElementById('txtUnit' + k).value = '';
+                document.getElementById('txtCode' + k).value = '';
+                document.getElementById('txtCategory' + k).value = '';
+                document.getElementById('txtQuantity' + k).value = '';
+            }
+        }
+
+
+
     </script>
     
     <script src="../js/jquery-1.12.0.min.js"></script>
@@ -114,7 +158,34 @@
     
 
   <div class="main_body">
-          
+         
+      
+          <div id="Errorbox"  style="display:none;"  runat="server" ><a class="alert_close">X</a>
+                    <div>
+                            <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
+                                 <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+
+                            </div>
+
+                            </div>                     
+
+         <div class="alert alert-success" style="display:none">
+          <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+        </div>        
+        <div class="alert alert-info" style="display:none">
+          <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+        </div>
+        
+        <div class="alert alert-warning" style="display:none">
+          <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+        </div>
+        
+        <div class="alert alert-danger" style="display:none">
+          <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+        </div>
+
+      
+       
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
          <ul class="menu">
@@ -154,7 +225,7 @@
          <input class="field" type="search" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div> 
-         <ul class="top_right_links"><li><a class="back" href="StockOut.aspx"><span></span>Back</a></li><li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" href="#" ><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="back" href="StockOut.aspx"><span></span>Back</a></li><li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick"  ><span></span>Save</a></li><li><a class="new" href="#"  onclick="ClearControls();"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         
@@ -163,15 +234,15 @@
           <tr>
             <td>Issue No</td>
               <td>
-                <asp:TextBox ID="txtIssueNO" runat="server" ></asp:TextBox></td>
+                <asp:TextBox ID="txtIssueNO" runat="server" required ></asp:TextBox></td>
             <td>Date</td>
                <td>
-                <asp:TextBox ID="txtDate" runat="server"></asp:TextBox></td>
+                <asp:TextBox ID="txtDate" runat="server" required></asp:TextBox></td>
           </tr>
           <tr>
             <td >Issued To</td>
               <td>
-                <asp:TextBox ID="txtIssuedTo" runat="server" EnableViewState="false"></asp:TextBox>
+                <asp:TextBox ID="txtIssuedTo" runat="server" EnableViewState="false" required></asp:TextBox>
 
             </td>
           </tr>  

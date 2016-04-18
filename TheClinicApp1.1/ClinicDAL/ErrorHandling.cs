@@ -78,8 +78,8 @@ namespace TheClinicApp1._1.ClinicDAL
             lblMsgges.Text = Messages.UpdationSuccessFull;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
 
-            divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
-
+            //divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
+            divMask1.Attributes["class"] = "alert alert-success";
         }
         public void UpdationNotSuccessMessage(Page pg)
         {
@@ -93,8 +93,8 @@ namespace TheClinicApp1._1.ClinicDAL
             lblMsgges.Text = Messages.UpdationFailure;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
 
-            divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
-
+            //divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
+            divMask1.Attributes["class"] = "alert alert-danger";
         }
 
         public void UpdationSuccessMessage(Page pg, string msg)//if update fails
@@ -140,7 +140,8 @@ namespace TheClinicApp1._1.ClinicDAL
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
             lblErrorCaption.Text = Messages.SuccessMsgCaption;
-            divMask1.Attributes["class"] = "alert lblErrorCaptionDanger fade in";
+            //divMask1.Attributes["class"] = "alert lblErrorCaptionDanger fade in";
+            divMask1.Attributes["class"] = "alert alert-success";
         }
 
         public void WarningMessage(Page pg)
@@ -168,7 +169,8 @@ namespace TheClinicApp1._1.ClinicDAL
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
             lblErrorCaption.Text = Messages.InsertionFailureMsgCaption;
-            divMask1.Attributes["class"] = "alert lblErrorCaptionDanger fade in";
+            //divMask1.Attributes["class"] = "alert lblErrorCaptionDanger fade in";
+            divMask1.Attributes["class"] = "alert alert-danger";
         }
 
         public void AlreadyExistsMessage(Page pg)
