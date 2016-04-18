@@ -1,14 +1,39 @@
 ﻿/*! jQuery Dynamic Grid using TextBoxes| (c) Author: Thomson Kattingal | /www.thrithvam.com */
 /*!No Modifications are allowed without permission*/
+
 var last = 0;
 var iCnt = 0;
 var ExistingRowCount = 0;
+var IdToRemove;
+var RemovedIDs = '';
+
+function GetClientIDOfRemovedID(DetailID)
+{
+     debugger;
+     IdToRemove = DetailID;
+}
+
+
 // CREATE A "DIV" ELEMENT AND DESIGN IT USING JQUERY ".css()" CLASS.
 var container = $(document.createElement('div')).css({
     width: '100%',
     borderTopColor: '#FFFFFF', borderBottomColor: '#FFFFFF',
     borderLeftColor: '#FFFFFF', borderRightColor: '#FFFFFF'
 });
+
+function RemoveWarning(ControlNo) {
+    //debugger;
+
+    //--------------* To remove warning msg from textbox if the medicine is not out of stock , and is called onfocus event of quantity textbox *-------------------//
+    $("#txtQuantity" + ControlNo).removeClass("warning");
+    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
+    $("#txtQuantity" + ControlNo).attr('type', 'number');
+
+
+}
+
+
+
 
 function clickStockAdd(id) {
     iCnt = iCnt + 1;
@@ -36,7 +61,7 @@ function clickStockAdd(id) {
 }
 
 function clickAdd(id) {
-    debugger;
+   
     iCnt = iCnt + 1;
 
     // ADD new row with fields needed.
@@ -61,7 +86,18 @@ function clickAdd(id) {
 var Removecount = 0;
 
 function clickdelete(id) {
+   
     debugger;
+    RemovedIDs += document.getElementById('hdnDetailID' + id).value + ',';
+
+    if (RemovedIDs == ',') {
+        RemovedIDs = '';
+    }
+    //document.getElementById('<%=hdnRemovedIDs.ClientID%>').value = RemovedIDs;
+    document.getElementById(IdToRemove).value = RemovedIDs;
+
+
+
     if (ExistingRowCount > 1)
     {
          
@@ -72,6 +108,8 @@ function clickdelete(id) {
             $('#btRemove' + id).closest("div").remove();
             //iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
+
+
         }
 //***********************************************************************************
 
@@ -142,14 +180,18 @@ function clickdelete(id) {
         last = iCnt;
         
     }
+ 
+  
 
 }
 
 // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
 var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
-function GetTextBoxValues() {
- 
+function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
+    debugger;
+    
+   
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -157,7 +199,7 @@ function GetTextBoxValues() {
     });
     var NumberOfColumns = i - 1;
     var NumberOfRows = NumberOfColumns / 5;
-    for (var k = 1; k <= NumberOfRows; k++)
+    for (var k = 0; k < NumberOfRows; k++)
     {
         var qty = document.getElementById('txtQuantity' + k).value;
         if (qty.indexOf('Must be') > -1)
@@ -178,6 +220,7 @@ function GetTextBoxValues() {
 
         if ((document.getElementById('txtQuantity' + k) != null) && ((document.getElementById('txtQuantity' + k).value == '') || (isNaN(document.getElementById('txtQuantity' + k).value) == true)))
         {
+           
             if ((document.getElementById('hdnDetailID' + k) != null) && (document.getElementById('hdnDetailID' + k).value != ''))
             {
                 RemovedIDs += document.getElementById('hdnDetailID' + k).value + ',';
@@ -186,19 +229,20 @@ function GetTextBoxValues() {
                 {
                     RemovedIDs = '';
                 }
-                document.getElementById('<%=hdnRemovedIDs.ClientID%>').value = RemovedIDs;
+                //document.getElementById('<%=hdnRemovedIDs.ClientID%>').value = RemovedIDs;
+                document.getElementById(hdnRemovedIDs).value = RemovedIDs;
             }
         }
     }
-    document.getElementById('<%=hdnTextboxValues.ClientID%>').value = values;
+    document.getElementById(hdnTextboxValues).value = values;
 
 }
 
 //-----* Function to bind textboxes by medicine name -- fills textboxes when focus is lost from medicine textbox  *----//
 function BindControlsByMedicneName(ControlNo) {
    
-
-    if (ControlNo >= 1) {
+  
+    if (ControlNo >= 0) {
         var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
 
     }
@@ -206,11 +250,13 @@ function BindControlsByMedicneName(ControlNo) {
     if (MedicineName != "") {
 
         PageMethods.MedDetails(MedicineName, OnSuccess, onError);
+       
     }
-
+    
     function OnSuccess(response, userContext, methodName) {
-        if (ControlNo >= 1) {
-
+        
+        if (ControlNo >= 0) {
+           
             var MedicineDetails = new Array();
             MedicineDetails = response.split('|');
 
@@ -221,10 +267,10 @@ function BindControlsByMedicneName(ControlNo) {
             document.getElementById('hdnQty' + ControlNo).value = parseInt(MedicineDetails[3]);
 
         }
-
+       
     }
     function onError(response, userContext, methodName) {
-
+       
     }
 
 
@@ -232,7 +278,7 @@ function BindControlsByMedicneName(ControlNo) {
 
 //-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
 function CheckMedicineIsOutOfStock(ControlNo) {
-                 
+   
     if (document.getElementById('txtMedicine' + ControlNo) != null && document.getElementById('txtQuantity' + ControlNo) != null)
     {
         var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);
@@ -285,22 +331,30 @@ function CheckMedicineIsOutOfStock(ControlNo) {
 
 
 //----------------------------------- * Function to rebind medicine textboxes -- refills controls by retrieving data from xml *--------------------//
-function RefillTextboxesWithXmlData(Medicines) {
-
+function RefillTextboxesWithXmlData(hdnXmlData) {
+  
    
-    var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
+    //var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
+
+    var XmlDataFromHF = document.getElementById(hdnXmlData).value;
     var xmlDoc = $.parseXML(XmlDataFromHF);
     var xml = $(xmlDoc);
     var Medicines = xml.find("Medicines");
-    var i = 1;
+    var i = 0;
 
     if (Medicines.length > 0)
     {
-        document.getElementById('<%=txtIssueNO.ClientID %>').readOnly = true;
+        //document.getElementById('<%=txtIssueNO.ClientID %>').readOnly = true;
 
         $.each(Medicines, function () {
 
-            debugger;
+            if (i > 0) {
+                clickStockAdd(i);
+            }
+
+
+
+           
             var MedicineName = $(this).find("MedicineName").text();
             var MedicineCode = $(this).find("MedCode").text();
             var MedicineUnit = $(this).find("Unit").text();

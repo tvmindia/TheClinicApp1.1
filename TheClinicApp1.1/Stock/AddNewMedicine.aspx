@@ -121,7 +121,13 @@
         }
 
 
-
+        function RemoveRequiredAttribute()
+        {
+            document.getElementById('<%=txtmedicineName.ClientID %>').required = false;
+            document.getElementById('<%=txtCode.ClientID %>').required = false;
+            document.getElementById('<%=txtUnit.ClientID %>').required = false;
+            document.getElementById('<%=txtOrderQuantity.ClientID %>').required = false;
+        }
 
     </script>
 </asp:Content>
@@ -273,7 +279,7 @@
 
          
           <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnSave_Click" ValidationGroup="Required" />
-        <asp:Button ID="btnNew" runat="server" Text="New" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnNew_Click" ValidationGroup="Required" OnClientClick="HideErrorMsg();" />
+        <asp:Button ID="btnNew" runat="server" Text="New" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnNew_Click" ValidationGroup="Required" OnClientClick="RemoveRequiredAttribute();"  />
         </div>
        <%-- </ContentTemplate>
     </asp:UpdatePanel>--%>

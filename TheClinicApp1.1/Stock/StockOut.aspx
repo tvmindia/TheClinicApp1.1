@@ -1,14 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockOut.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockOut" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-    <style type="text/css">
-           .highlight {
-            background-color: #FFFFAF;
-        }
-
-
-          </style>
-
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
      <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
      <script src="../js/vendor/jquery-1.11.1.min.js"></script>
@@ -108,9 +100,9 @@
                     $("td", row).eq(2).html($(this).find("Date").text());
                     $("td", row).eq(3).html('Details').click(function () {
 
-                        issueID = $(this).closest('tr').find('td:eq(2)').text();
+                        issueID = $(this).closest('tr').find('td:eq(4)').text();
                         window.location = "StockOutDetails.aspx?issueID=" + issueID;
-                    }); 
+                    }).addClass('CursorShow');
 
                     $("td", row).eq(4).html($(this).find("IssueID").text());
 
@@ -206,12 +198,12 @@
          <input class="field" type="search" placeholder="Search here..." id="txtSearch">
          <input class="button" type="submit" value="Search">
          </div> 
-         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="StockOutDetails.aspx"><span></span>New</a></li></ul>
          </div>
          
          <div class="tab_table">         
          
-<asp:GridView ID="gvIssueHD" runat="server" Style="width: 400px" AutoGenerateColumns="False" class="table">
+<asp:GridView ID="gvIssueHD" runat="server" Style="width:100%" AutoGenerateColumns="False" class="table">
             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
             <Columns>
             

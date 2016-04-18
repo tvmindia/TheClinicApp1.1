@@ -180,7 +180,7 @@ namespace TheClinicApp1._1.Stock
             BindListFilter();
 
 
-            txtDate.Attributes.Add("readonly", "readonly");
+          //  txtDate.Attributes.Add("readonly", "readonly");
             string receiptID = string.Empty;
 
             DataSet dsReceipthdr = null;
@@ -252,11 +252,11 @@ namespace TheClinicApp1._1.Stock
 
 
 
-            receipt = Guid.Parse(Request.QueryString["ReceiptID"]);
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            rpt.ClinicID = UA.ClinicID.ToString();
+            //receipt = Guid.Parse(Request.QueryString["ReceiptID"]);
+            //UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            //rpt.ClinicID = UA.ClinicID.ToString();
 
-            GridViewReceiptDetails();
+            //GridViewReceiptDetails();
              
 
         }

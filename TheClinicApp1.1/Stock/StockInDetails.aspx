@@ -2,27 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-
-    <%--   //------------- DATEPICKER SCRIPT AND  STYLES---------%>
-
-    <script src="../js/jquery-1.12.0.min.js"></script>
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-
-    <script src="../js/jquery-ui.js"></script>
-    <link href="../css/jquery-ui.css" rel="stylesheet" />
-    <script>
-
-        debugger;
-        $("[id$=txtDate]").datepicker({
-            dateFormat: 'dd-m-yy',
-            showOn: 'button',
-            buttonImageOnly: true,
-            buttonImage: '../images/calendar4.png',
-
-
-        });
-    </script>
-
     <%--Date picker styles--%>
     <style>
         .ui-autocomplete {
@@ -30,13 +9,11 @@
             background-color: ghostwhite;
             box-shadow: 1px 5px 10px 5px #4d3319;
         }
-
         .ui-datepicker {
             background: fixed;
             background-color: ghostwhite;
             box-shadow: 1px 5px 10px 5px #4d3319;
         }
-
         .warning {
             background: url(../Images/Button-Warning-icon.png) no-repeat;
             background-size: 9% 90%;
@@ -46,13 +23,114 @@
         }
     </style>
 
-
-
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="../js/jquery-1.12.0.min.js"></script>
+      <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
+
+    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
+
+    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>   
     <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
+
+ <script src="../js/jquery-1.9.1.min.js"></script>     
+    <script src="../js/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+           $('.nav_menu').click(function () {
+                
+                $(".main_body").toggleClass("active_close");
+            });
+
+
+  debugger;
+   
+           
+        $("[id$=txtDate]").datepicker({
+            dateFormat: 'dd-m-yy',
+            showOn: 'button',
+            buttonImageOnly: true,
+            buttonImage: '../images/calendar4.png',
+        });           
+
+
+
+        });
+    </script> 
+ 
+
+
+      
+                        
+        <script>
+           
+
+            function autocompleteonfocus(controlID)
+            {
+                //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
+
+              //  debugger;
+                var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
+ 
+                if (topcount==0)
+                {
+                    var ac=null; 
+                    ac = <%=listFilter %>;
+                    $( "#txtMedicine"+controlID).autocomplete({
+                        source: ac
+                    });
+                }
+                else
+                {
+                    var ac=null;
+                    ac = <%=listFilter %>;
+                    var i=1;
+                    while(i<=topcount)
+                    {
+                        if (i==1)
+                        {
+                            var item=  document.getElementById('txtMedicine'+i).value 
+                                 
+                            var result = ac.filter(function(elem){
+                                return elem != item; 
+                            });
+
+                        }
+                        else
+                        {
+                            if (document.getElementById('txtMedicine'+i) != null)
+
+                            {
+                                var item=  document.getElementById('txtMedicine'+i).value 
+                                                           
+
+                                result = result.filter(function(elem){
+                                    return elem != item; 
+                                }); 
+                            }
+                        }
+                        i++;
+                    }
+            
+                            
+                    $( "#txtMedicine"+controlID).autocomplete({
+                        source: result
+                    });
+
+                }
+
+            } 
+
+
+
+
+		</script>
+   
 
     <div class="main_body">
 
@@ -118,7 +196,7 @@
                                         </td>
                                         <td>Date</td>
                                         <td>
-                                            <asp:TextBox ID="txtDate" TabIndex="2" runat="server"></asp:TextBox>
+                                            <asp:TextBox ID="txtDate" Width="80%" TabIndex="2" runat="server"></asp:TextBox>
 
                                         </td>
                                     </tr>
@@ -141,7 +219,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <input id="txtMedicine0" type="text" placeholder="Medicine0" class="input" /></td>
+                                                    <input id="txtMedicine0" type="text"  placeholder="Medicine0" class="input" onblur="BindControlsByMedicneName(0)" onfocus="autocompleteonfocus(0)"/></td>
                                                 <td>
                                                     <input id="txtUnit0" class="input" type="text" placeholder="Unit0" /></td>
                                                 <td>
@@ -156,8 +234,8 @@
                                                     <input type="button" id="btAdd" onclick="clickStockAdd(); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
                                                 </td>
                                                 <td style="background-color: transparent">
-                                                    <input id="hdnDetailID' + iCnt + '" type="hidden" />
-                                                    <input id="hdnQty' + iCnt + '" type="hidden" /></td>
+                                                    <input id="hdnDetailID0" type="hidden" />
+                                                    <input id="hdnQty0" type="hidden" /></td>
 
                                             </tr>
                                         </tbody>
@@ -237,20 +315,4 @@
         </div>
     </div>
 
-
-
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/Dynamicgrid.js"></script>
-
-    <script>
-        var test = jQuery.noConflict();
-        test(document).ready(function () {
-
-            test('.nav_menu').click(function () {
-                test(".main_body").toggleClass("active_close");
-            });
-
-        });
-    </script>
 </asp:Content>

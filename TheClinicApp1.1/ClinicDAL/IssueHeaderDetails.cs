@@ -247,8 +247,9 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Generate_Issue_Number
   
         #region InsertIssueHeader
-        public void InsertIssueHeader()
+        public int InsertIssueHeader()
         {
+            int result = 0;
             dbConnection dcon = null;
             try
             {
@@ -274,14 +275,17 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 if (Outputval == 1)
                 {
+                    result = 1;
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                   //eObj.InsertionSuccessMessage(page);
+                    eObj.InsertionSuccessMessage(page);
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
                         //Already exists!
                     }
                 }
@@ -304,7 +308,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return result;
         }
 
         #endregion InsertIssueHeader
@@ -329,13 +333,26 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
 
+
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
+
+                if (Outputval == 1)
+                {
+                    //Success
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.UpdationSuccessMessage(page);
+                }
+
 
             }
 
             catch (Exception ex)
             {
-                throw ex;
+
+                var page = HttpContext.Current.CurrentHandler as Page;
             }
 
             finally
@@ -346,6 +363,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
 
         }
 
@@ -621,6 +639,8 @@ namespace TheClinicApp1._1.ClinicDAL
     }
     public class IssueDetails
     {
+        string msg = string.Empty;
+
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
         #endregion Global Variables
@@ -793,12 +813,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    //eObj.InsertionSuccessMessage(page);
+                    eObj.InsertionSuccessMessage(page);
                 }
                 else
                 {
                     if (Outputval == 2)
                     {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        msg = "Medicine is out of stock";
+                        eObj.InsertionNotSuccessMessage(page, msg);
                         //Out of stock
                     }
                 }
@@ -808,7 +831,7 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                eObj.ErrorData(ex, page);
 
             }
 
@@ -860,7 +883,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    //eObj.InsertionSuccessMessage(page);
+                    eObj.UpdationSuccessMessage(page);
                 }
 
 
@@ -967,7 +990,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    //eObj.InsertionSuccessMessage(page);
+                    eObj.DeleteSuccessMessage(page);
                 }
 
             }
@@ -975,7 +998,7 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                eObj.ErrorData(ex, page);
                
             }
 
@@ -1039,6 +1062,51 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         #endregion Get MedicineID By UniqueID
+
+        #region Get Quantity In Stock
+
+        public string GetQtyInStock(string MedName)
+        {
+            string Qty = string.Empty;
+            dbConnection dcon = null;
+
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetQtyInStock]";
+
+                cmd.Parameters.Add("@MedName", SqlDbType.NVarChar, 255).Value = MedName;
+
+                object qtyInIssueDT = cmd.ExecuteScalar();
+                if (qtyInIssueDT != null)
+                {
+                    Qty = qtyInIssueDT.ToString();
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+
+            return Qty;
+        }
+        #endregion Get Quantity In Stock
 
         #endregion Methods
 
