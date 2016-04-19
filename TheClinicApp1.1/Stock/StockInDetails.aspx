@@ -1,33 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockInDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockDetails" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-    <%--Date picker styles--%>
-    <style>
-        .ui-autocomplete {
-            background: fixed;
-            background-color: ghostwhite;
-            box-shadow: 1px 5px 10px 5px #4d3319;
-        } 
-               .warning {
-            background: url(../Images/Button-Warning-icon.png) no-repeat;
-            background-size: 9% 90%;
-            padding-left: 1%;
-            text-indent: 11%;
-            border: 1px solid #ccc;
-        }
-
-                .txtDate1Class
-        {
-            background: url('../images/calendar4.png') no-repeat right center;
-            padding-right:15px;
-          
-
-            
-        }
-
-
-    </style>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">  
+   
 
 </asp:Content>
 
@@ -37,6 +11,7 @@
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>   
     <script src="../js/JavaScript_selectnav.js"></script>
@@ -52,27 +27,18 @@
                 
                 $(".main_body").toggleClass("active_close");
             });
-
-
   debugger;
-   
-           
+              
         $("[id$=txtDate1]").datepicker({
             dateFormat: 'dd-m-yy',
+            
            
-            buttonImageOnly: true,
-            buttonImage: '../images/calendar4.png',
         });           
-
-
-
+            
         });
     </script> 
  
 
-
-      
-                        
         <script>
            
 
