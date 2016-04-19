@@ -184,7 +184,7 @@ namespace TheClinicApp1._1.Stock
         #region Clear Controls
         public void ClearControls()
         {
-            txtDate.Text = string.Empty;
+            txtDate1.Text = string.Empty;
             txtIssuedTo.Text = string.Empty;
         }
 
@@ -289,7 +289,7 @@ namespace TheClinicApp1._1.Stock
                     {
                         txtIssueNO.Text = dtIssuehdr.Rows[0]["IssueNO"].ToString();
                         txtIssuedTo.Text = dtIssuehdr.Rows[0]["IssuedTo"].ToString();
-                        txtDate.Text = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
+                        txtDate1.Text = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("MM-dd-yyyy");
                     }
 
 
@@ -307,7 +307,7 @@ namespace TheClinicApp1._1.Stock
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
             string msg = string.Empty;
-if ( (txtIssuedTo.Text != "") || (txtDate.Text != "") )
+if ( (txtIssuedTo.Text != "") || (txtDate1.Text != "") )
 {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
@@ -348,7 +348,7 @@ if ( (txtIssuedTo.Text != "") || (txtDate.Text != "") )
                 if (hdnTextboxValues.Value != "")
                 {
 
-                    if ((txtIssueNO.Text != string.Empty) && (txtIssuedTo.Text != string.Empty) && (txtDate.Text != string.Empty))
+                    if ((txtIssueNO.Text != string.Empty) && (txtIssuedTo.Text != string.Empty) && (txtDate1.Text != string.Empty))
                     {
 
                         IssuehdrObj.ClinicID = UA.ClinicID.ToString();
@@ -356,7 +356,7 @@ if ( (txtIssuedTo.Text != "") || (txtDate.Text != "") )
                         IssuehdrObj.IssueNO = txtIssueNO.Text;
                         IssuehdrObj.CreatedBy = UA.userName;
 
-                         IssuehdrObj.Date = Convert.ToDateTime(txtDate.Text);
+                         IssuehdrObj.Date = Convert.ToDateTime(txtDate1.Text);
 
 
 
@@ -389,7 +389,7 @@ if ( (txtIssuedTo.Text != "") || (txtDate.Text != "") )
                             {
 
                                 string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
-                                string newDate = txtDate.Text;
+                                string newDate = txtDate1.Text;
 
                                 if ((txtIssueNO.Text != dtIssuehdr.Rows[0]["IssueNO"].ToString()) || (txtIssuedTo.Text != dtIssuehdr.Rows[0]["IssuedTo"].ToString()) )
                                 {
@@ -402,7 +402,7 @@ if ( (txtIssuedTo.Text != "") || (txtDate.Text != "") )
 
                                         IssuehdrObj.ClinicID = UA.ClinicID.ToString();
                                         IssuehdrObj.IssuedTo = txtIssuedTo.Text;
-                                        IssuehdrObj.Date = Convert.ToDateTime(txtDate.Text);
+                                        IssuehdrObj.Date = Convert.ToDateTime(txtDate1.Text);
                                         IssuehdrObj.UpdatedBy = UA.userName;
                                         //IssuehdrObj.IssueNO = txtIssueNO.Text;
                                         IssuehdrObj.UpdateIssueHeader(ViewState["IssueHdrID"].ToString());
@@ -450,9 +450,8 @@ if ( (txtIssuedTo.Text != "") || (txtDate.Text != "") )
                                     if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
                                     {
                                         IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
-                                        IssuedtlObj.InsertIssueDetails();
-                                    }
-
+                                      }
+                                    IssuedtlObj.InsertIssueDetails();
                                   
                                 }
                             }
