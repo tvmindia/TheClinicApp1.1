@@ -406,3 +406,27 @@ html, body {
     text-decoration-color:white;
     color:white;
 }
+
+
+
+
+/*written by gibin*/
+  <%--Date picker styles--%>
+
+
+    .ui-autocomplete {
+            background: fixed;
+            background-color: ghostwhite;
+            box-shadow: 1px 5px 10px 5px #4d3319;
+        } 
+               .warning {
+            background: url(../Images/Button-Warning-icon.png) no-repeat;
+            background-size: 9% 90%;
+            padding-left: 1%;
+            text-indent: 11%;
+            border: 1px solid #ccc;
+        }
+         .txtDate1Class {
+            background: url('../images/calendar4.png') no-repeat right center;
+            padding-right:15px;  
+        }
