@@ -103,5 +103,10 @@ namespace TheClinicApp1._1.UIClasses
             get { return "Warning Msg "; }
         }
 
+        public static string DeletionFailure
+        {
+            get { return "Deletion Not Successful "; }
+        }
+
     }
 }
