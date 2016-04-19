@@ -206,27 +206,20 @@ function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
     var NumberOfColumns = i - 1;
     var NumberOfRows = NumberOfColumns / 5;
 
-    var j = 0; 
-    var tempRows= NumberOfRows;
 
+    var topId = iCnt;
 
-    for (var k = 0; k < NumberOfRows; k++)
+    for (var k = 0; k <= topId; k++)
+
     {
-      
-       
-        if (document.getElementById('txtQuantity' + k) == null)
-        {          
-            NumberOfRows = NumberOfRows + 2;
+
+        if (document.getElementById('txtQuantity' + k) == null) {
+            continue;
         }
-        else{
-
-
-        var qty = document.getElementById('txtQuantity' + k).value;
-        if (qty.indexOf('Must be') > -1)
+        if (((document.getElementById('txtQuantity' + k) != null) && (document.getElementById('txtQuantity' + k).value == '')) || ((document.getElementById('txtMedicine' + k) != null) && (document.getElementById('txtMedicine' + k).value == '')))
         {
-            document.getElementById('txtQuantity' + k).value = document.getElementById('hdnQty' + k).value;
+            continue;
         }
-
         if (((document.getElementById('txtQuantity' + k) != null) && (document.getElementById('txtQuantity' + k).value != '') && (isNaN(document.getElementById('txtQuantity' + k).value)) == false) && ((document.getElementById('txtMedicine' + k) != null) && (document.getElementById('txtMedicine' + k).value != '')))
         {
             var CurrentMedName = document.getElementById('txtMedicine' + k).value;
@@ -234,42 +227,24 @@ function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
             { }
             else
             {
-                values += document.getElementById('txtMedicine' + k).value + '|' + document.getElementById('txtUnit' + k).value + '|' + document.getElementById('txtCode' + k).value + '|' + document.getElementById('txtCategory' + k).value + '|' + document.getElementById('txtQuantity' + k).value + '|' + document.getElementById('hdnDetailID' + k).value + '$';
-               
-                j = j + 1;
-
-            }
-        }
-
-        if ((document.getElementById('txtQuantity' + k) != null) && ((document.getElementById('txtQuantity' + k).value == '') || (isNaN(document.getElementById('txtQuantity' + k).value) == true)))
-        {
-           
-            if ((document.getElementById('hdnDetailID' + k) != null) && (document.getElementById('hdnDetailID' + k).value != ''))
-            {
-                RemovedIDs += document.getElementById('hdnDetailID' + k).value + ',';
                 
-                if (RemovedIDs == ',')
-                {
-                    RemovedIDs = '';
-                }
-                //document.getElementById('<%=hdnRemovedIDs.ClientID%>').value = RemovedIDs;
-                document.getElementById(hdnRemovedIDs).value = RemovedIDs;
+                
+                //if (((document.getElementById('txtUnit' + k) != null) && (document.getElementById('txtUnit' + k).value == '')) || ((document.getElementById('txtCode' + k) != null) && (document.getElementById('txtCode' + k).value == '')) || ((document.getElementById('txtCategory' + k) != null) && (document.getElementById('txtCategory' + k).value == '')))
+                //{
+                //    continue;
+                //}
+                //else
+                //{
+
+                    values += document.getElementById('txtMedicine' + k).value + '|' + document.getElementById('txtUnit' + k).value + '|' + document.getElementById('txtCode' + k).value + '|' + document.getElementById('txtCategory' + k).value + '|' + document.getElementById('txtQuantity' + k).value + '|' + document.getElementById('hdnDetailID' + k).value + '$';
+                //}
+              
             }
-        }
-        
-        if ((document.getElementById('txtQuantity' + k) != null) && (document.getElementById('txtQuantity' + k).value == '') )
-        {
-            NumberOfRows = NumberOfRows + 2;
-        }
-      
-    }
-       
-        if(j ==tempRows )
-        {
-            break;
         }
 
     }
+
+
     document.getElementById(hdnTextboxValues).value = values;
 
 }
@@ -314,7 +289,7 @@ function BindControlsByMedicneName(ControlNo) {
 
 //-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
 function CheckMedicineIsOutOfStock(ControlNo) {
-   
+    debugger;
     if (document.getElementById('txtMedicine' + ControlNo) != null && document.getElementById('txtQuantity' + ControlNo) != null)
     {
         var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);
@@ -322,18 +297,28 @@ function CheckMedicineIsOutOfStock(ControlNo) {
         var InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
         document.getElementById('hdnQty' + ControlNo).value = InputQty;
 
-        if ((MedicineName != "") && (InputQty != ""))
+        if ((MedicineName != "") )
         {
             //----------- * Case Of Insert *----------//
             if (document.getElementById('hdnDetailID' + ControlNo).value == "")
             {
                
-                if (InputQty > Qty)
+                if (InputQty > Qty || InputQty <= 0)
                 {
                     $("#txtQuantity" + ControlNo).addClass("warning");
                     $("#txtQuantity" + ControlNo).attr('type', 'text');
                     $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
-                    $("#txtQuantity" + ControlNo).val('Must be < ' + Qty);                   
+
+                    if (InputQty > Qty)
+                    {
+                        $("#txtQuantity" + ControlNo).val('Must be < ' + Qty);
+                    }
+
+                    if (InputQty <= 0)
+                    {
+                        $("#txtQuantity" + ControlNo).val('Must be > 0');
+                    }
+
                 }
                 else
                 {
@@ -346,13 +331,24 @@ function CheckMedicineIsOutOfStock(ControlNo) {
             else
             {             
                 var QtyInStock = parseInt(document.getElementById('txtQuantity' + ControlNo).getAttribute("placeholder").replace(" Out Of: ", ""));
-                if (InputQty > QtyInStock)
+                if (InputQty > QtyInStock || InputQty <= 0 )
                 {
                     $("#txtQuantity" + ControlNo).addClass("warning");
                     $("#txtQuantity" + ControlNo).attr('type', 'text');
                     $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
-                    $("#txtQuantity" + ControlNo).val('Must be < ' + QtyInStock);       
+
+                    if (InputQty > Qty)
+                    {
+
+                        $("#txtQuantity" + ControlNo).val('Must be < ' + QtyInStock);
+                    }
+
+                    if (InputQty <= 0)
+                    {
+                        $("#txtQuantity" + ControlNo).val('Must be > 0');
+                    }
                 }
+
                 else
                 {
                     $("#txtQuantity" + ControlNo).removeClass("warning");

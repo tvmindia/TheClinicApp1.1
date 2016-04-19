@@ -22,6 +22,15 @@ namespace TheClinicApp1._1.Stock {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
+        /// btnSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnSave;
+        
+        /// <summary>
         /// Errorbox control.
         /// </summary>
         /// <remarks>
@@ -49,15 +58,6 @@ namespace TheClinicApp1._1.Stock {
         protected global::System.Web.UI.WebControls.Label lblMsgges;
         
         /// <summary>
-        /// btnSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnSave;
-        
-        /// <summary>
         /// txtIssueNO control.
         /// </summary>
         /// <remarks>
@@ -65,6 +65,24 @@ namespace TheClinicApp1._1.Stock {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtIssueNO;
+        
+        /// <summary>
+        /// imgWebLnames control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgWebLnames;
+        
+        /// <summary>
+        /// errorLnames control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image errorLnames;
         
         /// <summary>
         /// txtDate1 control.
