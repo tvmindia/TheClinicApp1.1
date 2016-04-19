@@ -1,11 +1,10 @@
 ﻿
 <%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-  </asp:Content>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-     <!-- Script Files -->
-  
+    <!-- Script Files -->  
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
    
     <script src="../js/jquery-1.12.0.min.js"></script>
@@ -13,7 +12,28 @@
     <script src="../js/bootstrap.min.js"></script>  
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
+    <!---   Script for fileupload preview, Created By:Thomson Kattingal --->   
+    <script type="text/javascript">
+         function showpreview(input) {
+             debugger;
 
+             if (input.files && input.files[0]) {
+                 debugger;
+
+                 var reader = new FileReader();
+                 reader.onload = function (e) {
+                     debugger;
+                        
+                     $('#<%=ProfilePic.ClientID %>').attr('src', e.target.result);
+                 }
+                 reader.readAsDataURL(input.files[0]);
+             }
+
+         }
+
+    </script>
+    <!--------------------------------------------------------------------->
+    <!---   Script Nav button to srink and reform in document Ready --->
     <script> 
         function getPatientId(Patient)
         {
@@ -43,7 +63,8 @@
         });
 
 		</script>
-      <script>
+     <!---------------------------------------------------------------->
+    <script>
           var test = jQuery.noConflict();
           test(document).on('ready', function () {
               test("#FileUpload").fileinput({
@@ -51,7 +72,8 @@
               });
               
          });
-        </script>    
+        </script> 
+    <!--- Script for AutocompletionTextBox preview, Created By:Thomson Kattingal --->   
     <script>
         var test=jQuery.noConflict();
         test(document).on('ready',function(){
@@ -64,6 +86,8 @@
         });
              
     </script>
+    <!------------------------------------------------------------------------------>
+    <!--- Script for Url driven for iframe, Created By:Thomson Kattingal --->
     <script>
         function SetIframeSrc(HyperlinkID){
             if (HyperlinkID=="AllRegistrationIframe")
@@ -73,9 +97,11 @@
             }
         }
     </script>
+    <!---------------------------------------------------------------------->
+   <!------------------------------------->
   
-  <!-- Main Container -->
-  <div class="main_body">   
+        <!-- Main Container -->
+        <div class="main_body">   
       
       <!-- Left Navigation Bar -->  
          <div class="left_part">
@@ -103,21 +129,28 @@
          <div class="grey_sec">
          <div class="search_div">
          <input class="field" type="search" id="txtSearch" name="txtSearch" placeholder="Search here..." />
-         <input class="button" type="submit" value="Search" />
+         <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" />
          </div>
          <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClick="btnSave_Click" /></li><li><a class="new" href="#" runat="server" id="btnNew" onserverclick="btnNew_ServerClick"><span></span>New</a></li></ul>
          </div>        
          <div class="right_form">         
-         <div id="Errorbox"  style="height:25%;display:none;"  runat="server" ><a class="alert_close">X</a>
+         <div id="Errorbox"  style="height:30%;display:none;" runat="server" ><a class="alert_close">X</a>
          <div>
          <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
          <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
-
+         </div>
+         <div class="alert alert-info" id="divDisplayNumber" visible="false" runat="server" ><a class="alert_close">X</a>
+         <div>
+             <div><strong><asp:Label ID="lblDisplayFileNumber" runat="server" Text="File Number"></asp:Label>:&nbsp;</strong><asp:Label ID="lblFileCount" runat="server" Text=""></asp:Label></div>
+             <div><strong><asp:Label ID="lblTokenNumber" runat="server" Text="Token Number"></asp:Label>:&nbsp;</strong><asp:Label ID="lblTokencount" runat="server" Text=""></asp:Label></div>
+                           
          </div>
 
          </div>
-             
-         <div class="alert alert-success" style="display:none">
+
+         </div>
+                
+         <%--<div class="alert alert-success" style="display:none">
           <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
         </div>        
         <div class="alert alert-info" style="display:none">
@@ -130,7 +163,7 @@
         
         <div class="alert alert-danger" style="display:none">
           <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-        </div>
+        </div>--%>
             
       <div class="registration_form">        
       <div class="row field_row">  
@@ -139,11 +172,12 @@
       <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required /></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
-      <img id="ProfilePic" runat="server" src="../images/UploadPic.png" />
+      <img id="ProfilePic" src="../images/UploadPic.png" runat="server"  />
       </div>
       <div class="upload">
       <label class="control-label">Upload Picture</label>
-      <asp:FileUpload ID="FileUpload1" ForeColor="Green" Font-Size="12px" runat="server" />
+          
+      <asp:FileUpload ID="FileUpload1" ForeColor="Green" Font-Size="12px" runat="server" onchange="showpreview(this);" />
       </div>
       </div>
       <div class="col-lg-8 margin_bottom"><label for="sex">Sex</label>
@@ -182,39 +216,19 @@
       <div class="col-lg-4">
       <label for="occupation">Occupation</label><input id="txtOccupation" runat="server" type="text" name="occupation" />
       </div>
-      </div>
-      
-        </div> 
-        
-          <div class="col-md-12" id="divDisplayNumber" visible="false" style="font-size:20px" runat="server">
-                    <table>
-                        <tr>
-                            <td>
-                                 <asp:Label ID="lblDisplayFileNumber" runat="server" Text="File Number"></asp:Label>:
-                            </td>
-                            <td>
-                                <asp:Label ID="lblFileCount" runat="server" Text=""></asp:Label>
-                            </td>
-                            </tr>
-                        <tr>
-                            <td>
-                                 <asp:Label ID="lblTokenNumber" runat="server" Text="Token Number"></asp:Label>:
-                            </td>
-                            <td>
-                                <asp:Label ID="lblTokencount" runat="server" Text=""></asp:Label>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-         
-         
-         </div>
-         
-         </div>  
-    </div>  
-        <!---------------------------------- Modal Section --------------------------------------->
 
-    <div id="add_medicine" class="modal fade" role="dialog">
+      </div>
+
+      </div>
+
+         </div>
+
+         </div>
+
+  </div>  
+        <!---------------------------------- Modal Section --------------------------------------->
+        <!-- All Registration Iframe Modal -->
+        <div id="add_medicine" class="modal fade" role="dialog">
   <div class="modal-dialog" style="height:600px;">
 
     <!-- Modal content-->
@@ -232,9 +246,10 @@
 
   </div>
 </div> 
-
+              
+        <!-- Token Registration Modal -->
         <div class="modal fade" id="TokenRegistration" role="dialog">
-            <div class="modal-dialog modal-lg1" style="width:400px;">
+            <div class="modal-dialog modal-lg1" style="width:40%;height:70%">
 
                 <!-- Modal content-->
                 
@@ -244,7 +259,7 @@
                         <h4 class="modal-title" style="font-size:20px;color:white;font-family:Castellar;">Token Registration</h4>
 
                     </div>
-                    <div class="modal-body" style="background-color:white;overflow-x:hidden;overflow-y:hidden;">
+                    <div class="modal-body" style="background-color:white;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;">
                         <div class="col-lg-12" style="color:brown;">
                             Would You Like to Book A Token ?
                         </div>
@@ -288,59 +303,6 @@
                             </div>
                              
                         </div>
-                        <%-- Patient Details Diplay region --%>
-                        
-                      
-               <%--    <table class="tokenPatientDetailsTable TileContent" id="divContainer" style="display:none" >
-                       <tr>
-                           <td class="tokenPatientDetailsTableColumn">
-                                       <label  class="subheadingLabel" style="text-align:center" >Patient Details</label>
-
-                           </td>
-                       </tr>
-
-                        <tr>
-                           <td  class="tokenPatientDetailsTableColumn">
-
-                                       <asp:Label ID="lblFile" CssClass="largefont " runat="server" Text=""></asp:Label>
-
-                           </td>
-                       </tr>
-                        <tr>
-                           <td  class="tokenPatientDetailsTableColumn">
-                                    
-                                          <asp:Label ID="lblName"  CssClass="tokenPatientDetailsName "  runat="server" Text=""></asp:Label>
-
-                           </td>
-                       </tr>
-                        <tr>
-                           <td  class="tokenPatientDetailsTableColumn">
-                                        <asp:Label ID="lblAge" runat="server"  CssClass="tokenPatientDetailslabel" Text=""></asp:Label>
-
-                           </td>
-                       </tr>
-                         <tr>
-                           <td  class="tokenPatientDetailsTableColumn">
-                                 <asp:Label ID="lblGender" runat="server" CssClass="tokenPatientDetailslabel" Text=""></asp:Label>
-                           </td>
-                       </tr>
-                        <tr>
-                           <td  class="tokenPatientDetailsTableColumn">
-                                           <asp:Label ID="lblPhone" runat="server" CssClass="tokenPatientDetailslabel" Text=""></asp:Label>
-
-                           </td>
-                       </tr>
-
-                        <tr>
-                           <td  class="tokenPatientDetailsTableColumn">
-                                    <asp:Label ID="lblToken" Visible="false" CssClass="largefont tokenPatientDetailslabel"  runat="server" Text="Token NO"></asp:Label>
-
-                           </td>
-                       </tr>
-                        
-                   </table>--%>
-                                     
-
                             <div class="col-md-12 Span-One">
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -364,50 +326,41 @@
                         </div>
                     </div>
                     <div class="modal-footer" style="background-color:white;">
-                      <asp:Button ID="btntokenbooking" runat="server" Text="BOOK TOKEN"  type="submit" CssClass="button" OnClick="btntokenbooking_Click" BorderColor="DarkSeaGreen" ForeColor="White" BackColor="#3366ff" ValidationGroup="Submit" formnovalidate />
-                        ....
+                      <asp:Button ID="btntokenbooking" runat="server" Text="BOOK TOKEN"  type="submit" CssClass="button" OnClick="btntokenbooking_Click" BorderColor="DarkSeaGreen" ForeColor="White" BackColor="#3366ff" ValidationGroup="Submit" formnovalidate />                       
                     </div>
                 </div>
                 
             </div>
         </div>
 
-
+        <!-- All Registration Modal -->
         <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog  modal-lg">
-
+            <div class="modal-dialog  modal-lg" style="width:60%;height:70%">
                 <!-- Modal content-->
-                <div class="modal-content" >
+                <div class="modal-content" style="width:100%;height:100%" >
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">View All Registrations</h4>
-
+                        <h3 class="modal-title">View All Registrations</h3>
                     </div>
-                    <div class="modal-body" >
-                        
-                        <asp:GridView ID="dtgViewAllRegistration" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None" Height="30px" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5">
-                            
+                    <div class="modal-body" style="width:100%;height:100%" >                        
+                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None" Height="30px" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5">                            
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
                                         <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
                                        
-
-                                    </ItemTemplate>
-                                    
+                                    </ItemTemplate>                                    
                                 </asp:TemplateField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
                                         <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Cancel.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
                                        
-
                                     </ItemTemplate>
                                    <ItemStyle HorizontalAlign="Center" />
                                     <HeaderStyle HorizontalAlign="Center" />
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Name" HeaderText="Patient Name">
-                                    
+                                <asp:BoundField DataField="Name" HeaderText="Patient Name">                                    
                                      <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"></ItemStyle>
                                 </asp:BoundField>
                                 <asp:BoundField DataField="Address" HeaderText="Address">
@@ -422,51 +375,37 @@
 
                             </Columns>
                             <EditRowStyle HorizontalAlign="Center" BackColor="#0080AA"></EditRowStyle>
-
                             <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
-
                             <HeaderStyle BackColor="#0080AA" HorizontalAlign="Center" VerticalAlign="Middle" Font-Bold="True" ForeColor="White"></HeaderStyle>
-
                             <PagerStyle HorizontalAlign="Center" ForeColor="black" BackColor="#2461BF"></PagerStyle>
-
                             <RowStyle BackColor="#EFF3FB"></RowStyle>
-
                             <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
-
                             <SortedAscendingCellStyle BackColor="#F5F7FB"></SortedAscendingCellStyle>
-
                             <SortedAscendingHeaderStyle BackColor="#6D95E1"></SortedAscendingHeaderStyle>
-
                             <SortedDescendingCellStyle BackColor="#E9EBEF"></SortedDescendingCellStyle>
-
                             <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
                         </asp:GridView>
-                            </div>
-                   
+                    </div>                 
                     <div class="modal-footer">
-                   
-
                     </div>
                 </div>
 
             </div>
         </div>
       
-        
+        <!-- Todays Registration Modal -->
         <div class="modal fade" id="TodaysRegistration" role="dialog">
-            <div class="modal-dialog modal-lg">
-
-                <!-- Modal content-->
-                
-                <div class="modal-content">
+            <div class="modal-dialog modal-lg" style="width:60%;height:70%">
+                <!-- Modal content-->               
+                <div class="modal-content" style="width:100%;height:100%">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Todays Registrations</h4>
+                        <h3 class="modal-title">Todays Registrations</h3>
 
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="width:100%;height:100%">
                      
-                        <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None">
+                        <asp:GridView ID="dtgViewTodaysRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None">
                             <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField>
@@ -488,25 +427,15 @@
                                 <asp:BoundField DataField="Email" HeaderText="Email"></asp:BoundField>
                                 
                             </Columns>
-
                             <EditRowStyle BackColor="#0080AA"></EditRowStyle>
-
                             <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
-
                             <HeaderStyle BackColor="#0080AA" Font-Bold="True" ForeColor="White"></HeaderStyle>
-
                             <PagerStyle HorizontalAlign="Center" BackColor="#284775" ForeColor="White"></PagerStyle>
-
                             <RowStyle BackColor="#F7F6F3" ForeColor="#333333"></RowStyle>
-
                             <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
-
                             <SortedAscendingCellStyle BackColor="#E9E7E2"></SortedAscendingCellStyle>
-
                             <SortedAscendingHeaderStyle BackColor="#506C8C"></SortedAscendingHeaderStyle>
-
                             <SortedDescendingCellStyle BackColor="#FFFDF8"></SortedDescendingCellStyle>
-
                             <SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
                         </asp:GridView>
                         
@@ -521,55 +450,14 @@
         </div>
         <!------------------------------------------------------------------------------------------>   
                     
-<!-- All Registration Modal -->
-<%--<div id="ViewAllregistration" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-  
-  <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        
-        <h4 class="modal-title">Registered List </h4>
-      </div>
-      <div class="modal-body">
-
-      </div>
-
-  </div>
-
-  </div>
-
-</div>   --%>      
-         
-<!-- Todays Registration Modal -->
-<%--<div id="ViewTodaysRegistration" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-  
-  <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        
-        <h4 class="modal-title">Registered List </h4>
-      </div>
-      <div class="modal-body">
-
-      </div>
-
-  </div>
-
-  </div>
-
-</div>--%>
-     
-     
-
-   
+    <!-- Script Files -->
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <!---   Script includes function for open Modals preview, Created By:Thomson Kattingal --->
     <asp:ScriptManager runat="server"></asp:ScriptManager>   
-    <script type="text/javascript">
-       
+    <script type="text/javascript">  
+        <!---Function for Open Token Registration Modal and All Registarion Modal----->
         function openModal() {
             debugger;
              $('#TokenRegistration').modal('show');
@@ -579,6 +467,7 @@
             $('#myModal').modal('show');
         }
         </script>
-   
+   <!----------------------------------------------------------------------------------------> 
+   <!------------------------------------->
             
 </asp:Content>

@@ -14,7 +14,11 @@ namespace TheClinicApp1._1.Doctor
     {
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
+        ClinicDAL.ErrorHandling eObj = new ClinicDAL.ErrorHandling();
+        ClinicDAL.TokensBooking tok = new ClinicDAL.TokensBooking();
+        ClinicDAL.CaseFile.Visit CaseFileObj = new ClinicDAL.CaseFile.Visit();
         ClinicDAL.Patient PatientObj = new ClinicDAL.Patient();
+        ClinicDAL.Doctor DoctorObj = new ClinicDAL.Doctor();
         public string listFilter=null;
         public string RoleName = null;
         protected void Page_Load(object sender, EventArgs e)
@@ -25,6 +29,7 @@ namespace TheClinicApp1._1.Doctor
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
+            gridviewbind();
         }
 
         #region BindSearch
@@ -55,7 +60,7 @@ namespace TheClinicApp1._1.Doctor
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             ClinicDAL.CaseFile.Visit VisitsObj = new ClinicDAL.CaseFile.Visit();
             VisitsObj.DoctorID = Guid.Parse("469489AE-6237-47B3-B8CC-74B62EC81D77");
-            VisitsObj.ClinicID = Guid.Parse("2C7A7172-6EA9-4640-B7D2-0C329336F289");
+            VisitsObj.ClinicID =Guid.Parse(UA.Clinic);
             VisitsObj.FileID = Guid.Parse("232CFE06-E9E9-42C1-B2F6-B992ABE0140A");
             int feet = Convert.ToInt32(txtHeightFeet.Value);
             int inch = Convert.ToInt32(txtHeightInch.Value);
@@ -76,8 +81,8 @@ namespace TheClinicApp1._1.Doctor
             VisitsObj.Sleep = (sleep.Value != null) ? sleep.Value.ToString() : null;
             VisitsObj.Diagnosys = (diagnosys.Value != null) ? diagnosys.Value.ToString() : null;
             VisitsObj.Remarks = (remarks.Value != null) ? remarks.Value.ToString() : null;
-            VisitsObj.CreatedBy = "thomson";
-            VisitsObj.UpdatedBy = "thomson";
+            VisitsObj.CreatedBy = UA.userName;
+            VisitsObj.UpdatedBy = UA.userName;
             VisitsObj.Bp = (bp.Value != null) ? bp.Value.ToString() : null;
             VisitsObj.Pulse = (pulse.Value != null) ? pulse.Value.ToString() : null;
             VisitsObj.Tounge = (tounge.Value != null) ? tounge.Value.ToString() : null;
@@ -103,5 +108,97 @@ namespace TheClinicApp1._1.Doctor
                 }
             } 
         }
+
+        #region FillPatientDetails
+        protected void ImgBtnUpdate_Command1(object sender, CommandEventArgs e)
+        {
+            DataRow dr = null;
+            PatientObj.PatientID = Guid.Parse(e.CommandArgument.ToString());
+            Guid PatientIDForFile = Guid.Parse(e.CommandArgument.ToString());
+
+            DoctorObj.PatientIdForFile = PatientIDForFile;
+            DataTable DtFileID = DoctorObj.GetFileIDUSingPatientID();
+            dr = DtFileID.NewRow();
+            dr = DtFileID.Rows[0];
+            Guid FileIDForGrid = Guid.Parse(dr["FileID"].ToString());
+
+            DataTable GridBindVisits = new DataTable();
+            GridBindVisits = CaseFileObj.GetGridVisits(FileIDForGrid);
+            GridViewVisitsHistory.EmptyDataText = "No Records Found";
+            GridViewVisitsHistory.DataSource = GridBindVisits;
+            GridViewVisitsHistory.DataBind();
+            DataTable dt = PatientObj.SelectPatient();
+            dr = dt.NewRow();
+            dr = dt.Rows[0];
+            DateTime date = DateTime.Now;
+            int year = date.Year;
+            Guid PatientID = Guid.Parse(dr["PatientID"].ToString());
+            lblPatientName.Text = dr["Name"].ToString();
+            lblGenderDis.Text = dr["Gender"].ToString();
+            HiddenField2.Value = FileIDForGrid.ToString();
+            DateTime DT = Convert.ToDateTime(dr["DOB"].ToString());
+            int Age = year - DT.Year;
+            lblAgeCount.Text = Age.ToString();
+            //lblAddress.Text = dr["Address"].ToString();
+            //lblLastVisitDate.Text = dr["CreatedDate"].ToString();
+            ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+            //ProfilePic.Visible = true;
+
+            //HiddenField1.Value = PatientID.ToString();
+        }
+        #endregion FillPatientDetails
+
+        #region Update Visits
+        protected void ImgBtnUpdateVisits_Command(object sender, CommandEventArgs e)
+        {
+
+            string[] Visits = e.CommandArgument.ToString().Split(new char[] { '|' });
+            CaseFileObj.VisitID = Guid.Parse(Visits[0]);
+            CaseFileObj.GetVisits();
+            txtHeightFeet.Value = CaseFileObj.Height.ToString();
+            txtWeight.Value = CaseFileObj.Weight.ToString();
+            bowel.Value = CaseFileObj.Bowel;
+            appettie.Value = CaseFileObj.Appettie;
+            micturation.Value = CaseFileObj.Micturation;
+            sleep.Value = CaseFileObj.Sleep;
+            symptoms.Value = CaseFileObj.Symptoms;
+            cardiovascular.Value = CaseFileObj.Cardiovascular;
+            nervoussystem.Value = CaseFileObj.Nervoussystem;
+            musculoskeletal.Value = CaseFileObj.Musculoskeletal;
+            palloe.Value = CaseFileObj.Palloe;
+            icterus.Value = CaseFileObj.Icterus;
+            clubbing.Value = CaseFileObj.Clubbing;
+            cyanasis.Value = CaseFileObj.Cyanasis; 
+            
+
+            lymphGen.Value = CaseFileObj.LymphClinic;
+            edima.Value = CaseFileObj.Edima;
+            diagnosys.Value = CaseFileObj.Diagnosys;
+            remarks.Value = CaseFileObj.Remarks;
+            pulse.Value = CaseFileObj.Pulse;
+            bp.Value = CaseFileObj.Bp;
+            tounge.Value = CaseFileObj.Tounge;
+            heart.Value = CaseFileObj.Heart;
+            lymphnodes.Value = CaseFileObj.LymphGen;          
+            resp_rate.Value = CaseFileObj.RespRate;
+            others.Value = CaseFileObj.Others;
+            //btnnew.Visible = true;
+            string PrescriptionID = Visits[1];
+        }
+        #endregion Update Visits
+
+        #region GridBindTokens
+        public void gridviewbind()
+        {
+            //Gridview Binding to Diplay DoctorName,Token No,Patient Name,TIME
+            tok.DateTime = DateTime.Now;
+            DataSet gds = tok.ViewToken();
+            GridViewTokenlist.EmptyDataText = "No Records Found";
+            GridViewTokenlist.DataSource = gds;
+            GridViewTokenlist.DataBind();
+
+
+        }
+        #endregion GridBindTokens
     }
 }
