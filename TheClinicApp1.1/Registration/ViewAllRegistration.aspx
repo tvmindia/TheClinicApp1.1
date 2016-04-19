@@ -2,8 +2,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <script src="../js/jquery-1.12.0.min.js"></script>
   <script>
-      function fill(Patient) {
+      function Fill(Patient) {
           debugger;
           parent.getPatientId(Patient); 
       }
@@ -14,7 +15,7 @@
       <Columns>
       <asp:TemplateField>
        <ItemTemplate>
-      <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnClientClick="Fill(hello);" formnovalidate />
+      <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
     </ItemTemplate>
       </asp:TemplateField>
       <asp:TemplateField>
@@ -57,5 +58,26 @@
 
                             <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
                         </asp:GridView>
+        <asp:HiddenField ID="HiddenField1" runat="server" />
+        <asp:HiddenField ID="HiddenField2" runat="server" />
+        <asp:HiddenField ID="HiddenField3" runat="server" />
+        <asp:HiddenField ID="HiddenField4" runat="server" />
+        <asp:HiddenField ID="HiddenField5" runat="server" />
+        <asp:HiddenField ID="HiddenField6" runat="server" />
         </div>
+   <script src="../js/jquery-1.12.0.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <asp:ScriptManager runat="server"></asp:ScriptManager>   
+    <script type="text/javascript">
+        function SetFields() {
+            debugger;
+            if (window.showModalDialog != null && !window.showModalDialog.closed) {
+                debugger;
+                var txtName = window.showModalDialog.document.getElementById("txtName");
+                txtName.value = document.getElementById("HiddenField2").value;
+            }
+            window.close();
+        }
+</script>
 </asp:Content>

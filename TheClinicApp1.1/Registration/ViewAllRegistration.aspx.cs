@@ -20,39 +20,25 @@ namespace TheClinicApp1._1.Registration
             #endregion GridAllRegistration
         }
         #region EditPatients
-        //protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
-        //{
-        //    DateTime date = DateTime.Now;
-        //    int year = date.Year;
-        //    string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
-           
-        //    //Guid PatientID = Guid.Parse(Patient[0]);
-        //    //txtName.Value = Patient[1];
-        //    //if (Patient[6].Trim() == "Male")
-        //    //{
-        //    //    rdoFemale.Checked = false;
-        //    //    rdoMale.Checked = true;
-        //    //}
-        //    //else if (Patient[6].Trim() == "Female")
-        //    //{
-        //    //    rdoMale.Checked = false;
-        //    //    rdoFemale.Checked = true;
-        //    //}
+        protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
+        {
+            DateTime date = DateTime.Now;
+            int year = date.Year;
+            string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
 
-        //    //DateTime dt = Convert.ToDateTime(Patient[5]);
-        //    //int Age = year - dt.Year;
-        //    //txtAge.Value = Age.ToString();
-        //    //txtAddress.Value = Patient[2];
-        //    //txtMobile.Value = Patient[3];
-        //    //txtEmail.Value = Patient[4];
-        //    //ddlMarital.SelectedValue = Patient[7];
-
-        //    //ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
-        //    //ProfilePic.Visible = true;
-        //    ////btnnew.Visible = true;
-        //    //HiddenField1.Value = PatientID.ToString();
-
-        //}
+            Guid PatientID = Guid.Parse(Patient[0]);           
+            HiddenField1.Value = PatientID.ToString();
+            HiddenField2.Value=Patient[1];
+            string Address=Patient[2];
+            string Phone = Patient[3];
+            string Gmail = Patient[4];
+            string DOB=Patient[5];
+            string Gender = Patient[6];
+            string Marital = Patient[7];
+            string Pic = Patient[8];
+            string Type = Patient[9];
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "SetFields();", true);
+        }
         #endregion EditPatients
 
         #region GridDelete

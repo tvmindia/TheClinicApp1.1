@@ -231,7 +231,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@DOB", SqlDbType.Date).Value = DOB;
                 pud.Parameters.Add("@Gender", SqlDbType.NVarChar, 50).Value = Gender;
                 pud.Parameters.Add("@MaritalStatus", SqlDbType.NVarChar, 50).Value = MaritalStatus;
-                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UA.userName;
+                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
