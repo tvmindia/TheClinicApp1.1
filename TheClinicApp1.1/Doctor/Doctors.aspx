@@ -48,19 +48,19 @@
          <div class="right_form">
          
          <div class="token_id_card">
-             <div class="name_field"><img src="../images/UploadPic.png" width="80" height="80" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label></div>
+             <div class="name_field"><img id="ProfilePic" src="../images/UploadPic.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label></div>
                  <div class="light_grey">
-                     <div class="col3_div">25yrs<span>Age</span></div>
-                     <div class="col3_div">Female<span>Gender</span></div>
-                     <div class="col3_div">1562<span>File No</span></div>
+                     <div class="col3_div"><asp:Label ID="lblAgeCount" runat="server" Text=""></asp:Label><span>Age</span></div>
+                     <div class="col3_div"><asp:Label ID="lblGenderDis" runat="server" Text=""></asp:Label><span>Gender</span></div>
+                     <div class="col3_div"><asp:Label ID="lblFileNum" runat="server" Text=""></asp:Label><span>File No</span></div>
                  </div>
                  <div class="card_white">
-                    <div class="field_label"><label>Doctor</label> Test Test</div>      
+                    <div class="field_label"><label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text="Dr.George"></asp:Label></div>      
                 </div>
              </div>
          
 
-          
+             <asp:HiddenField ID="HiddenField2" runat="server" />
          
          <div id="accordion">
   <h3>Personal</h3>
@@ -203,35 +203,101 @@
                  
 <!-- Modal -->
 <div id="casehistory" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width:60%;height:70%;">
 	
     <!-- Modal content-->
-    <div class="modal-content">
+    <div class="modal-content" style="width:100%;height:100%">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         
-        <h4 class="modal-title">Case History</h4>
+        <h3 class="modal-title">Case History</h3>
       </div>
-      <div class="modal-body">
-       
-      </div>      
+      <div class="modal-body" style="width:100%;height:100%">
+         <asp:GridView ID="GridViewVisitsHistory" runat="server" AutoGenerateColumns="False" CssClass="table" Style="max-width: 100%;min-width:100%;" DataKeyNames="FileID" CellPadding="4" GridLines="None" ForeColor="#333333">
+              <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+              <Columns>
+                  <asp:TemplateField>
+                      <ItemTemplate>
+                          <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" formnovalidate />
+
+
+
+                      </ItemTemplate>
+                  </asp:TemplateField>
+                  <asp:BoundField HeaderText="Date" DataField="CreatedDate" />
+                  <asp:BoundField HeaderText="Remarks" DataField="Remarks" />
+              </Columns>
+
+              <EditRowStyle BackColor="#2461BF"></EditRowStyle>
+
+              <FooterStyle BackColor="#507CD1" ForeColor="White" Font-Bold="True"></FooterStyle>
+
+              <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White"></HeaderStyle>
+
+              <PagerStyle HorizontalAlign="Center" ForeColor="White" BackColor="#2461BF"></PagerStyle>
+
+              <RowStyle BackColor="#EFF3FB"></RowStyle>
+
+              <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
+
+              <SortedAscendingCellStyle BackColor="#F5F7FB"></SortedAscendingCellStyle>
+
+              <SortedAscendingHeaderStyle BackColor="#6D95E1"></SortedAscendingHeaderStyle>
+
+              <SortedDescendingCellStyle BackColor="#E9EBEF"></SortedDescendingCellStyle>
+
+              <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
+                        </asp:GridView> 
+      </div> 
+        <div class="modal-footer">
+                       
+
+                    </div>     
     </div>
 
   </div>
 </div>         
          
 <div id="tokens" class="modal fade" role="dialog">
-  <div class="modal-dialog">	
+  <div class="modal-dialog" style="width:60%;height:70%;">	
     <!-- Modal content-->
-    <div class="modal-content">
+    <div class="modal-content" style="width:100%;height:100%">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         
-        <h4 class="modal-title">Tokens</h4>
+        <h3 class="modal-title">Tokens</h3>
       </div>
-      <div class="modal-body">
-       
+      <div class="modal-body" style="width:100%;height:100%" >
+        <asp:GridView ID="GridViewTokenlist" runat="server" AutoGenerateColumns="False" CssClass="table" style="text-align:center;width:100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None" ForeColor="#333333">
+              <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>
+              <Columns>
+                  <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
+                  <asp:BoundField HeaderText="Patient Name" DataField="Name" />
+
+                  <asp:TemplateField>
+                      <ItemTemplate>
+                          <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")%>' OnCommand="ImgBtnUpdate_Command1" Width="50%" BorderColor="White" formnovalidate />
+
+                      </ItemTemplate>
+                  </asp:TemplateField>
+              </Columns>
+            <EditRowStyle BackColor="#0080AA"></EditRowStyle>
+            <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
+            <HeaderStyle BackColor="#0080AA" Font-Bold="True" ForeColor="White"></HeaderStyle>
+            <PagerStyle HorizontalAlign="Center" ForeColor="White" BackColor="#284775"></PagerStyle>
+            <RowStyle BackColor="#F7F6F3" ForeColor="#333333"></RowStyle>
+            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
+            <SortedAscendingCellStyle BackColor="#E9E7E2"></SortedAscendingCellStyle>
+            <SortedAscendingHeaderStyle BackColor="#506C8C"></SortedAscendingHeaderStyle>
+            <SortedDescendingCellStyle BackColor="#FFFDF8"></SortedDescendingCellStyle>
+            <SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
+
+        </asp:GridView>
       </div>      
+        <div class="modal-footer">
+                       
+
+                    </div>
     </div>
 
   </div>
@@ -306,6 +372,19 @@
 			});
                
         
+    </script>
+ 
+     <script>
+         var test=jQuery.noConflict();
+         test(document).on('ready',function(){
+             debugger;
+             var ac=null;
+             ac = <%=listFilter %>;
+            $( "#txtSearch" ).autocomplete({
+                source: ac
+            });
+        });
+             
     </script>
   
 </asp:Content>

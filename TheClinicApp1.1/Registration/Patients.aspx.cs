@@ -107,6 +107,10 @@ namespace TheClinicApp1._1.Registration
         #region EditPatients
         protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
         {
+            divDisplayNumber.Visible = false;
+            lblMsgges.Text = "";
+            lblErrorCaption.Text = "";
+            Errorbox.Visible = false;
             DateTime date = DateTime.Now;
             int year = date.Year;
             string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
@@ -139,54 +143,17 @@ namespace TheClinicApp1._1.Registration
         }
         #endregion EditPatients
 
-        #region SearchButtonClick
-        //protected void btnSearch_ServerClick1(object sender, EventArgs e)
-        //{
-           
-        //    DataRow dr = null;
-        //    string path = Server.MapPath("~/Content/ProfilePics/").ToString();
-        //    string Name = Request.Form["txtSearch"];
-        //    if (Name != " ")
-        //    {
-        //        DataTable dt = PatientObj.GetSearchWithName(Name);
-        //        dr = dt.NewRow();
-        //        dr = dt.Rows[0];
-        //        DateTime date = DateTime.Now;
-        //        int year = date.Year;
-        //        Guid PatientID = Guid.Parse(dr["PatientID"].ToString());
-        //        txtName.Value = dr["Name"].ToString();
-        //        string Gender= dr["Gender"].ToString();
-        //        if (Gender.Trim() == "Male")
-        //        {
-
-        //            rdoMale.Checked = true;
-        //        }
-        //        else if (Gender.Trim() == "Female")
-        //        {
-        //            rdoFemale.Checked = true;
-        //        }
-        //        DateTime DT = Convert.ToDateTime(dr["DOB"].ToString());
-        //        int Age = year - DT.Year;
-        //        txtAge.Value = Age.ToString();
-        //        txtAddress.Value = dr["Address"].ToString();
-        //        txtMobile.Value = dr["Phone"].ToString();
-        //        txtEmail.Value = dr["Email"].ToString();
-        //        string Status= dr["MaritalStatus"].ToString();
-        //        //
-        //        ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
-        //        HiddenField1.Value = PatientID.ToString();
-        //    }
-        //    else
-        //    {
-        //        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", "alert('Invalid Suggesion');", true);
-
-        //    }
-        //}
-        #endregion SearchButtonClick
-
+        
+        
+        
+       
         #region GridDelete
         protected void ImgBtnDelete_Command(object sender, CommandEventArgs e)
         {
+            divDisplayNumber.Visible = false;
+            lblMsgges.Text = "";
+            lblErrorCaption.Text = "";
+            Errorbox.Visible = false;
             
             Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
             PatientObj.PatientID = PatientID;
@@ -206,8 +173,9 @@ namespace TheClinicApp1._1.Registration
             txtAddress.Value = "";
             txtEmail.Value = "";
             txtMobile.Value = "";
-            
-            
+            txtOccupation.Value = "";
+            rdoFemale.Checked=false;
+            rdoMale.Checked=false;            
             ProfilePic.Src = "../Images/UploadPic.png";
         }
         #endregion clearfield
@@ -241,6 +209,8 @@ namespace TheClinicApp1._1.Registration
             ClearFields();
             ProfilePic.Src = "../Images/UploadPic.png";
             divDisplayNumber.Visible = false;
+            lblMsgges.Text = "";
+            lblErrorCaption.Text = "";
             Errorbox.Visible = false;
         }
         #endregion ClearScreen
@@ -265,6 +235,10 @@ namespace TheClinicApp1._1.Registration
         #region Paging
         protected void dtgViewAllRegistration_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            divDisplayNumber.Visible = false;
+            lblMsgges.Text = "";
+            lblErrorCaption.Text = "";
+            Errorbox.Visible = false;
             dtgViewAllRegistration.PageIndex = e.NewPageIndex;
             dtgViewAllRegistration.DataBind();
             ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openmyModal();", true);
@@ -276,6 +250,7 @@ namespace TheClinicApp1._1.Registration
         #region MainButton
         protected void btnSave_Click(object sender, EventArgs e)
         {
+           
             try
             {
 
@@ -325,20 +300,30 @@ namespace TheClinicApp1._1.Registration
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
 
                         }
-                        
+
                         Guid g = Guid.NewGuid();
                         PatientObj.PatientID = g;
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
-
+                        ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + g.ToString();
                         var page = HttpContext.Current.CurrentHandler as Page;
 
                     }
                     else
                     {
+                        if (FileUpload1.HasFile)
+                        {
+                            byte[] ImageByteArray = null;
+                            ImageByteArray = ConvertImageToByteArray(FileUpload1);
+                            PatientObj.Picupload = ImageByteArray;
+                            PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
+                            PatientObj.UpdatePatientPicture();
+
+                        }
                         PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
-                        PatientObj.UpdatePatientDetails();
+                        PatientObj.UpdatePatientDetails();                 
                         var page = HttpContext.Current.CurrentHandler as Page;
+                        ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + HiddenField1.Value.ToString();
                     }
                 }
                 gridDataBind();
@@ -347,6 +332,7 @@ namespace TheClinicApp1._1.Registration
                 //lblName.Text = txtName.Value;
                 //lblAge.Text = txtAge.Value;
                 //lblPhone.Text = txtMobile.Value;
+               
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
             }
             catch
@@ -355,6 +341,63 @@ namespace TheClinicApp1._1.Registration
             }
         }
         #endregion MainButton
+
+        #region SearchButtonClick
+        protected void btnSearch_ServerClick(object sender, EventArgs e)
+        {
+            try
+            {
+                divDisplayNumber.Visible = false;
+                lblMsgges.Text = "";
+                lblErrorCaption.Text = "";
+                Errorbox.Visible = false;
+                DataRow dr = null;
+                string path = Server.MapPath("~/Content/ProfilePics/").ToString();
+                string Name = Request.Form["txtSearch"];
+                if (Name != "")
+                {
+                    DataTable dt = PatientObj.GetSearchWithName(Name);
+                    dr = dt.NewRow();
+                    dr = dt.Rows[0];
+                    DateTime date = DateTime.Now;
+                    int year = date.Year;
+                    Guid PatientID = Guid.Parse(dr["PatientID"].ToString());
+                    txtName.Value = dr["Name"].ToString();
+                    string Gender = dr["Gender"].ToString();
+                    if (Gender.Trim() == "Male")
+                    {
+
+                        rdoMale.Checked = true;
+                    }
+                    else if (Gender.Trim() == "Female")
+                    {
+                        rdoFemale.Checked = true;
+                    }
+                    DateTime DT = Convert.ToDateTime(dr["DOB"].ToString());
+                    int Age = year - DT.Year;
+                    txtAge.Value = Age.ToString();
+                    txtAddress.Value = dr["Address"].ToString();
+                    txtMobile.Value = dr["Phone"].ToString();
+                    txtEmail.Value = dr["Email"].ToString();
+                    string Status = dr["MaritalStatus"].ToString();
+
+                    ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+                    HiddenField1.Value = PatientID.ToString();
+                }
+                else
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", "alert('Invalid Suggesion');", true);
+
+                }
+            }
+            catch
+            {
+                Response.Redirect("../Registration/Patient.aspx");
+            }
+        }
+        #endregion SearchButtonClick
+
+
 
     }
 }

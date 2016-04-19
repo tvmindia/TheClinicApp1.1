@@ -128,6 +128,49 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Methods
         //****Patient Functionalities****//
         #region Patients Methods
+
+        #region UpdatePatientPicture
+        public void UpdatePatientPicture()
+        {
+            SqlConnection con = null;
+            try
+            {
+                
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand pud = new SqlCommand();
+                pud.Connection = con;
+                pud.CommandType = System.Data.CommandType.StoredProcedure;
+                pud.CommandText = "[UpdatePatientPicture]";
+                pud.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
+                pud.Parameters.Add("@image", SqlDbType.Image,0).Value =Picupload;
+                pud.Parameters.Add("@ImageType", SqlDbType.NVarChar, 6).Value = ImageType;               
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                pud.Parameters.Add(Output);
+                pud.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                
+            
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            
+        }
+
+        #endregion UpdatePatientPicture
+
         #region AddPatientDetails
         /// <summary>
         /// Insert Patients On save Click
