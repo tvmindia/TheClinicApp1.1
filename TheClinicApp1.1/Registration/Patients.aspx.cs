@@ -234,11 +234,7 @@ namespace TheClinicApp1._1.Registration
 
         #region Paging
         protected void dtgViewAllRegistration_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            divDisplayNumber.Visible = false;
-            lblMsgges.Text = "";
-            lblErrorCaption.Text = "";
-            Errorbox.Visible = false;
+        {          
             dtgViewAllRegistration.PageIndex = e.NewPageIndex;
             dtgViewAllRegistration.DataBind();
             ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openmyModal();", true);
@@ -347,10 +343,7 @@ namespace TheClinicApp1._1.Registration
         {
             try
             {
-                divDisplayNumber.Visible = false;
-                lblMsgges.Text = "";
-                lblErrorCaption.Text = "";
-                Errorbox.Visible = false;
+                
                 DataRow dr = null;
                 string path = Server.MapPath("~/Content/ProfilePics/").ToString();
                 string Name = Request.Form["txtSearch"];

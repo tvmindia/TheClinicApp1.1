@@ -12,6 +12,12 @@
     <script src="../js/bootstrap.min.js"></script>  
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
+
+
+
+
+
+
     <!---   Script for fileupload preview, Created By:Thomson Kattingal --->   
     <script type="text/javascript">
          function showpreview(input) {
@@ -150,7 +156,7 @@
 
          </div>
                 
-         <%--<div class="alert alert-success" style="display:none">
+         <div class="alert alert-success" style="display:none">
           <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
         </div>        
         <div class="alert alert-info" style="display:none">
@@ -163,7 +169,7 @@
         
         <div class="alert alert-danger" style="display:none">
           <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-        </div>--%>
+        </div>
             
       <div class="registration_form">        
       <div class="row field_row">  
@@ -256,78 +262,31 @@
                 <div class="modal-content" style="height:100%;overflow-y:no-display;">
                     <div class="modal-header" style="background-color:royalblue">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" style="font-size:20px;color:white;font-family:Castellar;">Token Registration</h4>
+                        <h4 class="modal-title" style="font-size:20px;color:white;">Token Registration</h4>
 
                     </div>
-                    <div class="modal-body" style="background-color:white;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;">
+                    <div class="modal-body" style="background-color:white;overflow-x:hidden;overflow-y:hidden;height:60%;width:100%;">
                         <div class="col-lg-12" style="color:brown;">
                             Would You Like to Book A Token ?
                         </div>
-                         <div class="col-lg-10">
-                           <button type="button" class="close" data-dismiss="modal" style="color:royalblue;font-size:25px;">>>>Skip</button>
-                        </div>
+                         
                         <div class="col-lg-12">
                             
-                     <asp:Label Text="Select Your Doctor" Font-Size="Large" Font-Bold="true"  runat="server"></asp:Label>
-                            <asp:DropDownList ID="ddlDoctorName" Height="40%" Width="100%" runat="server"></asp:DropDownList>
+                     <asp:Label Text="Select Your Doctor " Font-Size="Large" Font-Bold="true"  runat="server"></asp:Label>
+                            <asp:DropDownList ID="ddlDoctorName" Height="70%" Width="100%" runat="server"></asp:DropDownList>
                         </div>
-                        <div class="col-md-12 Span-One">
-                        
-                    <div class="col-md-7" >
-                        <div class="col-md-12 Span-One">
-                            
-                             
+                        <div class="col-lg-12">
+                            <h1 style="color:white;">Good Luck</h1>
+                            <h1 style="color:white;">Good Luck</h1>
                         </div>
-                         
-
-                        <div class="col-md-12 Span-One">
-                            <div class="col-md-7">
-                                <div class="form-group">
-                   
-                                    
-                                </div>
-                           
-                            </div>
-                             <div class="col-md-5">           
-                                
-                            </div>
-                        </div>
-
-                          <div class="col-md-12 Span-One">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                   
-                                    
-                                </div>
-                           
-                            </div>
-                             
-                        </div>
-                            <div class="col-md-12 Span-One">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                   
-                                    <div class="col-md-12">
-                                          &nbsp
-                                                       
-                                    </div>
-                                </div>
-                           
-                            </div>
-                             <div class="col-md-4">           
-                                <div class="col-md-12">                 
-                                     &nbsp
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-
+                      <div class="col-lg-10">
+                           <button type="button" class="close" data-dismiss="modal" style="color:blueviolet;font-size:25px;">>>>Skip</button>
                         </div>
                     </div>
-                    <div class="modal-footer" style="background-color:white;">
-                      <asp:Button ID="btntokenbooking" runat="server" Text="BOOK TOKEN"  type="submit" CssClass="button" OnClick="btntokenbooking_Click" BorderColor="DarkSeaGreen" ForeColor="White" BackColor="#3366ff" ValidationGroup="Submit" formnovalidate />                       
+                    <div class="modal-footer">
+                      <asp:Button ID="btntokenbooking" runat="server" Text="BOOK TOKEN"  type="submit" CssClass="button" OnClick="btntokenbooking_Click" BorderColor="DarkSeaGreen" ForeColor="White" BackColor="#3366ff" ValidationGroup="Submit" formnovalidate />                    
                     </div>
+                    
                 </div>
                 
             </div>

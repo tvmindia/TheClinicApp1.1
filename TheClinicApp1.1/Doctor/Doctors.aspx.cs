@@ -19,18 +19,50 @@ namespace TheClinicApp1._1.Doctor
         ClinicDAL.CaseFile.Visit CaseFileObj = new ClinicDAL.CaseFile.Visit();
         ClinicDAL.Patient PatientObj = new ClinicDAL.Patient();
         ClinicDAL.Doctor DoctorObj = new ClinicDAL.Doctor();
+        ClinicDAL.Stocks stockObj = new ClinicDAL.Stocks();
         public string listFilter=null;
         public string RoleName = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             listFilter = null;
-            listFilter = BindName();
+            listFilter = GetMedicineNames();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
             gridviewbind();
         }
+
+
+        #region Get Medicine Names
+
+        /// <summary>
+        /// Get all medicine names to be binded into list filter
+        /// </summary>
+        /// <returns></returns>
+        private string GetMedicineNames()
+        {
+            // Patient PatientObj = new Patient();
+            
+
+            DataTable dt = stockObj.SearchBoxMedicine();
+
+            StringBuilder output = new StringBuilder();
+            output.Append("[");
+            for (int i = 0; i < dt.Rows.Count; ++i)
+            {
+                output.Append("\"" + dt.Rows[i]["Name"].ToString() + "\"");
+
+                if (i != (dt.Rows.Count - 1))
+                {
+                    output.Append(",");
+                }
+            }
+            output.Append("]");
+            return output.ToString();
+        }
+
+        #endregion Get Medicine Names
 
         #region BindSearch
         private string BindName()
