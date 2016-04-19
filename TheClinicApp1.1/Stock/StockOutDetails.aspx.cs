@@ -289,7 +289,7 @@ namespace TheClinicApp1._1.Stock
                     {
                         txtIssueNO.Text = dtIssuehdr.Rows[0]["IssueNO"].ToString();
                         txtIssuedTo.Text = dtIssuehdr.Rows[0]["IssuedTo"].ToString();
-                        txtDate.Text = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
+                        txtDate.Text = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("MM-dd-yyyy");
                     }
 
 
@@ -450,9 +450,8 @@ if ( (txtIssuedTo.Text != "") || (txtDate.Text != "") )
                                     if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
                                     {
                                         IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
-                                        IssuedtlObj.InsertIssueDetails();
-                                    }
-
+                                      }
+                                    IssuedtlObj.InsertIssueDetails();
                                   
                                 }
                             }

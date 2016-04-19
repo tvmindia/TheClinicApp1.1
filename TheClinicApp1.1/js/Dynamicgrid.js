@@ -201,6 +201,15 @@ function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
     var NumberOfRows = NumberOfColumns / 5;
     for (var k = 0; k < NumberOfRows; k++)
     {
+        debugger;
+        if (document.getElementById('txtQuantity' + k) == null)
+        {
+           
+            NumberOfRows = NumberOfRows + 2;
+        }
+        else{
+
+
         var qty = document.getElementById('txtQuantity' + k).value;
         if (qty.indexOf('Must be') > -1)
         {
@@ -215,6 +224,9 @@ function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
             else
             {
                 values += document.getElementById('txtMedicine' + k).value + '|' + document.getElementById('txtUnit' + k).value + '|' + document.getElementById('txtCode' + k).value + '|' + document.getElementById('txtCategory' + k).value + '|' + document.getElementById('txtQuantity' + k).value + '|' + document.getElementById('hdnDetailID' + k).value + '$';
+               
+
+
             }
         }
 
@@ -233,6 +245,14 @@ function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
                 document.getElementById(hdnRemovedIDs).value = RemovedIDs;
             }
         }
+        
+        if ((document.getElementById('txtQuantity' + k) != null) && (document.getElementById('txtQuantity' + k).value == '') )
+        {
+            NumberOfRows = NumberOfRows + 2;
+        }
+      
+    }
+       
     }
     document.getElementById(hdnTextboxValues).value = values;
 
