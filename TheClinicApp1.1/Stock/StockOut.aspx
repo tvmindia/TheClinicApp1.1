@@ -53,7 +53,7 @@
     <script src="../js/jquery-1.8.3.min.js"></script>
     
     <script src="../js/ASPSnippets_Pager.min.js"></script>
-
+    <script src="../js/DeletionConfirmation.js"></script>
     <script type="text/javascript">
 
 
@@ -94,7 +94,7 @@
         var issueID = '';
 
         function OnSuccess(response) {
-
+          
 
 
             var xmlDoc = $.parseXML(response.d);
@@ -125,9 +125,16 @@
 
                     $("td", row).eq(0).html($('<img />')
                         .attr('src', "" + '../images/Cancel.png' + "")).click(function () {
+                            debugger;
+            var         DeletionConfirmation   =  ConfirmDelete();
 
-                            issueID = $(this).closest('tr').find('td:eq(5)').text();
-                            window.location = "StockOut.aspx?HdrID=" + issueID;
+            if (DeletionConfirmation == true)
+                        {
+                issueID = $(this).closest('tr').find('td:eq(5)').text();
+
+
+                window.location = "StockOut.aspx?HdrID=" + issueID;
+                         }
                         }).addClass('CursorShow');
 
 
@@ -285,7 +292,7 @@
                <asp:TemplateField HeaderText="Delete" >
                     <ItemTemplate>
                         <asp:Image ID="img1"  runat="server" Style="height: 100px;
-                            width: 100px" />
+                            width: 100px"  OnClientClick="ConfirmDelete()" />
                     </ItemTemplate>
                 </asp:TemplateField>
              

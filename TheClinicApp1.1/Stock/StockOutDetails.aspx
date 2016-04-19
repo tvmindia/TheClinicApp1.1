@@ -73,7 +73,7 @@
             
                 $("[id$=txtDate1]").datepicker({
             
-                    dateFormat: 'dd-m-yy',
+                    dateFormat: 'dd-mm-yy',
             
                     buttonImageOnly: true,
             
