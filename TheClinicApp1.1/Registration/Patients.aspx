@@ -93,6 +93,107 @@
              
     </script>
     <!------------------------------------------------------------------------------>
+  <%--  <script>
+        var test=jQuery.noConflict();
+        test(document).on('ready',function(){
+            $('#sendMessageForm')
+         .formValidation({
+             framework: 'bootstrap',
+             icon: {
+                 valid: 'glyphicon glyphicon-ok',
+                 invalid: 'glyphicon glyphicon-remove',
+                 validating: 'glyphicon glyphicon-refresh'
+             },
+             fields: {
+                 fullName: {
+                     validators: {
+                         notEmpty: {
+                             message: 'The full name is required and cannot be empty'
+                         }
+                     }
+                 },
+                 email: {
+                     validators: {
+                         notEmpty: {
+                             message: 'The email address is required and cannot be empty'
+                         },
+                         emailAddress: {
+                             message: 'The email address is not valid'
+                         }
+                     }
+                 },
+                 title: {
+                     validators: {
+                         notEmpty: {
+                             message: 'The title is required and cannot be empty'
+                         },
+                         stringLength: {
+                             max: 100,
+                             message: 'The title must be less than 100 characters long'
+                         }
+                     }
+                 },
+                 content: {
+                     validators: {
+                         notEmpty: {
+                             message: 'The content is required and cannot be empty'
+                         },
+                         stringLength: {
+                             max: 500,
+                             message: 'The content must be less than 500 characters long'
+                         }
+                     }
+                 }
+             }
+         })
+
+         .on('success.form.fv', function(e) {
+             // Reset the message element when the form is valid
+             $('#errors').html('');
+         })
+
+         .on('err.field.fv', function(e, data) {
+             // data.fv      --> The FormValidation instance
+             // data.field   --> The field name
+             // data.element --> The field element
+
+             // Get the messages of field
+             var messages = data.fv.getMessages(data.element);
+
+             // Remove the field messages if they're already available
+             $('#errors').find('li[data-field="' + data.field + '"]').remove();
+
+             // Loop over the messages
+             for (var i in messages) {
+                 // Create new 'li' element to show the message
+                 $('<li/>')
+                     .attr('data-field', data.field)
+                     .wrapInner(
+                         $('<a/>')
+                             .attr('href', 'javascript: void(0);')
+                             .html(messages[i])
+                             .on('click', function(e) {
+                                 // Focus on the invalid field
+                                 data.element.focus();
+                             })
+                     )
+                     .appendTo('#errors');
+             }
+
+             // Hide the default message
+             // data.element.data('fv.messages') returns the field messages element
+             data.element
+                 .data('fv.messages')
+                 .find('.help-block[data-fv-for="' + data.field + '"]')
+                 .hide();
+         })
+
+         .on('success.field.fv', function(e, data) {
+             // Remove the field messages
+             $('#errors').find('li[data-field="' + data.field + '"]').remove();
+         });
+        });
+</script>--%>
     <!--- Script for Url driven for iframe, Created By:Thomson Kattingal --->
    <%-- <script>
         function SetIframeSrc(HyperlinkID){
@@ -134,6 +235,7 @@
          </div>
          <div class="grey_sec">
          <div class="search_div">
+            
          <input class="field" type="search" id="txtSearch" name="txtSearch" placeholder="Search here..." />
          <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" />
          </div>
@@ -190,20 +292,20 @@
           <asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" />
           <asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" />
       </div>
-      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="text" min ="1" max="200" name="age" required /></div>
+      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" min ="1" max="200" name="age" required /></div>
       </div>
       </div>            
       </div>
       
       <div class="row field_row">  
       <div class="col-lg-12">
-      <label for="address">Address</label><textarea id="txtAddress" runat="server" style="width:43%" required></textarea>
+      <label for="address">Address</label><textarea id="txtAddress" runat="server" style="width:43%" ></textarea>
       </div>
       </div>
       
       <div class="row field_row">  
       <div class="col-lg-4">
-      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="12" pattern="{10}[0-9]" />
+      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="10" pattern="{10}[0-9]" />
       </div>
       <div class="col-lg-4">
       <label for="email">Email</label><input id="txtEmail" runat="server" type="text" name="email" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" />
