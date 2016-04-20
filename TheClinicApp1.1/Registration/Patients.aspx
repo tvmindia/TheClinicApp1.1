@@ -94,7 +94,7 @@
     </script>
     <!------------------------------------------------------------------------------>
     <!--- Script for Url driven for iframe, Created By:Thomson Kattingal --->
-    <script>
+   <%-- <script>
         function SetIframeSrc(HyperlinkID){
             if (HyperlinkID=="AllRegistrationIframe")
             {
@@ -102,7 +102,7 @@
                 AllRegistrationIframe.src="../Registration/ViewAllRegistration.aspx";
             }
         }
-    </script>
+    </script>--%>
     <!---------------------------------------------------------------------->
    <!------------------------------------->
   
@@ -129,7 +129,7 @@
          <a class="nav_menu">Menu</a>
          Patients Registration</div>
          <div class="icon_box">
-         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd.png" /></span></a>
+         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>
          <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
@@ -231,10 +231,10 @@
 
          </div>
 
-  </div>  
+  
         <!---------------------------------- Modal Section --------------------------------------->
         <!-- All Registration Iframe Modal -->
-        <div id="add_medicine" class="modal fade" role="dialog">
+       <%-- <div id="add_medicine" class="modal fade" role="dialog">
   <div class="modal-dialog" style="height:600px;">
 
     <!-- Modal content-->
@@ -251,7 +251,7 @@
     </div>
 
   </div>
-</div> 
+</div> --%>
               
         <!-- Token Registration Modal -->
         <div class="modal fade" id="TokenRegistration" role="dialog">
@@ -408,7 +408,7 @@
             </div>
         </div>
         <!------------------------------------------------------------------------------------------>   
-                    
+          </div>            
     <!-- Script Files -->
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/jquery-ui.js"></script>

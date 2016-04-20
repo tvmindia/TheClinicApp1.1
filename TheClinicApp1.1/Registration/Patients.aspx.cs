@@ -213,9 +213,10 @@ namespace TheClinicApp1._1.Registration
             ClearFields();
             ProfilePic.Src = "../Images/UploadPic.png";
             divDisplayNumber.Visible = false;
-            lblMsgges.Text = "";
-            lblErrorCaption.Text = "";
+            lblMsgges.Text = string.Empty;
+            lblErrorCaption.Text = string.Empty;
             Errorbox.Visible = false;
+            HiddenField1.Value = string.Empty;
         }
         #endregion ClearScreen
 
@@ -328,11 +329,6 @@ namespace TheClinicApp1._1.Registration
                 }
                 gridDataBind();
                 lblFileCount.Text = PatientObj.FileNumber;
-                //lblFile.Text = PatientObj.FileNumber;
-                //lblName.Text = txtName.Value;
-                //lblAge.Text = txtAge.Value;
-                //lblPhone.Text = txtMobile.Value;
-               
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
             }
             catch
