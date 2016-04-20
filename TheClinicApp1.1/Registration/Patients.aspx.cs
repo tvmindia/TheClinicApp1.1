@@ -111,10 +111,7 @@ namespace TheClinicApp1._1.Registration
         #region EditPatients
         protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
         {
-            divDisplayNumber.Visible = false;
-            lblMsgges.Text = "";
-            lblErrorCaption.Text = "";
-            Errorbox.Visible = false;
+            
             DateTime date = DateTime.Now;
             int year = date.Year;
             string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
@@ -153,12 +150,7 @@ namespace TheClinicApp1._1.Registration
        
         #region GridDelete
         protected void ImgBtnDelete_Command(object sender, CommandEventArgs e)
-        {
-            divDisplayNumber.Visible = false;
-            lblMsgges.Text = "";
-            lblErrorCaption.Text = "";
-            Errorbox.Visible = false;
-            
+        {   
             Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
             PatientObj.PatientID = PatientID;
             PatientObj.DeletePatientDetails();
@@ -389,8 +381,5 @@ namespace TheClinicApp1._1.Registration
             }
         }
         #endregion SearchButtonClick
-
-
-
     }
 }
