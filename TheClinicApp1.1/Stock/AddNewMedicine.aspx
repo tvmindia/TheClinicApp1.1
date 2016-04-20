@@ -2,10 +2,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/Masterw3.css" rel="stylesheet" />
 
+   
     <style>
 
 
+    table     td, th,tr {
         
+   border:0 none;
+}
+
         .Dropdown {
             display: block;
             padding: 5px;
@@ -169,9 +174,11 @@
 
        <%-- <div class="prescription_grid" >--%>
         
+     
+
+        <table  style="width: 100%;border-collapse:separate; 
+border-spacing:0.5em;"> 
         
-        <table class="table" border="0" style="width: 100%">
-            <tbody>
 
                 <tr>
                     <td>Medicine Name
@@ -179,12 +186,12 @@
                         
 
                     </td>
-                    <td>
+                    <td >
                         <asp:TextBox ID="txtmedicineName" runat="server" onchange="CheckMedicineNameDuplication(this)" required></asp:TextBox>
 
                     </td>
 
-                    <td style="width:10%;">
+                    <td style="width:10%;border:none;">
 
  <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login Name is Available" ImageUrl="~/Images/Check.png" Width="90%" Height="18%" />
 
@@ -197,18 +204,18 @@
                 </tr>
 
                 <tr>
-                    <td>Medicine Code 
+                    <td >Medicine Code 
 
                     </td>
-                    <td>
+                    <td >
                         <asp:TextBox ID="txtCode" runat="server" required></asp:TextBox>
 
                     </td>
-                    <td></td>
+                    <td ></td>
                 </tr>
 
                 <tr>
-                    <td>Category</td>
+                    <td >Category</td>
                     <td>
                         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                             <ContentTemplate>
@@ -228,12 +235,12 @@
                         </asp:UpdatePanel>
 
                     </td>
-                    <td></td>
+                    <td ></td>
 
                 </tr>
 
                 <tr>
-                    <td>Unit</td>
+                    <td >Unit</td>
                     <td>
                         <asp:TextBox ID="txtUnit" runat="server" required></asp:TextBox>
 
@@ -274,8 +281,10 @@
                 <td>  <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnSave" onclick="this.style.visibility='hidden';" onserverclick="btnSave_ServerClick"> Save </button></td>
                 <td>  <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnNew" onclick="this.style.visibility='hidden';" onserverclick="btnNew_ServerClick" > New </button></td>
             </tr>--%>
-            </tbody>
+           
         </table>
+
+    
 
          
           <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnSave_Click" ValidationGroup="Required" />

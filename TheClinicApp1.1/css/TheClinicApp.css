@@ -1,4 +1,18 @@
 ﻿
+
+
+/*-----------------------  * Out Of Stock Display   * -----------------------------*/
+    .warning {
+            background: url(../Images/Button-Warning-icon.png) no-repeat;
+            background-size: 9% 90%;
+            padding-left: 1%;
+            text-indent: 11%;
+            border: 1px solid #ccc;
+          
+        }
+
+
+
 /*-----------------------  * Gridview Filter Styles * -----------------------------*/
 
    .highlight {

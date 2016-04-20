@@ -253,6 +253,9 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            txtDate1.Attributes.Add("readonly", "readonly");
+
             btnSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','"+hdnRemovedIDs.ClientID+"')");
            
 
