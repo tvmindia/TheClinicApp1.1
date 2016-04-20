@@ -124,6 +124,7 @@
                     $("td", row).eq(2).html($(this).find("CategoryName").text());
                     $("td", row).eq(3).html($(this).find("Unit").text());
                     $("td", row).eq(4).html($(this).find("Qty").text());
+                    $("td", row).eq(5).html($(this).find("ReOrderQty").text());
 
                     $("[id*=gvMedicines]").append(row);
                     row = $("[id*=gvMedicines] tr:last-child").clone(true);
@@ -216,7 +217,8 @@
                 <asp:BoundField DataField="MedicineName" HeaderText="Medicine Name"  ItemStyle-CssClass="Match"  />
                 <asp:BoundField DataField="CategoryName" HeaderText="Category Name"  ItemStyle-CssClass="Match"  />
                  <asp:BoundField DataField="Unit" HeaderText="Unit"  ItemStyle-CssClass="Match"  />
-                 <asp:BoundField DataField="Qty" HeaderText="Qty"  ItemStyle-CssClass="Match"  />
+                 <asp:BoundField DataField="Qty" HeaderText="Existing Qty"  ItemStyle-CssClass="Match"  />
+                 <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" />
 
 
             </Columns>

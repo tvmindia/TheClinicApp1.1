@@ -27,14 +27,40 @@
                 
                 $(".main_body").toggleClass("active_close");
             });
-  debugger;
+
+
+           $('.alert_close').click(function () {
+                
+            
+               $(this).parent(".alert").hide();
+            
+           });
+
+            
+            //$('[data-toggle="tooltip"]').tooltip();
+            
+         
+
+            
+           $('.nav_menu').click(function () {
+                
+            
+               $(".main_body").toggleClass("active_close");
+            
+           });
+
               
         $("[id$=txtDate1]").datepicker({
-            dateFormat: 'dd-m-yy',
+            dateFormat: 'dd-mm-yy',
             
            
         });           
             
+
+
+        GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>');
+        RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+
         });
     </script> 
  

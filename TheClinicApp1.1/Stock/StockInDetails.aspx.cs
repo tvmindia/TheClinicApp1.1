@@ -176,7 +176,7 @@ namespace TheClinicApp1._1.Stock
 
 
         protected void Page_Load(object sender, EventArgs e)
-        {
+         {
             BindListFilter();
 
 
@@ -221,7 +221,7 @@ namespace TheClinicApp1._1.Stock
                 {
                     ViewState["ReceiptHdrID"] = Request.QueryString["receiptID"].ToString();
 
-                   
+
 
                     if (!IsPostBack)
                     {
@@ -261,14 +261,14 @@ namespace TheClinicApp1._1.Stock
 
         }
 
-        public void GridViewReceiptDetails()
-        {
-            DataSet gds = rpt.GetReceiptDetailsByReceiptID(receipt);
+        //public void GridViewReceiptDetails()
+        //{
+        //    DataSet gds = rpt.GetReceiptDetailsByReceiptID(receipt);
 
-            txtBillNo.Text = gds.Tables[0].Rows[0][0].ToString();
-            txtRefNo2.Text = gds.Tables[0].Rows[0][1].ToString();
-            txtDate1.Value = gds.Tables[0].Rows[0][2].ToString();
-        }
+        //    txtBillNo.Text = gds.Tables[0].Rows[0][0].ToString();
+        //    txtRefNo2.Text = gds.Tables[0].Rows[0][1].ToString();
+        //    txtDate1.Value = gds.Tables[0].Rows[0][2].ToString();
+        //}
 
         
 
@@ -446,7 +446,7 @@ namespace TheClinicApp1._1.Stock
                 }
             }
 
-           // StoreXmlToHiddenField();
+            StoreXmlToHiddenField();
 
         }
 
