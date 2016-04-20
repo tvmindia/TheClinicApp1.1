@@ -65,9 +65,9 @@ function clickAdd(id) {
     iCnt = iCnt + 1;
 
     // ADD new row with fields needed.
-    $(container).append('<div><table class="table" style="width:100%;border:0;">'
-               + ' <td ><input id="txtMedName' + iCnt + '" type="text" placeholder="Medicine' + iCnt + '" class="input"/></td>'
-                + '<td ><input id="txtMedQty' + iCnt + '" type="text" placeholder="Qty' + iCnt + '" class="input"/></td>'
+    $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;border:0;">'
+               + ' <td ><input id="txtMedName' + iCnt + '" type="text" placeholder="Medicine' + iCnt + '" class="input" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
+                + '<td ><input id="txtQuantity' + iCnt + '" type="text" placeholder="Qty' + iCnt + '" class="input"/></td>'
                 + '<td ><input id="txtMedUnit' + iCnt + '" class="input" type="text" placeholder="Unit' + iCnt + '" /></td>'
                 + '<td ><input id="txtMedDos' + iCnt + '" type="text" placeholder="Dosage' + iCnt + '" class="input"/></td>'
                 + '<td><input id="txtMedTime' + iCnt + '" type="text" placeholder="Timing' + iCnt + '" class="input"/></td>'
@@ -76,10 +76,13 @@ function clickAdd(id) {
                  + '<input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" /></td>'
                  + '<td style="background:#E6E5E5">'
                  + '<input type="button" id="btAdd' + iCnt + '" value="+" onclick="clickAdd(' + iCnt + ')" class="bt" style="width:20px" /></td>'
+                 + '<td style="background:#E6E5E5"><input id="hdnDetailID' + iCnt + '" type="hidden" /> <input id="hdnQty' + iCnt + '" type="hidden" /></td>'
                  + '</tr></table><div>');
     $('#maindiv').after(container);
     $('#btAdd' + id).css("visibility", "hidden");
 
+    ExistingRowCount = ExistingRowCount + 1;
+    last = last + 1;
 }
 
 //Delete Div where the remove button contain.
@@ -94,8 +97,11 @@ function clickdelete(id) {
         RemovedIDs = '';
     }
     //document.getElementById('<%=hdnRemovedIDs.ClientID%>').value = RemovedIDs;
-    document.getElementById(IdToRemove).value = RemovedIDs;
 
+
+    if (RemovedIDs!='') {
+        document.getElementById(IdToRemove).value = RemovedIDs;
+    }
 
 
     if (ExistingRowCount > 1)
