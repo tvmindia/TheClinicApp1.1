@@ -6,15 +6,82 @@
  
      <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+     <script src="../js/jquery-ui.js"></script>
+
+        <script>
+           
+
+            function autocompleteonfocus(controlID)
+            {
+                //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
+
+                
+                var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
+ 
+                if (topcount==0)
+                {
+                    var ac=null; 
+                    ac = <%=listFilter %>;
+                    $( "#txtMedName"+controlID).autocomplete({
+                        source: ac
+                    });
+                }
+                else
+                {
+                    var ac=null;
+                    ac = <%=listFilter %>;
+                    var i=1;
+                    while(i<=topcount)
+                    {
+                        if (i==1)
+                        {
+                            var item=  document.getElementById('txtMedName'+i).value 
+                                 
+                            var result = ac.filter(function(elem){
+                                return elem != item; 
+                            });
+
+                        }
+                        else
+                        {
+                            if (document.getElementById('txtMedName'+i) != null)
+
+                            {
+                                var item=  document.getElementById('txtMedName'+i).value 
+                                                           
+
+                                result = result.filter(function(elem){
+                                    return elem != item; 
+                                }); 
+                            }
+                        }
+                        i++;
+                    }
+            
+                            
+                    $( "#txtMedName"+controlID).autocomplete({
+                        source: result
+                    });
+
+                }
+
+            } 
+
+
+
+            function GetTextBoxValuesPresLocal(){
+            
+                GetTextBoxValuesPres('<%=hdnTextboxValues.ClientID%>');
+            }
+		</script>
+
+
 
     <!-- #main-container -->
          
-         
-         <div class="main_body">
-
-
-         
-          <div class="left_part">
+         <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
+         <div class="main_body">         
+         <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
          <ul class="menu">
          <li  id="patients"><a name="hello" onclick="selectTile('patients','<%=RoleName%>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
@@ -43,9 +110,10 @@
          <input class="field" id="txtSearch" name="txtSearch" type="search" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div>
-         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextValue();" OnClick="btnSave_Click" /></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+
+         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
-         <div class="right_form">
+         <div class="right_form"> 
          
          <div class="token_id_card">
              <div class="name_field"><img id="ProfilePic" src="../images/UploadPic.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label></div>
@@ -176,15 +244,15 @@
     <th>Days</th>
   </tr>
   <tr> 
-     <td ><input id="txtMedName" type="text" placeholder="Medicine" class="input"/></td>
-      <td ><input id="txtMedQty" type="text" placeholder="Qty" class="input"/></td>
-      <td ><input id="txtMedUnit" class="input" type="text" placeholder="Unit" /></td>
-      <td ><input id="txtMedDos" type="text" placeholder="Dosage" class="input"/></td>
-      <td><input id="txtMedTime" type="text" placeholder="Timing" class="input"/></td>
-      <td><input id="txtMedDay" type="text" placeholder="Days" class="input"/></td><td style="background:#E6E5E5">
-    <input type="button" value="-" class="bt1" style="width:20px;"/></td><td style="background:#E6E5E5">
+     <td ><input id="txtMedName0" type="text" placeholder="Medicine" class="input" onfocus="autocompleteonfocus(0)"/></td>
+      <td ><input id="txtMedQty0" type="text" placeholder="Qty" class="input"/></td>
+      <td ><input id="txtMedUnit0" class="input" type="text" placeholder="Unit" /></td>
+      <td ><input id="txtMedDos0" type="text" placeholder="Dosage" class="input"/></td>
+      <td><input id="txtMedTime0" type="text" placeholder="Timing" class="input"/></td>
+      <td><input id="txtMedDay0" type="text" placeholder="Days" class="input"/></td><td style="background:#E6E5E5">
+      <input type="button" value="-" class="bt1" style="width:20px;"/></td><td style="background:#E6E5E5">
          <input type="button" id="btAdd" onclick="clickAdd();this.style.visibility = 'hidden';" value="+" class="bt1" style="width:20px" />         
-         </td>
+         </td><td style="background-color: transparent"><input id="hdnDetailID0" type="hidden" /><input id="hdnQty0" type="hidden" /></td>
   </tr>
   </tbody>      
   </table>
@@ -196,6 +264,13 @@
 </div>
          
          <asp:HiddenField ID="HiddenField1" runat="server"></asp:HiddenField>
+             <asp:HiddenField ID="hdnXmlData" runat="server" />
+                    <asp:HiddenField ID="HiddenField3" runat="server" Value="0" />
+                    <asp:HiddenField ID="hdnTextboxValues" runat="server" />
+                    <asp:HiddenField ID="hdnManageGridBind" runat="server" Value="False" />
+
+                    <asp:HiddenField ID="hdnHdrInserted" runat="server" />
+                    <asp:HiddenField ID="hdnRemovedIDs" runat="server" />
          </div>
          
          </div>         

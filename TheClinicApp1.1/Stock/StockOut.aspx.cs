@@ -8,12 +8,15 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Web.Services;
+using TheClinicApp1._1.ClinicDAL;
 
 namespace TheClinicApp1._1.Stock
 {
     public partial class StockOut : System.Web.UI.Page
     {
-        private static int PageSize = 5;
+        IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
+
+        private static int PageSize = 7;
         ClinicDAL.UserAuthendication UA;
         UIClasses.Const Const = new UIClasses.Const();
 
@@ -22,6 +25,7 @@ namespace TheClinicApp1._1.Stock
         {
             DataTable dummy = new DataTable();
 
+            dummy.Columns.Add("Delete");
             dummy.Columns.Add("IssueNO");
             dummy.Columns.Add("IssuedTo");
             //dummy.Columns.Add("IssueID");
@@ -42,10 +46,22 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            string issueID = string.Empty;
+
             if (!IsPostBack)
             {
                 BindDummyRow();
 
+            }
+
+            if (Request.QueryString["HdrID"] != null)
+            {
+
+                issueID = Request.QueryString["HdrID"].ToString();
+
+                IssuehdrObj.ClinicID = UA.ClinicID.ToString();
+                IssuehdrObj.DeleteIssueHeader(issueID);
             }
         }
 

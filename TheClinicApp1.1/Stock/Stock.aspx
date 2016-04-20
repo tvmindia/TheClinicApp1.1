@@ -313,7 +313,7 @@
       </div>
       <div class="modal-body" style="height:400px;">
 
-             <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" ></iframe>
+             <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
         <%--<table class="table" width="100%" border="0">
           <tr>
             <th>Sl No.</th>
@@ -360,7 +360,7 @@
                                         <%--  <asp:BoundField DataField="MedicineID" HeaderText="MedicineID" />--%>
                                         <asp:BoundField DataField="MedicineName" HeaderText="Medicine Name" />
                                         <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                        <asp:BoundField DataField="Qty" HeaderText="Quantity" />
+                                        <asp:BoundField DataField="Qty" HeaderText="Existing Quantity" />
                                         <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" />
                                         <asp:BoundField DataField="CategoryName" HeaderText="Category Name"/>
                                     </Columns>

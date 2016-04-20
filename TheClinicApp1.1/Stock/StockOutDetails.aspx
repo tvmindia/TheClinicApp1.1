@@ -1,16 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" ValidateRequest="false" AutoEventWireup="true" CodeBehind="StockOutDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockOutDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-    <style>
-        .warning {
-            background: url(../Images/Button-Warning-icon.png) no-repeat;
-            background-size: 6% 80%;
-            padding-left: 1%;
-            text-indent: 11%;
-            border: 1px solid #ccc;
-        }
-    </style>
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
+   
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -31,22 +23,28 @@
     <script>
         var test = jQuery.noConflict();
             
-    test(document).ready(function () {
+        test(document).ready(function () {
 
             
-        test('.nav_menu').click(function () {
+            var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+        LnameImage.style.display = "none";
+        var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                errLname.style.display = "none";
+
+
+                test('.nav_menu').click(function () {
             
-            test(".main_body").toggleClass("active_close");
+                    test(".main_body").toggleClass("active_close");
             
-        });
+                });
 
             
-        $('.alert_close').click(function () {
+                $('.alert_close').click(function () {
                 
             
-            $(this).parent(".alert").hide();
+                    $(this).parent(".alert").hide();
             
-        });
+                });
 
             
         //$('[data-toggle="tooltip"]').tooltip();
@@ -54,45 +52,45 @@
          
 
             
-        $('.nav_menu').click(function () {
+                $('.nav_menu').click(function () {
                 
             
-            $(".main_body").toggleClass("active_close");
+                    $(".main_body").toggleClass("active_close");
             
-        });
+                });
             
 
             
         //date picker
             
-        $("[id$=txtDate1]").datepicker({
+                $("[id$=txtDate1]").datepicker({
             
-            dateFormat: 'dd-m-yy',
+                    dateFormat: 'dd-mm-yy',
             
-            buttonImageOnly: true,
+                    buttonImageOnly: true,
             
           
             
-        });           
+                });           
 
 
             
-        GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>');
-            RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+                GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>');
+        RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+    });
+
+    function ClearControls()
+    {
+        var i = 1;
+        $('.input').each(function () {
+            i++;
         });
-
-        function ClearControls()
-        {
-            var i = 1;
-            $('.input').each(function () {
-                i++;
-            });
-            var NumberOfColumns = i - 1;
-            var NumberOfRows = NumberOfColumns / 5;
+        var NumberOfColumns = i - 1;
+        var NumberOfRows = NumberOfColumns / 5;
 
 
-            debugger;
-            document.getElementById('<%=txtIssueNO.ClientID%>').value = '';
+        debugger;
+        document.getElementById('<%=txtIssueNO.ClientID%>').value = '';
             document.getElementById('<%=txtDate1.ClientID%>').value = '';
             document.getElementById('<%=txtIssuedTo.ClientID%>').value = '';
 
@@ -104,9 +102,56 @@
                 document.getElementById('txtCategory' + k).value = '';
                 document.getElementById('txtQuantity' + k).value = '';
             }
+
+            PageMethods.GenerateIssueNo(OnSuccess, onError);
+
+            function OnSuccess(response, userContext, methodName)
+            {
+
+                document.getElementById('<%=txtIssueNO.ClientID%>').value = response;
+              
+            }
+            function onError(response, userContext, methodName) {
+
+            }
+
+
+
         }
+
+        function CheckIssueNoDuplication(IssueNo) {
+
+            //---------------* Function to check Issue Number duplication *-----------------// 
+            
+            var IssueNo = document.getElementById('<%=txtIssueNO.ClientID %>').value;
+    IssueNo = IssueNo.replace(/\s/g, '');
+
+    PageMethods.CheckIssueNoDuplication(IssueNo, OnSuccess, onError);
+
+    function OnSuccess(response, userContext, methodName) {
+
+        var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                    var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                    if (response == false) {
+
+                        LnameImage.style.display = "block";
+                        errLname.style.display = "none";
+
+                    }
+                    if (response == true) {
+                        errLname.style.display = "block";
+                        errLname.style.color = "Red";
+                        errLname.innerHTML = "Name Alreay Exists"
+                        LnameImage.style.display = "none";
+
+                    }
+                }
+                function onError(response, userContext, methodName) {
+
+                }
+            }
         
-        </script>
+    </script>
 
     <script src="../js/jquery-1.12.0.min.js"></script>
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
@@ -118,21 +163,21 @@
            
 
             
-    function autocompleteonfocus(controlID)
+        function autocompleteonfocus(controlID)
             
-    {
+        {
             
-        //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
+            //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
 
             
-        //debugger;
+            //debugger;
             
-        var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
+            var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
  
-                if (topcount==0)
-                {
-                    var ac=null; 
-                    ac = <%=listFilter %>;
+        if (topcount==0)
+        {
+            var ac=null; 
+            ac = <%=listFilter %>;
                     $( "#txtMedicine"+controlID).autocomplete({
                         source: ac
                     });
@@ -178,44 +223,18 @@
 
             } 
 
-            </script>
+    </script>
 
 
     <div class="main_body">
 
 
-        <div id="Errorbox" style="display: none;" runat="server">
-            <a class="alert_close">X</a>
-            <div>
-                <strong>
-                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
-                </strong>
-                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
-
-            </div>
-
-        </div>
-
-        <div class="alert alert-success" style="display: none">
-            <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-        </div>
-        <div class="alert alert-info" style="display: none">
-            <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
-        </div>
-
-        <div class="alert alert-warning" style="display: none">
-            <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
-        </div>
-
-        <div class="alert alert-danger" style="display: none">
-            <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-        </div>
-
-
 
         <div class="left_part">
-            <div class="logo"><a href="#">
-                <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
+            <div class="logo">
+                <a href="#">
+                    <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
+            </div>
             <ul class="menu">
                 <li id="patients"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
                 <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
@@ -251,16 +270,50 @@
 
                         <div role="tabpanel" class="tab-pane active" id="stock_in">
                             <div class="grey_sec">
-                                <div class="search_div">
+
+                                <%--<div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." />
                                     <input class="button" type="submit" value="Search" />
-                                </div>
+                                </div>--%>
+
                                 <ul class="top_right_links">
                                     <li><a class="back" href="StockOut.aspx"><span></span>Back</a></li>
                                     <li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick"><span></span>Save</a></li>
-                                    <li><a class="new" href="#" onclick="ClearControls();"><span></span>New</a></li>
+                                    <li><a class="new" href="StockOutDetails.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
+
+
+                            
+        <div id="Errorbox" style="display: none;" runat="server">
+            <a class="alert_close">X</a>
+            <div>
+                <strong>
+                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                </strong>
+                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+
+            </div>
+
+        </div>
+
+        <div class="alert alert-success" style="display: none">
+            <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+        </div>
+        <div class="alert alert-info" style="display: none">
+            <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+        </div>
+
+        <div class="alert alert-warning" style="display: none">
+            <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+        </div>
+
+        <div class="alert alert-danger" style="display: none">
+            <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+        </div>
+
+
+
 
                             <div class="tab_table">
 
@@ -268,15 +321,21 @@
                                     <tr>
                                         <td>Issue No</td>
                                         <td>
-                                            <asp:TextBox ID="txtIssueNO" runat="server" required></asp:TextBox></td>
+                                            <asp:TextBox ID="txtIssueNO" Width="80%" runat="server" required onchange="CheckIssueNoDuplication(this)"></asp:TextBox></td>
+
+                                        <td width="10%">
+                                            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login Name is Available" ImageUrl="~/Images/Check.png" Width="30%" Height="10%" />
+
+                                            <asp:Image ID="errorLnames" runat="server" ToolTip="Login Name is Unavailable" ImageUrl="~/Images/newClose.png" /></td>
+
                                         <td>Date</td>
                                         <td>
-                                            <asp:TextBox ID="txtDate1" CssClass="txtDate1Class" runat="server" required></asp:TextBox></td>
+                                            <asp:TextBox ID="txtDate1" CssClass="txtDate1Class" Width="80%" runat="server" required ></asp:TextBox></td>
                                     </tr>
                                     <tr>
                                         <td>Issued To</td>
                                         <td>
-                                            <asp:TextBox ID="txtIssuedTo" runat="server" EnableViewState="false" required></asp:TextBox>
+                                            <asp:TextBox ID="txtIssuedTo" Width="80%" runat="server" EnableViewState="false" required></asp:TextBox>
 
                                         </td>
                                     </tr>

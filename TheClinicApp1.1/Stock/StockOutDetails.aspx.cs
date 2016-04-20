@@ -181,6 +181,24 @@ namespace TheClinicApp1._1.Stock
 
         //-----------------------------  * END  MEDICINES AREA * -------------------//
 
+
+        [WebMethod]
+        public static string GenerateIssueNo()
+        {
+            IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
+
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            IssuehdrObj.ClinicID = UA.ClinicID.ToString();
+            string IssueNumber = IssuehdrObj.Generate_Issue_Number();
+
+            return IssueNumber;
+        }
+
+
+
         #region Clear Controls
         public void ClearControls()
         {
@@ -235,6 +253,9 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            txtDate1.Attributes.Add("readonly", "readonly");
+
             btnSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','"+hdnRemovedIDs.ClientID+"')");
            
 
@@ -264,6 +285,9 @@ namespace TheClinicApp1._1.Stock
             else
             {
 
+               
+
+                txtIssueNO.ReadOnly = true;
 
                 //-----*Redirection due to Grid link click*-----//
 
@@ -307,8 +331,8 @@ namespace TheClinicApp1._1.Stock
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
             string msg = string.Empty;
-if ( (txtIssuedTo.Text != "") || (txtDate1.Text != "") )
-{
+            if ( (txtIssuedTo.Text != "") || (txtDate1.Text != "") || (txtIssueNO.Text != ""))
+             {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
 
@@ -364,10 +388,12 @@ if ( (txtIssuedTo.Text != "") || (txtDate1.Text != "") )
                         {
                        int result =      IssuehdrObj.InsertIssueHeader();
 
+
                        if (result == 1)
                        {
                            hdnHdrInserted.Value = "True";
                            ViewState["IssueHdrID"] = IssuehdrObj.IssueID;
+                           txtIssueNO.ReadOnly = true;
                        }
                             
 
@@ -391,10 +417,10 @@ if ( (txtIssuedTo.Text != "") || (txtDate1.Text != "") )
                                 string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
                                 string newDate = txtDate1.Text;
 
-                                if ((txtIssueNO.Text != dtIssuehdr.Rows[0]["IssueNO"].ToString()) || (txtIssuedTo.Text != dtIssuehdr.Rows[0]["IssuedTo"].ToString()) )
+                                if ((txtIssueNO.Text != dtIssuehdr.Rows[0]["IssueNO"].ToString()) || (txtIssuedTo.Text != dtIssuehdr.Rows[0]["IssuedTo"].ToString()) || (oldDate != newDate))
                                 {
                                     
-                                    //|| (oldDate != newDate)
+                                    //
                                     // ----------------- *  Update header*-----------------------------------//
 
                                     if (hdnTextboxValues.Value != "")

@@ -18,6 +18,31 @@
                   test(".main_body").toggleClass("active_close");
               });
 
+            
+
+
+              $('.alert_close').click(function () {
+
+
+                  $(this).parent(".alert").hide();
+
+              });
+
+
+              //$('[data-toggle="tooltip"]').tooltip();
+
+
+
+
+              $('.nav_menu').click(function () {
+
+
+                  $(".main_body").toggleClass("active_close");
+
+              });
+
+
+
           });
 		</script>
 
@@ -28,7 +53,7 @@
     <script src="../js/jquery-1.8.3.min.js"></script>
     
     <script src="../js/ASPSnippets_Pager.min.js"></script>
-
+    <script src="../js/DeletionConfirmation.js"></script>
     <script type="text/javascript">
 
 
@@ -69,7 +94,7 @@
         var issueID = '';
 
         function OnSuccess(response) {
-
+          
 
 
             var xmlDoc = $.parseXML(response.d);
@@ -93,19 +118,39 @@
                     //    issueID = $(this).closest('tr').find('td:eq(2)').text();
                     //    window.location = "NewIssue.aspx?issueID=" + issueID;
                     //});
+                    
+                    //$("td", row).eq(0).html($(this).find('[id*=img1]').attr('src', '../images/Cancel.png'));
+                    //$("td", row).eq(0).html("<img src='../images/Cancel.png' />");
 
-                    $("td", row).eq(0).html($(this).find("IssueNO").text());
 
-                    $("td", row).eq(1).html($(this).find("IssuedTo").text());
-                    $("td", row).eq(2).html($(this).find("Date").text());
-                    $("td", row).eq(3).html('Details').click(function () {
+                    $("td", row).eq(0).html($('<img />')
+                        .attr('src', "" + '../images/Cancel.png' + "")).click(function () {
+                            debugger;
+            var         DeletionConfirmation   =  ConfirmDelete();
 
-                        issueID = $(this).closest('tr').find('td:eq(4)').text();
+            if (DeletionConfirmation == true)
+                        {
+                issueID = $(this).closest('tr').find('td:eq(5)').text();
+
+
+                window.location = "StockOut.aspx?HdrID=" + issueID;
+                         }
+                        }).addClass('CursorShow');
+
+
+
+                    $("td", row).eq(1).html($(this).find("IssueNO").text());
+
+                    $("td", row).eq(2).html($(this).find("IssuedTo").text());
+                    $("td", row).eq(3).html($(this).find("Date").text());
+                    $("td", row).eq(4).html('Details').click(function () {
+
+                        issueID = $(this).closest('tr').find('td:eq(5)').text();
                         window.location = "StockOutDetails.aspx?issueID=" + issueID;
                     }).addClass('CursorShow');
 
-                    $("td", row).eq(4).html($(this).find("IssueID").text());
-
+                    $("td", row).eq(5).html($(this).find("IssueID").text());
+                  
                    
 
                     //$("td", row).eq(2).html($(this).find("Date").text());
@@ -148,10 +193,11 @@
         };
 
 
-
+        
 
 
     </script>
+   
 
     <!-- #main-container -->
          
@@ -201,6 +247,37 @@
          <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="StockOutDetails.aspx"><span></span>New</a></li></ul>
          </div>
          
+            
+        <div id="Errorbox" style="display: none;" runat="server">
+            <a class="alert_close">X</a>
+            <div>
+                <strong>
+                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                </strong>
+                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+
+            </div>
+
+        </div>
+
+        <div class="alert alert-success" style="display: none">
+            <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+        </div>
+        <div class="alert alert-info" style="display: none">
+            <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+        </div>
+
+        <div class="alert alert-warning" style="display: none">
+            <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+        </div>
+
+        <div class="alert alert-danger" style="display: none">
+            <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+        </div>
+
+
+
+
          <div class="tab_table">         
          
 <asp:GridView ID="gvIssueHD" runat="server" Style="width:100%" AutoGenerateColumns="False" class="table">
@@ -209,7 +286,17 @@
             
             
               <%--<asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow" />--%>
-                  <asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-CssClass="Match"  />
+                 
+               
+                 <%--<asp:BoundField  HeaderText="Delete"  ItemStyle-CssClass="Match"  />--%>
+               <asp:TemplateField HeaderText="Delete" >
+                    <ItemTemplate>
+                        <asp:Image ID="img1"  runat="server" Style="height: 100px;
+                            width: 100px"  OnClientClick="ConfirmDelete()" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+             
+                 <asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-CssClass="Match"  />
                 <asp:BoundField DataField="IssuedTo" HeaderText="IssuedTo"  ItemStyle-CssClass="Match"  />
                <asp:BoundField DataField="Date" HeaderText="Date"  ItemStyle-CssClass="Match"  /> 
                 <asp:BoundField  HeaderText="Details"  ItemStyle-CssClass="Match"  /> 
