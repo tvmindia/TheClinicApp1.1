@@ -1,13 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockIn.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockIn" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-       <style type="text/css">
-           .highlight {
-            background-color: #FFFFAF;
-        }
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
 
-          </style>
+
+      
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -16,10 +13,15 @@
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
 
+    <script src="../js/DeletionConfirmation.js"></script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      
     <script>
+
+        var receiptID = '';
+
         var test = jQuery.noConflict();
         test(document).ready(function () {
 
@@ -27,7 +29,58 @@
                 test(".main_body").toggleClass("active_close");
             });
 
+
+
+            $('.alert_close').click(function () {
+
+
+                $(this).parent(".alert").hide();
+
+            });
+
+
+            //$('[data-toggle="tooltip"]').tooltip();
+
+
+
+
+            $('.nav_menu').click(function () {
+
+
+                $(".main_body").toggleClass("active_close");
+
+            });
+
+           
+
         });
+
+
+        $(function () {
+            $("[id*=GridViewStockin] td:first").click(function () {
+                var DeletionConfirmation = ConfirmDelete();
+
+                if (DeletionConfirmation == true) {
+                    receiptID = $(this).closest('tr').find('td:eq(5)').text();
+
+
+                    window.location = "StockIn.aspx?HdrID=" + receiptID;
+                }
+            });
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
 		</script>
 
       <%--  //------------- AUTOFILL SCRIPT ---------%>
@@ -73,6 +126,7 @@
            });
        }
        var row;
+      
        function OnSuccess(response) {
 
            var xmlDoc = $.parseXML(response.d);
@@ -89,9 +143,27 @@
 
                    //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
 
-                   $("td", row).eq(0).html($(this).find("RefNo1").text());
-                   $("td", row).eq(1).html($(this).find("RefNo2").text());
-                   $("td", row).eq(2).html($(this).find("Date").text());
+                   $("td", row).eq(0).html($('<img />')
+                      .attr('src', "" + '../images/Cancel.png' + "")).addClass('CursorShow');
+
+
+
+
+
+
+                   $("td", row).eq(1).html($(this).find("RefNo1").text());
+                   $("td", row).eq(2).html($(this).find("RefNo2").text());
+                   $("td", row).eq(3).html($(this).find("Date").text());
+
+
+                   $("td", row).eq(4).html('Details').click(function () {
+
+                       receiptID = $(this).closest('tr').find('td:eq(5)').text();
+                       window.location = "StockInDetails.aspx?receiptID=" + receiptID;
+                   }).addClass('CursorShow');
+
+                   $("td", row).eq(5).html($(this).find("ReceiptID").text());
+
                  
 
                    $("[id*=GridViewStockin]").append(row);
@@ -119,6 +191,13 @@
                $("td", empty_row).not($("td:first-child", empty_row)).remove();
                $("[id*=GridViewStockin]").append(empty_row);
            }
+
+           var th = $("[id*=GridViewStockin] th:contains('ReceiptID')");
+           th.css("display", "none");
+           $("[id*=GridViewStockin] tr").each(function () {
+               $(this).find("td").eq(th.index()).css("display", "none");
+           });
+
        };
 
 
@@ -176,6 +255,36 @@
          <ul class="top_right_links"><li><a class="save" id="btSave" runat="server" style="visibility:hidden" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new"  onserverclick="btNew_ServerClick" href="StockInDetails.aspx"><span></span>New</a></li></ul>
          </div>
          
+
+                  
+        <div id="Errorbox" style="display: none;" runat="server">
+            <a class="alert_close">X</a>
+            <div>
+                <strong>
+                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                </strong>
+                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+
+            </div>
+
+        </div>
+
+        <div class="alert alert-success" style="display: none">
+            <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+        </div>
+        <div class="alert alert-info" style="display: none">
+            <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+        </div>
+
+        <div class="alert alert-warning" style="display: none">
+            <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+        </div>
+
+        <div class="alert alert-danger" style="display: none">
+            <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+        </div>
+
+
          <div class="tab_table">         
          
          <table class="table" style="width:100%;border:0;">
@@ -184,9 +293,20 @@
    <asp:GridView ID="GridViewStockin" runat="server" Width="100%" AutoGenerateColumns="False" class="table">
                     <Columns>
                         <%--<asp:BoundField HeaderText="Receipt ID" DataField="ReceiptID" />--%>
-                        <asp:BoundField DataField="RefNo1" HeaderText="Bill Number" />
-                        <asp:BoundField DataField="RefNo2" HeaderText="Reference Number" />
-                        <asp:BoundField HeaderText="Date"  DataFormatString="{0:dd/MM/yyyy}"   DataField="Date" />
+
+                         <asp:TemplateField HeaderText=" " >
+                    <ItemTemplate>
+                        <asp:Image ID="img1"  runat="server" Style="height: 100px;
+                            width: 100px"  OnClientClick="ConfirmDelete()" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                        <asp:BoundField DataField="RefNo1" HeaderText="Reference Number1" ItemStyle-CssClass="Match" />
+                        <asp:BoundField DataField="RefNo2" HeaderText="Reference Number2" ItemStyle-CssClass="Match"/>
+                        <asp:BoundField HeaderText="Date"  DataFormatString="{0:dd/MM/yyyy}"   DataField="Date" ItemStyle-CssClass="Match"/>
+
+                          <asp:BoundField  HeaderText="Details"  ItemStyle-CssClass="Match"  /> 
+                   <asp:BoundField DataField="ReceiptID" HeaderText="ReceiptID"  ItemStyle-CssClass="Match"  />
                         <%--<asp:HyperLinkField  Text="Details" HeaderText="Click Here" DataNavigateUrlFields="ReceiptID" DataNavigateUrlFormatString="~/Stock/StockInDetails.aspx?ReceiptID={0}" />--%>
                                                
                     </Columns>

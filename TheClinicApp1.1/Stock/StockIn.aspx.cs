@@ -23,7 +23,7 @@ namespace TheClinicApp1._1.Stock
 
 
         #region Global Variables
-        private static int PageSize = 5;
+        private static int PageSize = 7;
 
         public string listFilter = null;
 
@@ -44,10 +44,16 @@ namespace TheClinicApp1._1.Stock
         private void BindDummyRow()
         {
             DataTable dummy = new DataTable();
+
+            dummy.Columns.Add(" ");
             dummy.Columns.Add("RefNo1");
             dummy.Columns.Add("RefNo2");
             dummy.Columns.Add("Date");
-           
+
+            dummy.Columns.Add("Details");
+            dummy.Columns.Add("ReceiptID");
+
+
 
             dummy.Rows.Add();
             GridViewStockin.DataSource = dummy;
@@ -59,6 +65,7 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string receiptID = string.Empty;
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();
 
@@ -69,6 +76,16 @@ namespace TheClinicApp1._1.Stock
                 BindDummyRow();
                 
             }
+
+            if (Request.QueryString["HdrID"] != null)
+            {
+
+                receiptID = Request.QueryString["HdrID"].ToString();
+
+                rpt.ClinicID = UA.ClinicID.ToString();
+                rpt.DeleteReceiptHeader(receiptID);
+            }
+
 
         }
 

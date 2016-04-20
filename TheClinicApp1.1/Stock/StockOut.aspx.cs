@@ -25,7 +25,7 @@ namespace TheClinicApp1._1.Stock
         {
             DataTable dummy = new DataTable();
 
-            dummy.Columns.Add("Delete");
+            dummy.Columns.Add(" ");
             dummy.Columns.Add("IssueNO");
             dummy.Columns.Add("IssuedTo");
             //dummy.Columns.Add("IssueID");
