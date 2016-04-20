@@ -278,7 +278,7 @@ namespace TheClinicApp1._1.Registration
                 PatientObj.Occupation = (txtOccupation.Value != "") ? txtOccupation.Value.ToString() : null;
                 PatientObj.CreatedBy = UA.userName;
                 PatientObj.UpdatedBy = UA.userName;
-                if ((PatientObj.Name != null) && (PatientObj.Address != null))
+                if (PatientObj.Name != null)
                 {
                     string filenum = "F" + clinID.Substring(0, 4) + txtName.Value.Substring(0, 3) + txtMobile.Value.Substring(7, 3);
                     PatientObj.FileNumber = filenum.Trim();
@@ -308,6 +308,7 @@ namespace TheClinicApp1._1.Registration
                         {
                             byte[] ImageByteArray = null;
                             ImageByteArray = ConvertImageToByteArray(FileUpload1);
+                            PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
                             PatientObj.Picupload = ImageByteArray;
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
                             PatientObj.UpdatePatientPicture();

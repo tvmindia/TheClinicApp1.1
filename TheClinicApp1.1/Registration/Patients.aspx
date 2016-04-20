@@ -247,16 +247,14 @@
          <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
          <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
          </div>
-         <div class="alert alert-info" id="divDisplayNumber" visible="false" runat="server" ><a class="alert_close">X</a>
-         <div>
-             <div><strong><asp:Label ID="lblDisplayFileNumber" runat="server" Text="File Number"></asp:Label>:&nbsp;</strong><asp:Label ID="lblFileCount" runat="server" Text=""></asp:Label></div>
-             <div><strong><asp:Label ID="lblTokenNumber" runat="server" Text="Token Number"></asp:Label>:&nbsp;</strong><asp:Label ID="lblTokencount" runat="server" Text=""></asp:Label></div>
+         </div>
+             <div class="alert alert-info" id="divDisplayNumber" visible="false" runat="server" ><a class="alert_close">X</a>
+             <div>
+             <div><asp:Label ID="lblDisplayFileNumber" runat="server" Text="File Number"></asp:Label>:&nbsp;<strong><asp:Label ID="lblFileCount" runat="server" Text=""></asp:Label></strong>&nbsp;&nbsp;<asp:Label ID="lblTokenNumber" runat="server" Text="Token Number"></asp:Label>:&nbsp;<strong><asp:Label ID="lblTokencount" runat="server" Text=""></asp:Label></strong></div>
                            
-         </div>
+             </div>
 
-         </div>
-
-         </div>
+             </div>
                 
          <div class="alert alert-success" style="display:none">
           <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
@@ -277,7 +275,7 @@
       <div class="row field_row">  
       <div class="col-lg-8">
       <div class="row"> 
-      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required pattern="^[A-z][A-z\.\s]+$" /></div>
+      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required pattern="^[A-z][A-z\.\s]+$" title="The Name is required and cannot be empty" /></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
       <img id="ProfilePic" src="../images/UploadPic.png" runat="server"  />
@@ -292,7 +290,7 @@
           <asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" />
           <asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" />
       </div>
-      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" min ="1" max="200" name="age" required /></div>
+      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" required title="The Age is required and cannot be empty !should be Number" /></div>
       </div>
       </div>            
       </div>
@@ -305,10 +303,10 @@
       
       <div class="row field_row">  
       <div class="col-lg-4">
-      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="10" pattern="{10}[0-9]" />
+      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="5" pattern="{10}[0-9]" title="Not a Required Field if enter Only Numbers" />
       </div>
       <div class="col-lg-4">
-      <label for="email">Email</label><input id="txtEmail" runat="server" type="text" name="email" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" />
+      <label for="email">Email</label><input id="txtEmail" runat="server" type="email" name="email" title="The Email should keep a correct format like testname@test.te" />
       </div>
       </div>
       
@@ -404,7 +402,7 @@
                         <h3 class="modal-title">View All Registrations</h3>
                     </div>
                     <div class="modal-body" style="width:100%;height:100%" >                        
-                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None" Height="30px" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5">                            
+                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5">                            
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField>
