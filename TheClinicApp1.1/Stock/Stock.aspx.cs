@@ -61,6 +61,8 @@ namespace TheClinicApp1._1.Stock
             dummy.Columns.Add("MedicineCode");
             dummy.Columns.Add("Unit");
             dummy.Columns.Add("Qty");
+            dummy.Columns.Add("ReOrderQty");
+
 
             dummy.Rows.Add();
             gvMedicines.DataSource = dummy;

@@ -21,7 +21,7 @@ namespace TheClinicApp1._1.Registration
         }
         #region EditPatients
         protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
-        {
+        { 
             DateTime date = DateTime.Now;
             int year = date.Year;
             string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });

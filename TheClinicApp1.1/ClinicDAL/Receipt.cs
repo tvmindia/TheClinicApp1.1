@@ -6,6 +6,8 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web.UI;
 
+
+
 namespace TheClinicApp1._1.ClinicDAL
 {
     public class Receipt
@@ -290,14 +292,32 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@ReceiptID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ReceiptID);
 
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
+
+                if (Outputval == 1)
+                {
+                    //Success
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.DeleteSuccessMessage(page);
+                }
+
+                if (Outputval == 0)
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.DeletionNotSuccessMessage(page);
+                }
+
 
             }
 
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -309,6 +329,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             }
 
+            
+
+           
+
+          
         }
 
         #endregion InsertReceiptHeader
@@ -423,7 +448,7 @@ namespace TheClinicApp1._1.ClinicDAL
         //Get Recipt Details by Passing Reference Number
         #region GetReceiptDetailsByReceiptID
 
-        public DataSet GetReceiptDetailsByReceiptID(Guid Receipt)
+        public DataSet GetReceiptDetailsByReceiptID(string ReceiptID)
         {
 
             dbConnection dcon = null;
@@ -441,7 +466,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
 
-                cmd.Parameters.Add("@ReceiptID", SqlDbType.UniqueIdentifier).Value = Receipt;
+                cmd.Parameters.Add("@ReceiptID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ReceiptID);
 
 
                 sda = new SqlDataAdapter();
@@ -478,10 +503,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Methods
 
 
-        internal DataSet GetReceiptDetailsByReceiptID(string receiptid)
-        {
-            throw new NotImplementedException();
-        }
+        //internal DataSet GetReceiptDetailsByReceiptID(string receiptid)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 
 
