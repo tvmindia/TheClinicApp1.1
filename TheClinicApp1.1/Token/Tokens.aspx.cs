@@ -32,8 +32,7 @@ namespace TheClinicApp1._1.Token
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
 
-
-            //tokenObj.ClinicID = UA.ClinicID.ToString();
+            tokenObj.ClinicID = UA.ClinicID.ToString();
 
             listerfilterbind();
 

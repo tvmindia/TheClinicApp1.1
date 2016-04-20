@@ -41,6 +41,9 @@ namespace TheClinicApp1._1.Registration
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
+
+
+            tok.ClinicID = UA.ClinicID.ToString();
             
             gridDataBind();
             listFilter = null;
@@ -74,6 +77,7 @@ namespace TheClinicApp1._1.Registration
         public void DropdownDoctors()
         {
             DataSet ds = tok.DropBindDoctorsName();
+            
             ddlDoctorName.DataSource = ds.Tables[0];
             ddlDoctorName.DataValueField = "DoctorID";
             ddlDoctorName.DataTextField = "Name";

@@ -11,43 +11,34 @@ namespace TheClinicApp1._1.ClinicDAL
     public class TokensBooking
     {
         //Property
-        #region TokenProperty
-
-        
+        #region TokenProperty        
         
         public int TokenNo
         {
             get;
             set;
         }
-
         public string DoctorID
         {
             get;
             set;
 
         }
-
-
         public string PatientID
         {
             get;
             set;
         }
-
         public DateTime DateTime
         {
             get;
             set;
-
         }
-
         public string ClinicID
         {
             get;
             set;
         }
-
         public string CreatedBy
         {
             get;
@@ -57,21 +48,10 @@ namespace TheClinicApp1._1.ClinicDAL
         {
             get;
             set;
-
-        }
-
-
-        
-
-        
+        }     
         #endregion Token_Property
 
-
-
         //Methods
-
-
-
 
         #region Token_Methods
 
@@ -113,9 +93,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetPatientDetailsForToken]";
-
-                cmd.Parameters.Add("@filenumber", SqlDbType.NVarChar).Value = str1;
-          
+                cmd.Parameters.Add("@filenumber", SqlDbType.NVarChar).Value = str1;        
                  
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
@@ -165,6 +143,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetDoctorDetails]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
 
                  sda= new SqlDataAdapter(cmd) ;
                  ds = new DataSet();

@@ -9,6 +9,23 @@
             font-family:'Footlight MT';
             font-weight:bold;
         }
+
+         .Dropdown1 {
+            display: block;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #dbdbdb;
+            height: 41px;
+            font-family: 'roboto-light';
+            font-weight: bold;
+            font-size: 14px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+        }
+
+
+
     </style>
   <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
@@ -137,7 +154,7 @@
          <div class="right_form">
          
          <div class="token_id_card">
-             <div class="name_field"><asp:Label ID="lblPatientName" runat="server"  Text="Name" ></asp:Label><span class="generate_token">5</span></div>
+             <div class="name_field"><asp:Label ID="lblPatientName" runat="server"  Text="Name" ></asp:Label><span class="generate_token">0</span></div>
                  <div class="light_grey">
                      <div class="col3_div">Age<span><asp:Label ID="lblAge" runat="server"   Font-Size="Large"></asp:Label></span></div>
                      <div class="col3_div">Gender<span><asp:Label ID="lblGender" runat="server"   Font-Size="Large"></asp:Label></span></div>
@@ -147,13 +164,12 @@
                     <div class="field_label"><label>Address</label><asp:Label ID="lblAddress" runat="server"  ></asp:Label></div>  
                     <div class="field_label"><label>Mobile</label><asp:Label ID="lblMobile" runat="server"  ></asp:Label></div>  
                     <div class="field_label"><label>Email</label> <a href="mailto: demo@test.com"><asp:Label ID="lblEmail" runat="server" ></asp:Label></a></div>  
-                    <div class="field_label"><label>Last visit</label><asp:Label ID="lblLastVisit" runat="server"  ></asp:Label></div>                      
+                    <div class="field_label"><label>Last visit</label><asp:Label ID="lblLastVisit" runat="server"  ></asp:Label></div>  
+                     <div class="field_label"></div>
+                     <div class="field_label" id="DropDownDoctor" style="visibility:hidden"> <label>Doctor Name</label><asp:DropDownList ID="ddlDoctor"  runat="server"></asp:DropDownList></div>                       
                 </div>                 
              </div>
-
-              <div  class="token_id_card" id="DropDownDoctor" style="visibility:hidden">
-                  <div class="light_grey"><label>Doctor Name</label><asp:DropDownList ID="ddlDoctor" runat="server"></asp:DropDownList></div> 
-             </div>   
+ 
          </div>
          
          </div>         
