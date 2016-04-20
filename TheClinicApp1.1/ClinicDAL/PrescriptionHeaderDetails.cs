@@ -285,7 +285,7 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-         public string MedicineID
+         public string MedicineName
         {
             get;
             set;
@@ -300,7 +300,7 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-         public int  Unit
+         public string Unit
          {
              get;
              set;
@@ -367,7 +367,7 @@ namespace TheClinicApp1._1.ClinicDAL
                  cmd.Parameters.Add("@UniqueID",SqlDbType.UniqueIdentifier).Value = UniqueID;
 
                  cmd.Parameters.Add("@PrescID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
-                 cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(MedicineID);               
+                 cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = MedicineName;               
                  cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);                 
                  cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
                  cmd.Parameters.Add("@Unit", SqlDbType.Real).Value = Unit;
@@ -474,7 +474,7 @@ namespace TheClinicApp1._1.ClinicDAL
                  cmd.CommandText = "[UpdatePrescriptionDetails]";
 
                  cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UniqueID);
-                 cmd.Parameters.Add("@MedcineID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(MedicineID);
+                 cmd.Parameters.Add("@MedcineID", SqlDbType.UniqueIdentifier).Value = MedicineName;
 
                  cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
                  cmd.Parameters.Add("@Unit", SqlDbType.Real).Value = Unit;
@@ -553,7 +553,27 @@ namespace TheClinicApp1._1.ClinicDAL
          }
 
         #endregion DeletePrescriptionDetails
-        
+
+         #region SearchMedicinewithCategory
+         public DataTable SearchMedicinewithCategory()
+         {
+
+             DataTable dt = null;
+             SqlConnection con = null;
+             dbConnection dcon = new dbConnection();
+             con = dcon.GetDBConnection();
+             SqlCommand cmd = new SqlCommand("SearchMedicinewithCategory", con);
+             cmd.CommandType = CommandType.StoredProcedure;
+             SqlDataAdapter adapter = new SqlDataAdapter();
+             adapter.SelectCommand = cmd;
+             dt = new DataTable();
+             adapter.Fill(dt);
+             con.Close();
+             return dt;
+
+         }
+         #endregion SearchMedicinewithCategory
+
         #endregion Methods
 
 

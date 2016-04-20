@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+      <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
     <style>
         .hello{
             font-size:30px;
@@ -9,9 +10,99 @@
             font-weight:bold;
         }
     </style>
+  <script src="../js/vendor/jquery-1.11.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
-    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="../js/jquery-1.12.0.min.js"></script>
+    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>   
+    <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
+
+ <script src="../js/jquery-1.9.1.min.js"></script>     
+    <script src="../js/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            debugger;
+            $('.nav_menu').click(function () {
+                
+                $(".main_body").toggleClass("active_close");
+            });
+
+            debugger;
+              
+         
+            var ac=null;
+            ac = <%=listFilter %>;
+            $( "#txtSearch" ).autocomplete({
+                source: ac
+            });       
+        });
+    </script> 
+ 
+
+    <script>
+        
+        function bindPatientDetails()
+        {
+            debugger;
+
+  
+
+
+            var PatientName = document.getElementById("txtSearch").value;
+            // split   
+
+            //var name= PatientName.split('🏠');
+            //var address= name[1].split('📞');           
+            var file=PatientName.split('📝')
+
+            //var name1= name[0];
+            //var address1=address[0];
+            //var phone1=file[0];
+            var file1=file[1]
+            
+                if (PatientName!="")
+            { 
+              
+                    PageMethods.PatientDetails(file1, OnSuccess, onError);  
+            }
+
+            function OnSuccess(response, userContext, methodName) 
+            {   
+                debugger;         
+                var string1 = new Array();
+                string1 = response.split('|');
+               
+
+                document.getElementById('<%=lblFileNo.ClientID%>').innerHTML=string1[0];
+                document.getElementById('<%=lblPatientName.ClientID%>').innerHTML=string1[1];
+                document.getElementById('<%=lblAge.ClientID%>').innerHTML=string1[2];
+                document.getElementById('<%=lblGender.ClientID%>').innerHTML=string1[3];
+                document.getElementById('<%=lblAddress.ClientID%>').innerHTML=string1[4];
+                document.getElementById('<%=lblMobile.ClientID%>').innerHTML=string1[5];
+                document.getElementById('<%=lblEmail.ClientID%>').innerHTML=string1[6];
+                document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
+                document.getElementById('<%=HiddenClinicID.ClientID%>').value=string1[8];
+
+                document.getElementById('txtSearch').value="";//clearin the earch box
+
+                document.getElementById('DropDownDoctor').style.visibility= 'visible';
+            }          
+            function onError(response, userContext, methodName)
+            {                   
+            }         
+        }
+
+
+    </script>
+
+
+
+
+
      <!-- #main-container -->
      <div class="main_body">                  
           <div class="left_part">
@@ -37,8 +128,8 @@
          </div>
          <div class="grey_sec">
          <div class="search_div">
-         <input class="field" type="search" placeholder="Search here..." />
-         <input class="button" type="submit" value="Search" />
+         <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch"  type="search" placeholder="Search here..." />
+         <input class="button" onserverclick="btnSearch_ServerClick" runat="server" type="submit" value="Search" />
          </div>
          <ul class="top_right_links"><li><a class="book_token" runat="server" id="btnBookToken" onserverclick="btnBookToken_ServerClick"><span></span>Book Token</a></li></ul>
          </div>
@@ -46,24 +137,30 @@
          <div class="right_form">
          
          <div class="token_id_card">
-             <div class="name_field"><asp:Label ID="lblPatientName" runat="server" Text="Patient_test"></asp:Label><span class="generate_token">5</span></div>
+             <div class="name_field"><asp:Label ID="lblPatientName" runat="server"  Text="Name" ></asp:Label><span class="generate_token">5</span></div>
                  <div class="light_grey">
-                     <div class="col3_div">Age<span><asp:Label ID="lblAge" runat="server" Text="22" Font-Size="Large"></asp:Label></span></div>
-                     <div class="col3_div">Gender<span><asp:Label ID="lblGender" runat="server" Text="Male" Font-Size="Large"></asp:Label></span></div>
-                     <div class="col3_div">File No<span><asp:Label ID="lblFileNo" runat="server" Text="1120" Font-Size="Large"></asp:Label></span></div>
+                     <div class="col3_div">Age<span><asp:Label ID="lblAge" runat="server"   Font-Size="Large"></asp:Label></span></div>
+                     <div class="col3_div">Gender<span><asp:Label ID="lblGender" runat="server"   Font-Size="Large"></asp:Label></span></div>
+                     <div class="col3_div">File No<span><asp:Label ID="lblFileNo" runat="server"   Font-Size="Large"></asp:Label></span></div>
                  </div>
                  <div class="card_white">
-                    <div class="field_label"><label>Address</label><asp:Label ID="lblAddress" runat="server" Text="Patient_address"></asp:Label></div>  
-                    <div class="field_label"><label>Mobile</label><asp:Label ID="lblMobile" runat="server" Text="9656605436"></asp:Label></div>  
-                    <div class="field_label"><label>Email</label> <a href="mailto: demo@test.com"><asp:Label ID="lblEmail" runat="server" Text="tom.a4s.son@gmail.com"></asp:Label></a></div>  
-                    <div class="field_label"><label>Last visit</label><asp:Label ID="lblLastVisit" runat="server" Text="08-04-2016"></asp:Label></div>    
-                </div>
+                    <div class="field_label"><label>Address</label><asp:Label ID="lblAddress" runat="server"  ></asp:Label></div>  
+                    <div class="field_label"><label>Mobile</label><asp:Label ID="lblMobile" runat="server"  ></asp:Label></div>  
+                    <div class="field_label"><label>Email</label> <a href="mailto: demo@test.com"><asp:Label ID="lblEmail" runat="server" ></asp:Label></a></div>  
+                    <div class="field_label"><label>Last visit</label><asp:Label ID="lblLastVisit" runat="server"  ></asp:Label></div>                      
+                </div>                 
              </div>
-         
+
+              <div  class="token_id_card" id="DropDownDoctor" style="visibility:hidden">
+                  <div class="light_grey"><label>Doctor Name</label><asp:DropDownList ID="ddlDoctor" runat="server"></asp:DropDownList></div> 
+             </div>   
          </div>
          
          </div>         
          </div>
+
+    <asp:HiddenField ID="HiddenPatientID"  runat="server" />
+    <asp:HiddenField ID="HiddenClinicID" runat="server" />
 
     <!-- Modal -->
 <div id="all_token" class="modal fade" role="dialog">
@@ -131,23 +228,5 @@
   </div>
 </div>
     
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-
-<script>
-			var test=jQuery.noConflict();
-			test(document).ready(function(){	
-				
-			test('[data-toggle="tooltip"]').tooltip();  
-			
-				
-				test('.nav_menu').click(function(){
-					test(".main_body").toggleClass("active_close");
-				});
-			
-			});
-			
-		</script>
-     
-    <script src="../js/JavaScript_selectnav.js"></script> 
+   
 </asp:Content>

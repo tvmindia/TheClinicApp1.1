@@ -331,8 +331,8 @@ namespace TheClinicApp1._1.Stock
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
             string msg = string.Empty;
-if ( (txtIssuedTo.Text != "") || (txtDate1.Text != "") || (txtIssueNO.Text != ""))
-{
+            if ( (txtIssuedTo.Text != "") || (txtDate1.Text != "") || (txtIssueNO.Text != ""))
+             {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
 
