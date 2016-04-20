@@ -15,7 +15,7 @@
             {
                 //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
 
-                debugger;
+                
                 var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
  
                 if (topcount==0)
@@ -67,6 +67,12 @@
 
             } 
 
+
+
+            function GetTextBoxValuesPresLocal(){
+            
+                GetTextBoxValuesPres('<%=hdnTextboxValues.ClientID%>');
+            }
 		</script>
 
 
@@ -74,11 +80,8 @@
     <!-- #main-container -->
          
          <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
-         <div class="main_body">
-
-
-         
-          <div class="left_part">
+         <div class="main_body">         
+         <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
          <ul class="menu">
          <li  id="patients"><a name="hello" onclick="selectTile('patients','<%=RoleName%>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
@@ -107,7 +110,8 @@
          <input class="field" id="txtSearch" name="txtSearch" type="search" placeholder="Search here..." />
          <input class="button" type="submit" value="Search" />
          </div>
-         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValues();" OnClick="btnSave_Click" /></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+
+         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          <div class="right_form">
          
@@ -240,7 +244,7 @@
     <th>Days</th>
   </tr>
   <tr> 
-     <td ><input id="txtMedName0" type="text" placeholder="Medicine" class="input" onfocus="autocompleteonfocus('0')"/></td>
+     <td ><input id="txtMedName0" type="text" placeholder="Medicine" class="input" onfocus="autocompleteonfocus(0)"/></td>
       <td ><input id="txtMedQty0" type="text" placeholder="Qty" class="input"/></td>
       <td ><input id="txtMedUnit0" class="input" type="text" placeholder="Unit" /></td>
       <td ><input id="txtMedDos0" type="text" placeholder="Dosage" class="input"/></td>
@@ -260,6 +264,13 @@
 </div>
          
          <asp:HiddenField ID="HiddenField1" runat="server"></asp:HiddenField>
+             <asp:HiddenField ID="hdnXmlData" runat="server" />
+                    <asp:HiddenField ID="HiddenField3" runat="server" Value="0" />
+                    <asp:HiddenField ID="hdnTextboxValues" runat="server" />
+                    <asp:HiddenField ID="hdnManageGridBind" runat="server" Value="False" />
+
+                    <asp:HiddenField ID="hdnHdrInserted" runat="server" />
+                    <asp:HiddenField ID="hdnRemovedIDs" runat="server" />
          </div>
          
          </div>         

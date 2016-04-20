@@ -20,10 +20,13 @@ namespace TheClinicApp1._1.Doctor
         ClinicDAL.Patient PatientObj = new ClinicDAL.Patient();
         ClinicDAL.Doctor DoctorObj = new ClinicDAL.Doctor();
         ClinicDAL.Stocks stockObj = new ClinicDAL.Stocks();
+        ClinicDAL.PrescriptionDetails PrescriptionObj= new ClinicDAL.PrescriptionDetails();
         public string listFilter=null;
         public string RoleName = null;
         protected void Page_Load(object sender, EventArgs e)
         {
+             //OnClientClick="GetTextBoxValuesPres('<%=hdnTextboxValues.ClientID%>');"
+            //btnSave.Attributes.Add("OnClientClick", "GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "')");
             listFilter = null;
             listFilter = GetMedicineNames();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -45,13 +48,13 @@ namespace TheClinicApp1._1.Doctor
             // Patient PatientObj = new Patient();
             
 
-            DataTable dt = stockObj.SearchBoxMedicine();
+            DataTable dt = PrescriptionObj.SearchMedicinewithCategory();
 
             StringBuilder output = new StringBuilder();
             output.Append("[");
             for (int i = 0; i < dt.Rows.Count; ++i)
             {
-                output.Append("\"" + dt.Rows[i]["Name"].ToString() + "\"");
+                output.Append("\"" + dt.Rows[i]["Name"].ToString() +"💼"+dt.Rows[i]["CategoryName"].ToString()+ "\"");
 
                 if (i != (dt.Rows.Count - 1))
                 {
@@ -84,15 +87,15 @@ namespace TheClinicApp1._1.Doctor
             return output.ToString();
         }
         #endregion BindSearch
-          
-        
+
+
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             ClinicDAL.CaseFile.Visit VisitsObj = new ClinicDAL.CaseFile.Visit();
             VisitsObj.DoctorID = Guid.Parse("469489AE-6237-47B3-B8CC-74B62EC81D77");
-            VisitsObj.ClinicID =Guid.Parse(UA.Clinic);
+            VisitsObj.ClinicID = UA.ClinicID;
             VisitsObj.FileID = Guid.Parse("232CFE06-E9E9-42C1-B2F6-B992ABE0140A");
             int feet = Convert.ToInt32(txtHeightFeet.Value);
             int inch = Convert.ToInt32(txtHeightInch.Value);
@@ -129,18 +132,80 @@ namespace TheClinicApp1._1.Doctor
             }
 
             //Fetching values of prescription from Design throurh Hiddenfield
-            string values = HiddenField1.Value;
-            if (values != null)
-            {
-                string[] Invalue = values.Split('|');
-                int count = Invalue.Length - 1;
-                for (int i = 0; i < count; i = i + 4)
-                {
-                    string w = Invalue[i], x = Invalue[i + 1], y = Invalue[i + 2], z = Invalue[i + 3];
-                }
-            } 
-        }
+            //string values = HiddenField1.Value;
+            //if (values != null)
+            //{
+            //    string[] Invalue = values.Split('|');
+            //    int count = Invalue.Length - 1;
+            //    for (int i = 0; i < count; i = i + 4)
+            //    {
+            //        string w = Invalue[i], x = Invalue[i + 1], y = Invalue[i + 2], z = Invalue[i + 3];
+            //    }
+            //}
 
+            string last = string.Empty;
+            string values = hdnTextboxValues.Value;
+            string[] Rows = values.Split('$');
+            for (int i = 0; i < Rows.Length - 1; i++)
+            {
+                string[] tempRow = Rows;
+
+                last = tempRow[i].Split('|').Last();
+
+                string[] columns = tempRow[i].Split('|');
+
+                if (last == string.Empty || last == "")
+                {
+
+                    //----------------- * CASE : INSERT *-----------------------------------//
+                    if ((columns[0] != null) && (columns[1] != null))
+                    {                        
+                        PrescriptionObj.MedicineName = columns[0];
+                        PrescriptionObj.Qty = Convert.ToInt32(columns[1]);
+                        PrescriptionObj.Unit = columns[2];
+                        PrescriptionObj.Dosage = Convert.ToInt32(columns[3]);
+                        PrescriptionObj.Timing = columns[4];
+                        PrescriptionObj.Days = Convert.ToInt32(columns[5]);
+                        PrescriptionObj.CreatedBy = UA.userName;
+                        PrescriptionObj.ClinicID = UA.ClinicID.ToString();
+                        PrescriptionObj.CreatedDate = DateTime.Now;
+
+                        //if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
+                        //{
+                        //    //PrescriptionObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
+                        //}
+                        PrescriptionObj.InsertPrescriptionDetails();
+
+                    }
+                }
+
+               // if (last != string.Empty)
+                //{
+                    //----------------- * CASE : UPDATE *---------------------------------//
+
+                    //if ((columns[0] != null) && (columns[4] != null))
+                    //{
+                    //    string uniqueID = last;
+                    //    IssueDetails UpIssueDtlObj = new IssueDetails(new Guid(uniqueID));
+
+                    //    UpIssueDtlObj.ClinicID = UA.ClinicID.ToString();
+                    //    UpIssueDtlObj.Qty = Convert.ToInt32(columns[4]);
+                    //    UpIssueDtlObj.UpdatedBy = UA.userName;
+
+                    //    //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
+
+                    //    UpIssueDtlObj.UpdateIssueDetails(uniqueID);
+                    //}
+                //
+            //}
+
+            }
+
+
+
+
+        }
+    
         #region FillPatientDetails
         protected void ImgBtnUpdate_Command1(object sender, CommandEventArgs e)
         {

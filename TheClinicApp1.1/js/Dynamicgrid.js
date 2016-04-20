@@ -67,7 +67,7 @@ function clickAdd(id) {
     // ADD new row with fields needed.
     $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;border:0;">'
                + ' <td ><input id="txtMedName' + iCnt + '" type="text" placeholder="Medicine' + iCnt + '" class="input" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
-                + '<td ><input id="txtQuantity' + iCnt + '" type="text" placeholder="Qty' + iCnt + '" class="input"/></td>'
+                + '<td ><input id="txtMedQty' + iCnt + '" type="text" placeholder="Qty' + iCnt + '" class="input"/></td>'
                 + '<td ><input id="txtMedUnit' + iCnt + '" class="input" type="text" placeholder="Unit' + iCnt + '" /></td>'
                 + '<td ><input id="txtMedDos' + iCnt + '" type="text" placeholder="Dosage' + iCnt + '" class="input"/></td>'
                 + '<td><input id="txtMedTime' + iCnt + '" type="text" placeholder="Timing' + iCnt + '" class="input"/></td>'
@@ -195,9 +195,7 @@ function clickdelete(id) {
 var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
 function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
-    debugger;
-    
-   
+    debugger;   
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -360,7 +358,158 @@ function CheckMedicineIsOutOfStock(ControlNo) {
     }
 }
 
+// PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
+var divValue, values = '';
+//------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
+function GetTextBoxValuesPres(hdnTextboxValues) {
+    debugger;
+    values = '';
+    var i = 1;
+    $('.input').each(function () {
+        i++;
+    });
+    alert(values);
+    var NumberOfColumns = i - 1;
+    var NumberOfRows = NumberOfColumns / 6;
+    var topId = iCnt;
 
+    for (var k = 0; k <= topId; k++) {
+
+        if (document.getElementById('txtMedName' + k) == null) {
+            continue;
+        }
+        if (((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == '')) || ((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == ''))) {
+            continue;
+        }
+        //if (((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value != '') && (isNaN(document.getElementById('txtMedName' + k).value)) == false) && ((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value != ''))) {
+            var CurrentMedName = document.getElementById('txtMedName' + k).value;
+            if (values.indexOf(CurrentMedName) > -1)
+            {
+
+
+            }
+            else
+            {
+
+
+                //if (((document.getElementById('txtUnit' + k) != null) && (document.getElementById('txtUnit' + k).value == '')) || ((document.getElementById('txtCode' + k) != null) && (document.getElementById('txtCode' + k).value == '')) || ((document.getElementById('txtCategory' + k) != null) && (document.getElementById('txtCategory' + k).value == '')))
+                //{
+                //    continue;
+                //}
+                //else
+                //{
+
+                values += document.getElementById('txtMedName' + k).value + '|' + document.getElementById('txtMedQty' + k).value + '|' + document.getElementById('txtMedUnit' + k).value + '|' + document.getElementById('txtMedDos' + k).value + '|' + document.getElementById('txtMedTime' + k).value + '|' + document.getElementById('txtMedDay' + k).value + '|' + document.getElementById('hdnDetailID' + k).value + '$';
+                //}
+
+            }
+        //}
+
+    }
+
+    alert(values);
+    document.getElementById(hdnTextboxValues).value = values;
+
+}
+
+//-----* Function to bind textboxes by medicine name -- fills textboxes when focus is lost from medicine textbox  *----//
+function BindControlsByMedicneName(ControlNo) {
+
+
+    if (ControlNo >= 0) {
+        var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
+
+    }
+
+    if (MedicineName != "") {
+
+        PageMethods.MedDetails(MedicineName, OnSuccess, onError);
+
+    }
+
+    function OnSuccess(response, userContext, methodName) {
+
+        if (ControlNo >= 0) {
+
+            var MedicineDetails = new Array();
+            MedicineDetails = response.split('|');
+
+            document.getElementById('txtUnit' + ControlNo).value = MedicineDetails[0];
+            document.getElementById('txtCode' + ControlNo).value = MedicineDetails[1];
+            document.getElementById('txtCategory' + ControlNo).value = MedicineDetails[2];
+            document.getElementById('txtQuantity' + ControlNo).placeholder = " Out Of: " + MedicineDetails[3];
+            document.getElementById('hdnQty' + ControlNo).value = parseInt(MedicineDetails[3]);
+
+        }
+
+    }
+    function onError(response, userContext, methodName) {
+
+    }
+
+
+}
+
+//-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
+function CheckMedicineIsOutOfStock(ControlNo) {
+    debugger;
+    if (document.getElementById('txtMedicine' + ControlNo) != null && document.getElementById('txtQuantity' + ControlNo) != null) {
+        var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);
+        var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
+        var InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
+        document.getElementById('hdnQty' + ControlNo).value = InputQty;
+
+        if ((MedicineName != "")) {
+            //----------- * Case Of Insert *----------//
+            if (document.getElementById('hdnDetailID' + ControlNo).value == "") {
+
+                if (InputQty > Qty || InputQty <= 0) {
+                    $("#txtQuantity" + ControlNo).addClass("warning");
+                    $("#txtQuantity" + ControlNo).attr('type', 'text');
+                    $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
+
+                    if (InputQty > Qty) {
+                        $("#txtQuantity" + ControlNo).val('Must be < ' + Qty);
+                    }
+
+                    if (InputQty <= 0) {
+                        $("#txtQuantity" + ControlNo).val('Must be > 0');
+                    }
+
+                }
+                else {
+                    $("#txtQuantity" + ControlNo).removeClass("warning");
+                    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
+                    $("#txtQuantity" + ControlNo).attr('type', 'number');
+                }
+            }
+                //----------- * Case Of Update *----------//     
+            else {
+                var QtyInStock = parseInt(document.getElementById('txtQuantity' + ControlNo).getAttribute("placeholder").replace(" Out Of: ", ""));
+                if (InputQty > QtyInStock || InputQty <= 0) {
+                    $("#txtQuantity" + ControlNo).addClass("warning");
+                    $("#txtQuantity" + ControlNo).attr('type', 'text');
+                    $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
+
+                    if (InputQty > Qty) {
+
+                        $("#txtQuantity" + ControlNo).val('Must be < ' + QtyInStock);
+                    }
+
+                    if (InputQty <= 0) {
+                        $("#txtQuantity" + ControlNo).val('Must be > 0');
+                    }
+                }
+
+                else {
+                    $("#txtQuantity" + ControlNo).removeClass("warning");
+                    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
+                    $("#txtQuantity" + ControlNo).attr('type', 'number');
+                }
+            }
+        }
+    }
+}
 
 //----------------------------------- * Function to rebind medicine textboxes -- refills controls by retrieving data from xml *--------------------//
 function RefillTextboxesWithXmlData(hdnXmlData) {
