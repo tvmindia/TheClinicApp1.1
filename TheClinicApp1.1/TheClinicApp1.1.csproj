@@ -194,7 +194,7 @@
     <Content Include="images\token-hover.png" />
     <Content Include="images\token.png" />
     <Content Include="images\tokens.png" />
-    <Content Include="images\UploadPic.png" />
+    <Content Include="images\UploadPic1.png" />
     <Content Include="js\ASPSnippets_Pager.min.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\DeletionConfirmation.js" />

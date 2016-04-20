@@ -203,7 +203,7 @@ namespace TheClinicApp1._1.Registration
         protected void btnNew_ServerClick(object sender, EventArgs e)
         {
             ClearFields();
-            ProfilePic.Src = "../Images/UploadPic.png";
+            ProfilePic.Src = "../Images/UploadPic1.png";
             divDisplayNumber.Visible = false;
             lblMsgges.Text = string.Empty;
             lblErrorCaption.Text = string.Empty;

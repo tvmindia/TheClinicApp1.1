@@ -278,7 +278,7 @@
       <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required pattern="^[A-z][A-z\.\s]+$" title="The Name is required and cannot be empty" /></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
-      <img id="ProfilePic" src="../images/UploadPic.png" runat="server"  />
+      <img id="ProfilePic" src="~/images/UploadPic1.png" runat="server"  />
       </div>
       <div class="upload">
       <label class="control-label">Upload Picture</label>
