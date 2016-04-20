@@ -113,7 +113,7 @@
 
          <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
-         <div class="right_form">
+         <div class="right_form"> 
          
          <div class="token_id_card">
              <div class="name_field"><img id="ProfilePic" src="../images/UploadPic.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label></div>
