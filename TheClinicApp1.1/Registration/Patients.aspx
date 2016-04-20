@@ -175,7 +175,7 @@
       <div class="row field_row">  
       <div class="col-lg-8">
       <div class="row"> 
-      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required /></div>
+      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required pattern="^[A-z][A-z\.\s]+$" /></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
       <img id="ProfilePic" src="../images/UploadPic.png" runat="server"  />
@@ -190,7 +190,7 @@
           <asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" />
           <asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" />
       </div>
-      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="text" name="age" required /></div>
+      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="text" min ="1" max="200" name="age" required /></div>
       </div>
       </div>            
       </div>
@@ -203,10 +203,10 @@
       
       <div class="row field_row">  
       <div class="col-lg-4">
-      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" />
+      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="12" pattern="{10}[0-9]" />
       </div>
       <div class="col-lg-4">
-      <label for="email">Email</label><input id="txtEmail" runat="server" type="text" name="email" />
+      <label for="email">Email</label><input id="txtEmail" runat="server" type="text" name="email" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" />
       </div>
       </div>
       
