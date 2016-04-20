@@ -7,7 +7,7 @@
       function Fill(Patient) {
           debugger;
           parent.getPatientId(Patient); 
-      }
+      }   
   </script>
     <div class="main_body">
       <asp:GridView ID="dtgViewAllRegistration" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None" Height="100%" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5">
