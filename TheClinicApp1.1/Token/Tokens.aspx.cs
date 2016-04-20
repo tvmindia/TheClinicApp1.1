@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
@@ -38,11 +37,8 @@ namespace TheClinicApp1._1.Token
 
             if (!IsPostBack)
             {
-
                 //binding the values of doctor dropdownlist
-
                 DataSet ds = tokenObj.DropBindDoctorsName();
-
                 ddlDoctor.DataSource = ds.Tables[0];
                 ddlDoctor.DataValueField = "DoctorID";
                 ddlDoctor.DataTextField = "Name";
@@ -78,9 +74,6 @@ namespace TheClinicApp1._1.Token
             return output.ToString();
         }
         #endregion BindDataAutocomplete
-
-
-
 
         #region WebMethod
 
@@ -125,6 +118,21 @@ namespace TheClinicApp1._1.Token
         }
         protected void btnBookToken_ServerClick(object sender, EventArgs e)
         {
+            if (lblToken.Visible == false)
+            {
+                tokenObj.DoctorID = ddlDoctor.SelectedValue;
+                tokenObj.PatientID = HiddenPatientID.Value;
+                tokenObj.ClinicID = HiddenClinicID.Value;
+                tokenObj.CreatedBy = UA.userName;
+                tokenObj.DateTime = DateTime.Now;
+
+                int tokenNo = tokenObj.InsertToken();
+
+                lblToken.Text = tokenNo.ToString();
+                lblToken.Visible = true;
+                
+
+            }
             
 
         }

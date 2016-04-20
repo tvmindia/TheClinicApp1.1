@@ -203,7 +203,7 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
             cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-            cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = CreateDate;
+          
 
             SqlParameter OutparmItemId = cmd.Parameters.Add("@TokenNo", SqlDbType.Int);
             OutparmItemId.Direction = ParameterDirection.Output;

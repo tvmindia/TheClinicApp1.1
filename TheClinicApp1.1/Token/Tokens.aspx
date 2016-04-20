@@ -10,21 +10,6 @@
             font-weight:bold;
         }
 
-         .Dropdown1 {
-            display: block;
-            padding: 10px;
-            width: 100%;
-            border: 1px solid #dbdbdb;
-            height: 41px;
-            font-family: 'roboto-light';
-            font-weight: bold;
-            font-size: 14px;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
-        }
-
-
 
     </style>
   <script src="../js/vendor/jquery-1.11.1.min.js"></script>
@@ -67,18 +52,11 @@
             debugger;
 
   
-
-
+          
             var PatientName = document.getElementById("txtSearch").value;
-            // split   
-
-            //var name= PatientName.split('🏠');
-            //var address= name[1].split('📞');           
-            var file=PatientName.split('📝')
-
-            //var name1= name[0];
-            //var address1=address[0];
-            //var phone1=file[0];
+       
+                     
+            var file=PatientName.split('📝')      
             var file1=file[1]
             
                 if (PatientName!="")
@@ -154,7 +132,7 @@
          <div class="right_form">
          
          <div class="token_id_card">
-             <div class="name_field"><asp:Label ID="lblPatientName" runat="server"  Text="Name" ></asp:Label><span class="generate_token">0</span></div>
+             <div class="name_field"><asp:Label ID="lblPatientName" runat="server"  Text="Name" ></asp:Label><span class="generate_token"><asp:Label ID="lblToken" runat="server" Visible="false" ></asp:Label></span></div>
                  <div class="light_grey">
                      <div class="col3_div">Age<span><asp:Label ID="lblAge" runat="server"   Font-Size="Large"></asp:Label></span></div>
                      <div class="col3_div">Gender<span><asp:Label ID="lblGender" runat="server"   Font-Size="Large"></asp:Label></span></div>
@@ -165,8 +143,8 @@
                     <div class="field_label"><label>Mobile</label><asp:Label ID="lblMobile" runat="server"  ></asp:Label></div>  
                     <div class="field_label"><label>Email</label> <a href="mailto: demo@test.com"><asp:Label ID="lblEmail" runat="server" ></asp:Label></a></div>  
                     <div class="field_label"><label>Last visit</label><asp:Label ID="lblLastVisit" runat="server"  ></asp:Label></div>  
-                     <div class="field_label"></div>
-                     <div class="field_label" id="DropDownDoctor" style="visibility:hidden"> <label>Doctor Name</label><asp:DropDownList ID="ddlDoctor"  runat="server"></asp:DropDownList></div>                       
+                     <br />  <br />  
+                     <div class="field_label" id="DropDownDoctor" style="visibility:hidden"> <label>Doctor Name</label><asp:DropDownList ID="ddlDoctor" width="60%" runat="server"></asp:DropDownList></div>                       
                 </div>                 
              </div>
  
