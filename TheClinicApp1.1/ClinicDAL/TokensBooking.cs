@@ -76,9 +76,31 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Token_Methods
 
 
+        #region GetSearchBoxData
+        public DataTable GetSearchBoxData()
+        {
+
+            DataTable dt = null;
+            SqlConnection con = null;
+            dbConnection dcon = new dbConnection();
+            con = dcon.GetDBConnection();
+            SqlCommand cmd = new SqlCommand("GetSearchBoxData", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = cmd;
+            dt = new DataTable();
+            adapter.Fill(dt);
+            con.Close();
+            return dt;
+
+        }
+        #endregion GetSearchBoxData
+
+
+
         #region GetPatientDetails
 
-        public DataSet GetpatientDetails( string str)
+        public DataSet GetpatientDetails(string str1)
         {
             SqlConnection con = null;
             DataSet ds = null;
@@ -90,9 +112,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[ViewPatientDetails]";
+                cmd.CommandText = "[GetPatientDetailsForToken]";
 
-                cmd.Parameters.Add("@string", SqlDbType.NVarChar).Value = str;
+                cmd.Parameters.Add("@filenumber", SqlDbType.NVarChar).Value = str1;
+          
                  
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
@@ -334,6 +357,9 @@ namespace TheClinicApp1._1.ClinicDAL
         
         #endregion Token_Methods
 
+
+        
+    
 
 
 
