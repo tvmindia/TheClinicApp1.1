@@ -1,16 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" ValidateRequest="false" AutoEventWireup="true" CodeBehind="StockOutDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockOutDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-    <style>
-        .warning {
-            background: url(../Images/Button-Warning-icon.png) no-repeat;
-            background-size: 6% 80%;
-            padding-left: 1%;
-            text-indent: 11%;
-            border: 1px solid #ccc;
-        }
-    </style>
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
+   
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

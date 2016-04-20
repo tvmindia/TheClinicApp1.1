@@ -305,7 +305,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
 
                     if (InputQty > Qty)
                     {
-                        $("#txtQuantity" + ControlNo).val('Must be < ' + Qty);
+                        $("#txtQuantity" + ControlNo).val('Must be <=' + Qty);
                     }
 
                     if (InputQty <= 0)
@@ -334,7 +334,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
                     if (InputQty > Qty)
                     {
 
-                        $("#txtQuantity" + ControlNo).val('Must be < ' + QtyInStock);
+                        $("#txtQuantity" + ControlNo).val('Must be <= ' + QtyInStock);
                     }
 
                     if (InputQty <= 0)
