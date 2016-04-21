@@ -90,7 +90,7 @@ var Removecount = 0;
 
 function clickdelete(id) {
    
-    debugger;
+  
     RemovedIDs += document.getElementById('hdnDetailID' + id).value + ',';
 
     if (RemovedIDs == ',') {
@@ -195,7 +195,7 @@ function clickdelete(id) {
 var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
 function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
-    debugger;   
+    
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -287,14 +287,16 @@ function BindControlsByMedicneName(ControlNo) {
 
 //-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
 function CheckMedicineIsOutOfStock(ControlNo) {
+  
     debugger;
+
     if (document.getElementById('txtMedicine' + ControlNo) != null && document.getElementById('txtQuantity' + ControlNo) != null)
     {
         var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);
         var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
         var InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
-        document.getElementById('hdnQty' + ControlNo).value = InputQty;
 
+        
         if ((MedicineName != "") )
         {
             //----------- * Case Of Insert *----------//
@@ -362,7 +364,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
 var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
 function GetTextBoxValuesPres(hdnTextboxValues) {
-    debugger;
+   
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -457,7 +459,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
         var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);
         var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
         var InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
-        document.getElementById('hdnQty' + ControlNo).value = InputQty;
+        //document.getElementById('hdnQty' + ControlNo).value = InputQty;
 
         if ((MedicineName != "")) {
             //----------- * Case Of Insert *----------//
@@ -469,7 +471,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
                     $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
 
                     if (InputQty > Qty) {
-                        $("#txtQuantity" + ControlNo).val('Must be < ' + Qty);
+                        $("#txtQuantity" + ControlNo).val('Must be <= ' + Qty);
                     }
 
                     if (InputQty <= 0) {
@@ -493,7 +495,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
 
                     if (InputQty > Qty) {
 
-                        $("#txtQuantity" + ControlNo).val('Must be < ' + QtyInStock);
+                        $("#txtQuantity" + ControlNo).val('Must be <= ' + QtyInStock);
                     }
 
                     if (InputQty <= 0) {
@@ -514,7 +516,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
 //----------------------------------- * Function to rebind medicine textboxes -- refills controls by retrieving data from xml *--------------------//
 function RefillTextboxesWithXmlData(hdnXmlData) {
   
-   
+    debugger;
     //var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
 
     var XmlDataFromHF = document.getElementById(hdnXmlData).value;
@@ -528,7 +530,7 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
         //document.getElementById('<%=txtIssueNO.ClientID %>').readOnly = true;
 
         $.each(Medicines, function () {
-
+            debugger;
             if (i > 0) {
                 clickStockAdd(i);
             }

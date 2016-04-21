@@ -179,7 +179,7 @@
                });
 
                $(".Match").each(function () {
-                   debugger;
+                  
                    var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
                    $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
                });

@@ -23,11 +23,11 @@ namespace TheClinicApp1._1.Stock
         public string listFilter = null;
 
         ErrorHandling eObj = new ErrorHandling();
-        Stocks stok = new Stocks();       
+        Stocks stok = new Stocks();
         Receipt rpt = new Receipt();
 
         Guid receipt;  //passing guid value: ReceiptID  
-      
+
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
 
@@ -36,6 +36,19 @@ namespace TheClinicApp1._1.Stock
         #region Methods
 
         //------------------------------ * MEDICINES  * -------------------------------------------//
+
+        #region Get Quantity In Stock
+        [WebMethod]
+
+        public static string GetQtyInStock(string MedName)
+        {
+            IssueDetails dtlsObj = new IssueDetails();
+            string qty = dtlsObj.GetQtyInStock(MedName);
+            return qty;
+        }
+
+        #endregion Get Quantity In Stock
+
 
         #region Get MedicineDetails By Medicine Name
 
@@ -134,7 +147,7 @@ namespace TheClinicApp1._1.Stock
             {
                 string receiptid = ViewState["ReceiptHdrID"].ToString();
 
-               
+
                 DataSet dsreceipt = GetIssueDetailsByReceiptid(receiptid);
                 var xml = dsreceipt.GetXml();
 
@@ -176,11 +189,14 @@ namespace TheClinicApp1._1.Stock
 
 
         protected void Page_Load(object sender, EventArgs e)
-         {
+        {
+            txtDate1.Attributes.Add("readonly", "readonly");
+            btSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','" + hdnRemovedIDs.ClientID + "')");
+
             BindListFilter();
 
 
-          //  txtDate.Attributes.Add("readonly", "readonly");
+            //  txtDate.Attributes.Add("readonly", "readonly");
             string receiptID = string.Empty;
 
             DataSet dsReceipthdr = null;
@@ -195,7 +211,7 @@ namespace TheClinicApp1._1.Stock
 
                 if (!IsPostBack)
                 {
-                   
+
                 }
 
             }
@@ -245,213 +261,231 @@ namespace TheClinicApp1._1.Stock
 
 
 
-
-
-
-
-
-
-
-            //receipt = Guid.Parse(Request.QueryString["ReceiptID"]);
-            //UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            //rpt.ClinicID = UA.ClinicID.ToString();
-
-            //GridViewReceiptDetails();
-             
-
         }
 
-        //public void GridViewReceiptDetails()
-        //{
-        //    DataSet gds = rpt.GetReceiptDetailsByReceiptID(receipt);
 
-        //    txtBillNo.Text = gds.Tables[0].Rows[0][0].ToString();
-        //    txtRefNo2.Text = gds.Tables[0].Rows[0][1].ToString();
-        //    txtDate1.Value = gds.Tables[0].Rows[0][2].ToString();
-        //}
 
-        
+
 
         protected void btSave_ServerClick(object sender, EventArgs e)
         {
+            string msg = string.Empty;
 
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            
 
-            if (hdnRemovedIDs.Value != string.Empty)
+            if ((txtBillNo.Text != string.Empty) && (txtRefNo2.Text != string.Empty) && (txtDate1.Value != string.Empty))
             {
+                UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-                //----------------- * CASE : DELETE *-----------------------------------//
 
-                string hdRemovedIDValue = hdnRemovedIDs.Value;
-
-                string[] RemovedIDs = hdRemovedIDValue.Split(',');
-
-                for (int i = 0; i < RemovedIDs.Length - 1; i++)
+                if (hdnRemovedIDs.Value != string.Empty)
                 {
 
-                    if ((RemovedIDs[i] != "") || (RemovedIDs[i] != string.Empty))
+                    //----------------- * CASE : DELETE *-----------------------------------//
+
+                    string hdRemovedIDValue = hdnRemovedIDs.Value;
+
+                    string[] RemovedIDs = hdRemovedIDValue.Split(',');
+
+                    for (int i = 0; i < RemovedIDs.Length - 1; i++)
                     {
 
-                        ReceiptDetails DetailObj = new ReceiptDetails();
-                        string UniqueId = RemovedIDs[i].ToString();
+                        if ((RemovedIDs[i] != "") || (RemovedIDs[i] != string.Empty))
+                        {
 
-                        //string medId =   DetailObj.GetMedicineIDByUniqueID(Guid.Parse(UniqueId));
+                            ReceiptDetails DetailObj = new ReceiptDetails();
+                            string UniqueId = RemovedIDs[i].ToString();
 
-                        DetailObj.ClinicID = UA.ClinicID.ToString();
-                        DetailObj.DeleteReceiptDetails(UniqueId);
-                        hdnRemovedIDs.Value = "";
+                            //string medId =   DetailObj.GetMedicineIDByUniqueID(Guid.Parse(UniqueId));
 
+                            DetailObj.ClinicID = UA.ClinicID.ToString();
+                            DetailObj.DeleteReceiptDetails(UniqueId);
+                            hdnRemovedIDs.Value = "";
+
+                        }
                     }
+
                 }
 
-            }
 
 
-
-            if (hdnRemovedIDs.Value == string.Empty)
-            {
-                if (hdnTextboxValues.Value != "")
+                if (hdnRemovedIDs.Value == string.Empty)
                 {
-
-                    if ((txtBillNo.Text != string.Empty) && (txtRefNo2.Text != string.Empty) && (txtDate1.Value != string.Empty))
+                    if (hdnTextboxValues.Value != "")
                     {
 
-                        rpt.ClinicID = UA.ClinicID.ToString();
-                        rpt.RefNo1 = txtBillNo.Text;
-                        rpt.RefNo2 = txtRefNo2.Text;
-                        rpt.CreatedBy = UA.userName;
-
-                        rpt.Date = Convert.ToDateTime(txtDate1.Value);
-
-
-
-                        if ((hdnHdrInserted.Value == "") && (hdnTextboxValues.Value != ""))
+                        if ((txtBillNo.Text != string.Empty) && (txtRefNo2.Text != string.Empty) && (txtDate1.Value != string.Empty))
                         {
-                            rpt.InsertReceiptHeader();
-                            hdnHdrInserted.Value = "True";
-                            ViewState["ReceiptHdrID"] = rpt.ReceiptID;// check view state
-                            
-                        }
-
-                        if (ViewState["ReceiptHdrID"] != null && ViewState["ReceiptHdrID"].ToString() != string.Empty)
-                        {
-
-
-                            string receiptid = ViewState["ReceiptHdrID"].ToString();
 
                             rpt.ClinicID = UA.ClinicID.ToString();
-                            DataSet dsHdr = rpt.GetReceiptDetailsByReceiptID(receiptid);
+                            rpt.RefNo1 = txtBillNo.Text;
+                            rpt.RefNo2 = txtRefNo2.Text;
+                            rpt.CreatedBy = UA.userName;
 
-                          
-
-                            dtReceipthdr = dsHdr.Tables[0];
+                            rpt.Date = Convert.ToDateTime(txtDate1.Value);
 
 
-                            if (dtReceipthdr.Rows.Count > 0)
+
+                            if ((hdnHdrInserted.Value == "") && (hdnTextboxValues.Value != ""))
+                            {
+                                rpt.InsertReceiptHeader();
+                                hdnHdrInserted.Value = "True";
+                                ViewState["ReceiptHdrID"] = rpt.ReceiptID;// check view state
+
+                            }
+
+                            if (ViewState["ReceiptHdrID"] != null && ViewState["ReceiptHdrID"].ToString() != string.Empty)
                             {
 
-                                string oldDate = ((DateTime)dtReceipthdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
-                                string newDate = txtDate1.Value;
 
-                                if ((txtBillNo.Text != dtReceipthdr.Rows[0]["RefNo1"].ToString()) || (txtRefNo2.Text != dtReceipthdr.Rows[0]["RefNo2"].ToString()) || (oldDate != newDate))
+                                string receiptid = ViewState["ReceiptHdrID"].ToString();
+
+                                rpt.ClinicID = UA.ClinicID.ToString();
+                                DataSet dsHdr = rpt.GetReceiptDetailsByReceiptID(receiptid);
+
+
+
+                                dtReceipthdr = dsHdr.Tables[0];
+
+
+                                if (dtReceipthdr.Rows.Count > 0)
                                 {
-                                    // ----------------- *  Update header*-----------------------------------//
 
-                                    if (hdnTextboxValues.Value != "")
+                                    string oldDate = ((DateTime)dtReceipthdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
+                                    string newDate = txtDate1.Value;
+
+                                    if ((txtBillNo.Text != dtReceipthdr.Rows[0]["RefNo1"].ToString()) || (txtRefNo2.Text != dtReceipthdr.Rows[0]["RefNo2"].ToString()) || (oldDate != newDate))
+                                    {
+                                        // ----------------- *  Update header*-----------------------------------//
+
+                                        if (hdnTextboxValues.Value != "")
+                                        {
+
+                                            rpt.ClinicID = UA.ClinicID.ToString();
+
+                                            rpt.RefNo2 = txtRefNo2.Text;
+                                            rpt.Date = Convert.ToDateTime(txtDate1.Value);
+                                            rpt.UpdatedBy = UA.userName;
+
+                                            rpt.RefNo1 = txtBillNo.Text;
+                                            rpt.UpdateReceiptHeader(ViewState["ReceiptHdrID"].ToString());
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            string last = string.Empty;
+
+
+
+
+                            string values = hdnTextboxValues.Value;
+
+                            string[] Rows = values.Split('$');
+
+
+
+                            for (int i = 0; i < Rows.Length - 1; i++)
+                            {
+                                ReceiptDetails ReceiptDtObj = new ReceiptDetails(); //Object is created in loop as each entry should have different uniqueID
+                                string[] tempRow = Rows;
+
+                                last = tempRow[i].Split('|').Last();
+
+                                string[] columns = tempRow[i].Split('|');
+
+                                if (last == string.Empty || last == "")
+                                {
+
+                                    //----------------- * CASE : INSERT *-----------------------------------//
+                                    if ((columns[0] != null) && (columns[4] != null))
                                     {
 
-                                        rpt.ClinicID = UA.ClinicID.ToString();
-                                       
-                                        rpt.RefNo2 = txtRefNo2.Text;
-                                        rpt.Date = Convert.ToDateTime(txtDate1.Value);
-                                        rpt.UpdatedBy = UA.userName;
-                                         
-                                        rpt.UpdateReceiptHeader(ViewState["ReceiptHdrID"].ToString());
+
+                                        ReceiptDtObj.MedicineName = columns[0];
+                                        ReceiptDtObj.Unit = columns[1];
+                                        ReceiptDtObj.QTY = Convert.ToInt32(columns[4]);
+
+                                        ReceiptDtObj.CreatedBy = UA.userName; ;
+                                        ReceiptDtObj.ClinicID = UA.ClinicID.ToString();
+
+                                        if (ViewState["ReceiptHdrID"] != null && ViewState["ReceiptHdrID"].ToString() != string.Empty)
+                                        {
+                                            ReceiptDtObj.ReceiptID = Guid.Parse(ViewState["ReceiptHdrID"].ToString());
+                                        }
+
+                                        ReceiptDtObj.InsertReceiptDetails();
                                     }
-
                                 }
-                            }
-                        }
 
-                        string last = string.Empty;
-
-
-
-
-                        string values = hdnTextboxValues.Value;
-
-                        string[] Rows = values.Split('$');
-
-
-
-                        for (int i = 0; i < Rows.Length - 1; i++)
-                        {
-                            ReceiptDetails ReceiptDtObj = new ReceiptDetails(); //Object is created in loop as each entry should have different uniqueID
-                            string[] tempRow = Rows;
-
-                            last = tempRow[i].Split('|').Last();
-
-                            string[] columns = tempRow[i].Split('|');
-
-                            if (last == string.Empty || last == "")
-                            {
-
-                                //----------------- * CASE : INSERT *-----------------------------------//
-                                if ((columns[0] != null) && (columns[4] != null))
+                                if (last != string.Empty)
                                 {
+                                    //----------------- * CASE : UPDATE *---------------------------------//
 
-
-                                    ReceiptDtObj.MedicineName = columns[0];
-                                    ReceiptDtObj.Unit = columns[1];
-                                    ReceiptDtObj.QTY = Convert.ToInt32(columns[4]);
-
-                                    ReceiptDtObj.CreatedBy = UA.userName; ;
-                                    ReceiptDtObj.ClinicID = UA.ClinicID.ToString();
-
-                                    if (ViewState["ReceiptHdrID"] != null && ViewState["ReceiptHdrID"].ToString() != string.Empty)
+                                    if ((columns[0] != null) && (columns[4] != null))
                                     {
-                                        ReceiptDtObj.ReceiptID = Guid.Parse(ViewState["ReceiptHdrID"].ToString());
+                                        string uniqueID = last;
+                                        ReceiptDetails UpREceiptDtlObj = new ReceiptDetails(new Guid(uniqueID));
+
+                                        UpREceiptDtlObj.ClinicID = UA.ClinicID.ToString();
+                                        UpREceiptDtlObj.QTY = Convert.ToInt32(columns[4]);
+                                        UpREceiptDtlObj.UpdatedBy = UA.userName;
+
+                                        //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
+
+                                        UpREceiptDtlObj.UpdateReceiptDetails(uniqueID);
                                     }
-
-                                    ReceiptDtObj.InsertReceiptDetails();
                                 }
+
                             }
 
-                            if (last != string.Empty)
-                            {
-                                //----------------- * CASE : UPDATE *---------------------------------//
 
-                                if ((columns[0] != null) && (columns[4] != null))
-                                {
-                                    string uniqueID = last;
-                                    ReceiptDetails UpREceiptDtlObj = new ReceiptDetails(new Guid(uniqueID));
-
-                                    UpREceiptDtlObj.ClinicID = UA.ClinicID.ToString();
-                                    UpREceiptDtlObj.QTY = Convert.ToInt32(columns[4]);
-                                    UpREceiptDtlObj.UpdatedBy = UA.userName;
-
-                                    //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
-
-                                    UpREceiptDtlObj.UpdateReceiptDetails(uniqueID);
-                                }
-                            }
+                            hdnManageGridBind.Value = "True";
 
                         }
-
-
-                        hdnManageGridBind.Value = "True";
-
                     }
                 }
+
+                StoreXmlToHiddenField();
             }
 
-            StoreXmlToHiddenField();
+            else
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+
+                msg = "Please fill all the fields";
+
+                eObj.InsertionNotSuccessMessage(page, msg);
+            }
+
+
 
         }
-
-       
-
-
     }
 }
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
