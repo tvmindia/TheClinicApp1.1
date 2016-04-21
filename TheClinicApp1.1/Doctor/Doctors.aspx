@@ -101,9 +101,9 @@
          <span>Doctors...</span>
          </div>
          <div class="icon_box">
-         <a class="records" data-toggle="modal" data-target="#casehistory"><span class="count">5</span><span title="Case HIstory" data-toggle="tooltip" data-placement="left"><img src="../images/case-history.png"/></span></a>
-         
-         <a class="tokens_link" data-toggle="modal" data-target="#tokens" ><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png"/></span></a>         
+         <a class="records" data-toggle="modal" data-target="#casehistory"><span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="6"></asp:Label></span><span title="Case HIstory" data-toggle="tooltip" data-placement="left"><img src="../images/case-history.png"/></span></a>
+                  <a class="casehistory_link" data-toggle="modal" data-target="#tokens" ><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png"/></span></a>
+        <%-- <a class="tokens_link" data-toggle="modal" data-target="#tokens" ><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png"/></span></a>--%>         
          </div>
          <div class="grey_sec">
          <div class="search_div">
@@ -114,7 +114,12 @@
          <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          <div class="right_form"> 
-         
+         <div id="Errorbox"  style="height:30%;display:none;" runat="server" ><a class="alert_close">X</a>
+         <div>
+         <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
+         <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+         </div>
+         </div>
          <div class="token_id_card">
              <div class="name_field"><img id="ProfilePic" src="../images/UploadPic.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label></div>
                  <div class="light_grey">

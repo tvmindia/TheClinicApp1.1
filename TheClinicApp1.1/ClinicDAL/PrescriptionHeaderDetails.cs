@@ -273,9 +273,13 @@ namespace TheClinicApp1._1.ClinicDAL
     }
     public class PrescriptionDetails
     {
+        public PrescriptionDetails()
+            {
+                UniqueID = Guid.NewGuid();
+            }
         #region Property
-        
-         public string UniqueID
+
+        public Guid UniqueID
         {
             get;
             set;
@@ -355,33 +359,24 @@ namespace TheClinicApp1._1.ClinicDAL
              try
              {
 
-                 Guid UniqueID = new Guid();
-
                  dcon = new dbConnection();
                  dcon.GetDBConnection();
                  SqlCommand cmd = new SqlCommand();
                  cmd.Connection = dcon.SQLCon;
                  cmd.CommandType = CommandType.StoredProcedure;
                  cmd.CommandText = "[InsertPrescriptionDetails]";
-
                  cmd.Parameters.Add("@UniqueID",SqlDbType.UniqueIdentifier).Value = UniqueID;
-
-                 cmd.Parameters.Add("@PrescID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
-                 cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = MedicineName;               
+                 cmd.Parameters.Add("@PrescriptionID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
+                 cmd.Parameters.Add("@MedicineName",SqlDbType.NVarChar,255).Value = MedicineName;               
                  cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);                 
                  cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
-                 cmd.Parameters.Add("@Unit", SqlDbType.Real).Value = Unit;
+                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 20).Value = Unit;
                  cmd.Parameters.Add("@Dosage", SqlDbType.Real).Value = Dosage;
-                 cmd.Parameters.Add("@Timing", SqlDbType.NVarChar, 255).Value = Timing;
-                
+                 cmd.Parameters.Add("@Timing", SqlDbType.NVarChar, 10).Value = Timing;               
                  cmd.Parameters.Add("@Days", SqlDbType.Int).Value = Days;           
                  cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-                 cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = CreatedDate;
                  cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                 cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = UpdatedDate;
-
                  cmd.ExecuteNonQuery();
-
              }
 
              catch (Exception ex)

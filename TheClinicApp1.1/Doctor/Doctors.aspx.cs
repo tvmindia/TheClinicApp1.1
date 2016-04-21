@@ -107,40 +107,40 @@ namespace TheClinicApp1._1.Doctor
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];                        
             VisitsObj.ClinicID = UA.ClinicID;
-            VisitsObj.FileID = Guid.Parse("232CFE06-E9E9-42C1-B2F6-B992ABE0140A");
+            VisitsObj.FileID = Guid.Parse(HiddenField2.Value);
             int feet = Convert.ToInt32(txtHeightFeet.Value);
             int inch = Convert.ToInt32(txtHeightInch.Value);
             VisitsObj.Height = float.Parse(feet.ToString() + "." + inch.ToString());
             VisitsObj.Weight = float.Parse(txtWeight.Value);
-            VisitsObj.Symptoms = (symptoms.Value != null) ? symptoms.Value.ToString() : null;
-            VisitsObj.Cardiovascular = (cardiovascular.Value != null) ? cardiovascular.Value.ToString() : null;
-            VisitsObj.Nervoussystem = (nervoussystem.Value != null) ? nervoussystem.Value.ToString() : null;
-            VisitsObj.Musculoskeletal = (musculoskeletal.Value != null) ? musculoskeletal.Value.ToString() : null;
-            VisitsObj.Palloe = (palloe.Value != null) ? palloe.Value.ToString() : null;
-            VisitsObj.Icterus = (icterus.Value != null) ? icterus.Value.ToString() : null;
-            VisitsObj.Clubbing = (clubbing.Value != null) ? clubbing.Value.ToString() : null;
-            VisitsObj.Cyanasis = (cyanasis.Value != null) ? cyanasis.Value.ToString() : null;
-            VisitsObj.Edima = (edima.Value != null) ? edima.Value.ToString() : null;
-            VisitsObj.Bowel = (bowel.Value != null) ? bowel.Value.ToString() : null;
-            VisitsObj.Appettie = (appettie.Value != null) ? appettie.Value.ToString() : null;
-            VisitsObj.Micturation = (micturation.Value != null) ? micturation.Value.ToString() : null;
-            VisitsObj.Sleep = (sleep.Value != null) ? sleep.Value.ToString() : null;
-            VisitsObj.Diagnosys = (diagnosys.Value != null) ? diagnosys.Value.ToString() : null;
-            VisitsObj.Remarks = (remarks.Value != null) ? remarks.Value.ToString() : null;
+            VisitsObj.Symptoms = (symptoms.Value != "") ? symptoms.Value.ToString() : null;
+            VisitsObj.Cardiovascular = (cardiovascular.Value != "") ? cardiovascular.Value.ToString() : null;
+            VisitsObj.Nervoussystem = (nervoussystem.Value != "") ? nervoussystem.Value.ToString() : null;
+            VisitsObj.Musculoskeletal = (musculoskeletal.Value != "") ? musculoskeletal.Value.ToString() : null;
+            VisitsObj.Palloe = (palloe.Value != "") ? palloe.Value.ToString() : null;
+            VisitsObj.Icterus = (icterus.Value != "") ? icterus.Value.ToString() : null;
+            VisitsObj.Clubbing = (clubbing.Value != "") ? clubbing.Value.ToString() : null;
+            VisitsObj.Cyanasis = (cyanasis.Value != "") ? cyanasis.Value.ToString() : null;
+            VisitsObj.Edima = (edima.Value != "") ? edima.Value.ToString() : null;
+            VisitsObj.Bowel = (bowel.Value != "") ? bowel.Value.ToString() : null;
+            VisitsObj.Appettie = (appettie.Value != "") ? appettie.Value.ToString() : null;
+            VisitsObj.Micturation = (micturation.Value != "") ? micturation.Value.ToString() : null;
+            VisitsObj.Sleep = (sleep.Value != "") ? sleep.Value.ToString() : null;
+            VisitsObj.Diagnosys = (diagnosys.Value != "") ? diagnosys.Value.ToString() : null;
+            VisitsObj.Remarks = (remarks.Value != "") ? remarks.Value.ToString() : null;
             VisitsObj.CreatedBy = UA.userName;
             VisitsObj.UpdatedBy = UA.userName;
-            VisitsObj.Bp = (bp.Value != null) ? bp.Value.ToString() : null;
-            VisitsObj.Pulse = (pulse.Value != null) ? pulse.Value.ToString() : null;
-            VisitsObj.Tounge = (tounge.Value != null) ? tounge.Value.ToString() : null;
-            VisitsObj.Heart = (heart.Value != null) ? heart.Value.ToString() : null;
-            VisitsObj.LymphGen = (lymphGen.Value != null) ? lymphGen.Value.ToString() : null;
-            VisitsObj.LymphClinic = (lymphnodes.Value != null) ? lymphnodes.Value.ToString() : null;
-            VisitsObj.RespRate = (resp_rate.Value != null) ? resp_rate.Value.ToString() : null;
-            VisitsObj.Others = (others.Value != null) ? others.Value.ToString() : null;
-            if (VisitsObj.Diagnosys != "")
-            {
-                VisitsObj.AddVisits();
-            }
+            VisitsObj.Bp = (bp.Value != "") ? bp.Value.ToString() : null;
+            VisitsObj.Pulse = (pulse.Value != "") ? pulse.Value.ToString() : null;
+            VisitsObj.Tounge = (tounge.Value != "") ? tounge.Value.ToString() : null;
+            VisitsObj.Heart = (heart.Value != "") ? heart.Value.ToString() : null;
+            VisitsObj.LymphGen = (lymphGen.Value != "") ? lymphGen.Value.ToString() : null;
+            VisitsObj.LymphClinic = (lymphnodes.Value != "") ? lymphnodes.Value.ToString() : null;
+            VisitsObj.RespRate = (resp_rate.Value != "") ? resp_rate.Value.ToString() : null;
+            VisitsObj.Others = (others.Value != "") ? others.Value.ToString() : null;
+            VisitsObj.AddVisits();
+            if (VisitsObj.PrescriptionID!=Guid.Empty)
+            { 
+            PrescriptionObj.PrescID = VisitsObj.PrescriptionID.ToString();
 
             //Fetching values of prescription from Design throurh Hiddenfield
             //string values = HiddenField1.Value;
@@ -170,8 +170,8 @@ namespace TheClinicApp1._1.Doctor
 
                     //----------------- * CASE : INSERT *-----------------------------------//
                     if ((columns[0] != null) && (columns[1] != null))
-                    {    
-                       
+                    {
+
                         PrescriptionObj.MedicineName = columns[0];
                         PrescriptionObj.Qty = Convert.ToInt32(columns[1]);
                         PrescriptionObj.Unit = columns[2];
@@ -180,42 +180,13 @@ namespace TheClinicApp1._1.Doctor
                         PrescriptionObj.Days = Convert.ToInt32(columns[5]);
                         PrescriptionObj.CreatedBy = UA.userName;
                         PrescriptionObj.ClinicID = UA.ClinicID.ToString();
-                        PrescriptionObj.CreatedDate = DateTime.Now;
-
-                        //if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
-                        //{
-                        //    //PrescriptionObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
-                        //}
+                        PrescriptionObj.CreatedDate = DateTime.Now;                       
                         PrescriptionObj.InsertPrescriptionDetails();
 
                     }
                 }
-
-               // if (last != string.Empty)
-                //{
-                    //----------------- * CASE : UPDATE *---------------------------------//
-
-                    //if ((columns[0] != null) && (columns[4] != null))
-                    //{
-                    //    string uniqueID = last;
-                    //    IssueDetails UpIssueDtlObj = new IssueDetails(new Guid(uniqueID));
-
-                    //    UpIssueDtlObj.ClinicID = UA.ClinicID.ToString();
-                    //    UpIssueDtlObj.Qty = Convert.ToInt32(columns[4]);
-                    //    UpIssueDtlObj.UpdatedBy = UA.userName;
-
-                    //    //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
-
-                    //    UpIssueDtlObj.UpdateIssueDetails(uniqueID);
-                    //}
-                //
-            //}
-
             }
-
-
-
-
+            }
         }
     
         #region FillPatientDetails
@@ -236,6 +207,8 @@ namespace TheClinicApp1._1.Doctor
             GridViewVisitsHistory.EmptyDataText = "No Records Found";
             GridViewVisitsHistory.DataSource = GridBindVisits;
             GridViewVisitsHistory.DataBind();
+            lblCaseCount.Text = GridViewVisitsHistory.Rows.Count.ToString();
+
             DataTable dt = PatientObj.SelectPatient();
             dr = dt.NewRow();
             dr = dt.Rows[0];
