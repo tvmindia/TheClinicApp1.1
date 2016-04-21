@@ -6,11 +6,22 @@ var iCnt = 0;
 var ExistingRowCount = 0;
 var IdToRemove;
 var RemovedIDs = '';
+var PageCalledFrom = '';
+var CurrentRowCount;
 
-function GetClientIDOfRemovedID(DetailID)
+
+function SetPageIDCalled(page)
+{
+    PageCalledFrom = page;
+}
+
+
+function GetClientIDOfRemovedID(DetailID,rowCnt )
 {
      debugger;
      IdToRemove = DetailID;
+     CurrentRowCount = rowCnt;
+      
 }
 
 
@@ -57,6 +68,15 @@ function clickStockAdd(id) {
     $('#btAdd' + id).css("visibility", "hidden");
 
     ExistingRowCount = ExistingRowCount + 1;
+
+    if (CurrentRowCount != null && CurrentRowCount != '')
+    {
+        document.getElementById(CurrentRowCount).value = ExistingRowCount;
+    }
+
+   
+
+
     last = last + 1;
 }
 
@@ -82,11 +102,19 @@ function clickAdd(id) {
     $('#btAdd' + id).css("visibility", "hidden");
 
     ExistingRowCount = ExistingRowCount + 1;
+   
+    if (CurrentRowCount != null && CurrentRowCount != '')
+    {
+        document.getElementById(CurrentRowCount).value = ExistingRowCount;
+    }
+
+
     last = last + 1;
 }
 
 //Delete Div where the remove button contain.
 var Removecount = 0;
+
 
 function clickdelete(id) {
    
@@ -115,7 +143,10 @@ function clickdelete(id) {
             //iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
 
-
+            if (CurrentRowCount != null && CurrentRowCount != '')
+            {
+                document.getElementById(CurrentRowCount).value = ExistingRowCount;
+            }
         }
 //***********************************************************************************
 
@@ -139,7 +170,9 @@ function clickdelete(id) {
             //iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
 
-
+            if (CurrentRowCount != null && CurrentRowCount != '') {
+                document.getElementById(CurrentRowCount).value = ExistingRowCount;
+            }
 
 
 
@@ -168,6 +201,9 @@ function clickdelete(id) {
             //iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
 
+            if (CurrentRowCount != null && CurrentRowCount != '') {
+                document.getElementById(CurrentRowCount).value = ExistingRowCount;
+            }
         }
 
 
@@ -175,6 +211,9 @@ function clickdelete(id) {
             $('#btRemove' + id).closest("div").remove();
             // iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
+            if (CurrentRowCount != null && CurrentRowCount != '') {
+                document.getElementById(CurrentRowCount).value = ExistingRowCount;
+            }
         }
     }
 
@@ -183,6 +222,9 @@ function clickdelete(id) {
         $('#btAdd').css('visibility', 'visible')
         $('#btRemove' + id).closest("div").remove();
         ExistingRowCount = ExistingRowCount - 1;
+        if (CurrentRowCount != null && CurrentRowCount != '') {
+            document.getElementById(CurrentRowCount).value = ExistingRowCount;
+        }
         last = iCnt;
         
     }
@@ -190,6 +232,7 @@ function clickdelete(id) {
   
 
 }
+
 
 // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
 var divValue, values = '';
@@ -247,6 +290,7 @@ function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
 
 }
 
+
 //-----* Function to bind textboxes by medicine name -- fills textboxes when focus is lost from medicine textbox  *----//
 function BindControlsByMedicneName(ControlNo) {
    
@@ -272,7 +316,13 @@ function BindControlsByMedicneName(ControlNo) {
             document.getElementById('txtUnit' + ControlNo).value = MedicineDetails[0];
             document.getElementById('txtCode' + ControlNo).value = MedicineDetails[1];
             document.getElementById('txtCategory' + ControlNo).value = MedicineDetails[2];
-            document.getElementById('txtQuantity' + ControlNo).placeholder = " Out Of: " + MedicineDetails[3];
+
+
+            if (PageCalledFrom != 'StockIn') {
+                document.getElementById('txtQuantity' + ControlNo).placeholder = " Out Of: " + MedicineDetails[3];
+            }
+
+
             document.getElementById('hdnQty' + ControlNo).value = parseInt(MedicineDetails[3]);
 
         }
@@ -285,80 +335,108 @@ function BindControlsByMedicneName(ControlNo) {
 
 }
 
+
 //-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
 function CheckMedicineIsOutOfStock(ControlNo) {
   
     debugger;
 
-    if (document.getElementById('txtMedicine' + ControlNo) != null && document.getElementById('txtQuantity' + ControlNo) != null)
-    {
-        var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);
-        var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
-        var InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
+    if(   PageCalledFrom != 'StockIn')
+
+     {
+        if (document.getElementById('txtMedicine' + ControlNo) != null && document.getElementById('txtQuantity' + ControlNo) != null)
+        {
+            var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);
+            var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
+            var InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
 
         
-        if ((MedicineName != "") )
-        {
-            //----------- * Case Of Insert *----------//
-            if (document.getElementById('hdnDetailID' + ControlNo).value == "")
+            if ((MedicineName != "") )
             {
+                //----------- * Case Of Insert *----------//
+                if (document.getElementById('hdnDetailID' + ControlNo).value == "")
+                {
                
-                if (InputQty > Qty || InputQty <= 0)
-                {
-                    $("#txtQuantity" + ControlNo).addClass("warning");
-                    $("#txtQuantity" + ControlNo).attr('type', 'text');
-                    $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
-
-                    if (InputQty > Qty)
+                    if (InputQty > Qty || InputQty <= 0)
                     {
-                        $("#txtQuantity" + ControlNo).val('Must be <=' + Qty);
-                    }
+                        $("#txtQuantity" + ControlNo).addClass("warning");
+                        $("#txtQuantity" + ControlNo).attr('type', 'text');
+                        $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
 
-                    if (InputQty <= 0)
+                        if (InputQty > Qty)
+                        {
+                            $("#txtQuantity" + ControlNo).val('Must be <=' + Qty);
+                        }
+
+                        if (InputQty <= 0)
+                        {
+                            $("#txtQuantity" + ControlNo).val('Must be > 0');
+                        }
+
+                    }
+                    else
                     {
-                        $("#txtQuantity" + ControlNo).val('Must be > 0');
+                        $("#txtQuantity" + ControlNo).removeClass("warning");
+                        $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
+                        $("#txtQuantity" + ControlNo).attr('type', 'number');
                     }
-
                 }
+                    //----------- * Case Of Update *----------//     
                 else
-                {
-                    $("#txtQuantity" + ControlNo).removeClass("warning");
-                    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
-                    $("#txtQuantity" + ControlNo).attr('type', 'number');
-                }
-            }
-                //----------- * Case Of Update *----------//     
-            else
-            {             
-                var QtyInStock = parseInt(document.getElementById('txtQuantity' + ControlNo).getAttribute("placeholder").replace(" Out Of: ", ""));
-                if (InputQty > QtyInStock || InputQty <= 0 )
-                {
-                    $("#txtQuantity" + ControlNo).addClass("warning");
-                    $("#txtQuantity" + ControlNo).attr('type', 'text');
-                    $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
-
-                    if (InputQty > Qty)
+                {             
+                    var QtyInStock = parseInt(document.getElementById('txtQuantity' + ControlNo).getAttribute("placeholder").replace(" Out Of: ", ""));
+                    if (InputQty > QtyInStock || InputQty <= 0 )
                     {
+                        $("#txtQuantity" + ControlNo).addClass("warning");
+                        $("#txtQuantity" + ControlNo).attr('type', 'text');
+                        $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
 
-                        $("#txtQuantity" + ControlNo).val('Must be <= ' + QtyInStock);
+                        if (InputQty > Qty)
+                        {
+
+                            $("#txtQuantity" + ControlNo).val('Must be <= ' + QtyInStock);
+                        }
+
+                        if (InputQty <= 0)
+                        {
+                            $("#txtQuantity" + ControlNo).val('Must be > 0');
+                        }
                     }
 
-                    if (InputQty <= 0)
+                    else
                     {
-                        $("#txtQuantity" + ControlNo).val('Must be > 0');
+                        $("#txtQuantity" + ControlNo).removeClass("warning");
+                        $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
+                        $("#txtQuantity" + ControlNo).attr('type', 'number');
                     }
-                }
-
-                else
-                {
-                    $("#txtQuantity" + ControlNo).removeClass("warning");
-                    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
-                    $("#txtQuantity" + ControlNo).attr('type', 'number');
                 }
             }
         }
-    }
 }
+
+    else
+    {
+        if (PageCalledFrom == 'StockIn')
+        {
+            var InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
+
+            if ( InputQty <= 0) {
+                $("#txtQuantity" + ControlNo).addClass("warning");
+                $("#txtQuantity" + ControlNo).attr('type', 'text');
+                $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
+
+                if (InputQty <= 0) 
+                    $("#txtQuantity" + ControlNo).val('Must be > 0');
+                
+
+            }
+
+        }
+    }
+
+
+}
+
 
 // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
 var divValue, values = '';
@@ -414,104 +492,6 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
 
 }
 
-//-----* Function to bind textboxes by medicine name -- fills textboxes when focus is lost from medicine textbox  *----//
-function BindControlsByMedicneName(ControlNo) {
-
-
-    if (ControlNo >= 0) {
-        var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
-
-    }
-
-    if (MedicineName != "") {
-
-        PageMethods.MedDetails(MedicineName, OnSuccess, onError);
-
-    }
-
-    function OnSuccess(response, userContext, methodName) {
-
-        if (ControlNo >= 0) {
-
-            var MedicineDetails = new Array();
-            MedicineDetails = response.split('|');
-
-            document.getElementById('txtUnit' + ControlNo).value = MedicineDetails[0];
-            document.getElementById('txtCode' + ControlNo).value = MedicineDetails[1];
-            document.getElementById('txtCategory' + ControlNo).value = MedicineDetails[2];
-            document.getElementById('txtQuantity' + ControlNo).placeholder = " Out Of: " + MedicineDetails[3];
-            document.getElementById('hdnQty' + ControlNo).value = parseInt(MedicineDetails[3]);
-
-        }
-
-    }
-    function onError(response, userContext, methodName) {
-
-    }
-
-
-}
-
-//-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
-function CheckMedicineIsOutOfStock(ControlNo) {
-    debugger;
-    if (document.getElementById('txtMedicine' + ControlNo) != null && document.getElementById('txtQuantity' + ControlNo) != null) {
-        var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);
-        var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
-        var InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
-        //document.getElementById('hdnQty' + ControlNo).value = InputQty;
-
-        if ((MedicineName != "")) {
-            //----------- * Case Of Insert *----------//
-            if (document.getElementById('hdnDetailID' + ControlNo).value == "") {
-
-                if (InputQty > Qty || InputQty <= 0) {
-                    $("#txtQuantity" + ControlNo).addClass("warning");
-                    $("#txtQuantity" + ControlNo).attr('type', 'text');
-                    $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
-
-                    if (InputQty > Qty) {
-                        $("#txtQuantity" + ControlNo).val('Must be <= ' + Qty);
-                    }
-
-                    if (InputQty <= 0) {
-                        $("#txtQuantity" + ControlNo).val('Must be > 0');
-                    }
-
-                }
-                else {
-                    $("#txtQuantity" + ControlNo).removeClass("warning");
-                    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
-                    $("#txtQuantity" + ControlNo).attr('type', 'number');
-                }
-            }
-                //----------- * Case Of Update *----------//     
-            else {
-                var QtyInStock = parseInt(document.getElementById('txtQuantity' + ControlNo).getAttribute("placeholder").replace(" Out Of: ", ""));
-                if (InputQty > QtyInStock || InputQty <= 0) {
-                    $("#txtQuantity" + ControlNo).addClass("warning");
-                    $("#txtQuantity" + ControlNo).attr('type', 'text');
-                    $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
-
-                    if (InputQty > Qty) {
-
-                        $("#txtQuantity" + ControlNo).val('Must be <= ' + QtyInStock);
-                    }
-
-                    if (InputQty <= 0) {
-                        $("#txtQuantity" + ControlNo).val('Must be > 0');
-                    }
-                }
-
-                else {
-                    $("#txtQuantity" + ControlNo).removeClass("warning");
-                    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
-                    $("#txtQuantity" + ControlNo).attr('type', 'number');
-                }
-            }
-        }
-    }
-}
 
 //----------------------------------- * Function to rebind medicine textboxes -- refills controls by retrieving data from xml *--------------------//
 function RefillTextboxesWithXmlData(hdnXmlData) {
@@ -553,19 +533,26 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
             document.getElementById('txtQuantity' + i).value = MedicineQuantity;
             document.getElementById('hdnQty' + i).value = MedicineQuantity;
             document.getElementById('hdnDetailID' + i).value = UniqueID;
-            document.getElementById('txtQuantity' + i).placeholder = " Out Of: " + QtyInStock;
+
             document.getElementById('txtMedicine' + i).readOnly = true; // --------* medicine name set to non-editable after saving *--------//
 
-            PageMethods.GetQtyInStock(MedicineName, OnSuccess, onError);
-            function OnSuccess(response, userContext, methodName)
-            {
-                QtyInStock = parseInt(response);
+            if (PageCalledFrom != 'StockIn') {
+
+                document.getElementById('txtQuantity' + i).placeholder = " Out Of: " + QtyInStock;
+
+
+                PageMethods.GetQtyInStock(MedicineName, OnSuccess, onError);
+                function OnSuccess(response, userContext, methodName) {
+                    QtyInStock = parseInt(response);
+                }
+                function onError(response, userContext, methodName)
+                { }
+                var oldQty = parseInt(MedicineQuantity);
+                var total = parseInt(oldQty + parseInt(QtyInStock));
+                document.getElementById('txtQuantity' + i).placeholder = " Out Of: " + total;
             }
-            function onError(response, userContext, methodName)
-            {  }
-            var oldQty = parseInt(MedicineQuantity);
-            var total = parseInt(oldQty + parseInt(QtyInStock));
-            document.getElementById('txtQuantity' + i).placeholder = " Out Of: " + total;
+
+
             i = i + 1;
         });
 

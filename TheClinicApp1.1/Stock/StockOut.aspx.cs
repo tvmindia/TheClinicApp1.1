@@ -16,7 +16,7 @@ namespace TheClinicApp1._1.Stock
     {
         IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
 
-        private static int PageSize = 7;
+        private static int PageSize = 8;
         ClinicDAL.UserAuthendication UA;
         UIClasses.Const Const = new UIClasses.Const();
 

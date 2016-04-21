@@ -54,7 +54,10 @@
                 $(".main_body").toggleClass("active_close");
             });
 
-
+            if ($('#<%=hdnManageGridBind.ClientID %>').val() == "True") {
+                parent.GetMedicines(1);
+                $('#<%=hdnManageGridBind.ClientID %>').val('False');
+            }
 
 
                 });
@@ -294,6 +297,6 @@ border-spacing:0.5em;">
     </asp:UpdatePanel>--%>
 
    
-
+    <asp:HiddenField ID="hdnManageGridBind" runat="server"  Value="False"/>
 
 </asp:Content>

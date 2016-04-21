@@ -28,7 +28,7 @@ namespace TheClinicApp1._1.Stock
 
         #region Global Variables
 
-        private static int PageSize = 5;
+        private static int PageSize = 8;
         Stocks stockObj = new Stocks();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
