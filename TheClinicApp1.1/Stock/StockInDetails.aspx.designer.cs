@@ -31,6 +31,33 @@ namespace TheClinicApp1._1.Stock {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor btSave;
         
         /// <summary>
+        /// Errorbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Errorbox;
+        
+        /// <summary>
+        /// lblErrorCaption control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorCaption;
+        
+        /// <summary>
+        /// lblMsgges control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMsgges;
+        
+        /// <summary>
         /// txtBillNo control.
         /// </summary>
         /// <remarks>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockInDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockDetails" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" ValidateRequest="false" AutoEventWireup="true" CodeBehind="StockInDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">  
    
@@ -184,6 +184,34 @@
                                 </ul>
                             </div>
 
+                               <div id="Errorbox" style="display: none;" runat="server">
+            <a class="alert_close">X</a>
+            <div>
+                <strong>
+                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                </strong>
+                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+
+            </div>
+
+        </div>
+
+        <div class="alert alert-success" style="display: none">
+            <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+        </div>
+        <div class="alert alert-info" style="display: none">
+            <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+        </div>
+
+        <div class="alert alert-warning" style="display: none">
+            <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+        </div>
+
+        <div class="alert alert-danger" style="display: none">
+            <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+        </div>
+
+
                             <div class="tab_table">
 
                                 <table class="details_table" style="width:100%"  border="0">
@@ -226,7 +254,7 @@
                                                 <td>
                                                     <input id="txtCategory0" type="text" placeholder="Category0" class="input" /></td>
                                                 <td>
-                                                    <input id="txtQuantity0" type="text" placeholder="Quantity0" class="input" /></td>
+                                                    <input id="txtQuantity0" type="text" placeholder="Quantity0" class="input" onblur="CheckMedicineIsOutOfStock('0')" onfocus="RemoveWarning('0')"/></td>
                                                 <td style="background-color: transparent">
                                                     <input type="button" value="-" class="bt1" style="width: 20px;" /></td>
                                                 <td style="background-color: transparent">

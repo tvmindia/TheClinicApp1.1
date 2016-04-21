@@ -50,7 +50,7 @@
 
           $(function () {
               $("[id*=GridView] td:first").click(function () {
-                  debugger;
+                
                   var DeletionConfirmation = ConfirmDelete();
 
                   if (DeletionConfirmation == true) {

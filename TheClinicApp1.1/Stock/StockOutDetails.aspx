@@ -89,7 +89,7 @@
         var NumberOfRows = NumberOfColumns / 5;
 
 
-        debugger;
+       
         document.getElementById('<%=txtIssueNO.ClientID%>').value = '';
             document.getElementById('<%=txtDate1.ClientID%>').value = '';
             document.getElementById('<%=txtIssuedTo.ClientID%>').value = '';

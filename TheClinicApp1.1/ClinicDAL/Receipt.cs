@@ -473,7 +473,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
-                sda.Fill(ds);
+                sda.Fill(ds, "Medicines");
 
 
                 return ds;
@@ -692,12 +692,14 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    //eObj.InsertionSuccessMessage(page);
+                    eObj.InsertionSuccessMessage(page);
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
                         //Already exists!
                     }
                 }
@@ -707,9 +709,9 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                eObj.ErrorData(ex, page);
 
-                throw ex;
+               
             }
 
             finally
@@ -746,7 +748,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UniqueID);
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                  
-                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;
+                //cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;
                 cmd.Parameters.Add("@UpdateBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@QTY", SqlDbType.Real).Value = QTY;
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
@@ -760,13 +762,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    //eObj.UpdationSuccessMessage(page);
+                    eObj.UpdationSuccessMessage(page);
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
-                        //Already exists!
+                        var page = HttpContext.Current.CurrentHandler as Page;
+
+                        eObj.UpdationNotSuccessMessage(page);
                     }
                 }
 
@@ -775,7 +779,7 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.UpdationNotSuccessMessage(ex, page);
+                eObj.ErrorData(ex, page);
 
                 //throw ex;
             }
