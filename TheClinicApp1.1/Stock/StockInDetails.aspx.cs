@@ -233,6 +233,17 @@ namespace TheClinicApp1._1.Stock
 
                 dtReceipthdr = dsHdr.Tables[0];
 
+
+                if (dtReceipthdr.Rows.Count == 0)
+                {
+                    dsHdr = rpt.GetReceiptHeaderByReceiptID(receiptID);
+
+                    dtReceipthdr = dsHdr.Tables[0];
+                }
+
+
+
+
                 if (dtReceipthdr.Rows.Count > 0)
                 {
                     ViewState["ReceiptHdrID"] = Request.QueryString["receiptID"].ToString();
