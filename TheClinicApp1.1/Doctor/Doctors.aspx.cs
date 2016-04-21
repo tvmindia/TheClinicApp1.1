@@ -21,6 +21,7 @@ namespace TheClinicApp1._1.Doctor
         ClinicDAL.Doctor DoctorObj = new ClinicDAL.Doctor();
         ClinicDAL.Stocks stockObj = new ClinicDAL.Stocks();
         ClinicDAL.PrescriptionDetails PrescriptionObj= new ClinicDAL.PrescriptionDetails();
+        ClinicDAL.PrescriptionHeaderDetails PrescriptionHeadObj = new ClinicDAL.PrescriptionHeaderDetails();
         ClinicDAL.CaseFile.Visit VisitsObj = new ClinicDAL.CaseFile.Visit();
         public string listFilter=null;
         public string RoleName = null;
@@ -42,6 +43,7 @@ namespace TheClinicApp1._1.Doctor
                 string DoctorName = dt.Rows[0]["Name"].ToString();
                 Guid DoctorID = Guid.Parse(dt.Rows[0]["DoctorID"].ToString());
                 VisitsObj.DoctorID = DoctorID;
+                PrescriptionHeadObj.DoctorID = DoctorID;
                 tok.DoctorID = DoctorID.ToString();
                 lblDoctor.Text = "Dr."+DoctorName;
 
@@ -140,19 +142,16 @@ namespace TheClinicApp1._1.Doctor
             VisitsObj.AddVisits();
             if (VisitsObj.PrescriptionID!=Guid.Empty)
             { 
-            PrescriptionObj.PrescID = VisitsObj.PrescriptionID.ToString();
-
-            //Fetching values of prescription from Design throurh Hiddenfield
-            //string values = HiddenField1.Value;
-            //if (values != null)
-            //{
-            //    string[] Invalue = values.Split('|');
-            //    int count = Invalue.Length - 1;
-            //    for (int i = 0; i < count; i = i + 4)
-            //    {
-            //        string w = Invalue[i], x = Invalue[i + 1], y = Invalue[i + 2], z = Invalue[i + 3];
-            //    }
-            //}
+            
+            PrescriptionHeadObj.PrescID = VisitsObj.PrescriptionID.ToString();
+            PrescriptionHeadObj.VisitID = VisitsObj.VisitID.ToString();
+            PrescriptionHeadObj.ClinicID = UA.ClinicID.ToString();
+            PrescriptionHeadObj.CreatedBy = UA.userName;
+            PrescriptionHeadObj.UpdatedBy = UA.userName;
+            PrescriptionHeadObj.CreatedDate = DateTime.Now;
+            PrescriptionHeadObj.UpdatedDate = DateTime.Now;
+            PrescriptionHeadObj.InsertPrescriptionHeaderDetails();
+            PrescriptionObj.PrescID = PrescriptionHeadObj.PrescID.ToString();
 
             string last = string.Empty;
             string values = hdnTextboxValues.Value;
@@ -180,7 +179,7 @@ namespace TheClinicApp1._1.Doctor
                         PrescriptionObj.Days = Convert.ToInt32(columns[5]);
                         PrescriptionObj.CreatedBy = UA.userName;
                         PrescriptionObj.ClinicID = UA.ClinicID.ToString();
-                        PrescriptionObj.CreatedDate = DateTime.Now;                       
+                        PrescriptionObj.UpdatedBy = UA.userName;                       
                         PrescriptionObj.InsertPrescriptionDetails();
 
                     }
@@ -227,7 +226,7 @@ namespace TheClinicApp1._1.Doctor
             ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
             //ProfilePic.Visible = true;
 
-            //HiddenField1.Value = PatientID.ToString();
+            HiddenField1.Value = PatientID.ToString();
         }
         #endregion FillPatientDetails
 
@@ -251,9 +250,7 @@ namespace TheClinicApp1._1.Doctor
             palloe.Value = CaseFileObj.Palloe;
             icterus.Value = CaseFileObj.Icterus;
             clubbing.Value = CaseFileObj.Clubbing;
-            cyanasis.Value = CaseFileObj.Cyanasis; 
-            
-
+            cyanasis.Value = CaseFileObj.Cyanasis;             
             lymphGen.Value = CaseFileObj.LymphClinic;
             edima.Value = CaseFileObj.Edima;
             diagnosys.Value = CaseFileObj.Diagnosys;
@@ -265,7 +262,7 @@ namespace TheClinicApp1._1.Doctor
             lymphnodes.Value = CaseFileObj.LymphGen;          
             resp_rate.Value = CaseFileObj.RespRate;
             others.Value = CaseFileObj.Others;
-            //btnnew.Visible = true;
+            
             string PrescriptionID = Visits[1];
         }
         #endregion Update Visits
