@@ -21,6 +21,7 @@ namespace TheClinicApp1._1.Doctor
         ClinicDAL.Doctor DoctorObj = new ClinicDAL.Doctor();
         ClinicDAL.Stocks stockObj = new ClinicDAL.Stocks();
         ClinicDAL.PrescriptionDetails PrescriptionObj= new ClinicDAL.PrescriptionDetails();
+        ClinicDAL.CaseFile.Visit VisitsObj = new ClinicDAL.CaseFile.Visit();
         public string listFilter=null;
         public string RoleName = null;
         protected void Page_Load(object sender, EventArgs e)
@@ -30,9 +31,21 @@ namespace TheClinicApp1._1.Doctor
             listFilter = null;
             listFilter = GetMedicineNames();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+           
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
+            if(RoleName=="Doctor")
+            {
+                DataTable dt = new DataTable();
+                dt = UA.GetDoctorAndDoctorID(Login);
+                string DoctorName = dt.Rows[0]["Name"].ToString();
+                Guid DoctorID = Guid.Parse(dt.Rows[0]["DoctorID"].ToString());
+                VisitsObj.DoctorID = DoctorID;
+                tok.DoctorID = DoctorID.ToString();
+                lblDoctor.Text = "Dr."+DoctorName;
+
+            }
             gridviewbind();
         }
 
@@ -92,9 +105,7 @@ namespace TheClinicApp1._1.Doctor
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            ClinicDAL.CaseFile.Visit VisitsObj = new ClinicDAL.CaseFile.Visit();
-            VisitsObj.DoctorID = Guid.Parse("469489AE-6237-47B3-B8CC-74B62EC81D77");
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];                        
             VisitsObj.ClinicID = UA.ClinicID;
             VisitsObj.FileID = Guid.Parse("232CFE06-E9E9-42C1-B2F6-B992ABE0140A");
             int feet = Convert.ToInt32(txtHeightFeet.Value);
@@ -234,6 +245,7 @@ namespace TheClinicApp1._1.Doctor
             lblPatientName.Text = dr["Name"].ToString();
             lblGenderDis.Text = dr["Gender"].ToString();
             HiddenField2.Value = FileIDForGrid.ToString();
+            lblFileNum.Text = dr["FileNumber"].ToString();
             DateTime DT = Convert.ToDateTime(dr["DOB"].ToString());
             int Age = year - DT.Year;
             lblAgeCount.Text = Age.ToString();
@@ -290,7 +302,7 @@ namespace TheClinicApp1._1.Doctor
         {
             //Gridview Binding to Diplay DoctorName,Token No,Patient Name,TIME
             tok.DateTime = DateTime.Now;
-            DataSet gds = tok.ViewToken();
+            DataSet gds = tok.DoctorViewToken();
             GridViewTokenlist.EmptyDataText = "No Records Found";
             GridViewTokenlist.DataSource = gds;
             GridViewTokenlist.DataBind();

@@ -203,7 +203,42 @@ namespace TheClinicApp1._1.ClinicDAL
         }
        
         #endregion Get Login Details
+        public DataTable GetDoctorAndDoctorID(string LoginName)
+        {
+            SqlConnection con = null;
 
+            try
+            {
+                DataTable dt = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("[GetDoctorandDoctorID]", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@LoginName", SqlDbType.NVarChar, 50).Value = LoginName;
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                dt = new DataTable();
+                adapter.Fill(dt);
+                con.Close();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+                throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+
+        }
         #region Get RoleID
         public string GetRoleName(string LoginName)
         {
@@ -347,5 +382,8 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             return plainText;
         }
+
+     
+
     }
 }
