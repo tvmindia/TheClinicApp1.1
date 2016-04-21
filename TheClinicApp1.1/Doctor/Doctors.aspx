@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="Doctors.aspx.cs" Inherits="TheClinicApp1._1.Doctor.Doctors" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="Doctors.aspx.cs" Inherits="TheClinicApp1._1.Doctor.Doctors" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
       
 </asp:Content>
@@ -123,7 +123,7 @@
                      <div class="col3_div"><asp:Label ID="lblFileNum" runat="server" Text=""></asp:Label><span>File No</span></div>
                  </div>
                  <div class="card_white">
-                    <div class="field_label"><label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text="Dr.George"></asp:Label></div>      
+                    <div class="field_label"><label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text=""></asp:Label></div>      
                 </div>
              </div>
          
@@ -343,7 +343,8 @@
         <h3 class="modal-title">Tokens</h3>
       </div>
       <div class="modal-body" style="width:100%;height:100%" >
-        <asp:GridView ID="GridViewTokenlist" runat="server" AutoGenerateColumns="False" CssClass="table" style="text-align:center;width:100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None" ForeColor="#333333">
+          <div class="col-lg-12">
+                   <asp:GridView ID="GridViewTokenlist" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None" ForeColor="#333333">
               <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>
               <Columns>
                   <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
@@ -368,6 +369,7 @@
             <SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
 
         </asp:GridView>
+              </div>
       </div>      
         <div class="modal-footer">
                        
