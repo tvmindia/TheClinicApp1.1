@@ -8,6 +8,7 @@
             font-size:30px;
             font-family:'Footlight MT';
             font-weight:bold;
+           
         }
 
 
@@ -60,8 +61,9 @@
             var file1=file[1]
             
                 if (PatientName!="")
-            { 
-              
+
+                { 
+                                  
                     PageMethods.PatientDetails(file1, OnSuccess, onError);  
             }
 
@@ -126,7 +128,7 @@
          <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch"  type="search" placeholder="Search here..." />
          <input class="button" onserverclick="btnSearch_ServerClick" runat="server" type="submit" value="Search" />
          </div>
-         <ul class="top_right_links"><li><a class="book_token" runat="server" id="btnBookToken" onserverclick="btnBookToken_ServerClick"><span></span>Book Token</a></li></ul>
+         <ul class="top_right_links"><li><a class="book_token" runat="server" id="btnBookToken" onserverclick="btnBookToken_ServerClick"><span></span>Book Token</a></li><li><a class="new" href="Tokens.aspx"><span></span>New</a></li></ul>
          </div>
          
          <div class="right_form">
@@ -143,8 +145,10 @@
                     <div class="field_label"><label>Mobile</label><asp:Label ID="lblMobile" runat="server"  ></asp:Label></div>  
                     <div class="field_label"><label>Email</label> <a href="mailto: demo@test.com"><asp:Label ID="lblEmail" runat="server" ></asp:Label></a></div>  
                     <div class="field_label"><label>Last visit</label><asp:Label ID="lblLastVisit" runat="server"  ></asp:Label></div>  
+
+                      <div class="field_label" id="BookedDoctorName" visible="false" runat="server" ><label>Doctor</label><asp:Label ID="lblDoctor"  runat="server" ></asp:Label></div>  
                      <br />  <br />  
-                     <div class="field_label" id="DropDownDoctor" style="visibility:hidden"> <label>Doctor Name</label><asp:DropDownList ID="ddlDoctor" width="60%" runat="server"></asp:DropDownList></div>                       
+                     <div class="field_label" id="DropDownDoctor" style="visibility:hidden"> <label>Doctor</label><asp:DropDownList ID="ddlDoctor" width="60%" runat="server"></asp:DropDownList></div>                       
                 </div>                 
              </div>
  

@@ -130,7 +130,30 @@ namespace TheClinicApp1._1.Token
 
                 lblToken.Text = tokenNo.ToString();
                 lblToken.Visible = true;
-                
+
+
+                DataSet dst = tokenObj.GetPatientTokenDetailsbyID(HiddenPatientID.Value);
+
+
+              
+
+                lblFileNo.Text = Convert.ToString(dst.Tables[0].Rows[0]["FileNumber"]);
+                lblPatientName.Text = Convert.ToString(dst.Tables[0].Rows[0]["Name"]);
+                lblGender.Text = Convert.ToString(dst.Tables[0].Rows[0]["Gender"]);
+                lblAddress.Text = Convert.ToString(dst.Tables[0].Rows[0]["Address"]);
+                lblMobile.Text = Convert.ToString(dst.Tables[0].Rows[0]["Phone"]);
+                lblEmail.Text = Convert.ToString(dst.Tables[0].Rows[0]["Email"]);
+                lblLastVisit.Text = Convert.ToString(dst.Tables[0].Rows[0]["LastVisitDate"]);
+
+
+                DateTime date = DateTime.Now;
+                int year = date.Year;
+                DateTime DT = Convert.ToDateTime(dst.Tables[0].Rows[0]["DOB"].ToString());
+                int Age = year - DT.Year;
+                lblAge.Text = Age.ToString();
+
+                BookedDoctorName.Visible = true;
+                lblDoctor.Text = Convert.ToString(dst.Tables[0].Rows[0]["DoctorName"]);
 
             }
             
