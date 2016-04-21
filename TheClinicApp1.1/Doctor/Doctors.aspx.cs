@@ -42,6 +42,7 @@ namespace TheClinicApp1._1.Doctor
                 string DoctorName = dt.Rows[0]["Name"].ToString();
                 Guid DoctorID = Guid.Parse(dt.Rows[0]["DoctorID"].ToString());
                 VisitsObj.DoctorID = DoctorID;
+                tok.DoctorID = DoctorID.ToString();
                 lblDoctor.Text = "Dr."+DoctorName;
 
             }
@@ -301,7 +302,7 @@ namespace TheClinicApp1._1.Doctor
         {
             //Gridview Binding to Diplay DoctorName,Token No,Patient Name,TIME
             tok.DateTime = DateTime.Now;
-            DataSet gds = tok.ViewToken();
+            DataSet gds = tok.DoctorViewToken();
             GridViewTokenlist.EmptyDataText = "No Records Found";
             GridViewTokenlist.DataSource = gds;
             GridViewTokenlist.DataBind();
