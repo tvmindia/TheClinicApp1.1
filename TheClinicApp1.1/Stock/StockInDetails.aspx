@@ -180,7 +180,7 @@
                                 <ul class="top_right_links">
                                     <li><a class="back" href="StockIn.aspx"><span></span>Back</a></li>
                                     <li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li>
-                                    <li><a class="new" href="#"><span></span>New</a></li>
+                                    <li><a class="new" href="StockInDetails.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
 

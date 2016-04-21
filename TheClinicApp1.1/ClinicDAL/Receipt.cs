@@ -113,20 +113,26 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@RefNo2", SqlDbType.NVarChar, 255).Value = RefNo2;
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
+
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
+
                 cmd.ExecuteNonQuery();
+
                 int Outputval = (int)cmd.Parameters["@Status"].Value;
                 if (Outputval == 1)
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    //eObj.InsertionSuccessMessage(page);
+                    eObj.InsertionSuccessMessage(page);
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
+
                         //Already exists!
                     }
                 }
@@ -135,7 +141,7 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -165,28 +171,30 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[UpdateReceiptHeader]";
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                cmd.Parameters.Add("@ReceiptID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ReceiptID);             
+                cmd.Parameters.Add("@RecepitID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ReceiptID);
+                cmd.Parameters.Add("@RefNo1", SqlDbType.NVarChar, 255).Value = RefNo1;
                 cmd.Parameters.Add("@RefNo2", SqlDbType.NVarChar, 255).Value = RefNo2;
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
+
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
-                cmd.ExecuteNonQuery();
-                int Outputval = (int)cmd.Parameters["@Status"].Value;
 
                 cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
 
                 if (Outputval == 1)
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    //eObj.UpdationSuccessMessage(page);
+                    eObj.UpdationSuccessMessage(page);
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
-                        //Already exists!
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.UpdationNotSuccessMessage(page);
                     }
                 }
 
@@ -195,7 +203,7 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.UpdationNotSuccessMessage(ex, page);
+                eObj.ErrorData(ex, page);
 
                 //throw ex;
             }
@@ -251,14 +259,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.Fill(ds);
 
 
-                return ds;
+                
 
             }
 
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -269,7 +278,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return ds;
         }
 
 
@@ -294,7 +303,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
+
                 cmd.ExecuteNonQuery();
+
                 int Outputval = (int)cmd.Parameters["@Status"].Value;
 
                 if (Outputval == 1)
@@ -368,14 +379,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 ds = new DataSet();
                 sda.Fill(ds, "Medicines");
 
-                return ds;
+              
 
             }
 
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -386,7 +398,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return ds;
         }
 
 
@@ -421,14 +433,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.Fill(ds);
 
 
-                return ds;
+               
 
             }
 
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -439,7 +452,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return ds;
         }
 
         #endregion Get Medicine Details By MedicineName
@@ -476,14 +489,14 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.Fill(ds, "Medicines");
 
 
-                return ds;
+                
 
             }
 
             catch (Exception ex)
             {
-
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -494,7 +507,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return ds;
         }
 
 
@@ -632,14 +645,14 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.Fill(ds);
 
 
-                return ds;
+                
 
             }
 
             catch (Exception ex)
             {
-
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -650,11 +663,63 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return ds;
         }
 
 
         #endregion autofill        
+
+
+        #region Get Receipt Details By UniqueID
+
+        public DataSet GetReceiptDetailsByUniqueID(string UniqueID)
+        {
+
+            dbConnection dcon = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetReceiptDetailsByUniqueID]";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
+                cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UniqueID);
+
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds, "Medicines");
+
+
+            }
+
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+            return ds;
+        }
+
+        #endregion Get Receipt Details By UniqueID
 
 
         #region InsertReceiptDetails
@@ -683,10 +748,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
-                cmd.ExecuteNonQuery();
-                int Outputval = (int)cmd.Parameters["@Status"].Value;
 
                 cmd.ExecuteNonQuery();
+
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
 
                 if (Outputval == 1)
                 {
@@ -699,8 +764,8 @@ namespace TheClinicApp1._1.ClinicDAL
                     if (Outputval == 0)
                     {
                         var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.AlreadyExistsMessage(page);
-                        //Already exists!
+                        eObj.InsertionNotSuccessMessage(page);
+                        
                     }
                 }
 
@@ -749,14 +814,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                  
                 //cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;
-                cmd.Parameters.Add("@UpdateBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
+                cmd.Parameters.Add("@Updatedby", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@QTY", SqlDbType.Real).Value = QTY;
+
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
                 int Outputval = (int)cmd.Parameters["@Status"].Value;
-
-                cmd.ExecuteNonQuery();
 
                 if (Outputval == 1)
                 {
@@ -828,14 +892,12 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.Fill(ds);
 
 
-                return ds;
-
             }
 
             catch (Exception ex)
             {
-
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -846,7 +908,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return ds;
         }
 
 
@@ -872,14 +934,36 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UniqueID);
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
 
+
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
+
+               
+                if (Outputval == 1)
+                {
+                    //Success
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.DeleteSuccessMessage(page);
+                }
+                else
+                {
+                    if (Outputval == 0)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+
+                        eObj.DeletionNotSuccessMessage(page);
+                    }
+                }
 
             }
 
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally

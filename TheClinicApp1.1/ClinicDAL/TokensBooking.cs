@@ -125,6 +125,54 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion GetPatientDetails
 
 
+
+        #region GetPatientTokenDetailsbyID
+
+        public DataSet GetPatientTokenDetailsbyID(string str1)
+        {
+            SqlConnection con = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetPatientTokenDetailsbyID]";
+                cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(str1);
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+
+                ds = new DataSet();
+                sda.Fill(ds);
+
+                return ds;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+        #endregion GetPatientDetails
+
+
         #region Doctorbind
         /// <summary>
         /// get datas from doctors table
@@ -288,7 +336,57 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion ViewToken
- 
+
+
+        #region DoctorViewToken
+        public DataSet DoctorViewToken()
+        {
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+
+                DateTime now = DateTime.Now;
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[DoctorViewPatientsBooking]";
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
+                cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+                return ds;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+        }
+
+        #endregion DoctorViewToken
+
+
+
         #region DeleteToken
 
         /// <summary>

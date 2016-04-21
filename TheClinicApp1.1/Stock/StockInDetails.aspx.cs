@@ -422,18 +422,30 @@ namespace TheClinicApp1._1.Stock
                                 {
                                     //----------------- * CASE : UPDATE *---------------------------------//
 
+
                                     if ((columns[0] != null) && (columns[4] != null))
                                     {
                                         string uniqueID = last;
                                         ReceiptDetails UpREceiptDtlObj = new ReceiptDetails(new Guid(uniqueID));
 
+
                                         UpREceiptDtlObj.ClinicID = UA.ClinicID.ToString();
-                                        UpREceiptDtlObj.QTY = Convert.ToInt32(columns[4]);
-                                        UpREceiptDtlObj.UpdatedBy = UA.userName;
 
-                                        //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
 
-                                        UpREceiptDtlObj.UpdateReceiptDetails(uniqueID);
+                                        //DataSet dsRptDetails = UpREceiptDtlObj.GetReceiptDetailsByUniqueID(uniqueID);
+
+                                        //for (int k = 0; i < dsRptDetails.Tables[0].Rows.Count; k++)
+                                        //{
+
+
+                                            UpREceiptDtlObj.QTY = Convert.ToInt32(columns[4]);
+                                            UpREceiptDtlObj.UpdatedBy = UA.userName;
+
+                                            //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
+
+                                            UpREceiptDtlObj.UpdateReceiptDetails(uniqueID);
+                                        //}
+                                    
                                     }
                                 }
 
