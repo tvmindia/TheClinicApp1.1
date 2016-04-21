@@ -16,13 +16,19 @@ namespace TheClinicApp1._1.Token
 {
     public partial class Tokens : System.Web.UI.Page
     {
+
+
+        #region Global Variables
+
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         public string listFilter = null;
         public string RoleName = null;
 
-
         TokensBooking tokenObj = new TokensBooking();
+        ErrorHandling eObj = new ErrorHandling();
+
+        #endregion Global Variables
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -49,6 +55,7 @@ namespace TheClinicApp1._1.Token
            
         }
 
+        #region gridviewbind
         public void gridviewbind()
         {
             //Gridview Binding to Diplay DoctorName,Token No,Patient Name,TIME
@@ -60,13 +67,15 @@ namespace TheClinicApp1._1.Token
             GridViewTokenlist.DataBind();
         }
 
+        #endregion gridviewbind
 
+        #region listerfilterbind
         public void listerfilterbind()
         { 
             listFilter = null;
             listFilter = BindName();
         }
-
+        #endregion listerfilterbind
 
         #region BindDataAutocomplete
         private string BindName()
@@ -131,14 +140,10 @@ namespace TheClinicApp1._1.Token
 
 
 
-        protected void ImgBtnDelete_Click(object sender, EventArgs e)
-        {
-
-
-
-        }
+     
         protected void btnBookToken_ServerClick(object sender, EventArgs e)
         {
+            string msg = string.Empty;
             if (hdnfileID.Value!="")
             {
                 tokenObj.DoctorID = ddlDoctor.SelectedValue;
@@ -174,12 +179,20 @@ namespace TheClinicApp1._1.Token
             }
             else 
             {
+                var page = HttpContext.Current.CurrentHandler as Page;
+
+                msg = "Please select Patient Details in Search";
+
+                eObj.InsertionNotSuccessMessage(page, msg);
 
             
             }
             
 
         }
+
+
+        
 
         protected void ImgBtnDelete_Click1(object sender, ImageClickEventArgs e)
         {

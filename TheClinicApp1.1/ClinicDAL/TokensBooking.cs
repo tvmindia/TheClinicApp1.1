@@ -4,12 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Data;
+using System.Web.UI;
 
 
 namespace TheClinicApp1._1.ClinicDAL
 {
     public class TokensBooking
     {
+
+        #region Global Variables
+        ErrorHandling eObj = new ErrorHandling();
+        #endregion Global Variables
+
         //Property
         #region TokenProperty        
         
@@ -260,24 +266,31 @@ namespace TheClinicApp1._1.ClinicDAL
 
             cmd.ExecuteNonQuery();
             TokenNo = Convert.ToInt32(OutparmItemId.Value);
-            return TokenNo;
+           
                  
              }
 
             catch (Exception ex)
             {
-                 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
             {
+
+
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.InsertionSuccessMessage(page);
+
+
                 if (con != null)
                 {
                     con.Dispose();
                 }
 
             }
+            return TokenNo;
          
 
 
