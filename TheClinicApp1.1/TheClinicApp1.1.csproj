@@ -125,6 +125,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Button-Warning-iconedited.png" />
     <Content Include="common\test page.txt" />
     <Content Include="css\bootstrap-spinner.css" />
     <Content Include="css\bootstrap-theme.min.css" />
@@ -156,7 +157,6 @@
     <Content Include="images\add_medicine.png" />
     <Content Include="images\back.png" />
     <Content Include="images\book_token.png" />
-    <Content Include="images\Button-Warning-icon.png" />
     <Content Include="images\calendar 32x32.png" />
     <Content Include="images\calendar4.png" />
     <Content Include="images\Cancel.png" />
