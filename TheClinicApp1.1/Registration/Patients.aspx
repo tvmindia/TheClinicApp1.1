@@ -93,117 +93,7 @@
              
     </script>
     <!------------------------------------------------------------------------------>
-  <%--  <script>
-        var test=jQuery.noConflict();
-        test(document).on('ready',function(){
-            $('#sendMessageForm')
-         .formValidation({
-             framework: 'bootstrap',
-             icon: {
-                 valid: 'glyphicon glyphicon-ok',
-                 invalid: 'glyphicon glyphicon-remove',
-                 validating: 'glyphicon glyphicon-refresh'
-             },
-             fields: {
-                 fullName: {
-                     validators: {
-                         notEmpty: {
-                             message: 'The full name is required and cannot be empty'
-                         }
-                     }
-                 },
-                 email: {
-                     validators: {
-                         notEmpty: {
-                             message: 'The email address is required and cannot be empty'
-                         },
-                         emailAddress: {
-                             message: 'The email address is not valid'
-                         }
-                     }
-                 },
-                 title: {
-                     validators: {
-                         notEmpty: {
-                             message: 'The title is required and cannot be empty'
-                         },
-                         stringLength: {
-                             max: 100,
-                             message: 'The title must be less than 100 characters long'
-                         }
-                     }
-                 },
-                 content: {
-                     validators: {
-                         notEmpty: {
-                             message: 'The content is required and cannot be empty'
-                         },
-                         stringLength: {
-                             max: 500,
-                             message: 'The content must be less than 500 characters long'
-                         }
-                     }
-                 }
-             }
-         })
-
-         .on('success.form.fv', function(e) {
-             // Reset the message element when the form is valid
-             $('#errors').html('');
-         })
-
-         .on('err.field.fv', function(e, data) {
-             // data.fv      --> The FormValidation instance
-             // data.field   --> The field name
-             // data.element --> The field element
-
-             // Get the messages of field
-             var messages = data.fv.getMessages(data.element);
-
-             // Remove the field messages if they're already available
-             $('#errors').find('li[data-field="' + data.field + '"]').remove();
-
-             // Loop over the messages
-             for (var i in messages) {
-                 // Create new 'li' element to show the message
-                 $('<li/>')
-                     .attr('data-field', data.field)
-                     .wrapInner(
-                         $('<a/>')
-                             .attr('href', 'javascript: void(0);')
-                             .html(messages[i])
-                             .on('click', function(e) {
-                                 // Focus on the invalid field
-                                 data.element.focus();
-                             })
-                     )
-                     .appendTo('#errors');
-             }
-
-             // Hide the default message
-             // data.element.data('fv.messages') returns the field messages element
-             data.element
-                 .data('fv.messages')
-                 .find('.help-block[data-fv-for="' + data.field + '"]')
-                 .hide();
-         })
-
-         .on('success.field.fv', function(e, data) {
-             // Remove the field messages
-             $('#errors').find('li[data-field="' + data.field + '"]').remove();
-         });
-        });
-</script>--%>
-    <!--- Script for Url driven for iframe, Created By:Thomson Kattingal --->
-   <%-- <script>
-        function SetIframeSrc(HyperlinkID){
-            if (HyperlinkID=="AllRegistrationIframe")
-            {
-                var AllRegistrationIframe=document.getElementById('ViewAllRegistration');
-                AllRegistrationIframe.src="../Registration/ViewAllRegistration.aspx";
-            }
-        }
-    </script>--%>
+  
     <!---------------------------------------------------------------------->
    <!------------------------------------->
   
@@ -330,7 +220,7 @@
          </div>
 
          </div>
-
+ </div> 
   
         <!---------------------------------- Modal Section --------------------------------------->
         <!-- All Registration Iframe Modal -->
@@ -366,6 +256,7 @@
 
                     </div>
                     <div class="modal-body" style="background-color:white;overflow-x:hidden;overflow-y:hidden;height:60%;width:100%;">
+                        <div class="col-sm-12">
                         <div class="col-lg-12" style="color:brown;">
                             Would You Like to Book A Token ?
                         </div>
@@ -386,7 +277,7 @@
                     <div class="modal-footer">
                       <asp:Button ID="btntokenbooking" runat="server" Text="BOOK TOKEN"  type="submit" CssClass="button" OnClick="btntokenbooking_Click" BorderColor="DarkSeaGreen" ForeColor="White" BackColor="#3366ff" ValidationGroup="Submit" formnovalidate />                    
                     </div>
-                    
+                    </div>
                 </div>
                 
             </div>
@@ -401,13 +292,14 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h3 class="modal-title">View All Registrations</h3>
                     </div>
-                    <div class="modal-body" style="width:100%;height:100%" >                        
-                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5">                            
+                    <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;" >
+                        <div class="col-sm-12">                        
+                        <asp:GridView ID="dtgViewAllRegistration" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5" Width="100%" height="50%">                            
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
                                        
                                     </ItemTemplate>                                    
                                 </asp:TemplateField>
@@ -444,13 +336,14 @@
                             <SortedDescendingCellStyle BackColor="#E9EBEF"></SortedDescendingCellStyle>
                             <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
                         </asp:GridView>
+                            </div>
                     </div>                 
                     <div class="modal-footer">
                     </div>
                 </div>
-
+                </div>
             </div>
-        </div>
+     
       
         <!-- Todays Registration Modal -->
         <div class="modal fade" id="TodaysRegistration" role="dialog">
@@ -463,7 +356,7 @@
 
                     </div>
                     <div class="modal-body" style="width:100%;height:100%">
-                     
+                     <div class="col-sm-12">
                         <asp:GridView ID="dtgViewTodaysRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None">
                             <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>
                             <Columns>
@@ -497,7 +390,7 @@
                             <SortedDescendingCellStyle BackColor="#FFFDF8"></SortedDescendingCellStyle>
                             <SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
                         </asp:GridView>
-                        
+                        </div>
                     </div>
                     <div class="modal-footer">
                        
@@ -508,7 +401,7 @@
             </div>
         </div>
         <!------------------------------------------------------------------------------------------>   
-          </div>            
+                    
     <!-- Script Files -->
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/jquery-ui.js"></script>

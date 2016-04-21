@@ -41,10 +41,7 @@ namespace TheClinicApp1._1.Registration
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
-
-
-            tok.ClinicID = UA.ClinicID.ToString();
-            
+            tok.ClinicID = UA.ClinicID.ToString();           
             gridDataBind();
             listFilter = null;
             listFilter = BindName();
@@ -76,8 +73,7 @@ namespace TheClinicApp1._1.Registration
         #region BindDropdownDoc
         public void DropdownDoctors()
         {
-            DataSet ds = tok.DropBindDoctorsName();
-            
+            DataSet ds = tok.DropBindDoctorsName();          
             ddlDoctorName.DataSource = ds.Tables[0];
             ddlDoctorName.DataValueField = "DoctorID";
             ddlDoctorName.DataTextField = "Name";
@@ -135,7 +131,7 @@ namespace TheClinicApp1._1.Registration
             txtMobile.Value = Patient[3];
             txtEmail.Value = Patient[4];
             ddlMarital.SelectedValue = Patient[7];
-                        
+            txtOccupation.Value = Patient[8];            
             ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
             ProfilePic.Visible = true;
             //btnnew.Visible = true;
@@ -366,6 +362,8 @@ namespace TheClinicApp1._1.Registration
                     txtMobile.Value = dr["Phone"].ToString();
                     txtEmail.Value = dr["Email"].ToString();
                     string Status = dr["MaritalStatus"].ToString();
+                    ddlMarital.Text = Status;
+                    txtOccupation.Value = dr["Occupation"].ToString();
 
                     ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
                     HiddenField1.Value = PatientID.ToString();
