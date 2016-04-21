@@ -72,6 +72,15 @@
 
 
 
+        function SetIframeSrc(HyperlinkID) {
+
+            if (HyperlinkID == "NewMedicineIframe") {
+                var NewMedicineIframe = document.getElementById('NewMedicineIframe');
+                NewMedicineIframe.src = "AddNewMedicine.aspx";
+                //$('#OutOfStock').modal('show');
+            }
+
+        }
 
 
 
@@ -232,7 +241,7 @@
          <a class="nav_menu">Menu</a>
          Stock In</div>         
          <div class="icon_box">
-         <a class="add_medicine" data-toggle="modal" data-target="#add_medicine" ><span title="All Medicine" data-toggle="tooltip" data-placement="left"><img src="../images/add_medicine.png"/></span></a>
+         <a class="add_medicine" data-toggle="modal" data-target="#add_medicine" ><span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')"><img src="../images/add_medicine.png"/></span></a>
          </div>
          <div class="right_form tab_right_form">
          
@@ -341,17 +350,20 @@
          
 <!-- Modal -->
 <div id="add_medicine" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="height:600px;">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         
-        <h4 class="modal-title">All Medicine</h4>
+        <h4 class="modal-title">Add New Medicine</h4>
       </div>
-      <div class="modal-body">
-        <table class="table" width="100%" border="0">
+      <div class="modal-body" style="height:400px;">
+
+           <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
+
+      <%--  <table class="table" width="100%" border="0">
           <tr>
             <th>Sl No.</th>
             <th>Date</th>
@@ -372,7 +384,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
-        </table>
+        </table>--%>
       </div>      
     </div>
 

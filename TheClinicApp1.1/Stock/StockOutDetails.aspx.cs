@@ -331,186 +331,192 @@ namespace TheClinicApp1._1.Stock
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
             string msg = string.Empty;
-            if ( (txtIssuedTo.Text != "") || (txtDate1.Text != "") || (txtIssueNO.Text != ""))
+            if ( (txtIssuedTo.Text != "") || (txtDate1.Text != "") )
              {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
 
-            if (hdnRemovedIDs.Value != string.Empty)
-            {
+                 if (txtIssueNO.Text != "")
+                 {
 
-                //----------------- * CASE : DELETE *-----------------------------------//
-
-                string hdRemovedIDValue = hdnRemovedIDs.Value;
-
-                string[] RemovedIDs = hdRemovedIDValue.Split(',');
-
-                for (int i = 0; i < RemovedIDs.Length - 1; i++)
-                {
-
-                    if ((RemovedIDs[i] != "") || (RemovedIDs[i] != string.Empty))
-                    {
-
-                        IssueDetails DetailObj = new IssueDetails();
-                        string UniqueId = RemovedIDs[i].ToString();
-
-                        //string medId =   DetailObj.GetMedicineIDByUniqueID(Guid.Parse(UniqueId));
-
-                        DetailObj.ClinicID = UA.ClinicID.ToString();
-                        DetailObj.DeleteIssueDetails(UniqueId);
-                        hdnRemovedIDs.Value = "";
-
-                    }
-                }
-
-            }
+                     UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
 
+                     if (hdnRemovedIDs.Value != string.Empty)
+                     {
 
-            if (hdnRemovedIDs.Value == string.Empty)
-            {
-                if (hdnTextboxValues.Value != "")
-                {
+                         //----------------- * CASE : DELETE *-----------------------------------//
 
-                    if ((txtIssueNO.Text != string.Empty) && (txtIssuedTo.Text != string.Empty) && (txtDate1.Text != string.Empty))
-                    {
+                         string hdRemovedIDValue = hdnRemovedIDs.Value;
 
-                        IssuehdrObj.ClinicID = UA.ClinicID.ToString();
-                        IssuehdrObj.IssuedTo = txtIssuedTo.Text;
-                        IssuehdrObj.IssueNO = txtIssueNO.Text;
-                        IssuehdrObj.CreatedBy = UA.userName;
+                         string[] RemovedIDs = hdRemovedIDValue.Split(',');
 
-                         IssuehdrObj.Date = Convert.ToDateTime(txtDate1.Text);
+                         for (int i = 0; i < RemovedIDs.Length - 1; i++)
+                         {
+
+                             if ((RemovedIDs[i] != "") || (RemovedIDs[i] != string.Empty))
+                             {
+
+                                 IssueDetails DetailObj = new IssueDetails();
+                                 string UniqueId = RemovedIDs[i].ToString();
+
+                                 //string medId =   DetailObj.GetMedicineIDByUniqueID(Guid.Parse(UniqueId));
+
+                                 DetailObj.ClinicID = UA.ClinicID.ToString();
+                                 DetailObj.DeleteIssueDetails(UniqueId);
+                                 hdnRemovedIDs.Value = "";
+
+                             }
+                         }
+
+                     }
 
 
 
-                        if ((hdnHdrInserted.Value == "") && (hdnTextboxValues.Value != ""))
-                        {
-                       int result =      IssuehdrObj.InsertIssueHeader();
+                     if (hdnRemovedIDs.Value == string.Empty)
+                     {
+                         if (hdnTextboxValues.Value != "")
+                         {
 
+                             if ((txtIssueNO.Text != string.Empty) && (txtIssuedTo.Text != string.Empty) && (txtDate1.Text != string.Empty))
+                             {
 
-                       if (result == 1)
-                       {
-                           hdnHdrInserted.Value = "True";
-                           ViewState["IssueHdrID"] = IssuehdrObj.IssueID;
-                           txtIssueNO.ReadOnly = true;
-                       }
-                            
+                                 IssuehdrObj.ClinicID = UA.ClinicID.ToString();
+                                 IssuehdrObj.IssuedTo = txtIssuedTo.Text;
+                                 IssuehdrObj.IssueNO = txtIssueNO.Text;
+                                 IssuehdrObj.CreatedBy = UA.userName;
 
-                        }
-
-                        if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
-                        {
-
-
-                            string issueid = ViewState["IssueHdrID"].ToString();
-
-                            IssuehdrObj.ClinicID = UA.ClinicID.ToString();
-                            DataSet dsHdr = IssuehdrObj.GetIssueHeaderByIssueID(issueid);
-
-                            dtIssuehdr = dsHdr.Tables[0];
-
-
-                            if (dtIssuehdr.Rows.Count > 0)
-                            {
-
-                                string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
-                                string newDate = txtDate1.Text;
-
-                                if ((txtIssueNO.Text != dtIssuehdr.Rows[0]["IssueNO"].ToString()) || (txtIssuedTo.Text != dtIssuehdr.Rows[0]["IssuedTo"].ToString()) || (oldDate != newDate))
-                                {
-                                    
-                                    //
-                                    // ----------------- *  Update header*-----------------------------------//
-
-                                    if (hdnTextboxValues.Value != "")
-                                    {
-
-                                        IssuehdrObj.ClinicID = UA.ClinicID.ToString();
-                                        IssuehdrObj.IssuedTo = txtIssuedTo.Text;
-                                        IssuehdrObj.Date = Convert.ToDateTime(txtDate1.Text);
-                                        IssuehdrObj.UpdatedBy = UA.userName;
-                                        //IssuehdrObj.IssueNO = txtIssueNO.Text;
-                                        IssuehdrObj.UpdateIssueHeader(ViewState["IssueHdrID"].ToString());
-                                    }
-
-                                }
-                            }
-                        }
-
-                        string last = string.Empty;
+                                 IssuehdrObj.Date = Convert.ToDateTime(txtDate1.Text);
 
 
 
-
-                        string values = hdnTextboxValues.Value;
-
-                        string[] Rows = values.Split('$');
-
+                                 if ((hdnHdrInserted.Value == "") && (hdnTextboxValues.Value != ""))
+                                 {
+                                     int result = IssuehdrObj.InsertIssueHeader();
 
 
-                        for (int i = 0; i < Rows.Length - 1; i++)
-                        {
-                            IssueDetails IssuedtlObj = new IssueDetails(); //Object is created in loop as each entry should have different uniqueID
-                            string[] tempRow = Rows;
-
-                            last = tempRow[i].Split('|').Last();
-
-                            string[] columns = tempRow[i].Split('|');
-
-                            if (last == string.Empty || last == "")
-                            {
-
-                                //----------------- * CASE : INSERT *-----------------------------------//
-                                if ((columns[0] != null) && (columns[4] != null))
-                                {
+                                     if (result == 1)
+                                     {
+                                         hdnHdrInserted.Value = "True";
+                                         ViewState["IssueHdrID"] = IssuehdrObj.IssueID;
+                                         txtIssueNO.ReadOnly = true;
+                                     }
 
 
-                                    IssuedtlObj.MedicineName = columns[0];
-                                    IssuedtlObj.Unit = columns[1];
-                                    IssuedtlObj.Qty = Convert.ToInt32(columns[4]);
+                                 }
 
-                                    IssuedtlObj.CreatedBy = UA.userName; ;
-                                    IssuedtlObj.ClinicID = UA.ClinicID.ToString();
-
-                                    if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
-                                    {
-                                        IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
-                                      }
-                                    IssuedtlObj.InsertIssueDetails();
-                                  
-                                }
-                            }
-
-                            if (last != string.Empty)
-                            {
-                                //----------------- * CASE : UPDATE *---------------------------------//
-
-                                if ((columns[0] != null) && (columns[4] != null))
-                                {
-                                    string uniqueID = last;
-                                    IssueDetails UpIssueDtlObj = new IssueDetails(new Guid(uniqueID));
-
-                                    UpIssueDtlObj.ClinicID = UA.ClinicID.ToString();
-                                    UpIssueDtlObj.Qty = Convert.ToInt32(columns[4]);
-                                    UpIssueDtlObj.UpdatedBy = UA.userName;
-
-                                    //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
-
-                                    UpIssueDtlObj.UpdateIssueDetails(uniqueID);
-                                }
-                            }
-
-                        }
+                                 if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
+                                 {
 
 
-                        hdnManageGridBind.Value = "True";
+                                     string issueid = ViewState["IssueHdrID"].ToString();
 
-                    }
-                }
-            }
+                                     IssuehdrObj.ClinicID = UA.ClinicID.ToString();
+                                     DataSet dsHdr = IssuehdrObj.GetIssueHeaderByIssueID(issueid);
 
-            StoreXmlToHiddenField();
+                                     dtIssuehdr = dsHdr.Tables[0];
+
+
+                                     if (dtIssuehdr.Rows.Count > 0)
+                                     {
+
+                                         string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
+                                         string newDate = txtDate1.Text;
+
+                                         if ((txtIssueNO.Text != dtIssuehdr.Rows[0]["IssueNO"].ToString()) || (txtIssuedTo.Text != dtIssuehdr.Rows[0]["IssuedTo"].ToString()) || (oldDate != newDate))
+                                         {
+
+                                             //
+                                             // ----------------- *  Update header*-----------------------------------//
+
+                                             if (hdnTextboxValues.Value != "")
+                                             {
+
+                                                 IssuehdrObj.ClinicID = UA.ClinicID.ToString();
+                                                 IssuehdrObj.IssuedTo = txtIssuedTo.Text;
+                                                 IssuehdrObj.Date = Convert.ToDateTime(txtDate1.Text);
+                                                 IssuehdrObj.UpdatedBy = UA.userName;
+                                                 //IssuehdrObj.IssueNO = txtIssueNO.Text;
+                                                 IssuehdrObj.UpdateIssueHeader(ViewState["IssueHdrID"].ToString());
+                                             }
+
+                                         }
+                                     }
+                                 }
+
+                                 string last = string.Empty;
+
+
+
+
+                                 string values = hdnTextboxValues.Value;
+
+                                 string[] Rows = values.Split('$');
+
+
+
+                                 for (int i = 0; i < Rows.Length - 1; i++)
+                                 {
+                                     IssueDetails IssuedtlObj = new IssueDetails(); //Object is created in loop as each entry should have different uniqueID
+                                     string[] tempRow = Rows;
+
+                                     last = tempRow[i].Split('|').Last();
+
+                                     string[] columns = tempRow[i].Split('|');
+
+                                     if (last == string.Empty || last == "")
+                                     {
+
+                                         //----------------- * CASE : INSERT *-----------------------------------//
+                                         if ((columns[0] != null) && (columns[4] != null))
+                                         {
+
+
+                                             IssuedtlObj.MedicineName = columns[0];
+                                             IssuedtlObj.Unit = columns[1];
+                                             IssuedtlObj.Qty = Convert.ToInt32(columns[4]);
+
+                                             IssuedtlObj.CreatedBy = UA.userName; ;
+                                             IssuedtlObj.ClinicID = UA.ClinicID.ToString();
+
+                                             if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
+                                             {
+                                                 IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
+                                             }
+                                             IssuedtlObj.InsertIssueDetails();
+
+                                         }
+                                     }
+
+                                     if (last != string.Empty)
+                                     {
+                                         //----------------- * CASE : UPDATE *---------------------------------//
+
+                                         if ((columns[0] != null) && (columns[4] != null))
+                                         {
+                                             string uniqueID = last;
+                                             IssueDetails UpIssueDtlObj = new IssueDetails(new Guid(uniqueID));
+
+                                             UpIssueDtlObj.ClinicID = UA.ClinicID.ToString();
+                                             UpIssueDtlObj.Qty = Convert.ToInt32(columns[4]);
+                                             UpIssueDtlObj.UpdatedBy = UA.userName;
+
+                                             //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
+
+                                             UpIssueDtlObj.UpdateIssueDetails(uniqueID);
+                                         }
+                                     }
+
+                                 }
+
+
+                                 hdnManageGridBind.Value = "True";
+
+                             }
+                         }
+                     }
+
+                     StoreXmlToHiddenField();
+                 }
         }
 
 else
