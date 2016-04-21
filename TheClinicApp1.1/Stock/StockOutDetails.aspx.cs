@@ -302,6 +302,17 @@ namespace TheClinicApp1._1.Stock
 
                 dtIssuehdr = dsHdr.Tables[0];
 
+
+                if (dtIssuehdr.Rows.Count == 0)
+                {
+                    dsHdr = IssuehdrObj.GetIssueHeaderByIssueID(issueID);
+
+                    dtIssuehdr = dsHdr.Tables[0];
+                }
+
+
+
+
                 if (dtIssuehdr.Rows.Count > 0)
                 {
                     ViewState["IssueHdrID"] = Request.QueryString["issueID"].ToString();

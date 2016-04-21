@@ -10,6 +10,33 @@ var PageCalledFrom = '';
 var CurrentRowCount;
 
 
+function ClearAndRemove()
+{
+  
+    document.getElementById('txtMedicine0').value = "";
+    document.getElementById('txtUnit0').value = "";
+
+    document.getElementById('txtCode0').value = '';
+    document.getElementById('txtCategory0').value = "";
+    document.getElementById('txtQuantity0').value = "";
+    
+    RemovedIDs += document.getElementById('hdnDetailID0').value + ',';
+
+    if (RemovedIDs == ',') {
+        RemovedIDs = '';
+    }
+    //document.getElementById('<%=hdnRemovedIDs.ClientID%>').value = RemovedIDs;
+
+
+    if (RemovedIDs != '') {
+        document.getElementById(IdToRemove).value = RemovedIDs;
+    }
+
+    
+}
+
+
+
 function SetPageIDCalled(page)
 {
     PageCalledFrom = page;
@@ -51,7 +78,7 @@ function clickStockAdd(id) {
 
      //ADD new row with fields needed.
    
-    $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;border:0;"><tr>'
+    $(container).append('<div id="div' + iCnt + '"><table  style="width:100%;border:0;"><tr>'
        + '<td><input id="txtMedicine' + iCnt + '" class="input" type="text" placeholder="Medicine' + iCnt + '" onblur="BindControlsByMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
        + '<td><input id="txtUnit' + iCnt + '" readonly="true" class="input "  type="text" placeholder="Unit' + iCnt + '" /></td>'
        + '<td><input id="txtCode' + iCnt + '" readonly="true" class="input "  type="text" placeholder="Med Code' + iCnt + '"/></td>'
