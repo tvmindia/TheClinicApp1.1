@@ -34,6 +34,7 @@ namespace TheClinicApp1._1.Token
             tokenObj.ClinicID = UA.ClinicID.ToString();
 
             listerfilterbind();
+            gridviewbind();
 
             if (!IsPostBack)
             {
@@ -46,6 +47,17 @@ namespace TheClinicApp1._1.Token
             }
 
            
+        }
+
+        public void gridviewbind()
+        {
+            //Gridview Binding to Diplay DoctorName,Token No,Patient Name,TIME
+            tokenObj.DateTime = DateTime.Now;
+
+            DataSet gds = tokenObj.ViewToken();
+            GridViewTokenlist.EmptyDataText = "No Records Found";
+            GridViewTokenlist.DataSource = gds;
+            GridViewTokenlist.DataBind();
         }
 
 
@@ -116,9 +128,18 @@ namespace TheClinicApp1._1.Token
 
 
         }
+
+
+
+        protected void ImgBtnDelete_Click(object sender, EventArgs e)
+        {
+
+
+
+        }
         protected void btnBookToken_ServerClick(object sender, EventArgs e)
         {
-            if (lblToken.Visible == false)
+            if (hdnfileID.Value!="")
             {
                 tokenObj.DoctorID = ddlDoctor.SelectedValue;
                 tokenObj.PatientID = HiddenPatientID.Value;
@@ -127,15 +148,11 @@ namespace TheClinicApp1._1.Token
                 tokenObj.DateTime = DateTime.Now;
 
                 int tokenNo = tokenObj.InsertToken();
-
                 lblToken.Text = tokenNo.ToString();
                 lblToken.Visible = true;
-
-
-                DataSet dst = tokenObj.GetPatientTokenDetailsbyID(HiddenPatientID.Value);
-
-
-              
+                hdnfileID.Value = "";
+                // reloading values in to repective fields
+                DataSet dst = tokenObj.GetPatientTokenDetailsbyID(HiddenPatientID.Value);              
 
                 lblFileNo.Text = Convert.ToString(dst.Tables[0].Rows[0]["FileNumber"]);
                 lblPatientName.Text = Convert.ToString(dst.Tables[0].Rows[0]["Name"]);
@@ -144,7 +161,6 @@ namespace TheClinicApp1._1.Token
                 lblMobile.Text = Convert.ToString(dst.Tables[0].Rows[0]["Phone"]);
                 lblEmail.Text = Convert.ToString(dst.Tables[0].Rows[0]["Email"]);
                 lblLastVisit.Text = Convert.ToString(dst.Tables[0].Rows[0]["LastVisitDate"]);
-
 
                 DateTime date = DateTime.Now;
                 int year = date.Year;
@@ -156,7 +172,17 @@ namespace TheClinicApp1._1.Token
                 lblDoctor.Text = Convert.ToString(dst.Tables[0].Rows[0]["DoctorName"]);
 
             }
+            else 
+            {
+
             
+            }
+            
+
+        }
+
+        protected void ImgBtnDelete_Click1(object sender, ImageClickEventArgs e)
+        {
 
         }
 
