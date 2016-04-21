@@ -127,6 +127,7 @@ namespace TheClinicApp1._1.Stock
                 StockObj.Unit = txtUnit.Text;
 
                 StockObj.InsertMedicines();
+                hdnManageGridBind.Value = "True";
             }
 
 

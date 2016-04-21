@@ -58,10 +58,15 @@
             
 
 
-        GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>');
+        GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
         RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
 
         });
+
+
+        SetPageIDCalled('StockIn');
+
+
     </script> 
  
 
@@ -72,8 +77,8 @@
             {
                 //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
 
-              //  debugger;
-                var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
+                debugger;
+                var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
  
                 if (topcount==0)
                 {
@@ -87,10 +92,10 @@
                 {
                     var ac=null;
                     ac = <%=listFilter %>;
-                    var i=1;
-                    while(i<=topcount)
+                    var i=0;
+                    while(i<topcount)
                     {
-                        if (i==1)
+                        if (i==0)
                         {
                             var item=  document.getElementById('txtMedicine'+i).value 
                                  

@@ -1,8 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" ValidateRequest="false" AutoEventWireup="true" CodeBehind="StockOutDetails.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockOutDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+
+
+
+
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
-   
+
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -27,88 +32,88 @@
 
             
             var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-        LnameImage.style.display = "none";
-        var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                errLname.style.display = "none";
+            LnameImage.style.display = "none";
+            var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+        errLname.style.display = "none";
 
 
-                test('.nav_menu').click(function () {
+        test('.nav_menu').click(function () {
             
-                    test(".main_body").toggleClass("active_close");
+            test(".main_body").toggleClass("active_close");
             
-                });
+        });
 
             
-                $('.alert_close').click(function () {
+        $('.alert_close').click(function () {
                 
             
-                    $(this).parent(".alert").hide();
+            $(this).parent(".alert").hide();
             
-                });
+        });
 
             
-        //$('[data-toggle="tooltip"]').tooltip();
+            //$('[data-toggle="tooltip"]').tooltip();
             
          
 
             
-                $('.nav_menu').click(function () {
+        $('.nav_menu').click(function () {
                 
             
-                    $(".main_body").toggleClass("active_close");
+            $(".main_body").toggleClass("active_close");
             
-                });
+        });
             
 
             
-        //date picker
+            //date picker
             
-                $("[id$=txtDate1]").datepicker({
+        $("[id$=txtDate1]").datepicker({
             
-                    dateFormat: 'dd-mm-yy',
+            dateFormat: 'dd-mm-yy',
             
-                    buttonImageOnly: true,
+            buttonImageOnly: true,
             
           
             
-                });           
+        });           
 
 
             
-                GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>');
-        RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
-    });
-
-    function ClearControls()
-    {
-        var i = 1;
-        $('.input').each(function () {
-            i++;
+        GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
+                RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
         });
-        var NumberOfColumns = i - 1;
-        var NumberOfRows = NumberOfColumns / 5;
+
+        function ClearControls()
+        {
+            var i = 1;
+            $('.input').each(function () {
+                i++;
+            });
+            var NumberOfColumns = i - 1;
+            var NumberOfRows = NumberOfColumns / 5;
 
 
        
-        document.getElementById('<%=txtIssueNO.ClientID%>').value = '';
-            document.getElementById('<%=txtDate1.ClientID%>').value = '';
-            document.getElementById('<%=txtIssuedTo.ClientID%>').value = '';
+            document.getElementById('<%=txtIssueNO.ClientID%>').value = '';
+        document.getElementById('<%=txtDate1.ClientID%>').value = '';
+        document.getElementById('<%=txtIssuedTo.ClientID%>').value = '';
 
-            for (var k = 0; k < NumberOfRows; k++)
-            {
-                document.getElementById('txtMedicine' + k).value = '';
-                document.getElementById('txtUnit' + k).value = '';
-                document.getElementById('txtCode' + k).value = '';
-                document.getElementById('txtCategory' + k).value = '';
-                document.getElementById('txtQuantity' + k).value = '';
-            }
+        for (var k = 0; k < NumberOfRows; k++)
+        {
+            document.getElementById('txtMedicine' + k).value = '';
+            document.getElementById('txtUnit' + k).value = '';
+            document.getElementById('txtCode' + k).value = '';
+            document.getElementById('txtCategory' + k).value = '';
+            document.getElementById('txtQuantity' + k).value = '';
+        }
 
-            PageMethods.GenerateIssueNo(OnSuccess, onError);
+        PageMethods.GenerateIssueNo(OnSuccess, onError);
 
-            function OnSuccess(response, userContext, methodName)
-            {
+        function OnSuccess(response, userContext, methodName)
+        {
 
-                document.getElementById('<%=txtIssueNO.ClientID%>').value = response;
+            document.getElementById('<%=txtIssueNO.ClientID%>').value = response;
               
             }
             function onError(response, userContext, methodName) {
@@ -117,39 +122,39 @@
 
 
 
-        }
-
-        function CheckIssueNoDuplication(IssueNo) {
-
-            //---------------* Function to check Issue Number duplication *-----------------// 
-            
-            var IssueNo = document.getElementById('<%=txtIssueNO.ClientID %>').value;
-    IssueNo = IssueNo.replace(/\s/g, '');
-
-    PageMethods.CheckIssueNoDuplication(IssueNo, OnSuccess, onError);
-
-    function OnSuccess(response, userContext, methodName) {
-
-        var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-                    var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                    if (response == false) {
-
-                        LnameImage.style.display = "block";
-                        errLname.style.display = "none";
-
-                    }
-                    if (response == true) {
-                        errLname.style.display = "block";
-                        errLname.style.color = "Red";
-                        errLname.innerHTML = "Name Alreay Exists"
-                        LnameImage.style.display = "none";
-
-                    }
-                }
-                function onError(response, userContext, methodName) {
-
-                }
             }
+
+            function CheckIssueNoDuplication(IssueNo) {
+
+                //---------------* Function to check Issue Number duplication *-----------------// 
+            
+                var IssueNo = document.getElementById('<%=txtIssueNO.ClientID %>').value;
+            IssueNo = IssueNo.replace(/\s/g, '');
+
+            PageMethods.CheckIssueNoDuplication(IssueNo, OnSuccess, onError);
+
+            function OnSuccess(response, userContext, methodName) {
+
+                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+        var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+        if (response == false) {
+
+            LnameImage.style.display = "block";
+            errLname.style.display = "none";
+
+        }
+        if (response == true) {
+            errLname.style.display = "block";
+            errLname.style.color = "Red";
+            errLname.innerHTML = "Name Alreay Exists"
+            LnameImage.style.display = "none";
+
+        }
+    }
+    function onError(response, userContext, methodName) {
+
+    }
+}
         
     </script>
 
@@ -172,24 +177,24 @@
             
             //debugger;
             
-            var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
+            var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
  
-        if (topcount==0)
+            if (topcount==0)
+            {
+                var ac=null; 
+                ac = <%=listFilter %>;
+            $( "#txtMedicine"+controlID).autocomplete({
+                source: ac
+            });
+        }
+        else
         {
-            var ac=null; 
+            var ac=null;
             ac = <%=listFilter %>;
-                    $( "#txtMedicine"+controlID).autocomplete({
-                        source: ac
-                    });
-                }
-                else
-                {
-                    var ac=null;
-                    ac = <%=listFilter %>;
-                    var i=1;
-                    while(i<=topcount)
+                    var i=0;
+                    while(i<topcount)
                     {
-                        if (i==1)
+                        if (i==0)
                         {
                             var item=  document.getElementById('txtMedicine'+i).value 
                                  
@@ -284,33 +289,33 @@
                             </div>
 
 
-                            
-        <div id="Errorbox" style="display: none;" runat="server">
-            <a class="alert_close">X</a>
-            <div>
-                <strong>
-                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
-                </strong>
-                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
 
-            </div>
+                            <div id="Errorbox" style="display: none;" runat="server">
+                                <a class="alert_close">X</a>
+                                <div>
+                                    <strong>
+                                        <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                                    </strong>
+                                    <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
 
-        </div>
+                                </div>
 
-        <div class="alert alert-success" style="display: none">
-            <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-        </div>
-        <div class="alert alert-info" style="display: none">
-            <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
-        </div>
+                            </div>
 
-        <div class="alert alert-warning" style="display: none">
-            <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
-        </div>
+                            <div class="alert alert-success" style="display: none">
+                                <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+                            </div>
+                            <div class="alert alert-info" style="display: none">
+                                <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+                            </div>
 
-        <div class="alert alert-danger" style="display: none">
-            <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-        </div>
+                            <div class="alert alert-warning" style="display: none">
+                                <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+                            </div>
+
+                            <div class="alert alert-danger" style="display: none">
+                                <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+                            </div>
 
 
 
@@ -330,7 +335,7 @@
 
                                         <td>Date</td>
                                         <td>
-                                            <asp:TextBox ID="txtDate1" CssClass="txtDate1Class" Width="80%" runat="server" required ></asp:TextBox></td>
+                                            <asp:TextBox ID="txtDate1" CssClass="txtDate1Class" Width="80%" runat="server" required></asp:TextBox></td>
                                     </tr>
                                     <tr>
                                         <td>Issued To</td>

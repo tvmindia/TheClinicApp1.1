@@ -1,14 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="Stock.aspx.cs" Inherits="TheClinicApp1._1.Stock.Stock" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-      <style type="text/css">
-           .highlight {
-            background-color: #FFFFAF;
-        }
-
-
-          </style>
-
+     
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -217,8 +211,8 @@
                 <asp:BoundField DataField="MedicineName" HeaderText="Medicine Name"  ItemStyle-CssClass="Match"  />
                 <asp:BoundField DataField="CategoryName" HeaderText="Category Name"  ItemStyle-CssClass="Match"  />
                  <asp:BoundField DataField="Unit" HeaderText="Unit"  ItemStyle-CssClass="Match"  />
-                 <asp:BoundField DataField="Qty" HeaderText="Existing Qty"  ItemStyle-CssClass="Match"  />
-                 <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" />
+                 <asp:BoundField DataField="Qty" HeaderText="Existing Qty"  ItemStyle-CssClass="Match" ItemStyle-HorizontalAlign="Right" />
+                 <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right"/>
 
 
             </Columns>
@@ -345,7 +339,7 @@
 </div> 
          
     <div id="View_OutOfStock" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="height:600px;">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -354,7 +348,7 @@
         
         <h4 class="modal-title">Out Of Stock Medicines</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="height:400px;">
 
               <asp:GridView ID="gvOutOfStock1" runat="server"  AutoGenerateColumns="False" class="table">
                                     <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
