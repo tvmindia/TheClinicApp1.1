@@ -111,10 +111,7 @@ namespace TheClinicApp1._1.Registration
         #region EditPatients
         protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
         {
-            divDisplayNumber.Visible = false;
-            lblMsgges.Text = "";
-            lblErrorCaption.Text = "";
-            Errorbox.Visible = false;
+            
             DateTime date = DateTime.Now;
             int year = date.Year;
             string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
@@ -153,12 +150,7 @@ namespace TheClinicApp1._1.Registration
        
         #region GridDelete
         protected void ImgBtnDelete_Command(object sender, CommandEventArgs e)
-        {
-            divDisplayNumber.Visible = false;
-            lblMsgges.Text = "";
-            lblErrorCaption.Text = "";
-            Errorbox.Visible = false;
-            
+        {   
             Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
             PatientObj.PatientID = PatientID;
             PatientObj.DeletePatientDetails();
@@ -211,11 +203,12 @@ namespace TheClinicApp1._1.Registration
         protected void btnNew_ServerClick(object sender, EventArgs e)
         {
             ClearFields();
-            ProfilePic.Src = "../Images/UploadPic.png";
+            ProfilePic.Src = "../Images/UploadPic1.png";
             divDisplayNumber.Visible = false;
-            lblMsgges.Text = "";
-            lblErrorCaption.Text = "";
+            lblMsgges.Text = string.Empty;
+            lblErrorCaption.Text = string.Empty;
             Errorbox.Visible = false;
+            HiddenField1.Value = string.Empty;
         }
         #endregion ClearScreen
 
@@ -285,7 +278,7 @@ namespace TheClinicApp1._1.Registration
                 PatientObj.Occupation = (txtOccupation.Value != "") ? txtOccupation.Value.ToString() : null;
                 PatientObj.CreatedBy = UA.userName;
                 PatientObj.UpdatedBy = UA.userName;
-                if ((PatientObj.Name != null) && (PatientObj.Address != null))
+                if (PatientObj.Name != null)
                 {
                     string filenum = "F" + clinID.Substring(0, 4) + txtName.Value.Substring(0, 3) + txtMobile.Value.Substring(7, 3);
                     PatientObj.FileNumber = filenum.Trim();
@@ -315,6 +308,7 @@ namespace TheClinicApp1._1.Registration
                         {
                             byte[] ImageByteArray = null;
                             ImageByteArray = ConvertImageToByteArray(FileUpload1);
+                            PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
                             PatientObj.Picupload = ImageByteArray;
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
                             PatientObj.UpdatePatientPicture();
@@ -328,11 +322,6 @@ namespace TheClinicApp1._1.Registration
                 }
                 gridDataBind();
                 lblFileCount.Text = PatientObj.FileNumber;
-                //lblFile.Text = PatientObj.FileNumber;
-                //lblName.Text = txtName.Value;
-                //lblAge.Text = txtAge.Value;
-                //lblPhone.Text = txtMobile.Value;
-               
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
             }
             catch
@@ -393,8 +382,5 @@ namespace TheClinicApp1._1.Registration
             }
         }
         #endregion SearchButtonClick
-
-
-
     }
 }

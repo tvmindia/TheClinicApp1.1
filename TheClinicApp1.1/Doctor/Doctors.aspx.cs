@@ -54,7 +54,7 @@ namespace TheClinicApp1._1.Doctor
             output.Append("[");
             for (int i = 0; i < dt.Rows.Count; ++i)
             {
-                output.Append("\"" + dt.Rows[i]["Name"].ToString() +"|"+dt.Rows[i]["CategoryName"].ToString()+ "\"");
+                output.Append("\"" + dt.Rows[i]["Name"].ToString() + "\"");
 
                 if (i != (dt.Rows.Count - 1))
                 {
@@ -160,7 +160,7 @@ namespace TheClinicApp1._1.Doctor
                     //----------------- * CASE : INSERT *-----------------------------------//
                     if ((columns[0] != null) && (columns[1] != null))
                     {    
-                        string MedCat=columns[0];
+                       
                         PrescriptionObj.MedicineName = columns[0];
                         PrescriptionObj.Qty = Convert.ToInt32(columns[1]);
                         PrescriptionObj.Unit = columns[2];

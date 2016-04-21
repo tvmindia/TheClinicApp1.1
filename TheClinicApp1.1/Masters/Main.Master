@@ -79,6 +79,7 @@ background-color: ghostwhite;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
         border-radius: 2px;
+        background-position-x:5px;
 
     }
 

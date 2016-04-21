@@ -93,8 +93,109 @@
              
     </script>
     <!------------------------------------------------------------------------------>
+  <%--  <script>
+        var test=jQuery.noConflict();
+        test(document).on('ready',function(){
+            $('#sendMessageForm')
+         .formValidation({
+             framework: 'bootstrap',
+             icon: {
+                 valid: 'glyphicon glyphicon-ok',
+                 invalid: 'glyphicon glyphicon-remove',
+                 validating: 'glyphicon glyphicon-refresh'
+             },
+             fields: {
+                 fullName: {
+                     validators: {
+                         notEmpty: {
+                             message: 'The full name is required and cannot be empty'
+                         }
+                     }
+                 },
+                 email: {
+                     validators: {
+                         notEmpty: {
+                             message: 'The email address is required and cannot be empty'
+                         },
+                         emailAddress: {
+                             message: 'The email address is not valid'
+                         }
+                     }
+                 },
+                 title: {
+                     validators: {
+                         notEmpty: {
+                             message: 'The title is required and cannot be empty'
+                         },
+                         stringLength: {
+                             max: 100,
+                             message: 'The title must be less than 100 characters long'
+                         }
+                     }
+                 },
+                 content: {
+                     validators: {
+                         notEmpty: {
+                             message: 'The content is required and cannot be empty'
+                         },
+                         stringLength: {
+                             max: 500,
+                             message: 'The content must be less than 500 characters long'
+                         }
+                     }
+                 }
+             }
+         })
+
+         .on('success.form.fv', function(e) {
+             // Reset the message element when the form is valid
+             $('#errors').html('');
+         })
+
+         .on('err.field.fv', function(e, data) {
+             // data.fv      --> The FormValidation instance
+             // data.field   --> The field name
+             // data.element --> The field element
+
+             // Get the messages of field
+             var messages = data.fv.getMessages(data.element);
+
+             // Remove the field messages if they're already available
+             $('#errors').find('li[data-field="' + data.field + '"]').remove();
+
+             // Loop over the messages
+             for (var i in messages) {
+                 // Create new 'li' element to show the message
+                 $('<li/>')
+                     .attr('data-field', data.field)
+                     .wrapInner(
+                         $('<a/>')
+                             .attr('href', 'javascript: void(0);')
+                             .html(messages[i])
+                             .on('click', function(e) {
+                                 // Focus on the invalid field
+                                 data.element.focus();
+                             })
+                     )
+                     .appendTo('#errors');
+             }
+
+             // Hide the default message
+             // data.element.data('fv.messages') returns the field messages element
+             data.element
+                 .data('fv.messages')
+                 .find('.help-block[data-fv-for="' + data.field + '"]')
+                 .hide();
+         })
+
+         .on('success.field.fv', function(e, data) {
+             // Remove the field messages
+             $('#errors').find('li[data-field="' + data.field + '"]').remove();
+         });
+        });
+</script>--%>
     <!--- Script for Url driven for iframe, Created By:Thomson Kattingal --->
-    <script>
+   <%-- <script>
         function SetIframeSrc(HyperlinkID){
             if (HyperlinkID=="AllRegistrationIframe")
             {
@@ -102,7 +203,7 @@
                 AllRegistrationIframe.src="../Registration/ViewAllRegistration.aspx";
             }
         }
-    </script>
+    </script>--%>
     <!---------------------------------------------------------------------->
    <!------------------------------------->
   
@@ -129,11 +230,12 @@
          <a class="nav_menu">Menu</a>
          Patients Registration</div>
          <div class="icon_box">
-         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd.png" /></span></a>
+         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>
          <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
          <div class="search_div">
+            
          <input class="field" type="search" id="txtSearch" name="txtSearch" placeholder="Search here..." />
          <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" />
          </div>
@@ -145,16 +247,14 @@
          <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
          <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
          </div>
-         <div class="alert alert-info" id="divDisplayNumber" visible="false" runat="server" ><a class="alert_close">X</a>
-         <div>
-             <div><strong><asp:Label ID="lblDisplayFileNumber" runat="server" Text="File Number"></asp:Label>:&nbsp;</strong><asp:Label ID="lblFileCount" runat="server" Text=""></asp:Label></div>
-             <div><strong><asp:Label ID="lblTokenNumber" runat="server" Text="Token Number"></asp:Label>:&nbsp;</strong><asp:Label ID="lblTokencount" runat="server" Text=""></asp:Label></div>
+         </div>
+             <div class="alert alert-info" id="divDisplayNumber" visible="false" runat="server" ><a class="alert_close">X</a>
+             <div>
+             <div><asp:Label ID="lblDisplayFileNumber" runat="server" Text="File Number"></asp:Label>:&nbsp;<strong><asp:Label ID="lblFileCount" runat="server" Text=""></asp:Label></strong>&nbsp;&nbsp;<asp:Label ID="lblTokenNumber" runat="server" Text="Token Number"></asp:Label>:&nbsp;<strong><asp:Label ID="lblTokencount" runat="server" Text=""></asp:Label></strong></div>
                            
-         </div>
+             </div>
 
-         </div>
-
-         </div>
+             </div>
                 
          <div class="alert alert-success" style="display:none">
           <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
@@ -175,10 +275,10 @@
       <div class="row field_row">  
       <div class="col-lg-8">
       <div class="row"> 
-      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required /></div>
+      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required pattern="^[A-z][A-z\.\s]+$" title="The Name is required and cannot be empty" /></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
-      <img id="ProfilePic" src="../images/UploadPic.png" runat="server"  />
+      <img id="ProfilePic" src="~/images/UploadPic1.png" runat="server"  />
       </div>
       <div class="upload">
       <label class="control-label">Upload Picture</label>
@@ -190,23 +290,23 @@
           <asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" />
           <asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" />
       </div>
-      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="text" name="age" required /></div>
+      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" required title="The Age is required and cannot be empty !should be Number" /></div>
       </div>
       </div>            
       </div>
       
       <div class="row field_row">  
       <div class="col-lg-12">
-      <label for="address">Address</label><textarea id="txtAddress" runat="server" style="width:43%" required></textarea>
+      <label for="address">Address</label><textarea id="txtAddress" runat="server" style="width:43%" ></textarea>
       </div>
       </div>
       
       <div class="row field_row">  
       <div class="col-lg-4">
-      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" />
+      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="5" pattern="{10}[0-9]" title="Not a Required Field if enter Only Numbers" />
       </div>
       <div class="col-lg-4">
-      <label for="email">Email</label><input id="txtEmail" runat="server" type="text" name="email" />
+      <label for="email">Email</label><input id="txtEmail" runat="server" type="email" name="email" title="The Email should keep a correct format like testname@test.te" />
       </div>
       </div>
       
@@ -231,10 +331,10 @@
 
          </div>
 
-  </div>  
+  
         <!---------------------------------- Modal Section --------------------------------------->
         <!-- All Registration Iframe Modal -->
-        <div id="add_medicine" class="modal fade" role="dialog">
+       <%-- <div id="add_medicine" class="modal fade" role="dialog">
   <div class="modal-dialog" style="height:600px;">
 
     <!-- Modal content-->
@@ -251,7 +351,7 @@
     </div>
 
   </div>
-</div> 
+</div> --%>
               
         <!-- Token Registration Modal -->
         <div class="modal fade" id="TokenRegistration" role="dialog">
@@ -302,7 +402,7 @@
                         <h3 class="modal-title">View All Registrations</h3>
                     </div>
                     <div class="modal-body" style="width:100%;height:100%" >                        
-                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None" Height="30px" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5">                            
+                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5">                            
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField>
@@ -408,7 +508,7 @@
             </div>
         </div>
         <!------------------------------------------------------------------------------------------>   
-                    
+          </div>            
     <!-- Script Files -->
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
