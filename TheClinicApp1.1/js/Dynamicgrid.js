@@ -580,7 +580,13 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
                 clickStockAdd(i);
             }
 
+            if (Medicines.length >1)
+            {
+                debugger;
 
+                $('#btAdd').css('visibility', 'hidden');
+                $('#btAdd' + (Medicines.length - 1)).css('visibility', 'visible');
+            }
 
            
             var MedicineName = $(this).find("MedicineName").text();
@@ -627,4 +633,73 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
 }
 
 
+function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
+    debugger;
+    //var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
+
+    var XmlDataFromHF = document.getElementById(hdnXmlData).value;
+    var xmlDoc = $.parseXML(XmlDataFromHF);
+    var xml = $(xmlDoc);
+    var Medicines = xml.find("Medicines");
+    var i = 0;
+
+    if (Medicines.length > 0) {
+        //document.getElementById('<%=txtIssueNO.ClientID %>').readOnly = true;
+
+        $.each(Medicines, function () {
+            debugger;
+            if (i > 0) {
+                clickAdd(i);
+            }
+
+
+
+
+            var MedicineName = $(this).find("MedicineName").text();
+            var MedicineDosage = $(this).find("Dosage").text();
+            var MedicineTiming = $(this).find("Timing").text();
+            var MedicineDays = $(this).find("Days").text();
+            var PrescriptionID = $(this).find("PrescriptionID").text();
+            //var MedicineCode = $(this).find("MedCode").text();
+            var MedicineUnit = $(this).find("Unit").text();
+            //var MedicineCategory = $(this).find("CategoryName").text();
+            var MedicineQuantity = $(this).find("Qty").text();
+            var UniqueID = $(this).find("UniqueID").text();
+            //var QtyInStock = $(this).find("QtyInStock").text();
+
+            document.getElementById('txtMedName' + i).value = MedicineName;
+            document.getElementById('txtMedQty' + i).value = MedicineQuantity;
+            document.getElementById('txtMedUnit' + i).value = MedicineUnit;
+            document.getElementById('txtMedDos' + i).value = MedicineDosage;
+            document.getElementById('txtMedTime' + i).value = MedicineTiming;
+            document.getElementById('txtMedDay' + i).value = MedicineDays;
+            document.getElementById('hdnQty' + i).value = PrescriptionID;
+            document.getElementById('hdnDetailID' + i).value = UniqueID;
+
+            document.getElementById('txtMedName' + i).readOnly = true; // --------* medicine name set to non-editable after saving *--------//
+
+            //if (PageCalledFrom != 'StockIn') {
+
+            //    document.getElementById('txtQuantity' + i).placeholder = " Out Of: " + QtyInStock;
+
+
+            //    PageMethods.GetQtyInStock(MedicineName, OnSuccess, onError);
+            //    function OnSuccess(response, userContext, methodName) {
+            //        QtyInStock = parseInt(response);
+            //    }
+            //    function onError(response, userContext, methodName)
+            //    { }
+            //    var oldQty = parseInt(MedicineQuantity);
+            //    var total = parseInt(oldQty + parseInt(QtyInStock));
+            //    document.getElementById('txtQuantity' + i).placeholder = " Out Of: " + total;
+            //}
+
+
+            i = i + 1;
+        });
+
+    }
+
+
+}

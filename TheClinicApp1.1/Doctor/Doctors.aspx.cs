@@ -226,8 +226,12 @@ namespace TheClinicApp1._1.Doctor
             //ProfilePic.Visible = true;
 
             HiddenField1.Value = PatientID.ToString();
+
         }
         #endregion FillPatientDetails
+
+        
+
 
         #region Update Visits
         protected void ImgBtnUpdateVisits_Command(object sender, CommandEventArgs e)
@@ -263,6 +267,10 @@ namespace TheClinicApp1._1.Doctor
             others.Value = CaseFileObj.Others;
             
             string PrescriptionID = Visits[1];
+            DataSet MedicinList = PrescriptionObj.ViewPrescriptionDetails(PrescriptionID);
+            var xml = MedicinList.GetXml();
+            hdnXmlData.Value = xml;
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
         }
         #endregion Update Visits
 

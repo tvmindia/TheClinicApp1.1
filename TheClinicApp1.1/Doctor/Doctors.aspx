@@ -74,6 +74,14 @@
             
                 GetTextBoxValuesPres('<%=hdnTextboxValues.ClientID%>');
             }
+
+            
+            function FillTextboxUsingXml(){
+                debugger;
+                alert("success!");
+                RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+           }
+
 		</script>
 
 
@@ -463,5 +471,6 @@
         });
              
     </script>
+ 
   
 </asp:Content>
