@@ -78,6 +78,7 @@
   
           
             var PatientName = document.getElementById("txtSearch").value;
+            document.getElementById('<%=lblToken.ClientID%>').innerHTML="_";
        
                      
             var file=PatientName.split('📝')      
