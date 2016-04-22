@@ -24,6 +24,13 @@
                 //$('#OutOfStock').modal('show');
             }
 
+
+            else if (HyperlinkID == "OutOfStockIframe") {
+                var OutOfStockIframe = document.getElementById('OutOfStockIframe');
+                NewMedicineIframe.src = "OutOfStock.aspx";
+                //$('#OutOfStock').modal('show');
+            }
+
         }
 
 
@@ -170,7 +177,7 @@
          <div class="icon_box">
          <a class="all_registration_link" data-toggle="modal" data-target="#add_medicine" ><span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')"><img src="../images/add_medicine.png"/></span></a>
         
-         <a class="Todays_registration_link" data-toggle="modal" data-target="#View_OutOfStock" ><span title="Out Of Stock Medicines" data-toggle="tooltip" data-placement="left" ><img src="../images/OutOfStock(1).png"/></span></a>
+         <a class="Todays_registration_link" data-toggle="modal" data-target="#View_OutOfStock" ><span title="Out Of Stock Medicines" data-toggle="tooltip" data-placement="left"  onclick="SetIframeSrc('OutOfStockIframe')" ><img src="../images/OutOfStock(1).png"/></span></a>
          </div>
 
          <div class="right_form tab_right_form">
@@ -326,6 +333,7 @@
         <h4 class="modal-title">Out Of Stock Medicines</h4>
       </div>
       <div class="modal-body" style="height:400px;">
+           <iframe id="OutOfStockIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
 
               <asp:GridView ID="gvOutOfStock1" runat="server"  AutoGenerateColumns="False" class="table">
                                     <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>

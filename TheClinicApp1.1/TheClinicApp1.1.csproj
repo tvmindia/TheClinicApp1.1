@@ -274,6 +274,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Stock\AddNewMedicine.aspx" />
+    <Content Include="Stock\OutOfStock.aspx" />
     <Content Include="Stock\Stock.aspx" />
     <Content Include="Stock\StockIn.aspx" />
     <Content Include="Stock\StockInDetails.aspx" />
@@ -428,6 +429,13 @@
     </Compile>
     <Compile Include="Stock\AddNewMedicine.aspx.designer.cs">
       <DependentUpon>AddNewMedicine.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Stock\OutOfStock.aspx.cs">
+      <DependentUpon>OutOfStock.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stock\OutOfStock.aspx.designer.cs">
+      <DependentUpon>OutOfStock.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stock\Stock.aspx.cs">
       <DependentUpon>Stock.aspx</DependentUpon>
