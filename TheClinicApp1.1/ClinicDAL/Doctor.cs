@@ -948,6 +948,10 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.Parameters.Add("@Height", SqlDbType.Real).Value = Height;
                     pud.Parameters.Add("@Weight", SqlDbType.Real).Value = Weight;
                     pud.Parameters.Add("@Symptoms", SqlDbType.NVarChar, 255).Value = Symptoms;
+                    pud.Parameters.Add("@Bowel", SqlDbType.NVarChar, 255).Value = Bowel;
+                    pud.Parameters.Add("@Appettie", SqlDbType.NVarChar, 255).Value = Appettie;
+                    pud.Parameters.Add("@Micturation", SqlDbType.NVarChar, 255).Value = Micturation;
+                    pud.Parameters.Add("@Sleep", SqlDbType.NVarChar, 255).Value = Sleep;
                     pud.Parameters.Add("@Cardiovascular", SqlDbType.NVarChar, 255).Value = Cardiovascular;
                     pud.Parameters.Add("@Nervoussystem", SqlDbType.NVarChar, 255).Value = Nervoussystem;
                     pud.Parameters.Add("@Musculoskeletal", SqlDbType.NVarChar, 255).Value = Musculoskeletal;
@@ -955,13 +959,19 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.Parameters.Add("@Icterus", SqlDbType.NVarChar, 255).Value = Icterus;
                     pud.Parameters.Add("@Clubbing", SqlDbType.NVarChar, 255).Value = Clubbing;
                     pud.Parameters.Add("@Cyanasis", SqlDbType.NVarChar, 255).Value = Cyanasis;
-                    pud.Parameters.Add("@Bowel", SqlDbType.NVarChar, 255).Value = Bowel;
-                    pud.Parameters.Add("@Appettie", SqlDbType.NVarChar, 255).Value = Appettie;
-                    pud.Parameters.Add("@Micturation", SqlDbType.NVarChar, 255).Value = Micturation;
-                    pud.Parameters.Add("@Sleep", SqlDbType.NVarChar, 255).Value = Sleep;
+                    pud.Parameters.Add("@LymphGen", SqlDbType.NVarChar, 255).Value = LymphGen;
+                    pud.Parameters.Add("@Edima", SqlDbType.NVarChar, 255).Value = Edima;
                     pud.Parameters.Add("@Diagnosys", SqlDbType.NVarChar, 255).Value = Diagnosys;
                     pud.Parameters.Add("@Remarks", SqlDbType.NVarChar, 255).Value = Remarks;
-                    pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
+                    pud.Parameters.Add("@Pulse", SqlDbType.NVarChar, 255).Value = Pulse;
+                    pud.Parameters.Add("@Bp", SqlDbType.NVarChar, 255).Value = Bp;
+                    pud.Parameters.Add("@Tounge", SqlDbType.NVarChar, 255).Value = Tounge;
+                    pud.Parameters.Add("@Heart", SqlDbType.NVarChar, 255).Value = Heart;
+                    pud.Parameters.Add("@LymphClinic", SqlDbType.NVarChar, 255).Value = LymphClinic;
+                    pud.Parameters.Add("@RespRate", SqlDbType.NVarChar, 255).Value = RespRate;
+                    pud.Parameters.Add("@Others", SqlDbType.NVarChar, 255).Value = Others;
+                    pud.Parameters.Add("@PrescriptionID", SqlDbType.UniqueIdentifier).Value = PrescriptionID;
+                    pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                     pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                     //SqlParameter OutparamId = pud.Parameters.Add("@OutparamId", SqlDbType.SmallInt);
                     //OutparamId.Direction = ParameterDirection.Output;
@@ -973,9 +983,9 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.ExecuteNonQuery();
                     if (int.Parse(Output.Value.ToString()) == -1)
                     {
-                        // ////not successfull
-                        // var page = HttpContext.Current.CurrentHandler as Page;
-                        //eObj.U
+                         ////not successfull
+                         var page = HttpContext.Current.CurrentHandler as Page;
+                         eObj.UpdationNotSuccessMessage(page);
                     }
                     else
                     {

@@ -49,6 +49,15 @@ namespace TheClinicApp1._1.Doctor {
         protected global::System.Web.UI.WebControls.Button btnSave;
         
         /// <summary>
+        /// btnNew control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnNew;
+        
+        /// <summary>
         /// Errorbox control.
         /// </summary>
         /// <remarks>
@@ -416,6 +425,15 @@ namespace TheClinicApp1._1.Doctor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnManageGridBind;
+        
+        /// <summary>
+        /// HdnForVisitID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HdnForVisitID;
         
         /// <summary>
         /// hdnHdrInserted control.

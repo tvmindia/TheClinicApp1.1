@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="Doctors.aspx.cs" Inherits="TheClinicApp1._1.Doctor.Doctors" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" ValidateRequest="false" EnableEventValidation="false" CodeBehind="Doctors.aspx.cs" Inherits="TheClinicApp1._1.Doctor.Doctors" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
       
 </asp:Content>
@@ -80,7 +80,14 @@
                 debugger;
                 alert("success!");
                 RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
-           }
+            }
+            function reset(){
+                $('input[type=text]').val('');  
+                $('#textarea').val(''); 
+                $('input[type=select]').val('');
+                $('input[type=radio]').val('');
+                $('input[type=checkbox]').val('');  
+            }
 
 		</script>
 
@@ -118,7 +125,7 @@
          <input class="button" type="submit" value="Search" />
          </div>
 
-         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li><li><a class="new" href="#" id="btnNew" runat="server" onclick="reset();" onserverclick="btnNew_ServerClick"><span></span>New</a></li></ul>
          </div>
          <div class="right_form"> 
          <div id="Errorbox"  style="height:30%;display:none;" runat="server" ><a class="alert_close">X</a>
@@ -278,7 +285,7 @@
                     <asp:HiddenField ID="HiddenField3" runat="server" Value="0" />
                     <asp:HiddenField ID="hdnTextboxValues" runat="server" />
                     <asp:HiddenField ID="hdnManageGridBind" runat="server" Value="False" />
-
+             <asp:HiddenField ID="HdnForVisitID" runat="server" />
                     <asp:HiddenField ID="hdnHdrInserted" runat="server" />
                     <asp:HiddenField ID="hdnRemovedIDs" runat="server" />
          </div>

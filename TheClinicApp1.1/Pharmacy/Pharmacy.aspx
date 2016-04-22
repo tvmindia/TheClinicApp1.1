@@ -39,19 +39,19 @@
          <input class="button" type="submit" value="Search" />
          </div>
          <ul class="top_right_links"><li>
-             <asp:Button ID="btnSave" runat="server" Text="Button" CssClass="button1" OnClick="btnSave_Click"/></li><li><a class="new" href="#"><span></span>New</a></li></ul>
+             <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click"/></li><li><a class="new" href="#"><span></span>New</a></li></ul>
          </div>
          <div class="right_form">
          
          <div class="token_id_card">
-             <div class="name_field"><img src="../images/UploadPic.png" width="80" height="80" />Patient_Name</div>
+             <div class="name_field"><img src="../images/UploadPic1.png" width="80" height="80" />Patient_Name</div>
                  <div class="light_grey">
-                     <div class="col3_div">25yrs<span>Age</span></div>
-                     <div class="col3_div">Male<span>Gender</span></div>
-                     <div class="col3_div">1562<span>File No</span></div>
+                     <div class="col3_div"><asp:Label ID="lblAgeCount" runat="server" Text=""></asp:Label><span>Age</span></div>
+                     <div class="col3_div"><asp:Label ID="lblGenderDis" runat="server" Text=""></asp:Label><span>Gender</span></div>
+                     <div class="col3_div"><asp:Label ID="lblFileNum" runat="server" Text=""></asp:Label><span>File No</span></div>
                  </div>
                  <div class="card_white">
-                    <div class="field_label"><label>Doctor</label> Test Test</div>      
+                    <div class="field_label"><label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text=""></asp:Label></div>      
                 </div>
              </div>
          
@@ -101,31 +101,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>        
-        <h4 class="modal-title">Patient List </h4>
+        <h4 class="modal-title">Patient List</h4>
       </div>
       <div class="modal-body">
-        <table class="table" width="100%" border="0">
-          <tr>
-            <th>Sl No.</th>
-            <th>Date</th>
-            <th>Remarks</th>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-        </table>
+       
       </div>      
     </div>
 
