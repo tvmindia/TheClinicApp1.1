@@ -580,7 +580,13 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
                 clickStockAdd(i);
             }
 
+            if (Medicines.length >1)
+            {
+                debugger;
 
+                $('#btAdd').css('visibility', 'hidden');
+                $('#btAdd' + (Medicines.length - 1)).css('visibility', 'visible');
+            }
 
            
             var MedicineName = $(this).find("MedicineName").text();
