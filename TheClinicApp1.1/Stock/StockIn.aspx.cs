@@ -32,7 +32,7 @@ namespace TheClinicApp1._1.Stock
         private static int PageSize = 8;
 
         public string listFilter = null;
-
+        public string RoleName = null;
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
 
@@ -54,6 +54,9 @@ namespace TheClinicApp1._1.Stock
             string receiptID = string.Empty;
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();
+            lblClinicName.Text = UA.Clinic;
+            string Login = UA.userName;
+            RoleName = UA.GetRoleName(Login);
 
             //GridViewStockIN();
 

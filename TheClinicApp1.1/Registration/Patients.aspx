@@ -204,9 +204,9 @@
       <div class="col-lg-4">
       <label for="marital">Marital</label>
           <asp:DropDownList ID="ddlMarital" runat="server" Width="100%" Height="40px">
-              <asp:ListItem Value="3">Single</asp:ListItem>
-              <asp:ListItem Value="1">Married</asp:ListItem>
-              <asp:ListItem Value="2">Divorced</asp:ListItem>
+              <asp:ListItem Value="Single" Text="Single"></asp:ListItem>
+              <asp:ListItem Value="Married" Text="Married"></asp:ListItem>
+              <asp:ListItem Value="Divorced" Text="Divorced"></asp:ListItem>
           </asp:DropDownList>
       </div>
       <div class="col-lg-4">
