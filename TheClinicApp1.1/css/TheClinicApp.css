@@ -102,7 +102,7 @@
 
 html, body {
     height: 100%;
-    background-image: url('../Images/HerbeInWhite.jpg');
+    /*background-image: url('../Images/HerbeInWhite.jpg');*/
     background-size: 100%;
 }
 
