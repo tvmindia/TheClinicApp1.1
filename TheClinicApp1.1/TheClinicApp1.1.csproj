@@ -282,6 +282,7 @@
     <Content Include="Stock\test page.txt" />
     <Content Include="Token\test page.txt" />
     <Content Include="Token\Tokens.aspx" />
+    <Content Include="Token\ViewTokens.aspx" />
     <Content Include="UnderConstruction.aspx" />
     <Content Include="packages.config" />
     <Content Include="Web.config" />
@@ -469,6 +470,13 @@
     </Compile>
     <Compile Include="Token\Tokens.aspx.designer.cs">
       <DependentUpon>Tokens.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Token\ViewTokens.aspx.cs">
+      <DependentUpon>ViewTokens.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Token\ViewTokens.aspx.designer.cs">
+      <DependentUpon>ViewTokens.aspx</DependentUpon>
     </Compile>
     <Compile Include="UIClasses\common.cs" />
     <Compile Include="UIClasses\Messages.cs" />

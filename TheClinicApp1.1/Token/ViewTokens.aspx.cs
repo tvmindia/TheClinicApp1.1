@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+using TheClinicApp1._1.ClinicDAL;
+using System.Text;
+using System.Web.Services;
+
+namespace TheClinicApp1._1.Token
+{
+    public partial class ViewTokens : System.Web.UI.Page
+    {
+
+
+
+        #region Global Variables
+
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;
+       
+        TokensBooking tokenObj = new TokensBooking();
+       
+        #endregion Global Variables
+
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            gridviewbind();
+        }
+
+
+
+
+        #region gridviewbind
+        public void gridviewbind()
+        {
+            //Gridview Binding to Diplay DoctorName,Token No,Patient Name,TIME
+            tokenObj.DateTime = DateTime.Now;
+
+            DataSet gds = tokenObj.ViewToken();
+            GridViewTokenlist.EmptyDataText = "No Records Found";
+            GridViewTokenlist.DataSource = gds;
+            GridViewTokenlist.DataBind();
+        }
+
+        #endregion gridviewbind
+
+
+
+
+        protected void ImgBtnDelete_Click1(object sender, ImageClickEventArgs e)
+        {
+
+             
+
+
+        }
+
+
+    }
+}
