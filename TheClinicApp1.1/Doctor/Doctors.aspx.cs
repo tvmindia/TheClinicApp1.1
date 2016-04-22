@@ -27,12 +27,10 @@ namespace TheClinicApp1._1.Doctor
         public string RoleName = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-             //OnClientClick="GetTextBoxValuesPres('<%=hdnTextboxValues.ClientID%>');"
-            //btnSave.Attributes.Add("OnClientClick", "GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "')");
+             
             listFilter = null;
             listFilter = GetMedicineNames();
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-           
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];          
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
@@ -45,6 +43,7 @@ namespace TheClinicApp1._1.Doctor
                 VisitsObj.DoctorID = DoctorID;
                 PrescriptionHeadObj.DoctorID = DoctorID;
                 tok.DoctorID = DoctorID.ToString();
+                tok.ClinicID = UA.ClinicID.ToString();
                 lblDoctor.Text = "Dr."+DoctorName;
 
             }

@@ -1,10 +1,13 @@
 ﻿var settingOpen = 0;
 function selectTile(id, RoleName) {
-
+    
     var tileList = ['patients', 'token', 'doctor', 'pharmacy', 'stock'];
     if (RoleName == 'Doctor') {
         var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Doctor/Doctors.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
 
+    }
+    else if (RoleName == 'Administrator') {
+        var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
     }
     else if (RoleName == 'pharmacist') {
         var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];

@@ -7,7 +7,8 @@
      <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
      <script src="../js/jquery-ui.js"></script>
-
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/fileinput.js"></script>
         <script>
            
 
@@ -99,7 +100,7 @@
          <span>Doctors...</span>
          </div>
          <div class="icon_box">
-         <a class="records" data-toggle="modal" data-target="#casehistory"><span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="6"></asp:Label></span><span title="Case HIstory" data-toggle="tooltip" data-placement="left"><img src="../images/case-history.png"/></span></a>
+         <a class="records" data-toggle="modal" data-target="#casehistory"><span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span><span title="Case HIstory" data-toggle="tooltip" data-placement="left"><img src="../images/case-history.png"/></span></a>
          <a class="casehistory_link" data-toggle="modal" data-target="#tokens" ><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png"/></span></a>
         <%-- <a class="tokens_link" data-toggle="modal" data-target="#tokens" ><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png"/></span></a>--%>         
          </div>
@@ -119,7 +120,7 @@
          </div>
          </div>
          <div class="token_id_card">
-             <div class="name_field"><img id="ProfilePic" src="../images/UploadPic.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label></div>
+             <div class="name_field"><img id="ProfilePic" src="../images/UploadPic1.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label></div>
                  <div class="light_grey">
                      <div class="col3_div"><asp:Label ID="lblAgeCount" runat="server" Text=""></asp:Label><span>Age</span></div>
                      <div class="col3_div"><asp:Label ID="lblGenderDis" runat="server" Text=""></asp:Label><span>Gender</span></div>
@@ -129,8 +130,6 @@
                     <div class="field_label"><label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text=""></asp:Label></div>      
                 </div>
              </div>
-         
-
              <asp:HiddenField ID="HiddenField2" runat="server" />
          
          <div id="accordion">
@@ -286,8 +285,7 @@
     <!-- Modal content-->
     <div class="modal-content" style="width:100%;height:100%">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>        
         <h3 class="modal-title">Case History</h3>
       </div>
       <div class="modal-body" style="width:100%;height:100%">
@@ -297,8 +295,7 @@
               <Columns>
                   <asp:TemplateField>
                       <ItemTemplate>
-                          <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" formnovalidate />
-
+                          <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" Width="50%" formnovalidate />
                       </ItemTemplate>
                   </asp:TemplateField>
                   <asp:BoundField HeaderText="Date" DataField="CreatedDate" />
@@ -350,15 +347,13 @@
                    <asp:GridView ID="GridViewTokenlist" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None" ForeColor="#333333">
               <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>
               <Columns>
-                  <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
-                  <asp:BoundField HeaderText="Patient Name" DataField="Name" />
-
-                  <asp:TemplateField>
+                   <asp:TemplateField>
                       <ItemTemplate>
-                          <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")%>' OnCommand="ImgBtnUpdate_Command1" Width="50%" BorderColor="White" formnovalidate />
-
+                      <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")%>' OnCommand="ImgBtnUpdate_Command1" Width="50%" BorderColor="White" formnovalidate />
                       </ItemTemplate>
                   </asp:TemplateField>
+                  <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
+                  <asp:BoundField HeaderText="Patient Name" DataField="Name" />                 
               </Columns>
             <EditRowStyle BackColor="#0080AA"></EditRowStyle>
             <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
@@ -409,7 +404,9 @@
 			var test=jQuery.noConflict();
 			test(document).ready(function () {
 			   
-				
+			    test('.alert_close').click(function () {
+			        test(this).parent(".alert").hide();
+			    });	
 							
 			test('[data-toggle="tooltip"]').tooltip(); 	
 			

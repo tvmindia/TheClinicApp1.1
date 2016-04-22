@@ -355,6 +355,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[DoctorViewPatientsBooking]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value =Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
                 cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
                 sda = new SqlDataAdapter();
