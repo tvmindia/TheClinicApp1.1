@@ -177,7 +177,7 @@
          <div class="icon_box">
          <a class="all_registration_link" data-toggle="modal" data-target="#add_medicine" ><span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')"><img src="../images/add_medicine.png"/></span></a>
         
-         <a class="Todays_registration_link" data-toggle="modal" data-target="#View_OutOfStock" ><span title="Out Of Stock Medicines" data-toggle="tooltip" data-placement="left"  onclick="SetIframeSrc('OutOfStockIframe')" ><img src="../images/OutOfStock(1).png"/></span></a>
+         <a class="Todays_registration_link" data-toggle="modal" data-target="#View_OutOfStock" ><span title="Out Of Stock Medicines" data-toggle="tooltip" data-placement="left"  onclick="SetIframeSrc('OutOfStockIframe')" ><img src="../images/Pill_New(1).png"/></span></a>
          </div>
 
          <div class="right_form tab_right_form">
