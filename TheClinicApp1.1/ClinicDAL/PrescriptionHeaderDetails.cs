@@ -371,7 +371,7 @@ namespace TheClinicApp1._1.ClinicDAL
                  cmd.Parameters.Add("@MedicineName",SqlDbType.NVarChar,255).Value = MedicineName;               
                  cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);                 
                  cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
-                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 20).Value = Unit;
+                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;
                  cmd.Parameters.Add("@Dosage", SqlDbType.Real).Value = Dosage;
                  cmd.Parameters.Add("@Timing", SqlDbType.NVarChar, 10).Value = Timing;               
                  cmd.Parameters.Add("@Days", SqlDbType.Int).Value = Days;           
@@ -402,7 +402,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region ViewPrescriptionDetails
 
-         public DataSet ViewPrescriptionDetails()
+         public DataSet ViewPrescriptionDetails(string PresicID)
          {
 
              dbConnection  dcon = null;
@@ -417,17 +417,12 @@ namespace TheClinicApp1._1.ClinicDAL
                  cmd.Connection = dcon.SQLCon;
                  cmd.CommandType = CommandType.StoredProcedure;
                  cmd.CommandText = "[ViewPrescriptionDetails]";
-
-                 //
-             
-
+                 cmd.Parameters.Add("@PrescriptionID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PresicID);
                  sda = new SqlDataAdapter();
                  cmd.ExecuteNonQuery();
                  sda.SelectCommand = cmd;
                  ds = new DataSet();
-                 sda.Fill(ds);
-
-
+                 sda.Fill(ds,"Medicines");
                  return ds;
 
              }
@@ -550,7 +545,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion DeletePrescriptionDetails
 
-         #region SearchMedicinewithCategory
+        #region SearchMedicinewithCategory
          public DataTable SearchMedicinewithCategory()
          {
 
