@@ -294,7 +294,7 @@
                     </div>
                     <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;" >
                         <div class="col-sm-12">                        
-                        <asp:GridView ID="dtgViewAllRegistration" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5" Width="100%" height="50%">                            
+                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5" Width="100%">                            
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField>
@@ -355,7 +355,7 @@
                         <h3 class="modal-title">Todays Registrations</h3>
 
                     </div>
-                    <div class="modal-body" style="width:100%;height:100%">
+                    <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;">
                      <div class="col-sm-12">
                         <asp:GridView ID="dtgViewTodaysRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None">
                             <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>
