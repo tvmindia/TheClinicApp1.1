@@ -118,15 +118,7 @@ namespace TheClinicApp1._1.Token
                        
         }        
         #endregion WebMethod
-
-        protected void btnSearch_ServerClick(object sender, EventArgs e)
-        {
-
-
-
-        }
-
-
+ 
 
      
         protected void btnBookToken_ServerClick(object sender, EventArgs e)
