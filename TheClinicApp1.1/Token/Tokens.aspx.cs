@@ -192,10 +192,13 @@ namespace TheClinicApp1._1.Token
         }
 
 
-        
+
 
         protected void ImgBtnDelete_Click1(object sender, ImageClickEventArgs e)
         {
+
+            int i = 0;
+
 
         }
 
