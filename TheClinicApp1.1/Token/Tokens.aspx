@@ -248,7 +248,8 @@
 
                     <h3 class="modal-title">Today's Patient Bookings</h3>
                 </div>
-                <div class="modal-body" style=" overflow-y: scroll; overflow-x: hidden; height:400px;">
+                <div class="modal-body" style=" overflow-y: scroll; overflow-x:hidden; height:400px;">
+
                     <%--<h4>Today's Patient Bookings</h4>--%>
 
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -260,7 +261,7 @@
                                 <Columns>
                                     <asp:TemplateField HeaderText="">
                                         <ItemTemplate>
-                                            <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/images/Cancel.png" Width="25px" OnClientClick="return  ConfirmDelete();" OnClick="ImgBtnDelete_Click1" />
+                                            <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/images/Cancel.png" Width="25px" OnClick="ImgBtnDelete_Click1" />
 
                                         </ItemTemplate>
                                     </asp:TemplateField>

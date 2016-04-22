@@ -554,6 +554,70 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion AddFile
 
+
+        //***Generate File Number***//
+           #region Generate_File_Number
+        public string Generate_File_Number()
+        {            
+            string NUM;
+
+            dbConnection dcon = null;
+          
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetTopFileNO]";
+              
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                SqlParameter OutparmItemId = cmd.Parameters.Add("@String", SqlDbType.NVarChar,50);
+                OutparmItemId.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                NUM = OutparmItemId.Value.ToString();    
+             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+
+
+            if (NUM != "")
+            {
+                //trim here
+                int x = Convert.ToInt32(NUM.Substring(NUM.IndexOf('-') + 1));
+                x = x + 1;
+                x.ToString();
+                string FileNO = "FF-" + x;
+
+                return FileNO;
+
+            }
+
+            else
+            {
+                
+                int x = 1000;
+                string FileNO = "FF-" + x;
+
+                return FileNO ;
+
+            }
+
+            
+        }
+#endregion Generate_File_Number
+
+
         //***Grid Bind For All regisration && Todays Registration
         #region GridBind
         #region ViewAllRegistration
