@@ -51,6 +51,22 @@
             });       
         });
     </script>
+     <script>
+
+
+         function SetIframeSrc(HyperlinkID) {
+          
+             if (HyperlinkID == "AllTokenIframe") {
+                 var AllTokenIframe = document.getElementById('AllTokenIframe');
+                 AllTokenIframe.src = "ViewTokens.aspx";
+                 //$('#OutOfStock').modal('show');
+             }
+
+         }
+
+
+
+       </script>
 
 
     <script>
@@ -134,7 +150,7 @@
                 Need Tokens..
             </div>
             <div class="icon_box">
-                <a class="all_token_link" data-toggle="modal" data-target="#all_token"><span title="All Tokens" data-toggle="tooltip" data-placement="left">
+                <a class="all_token_link" data-toggle="modal" data-target="#all_token"><span title="All Tokens" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllTokenIframe')">
                     <img src="../images/tokens.png" /></span></a>
             </div>
             <div class="grey_sec">
@@ -248,33 +264,13 @@
 
                     <h3 class="modal-title">Today's Patient Bookings</h3>
                 </div>
-                <div class="modal-body" style=" overflow-y: scroll; overflow-x:hidden; height:400px;">
+                <div class="modal-body" style=" /*overflow-y: scroll; overflow-x:hidden;*/ height:400px;">
+
+                     <iframe id="AllTokenIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
 
                     <%--<h4>Today's Patient Bookings</h4>--%>
 
-                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                        <ContentTemplate>
-
-
-                            <asp:GridView ID="GridViewTokenlist"  runat="server" AutoGenerateColumns="False" CssClass="footable" DataKeyNames="UniqueId">
-                                <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
-                                <Columns>
-                                    <asp:TemplateField HeaderText="">
-                                        <ItemTemplate>
-                                            <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/images/Cancel.png" Width="25px" OnClick="ImgBtnDelete_Click1" />
-
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:BoundField HeaderText="Doctor Name" DataField="DOCNAME" />
-                                    <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
-                                    <asp:BoundField HeaderText="Patient Name" DataField="Name" />
-                                    <asp:BoundField HeaderText="Time" DataField="DateTime" />
-
-                                </Columns>
-
-                            </asp:GridView>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
+               
 
 
                     <%--    <h4>Doctor 2</h4>

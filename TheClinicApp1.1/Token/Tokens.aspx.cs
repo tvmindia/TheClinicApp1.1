@@ -40,7 +40,7 @@ namespace TheClinicApp1._1.Token
             tokenObj.ClinicID = UA.ClinicID.ToString();
 
             listerfilterbind();
-            gridviewbind();
+           
 
             if (!IsPostBack)
             {
@@ -55,20 +55,8 @@ namespace TheClinicApp1._1.Token
            
         }
 
-        #region gridviewbind
-        public void gridviewbind()
-        {
-            //Gridview Binding to Diplay DoctorName,Token No,Patient Name,TIME
-            tokenObj.DateTime = DateTime.Now;
 
-            DataSet gds = tokenObj.ViewToken();
-            GridViewTokenlist.EmptyDataText = "No Records Found";
-            GridViewTokenlist.DataSource = gds;
-            GridViewTokenlist.DataBind();
-        }
-
-        #endregion gridviewbind
-
+     
         #region listerfilterbind
         public void listerfilterbind()
         { 
@@ -194,13 +182,7 @@ namespace TheClinicApp1._1.Token
 
 
 
-        protected void ImgBtnDelete_Click1(object sender, ImageClickEventArgs e)
-        {
-
-            int i = 0;
-
-
-        }
+      
 
 
 
