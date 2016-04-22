@@ -155,8 +155,9 @@
             </div>
             <div class="grey_sec">
                 <div class="search_div">
-                    <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." />
-                    <input class="button" onserverclick="btnSearch_ServerClick" runat="server" type="submit" value="Search" />
+                    <input class="field" id="txtSearch" onblur="bindPatientDetails()"  name="txtSearch" type="search" placeholder="Search here..." />
+                  <%--  <input class="button" onserverclick="btnSearch_ServerClick" runat="server"  value="Search" />--%>
+                      <input class="button"   type="button" value="Search" />
                 </div>
                 <ul class="top_right_links">
                     <li><a class="book_token" runat="server" id="btnBookToken" onserverclick="btnBookToken_ServerClick"><span></span>Book Token</a></li>
@@ -200,11 +201,8 @@
                         <strong>
                             <label> Guide Lines</label>
                         </strong>                       
-                      <label> 1. Search patient details in search box given</label> 
-                      <label> 2. Select patient, Details will be displayed in the box below </label> 
-                      <label> 3. Select Doctor> Click Book Token > Then Token Number will be displayed </label> 
-                      <label> 4.Click NEW for New Booking "  </label> 
-                    
+                      <label> Search & Select Patient >> Check Patient Details >> Select Doctor >> Book Token >> Check Booking Details >>Click NEW for New Booking  </label> 
+                  
 
                     </div>
 

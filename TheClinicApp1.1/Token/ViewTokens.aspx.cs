@@ -53,10 +53,19 @@ namespace TheClinicApp1._1.Token
 
 
 
-        protected void ImgBtnDelete_Click1(object sender, ImageClickEventArgs e)
+
+
+        protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
 
-             
+        ImageButton ib = sender as ImageButton;
+        GridViewRow row = ib.NamingContainer as GridViewRow;
+        string  id=GridViewTokenlist.DataKeys[row.RowIndex].Value.ToString();
+
+
+           
+            tokenObj.DeleteToken(id);
+            gridviewbind();
 
 
         }
