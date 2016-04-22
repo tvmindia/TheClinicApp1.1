@@ -1,9 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="Stock.aspx.cs" Inherits="TheClinicApp1._1.Stock.Stock" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-     
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
-
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -18,7 +16,6 @@
     <script>
 
 
-
         function SetIframeSrc(HyperlinkID) {
           
             if (HyperlinkID == "NewMedicineIframe") {
@@ -28,8 +25,6 @@
             }
 
         }
-
-
 
 
 
@@ -150,7 +145,7 @@
  
         </script>
 
-     <div class="main_body">
+    <div class="main_body">
           
           
          <div class="left_part">
@@ -201,8 +196,8 @@
          <div class="tab_table">         
          
 
- <asp:GridView ID="gvMedicines" runat="server" Style="width: 100%" AutoGenerateColumns="False" class="table" >
-            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+ <asp:GridView ID="gvMedicines" runat="server" Style="width: 100%" AutoGenerateColumns="False"  class="table" >
+           
             <Columns>
             
                 <asp:BoundField DataField="MedicineCode" HeaderText="Medicine Code"  ItemStyle-CssClass="Match"  />
@@ -216,25 +211,7 @@
 
 
             </Columns>
-            <EditRowStyle BackColor="#0080AA"></EditRowStyle>
-
-            <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
-
-            <HeaderStyle BackColor="#3FBF7F" Font-Bold="True" ForeColor="White"></HeaderStyle>
-
-            <PagerStyle HorizontalAlign="Center" ForeColor="White" BackColor="#2461BF"></PagerStyle>
-
-            <RowStyle BackColor="#EFF3FB"></RowStyle>
-
-            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
-
-            <SortedAscendingCellStyle BackColor="#F5F7FB"></SortedAscendingCellStyle>
-
-            <SortedAscendingHeaderStyle BackColor="#6D95E1"></SortedAscendingHeaderStyle>
-
-            <SortedDescendingCellStyle BackColor="#E9EBEF"></SortedDescendingCellStyle>
-
-            <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
+            
         </asp:GridView>
 
         <div class="Pager">
@@ -356,9 +333,10 @@
                                         <%--  <asp:BoundField DataField="MedicineID" HeaderText="MedicineID" />--%>
                                         <asp:BoundField DataField="MedicineName" HeaderText="Medicine Name" />
                                         <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                        <asp:BoundField DataField="Qty" HeaderText="Existing Quantity" />
-                                        <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" />
-                                        <asp:BoundField DataField="CategoryName" HeaderText="Category Name"/>
+                                          <asp:BoundField DataField="CategoryName" HeaderText="Category Name"/>
+                                        <asp:BoundField DataField="Qty" HeaderText="Existing Quantity" ItemStyle-HorizontalAlign="Right"/>
+                                        <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" />
+                                      
                                     </Columns>
                                     <EditRowStyle BackColor="#0080AA"></EditRowStyle>
 

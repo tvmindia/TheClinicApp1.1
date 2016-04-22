@@ -58,6 +58,9 @@
 
         $(function () {
             $("[id*=GridViewStockin] td:first").click(function () {
+              
+
+
                 var DeletionConfirmation = ConfirmDelete();
 
                 if (DeletionConfirmation == true) {

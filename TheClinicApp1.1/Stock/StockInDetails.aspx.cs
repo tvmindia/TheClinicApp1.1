@@ -1,4 +1,12 @@
-﻿#region Included Namespaces
+﻿
+#region CopyRight
+
+//Author      : Gibin
+//Modified By : SHAMILA T P
+
+#endregion CopyRight
+
+#region Included Namespaces
 
 using System;
 using System.Collections.Generic;
@@ -48,7 +56,6 @@ namespace TheClinicApp1._1.Stock
         }
 
         #endregion Get Quantity In Stock
-
 
         #region Get MedicineDetails By Medicine Name
 
@@ -184,9 +191,9 @@ namespace TheClinicApp1._1.Stock
 
         //-----------------------------  * END  MEDICINES AREA * -------------------//
 
-
         #endregion Methods
 
+        #region Page Load
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -274,9 +281,9 @@ namespace TheClinicApp1._1.Stock
 
         }
 
+        #endregion Page Load
 
-
-
+        #region  Save Button Click
 
         protected void btSave_ServerClick(object sender, EventArgs e)
         {
@@ -484,6 +491,9 @@ namespace TheClinicApp1._1.Stock
 
 
         }
+
+        #endregion Save Button Click
+
     }
 }
 

@@ -55,7 +55,7 @@ namespace TheClinicApp1._1.UIClasses
             get { return "Already exists!"; }
         }
 
-
+       
 //----------------* Success Messages *--------------//
         public static string LoginSuccess
         {
@@ -80,6 +80,11 @@ namespace TheClinicApp1._1.UIClasses
         {
             get { return "Successfully Uploaded"; }
         }
+        public static string SavedSuccessfull
+        {
+            get { return "Successfully Saved!"; }
+        }
+
 
 //----------------* Failure Messages *--------------//
 
@@ -108,5 +113,9 @@ namespace TheClinicApp1._1.UIClasses
             get { return "Deletion Not Successful "; }
         }
 
+        public static string SavingFailure
+        {
+            get { return "Saving Not Successful "; }
+        }
     }
 }

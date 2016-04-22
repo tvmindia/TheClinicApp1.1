@@ -26,15 +26,23 @@
 
     <script>
         $(document).ready(function () {
-
             debugger;
+
+            $('.nav_menu').click(function () {
+            
+                test(".main_body").toggleClass("active_close");            
+            });
+            
+            $('.alert_close').click(function () {                
+            
+                $(this).parent(".alert").hide();            
+            });      
+        
             $('.nav_menu').click(function () {
                 
                 $(".main_body").toggleClass("active_close");
             });
-
-            debugger;
-              
+          
          
             var ac=null;
             ac = <%=listFilter %>;
@@ -102,8 +110,10 @@
     <!-- #main-container -->
     <div class="main_body">
         <div class="left_part">
-            <div class="logo"><a href="#">
-                <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
+            <div class="logo">
+                <a href="#">
+                    <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
+            </div>
             <ul class="menu">
                 <li id="patients"><a name="hello" onclick="selectTile('patients','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
                 <li id="token" class="active"><a name="hello" onclick="selectTile('token','<%=RoleName %>')"><span class="icon token"></span><span class="text">Token</span></a></li>
@@ -113,7 +123,8 @@
             </ul>
 
             <p class="copy">
-                <asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
+                <asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label>
+            </p>
         </div>
 
 
@@ -136,12 +147,55 @@
                     <li><a class="new" href="Tokens.aspx"><span></span>New</a></li>
                 </ul>
             </div>
+            <div>
 
-            <div class="right_form">
+                <div id="Errorbox" style="display: none;" runat="server">
+                    <a class="alert_close">X</a>
+                    <div>
+                        <strong>
+                            <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                        </strong>
+                        <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+
+                    </div>
+
+                </div>
+
+                <div class="alert alert-success" style="display: none">
+                    <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+                </div>
+                <div class="alert alert-info" style="display: none">
+                    <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+                </div>
+
+                <div class="alert alert-warning" style="display: none">
+                    <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+                </div>
+
+                <div class="alert alert-danger" style="display: none">
+                    <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+                </div>
+            </div>
+
+
+
+            <div >
+                  <div  class="alert alert-info">
+                        <strong>
+                            <label> Guide Lines</label>
+                        </strong>                       
+                      <label> 1. Search patient details in search box given</label> 
+                      <label> 2. Select patient, Details will be displayed in the box below </label> 
+                      <label> 3. Select Doctor> Click Book Token > Then Token Number will be displayed </label> 
+                      <label> 4.Click NEW for New Booking "  </label> 
+                    
+
+                    </div>
 
                 <div class="token_id_card">
                     <div class="name_field">
-                        <asp:Label ID="lblPatientName" runat="server" Text="Name"></asp:Label><span class="generate_token"><asp:Label ID="lblToken" runat="server" Text="_"></asp:Label></span></div>
+                        <asp:Label ID="lblPatientName" runat="server" Text="Name"></asp:Label><span class="generate_token"><asp:Label ID="lblToken" runat="server" Text="_"></asp:Label></span>
+                    </div>
                     <div class="light_grey">
                         <div class="col3_div">Age<span><asp:Label ID="lblAge" runat="server" Font-Size="Large"></asp:Label></span></div>
                         <div class="col3_div">Gender<span><asp:Label ID="lblGender" runat="server" Font-Size="Large"></asp:Label></span></div>
@@ -149,22 +203,28 @@
                     </div>
                     <div class="card_white">
                         <div class="field_label">
-                            <label>Address</label><asp:Label ID="lblAddress" runat="server"></asp:Label></div>
+                            <label>Address</label><asp:Label ID="lblAddress" runat="server"></asp:Label>
+                        </div>
                         <div class="field_label">
-                            <label>Mobile</label><asp:Label ID="lblMobile" runat="server"></asp:Label></div>
+                            <label>Mobile</label><asp:Label ID="lblMobile" runat="server"></asp:Label>
+                        </div>
                         <div class="field_label">
                             <label>Email</label>
                             <a href="mailto: demo@test.com">
-                                <asp:Label ID="lblEmail" runat="server"></asp:Label></a></div>
+                                <asp:Label ID="lblEmail" runat="server"></asp:Label></a>
+                        </div>
                         <div class="field_label">
-                            <label>Last visit</label><asp:Label ID="lblLastVisit" runat="server"></asp:Label></div>
+                            <label>Last visit</label><asp:Label ID="lblLastVisit" runat="server"></asp:Label>
+                        </div>
 
                         <div class="field_label" id="BookedDoctorName" visible="false" runat="server">
-                            <label>Doctor</label><asp:Label ID="lblDoctor" runat="server"></asp:Label></div>
+                            <label>Doctor</label><asp:Label ID="lblDoctor" runat="server"></asp:Label>
+                        </div>
                         <br />
                         <br />
                         <div class="field_label" id="DropDownDoctor" style="visibility: hidden">
-                            <label>Doctor</label><asp:DropDownList ID="ddlDoctor" Width="60%" runat="server"></asp:DropDownList></div>
+                            <label>Doctor</label><asp:DropDownList ID="ddlDoctor" Width="60%" runat="server"></asp:DropDownList>
+                        </div>
                     </div>
                 </div>
 
@@ -175,11 +235,11 @@
 
     <asp:HiddenField ID="HiddenPatientID" runat="server" />
     <asp:HiddenField ID="HiddenClinicID" runat="server" />
-     <asp:HiddenField ID="hdnfileID" runat="server" />
+    <asp:HiddenField ID="hdnfileID" runat="server" />
 
     <!-- Modal -->
     <div id="all_token" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="height:600px;">
 
             <!-- Modal content-->
             <div class="modal-content">
@@ -188,33 +248,34 @@
 
                     <h3 class="modal-title">Today's Patient Bookings</h3>
                 </div>
-                <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;">
+                <div class="modal-body" style=" overflow-y: scroll; overflow-x:hidden; height:400px;">
+
                     <%--<h4>Today's Patient Bookings</h4>--%>
-                    
+
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
 
-                             
-                                     <asp:GridView ID="GridViewTokenlist" runat="server" AutoGenerateColumns="False"  CssClass="footable" DataKeyNames="UniqueId">
-                            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
-                            <Columns>
-                                  <asp:TemplateField HeaderText="">
-                                                  <ItemTemplate>
-                                                       <asp:ImageButton ID="ImgBtnDelete" runat="server"  ImageUrl="~/images/Cancel.png"   Width="25px" OnClientClick="return  ConfirmDelete();"  OnClick="ImgBtnDelete_Click1"/>
 
-                                                  </ItemTemplate>
-                                              </asp:TemplateField>
-                               <asp:BoundField HeaderText="Doctor Name" DataField="DOCNAME" />
-                                              <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
-                                              <asp:BoundField HeaderText="Patient Name" DataField="Name" />
-                                              <asp:BoundField HeaderText="Time" DataField="DateTime" />
-                                             
-                            </Columns>
-                          
-                        </asp:GridView>
+                            <asp:GridView ID="GridViewTokenlist"  runat="server" AutoGenerateColumns="False" CssClass="footable" DataKeyNames="UniqueId">
+                                <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+                                <Columns>
+                                    <asp:TemplateField HeaderText="">
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/images/Cancel.png" Width="25px" OnClick="ImgBtnDelete_Click1" />
+
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField HeaderText="Doctor Name" DataField="DOCNAME" />
+                                    <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
+                                    <asp:BoundField HeaderText="Patient Name" DataField="Name" />
+                                    <asp:BoundField HeaderText="Time" DataField="DateTime" />
+
+                                </Columns>
+
+                            </asp:GridView>
                         </ContentTemplate>
                     </asp:UpdatePanel>
-                 
+
 
                     <%--    <h4>Doctor 2</h4>
         <table class="table" width="100%" border="0">

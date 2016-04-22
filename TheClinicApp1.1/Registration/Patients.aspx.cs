@@ -276,9 +276,12 @@ namespace TheClinicApp1._1.Registration
                 PatientObj.UpdatedBy = UA.userName;
                 if (PatientObj.Name != null)
                 {
-                    string filenum = "F" + clinID.Substring(0, 4) + txtName.Value.Substring(0, 3) + txtMobile.Value.Substring(7, 3);
-                    PatientObj.FileNumber = filenum.Trim();
-                    
+                    //string filenum = "F" + clinID.Substring(0, 4) + txtName.Value.Substring(0, 3) + txtMobile.Value.Substring(7, 3);
+                    //PatientObj.FileNumber = filenum.Trim();
+
+                    PatientObj.FileNumber = PatientObj.Generate_File_Number().ToString();
+
+
                     if (HiddenField1.Value == "")
                     {
                         if (FileUpload1.HasFile)

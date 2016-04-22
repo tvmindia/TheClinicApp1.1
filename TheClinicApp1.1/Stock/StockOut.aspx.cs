@@ -1,4 +1,13 @@
-﻿using System;
+﻿
+#region CopyRight
+
+//Author      :SHAMILA T P
+
+#endregion CopyRight
+
+#region Included Namespaces
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,16 +19,25 @@ using System.Configuration;
 using System.Web.Services;
 using TheClinicApp1._1.ClinicDAL;
 
+#endregion Included Namespaces
+
 namespace TheClinicApp1._1.Stock
 {
     public partial class StockOut : System.Web.UI.Page
     {
+        #region Global variables
+
         IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
 
         private static int PageSize = 8;
         ClinicDAL.UserAuthendication UA;
         UIClasses.Const Const = new UIClasses.Const();
 
+        #endregion Global variables
+
+        #region Methods
+
+        #region Bind Dummy Row
 
         private void BindDummyRow()
         {
@@ -44,26 +62,9 @@ namespace TheClinicApp1._1.Stock
 
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            string issueID = string.Empty;
+        #endregion Bind Dummy Row
 
-            if (!IsPostBack)
-            {
-                BindDummyRow();
-
-            }
-
-            if (Request.QueryString["HdrID"] != null)
-            {
-
-                issueID = Request.QueryString["HdrID"].ToString();
-
-                IssuehdrObj.ClinicID = UA.ClinicID.ToString();
-                IssuehdrObj.DeleteIssueHeader(issueID);
-            }
-        }
+        #region Issue details
 
         [WebMethod]
         public static string GetIssueHD(string searchTerm, int pageIndex)
@@ -87,9 +88,6 @@ namespace TheClinicApp1._1.Stock
             var xml = GetData(cmd, pageIndex).GetXml();
             return xml;
         }
-
-
-
 
         private static DataSet GetData(SqlCommand cmd, int pageIndex)
         {
@@ -125,7 +123,38 @@ namespace TheClinicApp1._1.Stock
             }
         }
 
+        #endregion  Issue details
 
+        #endregion Methods
+
+        #region Events
+
+        #region Page Load
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            string issueID = string.Empty;
+
+            if (!IsPostBack)
+            {
+                BindDummyRow();
+
+            }
+
+            if (Request.QueryString["HdrID"] != null)
+            {
+
+                issueID = Request.QueryString["HdrID"].ToString();
+
+                IssuehdrObj.ClinicID = UA.ClinicID.ToString();
+                IssuehdrObj.DeleteIssueHeader(issueID);
+            }
+        }
+
+        #endregion Page Load
+
+        #endregion Events
 
         protected void btSave_ServerClick(object sender, EventArgs e)
         {
