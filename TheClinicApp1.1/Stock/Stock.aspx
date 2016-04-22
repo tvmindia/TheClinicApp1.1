@@ -17,7 +17,7 @@
 
 
         function SetIframeSrc(HyperlinkID) {
-          
+            debugger;
             if (HyperlinkID == "NewMedicineIframe") {
                 var NewMedicineIframe = document.getElementById('NewMedicineIframe');
                 NewMedicineIframe.src = "AddNewMedicine.aspx";
@@ -27,7 +27,7 @@
 
             else if (HyperlinkID == "OutOfStockIframe") {
                 var OutOfStockIframe = document.getElementById('OutOfStockIframe');
-                NewMedicineIframe.src = "OutOfStock.aspx";
+                OutOfStockIframe.src = "OutOfStock.aspx";
                 //$('#OutOfStock').modal('show');
             }
 
@@ -335,37 +335,7 @@
       <div class="modal-body" style="height:400px;">
            <iframe id="OutOfStockIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
 
-              <asp:GridView ID="gvOutOfStock1" runat="server"  AutoGenerateColumns="False" class="table">
-                                    <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
-                                    <Columns>
-                                        <%--  <asp:BoundField DataField="MedicineID" HeaderText="MedicineID" />--%>
-                                        <asp:BoundField DataField="MedicineName" HeaderText="Medicine Name" />
-                                        <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                          <asp:BoundField DataField="CategoryName" HeaderText="Category Name"/>
-                                        <asp:BoundField DataField="Qty" HeaderText="Existing Quantity" ItemStyle-HorizontalAlign="Right"/>
-                                        <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" />
-                                      
-                                    </Columns>
-                                    <EditRowStyle BackColor="#0080AA"></EditRowStyle>
-
-                                    <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
-
-                                    <HeaderStyle BackColor="#3FBF7F" Font-Bold="True" ForeColor="White"></HeaderStyle>
-
-                                    <PagerStyle HorizontalAlign="Center" ForeColor="White" BackColor="#2461BF"></PagerStyle>
-
-                                    <RowStyle BackColor="#EFF3FB"></RowStyle>
-
-                                    <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
-
-                                    <SortedAscendingCellStyle BackColor="#F5F7FB"></SortedAscendingCellStyle>
-
-                                    <SortedAscendingHeaderStyle BackColor="#6D95E1"></SortedAscendingHeaderStyle>
-
-                                    <SortedDescendingCellStyle BackColor="#E9EBEF"></SortedDescendingCellStyle>
-
-                                    <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
-                                </asp:GridView>
+             
       </div>      
     </div>
 

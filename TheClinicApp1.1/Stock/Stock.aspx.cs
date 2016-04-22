@@ -36,19 +36,19 @@ namespace TheClinicApp1._1.Stock
         #endregion Global Variables
 
 
-        #region Bind Out Of Stock Gridview
-        public void BindOutOfStockGridview()
-        {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            stockObj.ClinicID = UA.ClinicID.ToString();
-            //gridview binding for listing the Out of Stock Medicines 
-            DataSet gds = stockObj.ViewOutofStockMedicines();
-            gvOutOfStock1.EmptyDataText = "No Records Found";
-            gvOutOfStock1.DataSource = gds;
-            gvOutOfStock1.DataBind();
-        }
+        //#region Bind Out Of Stock Gridview
+        //public void BindOutOfStockGridview()
+        //{
+        //    UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+        //    stockObj.ClinicID = UA.ClinicID.ToString();
+        //    //gridview binding for listing the Out of Stock Medicines 
+        //    DataSet gds = stockObj.ViewOutofStockMedicines();
+        //    gvOutOfStock1.EmptyDataText = "No Records Found";
+        //    gvOutOfStock1.DataSource = gds;
+        //    gvOutOfStock1.DataBind();
+        //}
 
-        #endregion Bind Out Of Stock Gridview
+        //#endregion Bind Out Of Stock Gridview
 
 
         #region Bind Dummy Row
@@ -78,7 +78,7 @@ namespace TheClinicApp1._1.Stock
             if (!IsPostBack)
             {
                 BindDummyRow();
-                BindOutOfStockGridview();
+                //BindOutOfStockGridview();
             }
         }
 
