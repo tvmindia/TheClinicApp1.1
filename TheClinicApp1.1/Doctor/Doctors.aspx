@@ -92,9 +92,7 @@
          </ul>
          
          <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
-         </div>
-         
-         
+         </div>      
          <div class="right_part">         
          <div class="tagline">
          <a class="nav_menu">Menu</a>
@@ -102,7 +100,7 @@
          </div>
          <div class="icon_box">
          <a class="records" data-toggle="modal" data-target="#casehistory"><span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="6"></asp:Label></span><span title="Case HIstory" data-toggle="tooltip" data-placement="left"><img src="../images/case-history.png"/></span></a>
-                  <a class="casehistory_link" data-toggle="modal" data-target="#tokens" ><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png"/></span></a>
+         <a class="casehistory_link" data-toggle="modal" data-target="#tokens" ><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png"/></span></a>
         <%-- <a class="tokens_link" data-toggle="modal" data-target="#tokens" ><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png"/></span></a>--%>         
          </div>
          <div class="grey_sec">
@@ -293,14 +291,13 @@
         <h3 class="modal-title">Case History</h3>
       </div>
       <div class="modal-body" style="width:100%;height:100%">
-         <asp:GridView ID="GridViewVisitsHistory" runat="server" AutoGenerateColumns="False" CssClass="table" Style="max-width: 100%;min-width:100%;" DataKeyNames="FileID" CellPadding="4" GridLines="None" ForeColor="#333333">
+          <div class="col-lg-12">
+         <asp:GridView ID="GridViewVisitsHistory" runat="server" AutoGenerateColumns="False" Style="max-width: 100%;min-width:100%;" DataKeyNames="FileID" CellPadding="4" GridLines="None" ForeColor="#333333">
               <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
               <Columns>
                   <asp:TemplateField>
                       <ItemTemplate>
                           <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" formnovalidate />
-
-
 
                       </ItemTemplate>
                   </asp:TemplateField>
@@ -327,7 +324,8 @@
               <SortedDescendingCellStyle BackColor="#E9EBEF"></SortedDescendingCellStyle>
 
               <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
-                        </asp:GridView> 
+              </asp:GridView> 
+              </div>
       </div> 
         <div class="modal-footer">
                        
