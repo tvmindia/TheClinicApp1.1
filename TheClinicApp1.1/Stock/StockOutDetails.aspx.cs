@@ -1,4 +1,14 @@
-﻿using System;
+﻿
+#region CopyRight
+
+//Author      : SHAMILA T P
+
+
+#endregion CopyRight
+
+#region Included Namespaces
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,21 +22,23 @@ using TheClinicApp1._1.ClinicDAL;
 using System.Text;
 using System.Web.Services;
 
+#endregion Namespaces
+
 namespace TheClinicApp1._1.Stock
 {
     public partial class StockOutDetails : System.Web.UI.Page
     {
-        public string listFilter = null;
-        DataTable dtIssuehdr = null;
-
+      
         #region Global Variables
-
 
         //IssueDetails IssuedtlObj = new IssueDetails();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
         ErrorHandling eObj = new ErrorHandling();
+
+        public string listFilter = null;
+        DataTable dtIssuehdr = null;
 
         #endregion Global Variables
 
@@ -45,7 +57,6 @@ namespace TheClinicApp1._1.Stock
         }
 
         #endregion Get Quantity In Stock 
-
 
         #region Get MedicineDetails By Medicine Name
 
@@ -181,7 +192,7 @@ namespace TheClinicApp1._1.Stock
 
         //-----------------------------  * END  MEDICINES AREA * -------------------//
 
-
+        #region Generate IssueNo
         [WebMethod]
         public static string GenerateIssueNo()
         {
@@ -197,7 +208,7 @@ namespace TheClinicApp1._1.Stock
             return IssueNumber;
         }
 
-
+        #endregion  Generate IssueNo
 
         #region Clear Controls
         public void ClearControls()
@@ -250,6 +261,8 @@ namespace TheClinicApp1._1.Stock
         #endregion Methods
 
         #region Events
+
+        #region  Page Load
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -338,6 +351,10 @@ namespace TheClinicApp1._1.Stock
             }
 
         }
+
+        #endregion Page Load
+
+        #region Save Button Click
 
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
@@ -540,6 +557,8 @@ else
 }
 
         }
+
+        #endregion Save Button Click
 
         #endregion Events
     }

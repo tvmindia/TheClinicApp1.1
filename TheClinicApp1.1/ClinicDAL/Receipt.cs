@@ -124,7 +124,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionSuccessMessage(page);
+                    eObj.SavedSuccessMessage(page);
                 }
                 else
                 {
@@ -187,14 +187,14 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.UpdationSuccessMessage(page);
+                    eObj.SavedSuccessMessage(page);
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
                         var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.UpdationNotSuccessMessage(page);
+                        eObj.SavingFailureMessage(page);
                     }
                 }
 
@@ -312,13 +312,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeleteSuccessMessage(page);
+                    eObj.SavedSuccessMessage(page);
                 }
 
                 if (Outputval == 0)
                 {
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeletionNotSuccessMessage(page);
+                    eObj.SavingFailureMessage(page);
                 }
 
 
@@ -817,14 +817,14 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionSuccessMessage(page);
+                    eObj.SavedSuccessMessage(page);
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
                         var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.InsertionNotSuccessMessage(page);
+                        eObj.SavingFailureMessage(page);
                         
                     }
                 }
@@ -886,7 +886,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.UpdationSuccessMessage(page);
+                    eObj.SavedSuccessMessage(page);
                 }
                 else
                 {
@@ -894,7 +894,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     {
                         var page = HttpContext.Current.CurrentHandler as Page;
 
-                        eObj.UpdationNotSuccessMessage(page);
+                        eObj.SavingFailureMessage(page);
                     }
                 }
 
@@ -1005,7 +1005,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeleteSuccessMessage(page);
+                    eObj.SavedSuccessMessage(page);
                 }
                 else
                 {
@@ -1013,7 +1013,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     {
                         var page = HttpContext.Current.CurrentHandler as Page;
 
-                        eObj.DeletionNotSuccessMessage(page);
+                        eObj.SavingFailureMessage(page);
                     }
                 }
 

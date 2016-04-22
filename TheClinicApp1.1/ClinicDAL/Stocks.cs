@@ -273,7 +273,7 @@ namespace TheClinicApp1._1.ClinicDAL
                    //Success
                    
                    var page = HttpContext.Current.CurrentHandler as Page;
-                   eObj.InsertionSuccessMessage(page);
+                   eObj.SavedSuccessMessage(page);
                }
                 else
                 {

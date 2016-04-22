@@ -1,4 +1,12 @@
-﻿#region Included Namespaces
+﻿
+#region CopyRight
+
+//Author      : Gibin
+//Modified By : SHAMILA T P
+
+#endregion CopyRight
+
+#region Included Namespaces
 
 using System;
 using System.Collections.Generic;
@@ -15,12 +23,10 @@ using TheClinicApp1._1.ClinicDAL;
 
 #endregion  Included Namespaces
 
-
 namespace TheClinicApp1._1.Stock
 {
     public partial class StockIn : System.Web.UI.Page
     {
-
 
         #region Global Variables
         private static int PageSize = 8;
@@ -38,6 +44,42 @@ namespace TheClinicApp1._1.Stock
 
 
         #endregion Global Variables
+
+        #region Events
+
+        #region Page Load
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            string receiptID = string.Empty;
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            rpt.ClinicID = UA.ClinicID.ToString();
+
+            //GridViewStockIN();
+
+            if (!IsPostBack)
+            {
+                BindDummyRow();
+
+            }
+
+            if (Request.QueryString["HdrID"] != null)
+            {
+
+                receiptID = Request.QueryString["HdrID"].ToString();
+
+                rpt.ClinicID = UA.ClinicID.ToString();
+                rpt.DeleteReceiptHeader(receiptID);
+            }
+
+
+        }
+
+        #endregion page Load
+
+        #endregion Events
+
+        #region Methods
 
         #region Bind Dummy Row
 
@@ -62,33 +104,7 @@ namespace TheClinicApp1._1.Stock
 
         #endregion Bind Dummy Row
 
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            string receiptID = string.Empty;
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            rpt.ClinicID = UA.ClinicID.ToString();
-
-            //GridViewStockIN();
-
-            if (!IsPostBack)
-            {
-                BindDummyRow();
-                
-            }
-
-            if (Request.QueryString["HdrID"] != null)
-            {
-
-                receiptID = Request.QueryString["HdrID"].ToString();
-
-                rpt.ClinicID = UA.ClinicID.ToString();
-                rpt.DeleteReceiptHeader(receiptID);
-            }
-
-
-        }
-
+        #region Get Medicines
 
         [WebMethod]
         public static string GetMedicines(string searchTerm, int pageIndex)
@@ -113,7 +129,6 @@ namespace TheClinicApp1._1.Stock
             var xml = GetData(cmd, pageIndex).GetXml();
             return xml;
         }
-
 
         private static DataSet GetData(SqlCommand cmd, int pageIndex)
         {
@@ -143,6 +158,9 @@ namespace TheClinicApp1._1.Stock
             }
         }
 
+        #endregion Get Medicines
+
+        #endregion Methods
 
         public void GridViewStockIN()
         {
@@ -162,7 +180,6 @@ namespace TheClinicApp1._1.Stock
         {
 
         }
-
 
         protected void btNew_ServerClick(object sender, EventArgs e)
         {

@@ -347,6 +347,20 @@ function BindControlsByMedicneName(ControlNo) {
 
             if (PageCalledFrom != 'StockIn') {
                 document.getElementById('txtQuantity' + ControlNo).placeholder = " Out Of: " + MedicineDetails[3];
+
+
+                if (Number(MedicineDetails[3]) <= 0) {
+
+                    $("#txtQuantity" + ControlNo).addClass("warning");
+                    $("#txtQuantity" + ControlNo).attr('type', 'text');
+                    $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
+
+                    $("#txtQuantity" + ControlNo).val('Sorry! Out Of stock');
+
+
+                }
+
+
             }
 
 
@@ -384,7 +398,18 @@ function CheckMedicineIsOutOfStock(ControlNo) {
                 if (document.getElementById('hdnDetailID' + ControlNo).value == "")
                 {
                
-                    if (InputQty > Qty || InputQty <= 0)
+                    if (Qty <= 0) {
+                        $("#txtQuantity" + ControlNo).addClass("warning");
+                        $("#txtQuantity" + ControlNo).attr('type', 'text');
+                        $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
+
+                        $("#txtQuantity" + ControlNo).val('Out Of Stock');
+
+                    }
+
+
+
+                  else  if (InputQty > Qty || InputQty <= 0)
                     {
                         $("#txtQuantity" + ControlNo).addClass("warning");
                         $("#txtQuantity" + ControlNo).attr('type', 'text');
@@ -412,7 +437,20 @@ function CheckMedicineIsOutOfStock(ControlNo) {
                 else
                 {             
                     var QtyInStock = parseInt(document.getElementById('txtQuantity' + ControlNo).getAttribute("placeholder").replace(" Out Of: ", ""));
-                    if (InputQty > QtyInStock || InputQty <= 0 )
+
+
+                    if (QtyInStock <= 0)
+                    {
+                        $("#txtQuantity" + ControlNo).addClass("warning");
+                        $("#txtQuantity" + ControlNo).attr('type', 'text');
+                        $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
+
+                        $("#txtQuantity" + ControlNo).val('Out Of Stock');
+
+                    }
+
+
+                  else  if (InputQty > QtyInStock || InputQty <= 0 )
                     {
                         $("#txtQuantity" + ControlNo).addClass("warning");
                         $("#txtQuantity" + ControlNo).attr('type', 'text');

@@ -49,8 +49,8 @@
 
 
           $(function () {
-              $("[id*=GridView] td:first").click(function () {
-                
+              $("[id*=gvIssueHD] td:first").click(function () {
+                  
                   var DeletionConfirmation = ConfirmDelete();
 
                   if (DeletionConfirmation == true) {
