@@ -32,7 +32,8 @@ namespace TheClinicApp1._1.Stock
         private static int PageSize = 8;
         ClinicDAL.UserAuthendication UA;
         UIClasses.Const Const = new UIClasses.Const();
-
+        
+        public string RoleName = null;
         #endregion Global variables
 
         #region Methods
@@ -135,6 +136,9 @@ namespace TheClinicApp1._1.Stock
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string issueID = string.Empty;
+            lblClinicName.Text = UA.Clinic;
+            string Login = UA.userName;
+            RoleName = UA.GetRoleName(Login);
 
             if (!IsPostBack)
             {
