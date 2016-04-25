@@ -121,7 +121,7 @@
          Patients Registration</div>
          <div class="icon_box">
          <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>
-         <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
+         <a class="Todays_registration_link" data-toggle="modal" data-target="#TokenRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
          <div class="search_div">
@@ -246,41 +246,28 @@
 
                 <!-- Modal content-->
                 
-                <div class="modal-content" style="height:100%;overflow-y:no-display;">
+                <div class="modal-content" style="overflow-y:no-display;">
                     <div class="modal-header" style="background-color:royalblue">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title" style="font-size:20px;color:white;">Token Registration</h4>
 
                     </div>
                     <div class="modal-body" style="background-color:white;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;">
-                        <%--<div class="col-sm-12">
-                        <div class="col-lg-12" style="color:brown;">
-                            Would You Like to Book A Token ?
-                        </div>
-                         
-                        <div class="col-lg-12">
-                            
-                     <asp:Label Text="Select Your Doctor " Font-Size="Large" Font-Bold="true"  runat="server"></asp:Label>
-                            <asp:DropDownList ID="ddlDoctorName" Height="70%" Width="100%" runat="server"></asp:DropDownList>
-                        </div>
-                        <div class="col-lg-12">
-                            <h1 style="color:white;">Good Luck</h1>
-                            <h1 style="color:white;">Good Luck</h1>
-                        </div>
-                      <div class="col-lg-10">
-                           <button type="button" class="close" data-dismiss="modal" style="color:blueviolet;font-size:25px;">>>>Skip</button>
-                        </div>
-                    </div>--%>
+                       
                         <div class="token_id_card">
+                             <div class="name_field">Would You like To Book a Token... <span class="generate_token">?</span></div>
+                            <div class="light_grey">
 
-                        </div>
-                    <div class="modal-footer">
-                        <div class="icon_box">
-         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>
-         <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
-         </div>
-                      <%--<asp:Button ID="btntokenbooking" runat="server" Text="BOOK TOKEN"  type="submit" CssClass="button" OnClick="btntokenbooking_Click" BorderColor="DarkSeaGreen" ForeColor="White" BackColor="#3366ff" ValidationGroup="Submit" formnovalidate />--%>                    
+                            </div>
+                            <div class="card_white">
+                             <asp:Label Text="Select Your Doctor " Font-Size="Large" Font-Bold="true"  runat="server"></asp:Label>
+                            <asp:DropDownList ID="ddlDoctorName" Height="70%" Width="100%" runat="server"></asp:DropDownList>
+                            </div>
+                        </div>                      
+                    <div class="modal-footer" style="background-color:grey;">                       
+                      <ul class="top_right_links"><li><asp:Button ID="btntokenbooking" runat="server" Text="Book" CssClass="button1"  OnClick="btntokenbooking_Click" /><span></span><span></span><span></span></li><li><a class="new" href="#" id="NewA1" data-dismiss="modal" ><span></span>>Skip</a></li></ul>                    
                     </div>
+                       
                     </div>
                 </div>
                 
