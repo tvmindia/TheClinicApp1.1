@@ -60,13 +60,17 @@ var container = $(document.createElement('div')).css({
 });
 
 function RemoveWarning(ControlNo) {
-    //debugger;
+    debugger;
 
     //--------------* To remove warning msg from textbox if the medicine is not out of stock , and is called onfocus event of quantity textbox *-------------------//
-    $("#txtQuantity" + ControlNo).removeClass("warning");
-    $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
-    $("#txtQuantity" + ControlNo).attr('type', 'number');
+    if ($("#txtQuantity" + ControlNo).val == 'Sorry! Out Of stock')
+    {
 
+
+        $("#txtQuantity" + ControlNo).removeClass("warning");
+        $("#txtQuantity" + ControlNo).css({ 'color': 'black' });
+        $("#txtQuantity" + ControlNo).attr('type', 'number');
+    }
 
 }
 
@@ -320,7 +324,7 @@ function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
 
 //-----* Function to bind textboxes by medicine name -- fills textboxes when focus is lost from medicine textbox  *----//
 function BindControlsByMedicneName(ControlNo) {
-   
+    debugger;
   
     if (ControlNo >= 0) {
         var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
@@ -346,7 +350,7 @@ function BindControlsByMedicneName(ControlNo) {
 
 
             if (PageCalledFrom != 'StockIn') {
-                document.getElementById('txtQuantity' + ControlNo).placeholder = " Out Of: " + MedicineDetails[3];
+               
 
 
                 if (Number(MedicineDetails[3]) <= 0) {
@@ -356,8 +360,12 @@ function BindControlsByMedicneName(ControlNo) {
                     $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
 
                     $("#txtQuantity" + ControlNo).val('Sorry! Out Of stock');
+                   
+                    
+                }
 
-
+                else {
+                    document.getElementById('txtQuantity' + ControlNo).placeholder = " Out Of: " + MedicineDetails[3];
                 }
 
 
@@ -380,11 +388,12 @@ function BindControlsByMedicneName(ControlNo) {
 //-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
 function CheckMedicineIsOutOfStock(ControlNo) {
   
-    debugger;
+    if ($("#txtQuantity" + ControlNo).val == 'Sorry! Out Of stock')
+    {
 
     if(   PageCalledFrom != 'StockIn')
 
-     {
+    {
         if (document.getElementById('txtMedicine' + ControlNo) != null && document.getElementById('txtQuantity' + ControlNo) != null)
         {
             var Qty = parseInt(document.getElementById('hdnQty' + ControlNo).value);
@@ -409,7 +418,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
 
 
 
-                  else  if (InputQty > Qty || InputQty <= 0)
+                    else  if (InputQty > Qty || InputQty <= 0)
                     {
                         $("#txtQuantity" + ControlNo).addClass("warning");
                         $("#txtQuantity" + ControlNo).attr('type', 'text');
@@ -450,7 +459,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
                     }
 
 
-                  else  if (InputQty > QtyInStock || InputQty <= 0 )
+                    else  if (InputQty > QtyInStock || InputQty <= 0 )
                     {
                         $("#txtQuantity" + ControlNo).addClass("warning");
                         $("#txtQuantity" + ControlNo).attr('type', 'text');
@@ -477,7 +486,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
                 }
             }
         }
-}
+    }
 
     else
     {
@@ -499,7 +508,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
         }
     }
 
-
+}
 }
 
 
