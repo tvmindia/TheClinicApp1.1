@@ -181,7 +181,7 @@ namespace TheClinicApp1._1.Registration {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtAddress;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAddress;
         
         /// <summary>
         /// txtMobile control.
@@ -202,6 +202,15 @@ namespace TheClinicApp1._1.Registration {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtEmail;
         
         /// <summary>
+        /// HdnFirstInsertID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HdnFirstInsertID;
+        
+        /// <summary>
         /// ddlMarital control.
         /// </summary>
         /// <remarks>
@@ -218,24 +227,6 @@ namespace TheClinicApp1._1.Registration {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtOccupation;
-        
-        /// <summary>
-        /// ddlDoctorName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDoctorName;
-        
-        /// <summary>
-        /// btntokenbooking control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btntokenbooking;
         
         /// <summary>
         /// dtgViewAllRegistration control.

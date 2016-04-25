@@ -165,10 +165,10 @@
       <div class="row field_row">  
       <div class="col-lg-8">
       <div class="row"> 
-      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required pattern="^[A-z][A-z\.\s]+$" title="The Name is required and cannot be empty" /></div>
+      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required pattern="^[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." /></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
-      <img id="ProfilePic" src="~/images/UploadPic1.png" runat="server"  />
+      <img id="ProfilePic" src="~/images/UploadPic1.png" style="height:142px;" runat="server"  />
       </div>
       <div class="upload">
       <label class="control-label">Upload Picture</label>
@@ -176,30 +176,27 @@
       <asp:FileUpload ID="FileUpload1" ForeColor="Green" Font-Size="12px" runat="server" onchange="showpreview(this);" />
       </div>
       </div>
-      <div class="col-lg-8 margin_bottom"><label for="sex">Sex</label>
-          <asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" />
-          <asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" />
+      <div class="col-lg-8"><label for="sex">Sex<asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" /><asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" /></label>
       </div>
-      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" required title="The Age is required and cannot be empty !should be Number" /></div>
+      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" min="1" pattern="\d*" required title="⚠ The Age is required and entry should be Numbers no Negative Values Expected." /></div>
       </div>
       </div>            
       </div>
-      
-      <div class="row field_row">  
-      <div class="col-lg-12">
-      <label for="address">Address</label><textarea id="txtAddress" runat="server" style="width:43%" ></textarea>
-      </div>
+      <div class="row field_row">      
+      <div class="col-lg-8">
+      <label for="address">Address</label><input name="address" id="txtAddress" type="text" runat="server" />
+      </div>      
       </div>
       
       <div class="row field_row">  
       <div class="col-lg-4">
-      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="5" pattern="{10}[0-9]" title="Not a Required Field if enter Only Numbers" />
+      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="5" pattern="{10}[0-9]" title="⚠ This entry can only contain Numbers." />
       </div>
       <div class="col-lg-4">
-      <label for="email">Email</label><input id="txtEmail" runat="server" type="email" name="email" title="The Email should keep a correct format like testname@test.te" />
+      <label for="email">Email</label><input id="txtEmail" runat="server" type="email" name="email" title="⚠ Invalid Email Check format expects testname@test.te" />
       </div>
       </div>
-      
+          <asp:HiddenField ID="HdnFirstInsertID" runat="server" />
       <div class="row field_row">  
       <div class="col-lg-4">
       <label for="marital">Marital</label>
@@ -255,8 +252,8 @@
                         <h4 class="modal-title" style="font-size:20px;color:white;">Token Registration</h4>
 
                     </div>
-                    <div class="modal-body" style="background-color:white;overflow-x:hidden;overflow-y:hidden;height:60%;width:100%;">
-                        <div class="col-sm-12">
+                    <div class="modal-body" style="background-color:white;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;">
+                        <%--<div class="col-sm-12">
                         <div class="col-lg-12" style="color:brown;">
                             Would You Like to Book A Token ?
                         </div>
@@ -273,9 +270,16 @@
                       <div class="col-lg-10">
                            <button type="button" class="close" data-dismiss="modal" style="color:blueviolet;font-size:25px;">>>>Skip</button>
                         </div>
-                    </div>
+                    </div>--%>
+                        <div class="token_id_card">
+
+                        </div>
                     <div class="modal-footer">
-                      <asp:Button ID="btntokenbooking" runat="server" Text="BOOK TOKEN"  type="submit" CssClass="button" OnClick="btntokenbooking_Click" BorderColor="DarkSeaGreen" ForeColor="White" BackColor="#3366ff" ValidationGroup="Submit" formnovalidate />                    
+                        <div class="icon_box">
+         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>
+         <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
+         </div>
+                      <%--<asp:Button ID="btntokenbooking" runat="server" Text="BOOK TOKEN"  type="submit" CssClass="button" OnClick="btntokenbooking_Click" BorderColor="DarkSeaGreen" ForeColor="White" BackColor="#3366ff" ValidationGroup="Submit" formnovalidate />--%>                    
                     </div>
                     </div>
                 </div>
