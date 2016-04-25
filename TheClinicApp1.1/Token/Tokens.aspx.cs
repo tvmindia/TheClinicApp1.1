@@ -39,6 +39,10 @@ namespace TheClinicApp1._1.Token
 
             tokenObj.ClinicID = UA.ClinicID.ToString();
 
+            DataSet gds = tokenObj.ViewToken();
+            lblCaseCount.Text = gds.Tables[0].Rows.Count.ToString();
+
+
             listerfilterbind();
            
 

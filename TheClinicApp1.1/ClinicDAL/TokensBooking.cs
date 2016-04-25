@@ -242,7 +242,7 @@ namespace TheClinicApp1._1.ClinicDAL
             try
             {
             
-            DateTime now = DateTime.Now;
+            //DateTime now = DateTime.Now;
             dbConnection dcon = new dbConnection();
             con = dcon.GetDBConnection();
             SqlCommand cmd = new SqlCommand();
@@ -254,7 +254,7 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
             cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PatientID);
         
-            cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+            //cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
             cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
           
