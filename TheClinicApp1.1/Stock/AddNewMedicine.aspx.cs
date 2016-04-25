@@ -42,15 +42,36 @@ namespace TheClinicApp1._1.Stock
         {
             txtmedicineName.Text = "";
             txtCode.Text = "";
-            txtUnit.Text = "";
+            //txtUnit.Text = "";
             txtOrderQuantity.Text = "";
             BindCategory();
+            BindUnits();
         }
 
 
         #endregion Clear Controls
 
-        #region Bind Category
+        #region Bind Units DropDown
+
+        public void BindUnits()
+        {
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            StockObj.ClinicID = UA.ClinicID.ToString();
+
+
+            ddlUnits.DataSource = StockObj.ViewUnits();
+            ddlUnits.DataTextField = "Description";
+            ddlUnits.DataValueField = "Code";
+            ddlUnits.DataBind();
+
+            ddlUnits.Items.Insert(0, "--Select--");
+            
+        }
+
+        #endregion Bind Units DropDown
+
+        #region Bind Category DropDown
         public void BindCategory()
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -65,7 +86,7 @@ namespace TheClinicApp1._1.Stock
             ddlCategory.Items.Insert(0, "--Select--");
 
         }
-        #endregion Bind Category
+        #endregion Bind Category DropDown
 
         #region Add New Medicine
         public void AddMedicine()
@@ -124,7 +145,8 @@ namespace TheClinicApp1._1.Stock
                 StockObj.ReOrderQty = Convert.ToInt32(txtOrderQuantity.Text);
                 StockObj.ClinicID = UA.ClinicID.ToString();
                 StockObj.CreatedBy = UA.userName;
-                StockObj.Unit = txtUnit.Text;
+                //StockObj.Unit = txtUnit.Text;
+                StockObj.Unit = ddlUnits.SelectedItem.Text;
 
                 StockObj.InsertMedicines();
                 hdnManageGridBind.Value = "True";
@@ -150,6 +172,22 @@ namespace TheClinicApp1._1.Stock
 
         #endregion  Validate Medicine Name
 
+        #region Validate Medicine Code
+        [WebMethod]
+        public static bool ValidateMedicineCode(string MedicineCode)
+        {
+            Stocks StockObj = new Stocks();
+
+            if (StockObj.ValidateMedicineCode(MedicineCode))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion  Validate Medicine Code
+
+
         #endregion Methods
 
         #region Events
@@ -159,6 +197,7 @@ namespace TheClinicApp1._1.Stock
             if (!IsPostBack)
             {
                 BindCategory();
+                BindUnits();
             }
 
         }
@@ -167,7 +206,7 @@ namespace TheClinicApp1._1.Stock
 
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
-           
+            AddMedicine();
 
         }
 
@@ -179,13 +218,13 @@ namespace TheClinicApp1._1.Stock
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            AddMedicine();
+            //AddMedicine();
         }
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
-            Errorbox.Attributes.Add("style", "display:none");
-            ClearControls();
+            //Errorbox.Attributes.Add("style", "display:none");
+            //ClearControls();
         }
 
        

@@ -40,6 +40,11 @@
                 var errLname = document.getElementById('<%=errorLnames.ClientID %>');
                 errLname.style.display = "none";
 
+                var CodeAvailableImage = document.getElementById('<%=imgCodeAvailable.ClientID %>');
+                 CodeAvailableImage.style.display = "none";
+                 var CodeUnavailableImage = document.getElementById('<%=imgCodeUnavailable.ClientID %>');
+                 CodeUnavailableImage.style.display = "none";
+
   $('.alert_close').click(function () {
                 
                 $(this).parent(".alert").hide();
@@ -66,7 +71,8 @@
 
         //---------------* Function to check medicine name duplication *-----------------//
 
-        function CheckMedicineNameDuplication(txtmedicineName) {
+        function CheckMedicineNameDuplication(txtmedicineName)
+        {
             
             var name = document.getElementById('<%=txtmedicineName.ClientID %>').value;
             name = name.replace(/\s/g, '');
@@ -95,6 +101,44 @@
 
             }
         }
+
+
+        function CheckMedicineCodeDuplication(txtCode) {
+
+            var name = document.getElementById('<%=txtCode.ClientID %>').value;
+            name = name.replace(/\s/g, '');
+
+            PageMethods.ValidateMedicineCode(name, OnSuccess, onError);
+
+            function OnSuccess(response, userContext, methodName) {
+
+                var CodeAvailableImage = document.getElementById('<%=imgCodeAvailable.ClientID %>');
+                var CodeUnavailableImage = document.getElementById('<%=imgCodeUnavailable.ClientID %>');
+                if (response == false) {
+
+                    CodeAvailableImage.style.display = "block";
+                    CodeUnavailableImage.style.display = "none";
+
+                }
+                if (response == true) {
+                    CodeUnavailableImage.style.display = "block";
+                    CodeUnavailableImage.style.color = "Red";
+                    CodeUnavailableImage.innerHTML = "Name Alreay Exists"
+                    CodeAvailableImage.style.display = "none";
+
+                }
+            }
+            function onError(response, userContext, methodName) {
+
+            }
+        }
+
+
+
+
+
+
+
 
 
         function HideErrorMsg()
@@ -131,11 +175,39 @@
 
         function RemoveRequiredAttribute()
         {
+            debugger;
+
             document.getElementById('<%=txtmedicineName.ClientID %>').required = false;
             document.getElementById('<%=txtCode.ClientID %>').required = false;
-            document.getElementById('<%=txtUnit.ClientID %>').required = false;
+           
             document.getElementById('<%=txtOrderQuantity.ClientID %>').required = false;
+
+           <%-- document.getElementById('<%=RequiredFieldValidator1.ClientID %>').innerText = '';
+            document.getElementById('<%=RequiredFieldValidator2.ClientID %>').innerText = '';
+            document.getElementById('<%=RequiredFieldValidator3.ClientID %>').innerText = '';
+            document.getElementById('<%=RequiredFieldValidator4.ClientID %>').innerText = '';
+
+            document.getElementById('<%=RegularExpressionValidator1.ClientID %>').innerText = '';--%>
+            document.getElementById('<%=RequiredFieldValidator1.ClientID %>').style.color = "white";
+            document.getElementById('<%=RequiredFieldValidator2.ClientID %>').style.color = "white";
+            document.getElementById('<%=RequiredFieldValidator3.ClientID %>').style.color = "white";
+            document.getElementById('<%=RequiredFieldValidator4.ClientID %>').style.color = "white";
+            document.getElementById('<%=RegularExpressionValidator1.ClientID %>').style.color = "white";
         }
+
+
+        function AddValidators()
+        {
+            document.getElementById('<%=RequiredFieldValidator1.ClientID %>').style.color = "red";
+            document.getElementById('<%=RequiredFieldValidator2.ClientID %>').style.color = "red";
+            document.getElementById('<%=RequiredFieldValidator3.ClientID %>').style.color = "red";
+            document.getElementById('<%=RequiredFieldValidator4.ClientID %>').style.color = "red";
+
+
+            document.getElementById('<%=RegularExpressionValidator1.ClientID %>').style.color = "red";
+        }
+
+
 
     </script>
 </asp:Content>
@@ -191,14 +263,18 @@ border-spacing:0.5em;">
                     </td>
                     <td >
                         <asp:TextBox ID="txtmedicineName" runat="server" onchange="CheckMedicineNameDuplication(this)" required></asp:TextBox>
-
+                        <asp:RequiredFieldValidator id="RequiredFieldValidator3" runat="server"
+  ControlToValidate="txtmedicineName"
+  ErrorMessage="Please fill out this field"
+  ForeColor="Red">
+</asp:RequiredFieldValidator>
                     </td>
 
                     <td style="width:10%;border:none;">
 
- <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login Name is Available" ImageUrl="~/Images/Check.png" Width="90%" Height="18%" />
+ <asp:Image ID="imgWebLnames" runat="server" ToolTip="Medicine Name is Available" ImageUrl="~/Images/Check.png" Width="90%" Height="18%" />
 
-                    <asp:Image ID="errorLnames" runat="server" ToolTip="Login Name is Unavailable" ImageUrl="~/Images/newClose.png" />
+                    <asp:Image ID="errorLnames" runat="server" ToolTip="Medicine Name is Unavailable" ImageUrl="~/Images/newClose.png" />
 
                     </td>
                    
@@ -211,10 +287,18 @@ border-spacing:0.5em;">
 
                     </td>
                     <td >
-                        <asp:TextBox ID="txtCode" runat="server" required></asp:TextBox>
-
+                        <asp:TextBox ID="txtCode" runat="server"   onchange="CheckMedicineCodeDuplication(this)" required></asp:TextBox>
+                         <asp:RequiredFieldValidator id="RequiredFieldValidator4" runat="server"
+  ControlToValidate="txtCode"
+  ErrorMessage="Please fill out this field"
+  ForeColor="Red">
+</asp:RequiredFieldValidator>
                     </td>
-                    <td ></td>
+                    <td >
+                         <asp:Image ID="imgCodeAvailable" runat="server" ToolTip="Medicine Code is Available" ImageUrl="~/Images/Check.png" Width="90%" Height="18%" />
+
+                    <asp:Image ID="imgCodeUnavailable" runat="server" ToolTip="Medicine Code is Unavailable" ImageUrl="~/Images/newClose.png" />
+                    </td>
                 </tr>
 
                 <tr>
@@ -224,16 +308,16 @@ border-spacing:0.5em;">
                             <ContentTemplate>
                                 <asp:DropDownList ID="ddlCategory" CssClass="Dropdown" runat="server" AutoPostBack="true">
                                 </asp:DropDownList>
-                                <%--  <asp:RequiredFieldValidator
+                                  <asp:RequiredFieldValidator
              ID="RequiredFieldValidator1"
              runat="server"
              ControlToValidate="ddlCategory"
              InitialValue="--Select--"
              ErrorMessage="* Please select an item."
              ForeColor="Red"
-             Font-Names="Impact"
+            
              >
-        </asp:RequiredFieldValidator>--%>
+        </asp:RequiredFieldValidator>
                             </ContentTemplate>
                         </asp:UpdatePanel>
 
@@ -245,9 +329,25 @@ border-spacing:0.5em;">
                 <tr>
                     <td >Unit</td>
                     <td>
-                        <asp:TextBox ID="txtUnit" runat="server" required></asp:TextBox>
+                        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                            <ContentTemplate>
+                                <asp:DropDownList ID="ddlUnits" CssClass="Dropdown" runat="server" AutoPostBack="true">
+                                </asp:DropDownList>
+                                 <asp:RequiredFieldValidator
+             ID="RequiredFieldValidator2"
+             runat="server"
+             ControlToValidate="ddlUnits"
+             InitialValue="--Select--"
+             ErrorMessage="* Please select an item."
+             ForeColor="Red"
+            
+             >
+        </asp:RequiredFieldValidator>
+                                  </ContentTemplate>
+                        </asp:UpdatePanel>
+                        <%--<asp:TextBox ID="txtUnit" runat="server" required></asp:TextBox>--%>
 
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator2"
+                     <%--   <asp:RegularExpressionValidator ID="RegularExpressionValidator2"
                             ControlToValidate="txtUnit"
                             ValidationExpression="^[a-zA-Z ]+$"
                             Display="Static"
@@ -256,7 +356,7 @@ border-spacing:0.5em;">
                             MinimumValue="1"
                             Type="text"
                             Text="Please enter a valid unit!"
-                            runat="server" />
+                            runat="server" />--%>
                     </td>
                    <td></td>
                 </tr>
@@ -273,7 +373,7 @@ border-spacing:0.5em;">
                             ForeColor="Red"
                             MinimumValue="1"
                             Type="Integer"
-                            Text="Please enter a quantity greater than 0!"
+                            Text="* Please enter a quantity greater than 0!"
                             runat="server" />
 
                     </td>
@@ -287,11 +387,15 @@ border-spacing:0.5em;">
            
         </table>
 
-    
-
-         
-          <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnSave_Click" ValidationGroup="Required" />
-        <asp:Button ID="btnNew" runat="server" Text="New" CssClass="w3-btn w3-section w3-teal w3-ripple" Width="45%" OnClick="btnNew_Click" ValidationGroup="Required" OnClientClick="RemoveRequiredAttribute();"  />
+    <div class="grey_sec">
+      <ul class="top_right_links">
+                                   
+                                    <li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" onclick="AddValidators();"><span></span>Save</a></li>
+                                    <li><a class="new" id="btnNew"  href="StockOutDetails.aspx" runat="server" onserverclick="btnNew_ServerClick" onclick="RemoveRequiredAttribute();"><span></span>New</a></li>
+                                </ul>
+         </div>
+    <%-- <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="save" Width="45%" OnClick="btnSave_Click" ValidationGroup="Required" />
+        <asp:Button ID="btnNew" runat="server" Text="New" CssClass="new" Width="45%" OnClick="btnNew_Click" ValidationGroup="Required" OnClientClick="RemoveRequiredAttribute();"  />--%>
         </div>
        <%-- </ContentTemplate>
     </asp:UpdatePanel>--%>

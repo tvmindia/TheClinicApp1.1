@@ -332,25 +332,7 @@
                    <asp:BoundField DataField="IssueID" HeaderText="IssueID"  ItemStyle-CssClass="Match"  />
                 
             </Columns>
-            <EditRowStyle BackColor="#0080AA"></EditRowStyle>
-
-            <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
-
-            <HeaderStyle BackColor="#3FBF7F" Font-Bold="True" ForeColor="White"></HeaderStyle>
-
-            <PagerStyle HorizontalAlign="Center" ForeColor="White" BackColor="#2461BF"></PagerStyle>
-
-            <RowStyle BackColor="#EFF3FB"></RowStyle>
-
-            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
-
-            <SortedAscendingCellStyle BackColor="#F5F7FB"></SortedAscendingCellStyle>
-
-            <SortedAscendingHeaderStyle BackColor="#6D95E1"></SortedAscendingHeaderStyle>
-
-            <SortedDescendingCellStyle BackColor="#E9EBEF"></SortedDescendingCellStyle>
-
-            <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
+           
         </asp:GridView>
               <div class="Pager">
 
@@ -397,7 +379,7 @@
         
         <h4 class="modal-title">Add New Medicine</h4>
       </div>
-      <div class="modal-body"  style="height:400px;">
+      <div class="modal-body"  style="height:500px;">
 
             <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
        

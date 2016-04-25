@@ -237,6 +237,9 @@ namespace TheClinicApp1._1.Doctor
         }
         #endregion FillPatientDetails
 
+        
+
+
         #region Update Visits
         protected void ImgBtnUpdateVisits_Command(object sender, CommandEventArgs e)
         {

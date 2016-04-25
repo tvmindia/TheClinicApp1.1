@@ -38,7 +38,7 @@ namespace TheClinicApp1._1.Stock
 
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
-        public string RoleName = null;
+
         #endregion objects
 
         #region Methods
@@ -197,10 +197,9 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            lblClinicName.Text = UA.Clinic;
-            string Login = UA.userName;
-            RoleName = UA.GetRoleName(Login);
+     var today =        DateTime.Now.ToString("dd/MM/yyyy");
+     txtDate1.Value = today;
+
             txtDate1.Attributes.Add("readonly", "readonly");
             btSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','" + hdnRemovedIDs.ClientID + "')");
 
@@ -294,7 +293,7 @@ namespace TheClinicApp1._1.Stock
             string msg = string.Empty;
 
 
-            if ((txtBillNo.Text != string.Empty) && (txtRefNo2.Text != string.Empty) && (txtDate1.Value != string.Empty))
+            if ((txtBillNo.Text != string.Empty)  && (txtDate1.Value != string.Empty))
             {
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
@@ -335,7 +334,7 @@ namespace TheClinicApp1._1.Stock
                     if (hdnTextboxValues.Value != "")
                     {
 
-                        if ((txtBillNo.Text != string.Empty) && (txtRefNo2.Text != string.Empty) && (txtDate1.Value != string.Empty))
+                        if ((txtBillNo.Text != string.Empty)  && (txtDate1.Value != string.Empty))
                         {
 
                             rpt.ClinicID = UA.ClinicID.ToString();

@@ -20,7 +20,7 @@
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
-
+    <link href="../css/main.css" rel="stylesheet" />
     <script src="../js/jquery-1.9.1.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
 
@@ -51,6 +51,7 @@
             });       
         });
     </script>
+
      <script>
 
 
@@ -64,12 +65,16 @@
 
          }
 
+         </script>
 
-
-       </script>
+     
 
 
     <script>
+
+     
+
+
         
         function bindPatientDetails()
         {
@@ -148,15 +153,15 @@
         <div class="right_part">
             <div class="tagline">
                 <a class="nav_menu">nav</a>
-                Need Tokens..
+                 Tokens
             </div>
             <div class="icon_box">
-                <a class="all_token_link" data-toggle="modal" data-target="#all_token"><span title="All Tokens" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllTokenIframe')">
+                <a class="all_token_link" data-toggle="modal" data-target="#all_token"><span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span><span title="All Tokens" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllTokenIframe')">
                     <img src="../images/tokens.png" /></span></a>
             </div>
             <div class="grey_sec">
                 <div class="search_div">
-                    <input class="field" id="txtSearch" onblur="bindPatientDetails()"  name="txtSearch" type="search" placeholder="Search here..." />
+                    <input class="field" id="txtSearch"  onblur="bindPatientDetails()"  name="txtSearch" type="search" placeholder="Search here..." />
                   <%--  <input class="button" onserverclick="btnSearch_ServerClick" runat="server"  value="Search" />--%>
                       <input class="button"   type="button" value="Search" />
                 </div>
@@ -199,12 +204,10 @@
 
             <div >
                   <div  class="alert alert-info">
-                        <strong>
-                            <label> Guide Lines</label>
-                        </strong>                       
-                      <label> Search & Select Patient >> Check Patient Details >> Select Doctor >> Book Token >> Check Booking Details >>Click NEW for New Booking  </label> 
+                                      
+                      <label> Search & Select a Patient, then Book Token  </label> 
                   
-
+                      <a class="alert_close">X</a>
                     </div>
 
                 <div class="token_id_card">
