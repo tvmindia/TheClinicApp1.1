@@ -286,12 +286,12 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="border-color:royalblue">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         
         <h4 class="modal-title">Add New Medicine</h4>
       </div>
-      <div class="modal-body" style="height:400px;">
+      <div class="modal-body" style="height:500px;">
 
              <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
         <%--<table class="table" width="100%" border="0">

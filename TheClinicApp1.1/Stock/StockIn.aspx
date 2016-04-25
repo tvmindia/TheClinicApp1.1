@@ -313,8 +313,8 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                        <asp:BoundField DataField="RefNo1" HeaderText="Reference Number1" ItemStyle-CssClass="Match" />
-                        <asp:BoundField DataField="RefNo2" HeaderText="Reference Number2" ItemStyle-CssClass="Match"/>
+                        <asp:BoundField DataField="RefNo1" HeaderText="Ref No" ItemStyle-CssClass="Match" />
+                        <asp:BoundField DataField="RefNo2" HeaderText="Additional Ref No" ItemStyle-CssClass="Match"/>
                         <asp:BoundField HeaderText="Date"  DataFormatString="{0:dd/MM/yyyy}"   DataField="Date" ItemStyle-CssClass="Match"/>
 
                           <asp:BoundField  HeaderText="Details"  ItemStyle-CssClass="Match"  /> 
@@ -362,7 +362,7 @@
         
         <h4 class="modal-title">Add New Medicine</h4>
       </div>
-      <div class="modal-body" style="height:400px;">
+      <div class="modal-body" style="height:500px;">
 
            <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
 
