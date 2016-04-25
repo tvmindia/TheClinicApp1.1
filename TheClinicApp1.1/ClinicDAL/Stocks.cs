@@ -130,7 +130,9 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
             finally
             {
@@ -144,6 +146,48 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion Validate Medicine Name
+
+
+        #region Validate Medicine Code
+        public bool ValidateMedicineCode(string InputMedicineCode)
+        {
+            bool flag;
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckMedicineCodeDuplication", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@MedicineCode", SqlDbType.VarChar, 20).Value = InputMedicineCode;
+                SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
+                outflag.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                flag = (bool)outflag.Value;
+                if (flag == true)
+                {
+                    return flag;
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+            return false;
+        }
+
+        #endregion Validate Medicine Code
 
         #region View Categories
 
@@ -193,6 +237,58 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion View Categories
+
+        #region View Units
+
+        public DataSet ViewUnits()
+        {
+
+            dbConnection dcon = null;
+            DataSet dsunits = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ViewUnits";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                dsunits = new DataSet();
+                sda.Fill(dsunits);
+
+               
+
+            }
+
+            catch (Exception ex)
+            {
+
+                //throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+            return dsunits;
+        }
+
+        #endregion View Units
+
 
         #region SearchBoxMedicine
         public DataTable SearchBoxMedicine()
@@ -275,11 +371,19 @@ namespace TheClinicApp1._1.ClinicDAL
                    var page = HttpContext.Current.CurrentHandler as Page;
                    eObj.SavedSuccessMessage(page);
                }
+
+                else if (Outputval == 2)
+                {
+                    //Already exists! Medicine Code
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.AlreadyExistsMessage(page);
+                }
+
                 else
                 {
-                    if(Outputval == 0)
+                    if(Outputval == 0) 
                     {
-                        //Already exists!
+                        //Already exists! Medicine name
                         var page = HttpContext.Current.CurrentHandler as Page;
                         eObj.AlreadyExistsMessage(page);
                     }

@@ -14,8 +14,8 @@
             position:fixed;
             z-index:-1;
         }
-
-         .auto-style2 {
+ 
+  .auto-style2 {
             width: 203px;
             height: 117px;
             left:40%;
@@ -42,6 +42,9 @@
                 AllRegistrationIframe.src="../Login/Forgot.aspx";
             }
         }
+
+         
+
     </script>
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <link href="../css/materialize.min.css" rel="stylesheet" />
@@ -54,11 +57,11 @@
     </div>    
     <div class="login">         
         <div class="input-field ">
-          <input id="username" runat="server" type="text"  class="validate" style="color:saddlebrown;font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif" />
+          <input id="username" runat="server" type="text"  class="validate" style="color:white;font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif" autocomplete="off" />
           <label for="username" class="captions">User Name</label>
         </div>                
         <div class="input-field">
-          <input id="password" type="password" class="validate" runat="server" style="color:saddlebrown;" />
+          <input id="password" type="password" class="validate" runat="server" style="color:white;" readonly onfocus="this.removeAttribute('readonly');" />
           <label for="password" class="captions">Password</label>
         </div>
        
@@ -78,7 +81,7 @@
     <button id="bt_forgot" onclick="SetIframeSrc('AllRegistrationIframe'),document.getElementById('id01').style.display='block'" class="w3-btn" style="background-color:transparent;color:white;">Forget Password?</button> 
         <div id="id01" class="w3-modal" runat="server">
   <span onclick="document.getElementById('id01').style.display='none'" 
-  class="w3-closebtn w3-hover-red w3-container w3-padding-16 w3-display-topright w3-xxlarge">×</span>
+  class="w3-closebtn w3-hover-red w3-container w3-padding-16 w3-display-topright w3-xxlarge" style="color:white">×</span>
   <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px;height:372px;">  
               <iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>
   </div>

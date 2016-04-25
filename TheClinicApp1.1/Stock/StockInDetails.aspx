@@ -23,6 +23,7 @@
     <script>
         $(document).ready(function () {
 
+
            $('.nav_menu').click(function () {
                 
                 $(".main_body").toggleClass("active_close");
@@ -51,13 +52,11 @@
 
               
         $("[id$=txtDate1]").datepicker({
-            dateFormat: 'dd-mm-yy',
+            dateFormat: 'dd-mm-yy' 
             
            
         });           
-            
-
-
+       
         GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
         RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
 
@@ -234,7 +233,7 @@
 
                                 <table class="details_table" style="width:100%"  border="0">
                                     <tr>
-                                        <td>Bill No</td>
+                                        <td>Ref No</td>
                                         <td>
                                             <asp:TextBox ID="txtBillNo" TabIndex="1" runat="server"></asp:TextBox>
                                         </td>
@@ -246,7 +245,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Bill No2</td>
+                                        <td>Additional Ref No</td>
                                         <td>
                                             <asp:TextBox ID="txtRefNo2" TabIndex="3" runat="server"></asp:TextBox>
                                         </td>
@@ -331,7 +330,7 @@
 
                     <h4 class="modal-title">Add New Medicine</h4>
                 </div>
-                <div class="modal-body" style="height:400px;">
+                <div class="modal-body" style="height:500px;">
 
                      <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
 

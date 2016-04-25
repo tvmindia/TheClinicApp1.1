@@ -345,9 +345,9 @@
                                             <asp:TextBox ID="txtIssueNO" Width="80%" runat="server" required onchange="CheckIssueNoDuplication(this)"></asp:TextBox></td>
 
                                         <td width="10%">
-                                            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login Name is Available" ImageUrl="~/Images/Check.png" Width="30%" Height="10%" />
+                                            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Issue No is Available" ImageUrl="~/Images/Check.png" Width="30%" Height="10%" />
 
-                                            <asp:Image ID="errorLnames" runat="server" ToolTip="Login Name is Unavailable" ImageUrl="~/Images/newClose.png" /></td>
+                                            <asp:Image ID="errorLnames" runat="server" ToolTip="Issue No is Unavailable" ImageUrl="~/Images/newClose.png" /></td>
 
                                         <td>Date</td>
                                         <td>
@@ -445,7 +445,7 @@
 
                     <h4 class="modal-title">Add New Medicine</h4>
                 </div>
-                <div class="modal-body" style="height:400px;">
+                <div class="modal-body" style="height:500px;">
 
                      <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
 

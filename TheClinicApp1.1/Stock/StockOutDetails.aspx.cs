@@ -36,8 +36,7 @@ namespace TheClinicApp1._1.Stock
         ClinicDAL.UserAuthendication UA;
         IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
         ErrorHandling eObj = new ErrorHandling();
-       
-        public string RoleName = null;
+
         public string listFilter = null;
         DataTable dtIssuehdr = null;
 
@@ -267,10 +266,9 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            lblClinicName.Text = UA.Clinic;
-            string Login = UA.userName;
-            RoleName = UA.GetRoleName(Login);
+            var today = DateTime.Now.ToString("dd/MM/yyyy");
+            txtDate1.Text = today;
+
             txtDate1.Attributes.Add("readonly", "readonly");
 
             btnSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','"+hdnRemovedIDs.ClientID+"')");
