@@ -15,7 +15,7 @@
                                 <Columns>
                                     <asp:TemplateField HeaderText="">
                                         <ItemTemplate>
-                                            <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/images/Cancel.png" Width="25px" OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" />
+                                            <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/images/Cancel.png"   OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" />
 
                                         </ItemTemplate>
                                     </asp:TemplateField>
