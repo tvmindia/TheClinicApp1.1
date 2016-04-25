@@ -204,9 +204,9 @@
       <div class="col-lg-4">
       <label for="marital">Marital</label>
           <asp:DropDownList ID="ddlMarital" runat="server" Width="100%" Height="40px">
-              <asp:ListItem Value="3">Single</asp:ListItem>
-              <asp:ListItem Value="1">Married</asp:ListItem>
-              <asp:ListItem Value="2">Divorced</asp:ListItem>
+              <asp:ListItem Value="Single" Text="Single"></asp:ListItem>
+              <asp:ListItem Value="Married" Text="Married"></asp:ListItem>
+              <asp:ListItem Value="Divorced" Text="Divorced"></asp:ListItem>
           </asp:DropDownList>
       </div>
       <div class="col-lg-4">
@@ -294,7 +294,7 @@
                     </div>
                     <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;" >
                         <div class="col-sm-12">                        
-                        <asp:GridView ID="dtgViewAllRegistration" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5" Width="100%" height="50%">                            
+                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5" Width="100%">                            
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField>
@@ -355,7 +355,7 @@
                         <h3 class="modal-title">Todays Registrations</h3>
 
                     </div>
-                    <div class="modal-body" style="width:100%;height:100%">
+                    <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;">
                      <div class="col-sm-12">
                         <asp:GridView ID="dtgViewTodaysRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None">
                             <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>

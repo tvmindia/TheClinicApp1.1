@@ -78,6 +78,7 @@
   
           
             var PatientName = document.getElementById("txtSearch").value;
+            document.getElementById('<%=lblToken.ClientID%>').innerHTML="_";
        
                      
             var file=PatientName.split('📝')      
@@ -201,9 +202,9 @@
                         <strong>
                             <label> Guide Lines</label>
                         </strong>                       
-                      <label> Search & Select Patient >> Check Patient Details >> Select Doctor >> Book Token >> Check Booking Details >>Click NEW for New Booking  </label> 
+                      <label> Search & Select Patient, Then Book Token  </label> 
                   
-
+                      <a class="alert_close">X</a>
                     </div>
 
                 <div class="token_id_card">

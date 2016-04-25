@@ -270,15 +270,13 @@ namespace TheClinicApp1._1.Registration
                         PatientObj.Gender = "Female";
                     }
                 }
-
+                PatientObj.MaritalStatus = ddlMarital.SelectedItem.ToString();
                 PatientObj.Occupation = (txtOccupation.Value != "") ? txtOccupation.Value.ToString() : null;
                 PatientObj.CreatedBy = UA.userName;
                 PatientObj.UpdatedBy = UA.userName;
                 if (PatientObj.Name != null)
                 {
-                    //string filenum = "F" + clinID.Substring(0, 4) + txtName.Value.Substring(0, 3) + txtMobile.Value.Substring(7, 3);
-                    //PatientObj.FileNumber = filenum.Trim();
-
+                    
                     PatientObj.FileNumber = PatientObj.Generate_File_Number().ToString();
 
 
@@ -321,7 +319,10 @@ namespace TheClinicApp1._1.Registration
                 }
                 gridDataBind();
                 lblFileCount.Text = PatientObj.FileNumber;
-                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
+                if (HiddenField1.Value == "")
+                {
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
+                }
             }
             catch
             {
@@ -365,7 +366,7 @@ namespace TheClinicApp1._1.Registration
                     txtMobile.Value = dr["Phone"].ToString();
                     txtEmail.Value = dr["Email"].ToString();
                     string Status = dr["MaritalStatus"].ToString();
-                    ddlMarital.Text = Status;
+                    ddlMarital.SelectedValue = Status;
                     txtOccupation.Value = dr["Occupation"].ToString();
 
                     ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();

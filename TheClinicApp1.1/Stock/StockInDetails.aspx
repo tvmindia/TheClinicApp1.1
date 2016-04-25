@@ -23,6 +23,7 @@
     <script>
         $(document).ready(function () {
 
+
            $('.nav_menu').click(function () {
                 
                 $(".main_body").toggleClass("active_close");
@@ -51,13 +52,11 @@
 
               
         $("[id$=txtDate1]").datepicker({
-            dateFormat: 'dd-mm-yy',
+            dateFormat: 'dd-mm-yy' 
             
            
         });           
-            
-
-
+       
         GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
         RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
 
@@ -157,14 +156,14 @@
                     <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
             </div>
             <ul class="menu">
-                <li id="patients"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
-                <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
-                <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
-                <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
-                <li id="stock" class="active"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
+                <li id="patients"><a name="hello" onclick="selectTile('patients','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+                <li id="token"><a name="hello" onclick="selectTile('token','<%=RoleName %>')"><span class="icon token"></span><span class="text">Token</span></a></li>
+                <li id="doctor"><a name="hello" onclick="selectTile('doctor','<%=RoleName %>')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+                <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName %>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
+                <li id="stock" class="active"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
             </ul>
 
-            <p class="copy">&copy;Trithvam Ayurveda</p>
+            <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
         </div>
 
 
@@ -234,7 +233,7 @@
 
                                 <table class="details_table" style="width:100%"  border="0">
                                     <tr>
-                                        <td>Bill No</td>
+                                        <td>Ref No</td>
                                         <td>
                                             <asp:TextBox ID="txtBillNo" TabIndex="1" runat="server"></asp:TextBox>
                                         </td>
@@ -246,7 +245,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Bill No2</td>
+                                        <td>Additional Ref No</td>
                                         <td>
                                             <asp:TextBox ID="txtRefNo2" TabIndex="3" runat="server"></asp:TextBox>
                                         </td>
@@ -331,7 +330,7 @@
 
                     <h4 class="modal-title">Add New Medicine</h4>
                 </div>
-                <div class="modal-body" style="height:400px;">
+                <div class="modal-body" style="height:500px;">
 
                      <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
 

@@ -138,7 +138,14 @@ namespace TheClinicApp1._1.Doctor
             VisitsObj.LymphClinic = (lymphnodes.Value != "") ? lymphnodes.Value.ToString() : null;
             VisitsObj.RespRate = (resp_rate.Value != "") ? resp_rate.Value.ToString() : null;
             VisitsObj.Others = (others.Value != "") ? others.Value.ToString() : null;
-            VisitsObj.AddVisits();
+            if (HdnForVisitID.Value == "")
+            {
+                VisitsObj.AddVisits();
+            }
+            else
+            {
+                VisitsObj.UpdateVisits();
+            }
             if (VisitsObj.PrescriptionID!=Guid.Empty)
             { 
             
@@ -267,6 +274,7 @@ namespace TheClinicApp1._1.Doctor
             others.Value = CaseFileObj.Others;
             
             string PrescriptionID = Visits[1];
+            HdnForVisitID.Value=Visits[0];
             DataSet MedicinList = PrescriptionObj.ViewPrescriptionDetails(PrescriptionID);
             var xml = MedicinList.GetXml();
             hdnXmlData.Value = xml;
@@ -287,5 +295,10 @@ namespace TheClinicApp1._1.Doctor
 
         }
         #endregion GridBindTokens
+
+        protected void btnNew_ServerClick(object sender, EventArgs e)
+        {
+            HdnForVisitID.Value = string.Empty;
+        }
     }
 }
