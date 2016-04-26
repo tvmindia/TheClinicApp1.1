@@ -13,12 +13,17 @@ namespace TheClinicApp1._1.Login
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         public string RoleName = null;
+        public string From = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
+
+            if (Request.QueryString["From"] != null) {
+                From = Request.QueryString["From"].ToString();
+            }
         }
     }
 }
