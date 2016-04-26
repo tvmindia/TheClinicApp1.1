@@ -45,7 +45,7 @@
                 $(".main_body").toggleClass("active_close");
             });
           
-         
+        
             var ac=null;
    debugger;
 
@@ -56,9 +56,6 @@
             {        
 
              var name= ac[i].split('🏠');
-
-
-
              projects.push({  value : name[0], label: name[0], desc: name[1]})   
    
             }
@@ -76,8 +73,7 @@
          select: function( event, ui ) {
         $( "#project" ).val( ui.item.label );
       
-        $( "#project-description" ).html( ui.item.desc );
-        
+        $( "#project-description" ).html( ui.item.desc );        
  
         return false;
       }
@@ -86,44 +82,24 @@
       return $( "<li>" )
         .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
         .appendTo( ul );
-    };
-             
-            });       
-       
- 
-
+    };             
+            });   
     </script>
 
     <script>
-
-
-         function SetIframeSrc(HyperlinkID) {
-          
+         function SetIframeSrc(HyperlinkID) {          
              if (HyperlinkID == "AllTokenIframe") {
                  var AllTokenIframe = document.getElementById('AllTokenIframe');
                  AllTokenIframe.src = "ViewTokens.aspx";
                  //$('#OutOfStock').modal('show');
              }
-
          }
-
-    </script>
-
-
-
-
-    <script>
-
-     
-
-
-        
+    </script>    
+    <script> 
         function bindPatientDetails()
         {
             debugger;
-
-  
-          
+ 
             var PatientName = document.getElementById("project-description").innerText;
             document.getElementById('<%=lblToken.ClientID%>').innerHTML="_";
        
@@ -243,17 +219,19 @@
                 <div class="alert alert-danger" style="display: none">
                     <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
                 </div>
-            </div>
 
-
-
-            <div>
-                <div class="alert alert-info">
+                    <div class="alert alert-info"   id="info"  >
 
                     <label>Search & Select a Patient, then Book Token  </label>
 
                     <a class="alert_close">X</a>
                 </div>
+
+            </div>
+
+
+
+            <div>            
 
                 <div class="token_id_card">
                     <div class="name_field">
