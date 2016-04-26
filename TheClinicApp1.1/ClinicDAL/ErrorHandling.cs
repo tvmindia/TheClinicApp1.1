@@ -84,6 +84,22 @@ namespace TheClinicApp1._1.ClinicDAL
             divMask1.Attributes["class"] = "alert alert-success";
 
         }
+
+        public void InsertionSuccessMessage(Page pg, string msgCaption,string msgText)
+        {
+            var master1 = pg.Master;
+            ContentPlaceHolder mpContentPlaceHolder1;
+            mpContentPlaceHolder1 = (ContentPlaceHolder)master1.FindControl("ContentPlaceHolder1");
+            HtmlControl divMask1 = (HtmlControl)mpContentPlaceHolder1.FindControl("Errorbox") as HtmlControl;
+            Label lblMsgges = mpContentPlaceHolder1.FindControl("lblMsgges") as Label;
+            Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
+            lblErrorCaption.Text = msgCaption;
+            lblMsgges.Text = msgText;
+            divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
+
+            divMask1.Attributes["class"] = "alert alert-success";
+
+        }
         public void UpdationSuccessMessage(Page pg)
         {
             var master1 = pg.Master;
