@@ -73,7 +73,7 @@ namespace TheClinicApp1._1.Registration
         #region BindDropdownDoc
         public void DropdownDoctors()
         {
-            DataSet ds = tok.DropBindDoctorsName();          
+            DataSet ds = tok.DropBindDoctorsName();
             ddlDoctorName.DataSource = ds.Tables[0];
             ddlDoctorName.DataValueField = "DoctorID";
             ddlDoctorName.DataTextField = "Name";
@@ -107,7 +107,12 @@ namespace TheClinicApp1._1.Registration
         #region EditPatients
         protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
         {
-            
+            lblErrorCaption.Text = string.Empty;
+            lblMsgges.Text = string.Empty;
+            Errorbox.Style["display"] = "none";
+            lblFileCount.Text = string.Empty;
+            lblTokencount.Text = string.Empty;
+            divDisplayNumber.Style["display"] = "none";
             DateTime date = DateTime.Now;
             int year = date.Year;
             string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
@@ -138,15 +143,17 @@ namespace TheClinicApp1._1.Registration
             HiddenField1.Value = PatientID.ToString();
             
         }
-        #endregion EditPatients
-
-        
-        
-        
+        #endregion EditPatients       
        
         #region GridDelete
         protected void ImgBtnDelete_Command(object sender, CommandEventArgs e)
-        {   
+        {
+            lblErrorCaption.Text = string.Empty;
+            lblMsgges.Text = string.Empty;
+            Errorbox.Style["display"] = "none";
+            lblFileCount.Text = string.Empty;
+            lblTokencount.Text = string.Empty;
+            divDisplayNumber.Style["display"] = "none";
             Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
             PatientObj.PatientID = PatientID;
             PatientObj.DeletePatientDetails();
@@ -178,12 +185,15 @@ namespace TheClinicApp1._1.Registration
             //btnnew.Visible = true;
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             tok.DoctorID = ddlDoctorName.SelectedValue;
-            tok.PatientID = HiddenField1.Value;
-            if(tok.PatientID=="")
+            if (HiddenField1.Value == "")
             {
-                tok.PatientID = PatientObj.GetPatientID(txtName.Value, txtAddress.Value, txtMobile.Value, txtEmail.Value).ToString();
-                
+                tok.PatientID = HdnFirstInsertID.Value;
             }
+            else
+            {
+                tok.PatientID = HiddenField1.Value;
+            }
+            
             tok.ClinicID = UA.ClinicID.ToString();
             tok.CreateDate = DateTime.Now;
             tok.DateTime = DateTime.Now;
@@ -227,7 +237,13 @@ namespace TheClinicApp1._1.Registration
 
         #region Paging
         protected void dtgViewAllRegistration_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {          
+        {
+            lblErrorCaption.Text = string.Empty;
+            lblMsgges.Text = string.Empty;
+            Errorbox.Style["display"] = "none";
+            lblFileCount.Text = string.Empty;
+            lblTokencount.Text = string.Empty;
+            divDisplayNumber.Style["display"] = "none";
             dtgViewAllRegistration.PageIndex = e.NewPageIndex;
             dtgViewAllRegistration.DataBind();
             ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openmyModal();", true);
@@ -293,6 +309,7 @@ namespace TheClinicApp1._1.Registration
 
                         Guid g = Guid.NewGuid();
                         PatientObj.PatientID = g;
+                        HdnFirstInsertID.Value = PatientObj.PatientID.ToString();
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
                         ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + g.ToString();
@@ -336,7 +353,12 @@ namespace TheClinicApp1._1.Registration
         {
             try
             {
-                
+                lblErrorCaption.Text = string.Empty;
+                lblMsgges.Text = string.Empty;
+                Errorbox.Style["display"] = "none";
+                lblFileCount.Text = string.Empty;
+                lblTokencount.Text = string.Empty;
+                divDisplayNumber.Style["display"] = "none";
                 DataRow dr = null;
                 string path = Server.MapPath("~/Content/ProfilePics/").ToString();
                 string Name = Request.Form["txtSearch"];

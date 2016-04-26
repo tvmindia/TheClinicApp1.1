@@ -184,7 +184,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
             string sDate = DateTime.Now.ToString();
             DateTime datevalue = (Convert.ToDateTime(sDate.ToString()));
-            string mn = datevalue.Month.ToString();
+            string mn = datevalue.ToString("MMM");
             string yy = datevalue.Year.ToString();
             string dd = datevalue.Day.ToString();
             string NUM;
@@ -226,7 +226,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 int x = Convert.ToInt32(NUM.Substring(NUM.IndexOf('/') + 1));
                 x = x + 1;
                 x.ToString();
-                string IssueNO = yy + '-' + mn + '-' + dd + '/' + x;
+                //string IssueNO = yy + '-' + mn + '-' + dd + '/' + x;
+
+                string IssueNO = dd + '-' + mn + '-' + yy + '/' + x;
 
                 return IssueNO;
 
@@ -236,7 +238,9 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 
                 int x = 1;
-                string IssueNO = yy + '-' + mn + '-' + dd + '/' + x;
+                //string IssueNO = yy + '-' + mn + '-' + dd + '/' + x;
+
+                string IssueNO = dd + '-' + mn + '-' + yy + '/' + x;
                 return IssueNO;
 
             }

@@ -224,7 +224,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //successfull
                     
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionSuccessMessage(page);
+                    eObj.PatientInsertionSuccessMessage(page);
 
 
                 }
@@ -292,7 +292,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //successfull
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.UpdationSuccessMessage(page);
+                    eObj.PatientUpdationSuccessMessage(page);
                 }
 
 
@@ -336,7 +336,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Connection = con;
                 pud.CommandType = System.Data.CommandType.StoredProcedure;
                 pud.CommandText = "GetPatientID";
-                pud.Parameters.Add("@Name", SqlDbType.NVarChar,255).Value = Name;
+                pud.Parameters.Add("@Name", SqlDbType.NVarChar,255).Value = (Name=="null")?DBNull.Value.ToString():Name;
                 pud.Parameters.Add("@Address", SqlDbType.NVarChar, 255).Value = Address;
                 pud.Parameters.Add("@Phone", SqlDbType.NVarChar, 255).Value = Phone;
                 pud.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = Email;
@@ -528,7 +528,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //successfull
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionSuccessMessage(page);
+                    eObj.PatientInsertionSuccessMessage(page);
 
 
                 }
