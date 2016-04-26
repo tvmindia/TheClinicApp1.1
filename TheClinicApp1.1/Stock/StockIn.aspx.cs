@@ -51,6 +51,9 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            bool CanDelete = true;
+            string msg = string.Empty;
+
             string receiptID = string.Empty;
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();
@@ -72,7 +75,38 @@ namespace TheClinicApp1._1.Stock
                 receiptID = Request.QueryString["HdrID"].ToString();
 
                 rpt.ClinicID = UA.ClinicID.ToString();
-                rpt.DeleteReceiptHeader(receiptID);
+
+              DataSet  dsReceipthdr = rpt.GetReceiptDetailsByReceiptID(receiptID);
+
+
+              for (int i = 0; i < dsReceipthdr.Tables[0].Rows.Count; i++)
+              {
+                  int Outqty = Convert.ToInt32(dsReceipthdr.Tables[0].Rows[i]["QTY"]);
+                  int qtyInStock = Convert.ToInt32(dsReceipthdr.Tables[0].Rows[i]["QtyInStock"]);
+
+
+                  if (Outqty > qtyInStock)
+                  {
+                      CanDelete = false;
+                      break;
+                  }
+
+              }
+
+
+              if (CanDelete == false)
+              {
+                  var page = HttpContext.Current.CurrentHandler as Page;
+
+                  msg = "Already issued.Can't be deleted";
+
+                  eObj.DeletionNotSuccessMessage(page, msg);
+              }
+
+              else
+              {
+                  rpt.DeleteReceiptHeader(receiptID);
+              }
             }
 
 

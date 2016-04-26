@@ -95,6 +95,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Methods
 
+        
         #region InsertReceiptHeader
         public void InsertReceiptHeader()
         {
@@ -728,6 +729,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         #endregion autofill        
+
 
 
         #region Get Receipt Details By UniqueID

@@ -38,6 +38,7 @@ namespace TheClinicApp1._1.Stock
 
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
+        IssueHeaderDetails IssueHdrObj = new IssueHeaderDetails();
 
         #endregion objects
 
@@ -453,19 +454,61 @@ namespace TheClinicApp1._1.Stock
                                         UpREceiptDtlObj.ClinicID = UA.ClinicID.ToString();
 
 
-                                        //DataSet dsRptDetails = UpREceiptDtlObj.GetReceiptDetailsByUniqueID(uniqueID);
+                                        DataSet dsRptDetails = UpREceiptDtlObj.GetReceiptDetailsByUniqueID(uniqueID);
 
                                         //for (int k = 0; i < dsRptDetails.Tables[0].Rows.Count; k++)
                                         //{
 
+                                        int ChangingQty = Convert.ToInt32(dsRptDetails.Tables[0].Rows[0]["Qty"]);
+
+                                        int qtyInStock = Convert.ToInt32(dsRptDetails.Tables[0].Rows[0]["QtyInStock"]);
+
+
+                                        if (ChangingQty != Convert.ToInt32(columns[4]))
+	{
+		 
+	
 
                                             UpREceiptDtlObj.QTY = Convert.ToInt32(columns[4]);
                                             UpREceiptDtlObj.UpdatedBy = UA.userName;
 
                                             //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
 
-                                            UpREceiptDtlObj.UpdateReceiptDetails(uniqueID);
-                                        //}
+
+                                            //stok.ClinicID = UA.ClinicID.ToString();
+                                  
+                                            // int qtyInStock = Convert.ToInt32(stok.GetQtyByMedicineName(columns[0]));
+
+                                          int inputQty = Convert.ToInt32(columns[4]);
+
+                                          IssueHdrObj.ClinicID = UA.ClinicID.ToString();
+
+                                          int TotalIssuedQty = Convert.ToInt32(IssueHdrObj.GetTotalQtyOfAMedicine(columns[0]));
+
+                                          int TotalStock = TotalIssuedQty + qtyInStock;
+                                        int x = TotalStock - ChangingQty;
+                                        int qtyNeeded = TotalIssuedQty - x;
+
+                                        if (inputQty < qtyNeeded)
+                                            {
+                                                var page = HttpContext.Current.CurrentHandler as Page;
+
+                                                msg = "Already issued.Can only be reduced upto " + qtyNeeded;
+
+                                                eObj.InsertionNotSuccessMessage(page, msg);
+                                            }
+
+                                            else
+                                            {
+
+
+                                                UpREceiptDtlObj.UpdateReceiptDetails(uniqueID);
+
+
+
+
+                                            }
+                                    }
                                     
                                     }
                                 }

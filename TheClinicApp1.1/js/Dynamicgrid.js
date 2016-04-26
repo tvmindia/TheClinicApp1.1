@@ -60,7 +60,7 @@ var container = $(document.createElement('div')).css({
 });
 
 function RemoveWarning(ControlNo) {
-    debugger;
+   
 
     //--------------* To remove warning msg from textbox if the medicine is not out of stock , and is called onfocus event of quantity textbox *-------------------//
     if ($("#txtQuantity" + ControlNo).val == 'Sorry! Out Of stock')
@@ -387,10 +387,7 @@ function BindControlsByMedicneName(ControlNo) {
 
 //-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
 function CheckMedicineIsOutOfStock(ControlNo) {
-  
-    if ($("#txtQuantity" + ControlNo).val == 'Sorry! Out Of stock')
-    {
-
+    
     if(   PageCalledFrom != 'StockIn')
 
     {
@@ -401,7 +398,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
             var InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
 
         
-            if ((MedicineName != "") )
+            if ((MedicineName != "") && (Qty != 0))
             {
                 //----------- * Case Of Insert *----------//
                 if (document.getElementById('hdnDetailID' + ControlNo).value == "")
@@ -508,7 +505,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
         }
     }
 
-}
+
 }
 
 
