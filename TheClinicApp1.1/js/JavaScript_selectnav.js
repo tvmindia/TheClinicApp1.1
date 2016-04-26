@@ -1,20 +1,32 @@
 ﻿var settingOpen = 0;
+var patientPageURL = '../Registration/Patients.aspx';
+var tokenPageURL = '../Token/Tokens.aspx';
+var doctorPageURL = '../Doctor/Doctors.aspx';
+var pharmacyPageURL = '../Pharmacy/Pharmacy.aspx';
+var stockPageURL = '../Stock/Stock.aspx';
+var adminPageURL = '../Admin/Admin.aspx';
+
 function selectTile(id, RoleName) {
+  //  debugger;
+    var tileList = ['patients', 'token', 'doctor', 'pharmacy', 'stock', 'admin'];
+    var Url = [patientPageURL, tokenPageURL, doctorPageURL, pharmacyPageURL, stockPageURL,adminPageURL];
 
-    var tileList = ['patients', 'token', 'doctor', 'pharmacy', 'stock'];
-    if (RoleName == 'Doctor') {
-        var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Doctor/Doctors.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
 
-    }
-    else if (RoleName == 'Administrator') {
-        var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
-    }
-    else if (RoleName == 'pharmacist') {
-        var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
-    }
-    else {
-        var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Login/AccessDenied.aspx', '../Login/AccessDenied.aspx'];
-    }
+    //if (RoleName == 'Doctor') {
+    //    var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Doctor/Doctors.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
+
+    //}
+    //else if (RoleName == 'Administrator') {
+    //    var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
+    //}
+    //else if (RoleName == 'pharmacist') {
+    //    var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
+    //}
+    //else {
+    //    var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Login/AccessDenied.aspx', '../Login/AccessDenied.aspx'];
+    //}
+
+
     for (i = 0; i < tileList.length; i++) {
         if (id == tileList[i]) {
             document.getElementById(id).className = 'active'

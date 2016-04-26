@@ -10,6 +10,8 @@
             font-family: 'Footlight MT';
             font-weight: bold;
         }
+
+        
     </style>
     <script src="../Scripts/DeletionConfirmation.js"></script>
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
@@ -26,7 +28,7 @@
 
     <script>
         $(document).ready(function () {
-            debugger;
+              debugger;
 
             $('.nav_menu').click(function () {
             
@@ -45,14 +47,54 @@
           
          
             var ac=null;
+   debugger;
+
             ac = <%=listFilter %>;
+            var length= ac.length;
+            var projects = new Array();
+            for (i=0;i<length;i++)
+            {        
+
+             var name= ac[i].split('🏠');
+
+
+
+             projects.push({  value : name[0], label: name[0], desc: name[1]})   
+   
+            }
+
             $( "#txtSearch" ).autocomplete({
-                source: ac
+               maxResults: 10,
+    source: function(request, response) {
+        var results = $.ui.autocomplete.filter(projects, request.term);
+        response(results.slice(0, this.options.maxResults));
+    },
+         focus: function( event, ui ) {
+        $( "#txtSearch" ).val( ui.item.label );
+        return false;
+      },
+         select: function( event, ui ) {
+        $( "#project" ).val( ui.item.label );
+      
+        $( "#project-description" ).html( ui.item.desc );
+        
+ 
+        return false;
+      }
+    })
+    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+        .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+        .appendTo( ul );
+    };
+             
             });       
-        });
+       
+ 
+
     </script>
 
-     <script>
+    <script>
 
 
          function SetIframeSrc(HyperlinkID) {
@@ -65,9 +107,9 @@
 
          }
 
-         </script>
+    </script>
 
-     
+
 
 
     <script>
@@ -82,18 +124,18 @@
 
   
           
-            var PatientName = document.getElementById("txtSearch").value;
+            var PatientName = document.getElementById("project-description").innerText;
             document.getElementById('<%=lblToken.ClientID%>').innerHTML="_";
        
                      
-            var file=PatientName.split('📝')      
-            var file1=file[1]
-            
+            var file=PatientName.split('|')      
+            var file1=file[0].split('📰 ')
+            var fileNO=file1[1]
             if (PatientName!="")
 
             { 
                                   
-                PageMethods.PatientDetails(file1, OnSuccess, onError);  
+                PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
             }
 
             function OnSuccess(response, userContext, methodName) 
@@ -153,17 +195,20 @@
         <div class="right_part">
             <div class="tagline">
                 <a class="nav_menu">nav</a>
-                 Tokens
+                Tokens
             </div>
             <div class="icon_box">
-                <a class="all_token_link" data-toggle="modal" data-target="#all_token"><span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span><span title="All Tokens" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllTokenIframe')">
-                    <img src="../images/tokens.png" /></span></a>
+                <a class="all_token_link" data-toggle="modal" data-target="#all_token"><span class="count">
+                    <asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span><span title="All Tokens" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllTokenIframe')">
+                        <img src="../images/tokens.png" /></span></a>
             </div>
             <div class="grey_sec">
                 <div class="search_div">
-                    <input class="field" id="txtSearch"  onblur="bindPatientDetails()"  name="txtSearch" type="search" placeholder="Search here..." />
-                  <%--  <input class="button" onserverclick="btnSearch_ServerClick" runat="server"  value="Search" />--%>
-                      <input class="button"   type="button" value="Search" />
+                    <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." />
+                    <input type="hidden" id="project-id"/>
+                    <p id="project-description" style="display:none"></p>
+                    <%--  <input class="button" onserverclick="btnSearch_ServerClick" runat="server"  value="Search" />--%>
+                    <input class="button" type="button" value="Search" />
                 </div>
                 <ul class="top_right_links">
                     <li><a class="book_token" runat="server" id="btnBookToken" onserverclick="btnBookToken_ServerClick"><span></span>Book Token</a></li>
@@ -202,13 +247,13 @@
 
 
 
-            <div >
-                  <div  class="alert alert-info">
-                                      
-                      <label> Search & Select a Patient, then Book Token  </label> 
-                  
-                      <a class="alert_close">X</a>
-                    </div>
+            <div>
+                <div class="alert alert-info">
+
+                    <label>Search & Select a Patient, then Book Token  </label>
+
+                    <a class="alert_close">X</a>
+                </div>
 
                 <div class="token_id_card">
                     <div class="name_field">
@@ -257,7 +302,7 @@
 
     <!-- Modal -->
     <div id="all_token" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="height:600px;">
+        <div class="modal-dialog" style="height: 600px;">
 
             <!-- Modal content-->
             <div class="modal-content">
@@ -266,13 +311,13 @@
 
                     <h3 class="modal-title">Today's Patient Bookings</h3>
                 </div>
-                <div class="modal-body" style=" /*overflow-y: scroll; overflow-x:hidden;*/ height:400px;">
+                <div class="modal-body" style="/*overflow-y: scroll; overflow-x: hidden; */ height: 400px;">
 
-                     <iframe id="AllTokenIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
+                    <iframe id="AllTokenIframe" style="width: 100%; height: 100%" frameborder="0"></iframe>
 
                     <%--<h4>Today's Patient Bookings</h4>--%>
 
-               
+
 
 
                     <%--    <h4>Doctor 2</h4>

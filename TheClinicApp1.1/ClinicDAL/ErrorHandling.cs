@@ -51,6 +51,24 @@ namespace TheClinicApp1._1.ClinicDAL
             // Success.Text = "Successfully Inserted"; 
 
         }
+        public void PatientInsertionSuccessMessage(Page pg)
+        {
+
+            var master1 = pg.Master;
+            ContentPlaceHolder mpContentPlaceHolder1;
+            mpContentPlaceHolder1 = (ContentPlaceHolder)master1.FindControl("ContentPlaceHolder1");
+            HtmlControl divMask1 = (HtmlControl)mpContentPlaceHolder1.FindControl("Errorbox") as HtmlControl;
+            Label lblMsgges = mpContentPlaceHolder1.FindControl("lblMsgges") as Label;
+            Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
+            lblErrorCaption.Text = Messages.SuccessMsgCaption;
+            lblMsgges.Text = Messages.PatInsertionSuccessFull;
+            divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
+
+            //divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
+            divMask1.Attributes["class"] = "alert alert-success";
+            // Success.Text = "Successfully Inserted"; 
+
+        }
         public void InsertionSuccessMessage(Page pg, string msg)
         {
             var master1 = pg.Master;
@@ -76,6 +94,21 @@ namespace TheClinicApp1._1.ClinicDAL
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
             lblErrorCaption.Text = Messages.SuccessMsgCaption;
             lblMsgges.Text = Messages.UpdationSuccessFull;
+            divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
+
+            //divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";
+            divMask1.Attributes["class"] = "alert alert-success";
+        }
+        public void PatientUpdationSuccessMessage(Page pg)
+        {
+            var master1 = pg.Master;
+            ContentPlaceHolder mpContentPlaceHolder1;
+            mpContentPlaceHolder1 = (ContentPlaceHolder)master1.FindControl("ContentPlaceHolder1");
+            HtmlControl divMask1 = (HtmlControl)mpContentPlaceHolder1.FindControl("Errorbox") as HtmlControl;
+            Label lblMsgges = mpContentPlaceHolder1.FindControl("lblMsgges") as Label;
+            Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
+            lblErrorCaption.Text = Messages.SuccessMsgCaption;
+            lblMsgges.Text = Messages.PatientUpdationSuccessFull;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
 
             //divMask1.Attributes["class"] = "alert lblErrorCaptionSuccess fade in";

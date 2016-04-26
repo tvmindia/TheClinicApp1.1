@@ -77,7 +77,7 @@ namespace TheClinicApp1._1.Token
             output.Append("[");
             for (int i = 0; i < dt.Rows.Count; ++i)
             {
-                output.Append("\"" + dt.Rows[i]["Name"].ToString() + "🏠" + dt.Rows[i]["Address"].ToString() + "📞" + dt.Rows[i]["Phone"].ToString() + "📝" + dt.Rows[i]["FileNumber"].ToString() + "\"");
+                output.Append("\"" + dt.Rows[i]["Name"].ToString() + "🏠📰 " + dt.Rows[i]["FileNumber"].ToString() + "|" + dt.Rows[i]["Address"].ToString() + "|" + dt.Rows[i]["Phone"].ToString() + "\"");
                 if (i != (dt.Rows.Count - 1))
                 {
                     output.Append(",");

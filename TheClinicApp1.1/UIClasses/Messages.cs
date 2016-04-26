@@ -35,6 +35,7 @@ namespace TheClinicApp1._1.UIClasses
             get { return "Success!"; }
         }
 
+
         public static string WarningMsgCaption
         {
             get { return "Warning!"; }
@@ -42,7 +43,7 @@ namespace TheClinicApp1._1.UIClasses
 
         public static string InsertionFailureMsgCaption
         {
-            get { return "Already exists!"; }
+            get { return "Somthing Wroung try Again!"; }
         }
 
         public static string FailureMsgCaption
@@ -66,10 +67,18 @@ namespace TheClinicApp1._1.UIClasses
         {
             get { return "Successfully Inserted"; }
         }
+        public static string PatInsertionSuccessFull
+        {
+            get { return "Patient Successfully Saved"; }
+        }
 
         public static string UpdationSuccessFull
         {
             get { return "Successfully Updated"; }
+        }
+        public static string PatientUpdationSuccessFull
+        {
+            get { return "Patient Successfully Edited And Saved"; }
         }
 
         public static string DeletionSuccessFull
@@ -95,12 +104,12 @@ namespace TheClinicApp1._1.UIClasses
 
         public static string InsertionFailure
         {
-            get { return "Insertion Not Successful"; }
+            get { return "Not Successfuly Saved Try Again"; }
         }
 
         public static string UpdationFailure
         {
-            get { return "Updatation Failure"; }
+            get { return "Edit Failed Try Again Later"; }
         }
 
         public static string Warning
