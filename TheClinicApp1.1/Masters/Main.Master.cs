@@ -20,8 +20,16 @@ namespace TheClinicApp1._1.Masters
 
             if (UA == null)
             {
-                Response.Redirect("../Login/Login.aspx");
+                Response.Redirect(Const.LoginPageURL);
             }
+
+            AccessCheck();
+           
+            
+
+
+
+
 
         }
 
@@ -29,6 +37,55 @@ namespace TheClinicApp1._1.Masters
         protected void Page_Load(object sender, EventArgs e)
         {
 
+        }
+
+
+
+        public void AccessCheck() {
+
+            try
+            {
+                string currRole = UA.GetRoleName(UA.userName);
+                string currPage = Const.GetCurrentPageName(Request);
+                string From = "?From=";
+                string redirectURL = "";
+
+                if (currRole == "") { Response.Redirect(Const.AccessDeniedURL); }
+
+                if (currPage != Const.AccessDenied)
+                {
+                    if (currPage == Const.PatientPage) { }
+                    if (currPage == Const.TokenPage) { }
+                    if (currPage == Const.DoctorPage) { 
+                        if (!currRole.Contains(Const.RoleDoctor)) {
+                            From = From + Const.Doctor;
+                            redirectURL = Const.AccessDeniedURL + From;
+                        } 
+                    }
+                    if (currPage == Const.PharmacyPage) { }
+                    if (currPage == Const.StockPage) { }
+                    if (currPage == Const.AdminPage) {
+                        if (!(currRole.Contains( Const.RoleDoctor) | currRole.Contains(Const.RoleAdministrator)))
+                        {
+                            From = From + Const.Admin;
+                            redirectURL = Const.AccessDeniedURL + From;
+                        } 
+                    }
+
+
+
+                    if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                   
+
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+                Response.Redirect(Const.AccessDeniedURL);
+            }
         }
     }
 }

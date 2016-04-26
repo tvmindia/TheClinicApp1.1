@@ -11,21 +11,7 @@ function selectTile(id, RoleName) {
     var tileList = ['patients', 'token', 'doctor', 'pharmacy', 'stock', 'admin'];
     var Url = [patientPageURL, tokenPageURL, doctorPageURL, pharmacyPageURL, stockPageURL,adminPageURL];
 
-
-    //if (RoleName == 'Doctor') {
-    //    var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Doctor/Doctors.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
-
-    //}
-    //else if (RoleName == 'Administrator') {
-    //    var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
-    //}
-    //else if (RoleName == 'pharmacist') {
-    //    var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Pharmacy/Pharmacy.aspx', '../Stock/Stock.aspx'];
-    //}
-    //else {
-    //    var Url = ['../Registration/Patients.aspx', '../Token/Tokens.aspx', '../Login/AccessDenied.aspx', '../Login/AccessDenied.aspx', '../Login/AccessDenied.aspx'];
-    //}
-
+     
 
     for (i = 0; i < tileList.length; i++) {
         if (id == tileList[i]) {
@@ -42,6 +28,25 @@ function selectTile(id, RoleName) {
     }
 
 }
+
+function activateTabSelection(id) {
+
+    var tileList = ['patients', 'token', 'doctor', 'pharmacy', 'stock', 'admin'];
+    var Url = [patientPageURL, tokenPageURL, doctorPageURL, pharmacyPageURL, stockPageURL, adminPageURL];
+
+
+
+    for (i = 0; i < tileList.length; i++) {
+        if (id == tileList[i]) {
+            document.getElementById(id).className = 'active'; 
+
+
+        }
+        
+
+    }
+}
+
 
 function openSettings() {
     if (settingOpen == 0) {
