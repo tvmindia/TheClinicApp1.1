@@ -6,7 +6,7 @@
 
 
 
-    <link href="../css/TheClinicApp.css" rel="stylesheet" />
+    
 
 
 </asp:Content>
@@ -15,6 +15,7 @@
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
@@ -23,7 +24,7 @@
 
     <script src="../js/jquery-1.9.1.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
-    <link href="../css/TheClinicApp.css" rel="stylesheet" />
+  
 
     <script>
         var test = jQuery.noConflict();
