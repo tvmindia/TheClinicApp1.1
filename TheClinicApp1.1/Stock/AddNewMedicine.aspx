@@ -34,6 +34,8 @@
     <script>  
         $(document).ready(function () {
          
+          
+
                 //images that represents medicine name duplication hide and show
                 var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
                 LnameImage.style.display = "none";
@@ -63,6 +65,9 @@
                 parent.GetMedicines(1);
                 $('#<%=hdnManageGridBind.ClientID %>').val('False');
             }
+
+
+          
 
 
                 });
@@ -173,39 +178,48 @@
         }
 
 
-        function RemoveRequiredAttribute()
+        function ClearControls()
         {
             debugger;
 
-            document.getElementById('<%=txtmedicineName.ClientID %>').required = false;
-            document.getElementById('<%=txtCode.ClientID %>').required = false;
-           
-            document.getElementById('<%=txtOrderQuantity.ClientID %>').required = false;
+          
 
-           <%-- document.getElementById('<%=RequiredFieldValidator1.ClientID %>').innerText = '';
-            document.getElementById('<%=RequiredFieldValidator2.ClientID %>').innerText = '';
-            document.getElementById('<%=RequiredFieldValidator3.ClientID %>').innerText = '';
-            document.getElementById('<%=RequiredFieldValidator4.ClientID %>').innerText = '';
 
-            document.getElementById('<%=RegularExpressionValidator1.ClientID %>').innerText = '';--%>
-            document.getElementById('<%=RequiredFieldValidator1.ClientID %>').style.color = "white";
+            document.getElementById('<%=txtmedicineName.ClientID %>').value= " ";
+            document.getElementById('<%=txtCode.ClientID %>').value = " ";
+            document.getElementById('<%=txtOrderQuantity.ClientID %>').value = " ";
+          
+            document.getElementById('<%=ddlCategory.ClientID %>').value = "--Select--";
+            document.getElementById('<%=ddlUnits.ClientID %>').value = "--Select--";
+
+
+          document.getElementById('<%=RequiredFieldValidator1.ClientID %>').style.color = "white";
             document.getElementById('<%=RequiredFieldValidator2.ClientID %>').style.color = "white";
             document.getElementById('<%=RequiredFieldValidator3.ClientID %>').style.color = "white";
             document.getElementById('<%=RequiredFieldValidator4.ClientID %>').style.color = "white";
             document.getElementById('<%=RegularExpressionValidator1.ClientID %>').style.color = "white";
+ 
+
+            var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+            LnameImage.style.display = "none";
+            var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+            errLname.style.display = "none";
+
+            var CodeAvailableImage = document.getElementById('<%=imgCodeAvailable.ClientID %>');
+            CodeAvailableImage.style.display = "none";
+            var CodeUnavailableImage = document.getElementById('<%=imgCodeUnavailable.ClientID %>');
+            CodeUnavailableImage.style.display = "none";
         }
 
-
-        function AddValidators()
+        function SetValidatorColor()
         {
             document.getElementById('<%=RequiredFieldValidator1.ClientID %>').style.color = "red";
             document.getElementById('<%=RequiredFieldValidator2.ClientID %>').style.color = "red";
             document.getElementById('<%=RequiredFieldValidator3.ClientID %>').style.color = "red";
             document.getElementById('<%=RequiredFieldValidator4.ClientID %>').style.color = "red";
-
-
             document.getElementById('<%=RegularExpressionValidator1.ClientID %>').style.color = "red";
         }
+      
 
 
 
@@ -390,9 +404,9 @@ border-spacing:0.5em;">
     <div class="grey_sec">
       <ul class="top_right_links">
                                    
-                                    <li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" onclick="AddValidators();"><span></span>Save</a></li>
-                                    <li><a class="new" id="btnNew"  href="StockOutDetails.aspx" runat="server" onserverclick="btnNew_ServerClick" onclick="RemoveRequiredAttribute();"><span></span>New</a></li>
-                                </ul>
+                                    <li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" onclick="SetValidatorColor();"  ><span></span>Save</a></li>
+                                    <li><a class="new" id="btnNew"   runat="server" onserverclick="btnNew_ServerClick"  onclick="ClearControls();"><span></span>New</a></li>
+                                </ul
          </div>
     <%-- <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="save" Width="45%" OnClick="btnSave_Click" ValidationGroup="Required" />
         <asp:Button ID="btnNew" runat="server" Text="New" CssClass="new" Width="45%" OnClick="btnNew_Click" ValidationGroup="Required" OnClientClick="RemoveRequiredAttribute();"  />--%>

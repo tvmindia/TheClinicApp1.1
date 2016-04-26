@@ -333,7 +333,7 @@
         
         <h3 class="modal-title">Out Of Stock Medicines</h3>
       </div>
-      <div class="modal-body" style="height:400px;">
+      <div class="modal-body" style="height:500px;">
            <iframe id="OutOfStockIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
 
              

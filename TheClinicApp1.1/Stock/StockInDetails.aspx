@@ -190,10 +190,10 @@
 
                         <div role="tabpanel" class="tab-pane active" id="stock_in">
                             <div class="grey_sec">
-                                <div class="search_div">
+                               <%-- <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." />
                                     <input class="button" type="submit" value="Search" />
-                                </div>
+                                </div>--%>
                                 <ul class="top_right_links">
                                     <li><a class="back" href="StockIn.aspx"><span></span>Back</a></li>
                                     <li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li>
@@ -325,7 +325,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header"  style="border-color:royalblue">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                     <h4 class="modal-title">Add New Medicine</h4>

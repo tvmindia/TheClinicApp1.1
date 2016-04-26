@@ -48,6 +48,8 @@ namespace TheClinicApp1._1.Token
 
             if (!IsPostBack)
             {
+
+          
                 //binding the values of doctor dropdownlist
                 DataSet ds = tokenObj.DropBindDoctorsName();
                 ddlDoctor.DataSource = ds.Tables[0];
@@ -140,6 +142,10 @@ namespace TheClinicApp1._1.Token
                 lblToken.Text = tokenNo.ToString();
                 lblToken.Visible = true;
                 hdnfileID.Value = "";
+                //diplaying number of bookings
+                DataSet gds = tokenObj.ViewToken();
+                lblCaseCount.Text = gds.Tables[0].Rows.Count.ToString();
+
                 // reloading values in to repective fields
                 DataSet dst = tokenObj.GetPatientTokenDetailsbyID(HiddenPatientID.Value);              
 
@@ -159,6 +165,9 @@ namespace TheClinicApp1._1.Token
 
                 BookedDoctorName.Visible = true;
                 lblDoctor.Text = Convert.ToString(dst.Tables[0].Rows[0]["DoctorName"]);
+
+
+
 
             }
             else 

@@ -246,6 +246,16 @@ a.all_registration_link {position: fixed; top: 300px; right: 17px; display: inli
 a.Todays_registration_link {position: fixed; top: 364px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 201px;}
 
 a.all_token_link {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
+a.all_token_link span.count {position: absolute; top: -15px; right: 5px; background: #036F09; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
+-webkit-border-radius: 50%;
+-moz-border-radius: 50%;
+border-radius: 50%;
+
+    -moz-box-shadow:0 0 1px #000;
+    -webkit-box-shadow:0 0 1px #000;
+    box-shadow:0 0 1px #000;
+}
+
 
 a.patient_list {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 
@@ -819,6 +829,7 @@ a.all_registration_link { position: relative; right: 0; top: auto; width: 50px; 
 a.Todays_registration_link { position: relative; right: 0; top: auto; width: 50px; height: 50px;}
 
 a.all_token_link { position: relative; right: 0; top: auto; width: 50px; height: 50px;}
+a.all_token_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 
 a.patient_list { position: relative; right: 0; top: auto; width: 50px; height: 50px;}
 
@@ -880,7 +891,7 @@ ul.top_right_links {display: block; float: none; text-align: center;}
 
 .right_form {padding: 20px;}
 
-.token_id_card {width: auto; max-width: 388px; margin: 0 auto 20px; display: block;}
+.token_id_card {width: auto; max-width: 388px;  margin: 0 auto 20px; display: block;}
 .token_id_card .light_grey {padding: 10px 0;}
 .token_id_card .light_grey .col3_div {font-size: 20px;}
 .token_id_card .light_grey .col3_div span {font-size: 11px;}
@@ -936,7 +947,7 @@ a.all_registration_link {right: 0; top: 300px; width: 60px; height: 60px;}
 a.Todays_registration_link {right: 0; top: 361px; width: 60px; height: 60px;}
 
 a.all_token_link {right: 0; top: 300px; width: 60px; height: 60px;}		
-
+a.all_token_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 a.patient_list {right: 0; top: 300px; width: 60px; height: 60px;}	
 
 a.add_medicine {right: 0; top: 300px; width: 60px; height: 60px;}	

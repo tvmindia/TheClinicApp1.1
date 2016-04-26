@@ -530,6 +530,9 @@ namespace TheClinicApp1._1.Stock
                                              UpIssueDtlObj.Qty = Convert.ToInt32(columns[4]);
                                              UpIssueDtlObj.UpdatedBy = UA.userName;
 
+                                             
+                                          
+
                                              //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
 
                                              UpIssueDtlObj.UpdateIssueDetails(uniqueID);
