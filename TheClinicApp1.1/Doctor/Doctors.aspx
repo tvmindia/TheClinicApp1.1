@@ -15,7 +15,6 @@
             function autocompleteonfocus(controlID)
             {
                 //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
-
                 
                 var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
  
@@ -296,15 +295,15 @@
                  
 <!-- Modal -->
 <div id="casehistory" class="modal fade" role="dialog">
-  <div class="modal-dialog" style="width:60%;height:70%;">
+  <div class="modal-dialog" style=" height:600px;">
 	
     <!-- Modal content-->
-    <div class="modal-content" style="width:100%;height:100%">
+    <div class="modal-content" >
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>        
         <h3 class="modal-title">Case History</h3>
       </div>
-      <div class="modal-body" style="width:100%;height:100%">
+      <div class="modal-body"style=" height: 400px; overflow-y: scroll; overflow-x: hidden; ">
           <div class="col-lg-12">
          <asp:GridView ID="GridViewVisitsHistory" runat="server" AutoGenerateColumns="False" Style="max-width: 100%;min-width:100%;" DataKeyNames="FileID" CellPadding="4" GridLines="None" ForeColor="#333333">
               <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
@@ -350,24 +349,25 @@
 </div>         
          
 <div id="tokens" class="modal fade" role="dialog">
-  <div class="modal-dialog" style="width:60%;height:70%;">	
+  <div class="modal-dialog" style="height: 600px;">	
     <!-- Modal content-->
-    <div class="modal-content" style="width:100%;height:100%">
+    <div class="modal-content"  >
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         
         <h3 class="modal-title">Tokens</h3>
       </div>
-      <div class="modal-body" style="width:100%;height:100%" >
+      <div class="modal-body" style=" height: 400px; overflow-y: scroll; overflow-x: hidden; " >
           <div class="col-lg-12">
-                   <asp:GridView ID="GridViewTokenlist" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None" ForeColor="#333333">
-              <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>
+                   <asp:GridView ID="GridViewTokenlist" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None" ForeColor="#333333"  >
+              <AlternatingRowStyle BackColor="Wheat"  ></AlternatingRowStyle>
               <Columns>
-                   <asp:TemplateField>
+                   <asp:TemplateField ItemStyle-Width="35px">
                       <ItemTemplate>
-                      <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")%>' OnCommand="ImgBtnUpdate_Command1" Width="50%" BorderColor="White" formnovalidate />
-                      </ItemTemplate>
+                      <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="../images/paper.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")%>' OnCommand="ImgBtnUpdate_Command1" ImageAlign="Middle"  BorderColor="White" formnovalidate />
+                      </ItemTemplate>                                            
                   </asp:TemplateField>
+                   
                   <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
                   <asp:BoundField HeaderText="Patient Name" DataField="Name" />                 
               </Columns>
