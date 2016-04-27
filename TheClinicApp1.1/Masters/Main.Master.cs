@@ -84,7 +84,7 @@ namespace TheClinicApp1._1.Masters
             catch (Exception)
             {
 
-                Response.Redirect(Const.AccessDeniedURL);
+             //   Response.Redirect(Const.AccessDeniedURL);
             }
         }
     }
