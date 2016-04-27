@@ -118,8 +118,8 @@ function clickAdd(id) {
     // ADD new row with fields needed.
     $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;border:0;">'
              + ' <td ><input id="txtMedName' + iCnt + '" type="text" placeholder="Medicine' + iCnt + '" class="input"  onblur="BindMedunitbyMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
-                + '<td ><input id="txtMedQty' + iCnt + '" type="text" placeholder="Qty' + iCnt + '" class="input"/></td>'
-                + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true"  onblur="focuscontrol(' + iCnt + ')" class="input" type="text" placeholder="Unit' + iCnt + '" /></td>'
+                + '<td ><input id="txtMedQty' + iCnt + '" type="text"  placeholder="Qty' + iCnt + '" class="input" onblur="focuscontrol(' + iCnt + ')"/></td>'
+                + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true"  class="input" type="text" placeholder="Unit' + iCnt + '" /></td>'
                 + '<td ><input id="txtMedDos' + iCnt + '" type="text" placeholder="Dosage' + iCnt + '" class="input"/></td>'
                 + '<td><input id="txtMedTime' + iCnt + '" type="text" placeholder="Timing' + iCnt + '" class="input"/></td>'
                  + '<td><input id="txtMedDay' + iCnt + '" type="text" placeholder="Days' + iCnt + '" class="input"/></td>'
