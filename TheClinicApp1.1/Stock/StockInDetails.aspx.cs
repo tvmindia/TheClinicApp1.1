@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -198,9 +199,7 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
-     var today =        DateTime.Now.ToString("dd/MM/yyyy");
-     txtDate1.Value = today;
-
+   
             txtDate1.Attributes.Add("readonly", "readonly");
             btSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','" + hdnRemovedIDs.ClientID + "')");
 
@@ -222,6 +221,8 @@ namespace TheClinicApp1._1.Stock
 
                 if (!IsPostBack)
                 {
+                    var today = DateTime.Now.ToString("dd/MM/yyyy");
+                    txtDate1.Value = today;
 
                 }
 
@@ -338,12 +339,21 @@ namespace TheClinicApp1._1.Stock
                         if ((txtBillNo.Text != string.Empty)  && (txtDate1.Value != string.Empty))
                         {
 
+
+
+                            CultureInfo culture = CultureInfo.CurrentCulture;
+
+
+                            string DateSelected = txtDate1.Value.ToString(culture);
+
                             rpt.ClinicID = UA.ClinicID.ToString();
                             rpt.RefNo1 = txtBillNo.Text;
                             rpt.RefNo2 = txtRefNo2.Text;
                             rpt.CreatedBy = UA.userName;
 
-                            rpt.Date = Convert.ToDateTime(txtDate1.Value);
+                            rpt.Date = Convert.ToDateTime(DateSelected);
+
+                            //rpt.Date = Convert.ToDateTime(txtDate1.Value);
 
 
 
@@ -385,7 +395,11 @@ namespace TheClinicApp1._1.Stock
                                             rpt.ClinicID = UA.ClinicID.ToString();
 
                                             rpt.RefNo2 = txtRefNo2.Text;
-                                            rpt.Date = Convert.ToDateTime(txtDate1.Value);
+
+
+                                            rpt.Date = Convert.ToDateTime(DateSelected);
+                                            //rpt.Date = Convert.ToDateTime(txtDate1.Value);
+
                                             rpt.UpdatedBy = UA.userName;
 
                                             rpt.RefNo1 = txtBillNo.Text;

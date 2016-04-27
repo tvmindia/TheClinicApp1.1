@@ -21,6 +21,8 @@ using System.Configuration;
 using TheClinicApp1._1.ClinicDAL;
 using System.Text;
 using System.Web.Services;
+using System.Globalization;
+using System.Threading;
 
 #endregion Namespaces
 
@@ -291,7 +293,7 @@ namespace TheClinicApp1._1.Stock
 
                 if (!IsPostBack)
                 {
-                    var today = DateTime.Now.ToString("dd/MM/yyyy");
+                    var today = DateTime.Now.ToString("dd-MM-yyyy");
                     txtDate1.Text = today;
 
                     BindTextboxByIssueNo();
@@ -341,7 +343,7 @@ namespace TheClinicApp1._1.Stock
                     {
                         txtIssueNO.Text = dtIssuehdr.Rows[0]["IssueNO"].ToString();
                         txtIssuedTo.Text = dtIssuehdr.Rows[0]["IssuedTo"].ToString();
-                        txtDate1.Text = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("MM-dd-yyyy");
+                        txtDate1.Text = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
                     }
 
 
@@ -411,13 +413,42 @@ namespace TheClinicApp1._1.Stock
 
                              if ((txtIssueNO.Text != string.Empty) && (txtIssuedTo.Text != string.Empty) && (txtDate1.Text != string.Empty))
                              {
+                                 //CultureInfo culture = new CultureInfo("en-US");
+
+                                 //string DateSelected = txtDate1.Text.ToString(culture);
+
+
+                                 //DateTime DateSelected = DateTime.ParseExact(txtDate1.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                                 //DateTime dt = DateTime.ParseExact(txtDate1.Text.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                                 Thread.CurrentThread.CurrentUICulture.ClearCachedData();
+
+
+                                 CultureInfo culture = CultureInfo.CurrentCulture;
+
+                                 CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
+                                 var cultureLanguageTag = CultureInfo.CurrentCulture.IetfLanguageTag;
+                                 var defaultCulture = CultureInfo.GetCultureInfoByIetfLanguageTag(cultureLanguageTag);
+                                 //DateTime DateSelected = Convert.ToDateTime(DateTime.ParseExact(txtDate1.Text, "dd/MM/yyyy", null));
+
+                                 string DateSelected = txtDate1.Text.ToString(culture);
+                               
+
+                               
+                                 //DateTimeFormatInfo usDtfi = new CultureInfo("en-US", false).DateTimeFormat;
+                                 //DateTimeFormatInfo ukDtfi = new CultureInfo("en-GB", false).DateTimeFormat;
+                                 //string DateSelected = Convert.ToDateTime(txtDate1.Text, ukDtfi).ToString(usDtfi.ShortDatePattern);
+
+                               
 
                                  IssuehdrObj.ClinicID = UA.ClinicID.ToString();
                                  IssuehdrObj.IssuedTo = txtIssuedTo.Text;
                                  IssuehdrObj.IssueNO = txtIssueNO.Text;
                                  IssuehdrObj.CreatedBy = UA.userName;
 
-                                 IssuehdrObj.Date = Convert.ToDateTime(txtDate1.Text);
+                                 IssuehdrObj.Date = Convert.ToDateTime(DateSelected);
+                                 //IssuehdrObj.Date = DateSelected;
 
 
 
@@ -465,7 +496,9 @@ namespace TheClinicApp1._1.Stock
 
                                                  IssuehdrObj.ClinicID = UA.ClinicID.ToString();
                                                  IssuehdrObj.IssuedTo = txtIssuedTo.Text;
-                                                 IssuehdrObj.Date = Convert.ToDateTime(txtDate1.Text);
+                                                 IssuehdrObj.Date = Convert.ToDateTime(DateSelected);
+
+                                                 //IssuehdrObj.Date = DateSelected;
                                                  IssuehdrObj.UpdatedBy = UA.userName;
                                                  //IssuehdrObj.IssueNO = txtIssueNO.Text;
                                                  IssuehdrObj.UpdateIssueHeader(ViewState["IssueHdrID"].ToString());

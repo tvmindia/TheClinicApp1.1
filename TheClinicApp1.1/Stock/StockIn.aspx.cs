@@ -87,21 +87,27 @@ namespace TheClinicApp1._1.Stock
                   int qtyInStock = Convert.ToInt32(dsReceipthdr.Tables[0].Rows[i]["QtyInStock"]);
 
                   string MedicineName = dsReceipthdr.Tables[0].Rows[i]["MedicineName"].ToString();
+                  string totalIssue = ihd.GetTotalQtyOfAMedicine(MedicineName);
 
-                  int TotalIssuedQty = Convert.ToInt32(ihd.GetTotalQtyOfAMedicine(MedicineName));
-
-
-                  int TotalStock = TotalIssuedQty + qtyInStock;
-
-                  int difference = TotalStock - Outqty;
-
-                  if ( (difference == 0) || (difference < TotalIssuedQty))
+                  if (totalIssue != string.Empty)
                   {
-                      CanDelete = false;
-                      break;
+
+                      int TotalIssuedQty = Convert.ToInt32(totalIssue);
+
+
+                      int TotalStock = TotalIssuedQty + qtyInStock;
+
+                      int difference = TotalStock - Outqty;
+
+                      if ((difference == 0) || (difference < TotalIssuedQty))
+                      {
+                          CanDelete = false;
+                          break;
+                      }
                   }
 
-                 
+
+
 
               }
 
