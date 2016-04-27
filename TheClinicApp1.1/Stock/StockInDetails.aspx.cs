@@ -489,6 +489,52 @@ namespace TheClinicApp1._1.Stock
                                         int x = TotalStock - ChangingQty;
                                         int qtyNeeded = TotalIssuedQty - x;
 
+
+                                        //if (x==0)
+                                        //{
+                                        //    qtyNeeded = TotalIssuedQty; 
+                                        //}
+
+                                        //else
+                                        //{
+                                        //    qtyNeeded = ChangingQty - TotalIssuedQty;
+                                        //}
+
+
+
+                                        int difference = TotalStock - ChangingQty;
+
+
+                                        if (difference == 0)
+                                        {
+                                            qtyNeeded = TotalStock - qtyInStock;
+                                        }
+
+                                        else
+                                        {
+                                            if (difference < TotalIssuedQty)
+	                                            {
+
+                                                    qtyNeeded = TotalIssuedQty - difference;
+	                                            }
+                                        }
+
+
+                                        //if (TotalIssuedQty >= ChangingQty)
+                                        //{
+                                        //    //qtyNeeded = TotalStock - TotalIssuedQty;
+
+                                        //    qtyNeeded = TotalIssuedQty - x;
+                                        //}
+
+                                        //else
+                                        //{
+                                        //    qtyNeeded = TotalIssuedQty;
+                                        //}
+
+                                       
+
+
                                         if (inputQty < qtyNeeded)
                                             {
                                                 var page = HttpContext.Current.CurrentHandler as Page;
