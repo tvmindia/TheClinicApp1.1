@@ -345,8 +345,14 @@ function BindControlsByMedicneName(ControlNo) {
             MedicineDetails = response.split('|');
 
             document.getElementById('txtUnit' + ControlNo).value = MedicineDetails[0];
+            document.getElementById('txtUnit' + ControlNo).readOnly=true;
+
+
             document.getElementById('txtCode' + ControlNo).value = MedicineDetails[1];
+            document.getElementById('txtCode' + ControlNo).readOnly = true;
+
             document.getElementById('txtCategory' + ControlNo).value = MedicineDetails[2];
+            document.getElementById('txtCategory' + ControlNo).readOnly = true;
 
             document.getElementById('txtQuantity' + ControlNo).focus();
 
