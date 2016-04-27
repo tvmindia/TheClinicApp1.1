@@ -1,12 +1,47 @@
 ﻿
 <%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <style>
+              
+                  
+          #testTable { 
+            width : 300px;
+            margin-left: auto; 
+            margin-right: auto; 
+          }
+          
+          #tablePagination { 
+            background-color:  Transparent; 
+            font-size: 0.8em; 
+            padding: 0px 5px; 
+            height: 20px
+          }
+          
+          #tablePagination_paginater { 
+            margin-left: auto; 
+            margin-right: auto;
+          }
+          
+          #tablePagination img { 
+            padding: 0px 2px; 
+          }
+          
+          #tablePagination_perPage { 
+            float: left; 
+          }
+          
+          #tablePagination_paginater { 
+            float: right; 
+          }
 
+    </style>
     <!-- Script Files -->  
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-   
+       <script src="../js/jquery-1.3.2.min.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
      
     <script src="../js/bootstrap.min.js"></script>  
@@ -40,7 +75,7 @@
     </script>
     <!--------------------------------------------------------------------->
     <!---   Script Nav button to srink and reform in document Ready --->
-    <script> 
+    <%--<script> 
         function getPatientId(Patient)
         {
             var PatientDetails=Patient;
@@ -68,9 +103,9 @@
 
         });
 
-		</script>
+		</script>   --%> 
      <!---------------------------------------------------------------->
-    <script>
+    <%-- <script>
           var test = jQuery.noConflict();
           test(document).on('ready', function () {
               test("#FileUpload").fileinput({
@@ -78,9 +113,12 @@
               });
               
          });
-        </script> 
-    <!--- Script for AutocompletionTextBox preview, Created By:Thomson Kattingal --->   
+        </script> --%>
     <script>
+
+    </script>
+    <!--- Script for AutocompletionTextBox preview, Created By:Thomson Kattingal --->   
+    <%--<script>
         var test=jQuery.noConflict();
         test(document).on('ready',function(){
             debugger;
@@ -91,7 +129,58 @@
             });
         });
              
-    </script>
+    </script>--%>
+
+    <script src="../js/jquery.tablePagination.0.1.js"></script>
+    <script type ="text/javascript" >
+        $(document).ready(
+        function () {
+            debugger;
+            var ac=null;
+            ac = <%=listFilter %>;
+            $( "#txtSearch" ).autocomplete({
+                source: ac
+            });
+            
+            $('.alert_close').click(function () {
+                $(this).parent(".alert").hide();
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+        
+
+
+            $('.nav_menu').click(function () {
+                $(".main_body").toggleClass("active_close");
+            });
+
+            $('table').tablePagination({});       
+            
+            });
+        
+       <%-- function check() {
+
+            var name = document.getElementById('<%=TextBox1.ClientID%>').value;
+            var first = name.substring(0, 1);
+            if (!(first >= "A" && first <= "Z")) {
+                alert("First character is capital");
+                return false;
+            }
+
+        }--%>
+        function getPatientId(Patient)
+        {
+            var PatientDetails=Patient;
+            alert(PatientDetails);
+        }
+
+        </script>
+                     
+     
+
+   
+   
+    
     <!------------------------------------------------------------------------------>
   
     <!---------------------------------------------------------------------->
@@ -122,7 +211,7 @@
          Patients Registration</div>
          <div class="icon_box">
          <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>
-         <a class="Todays_registration_link" data-toggle="modal" data-target="#TokenRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
+         <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
          <div class="search_div">
@@ -222,24 +311,47 @@
   
         <!---------------------------------- Modal Section --------------------------------------->
         <!-- All Registration Iframe Modal -->
-       <%-- <div id="add_medicine" class="modal fade" role="dialog">
-  <div class="modal-dialog" style="height:600px;">
+        <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg1" style="width:60%;height:70%">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">  
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
-        <h4 class="modal-title">Add New Medicine</h4>
+        <h4 class="modal-title">All Registration</h4>
       </div>
-      <div class="modal-body" style="height:400px;">
-
-             <iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>
-    
-      </div>      
+      <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;">
+       <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
+         <div class="col-lg-12"> 
+        <asp:GridView ID="GridView1" runat="server" CssClass="table" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" >
+            
+            <Columns>
+                 <asp:TemplateField>
+                  <ItemTemplate>
+                   <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" Height="45px" Width="45px" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                    </ItemTemplate>                                    
+                     </asp:TemplateField>
+                    <asp:TemplateField>
+                    <ItemTemplate>
+                     <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Cancel.png" Height="45px" Width="45px" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
+                       </ItemTemplate>
+                       </asp:TemplateField>
+                <asp:BoundField DataField="Name" HeaderText="👤 Name" SortExpression="Name"></asp:BoundField>
+                <asp:BoundField DataField="Address" HeaderText="🏡 Address" SortExpression="Address"></asp:BoundField>
+                <asp:BoundField DataField="Phone" HeaderText="📱 Phone" SortExpression="Phone"></asp:BoundField>               
+            </Columns>
+            
+        </asp:GridView>
+       <%-- <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+        <asp:Button ID="Button1" runat="server" Text="Button" OnClientClick ="return check();" />--%>
+ </div>
+    </div>
+         
+         
     </div>
 
   </div>
-</div> --%>
+</div> 
               
         <!-- Token Registration Modal -->
         <div class="modal fade" id="TokenRegistration" role="dialog">
@@ -276,7 +388,7 @@
         </div>
 
         <!-- All Registration Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
+        <%--   <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog  modal-lg" style="width:60%;height:70%">
                 <!-- Modal content-->
                 <div class="modal-content" style="width:100%;height:100%" >
@@ -286,7 +398,7 @@
                     </div>
                     <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;" >
                         <div class="col-sm-12">                        
-                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" AllowPaging="true" OnPageIndexChanging="dtgViewAllRegistration_PageIndexChanging" PageSize="5" Width="100%">                            
+                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" Width="100%" OnPreRender="GridView1_PreRender">                            
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField>
@@ -334,7 +446,7 @@
                     </div>
                 </div>
                 </div>
-            </div>
+            </div>--%>
      
       
         <!-- Todays Registration Modal -->
@@ -350,37 +462,25 @@
                     <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;">
                      <div class="col-sm-12">
                         <asp:GridView ID="dtgViewTodaysRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>
+                            
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                                        <asp:ImageButton ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Pencil-01.png" Height="45px" Width="45px" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
 
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Cancel.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
-                                       
-
+                                        <asp:ImageButton ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Cancel.png" Height="45px" Width="45px" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>
-                                <asp:BoundField DataField="Address" HeaderText="Address"></asp:BoundField>
-                                <asp:BoundField DataField="Phone" HeaderText="Phone"></asp:BoundField>
-                                <asp:BoundField DataField="Email" HeaderText="Email"></asp:BoundField>
+                                <asp:BoundField DataField="Name" HeaderText="👤 Name"></asp:BoundField>
+                                <asp:BoundField DataField="Address" HeaderText="🏡 Address"></asp:BoundField>
+                                <asp:BoundField DataField="Phone" HeaderText="📱 Phone"></asp:BoundField>
                                 
                             </Columns>
-                            <EditRowStyle BackColor="#0080AA"></EditRowStyle>
-                            <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
-                            <HeaderStyle BackColor="#0080AA" Font-Bold="True" ForeColor="White"></HeaderStyle>
-                            <PagerStyle HorizontalAlign="Center" BackColor="#284775" ForeColor="White"></PagerStyle>
-                            <RowStyle BackColor="#F7F6F3" ForeColor="#333333"></RowStyle>
-                            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
-                            <SortedAscendingCellStyle BackColor="#E9E7E2"></SortedAscendingCellStyle>
-                            <SortedAscendingHeaderStyle BackColor="#506C8C"></SortedAscendingHeaderStyle>
-                            <SortedDescendingCellStyle BackColor="#FFFDF8"></SortedDescendingCellStyle>
-                            <SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
+                            
                         </asp:GridView>
                         </div>
                     </div>
@@ -393,24 +493,30 @@
             </div>
         </div>
         <!------------------------------------------------------------------------------------------>   
-                    
-    <!-- Script Files -->
-    <script src="../js/jquery-1.12.0.min.js"></script>
+   <!-- Script Files -->
+    <script src="../js/jquery-1.3.2.min.js"></script>
+   <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+  
+     <script src="../js/jquery.tablePagination.0.1.js"></script>
     <!---   Script includes function for open Modals preview, Created By:Thomson Kattingal --->
+
+      
     <asp:ScriptManager runat="server"></asp:ScriptManager>   
     <script type="text/javascript">  
         <!---Function for Open Token Registration Modal and All Registarion Modal----->
-        function openModal() {
-            debugger;
-             $('#TokenRegistration').modal('show');
+    function openModal() {
+        debugger;
+        $('#TokenRegistration').modal('show');
            
-        }
-        function openmyModal() {
-            $('#myModal').modal('show');
-        }
+    }
+    function openmyModal() {
+        $('#myModal').modal('show');
+    }
         </script>
+   
+   
    <!----------------------------------------------------------------------------------------> 
    <!------------------------------------->
             

@@ -8,12 +8,14 @@
 #region Included Namespaces
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
@@ -32,6 +34,7 @@ namespace TheClinicApp1._1.Registration
         ErrorHandling eObj = new ErrorHandling();
         public string listFilter = null;
         public string RoleName = null;
+        private static int PageSize = 8;
         #endregion GlobalVariables
 
         #region PageLoad
@@ -41,23 +44,50 @@ namespace TheClinicApp1._1.Registration
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
-            tok.ClinicID = UA.ClinicID.ToString();           
+            tok.ClinicID = UA.ClinicID.ToString();
+            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
             gridDataBind();
             listFilter = null;
             listFilter = BindName();
+            //if (!IsPostBack)
+            //{
+            //    BindDummyRow();
+            //    //BindOutOfStockGridview();
+            //}
             
         }
         #endregion PageLoad
 
         #region Methods
+        #region Bind Dummy Row
+
+        //private void BindDummyRow()
+        //{
+        //    DataTable dummy = new DataTable();
+        //    dummy.Columns.Add("MedicineName");
+        //    dummy.Columns.Add("CategoryName");
+        //    dummy.Columns.Add("MedicineCode");
+        //    dummy.Columns.Add("Unit");
+        //    dummy.Columns.Add("Qty");
+        //    dummy.Columns.Add("ReOrderQty");
+        //    dummy.Rows.Add();
+        //    gvMedicines.DataSource = dummy;
+        //    gvMedicines.DataBind();
+        //}
+
+        #endregion Bind Dummy Row
 
         #region GridBind
         public void gridDataBind()
         {
+            
             #region GridAllRegistration
-            dtgViewAllRegistration.EmptyDataText = "No Records Found";
-            dtgViewAllRegistration.DataSource = PatientObj.GetAllRegistration();
-            dtgViewAllRegistration.DataBind();
+            //dtgViewAllRegistration.EmptyDataText = "No Records Found";
+            GridView1.EmptyDataText = "No Records Found";
+            //dtgViewAllRegistration.DataSource = PatientObj.GetAllRegistration();
+            GridView1.DataSource = PatientObj.GetAllRegistration();
+            //dtgViewAllRegistration.DataBind();
+            GridView1.DataBind();
             #endregion GridAllRegistration
             #region GridDateRegistration
             dtgViewTodaysRegistration.EmptyDataText = "....Till Now No Registration....";
@@ -237,20 +267,72 @@ namespace TheClinicApp1._1.Registration
         #endregion convertImage
 
         #region Paging
-        protected void dtgViewAllRegistration_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            lblErrorCaption.Text = string.Empty;
-            lblMsgges.Text = string.Empty;
-            Errorbox.Style["display"] = "none";
-            lblFileCount.Text = string.Empty;
-            lblTokencount.Text = string.Empty;
-            divDisplayNumber.Style["display"] = "none";
-            dtgViewAllRegistration.PageIndex = e.NewPageIndex;
-            dtgViewAllRegistration.DataBind();
-            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openmyModal();", true);
-        }
+        //protected void dtgViewAllRegistration_PageIndexChanging(object sender, GridViewPageEventArgs e)
+       // {
+           // lblErrorCaption.Text = string.Empty;
+           // lblMsgges.Text = string.Empty;
+           // Errorbox.Style["display"] = "none";
+           // lblFileCount.Text = string.Empty;
+           // lblTokencount.Text = string.Empty;
+           // divDisplayNumber.Style["display"] = "none";
+           // dtgViewAllRegistration.PageIndex = e.NewPageIndex;
+           // dtgViewAllRegistration.DataBind();
+           // ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openmyModal();", true);
+       // }
 
         #endregion Paging
+
+        //[WebMethod]
+        //public static string GetMedicines(string searchTerm, int pageIndex)
+        //{
+        //    ClinicDAL.UserAuthendication UA;
+        //    UIClasses.Const Const = new UIClasses.Const();
+
+        //    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+        //    string query = "ViewAndFilterMedicine";
+        //    SqlCommand cmd = new SqlCommand(query);
+        //    cmd.CommandType = CommandType.StoredProcedure;
+
+        //    cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
+        //    //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
+
+        //    cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+        //    cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+        //    cmd.Parameters.AddWithValue("@PageSize", PageSize);
+        //    cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+        //    var xml = GetData(cmd, pageIndex).GetXml();
+        //    return xml;
+        //}
+
+        //private static DataSet GetData(SqlCommand cmd, int pageIndex)
+        //{
+
+        //    string strConnString = ConfigurationManager.ConnectionStrings["ClinicAppConnectionString"].ConnectionString;
+        //    using (SqlConnection con = new SqlConnection(strConnString))
+        //    {
+        //        using (SqlDataAdapter sda = new SqlDataAdapter())
+        //        {
+        //            cmd.Connection = con;
+        //            sda.SelectCommand = cmd;
+        //            using (DataSet ds = new DataSet())
+        //            {
+        //                sda.Fill(ds, "Medicines");
+        //                DataTable dt = new DataTable("Pager");
+        //                dt.Columns.Add("PageIndex");
+        //                dt.Columns.Add("PageSize");
+        //                dt.Columns.Add("RecordCount");
+        //                dt.Rows.Add();
+        //                dt.Rows[0]["PageIndex"] = pageIndex;
+        //                dt.Rows[0]["PageSize"] = PageSize;
+        //                dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+        //                ds.Tables.Add(dt);
+        //                return ds;
+        //            }
+        //        }
+        //    }
+        //}
         #endregion Methods
 
         #region MainButton
@@ -407,5 +489,11 @@ namespace TheClinicApp1._1.Registration
             }
         }
         #endregion SearchButtonClick
+
+        protected void GridView1_PreRender(object sender, EventArgs e)
+        {
+            GridView1.UseAccessibleHeader = false;
+            GridView1.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
     }
 }

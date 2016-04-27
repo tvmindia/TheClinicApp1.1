@@ -19,27 +19,27 @@ namespace TheClinicApp1._1.Registration
             dtgViewAllRegistration.DataBind();
             #endregion GridAllRegistration
         }
-        #region EditPatients
-        protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
-        { 
-            DateTime date = DateTime.Now;
-            int year = date.Year;
-            string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
+        //#region EditPatients
+        //protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
+        //{ 
+        //    DateTime date = DateTime.Now;
+        //    int year = date.Year;
+        //    string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
 
-            Guid PatientID = Guid.Parse(Patient[0]);           
-            HiddenField1.Value = PatientID.ToString();
-            HiddenField2.Value=Patient[1];
-            string Address=Patient[2];
-            string Phone = Patient[3];
-            string Gmail = Patient[4];
-            string DOB=Patient[5];
-            string Gender = Patient[6];
-            string Marital = Patient[7];
-            string Pic = Patient[8];
-            string Type = Patient[9];
-            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "SetFields();", true);
-        }
-        #endregion EditPatients
+        //    Guid PatientID = Guid.Parse(Patient[0]);           
+        //    HiddenField1.Value = PatientID.ToString();
+        //    HiddenField2.Value=Patient[1];
+        //    string Address=Patient[2];
+        //    string Phone = Patient[3];
+        //    string Gmail = Patient[4];
+        //    string DOB=Patient[5];
+        //    string Gender = Patient[6];
+        //    string Marital = Patient[7];
+        //    string Pic = Patient[8];
+        //    string Type = Patient[9];
+        //    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "SetFields();", true);
+        //}
+        //#endregion EditPatients
 
         #region GridDelete
         protected void ImgBtnDelete_Command(object sender, CommandEventArgs e)
@@ -62,5 +62,16 @@ namespace TheClinicApp1._1.Registration
         }
 
         #endregion Paging
+
+        protected void GridView1_PreRender(object sender, EventArgs e)
+        {
+            dtgViewAllRegistration.UseAccessibleHeader = false;
+            dtgViewAllRegistration.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
+        {
+
+        }
     }
 }
