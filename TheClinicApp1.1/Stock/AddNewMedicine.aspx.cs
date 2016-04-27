@@ -227,6 +227,7 @@ namespace TheClinicApp1._1.Stock
             //ClearControls();
         }
 
+     
        
     }
 }

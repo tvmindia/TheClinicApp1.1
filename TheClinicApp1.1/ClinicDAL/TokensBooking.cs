@@ -14,6 +14,8 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
+        string msgText;
+        string msgCaption;
         #endregion Global Variables
 
         //Property
@@ -236,7 +238,7 @@ namespace TheClinicApp1._1.ClinicDAL
         /// <returns>return generated token number</returns>
         public int InsertToken()
         {
-
+           
             SqlConnection con = null;
             
             try
@@ -262,12 +264,12 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlParameter OutparmItemId = cmd.Parameters.Add("@TokenNo", SqlDbType.Int);
             OutparmItemId.Direction = ParameterDirection.Output;
 
-           
+            
 
             cmd.ExecuteNonQuery();
             TokenNo = Convert.ToInt32(OutparmItemId.Value);
-           
-                 
+            msgText = " Token No:" + TokenNo;
+            msgCaption = "Token Booked Sucessfully";  
              }
 
             catch (Exception ex)
@@ -281,7 +283,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
                 var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.InsertionSuccessMessage(page);
+                eObj.InsertionSuccessMessage(page, msgCaption, msgText);
 
 
                 if (con != null)

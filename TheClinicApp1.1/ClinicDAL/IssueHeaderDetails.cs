@@ -657,6 +657,53 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Get Issue Details By IssueNo
 
+        #region Get Total Qty Of A Medicine
+
+        public string GetTotalQtyOfAMedicine(string MedicineName)
+        {
+            string TotlQty = string.Empty;
+            dbConnection dcon = null;
+
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetTotalQtyOfAMedicine]";
+
+                cmd.Parameters.Add("@MedicineName", SqlDbType.NVarChar, 255).Value = MedicineName;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
+                object ID = cmd.ExecuteScalar();
+                if (ID != null)
+                {
+                    TotlQty = ID.ToString();
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+
+            return TotlQty;
+        }
+
+        #endregion Get Total Qty Of A Medicine
+
         #endregion Methods
 
     }
@@ -1130,6 +1177,9 @@ namespace TheClinicApp1._1.ClinicDAL
             return Qty;
         }
         #endregion Get Quantity In Stock
+
+
+        
 
         #endregion Methods
 
