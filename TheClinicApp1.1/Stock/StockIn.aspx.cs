@@ -41,7 +41,7 @@ namespace TheClinicApp1._1.Stock
         IssueDetails idt = new IssueDetails();
         Stocks stok = new Stocks();
         Receipt rpt = new Receipt();
-
+       
 
         #endregion Global Variables
 
@@ -78,18 +78,36 @@ namespace TheClinicApp1._1.Stock
 
               DataSet  dsReceipthdr = rpt.GetReceiptDetailsByReceiptID(receiptID);
 
+              ihd.ClinicID = UA.ClinicID.ToString();
 
               for (int i = 0; i < dsReceipthdr.Tables[0].Rows.Count; i++)
               {
+
                   int Outqty = Convert.ToInt32(dsReceipthdr.Tables[0].Rows[i]["QTY"]);
                   int qtyInStock = Convert.ToInt32(dsReceipthdr.Tables[0].Rows[i]["QtyInStock"]);
 
+                  string MedicineName = dsReceipthdr.Tables[0].Rows[i]["MedicineName"].ToString();
+                  string totalIssue = ihd.GetTotalQtyOfAMedicine(MedicineName);
 
-                  if (Outqty > qtyInStock)
+                  if (totalIssue != string.Empty)
                   {
-                      CanDelete = false;
-                      break;
+
+                      int TotalIssuedQty = Convert.ToInt32(totalIssue);
+
+
+                      int TotalStock = TotalIssuedQty + qtyInStock;
+
+                      int difference = TotalStock - Outqty;
+
+                      if ((difference == 0) || (difference < TotalIssuedQty))
+                      {
+                          CanDelete = false;
+                          break;
+                      }
                   }
+
+
+
 
               }
 

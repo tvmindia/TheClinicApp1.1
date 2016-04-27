@@ -87,7 +87,7 @@ function clickStockAdd(id) {
        + '<td><input id="txtUnit' + iCnt + '" readonly="true" class="input "  type="text" placeholder="Unit' + iCnt + '" /></td>'
        + '<td><input id="txtCode' + iCnt + '" readonly="true" class="input "  type="text" placeholder="Med Code' + iCnt + '"/></td>'
        + '<td><input id="txtCategory' + iCnt + '" readonly="true" class="input "  type="text" placeholder="Category' + iCnt + '"/></td>'
-       + '<td><input id="txtQuantity' + iCnt + '" class="input" min="1" type="number" placeholder="Quantity' + iCnt + '" onblur="CheckMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" /></td>'
+       + '<td><input id="txtQuantity' + iCnt + '" class="input" min="1" type="number" placeholder="Quantity' + iCnt + '" onblur="CheckMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" autocomplete="off" /></td>'
        + '<td style="background:#E6E5E5">'
        + '<input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" /></td>'
        + '<td style="background:#E6E5E5">'
@@ -117,9 +117,9 @@ function clickAdd(id) {
 
     // ADD new row with fields needed.
     $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;border:0;">'
-               + ' <td ><input id="txtMedName' + iCnt + '" type="text" placeholder="Medicine' + iCnt + '" class="input" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
-                + '<td ><input id="txtMedQty' + iCnt + '" type="text" placeholder="Qty' + iCnt + '" class="input"/></td>'
-                + '<td ><input id="txtMedUnit' + iCnt + '" class="input" type="text" placeholder="Unit' + iCnt + '" /></td>'
+             + ' <td ><input id="txtMedName' + iCnt + '" type="text" placeholder="Medicine' + iCnt + '" class="input"  onblur="BindMedunitbyMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
+                + '<td ><input id="txtMedQty' + iCnt + '" type="text"  placeholder="Qty' + iCnt + '" class="input" onblur="focuscontrol(' + iCnt + ')"/></td>'
+                + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true"  class="input" type="text" placeholder="Unit' + iCnt + '" /></td>'
                 + '<td ><input id="txtMedDos' + iCnt + '" type="text" placeholder="Dosage' + iCnt + '" class="input"/></td>'
                 + '<td><input id="txtMedTime' + iCnt + '" type="text" placeholder="Timing' + iCnt + '" class="input"/></td>'
                  + '<td><input id="txtMedDay' + iCnt + '" type="text" placeholder="Days' + iCnt + '" class="input"/></td>'
@@ -345,9 +345,16 @@ function BindControlsByMedicneName(ControlNo) {
             MedicineDetails = response.split('|');
 
             document.getElementById('txtUnit' + ControlNo).value = MedicineDetails[0];
-            document.getElementById('txtCode' + ControlNo).value = MedicineDetails[1];
-            document.getElementById('txtCategory' + ControlNo).value = MedicineDetails[2];
+            document.getElementById('txtUnit' + ControlNo).readOnly=true;
 
+
+            document.getElementById('txtCode' + ControlNo).value = MedicineDetails[1];
+            document.getElementById('txtCode' + ControlNo).readOnly = true;
+
+            document.getElementById('txtCategory' + ControlNo).value = MedicineDetails[2];
+            document.getElementById('txtCategory' + ControlNo).readOnly = true;
+
+            document.getElementById('txtQuantity' + ControlNo).focus();
 
             if (PageCalledFrom != 'StockIn') {
                
@@ -498,7 +505,13 @@ function CheckMedicineIsOutOfStock(ControlNo) {
     {
         if (PageCalledFrom == 'StockIn')
         {
-            var InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
+            debugger;
+
+            var InputQty = document.getElementById('txtQuantity' + ControlNo).value;
+
+            if (document.getElementById('txtQuantity' + ControlNo).value != "") {
+    
+                InputQty = Number(document.getElementById('txtQuantity' + ControlNo).value);
 
             if ( InputQty <= 0) {
                 $("#txtQuantity" + ControlNo).addClass("warning");
@@ -510,6 +523,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
                 
 
             }
+        }
 
         }
     }
