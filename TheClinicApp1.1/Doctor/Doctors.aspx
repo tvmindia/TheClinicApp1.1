@@ -3,6 +3,7 @@
       
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+      <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
  
      <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -10,12 +11,47 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/fileinput.js"></script>
         <script>
+            function BindMedunitbyMedicneName(ControlNo) 
+            {
+                debugger;
+  
+                if (ControlNo >= 0) {
+                    var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
+
+                }
+
+                if (MedicineName != "") 
+                {
+                    PageMethods.MedDetails(MedicineName, OnSuccess, onError);       
+                }
+    
+                function OnSuccess(response, userContext, methodName) 
+                {        
+                    if (ControlNo >= 0) 
+                    {          
+                         
+
+                        document.getElementById('txtMedUnit' + ControlNo).value = response;
+                       
+                    }   
+                }  
+                function onError(response, userContext, methodName) {       
+                }
+            }
+
+
+            function focuscontrol(ControlNo)
+            {
+                debugger; 
+                document.getElementById('txtMedDos' + ControlNo).focus();
+            }
+                   
            
 
             function autocompleteonfocus(controlID)
             {
                 //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
-                
+                debugger; 
                 var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
  
                 if (topcount==0)
@@ -261,9 +297,9 @@
     <th>Days</th>
   </tr>
   <tr> 
-     <td ><input id="txtMedName0" type="text" placeholder="Medicine" class="input" onfocus="autocompleteonfocus(0)"/></td>
-      <td ><input id="txtMedQty0" type="text" placeholder="Qty" class="input"/></td>
-      <td ><input id="txtMedUnit0" class="input" type="text" placeholder="Unit" /></td>
+     <td ><input id="txtMedName0" type="text"  placeholder="Medicine" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)"/></td>
+      <td ><input id="txtMedQty0" type="text" placeholder="Qty" class="input" onblur="focuscontrol(0)"/></td>
+      <td ><input id="txtMedUnit0" class="input"  readonly="true" type="text" placeholder="Unit" /></td>
       <td ><input id="txtMedDos0" type="text" placeholder="Dosage" class="input"/></td>
       <td><input id="txtMedTime0" type="text" placeholder="Timing" class="input"/></td>
       <td><input id="txtMedDay0" type="text" placeholder="Days" class="input"/></td><td style="background:#E6E5E5">

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TheClinicApp1._1.ClinicDAL;
 
 namespace TheClinicApp1._1.Doctor
 {
@@ -295,6 +296,46 @@ namespace TheClinicApp1._1.Doctor
 
         }
         #endregion GridBindTokens
+
+
+        #region Get MedicineDetails By Medicine Name
+
+        /// <summary>
+        /// To fill textboxes with medicine details when when medicne name is inserted
+        /// </summary>
+        /// <param name="MedName"></param>
+        /// <returns>String of medicine details</returns>
+
+        [WebMethod]
+
+        public static string MedDetails(string MedName)
+        {
+            IssueHeaderDetails IssuedtlsObj = new IssueHeaderDetails();
+
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            IssuedtlsObj.ClinicID = UA.ClinicID.ToString();
+
+            DataSet ds = IssuedtlsObj.GetMedicineDetailsByMedicineName(MedName);
+            string Unit = "";
+          
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                Unit = Convert.ToString(ds.Tables[0].Rows[0]["Unit"]);
+              
+            }
+
+            return String.Format("{0}", Unit);
+
+
+        }
+
+
+        #endregion Get MedicineDetails By Medicine Name
 
         protected void btnNew_ServerClick(object sender, EventArgs e)
         {
