@@ -262,7 +262,7 @@
                             </div>
                             <div class="card_white">
                              <asp:Label Text="Select Your Doctor " Font-Size="Large" Font-Bold="true"  runat="server"></asp:Label>
-                            <asp:DropDownList ID="ddlDoctorName" Height="70%" Width="100%" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlDoctorName" Height="70%" AppendDataBoundItems="true" Width="100%" runat="server"></asp:DropDownList>
                             </div>
                         </div>                      
                     <div class="modal-footer" style="background-color:grey;">                       
