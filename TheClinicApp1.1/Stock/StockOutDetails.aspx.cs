@@ -293,7 +293,8 @@ namespace TheClinicApp1._1.Stock
 
                 if (!IsPostBack)
                 {
-                    var today = DateTime.Now.ToString("dd-MM-yyyy");
+                    var today = DateTime.Now.ToString("dd-MMM-yyyy");
+
                     txtDate1.Text = today;
 
                     BindTextboxByIssueNo();
@@ -343,7 +344,7 @@ namespace TheClinicApp1._1.Stock
                     {
                         txtIssueNO.Text = dtIssuehdr.Rows[0]["IssueNO"].ToString();
                         txtIssuedTo.Text = dtIssuehdr.Rows[0]["IssuedTo"].ToString();
-                        txtDate1.Text = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
+                        txtDate1.Text = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MMM-yyyy");
                     }
 
 
