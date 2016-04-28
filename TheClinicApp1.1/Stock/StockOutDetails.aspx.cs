@@ -413,44 +413,14 @@ namespace TheClinicApp1._1.Stock
 
                              if ((txtIssueNO.Text != string.Empty) && (txtIssuedTo.Text != string.Empty) && (txtDate1.Text != string.Empty))
                              {
-                                 //CultureInfo culture = new CultureInfo("en-US");
-
-                                 //string DateSelected = txtDate1.Text.ToString(culture);
-
-
-                                 //DateTime DateSelected = DateTime.ParseExact(txtDate1.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-
-                                 //DateTime dt = DateTime.ParseExact(txtDate1.Text.ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-
-                                 Thread.CurrentThread.CurrentUICulture.ClearCachedData();
-
-
-                                 CultureInfo culture = CultureInfo.CurrentCulture;
-
-                                 CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
-                                 var cultureLanguageTag = CultureInfo.CurrentCulture.IetfLanguageTag;
-                                 var defaultCulture = CultureInfo.GetCultureInfoByIetfLanguageTag(cultureLanguageTag);
-                                 //DateTime DateSelected = Convert.ToDateTime(DateTime.ParseExact(txtDate1.Text, "dd/MM/yyyy", null));
-
-                                 string DateSelected = txtDate1.Text.ToString(culture);
-                               
-
-                               
-                                 //DateTimeFormatInfo usDtfi = new CultureInfo("en-US", false).DateTimeFormat;
-                                 //DateTimeFormatInfo ukDtfi = new CultureInfo("en-GB", false).DateTimeFormat;
-                                 //string DateSelected = Convert.ToDateTime(txtDate1.Text, ukDtfi).ToString(usDtfi.ShortDatePattern);
-
-                               
-
+                                
                                  IssuehdrObj.ClinicID = UA.ClinicID.ToString();
                                  IssuehdrObj.IssuedTo = txtIssuedTo.Text;
                                  IssuehdrObj.IssueNO = txtIssueNO.Text;
                                  IssuehdrObj.CreatedBy = UA.userName;
 
-                                 IssuehdrObj.Date = Convert.ToDateTime(DateSelected);
+                                 IssuehdrObj.Date = Convert.ToDateTime(txtDate1.Text);
                                  //IssuehdrObj.Date = DateSelected;
-
-
 
                                  if ((hdnHdrInserted.Value == "") && (hdnTextboxValues.Value != ""))
                                  {
@@ -482,7 +452,7 @@ namespace TheClinicApp1._1.Stock
                                      if (dtIssuehdr.Rows.Count > 0)
                                      {
 
-                                         string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MM-yyyy");
+                                         string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-M-yy");
                                          string newDate = txtDate1.Text;
 
                                          if ((txtIssueNO.Text != dtIssuehdr.Rows[0]["IssueNO"].ToString()) || (txtIssuedTo.Text != dtIssuehdr.Rows[0]["IssuedTo"].ToString()) || (oldDate != newDate))
@@ -496,7 +466,7 @@ namespace TheClinicApp1._1.Stock
 
                                                  IssuehdrObj.ClinicID = UA.ClinicID.ToString();
                                                  IssuehdrObj.IssuedTo = txtIssuedTo.Text;
-                                                 IssuehdrObj.Date = Convert.ToDateTime(DateSelected);
+                                                 IssuehdrObj.Date = Convert.ToDateTime(txtDate1.Text);
 
                                                  //IssuehdrObj.Date = DateSelected;
                                                  IssuehdrObj.UpdatedBy = UA.userName;
