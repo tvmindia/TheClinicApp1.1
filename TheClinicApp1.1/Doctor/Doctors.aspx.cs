@@ -6,13 +6,18 @@ using System.Text;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
+using System.Drawing;  
 using System.Web.UI.WebControls;
-using TheClinicApp1._1.ClinicDAL;
+ 
+using TheClinicApp1._1.ClinicDAL; 
 
 namespace TheClinicApp1._1.Doctor
 {
     public partial class Doctors : System.Web.UI.Page
     {
+
+         
+
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         ClinicDAL.ErrorHandling eObj = new ClinicDAL.ErrorHandling();
@@ -193,6 +198,7 @@ namespace TheClinicApp1._1.Doctor
                 }
             }
             }
+            gridviewbind();
         }
     
         #region FillPatientDetails
@@ -341,5 +347,58 @@ namespace TheClinicApp1._1.Doctor
         {
             HdnForVisitID.Value = string.Empty;
         }
+
+
+        int GetColumnIndexByName(GridViewRow row, string columnName)
+        {
+            int columnIndex = 0;
+            foreach (DataControlFieldCell cell in row.Cells)
+            {
+                if (cell.ContainingField is BoundField)
+                    if (((BoundField)cell.ContainingField).DataField.Equals(columnName))
+                        break;
+                columnIndex++; // keep adding 1 while we don't have the correct name
+            }
+            return columnIndex;
+        }
+
+
+
+
+
+        protected void GridViewTokenlist_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+             if (e.Row.RowType == DataControlRowType.DataRow)
+    {
+        int index = GetColumnIndexByName(e.Row,"IsProcessed");
+        string columnValue = e.Row.Cells[index].Text;
+       foreach (TableCell cell in e.Row.Cells)
+       {
+                 if (columnValue=="True")
+                     e.Row.BackColor = Color.Cyan; 
+       }
+
+
+
     }
+            
+            //foreach (GridViewRow row in GridViewTokenlist)
+            //{
+
+            //}
+           
+            //for (int i = 0; i <= GridViewTokenlist.Rows.Count;i++ )
+            //{
+            //    string str = e.Row.Cells[i].Text;
+            //    string str1 = e.Row.Cells[i+2].Text;
+
+                //if ((GridViewTokenlist.Rows[ == "1"))
+                //{
+                    
+                //   GridViewTokenlist.Rows[i].Cells[6].CssClass = "gridcss";
+                //}
+            //}
+        }
+
+    } 
 }
