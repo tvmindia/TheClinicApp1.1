@@ -470,8 +470,9 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                string Msg="Token Is been Generated Against this Patient For Deletion Contact Admin";
                 var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.DeletePatientErrorData(Msg,page);
 
             }
 
@@ -554,9 +555,69 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion AddFile
 
+        #region DeleteFile
+        public void DeleteFile()
+        {
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand pud = new SqlCommand();
+                pud.Connection = con;
+                pud.CommandType = System.Data.CommandType.StoredProcedure;
+                pud.CommandText = "DeleteFile";
+                pud.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                pud.Parameters.Add(Output);
+                pud.ExecuteNonQuery();
+                if (Output.Value.ToString() == "")
+                {
+                    //not successfull   
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.WarningMessage(page);
+
+                }
+                else
+                {
+                    //successfull
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.DeleteSuccessMessage(page);
+
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                string Msg = "Visits Exist Against this Patient For Deletion Contact Admin";
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.DeletePatientErrorData(Msg, page);
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+        }
+        #endregion DeleteFile
 
         //***Generate File Number***//
-           #region Generate_File_Number
+        #region Generate_File_Number
         public string Generate_File_Number()
         {            
             string NUM;

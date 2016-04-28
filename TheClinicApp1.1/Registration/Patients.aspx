@@ -164,27 +164,9 @@
          </div>
              <div class="alert alert-info" id="divDisplayNumber" visible="false" runat="server" ><a class="alert_close">X</a>
              <div>
-             <div><asp:Label ID="lblDisplayFileNumber" runat="server" Text="File Number"></asp:Label>:&nbsp;<strong><asp:Label ID="lblFileCount" runat="server" Text=""></asp:Label></strong>&nbsp;&nbsp;<asp:Label ID="lblTokenNumber" runat="server" Text="Token Number"></asp:Label>:&nbsp;<strong><asp:Label ID="lblTokencount" runat="server" Text=""></asp:Label></strong></div>
-                           
+             <div><asp:Label ID="lblDisplayFileNumber" runat="server" Text="File Number"></asp:Label>:&nbsp;<strong><asp:Label ID="lblFileCount" runat="server" Text=""></asp:Label></strong>&nbsp;&nbsp;<asp:Label ID="lblTokenNumber" runat="server" Text="Token Number"></asp:Label>:&nbsp;<strong><asp:Label ID="lblTokencount" runat="server" Text=""></asp:Label></strong></div>                           
              </div>
-
-             </div>
-                
-         <div class="alert alert-success" style="display:none">
-          <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-        </div>        
-        <div class="alert alert-info" style="display:none">
-          <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
-        </div>
-        
-        <div class="alert alert-warning" style="display:none">
-          <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
-        </div>
-        
-        <div class="alert alert-danger" style="display:none">
-          <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-        </div>
-            
+             </div>      
       <div class="registration_form">        
       <div class="row field_row">  
       <div class="col-lg-8">
@@ -270,9 +252,9 @@
                      <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Cancel.png" Height="45px" Width="45px" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
                        </ItemTemplate>
                        </asp:TemplateField>
-                <asp:BoundField DataField="Name" HeaderText="👤 Name" SortExpression="Name"></asp:BoundField>
-                <asp:BoundField DataField="Address" HeaderText="🏡 Address" SortExpression="Address"></asp:BoundField>
-                <asp:BoundField DataField="Phone" HeaderText="📱 Phone" SortExpression="Phone"></asp:BoundField>               
+                <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"></asp:BoundField>
+                <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address"></asp:BoundField>
+                <asp:BoundField DataField="Phone" HeaderText="Phone" SortExpression="Phone"></asp:BoundField>               
             </Columns>
             
         </asp:GridView>
@@ -347,9 +329,9 @@
                                         <asp:ImageButton ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Cancel.png" Height="45px" Width="45px" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Name" HeaderText="👤 Name"></asp:BoundField>
-                                <asp:BoundField DataField="Address" HeaderText="🏡 Address"></asp:BoundField>
-                                <asp:BoundField DataField="Phone" HeaderText="📱 Phone"></asp:BoundField>
+                                <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>
+                                <asp:BoundField DataField="Address" HeaderText="Address"></asp:BoundField>
+                                <asp:BoundField DataField="Phone" HeaderText="Phone"></asp:BoundField>
                                 
                             </Columns>
                             

@@ -183,6 +183,7 @@ namespace TheClinicApp1._1.Registration
             divDisplayNumber.Style["display"] = "none";
             Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
             PatientObj.PatientID = PatientID;
+            PatientObj.DeleteFile();
             PatientObj.DeletePatientDetails();
             gridDataBind();
         }
