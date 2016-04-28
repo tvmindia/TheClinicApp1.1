@@ -46,18 +46,18 @@
             debugger; 
             var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
  
-                if (topcount==0)
-                {
-                    var ac=null; 
-                    ac = <%=listFilter %>;
-                    $( "#txtMedName"+controlID).autocomplete({
-                        source: ac
-                    });
-                }
-                else
-                {
-                    var ac=null;
-                    ac = <%=listFilter %>;
+            if (topcount==0)
+            {
+                var ac=null; 
+                ac = <%=listFilter %>;
+                $( "#txtMedName"+controlID).autocomplete({
+                    source: ac
+                });
+            }
+            else
+            {
+                var ac=null;
+                ac = <%=listFilter %>;
                     var i=1;
                     while(i<=topcount)
                     {
@@ -113,8 +113,10 @@
     <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
     <div class="main_body">
         <div class="left_part">
-            <div class="logo"><a href="#">
-                <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
+            <div class="logo">
+                <a href="#">
+                    <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
+            </div>
             <ul class="menu">
                 <li id="patients"><a name="hello" onclick="selectTile('patients','<%=RoleName%>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
                 <li id="token"><a name="hello" onclick="selectTile('token','<%=RoleName %>')"><span class="icon token"></span><span class="text">Token</span></a></li>
@@ -162,18 +164,23 @@
                 </div>
                 <div class="token_id_card">
                     <div class="name_field">
-                        <img id="ProfilePic" src="../images/UploadPic1.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label></div>
+                        <img id="ProfilePic" src="../images/UploadPic1.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label>
+                    </div>
                     <div class="light_grey">
                         <div class="col3_div">
-                            <asp:Label ID="lblAgeCount" runat="server" Text=""></asp:Label><span>Age</span></div>
+                            <asp:Label ID="lblAgeCount" runat="server" Text=""></asp:Label><span>Age</span>
+                        </div>
                         <div class="col3_div">
-                            <asp:Label ID="lblGenderDis" runat="server" Text=""></asp:Label><span>Gender</span></div>
+                            <asp:Label ID="lblGenderDis" runat="server" Text=""></asp:Label><span>Gender</span>
+                        </div>
                         <div class="col3_div">
-                            <asp:Label ID="lblFileNum" runat="server" Text=""></asp:Label><span>File No</span></div>
+                            <asp:Label ID="lblFileNum" runat="server" Text=""></asp:Label><span>File No</span>
+                        </div>
                     </div>
                     <div class="card_white">
                         <div class="field_label">
-                            <label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text=""></asp:Label></div>
+                            <label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text=""></asp:Label>
+                        </div>
                     </div>
                 </div>
                 <asp:HiddenField ID="HiddenField2" runat="server" />
@@ -214,21 +221,26 @@
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <label for="bowel">Bowel</label><input id="bowel" type="text" name="bowel" runat="server" /></div>
+                                <label for="bowel">Bowel</label><input id="bowel" type="text" name="bowel" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="appettie">Appettie</label><input id="appettie" type="text" name="appettie" runat="server" /></div>
+                                <label for="appettie">Appettie</label><input id="appettie" type="text" name="appettie" runat="server" />
+                            </div>
                         </div>
 
                         <div class="row field_row">
                             <div class="col-lg-4">
-                                <label for="micturation">Micturation</label><input id="micturation" type="text" name="micturation" runat="server" /></div>
+                                <label for="micturation">Micturation</label><input id="micturation" type="text" name="micturation" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="sleep">Sleep</label><input id="sleep" type="text" name="sleep" runat="server" /></div>
+                                <label for="sleep">Sleep</label><input id="sleep" type="text" name="sleep" runat="server" />
+                            </div>
                         </div>
 
                         <div class="row">
                             <div class="col-lg-12">
-                                <label for="symptoms">Symptoms</label><textarea id="symptoms" runat="server"></textarea></div>
+                                <label for="symptoms">Symptoms</label><textarea id="symptoms" runat="server"></textarea>
+                            </div>
                         </div>
 
                     </div>
@@ -237,11 +249,14 @@
                     <div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label for="cardiovascular">Cardiovascular</label><input id="cardiovascular" type="text" name="cardiovascular" runat="server" /></div>
+                                <label for="cardiovascular">Cardiovascular</label><input id="cardiovascular" type="text" name="cardiovascular" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="nervoussystem">Nervoussystem</label><input id="nervoussystem" type="text" name="nervoussystem" runat="server" /></div>
+                                <label for="nervoussystem">Nervoussystem</label><input id="nervoussystem" type="text" name="nervoussystem" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="musculoskeletal">Musculoskeletal</label><input id="musculoskeletal" type="text" name="musculoskeletal" runat="server" /></div>
+                                <label for="musculoskeletal">Musculoskeletal</label><input id="musculoskeletal" type="text" name="musculoskeletal" runat="server" />
+                            </div>
                         </div>
                     </div>
 
@@ -249,19 +264,25 @@
                     <div>
                         <div class="row field_row">
                             <div class="col-lg-4">
-                                <label for="palloe">Palloe</label><input id="palloe" type="text" name="palloe" runat="server" /></div>
+                                <label for="palloe">Palloe</label><input id="palloe" type="text" name="palloe" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="icterus">Icterus</label><input id="icterus" type="text" name="icterus" runat="server" /></div>
+                                <label for="icterus">Icterus</label><input id="icterus" type="text" name="icterus" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="clubbing">Clubbing</label><input id="clubbing" type="text" name="clubbing" runat="server" /></div>
+                                <label for="clubbing">Clubbing</label><input id="clubbing" type="text" name="clubbing" runat="server" />
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label for="cyanasis">Cyanasis</label><input id="cyanasis" type="text" name="cyanasis" runat="server" /></div>
+                                <label for="cyanasis">Cyanasis</label><input id="cyanasis" type="text" name="cyanasis" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="lymphnodes">Lymphnodes</label><input id="lymphGen" type="text" name="lymphGen" runat="server" /></div>
+                                <label for="lymphnodes">Lymphnodes</label><input id="lymphGen" type="text" name="lymphGen" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="edima">Edima</label><input id="edima" type="text" name="edima" runat="server" /></div>
+                                <label for="edima">Edima</label><input id="edima" type="text" name="edima" runat="server" />
+                            </div>
                         </div>
                     </div>
 
@@ -269,7 +290,8 @@
                     <div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <label for="diagnosys">Diagnosys</label><textarea id="diagnosys" runat="server"></textarea></div>
+                                <label for="diagnosys">Diagnosys</label><textarea id="diagnosys" runat="server"></textarea>
+                            </div>
                         </div>
                     </div>
 
@@ -277,7 +299,8 @@
                     <div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <label for="remarks">Remarks</label><input id="remarks" type="text" name="remarks" runat="server" /></div>
+                                <label for="remarks">Remarks</label><input id="remarks" type="text" name="remarks" runat="server" />
+                            </div>
                         </div>
                     </div>
 
@@ -285,23 +308,30 @@
                     <div>
                         <div class="row field_row">
                             <div class="col-lg-4">
-                                <label for="pulse">Pulse</label><input id="pulse" type="text" name="pulse" runat="server" /></div>
+                                <label for="pulse">Pulse</label><input id="pulse" type="text" name="pulse" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="bp">Bp</label><input id="bp" type="text" name="bp" runat="server" /></div>
+                                <label for="bp">Bp</label><input id="bp" type="text" name="bp" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="tounge">Tounge</label><input id="tounge" type="text" name="tounge" runat="server" /></div>
+                                <label for="tounge">Tounge</label><input id="tounge" type="text" name="tounge" runat="server" />
+                            </div>
                         </div>
                         <div class="row field_row">
                             <div class="col-lg-4">
-                                <label for="heart">Heart</label><input id="heart" type="text" name="heart" runat="server" /></div>
+                                <label for="heart">Heart</label><input id="heart" type="text" name="heart" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="lymphnodes">Lymphnodes</label><input id="lymphnodes" type="text" name="lymphnodes" runat="server" /></div>
+                                <label for="lymphnodes">Lymphnodes</label><input id="lymphnodes" type="text" name="lymphnodes" runat="server" />
+                            </div>
                             <div class="col-lg-4">
-                                <label for="resp_rate">Resp rate</label><input id="resp_rate" type="text" name="resp_rate" runat="server" /></div>
+                                <label for="resp_rate">Resp rate</label><input id="resp_rate" type="text" name="resp_rate" runat="server" />
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <label for="others">Others</label><textarea id="others" runat="server"></textarea></div>
+                                <label for="others">Others</label><textarea id="others" runat="server"></textarea>
+                            </div>
                         </div>
                     </div>
 
@@ -377,6 +407,7 @@
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
+
                                         <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" Width="50%" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -384,7 +415,7 @@
                                 <asp:BoundField HeaderText="Remarks" DataField="Remarks" />
                             </Columns>
 
-                          
+
                         </asp:GridView>
                     </div>
                 </div>
@@ -417,8 +448,8 @@
 
                                 <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
                                 <asp:BoundField HeaderText="Patient Name" DataField="Name" />
-                                <asp:BoundField HeaderText="Processed"  DataField="IsProcessed" />
-                            </Columns> 
+                                <asp:BoundField HeaderText="Processed" DataField="IsProcessed" />
+                            </Columns>
                         </asp:GridView>
                     </div>
                 </div>
@@ -508,20 +539,18 @@
             debugger;
             var ac=null;
             ac = <%=listFilter %>;
-             $( "#txtSearch" ).autocomplete({
-                 source: ac
-             });
-         });
+            $( "#txtSearch" ).autocomplete({
+                source: ac
+            });
+        });
              
     </script>
     <style>
-
-        .gridcss
-{
-background:#df5015;
-font-weight:bold;
-color:White;
-}
+        .gridcss {
+            background: #df5015;
+            font-weight: bold;
+            color: White;
+        }
     </style>
 
 
