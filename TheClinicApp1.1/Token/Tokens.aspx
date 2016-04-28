@@ -28,12 +28,7 @@
 
     <script>
         $(document).ready(function () {
-              debugger;
-
-            $('.nav_menu').click(function () {
-            
-                test(".main_body").toggleClass("active_close");            
-            });
+              debugger; 
             
             $('.alert_close').click(function () {                
             
@@ -47,7 +42,7 @@
           
         
             var ac=null;
-   debugger;
+            debugger;
 
             ac = <%=listFilter %>;
             var length= ac.length;
