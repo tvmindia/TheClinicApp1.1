@@ -14,10 +14,8 @@ using TheClinicApp1._1.ClinicDAL;
 namespace TheClinicApp1._1.Doctor
 {
     public partial class Doctors : System.Web.UI.Page
-    {
-
-         
-
+    {         
+                 
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         ClinicDAL.ErrorHandling eObj = new ClinicDAL.ErrorHandling();
