@@ -145,23 +145,22 @@ namespace TheClinicApp1._1.Doctor
             if (HdnForVisitID.Value == "")
             {
                 VisitsObj.AddVisits();
+                PrescriptionHeadObj.PrescID = VisitsObj.PrescriptionID.ToString();
+                PrescriptionHeadObj.VisitID = VisitsObj.VisitID.ToString();
+                PrescriptionHeadObj.ClinicID = UA.ClinicID.ToString();
+                PrescriptionHeadObj.CreatedBy = UA.userName;
+                PrescriptionHeadObj.UpdatedBy = UA.userName;
+                PrescriptionHeadObj.CreatedDate = DateTime.Now;
+                PrescriptionHeadObj.UpdatedDate = DateTime.Now;
+                PrescriptionHeadObj.InsertPrescriptionHeaderDetails();
             }
             else
             {
                 VisitsObj.UpdateVisits();
             }
-            if (VisitsObj.PrescriptionID!=Guid.Empty)
-            { 
-            
-            PrescriptionHeadObj.PrescID = VisitsObj.PrescriptionID.ToString();
-            PrescriptionHeadObj.VisitID = VisitsObj.VisitID.ToString();
-            PrescriptionHeadObj.ClinicID = UA.ClinicID.ToString();
-            PrescriptionHeadObj.CreatedBy = UA.userName;
-            PrescriptionHeadObj.UpdatedBy = UA.userName;
-            PrescriptionHeadObj.CreatedDate = DateTime.Now;
-            PrescriptionHeadObj.UpdatedDate = DateTime.Now;
-            PrescriptionHeadObj.InsertPrescriptionHeaderDetails();
-            PrescriptionObj.PrescID = PrescriptionHeadObj.PrescID.ToString();
+            if (HdnPrescID.Value != string.Empty)
+            {
+                PrescriptionObj.PrescID = HdnPrescID.Value.ToString();
 
             string last = string.Empty;
             string values = hdnTextboxValues.Value;
@@ -174,26 +173,40 @@ namespace TheClinicApp1._1.Doctor
 
                 string[] columns = tempRow[i].Split('|');
 
-                if (last == string.Empty || last == "")
-                {
+                //if (last == string.Empty || last == "")
+               // {
 
                     //----------------- * CASE : INSERT *-----------------------------------//
                     if ((columns[0] != null) && (columns[1] != null))
                     {
 
                         PrescriptionObj.MedicineName = columns[0];
-                        PrescriptionObj.Qty = Convert.ToInt32(columns[1]);
+                        if (columns[1] != "")
+                        {
+                            PrescriptionObj.Qty = Convert.ToInt32(columns[1]);
+                        }
                         PrescriptionObj.Unit = columns[2];
-                        PrescriptionObj.Dosage = Convert.ToInt32(columns[3]);
+                        PrescriptionObj.Dosage = columns[3];
                         PrescriptionObj.Timing = columns[4];
-                        PrescriptionObj.Days = Convert.ToInt32(columns[5]);
+                        PrescriptionObj.Days =columns[5];
+                        if (columns[6] != "")
+                        {
+                            
+                            PrescriptionObj.ClinicID = UA.ClinicID.ToString();
+                            PrescriptionObj.UpdatedBy = UA.userName;
+                            PrescriptionObj.UpdatePrescriptionDetails(columns[6].ToString());
+                        
+                        }
+                        else
+                        {
                         PrescriptionObj.CreatedBy = UA.userName;
                         PrescriptionObj.ClinicID = UA.ClinicID.ToString();
                         PrescriptionObj.UpdatedBy = UA.userName;                       
                         PrescriptionObj.InsertPrescriptionDetails();
+                        }
 
                     }
-                }
+               // }
             }
             }
             gridviewbind();
@@ -242,9 +255,6 @@ namespace TheClinicApp1._1.Doctor
         }
         #endregion FillPatientDetails
 
-        
-
-
         #region Update Visits
         protected void ImgBtnUpdateVisits_Command(object sender, CommandEventArgs e)
         {
@@ -279,6 +289,7 @@ namespace TheClinicApp1._1.Doctor
             others.Value = CaseFileObj.Others;
             
             string PrescriptionID = Visits[1];
+            HdnPrescID.Value = Visits[1];
             HdnForVisitID.Value=Visits[0];
             DataSet MedicinList = PrescriptionObj.ViewPrescriptionDetails(PrescriptionID);
             var xml = MedicinList.GetXml();
@@ -344,6 +355,7 @@ namespace TheClinicApp1._1.Doctor
         protected void btnNew_ServerClick(object sender, EventArgs e)
         {
             HdnForVisitID.Value = string.Empty;
+            HdnPrescID.Value = string.Empty;
         }
 
 

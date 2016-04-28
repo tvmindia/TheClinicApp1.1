@@ -310,7 +310,7 @@ namespace TheClinicApp1._1.ClinicDAL
              get;
              set;
          }
-         public int Dosage
+         public string Dosage
          {
              get;
              set;
@@ -320,7 +320,7 @@ namespace TheClinicApp1._1.ClinicDAL
              get;
              set;
          }
-         public int Days
+         public string Days
          {
              get;
              set;
@@ -365,16 +365,15 @@ namespace TheClinicApp1._1.ClinicDAL
                  SqlCommand cmd = new SqlCommand();
                  cmd.Connection = dcon.SQLCon;
                  cmd.CommandType = CommandType.StoredProcedure;
-                 cmd.CommandText = "[InsertMedicinestoPrescriptionHD]";
-                
+                 cmd.CommandText = "[InsertMedicinestoPrescriptionHD]";               
                  cmd.Parameters.Add("@PrescriptionID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
                  cmd.Parameters.Add("@MedicineName",SqlDbType.NVarChar,255).Value = MedicineName;               
                  cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);                 
                  cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
-                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;
-                 cmd.Parameters.Add("@Dosage", SqlDbType.Real).Value = Dosage;
-                 cmd.Parameters.Add("@Timing", SqlDbType.NVarChar, 10).Value = Timing;               
-                 cmd.Parameters.Add("@Days", SqlDbType.Int).Value = Days;           
+                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 20).Value = Unit;
+                 cmd.Parameters.Add("@Dosage", SqlDbType.NVarChar, 20).Value = Dosage;
+                 cmd.Parameters.Add("@Timing", SqlDbType.NVarChar, 20).Value = Timing;
+                 cmd.Parameters.Add("@Days", SqlDbType.NVarChar, 20).Value = Days;           
                  cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
                  cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                  cmd.ExecuteNonQuery();
@@ -448,7 +447,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region UpdatePrescriptionDetails
 
-         public void UpdatePrescriptionDetails( string UniqueID)
+         public void UpdatePrescriptionDetails(string UniqueID)
          {
 
              dbConnection dcon = null;
@@ -465,17 +464,14 @@ namespace TheClinicApp1._1.ClinicDAL
                  cmd.CommandText = "[UpdatePrescriptionDetails]";
 
                  cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UniqueID);
-                 cmd.Parameters.Add("@MedcineID", SqlDbType.UniqueIdentifier).Value = MedicineName;
+                 cmd.Parameters.Add("@MedicineName", SqlDbType.NVarChar,255).Value = MedicineName;
 
                  cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
-                 cmd.Parameters.Add("@Unit", SqlDbType.Real).Value = Unit;
-                 cmd.Parameters.Add("@Dosage", SqlDbType.Real).Value = Dosage;
-                 cmd.Parameters.Add("@Timing", SqlDbType.NVarChar, 255).Value = Timing;
-                 cmd.Parameters.Add("@Days", SqlDbType.Int).Value = Days;           
-                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-                 cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = CreatedDate;
-                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                 cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = UpdatedDate;
+                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar,20).Value = Unit;
+                 cmd.Parameters.Add("@Dosage", SqlDbType.NVarChar, 20).Value = Dosage;
+                 cmd.Parameters.Add("@Timing", SqlDbType.NVarChar, 20).Value = Timing;
+                 cmd.Parameters.Add("@Days", SqlDbType.NVarChar, 20).Value = Days;
+                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
 
 
                  cmd.ExecuteNonQuery();
