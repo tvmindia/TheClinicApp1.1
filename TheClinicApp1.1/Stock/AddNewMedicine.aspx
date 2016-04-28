@@ -82,27 +82,33 @@
             var name = document.getElementById('<%=txtmedicineName.ClientID %>').value;
             name = name.replace(/\s/g, '');
 
-            PageMethods.ValidateMedicineName(name, OnSuccess, onError);
+            if (name != "")
+            {
 
-            function OnSuccess(response, userContext, methodName) {
 
-                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-                var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                if (response == false) {
+                PageMethods.ValidateMedicineName(name, OnSuccess, onError);
 
-                    LnameImage.style.display = "block";
-                    errLname.style.display = "none";
+                function OnSuccess(response, userContext, methodName) {
+
+                    var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                    var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                    if (response == false) {
+
+                        LnameImage.style.display = "block";
+                        errLname.style.display = "none";
+
+                    }
+                    if (response == true) {
+                        errLname.style.display = "block";
+                        errLname.style.color = "Red";
+                        errLname.innerHTML = "Name Alreay Exists"
+                        LnameImage.style.display = "none";
+
+                    }
+                }
+                function onError(response, userContext, methodName) {
 
                 }
-                if (response == true) {
-                    errLname.style.display = "block";
-                    errLname.style.color = "Red";
-                    errLname.innerHTML = "Name Alreay Exists"
-                    LnameImage.style.display = "none";
-
-                }
-            }
-            function onError(response, userContext, methodName) {
 
             }
         }
@@ -112,6 +118,8 @@
 
             var name = document.getElementById('<%=txtCode.ClientID %>').value;
             name = name.replace(/\s/g, '');
+
+            if (name != "") {
 
             PageMethods.ValidateMedicineCode(name, OnSuccess, onError);
 
@@ -136,6 +144,7 @@
             function onError(response, userContext, methodName) {
 
             }
+        }
         }
 
 
@@ -182,7 +191,13 @@
         {
             debugger;
 
-          
+
+            var Errorbox = document.getElementById('<%=Errorbox.ClientID %>');
+
+            if (Errorbox != null) {
+                document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+            }
+
 
 
             document.getElementById('<%=txtmedicineName.ClientID %>').value= " ";
@@ -390,9 +405,13 @@ border-spacing:0.5em;">
                             Text="* Please enter a quantity greater than 0!"
                             runat="server" />
 
+
                     </td>
                     <td></td>
                 </tr>
+
+
+            
 
                 <%--<tr>
                 <td>  <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnSave" onclick="this.style.visibility='hidden';" onserverclick="btnSave_ServerClick"> Save </button></td>
