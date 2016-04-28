@@ -538,9 +538,15 @@ namespace TheClinicApp1._1.Stock
 
                                              if (dsIDT.Tables[0].Rows.Count >0)
 	{
+
+        string CurrentQty = dsIDT.Tables[0].Rows[0]["QTY"].ToString();
+                                    
+         if (CurrentQty != string.Empty)
+	{
 		 
 	
-                                             
+
+
                                              int ChangingQty = Convert.ToInt32(dsIDT.Tables[0].Rows[0]["QTY"]);
 
 
@@ -554,6 +560,7 @@ namespace TheClinicApp1._1.Stock
                                              //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
 
                                              UpIssueDtlObj.UpdateIssueDetails(uniqueID);
+                                             }
                                              }
                                          }
                                          }
