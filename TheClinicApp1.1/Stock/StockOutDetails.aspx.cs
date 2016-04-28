@@ -453,7 +453,7 @@ namespace TheClinicApp1._1.Stock
                                      if (dtIssuehdr.Rows.Count > 0)
                                      {
 
-                                         string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-M-yy");
+                                         string oldDate = ((DateTime)dtIssuehdr.Rows[0]["Date"]).ToString("dd-MMM-yyyy");
                                          string newDate = txtDate1.Text;
 
                                          if ((txtIssueNO.Text != dtIssuehdr.Rows[0]["IssueNO"].ToString()) || (txtIssuedTo.Text != dtIssuehdr.Rows[0]["IssuedTo"].ToString()) || (oldDate != newDate))
@@ -531,17 +531,31 @@ namespace TheClinicApp1._1.Stock
                                          {
                                              string uniqueID = last;
                                              IssueDetails UpIssueDtlObj = new IssueDetails(new Guid(uniqueID));
-
                                              UpIssueDtlObj.ClinicID = UA.ClinicID.ToString();
+
+
+                                             DataSet dsIDT = UpIssueDtlObj.GetIssueDetailsByUniqueID(uniqueID);
+
+                                             if (dsIDT.Tables[0].Rows.Count >0)
+	{
+		 
+	
+                                             
+                                             int ChangingQty = Convert.ToInt32(dsIDT.Tables[0].Rows[0]["QTY"]);
+
+
+                                             if (ChangingQty != Convert.ToInt32(columns[4]))
+                                             {
+                                               
+                                            
                                              UpIssueDtlObj.Qty = Convert.ToInt32(columns[4]);
                                              UpIssueDtlObj.UpdatedBy = UA.userName;
-
-                                             
-                                          
 
                                              //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
 
                                              UpIssueDtlObj.UpdateIssueDetails(uniqueID);
+                                             }
+                                         }
                                          }
                                      }
 
