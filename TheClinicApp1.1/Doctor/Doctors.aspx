@@ -407,7 +407,7 @@
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-
+                                        
                                         <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" Width="50%" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -456,7 +456,7 @@
                 <div class="modal-footer">
                 </div>
             </div>
-
+            <asp:HiddenField ID="HdnPrescID" runat="server" />
         </div>
     </div>
 
