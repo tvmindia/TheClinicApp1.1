@@ -49,7 +49,7 @@ namespace TheClinicApp1._1.Registration
             gridDataBind();
             listFilter = null;
             listFilter = BindName();
-           
+        
             
         }
         #endregion PageLoad
@@ -92,7 +92,11 @@ namespace TheClinicApp1._1.Registration
             #endregion GridDateRegistration
             listFilter = null;
             listFilter = BindName();
-            DropdownDoctors();
+            if (!IsPostBack)
+            {
+                DropdownDoctors();
+            }
+         
         }
         #endregion GridBind
 

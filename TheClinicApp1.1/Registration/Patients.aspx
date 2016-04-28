@@ -228,15 +228,15 @@
         <!---------------------------------- Modal Section --------------------------------------->
         <!-- All Registration -->
         <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg1" style="width:60%;height:70%">
+          <div class="modal-dialog" style="height: 600px;">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">  
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
-        <h4 class="modal-title">All Registration</h4>
+        <h3 class="modal-title">All Registration</h3>
       </div>
-      <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;">
+      <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          <div class="col-lg-12"> 
         <asp:GridView ID="GridView1" runat="server" CssClass="table" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" >
@@ -271,17 +271,17 @@
               
         <!-- Token Registration Modal -->
         <div class="modal fade" id="TokenRegistration" role="dialog">
-            <div class="modal-dialog modal-lg1" style="width:40%;height:70%">
+          <div class="modal-dialog" style="height: 600px;">
 
                 <!-- Modal content-->
                 
-                <div class="modal-content" style="overflow-y:no-display;">
+                <div class="modal-content" >
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" style="font-size:20px;color:white;">Token Registration</h4>
+                        <h3 class="modal-title" >Token Registration</h3>
 
                     </div>
-                    <div class="modal-body" style="background-color:white;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;">
+                 <div class="modal-body"  style=" height: 500px;">
                        
                         <div class="token_id_card">
                              <div class="name_field">Would You like To Book a Token... <span class="generate_token">?</span></div>
@@ -305,15 +305,15 @@
       
         <!-- Todays Registration Modal -->
         <div class="modal fade" id="TodaysRegistration" role="dialog">
-            <div class="modal-dialog modal-lg" style="width:60%;height:70%">
+             <div class="modal-dialog" style="height: 600px;">
                 <!-- Modal content-->               
-                <div class="modal-content" style="height:100%">
+                <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h3 class="modal-title">Todays Registrations</h3>
 
                     </div>
-                    <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;">
+                   <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
                      <div class="col-sm-12">
                         <asp:GridView ID="dtgViewTodaysRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None">
                             
