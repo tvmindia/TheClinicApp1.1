@@ -1,92 +1,93 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="StockOut.aspx.cs" Inherits="TheClinicApp1._1.Stock.StockOut" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
-     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-         
+    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
+
     <script src="../js/bootstrap.min.js"></script>
 
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
 
-      <script>
-          var test = jQuery.noConflict();
-          test(document).ready(function () {
+    <script>
+        var test = jQuery.noConflict();
+        test(document).ready(function () {
 
-              test('.nav_menu').click(function () {
-                  test(".main_body").toggleClass("active_close");
-              });
-
-            
-           
-
-
-
-              $('.alert_close').click(function () {
-
-
-                  $(this).parent(".alert").hide();
-
-              });
-
-
-              //$('[data-toggle="tooltip"]').tooltip();
-
-
-
-
-              $('.nav_menu').click(function () {
-
-
-                  $(".main_body").toggleClass("active_close");
-
-              });
-
-
-
-          });
-
-
-          $(function () {
-              $("[id*=gvIssueHD] td:first").click(function () {
-                  
-                  var DeletionConfirmation = ConfirmDelete();
-
-                  if (DeletionConfirmation == true) {
-                      issueID = $(this).closest('tr').find('td:eq(5)').text();
-
-
-                      window.location = "StockOut.aspx?HdrID=" + issueID;
-                  }
-              });
-          });
+            test('.nav_menu').click(function () {
+                test(".main_body").toggleClass("active_close");
+            });
 
 
 
 
 
-          function SetIframeSrc(HyperlinkID) {
 
-              if (HyperlinkID == "NewMedicineIframe") {
-                  var NewMedicineIframe = document.getElementById('NewMedicineIframe');
-                  NewMedicineIframe.src = "AddNewMedicine.aspx";
-                  //$('#OutOfStock').modal('show');
-              }
-
-          }
+            $('.alert_close').click(function () {
 
 
+                $(this).parent(".alert").hide();
+
+            });
 
 
-		</script>
+            //$('[data-toggle="tooltip"]').tooltip();
+
+
+
+
+            $('.nav_menu').click(function () {
+
+
+                $(".main_body").toggleClass("active_close");
+
+            });
+
+
+
+        });
+
+
+        $(function () {
+            $("[id*=gvIssueHD] td:first").click(function () {
+
+                var DeletionConfirmation = ConfirmDelete();
+
+                if (DeletionConfirmation == true) {
+                    issueID = $(this).closest('tr').find('td:eq(5)').text();
+
+
+                    window.location = "StockOut.aspx?HdrID=" + issueID;
+                }
+            });
+        });
+
+
+
+
+
+        function SetIframeSrc(HyperlinkID) {
+
+            if (HyperlinkID == "NewMedicineIframe") {
+                var NewMedicineIframe = document.getElementById('NewMedicineIframe');
+                NewMedicineIframe.src = "AddNewMedicine.aspx";
+                //$('#OutOfStock').modal('show');
+            }
+
+        }
+
+
+
+
+    </script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
-       <%--  //------------- AUTOFILL SCRIPT ---------%>
+
+    <%--  //------------- AUTOFILL SCRIPT ---------%>
     <script src="../js/jquery-1.8.3.min.js"></script>
-    
+
     <script src="../js/ASPSnippets_Pager.min.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
     <script type="text/javascript">
@@ -129,7 +130,7 @@
         var issueID = '';
 
         function OnSuccess(response) {
-          
+
 
 
             var xmlDoc = $.parseXML(response.d);
@@ -153,16 +154,16 @@
                     //    issueID = $(this).closest('tr').find('td:eq(2)').text();
                     //    window.location = "NewIssue.aspx?issueID=" + issueID;
                     //});
-                    
+
                     //$("td", row).eq(0).html($(this).find('[id*=img1]').attr('src', '../images/Cancel.png'));
                     //$("td", row).eq(0).html("<img src='../images/Cancel.png' />");
 
 
                     $("td", row).eq(0).html($('<img />')
                         .attr('src', "" + '../images/Cancel.png' + "")).addClass('CursorShow');
-                        
-                         
-                               
+
+
+
 
 
 
@@ -177,8 +178,8 @@
                     }).addClass('CursorShow');
 
                     $("td", row).eq(5).html($(this).find("IssueID").text());
-                  
-                   
+
+
 
                     //$("td", row).eq(2).html($(this).find("Date").text());
                     $("[id*=gvIssueHD]").append(row);
@@ -221,169 +222,166 @@
         };
 
 
-        
+
 
 
     </script>
-   
+
 
     <!-- #main-container -->
-         
-          
-         <div class="main_body">
-              
-    
-         <div class="left_part">
-         <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
-         <ul class="menu">
-         <li  id="patients"><a name="hello" onclick="selectTile('patients','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
-         <li id="token"><a name="hello" onclick="selectTile('token','<%=RoleName %>')"><span class="icon token"></span><span class="text">Token</span></a></li>
-         <li id="doctor"><a name="hello" onclick="selectTile('doctor','<%=RoleName %>')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
-         <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName %>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
-         <li id="stock" class="active"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-         </ul>
-         
-         <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
-         </div>
-         
-         
-         <div class="right_part">
-         <div class="tagline">
-         <a class="nav_menu">nav</a>
-         Stock Out...</div>        
-         <div class="icon_box">
-         <a class="add_medicine" data-toggle="modal" data-target="#add_medicine" ><span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')" ><img src="../images/add_medicine.png"/></span></a>
 
-         </div>
-         <div class="right_form tab_right_form">
-         
-         <div class="page_tab">
-      <!-- Nav tabs -->
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"><a href="Stock.aspx">Stock</a></li>
-        <li role="presentation"><a href="StockIn.aspx">Stock In</a></li>
-        <li role="presentation" class="active"><a href="StockOut.aspx">Stock Out</a></li>
-      </ul>    
-      <!-- Tab panes -->
-      <div class="tab-content">
-                
-        <div role="tabpanel" class="tab-pane active" id="stock_out">
-        <div class="grey_sec">
-         <div class="search_div">
-         <input class="field" type="search" placeholder="Search here..." id="txtSearch">
-         <input class="button" type="submit" value="Search">
-         </div> 
-         <ul class="top_right_links"><li><a visible="false" class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li><li><a class="new" href="StockOutDetails.aspx"><span></span>New</a></li></ul>
-         </div>
-         
-            
-        <div id="Errorbox" style="display: none;" runat="server">
-            <a class="alert_close">X</a>
-            <div>
-                <strong>
-                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
-                </strong>
-                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+
+    <div class="main_body">
+
+
+        <div class="left_part">
+            <div class="logo"><a href="#">
+                <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
+            <ul class="menu">
+                <li id="patients"><a name="hello" onclick="selectTile('patients','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+                <li id="token"><a name="hello" onclick="selectTile('token','<%=RoleName %>')"><span class="icon token"></span><span class="text">Token</span></a></li>
+                <li id="doctor"><a name="hello" onclick="selectTile('doctor','<%=RoleName %>')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+                <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName %>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
+                <li id="stock" class="active"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
+                <li id="admin"><a name="hello" onclick="selectTile('admin','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Admin</span></a></li>
+            </ul>
+
+            <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
+        </div>
+
+
+        <div class="right_part">
+            <div class="tagline">
+                <a class="nav_menu">nav</a>
+                Stock Out
+            </div>
+            <div class="icon_box">
+                <a class="add_medicine" data-toggle="modal" data-target="#add_medicine"><span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')">
+                    <img src="../images/add_medicine.png" /></span></a>
 
             </div>
+            <div class="right_form tab_right_form">
 
+                <div class="page_tab">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation"><a href="Stock.aspx">Stock</a></li>
+                        <li role="presentation"><a href="StockIn.aspx">Stock In</a></li>
+                        <li role="presentation" class="active"><a href="StockOut.aspx">Stock Out</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+
+                        <div role="tabpanel" class="tab-pane active" id="stock_out">
+                            <div class="grey_sec">
+                                <div class="search_div">
+                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch">
+                                    <input class="button" type="submit" value="Search">
+                                </div>
+                                <ul class="top_right_links">
+                                    <li><a visible="false" class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li>
+                                    <li><a class="new" href="StockOutDetails.aspx"><span></span>New</a></li>
+                                </ul>
+                            </div>
+
+
+                            <div id="Errorbox" style="display: none;" runat="server">
+                                <a class="alert_close">X</a>
+                                <div>
+                                    <strong>
+                                        <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                                    </strong>
+                                    <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+
+                                </div>
+
+                            </div>
+
+                            <div class="alert alert-success" style="display: none">
+                                <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+                            </div>
+                            <div class="alert alert-info" style="display: none">
+                                <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+                            </div>
+
+                            <div class="alert alert-warning" style="display: none">
+                                <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+                            </div>
+
+                            <div class="alert alert-danger" style="display: none">
+                                <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+                            </div>
+
+
+
+
+                            <div class="tab_table">
+
+                                <asp:GridView ID="gvIssueHD" runat="server" Style="width: 100%" AutoGenerateColumns="False" class="table">
+                                    <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+                                    <Columns>
+
+
+                                        <%--<asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow" />--%>
+
+
+                                        <%--<asp:BoundField  HeaderText="Delete"  ItemStyle-CssClass="Match"  />--%>
+                                        <asp:TemplateField HeaderText=" ">
+                                            <ItemTemplate>
+                                                <asp:Image ID="img1" runat="server" Style="height: 100px; width: 100px"
+                                                    OnClientClick="ConfirmDelete()" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:BoundField DataField="IssueNO" HeaderText="IssueNO" ItemStyle-CssClass="Match" />
+                                        <asp:BoundField DataField="IssuedTo" HeaderText="IssuedTo" ItemStyle-CssClass="Match" />
+                                        <asp:BoundField DataField="Date" HeaderText="Date" ItemStyle-CssClass="Match" />
+                                        <asp:BoundField HeaderText="Details" ItemStyle-CssClass="Match" />
+                                        <asp:BoundField DataField="IssueID" HeaderText="IssueID" ItemStyle-CssClass="Match" />
+
+                                    </Columns>
+
+                                </asp:GridView>
+                                <div class="Pager">
+ 
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+            </div>
         </div>
 
-        <div class="alert alert-success" style="display: none">
-            <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-        </div>
-        <div class="alert alert-info" style="display: none">
-            <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
-        </div>
-
-        <div class="alert alert-warning" style="display: none">
-            <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
-        </div>
-
-        <div class="alert alert-danger" style="display: none">
-            <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-        </div>
 
 
 
 
-         <div class="tab_table">         
-         
-<asp:GridView ID="gvIssueHD" runat="server" Style="width:100%" AutoGenerateColumns="False" class="table">
-            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
-            <Columns>
-            
-            
-              <%--<asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow" />--%>
-                 
-               
-                 <%--<asp:BoundField  HeaderText="Delete"  ItemStyle-CssClass="Match"  />--%>
-               <asp:TemplateField HeaderText=" " >
-                    <ItemTemplate>
-                        <asp:Image ID="img1"  runat="server" Style="height: 100px;
-                            width: 100px"  OnClientClick="ConfirmDelete()" />
-                    </ItemTemplate>
-                </asp:TemplateField>
-             
-                 <asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-CssClass="Match"  />
-                <asp:BoundField DataField="IssuedTo" HeaderText="IssuedTo"  ItemStyle-CssClass="Match"  />
-               <asp:BoundField DataField="Date" HeaderText="Date"  ItemStyle-CssClass="Match"  /> 
-                <asp:BoundField  HeaderText="Details"  ItemStyle-CssClass="Match"  /> 
-                   <asp:BoundField DataField="IssueID" HeaderText="IssueID"  ItemStyle-CssClass="Match"  />
-                
-            </Columns>
-           
-        </asp:GridView>
-              <div class="Pager">
 
-         <%--<table class="table" style="width:100%;border:0;" >
-          <tr>
-            <td>Bill No</td>
-            <td>Bill No2</td>
-            <td>Date</td>
-            <td><a class="deatils" href="StockOutDetails.aspx">Details</a></td>
-          </tr>          
-                
-        </table>--%>
-         
-         </div>
-         
-        </div>
-      </div>    
-    </div>
-         
-         </div>
-         
-         
-         
-         
-         
-         
-         
-         </div>         
-         </div>
-         
-         
-         
-         
-         
-         
-<!-- Modal -->
-<div id="add_medicine" class="modal fade" role="dialog">
-  <div class="modal-dialog"  style="height:600px;">
+        <!-- Modal -->
+        <div id="add_medicine" class="modal fade" role="dialog">
+            <div class="modal-dialog" style="height: 600px;">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header"  style="border-color:royalblue">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        
-        <h4 class="modal-title">Add New Medicine</h4>
-      </div>
-      <div class="modal-body"  style="height:500px;">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="border-color: royalblue">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-            <iframe id="NewMedicineIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>
-       
-           <%--<table class="table" width="100%" border="0">
+                        <h4 class="modal-title">Add New Medicine</h4>
+                    </div>
+                    <div class="modal-body" style="height: 500px;">
+
+                        <iframe id="NewMedicineIframe" style="width: 100%; height: 100%" frameborder="0"></iframe>
+
+                        <%--<table class="table" width="100%" border="0">
           <tr>
             <th>Sl No.</th>
             <th>Date</th>
@@ -405,12 +403,12 @@
             <td>&nbsp;</td>
           </tr>
         </table>--%>
+                    </div>
+                </div>
 
-      </div>      
+            </div>
+        </div>
+
     </div>
 
-  </div>
-</div>         
-         
-     
 </asp:Content>
