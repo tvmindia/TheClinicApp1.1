@@ -346,6 +346,10 @@ namespace TheClinicApp1._1.Registration
                         PatientObj.UpdatePatientDetails();                 
                         var page = HttpContext.Current.CurrentHandler as Page;
                         ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + HiddenField1.Value.ToString();
+                        if(ProfilePic.Src=="")
+                        {
+                            ProfilePic.Src = "../images/UploadPic1.png";
+                        }
                     }
                 }
                 gridDataBind();
@@ -410,7 +414,7 @@ namespace TheClinicApp1._1.Registration
                 }
                 else
                 {
-                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", "alert('Invalid Suggesion');", true);
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", "Alert.render('Invalid Suggesion');", true);
 
                 }
             }
