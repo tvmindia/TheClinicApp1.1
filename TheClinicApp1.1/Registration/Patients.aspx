@@ -1,138 +1,79 @@
 ﻿
 <%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    
-    
+   <script>
+       function CustomAlert(){
+           this.render = function(dialog){
+               var winW = window.innerWidth;
+               var winH = window.innerHeight;
+               var dialogoverlay = document.getElementById('dialogoverlay');
+               var dialogbox = document.getElementById('dialogbox');
+               dialogoverlay.style.display = "block";
+               dialogoverlay.style.height = winH+"px";
+               dialogbox.style.left = (winW/2) - (550 * .5)+"px";
+               dialogbox.style.top = "100px";
+               dialogbox.style.display = "block";
+               document.getElementById('dialogboxhead').innerHTML = "This Alert Needs Your Attention !";
+               document.getElementById('dialogboxbody').innerHTML = dialog;
+               document.getElementById('dialogboxfoot').innerHTML = '<input type="button" class="buttonAlert" onclick="Alert.ok()" value="OK"/>';
+           }
+           this.ok = function(){
+               document.getElementById('dialogbox').style.display = "none";
+               document.getElementById('dialogoverlay').style.display = "none";
+           }
+       }
+       var Alert = new CustomAlert();
+</script> 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
-              
-                  
-          #testTable { 
-            width : 300px;
-            margin-left: auto; 
-            margin-right: auto; 
-          }
-          
-          #tablePagination { 
-            background-color:  Transparent; 
-            font-size: 0.8em; 
-            padding: 0px 5px; 
-            height: 20px
-          }
-          
-          #tablePagination_paginater { 
-            margin-left: auto; 
-            margin-right: auto;
-          }
-          
-          #tablePagination img { 
-            padding: 0px 2px; 
-          }
-          
-          #tablePagination_perPage { 
-            float: left; 
-          }
-          
-          #tablePagination_paginater { 
-            float: right; 
-          }
-
-    </style>
+    
     <!-- Script Files -->  
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-       <script src="../js/jquery-1.3.2.min.js"></script>
-    <script src="../js/jquery-1.12.0.min.js"></script>
-     
+    <script src="../js/jquery-1.3.2.min.js"></script>
+    <script src="../js/jquery-1.12.0.min.js"></script>    
     <script src="../js/bootstrap.min.js"></script>  
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
 
-
-
-
-
-
-    <!---   Script for fileupload preview, Created By:Thomson Kattingal --->   
-    <script type="text/javascript">
-         function showpreview(input) {
-             debugger;
-
-             if (input.files && input.files[0]) {
-                 debugger;
-
-                 var reader = new FileReader();
-                 reader.onload = function (e) {
-                     debugger;
-                        
-                     $('#<%=ProfilePic.ClientID %>').attr('src', e.target.result);
-                 }
-                 reader.readAsDataURL(input.files[0]);
-             }
-
+     <!---   Script for fileupload preview & FileType Checking  Created By:Thomson Kattingal --->    
+      <script type="text/javascript">
+        function showpreview(input) 
+        {
+          if (input.files && input.files[0]) 
+          {
+              var reader = new FileReader();
+              reader.onload = function (e) 
+              {
+               $('#<%=ProfilePic.ClientID %>').attr('src', e.target.result);
+              }
+                reader.readAsDataURL(input.files[0]);
+           }           
          }
+         
+        var validFiles = ["bmp", "gif", "png", "jpg", "jpeg"];
+        function OnUpload() 
+        {
+            var obj = document.getElementById("<%=FileUpload1.ClientID%>");
+            var source = obj.value;
+            var ext = source.substring(source.lastIndexOf(".") + 1, source.length).toLowerCase();
+            for (var i = 0; i < validFiles.length; i++) 
+            {
+                if (validFiles[i] == ext)
+                    break;
+            }
+            if (i >= validFiles.length) 
+            {
+                Alert.render("Not Valid Format\nPlease load with an extention as follows\n\n\n" + validFiles.join(", "));
+                document.getElementById("<%=FileUpload1.ClientID%>").value = '';
+            }
+            return true;
+        }
          
     </script>
     <!--------------------------------------------------------------------->
-    <!---   Script Nav button to srink and reform in document Ready --->
-    <%--<script> 
-        function getPatientId(Patient)
-        {
-            var PatientDetails=Patient;
-            alert(PatientDetails);
-        }
-
-
-        var test = jQuery.noConflict();
-        test(document).ready(function () {
-
-
-            test('.alert_close').click(function () {
-                test(this).parent(".alert").hide();
-            });
-
-            test('[data-toggle="tooltip"]').tooltip();
-
-
-
-            test('.nav_menu').click(function () {
-                test(".main_body").toggleClass("active_close");
-            });
-
-            
-
-        });
-
-		</script>   --%> 
-     <!---------------------------------------------------------------->
-    <%-- <script>
-          var test = jQuery.noConflict();
-          test(document).on('ready', function () {
-              test("#FileUpload").fileinput({
-                  browseLabel: 'Upload'
-              });
-              
-         });
-        </script> --%>
-    <script>
-
-    </script>
-    <!--- Script for AutocompletionTextBox preview, Created By:Thomson Kattingal --->   
-    <%--<script>
-        var test=jQuery.noConflict();
-        test(document).on('ready',function(){
-            debugger;
-            var ac=null;
-            ac = <%=listFilter %>;
-            $( "#txtSearch" ).autocomplete({
-                source: ac
-            });
-        });
-             
-    </script>--%>
-
+    <!---   Script Nav button to srink and reform, AutoComplete Textbox, Table Pagination in document Ready --->
     <script src="../js/jquery.tablePagination.0.1.js"></script>
-    <script type ="text/javascript" >
+      <script type ="text/javascript" >
         $(document).ready(
         function () {
             debugger;
@@ -142,17 +83,17 @@
                 source: ac
             });
             
-            $('.alert_close').click(function () {
+             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
-            });
+              });
 
-            $('[data-toggle="tooltip"]').tooltip();
+             $('[data-toggle="tooltip"]').tooltip();
         
 
 
-            $('.nav_menu').click(function () {
+              $('.nav_menu').click(function () {
                 $(".main_body").toggleClass("active_close");
-            });
+               });
 
             $('table').tablePagination({});       
             
@@ -174,15 +115,8 @@
             alert(PatientDetails);
         }
 
-        </script>
-                     
-     
-
-   
-   
-    
-    <!------------------------------------------------------------------------------>
-  
+        </script>   
+    <!------------------------------------------------------------------------------>  
     <!---------------------------------------------------------------------->
    <!------------------------------------->
   
@@ -263,7 +197,7 @@
       <div class="upload">
       <label class="control-label">Upload Picture</label>
           
-      <asp:FileUpload ID="FileUpload1" ForeColor="Green" Font-Size="12px" runat="server" onchange="showpreview(this);" />
+      <asp:FileUpload ID="FileUpload1" ForeColor="Green" Font-Size="12px" runat="server" onchange="OnUpload();showpreview(this);" />
       </div>
       </div>
       <div class="col-lg-8"><label for="sex">Sex<asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" /><asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" /></label>
@@ -280,7 +214,7 @@
       
       <div class="row field_row">  
       <div class="col-lg-4">
-      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="5" pattern="{10}[0-9]" title="⚠ This entry can only contain Numbers." />
+      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="number" name="mobile" minlength="5" pattern="{10}[0-9]" title="⚠ This entry can only contain Numbers." />
       </div>
       <div class="col-lg-4">
       <label for="email">Email</label><input id="txtEmail" runat="server" type="email" name="email" title="⚠ Invalid Email Check format expects testname@test.te" />
@@ -310,9 +244,9 @@
  </div> 
   
         <!---------------------------------- Modal Section --------------------------------------->
-        <!-- All Registration Iframe Modal -->
+        <!-- All Registration -->
         <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg1" style="width:60%;height:70%">
+        <div class="modal-dialog modal-lg1" style="width:60%;height:70%">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -351,7 +285,7 @@
     </div>
 
   </div>
-</div> 
+        </div> 
               
         <!-- Token Registration Modal -->
         <div class="modal fade" id="TokenRegistration" role="dialog">
@@ -360,7 +294,7 @@
                 <!-- Modal content-->
                 
                 <div class="modal-content" style="overflow-y:no-display;">
-                    <div class="modal-header" style="background-color:royalblue">
+                    <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title" style="font-size:20px;color:white;">Token Registration</h4>
 
@@ -386,74 +320,12 @@
                 
             </div>
         </div>
-
-        <!-- All Registration Modal -->
-        <%--   <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog  modal-lg" style="width:60%;height:70%">
-                <!-- Modal content-->
-                <div class="modal-content" style="width:100%;height:100%" >
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">View All Registrations</h3>
-                    </div>
-                    <div class="modal-body" style="width:100%;height:100%;overflow-x:auto;" >
-                        <div class="col-sm-12">                        
-                        <asp:GridView ID="dtgViewAllRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;" ForeColor="#333333" GridLines="None" Width="100%" OnPreRender="GridView1_PreRender">                            
-                            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
-                            <Columns>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
-                                       
-                                    </ItemTemplate>                                    
-                                </asp:TemplateField>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Cancel.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
-                                       
-                                    </ItemTemplate>
-                                   <ItemStyle HorizontalAlign="Center" />
-                                    <HeaderStyle HorizontalAlign="Center" />
-                                </asp:TemplateField>
-                                <asp:BoundField DataField="Name" HeaderText="Patient Name">                                    
-                                     <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"></ItemStyle>
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Address" HeaderText="Address">
-                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"></ItemStyle>
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Phone" HeaderText="Phone">
-                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"></ItemStyle>
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Email" HeaderText="Email">
-                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"></ItemStyle>
-                                </asp:BoundField>
-
-                            </Columns>
-                            <EditRowStyle HorizontalAlign="Center" BackColor="#0080AA"></EditRowStyle>
-                            <FooterStyle BackColor="#0080AA" ForeColor="White" Font-Bold="True"></FooterStyle>
-                            <HeaderStyle BackColor="#0080AA" HorizontalAlign="Center" VerticalAlign="Middle" Font-Bold="True" ForeColor="White"></HeaderStyle>
-                            <PagerStyle HorizontalAlign="Center" ForeColor="black" BackColor="#2461BF"></PagerStyle>
-                            <RowStyle BackColor="#EFF3FB"></RowStyle>
-                            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
-                            <SortedAscendingCellStyle BackColor="#F5F7FB"></SortedAscendingCellStyle>
-                            <SortedAscendingHeaderStyle BackColor="#6D95E1"></SortedAscendingHeaderStyle>
-                            <SortedDescendingCellStyle BackColor="#E9EBEF"></SortedDescendingCellStyle>
-                            <SortedDescendingHeaderStyle BackColor="#4870BE"></SortedDescendingHeaderStyle>
-                        </asp:GridView>
-                            </div>
-                    </div>                 
-                    <div class="modal-footer">
-                    </div>
-                </div>
-                </div>
-            </div>--%>
-     
       
         <!-- Todays Registration Modal -->
         <div class="modal fade" id="TodaysRegistration" role="dialog">
             <div class="modal-dialog modal-lg" style="width:60%;height:70%">
                 <!-- Modal content-->               
-                <div class="modal-content" style="width:100%;height:100%">
+                <div class="modal-content" style="height:100%">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h3 class="modal-title">Todays Registrations</h3>
@@ -492,20 +364,29 @@
                 <asp:HiddenField ID="HiddenField1" runat="server" />
             </div>
         </div>
+
+        <!-- Alert Container -->
+        <div id="dialogoverlay"></div>
+        <div id="dialogbox">
+  <div>
+    <div id="dialogboxhead"></div>
+    <div id="dialogboxbody"></div>
+    <div id="dialogboxfoot"></div>
+  </div>
+  </div>
+        <!---------------------> 
         <!------------------------------------------------------------------------------------------>   
    <!-- Script Files -->
-    <script src="../js/jquery-1.3.2.min.js"></script>
+   <script src="../js/jquery-1.3.2.min.js"></script>
    <script src="../js/jquery-1.12.0.min.js"></script>
-    <script src="../js/jquery-ui.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+   <script src="../js/jquery-ui.js"></script>
+   <script src="../js/bootstrap.min.js"></script>
   
      <script src="../js/jquery.tablePagination.0.1.js"></script>
-    <!---   Script includes function for open Modals preview, Created By:Thomson Kattingal --->
-
-      
+    <!---   Script includes function for open Modals preview, Created By:Thomson Kattingal --->     
     <asp:ScriptManager runat="server"></asp:ScriptManager>   
     <script type="text/javascript">  
-        <!---Function for Open Token Registration Modal and All Registarion Modal----->
+    <!---Function for Open Token Registration Modal and All Registarion Modal----->
     function openModal() {
         debugger;
         $('#TokenRegistration').modal('show');

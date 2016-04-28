@@ -99,7 +99,7 @@
             }
             function reset(){
                 $('input[type=text]').val('');  
-                $('#textarea').val(''); 
+                $('textarea').val(''); 
                 $('input[type=select]').val('');
                 $('input[type=radio]').val('');
                 $('input[type=checkbox]').val('');  

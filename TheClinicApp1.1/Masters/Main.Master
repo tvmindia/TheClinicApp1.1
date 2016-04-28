@@ -82,8 +82,82 @@ background-color: ghostwhite;
         background-position-x:5px;
 
     }
+    .buttonAlert{     
+        background: url("../images/Alert.png") no-repeat 0 center;   
+        height: 31px;
+        width: 60px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px 10px 7px;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        font-family:'raleway-semibold';
+        min-width: 83px;
+        background-color:#FFFFFF ;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        background-position-x:5px;
 
-</style>       
+    }
+
+</style>   
+    <style>                
+          #testTable { 
+            width : 300px;
+            margin-left: auto; 
+            margin-right: auto; 
+          }
+          
+          #tablePagination { 
+            background-color:  Transparent; 
+            font-size: 0.8em; 
+            padding: 0px 5px; 
+            height: 20px
+          }
+          
+          #tablePagination_paginater { 
+            margin-left: auto; 
+            margin-right: auto;
+          }
+          
+          #tablePagination img { 
+            padding: 0px 2px; 
+          }
+          
+          #tablePagination_perPage { 
+            float: left; 
+          }
+          
+          #tablePagination_paginater { 
+            float: right; 
+             }
+         
+          #dialogoverlay{
+	        display: none;
+	        opacity: .8;
+	        position: fixed;
+	        top: 0px;
+	        left: 0px;
+	        background: #FFF;
+	        width: 100%;
+	        z-index: 10;
+            }
+          #dialogbox{
+	        display: none;
+	        position: fixed;
+	        background: #F2F2F2;
+	        border-radius:7px; 
+	        width:550px;
+	        z-index: 10;
+            }
+          #dialogbox > div{ background:#FFF; margin:8px; }
+          #dialogbox > div > #dialogboxhead{ background: #3661C7; font-size:19px; padding:10px; color:#CCC; }
+          #dialogbox > div > #dialogboxbody{ background:#FFF; padding:20px; color:#1a1a00; }
+          #dialogbox > div > #dialogboxfoot{ background: #595959; padding:10px; text-align:right; }
+    </style>    
 
 </head>
 <body>
