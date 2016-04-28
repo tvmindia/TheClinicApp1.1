@@ -161,6 +161,12 @@ namespace TheClinicApp1._1.Doctor
             if (HdnPrescID.Value != string.Empty)
             {
                 PrescriptionObj.PrescID = HdnPrescID.Value.ToString();
+            }
+            else
+            {
+                PrescriptionObj.PrescID = VisitsObj.PrescriptionID.ToString();
+                HdnPrescID.Value = VisitsObj.PrescriptionID.ToString();
+            }
 
             string last = string.Empty;
             string values = hdnTextboxValues.Value;
@@ -208,13 +214,61 @@ namespace TheClinicApp1._1.Doctor
                     }
                // }
             }
+            if (hdnRemovedIDs.Value != string.Empty)
+            {
+
+                //----------------- * CASE : DELETE *-----------------------------------//
+
+                string hdRemovedIDValue = hdnRemovedIDs.Value;
+
+                string[] RemovedIDs = hdRemovedIDValue.Split(',');
+
+                for (int i = 0; i < RemovedIDs.Length - 1; i++)
+                {
+
+                    if ((RemovedIDs[i] != "") || (RemovedIDs[i] != string.Empty))
+                    {
+
+                        
+                        string UniqueId = RemovedIDs[i].ToString();
+
+                        //string medId =   DetailObj.GetMedicineIDByUniqueID(Guid.Parse(UniqueId));
+                        PrescriptionObj.ClinicID = UA.ClinicID.ToString();
+                        PrescriptionObj.DeletePrescriptionDetails(UniqueId);
+                        //DetailObj.DeleteReceiptDetails(UniqueId);
+                        hdnRemovedIDs.Value = "";
+
+                    }
+                }
+
             }
+           //}
             gridviewbind();
+            if (HdnPrescID.Value != string.Empty)
+            {
+                DataSet MedicinList = PrescriptionObj.ViewPrescriptionDetails(HdnPrescID.Value.ToString());
+                var xml = MedicinList.GetXml();
+                hdnXmlData.Value = xml;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
+            }
+            else
+            {
+                DataSet MedicinList = PrescriptionObj.ViewPrescriptionDetails(HdnPrescID.Value.ToString());
+                var xml = MedicinList.GetXml();
+                hdnXmlData.Value = xml;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
+                //PrescriptionObj.PrescID = VisitsObj.PrescriptionID.ToString();
+            }
+            
+            
         }
     
         #region FillPatientDetails
         protected void ImgBtnUpdate_Command1(object sender, CommandEventArgs e)
         {
+            lblErrorCaption.Text = string.Empty;
+            lblMsgges.Text = string.Empty;
+            Errorbox.Style["display"] = "none";
             DataRow dr = null;
             PatientObj.PatientID = Guid.Parse(e.CommandArgument.ToString());
             Guid PatientIDForFile = Guid.Parse(e.CommandArgument.ToString());
@@ -258,7 +312,9 @@ namespace TheClinicApp1._1.Doctor
         #region Update Visits
         protected void ImgBtnUpdateVisits_Command(object sender, CommandEventArgs e)
         {
-
+            lblErrorCaption.Text = string.Empty;
+            lblMsgges.Text = string.Empty;
+            Errorbox.Style["display"] = "none";
             string[] Visits = e.CommandArgument.ToString().Split(new char[] { '|' });
             CaseFileObj.VisitID = Guid.Parse(Visits[0]);
             CaseFileObj.GetVisits();
@@ -356,6 +412,9 @@ namespace TheClinicApp1._1.Doctor
         {
             HdnForVisitID.Value = string.Empty;
             HdnPrescID.Value = string.Empty;
+            lblErrorCaption.Text = string.Empty;
+            lblMsgges.Text = string.Empty;
+            Errorbox.Style["display"] = "none";
         }
 
 

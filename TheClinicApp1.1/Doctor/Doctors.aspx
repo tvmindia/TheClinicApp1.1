@@ -95,6 +95,7 @@
             function FillTextboxUsingXml(){
                 debugger;
                 alert("success!");
+                GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
                 RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
             }
             function reset(){
@@ -361,12 +362,13 @@
                                     <td>
                                         <input id="txtMedDay0" type="text" placeholder="Days" class="input" /></td>
                                     <td style="background: #E6E5E5">
-                                        <input type="button" value="-" class="bt1" style="width: 20px;" /></td>
+                                        <input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" /></td>
                                     <td style="background: #E6E5E5">
-                                        <input type="button" id="btAdd" onclick="clickAdd();this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
+                                        <input type="button" id="btAdd0" onclick="clickAdd(0);this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
                                     </td>
                                     <td style="background-color: transparent">
-                                        <input id="hdnDetailID0" type="hidden" /><input id="hdnQty0" type="hidden" /></td>
+                                        <input id="hdnDetailID0" type="hidden" />
+                                        <input id="hdnQty0" type="hidden" /></td>
                                 </tr>
                             </tbody>
                         </table>
