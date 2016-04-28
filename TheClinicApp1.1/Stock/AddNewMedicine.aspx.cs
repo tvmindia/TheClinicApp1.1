@@ -126,6 +126,12 @@ namespace TheClinicApp1._1.Stock
                   eObj.InsertionNotSuccessMessage(page, msg);
               }
 
+              else if (txtOrderQuantity.Text == string.Empty)
+              {
+                   msg = "Please enter reorder quantity";
+                  eObj.InsertionNotSuccessMessage(page, msg);
+              }
+
 
               else if(Convert.ToInt32(txtOrderQuantity.Text) <= 0)
             {
@@ -135,6 +141,8 @@ namespace TheClinicApp1._1.Stock
             }
 
            
+
+
             else
             {
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];

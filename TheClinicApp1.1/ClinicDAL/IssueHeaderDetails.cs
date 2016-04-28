@@ -467,13 +467,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     //Success
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
+                    //eObj.SavedSuccessMessage(page);
+                    eObj.DeleteSuccessMessage(page);
                 }
 
                 if (Outputval == 0)
                 {
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavingFailureMessage(page);
+                    eObj.DeletionNotSuccessMessage(page);
+                    //eObj.SavingFailureMessage(page);
                 }
 
 
