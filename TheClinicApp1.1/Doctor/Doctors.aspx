@@ -136,8 +136,9 @@
                 document.getElementById('<%=lblAgeCount.ClientID%>').innerHTML=string1[2];
                 document.getElementById('<%=lblGenderDis.ClientID%>').innerHTML=string1[3];            
                 document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
+                var BtID=document.getElementById('<%=btnSearch.ClientID%>')
                 
-
+                $('#<%=btnSearch.ClientID%>').click();
                 document.getElementById('txtSearch').value="";//clearin the earch box
 
                 
@@ -189,7 +190,8 @@
                     <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." />
                     <input type="hidden" id="project-id"/>
                     <p id="project-description" style="display:none"></p>
-                    <input class="button" type="submit" value="Search" />
+                    <asp:Button ID="btnSearch" runat="server" CssClass="button" Text="Search" OnClick="btnSearch_Click" />
+                    <%--<input class="button" type="submit" id="btnSearch" value="Search" />--%>
                 </div>
 
                 <ul class="top_right_links">
