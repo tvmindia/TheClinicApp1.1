@@ -238,7 +238,7 @@
       
       <div class="row field_row">  
       <div class="col-lg-4">
-      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="tel" name="mobile" minlength="5" pattern="^\d{10}$" title="⚠ This entry can only contain Numbers." />
+      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="tel" name="mobile" minlength="5" pattern="\d*" title="⚠ This entry can only contain Numbers." />
       </div>
       <div class="col-lg-4">
       <label for="email">Email</label><input id="txtEmail" runat="server" type="email" name="email" title="⚠ Invalid Email Check format expects testname@test.te" />
