@@ -129,6 +129,9 @@ namespace TheClinicApp1._1.Doctor
         }
         #endregion BindSearch
 
+        #region SearchFill
+       
+        #endregion SearchFill
         #region MainButton
         /// <summary>
         /// Save Button with Insert and Update of Visits, PrescriptionHeader,PrescriptionDetails 
@@ -472,7 +475,7 @@ namespace TheClinicApp1._1.Doctor
             string PatientID = Convert.ToString(ds.Tables[0].Rows[0]["PatientID"]);
             string ClinicID = Convert.ToString(ds.Tables[0].Rows[0]["ClinicID"]);
             string lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
-
+            
             DateTime date = DateTime.Now;
             int year = date.Year;
             DateTime DT = Convert.ToDateTime(ds.Tables[0].Rows[0]["DOB"].ToString());
@@ -533,6 +536,52 @@ namespace TheClinicApp1._1.Doctor
                 //   GridViewTokenlist.Rows[i].Cells[6].CssClass = "gridcss";
                 //}
             //}
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            lblErrorCaption.Text = string.Empty;
+            lblMsgges.Text = string.Empty;
+            Errorbox.Style["display"] = "none";
+            DataRow dr = null;
+            if (HiddenPatientID.Value != string.Empty)
+            {
+                PatientObj.PatientID = Guid.Parse(HiddenPatientID.Value.ToString());
+                Guid PatientIDForFile = Guid.Parse(HiddenPatientID.Value.ToString());
+
+                DoctorObj.PatientIdForFile = PatientIDForFile;
+                DataTable DtFileID = DoctorObj.GetFileIDUSingPatientID();
+                dr = DtFileID.NewRow();
+                dr = DtFileID.Rows[0];
+                Guid FileIDForGrid = Guid.Parse(dr["FileID"].ToString());
+
+                DataTable GridBindVisits = new DataTable();
+                GridBindVisits = CaseFileObj.GetGridVisits(FileIDForGrid);
+                GridViewVisitsHistory.EmptyDataText = "No Records Found";
+                GridViewVisitsHistory.DataSource = GridBindVisits;
+                GridViewVisitsHistory.DataBind();
+                lblCaseCount.Text = GridViewVisitsHistory.Rows.Count.ToString();
+
+                DataTable dt = PatientObj.SelectPatient();
+                dr = dt.NewRow();
+                dr = dt.Rows[0];
+                DateTime date = DateTime.Now;
+                int year = date.Year;
+                Guid PatientID = Guid.Parse(dr["PatientID"].ToString());
+                lblPatientName.Text = dr["Name"].ToString();
+                lblGenderDis.Text = dr["Gender"].ToString();
+                HiddenField2.Value = FileIDForGrid.ToString();
+                lblFileNum.Text = dr["FileNumber"].ToString();
+                DateTime DT = Convert.ToDateTime(dr["DOB"].ToString());
+                int Age = year - DT.Year;
+                lblAgeCount.Text = Age.ToString();
+                //lblAddress.Text = dr["Address"].ToString();
+                //lblLastVisitDate.Text = dr["CreatedDate"].ToString();
+                ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+                //ProfilePic.Visible = true;
+
+                HiddenField1.Value = PatientID.ToString();
+            }
         }
 
     }
