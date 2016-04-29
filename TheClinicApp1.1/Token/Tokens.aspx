@@ -87,15 +87,7 @@
     </script>
     <script> 
 
-
-        function labelcount(str)
-        {
-            debugger;
-            
-            document.getElementById('lblCaseCount').value=str;
-        }
-
-
+  
 
         function bindPatientDetails()
         {
