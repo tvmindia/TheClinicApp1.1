@@ -168,9 +168,9 @@
                 Tokens
             </div>
             <div class="icon_box">
-                <a class="all_token_link" data-toggle="modal" data-target="#all_token">
+                <a class="all_token_link" data-toggle="modal" data-target="#all_token" onclick="SetIframeSrc('AllTokenIframe')">
                     <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
-                    <span title="All Tokens" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllTokenIframe')">
+                    <span title="All Tokens" data-toggle="tooltip" data-placement="left">
                         <img src="../images/tokens.png" />
                     </span>
                 </a>
