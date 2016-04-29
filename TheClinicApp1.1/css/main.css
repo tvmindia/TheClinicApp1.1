@@ -679,6 +679,7 @@ border-radius: 5px;
     box-shadow:1px 1px 2px #999999;
 }
 .token_id_card .name_field {background: #3661c7; padding: 10px 20px; text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; text-transform: uppercase; font-family:'roboto-bold'; overflow: hidden; position: relative;}
+.token_id_card .name_field1 {background: #3661c7; padding: 10px 20px; text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; font-family:'roboto-bold'; overflow: hidden; position: relative;}
 .token_id_card .generate_token {position: absolute; top: 0; bottom: 0; right: 20px; margin: auto; padding: 0; background: #fff; color: #000; width: 40px;  height: 40px; line-height: 40px; text-align: center;
 -webkit-border-radius: 50%;
 -moz-border-radius: 50%;

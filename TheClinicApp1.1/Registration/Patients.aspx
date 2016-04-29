@@ -160,7 +160,7 @@
          Patients Registration</div>
          <div class="icon_box">
          <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>
-         <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
+         <a class="Todays_registration_link" data-toggle="modal" data-target="#TokenRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
          <div class="search_div">
@@ -187,7 +187,7 @@
       <div class="row field_row">  
       <div class="col-lg-8">
       <div class="row"> 
-      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required pattern="^[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." /></div>
+      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required="required" pattern="^[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." /></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
       <img id="ProfilePic" src="~/images/UploadPic1.png" style="height:142px;" runat="server"  />
@@ -200,7 +200,7 @@
       </div>
       <div class="col-lg-8"><label for="sex">Sex<asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" /><asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" /></label>
       </div>
-      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" min="1" pattern="\d*" required title="⚠ The Age is required and entry should be Numbers no Negative Values Expected." /></div>
+      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" min="1" pattern="\d*" required="required" title="⚠ The Age is required and entry should be Numbers no Negative Values Expected." /></div>
       </div>
       </div>            
       </div>
@@ -212,7 +212,7 @@
       
       <div class="row field_row">  
       <div class="col-lg-4">
-      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="number" name="mobile" minlength="5" pattern="{10}[0-9]" title="⚠ This entry can only contain Numbers." />
+      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="tel" name="mobile" minlength="5" pattern="^\d{10}$" title="⚠ This entry can only contain Numbers." />
       </div>
       <div class="col-lg-4">
       <label for="email">Email</label><input id="txtEmail" runat="server" type="email" name="email" title="⚠ Invalid Email Check format expects testname@test.te" />
@@ -248,13 +248,13 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">  
+      <div class="modal-header" style="border-color:#3661C7;">  
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
         <h3 class="modal-title">All Registration</h3>
       </div>
-      <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
+      <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         <div class="col-lg-12"> 
+         <div class="col-lg-12" style="height:500px;"> 
         <asp:GridView ID="GridView1" runat="server" CssClass="table" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" >
             
             <Columns>
@@ -287,20 +287,18 @@
               
         <!-- Token Registration Modal -->
         <div class="modal fade" id="TokenRegistration" role="dialog">
-          <div class="modal-dialog" style="height: 600px;">
+          <div class="modal-dialog" >
 
                 <!-- Modal content-->
                 
                 <div class="modal-content" >
-                    <div class="modal-header">
+                    <div class="modal-header" style="border-color:#3661C7;">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h3 class="modal-title" >Token Registration</h3>
-
-                    </div>
-                 <div class="modal-body"  style=" height: 500px;">
-                       
-                        <div class="token_id_card">
-                             <div class="name_field">Would You like To Book a Token... <span class="generate_token">?</span></div>
+                     </div>
+                 <div class="modal-body"  style="">
+                 <div class="token_id_card">
+                             <div class="name_field1">Would You like To Book a Token...<span></span> ?</div>
                             <div class="light_grey">
 
                             </div>
@@ -309,10 +307,9 @@
                             <asp:DropDownList ID="ddlDoctorName" Height="70%" AppendDataBoundItems="true" Width="100%" runat="server"></asp:DropDownList>
                             </div>
                         </div>                      
-                    <div class="modal-footer" style="background-color:grey;">                       
-                      <ul class="top_right_links"><li><asp:Button ID="btntokenbooking" runat="server" Text="Book" CssClass="button1"  OnClick="btntokenbooking_Click" /><span></span><span></span><span></span></li><li><a class="new" href="#" id="NewA1" data-dismiss="modal" ><span></span>>Skip</a></li></ul>                    
-                    </div>
-                       
+                 </div>
+                     <div class="modal-footer" style="background-color:grey;">                       
+                      <ul class="top_right_links"><li><asp:Button ID="btntokenbooking" runat="server" Text="Book" CssClass="button1"  OnClick="btntokenbooking_Click" /><span></span><span></span><span></span></li><li><a class="new" href="#" id="NewA1" data-dismiss="modal" ><span></span>Skip</a></li></ul>                    
                     </div>
                 </div>
                 
@@ -324,13 +321,13 @@
              <div class="modal-dialog" style="height: 600px;">
                 <!-- Modal content-->               
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="border-color:#3661C7;" >
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h3 class="modal-title">Todays Registrations</h3>
 
                     </div>
                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
-                     <div class="col-sm-12">
+                     <div class="col-sm-12" style="height:500px;">
                         <asp:GridView ID="dtgViewTodaysRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None">
                             
                             <Columns>
