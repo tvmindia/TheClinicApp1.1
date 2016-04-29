@@ -981,7 +981,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     Output.Direction = ParameterDirection.Output;
                     pud.Parameters.Add(Output);
                     pud.ExecuteNonQuery();
-                    if (int.Parse(Output.Value.ToString()) == -1)
+                    if (int.Parse(Output.Value.ToString()) != 1)
                     {
                          ////not successfull
                          var page = HttpContext.Current.CurrentHandler as Page;

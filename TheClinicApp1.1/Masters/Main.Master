@@ -46,11 +46,16 @@
    }
        
 .ui-autocomplete {
-background: fixed;
-font-size:small;
-font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
-background-color: ghostwhite;
+ background: fixed;
+ font-size:small;
+ /*font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;*/
+ font-family:'caviardreams-regular';
+ background-color: ghostwhite;
  box-shadow:1px 1px 1px 1px #f3e6d8;
+ max-height: 280px;
+ overflow-y: scroll;
+ overflow-x:hidden;
+
 }
 #divDisplayNumber{
     background-color:ghostwhite;

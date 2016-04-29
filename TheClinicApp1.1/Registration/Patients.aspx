@@ -1,6 +1,7 @@
 ﻿
 <%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
    <script>
        function CustomAlert(){
            this.render = function(dialog){
@@ -26,7 +27,20 @@
 </script> 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
+   <style type="text/css">
+/* Simple message styles customization */
+#errors {
+    border-left: 5px solid #a94442;
+    padding-left: 15px;
+}
+#errors li {
+    list-style-type: none;
+}
+#errors li:before {
+    content: '\b7\a0';
+}
+</style>
+ 
     <!-- Script Files -->  
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/jquery-1.3.2.min.js"></script>
@@ -76,6 +90,7 @@
       <script type ="text/javascript" >
         $(document).ready(
         function () {
+           
             debugger;
             var ac=null;
             ac = <%=listFilter %>;
@@ -155,7 +170,8 @@
          </div>
          <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClick="btnSave_Click" /></li><li><a class="new" href="#" runat="server" id="btnNew" onserverclick="btnNew_ServerClick"><span></span>New</a></li></ul>
          </div>        
-         <div class="right_form">         
+         <div class="right_form">  
+                    
          <div id="Errorbox"  style="height:30%;display:none;" runat="server" ><a class="alert_close">X</a>
          <div>
          <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
@@ -228,7 +244,7 @@
         <!---------------------------------- Modal Section --------------------------------------->
         <!-- All Registration -->
         <div id="myModal" class="modal fade" role="dialog">
-          <div class="modal-dialog" style="height: 600px;">
+          <div class="modal-dialog" style="height:600px">
 
     <!-- Modal content-->
     <div class="modal-content">
