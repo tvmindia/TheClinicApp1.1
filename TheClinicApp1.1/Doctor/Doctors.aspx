@@ -44,13 +44,13 @@
         {
             //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
             debugger; 
-            var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
+            var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
  
             if (topcount==0)
             {
                 var ac=null; 
                 ac = <%=listFilter %>;
-                $( "#txtMedName"+controlID).autocomplete({
+                $( "#txtMedName0").autocomplete({
                     source: ac
                 });
             }
@@ -58,10 +58,10 @@
             {
                 var ac=null;
                 ac = <%=listFilter %>;
-                    var i=1;
+                    var i=0;
                     while(i<=topcount)
                     {
-                        if (i==1)
+                        if (i==0)
                         {
                             var item=  document.getElementById('txtMedName'+i).value                                  
                             var result = ac.filter(function(elem){
@@ -624,6 +624,8 @@
             //$( "#txtSearch" ).autocomplete({
                 //source: ac
             //});
+            GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
+            RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
         });
              
     </script>
