@@ -7,7 +7,7 @@
 
     <script src="../js/DeletionConfirmation.js"></script>
 
-     
+    <asp:HiddenField ID="hdnCount" runat="server" />
 
 
                             <asp:GridView ID="GridViewTokenlist"  runat="server" AutoGenerateColumns="False" CssClass="footable" DataKeyNames="UniqueId">
@@ -15,7 +15,7 @@
                                 <Columns>
                                     <asp:TemplateField HeaderText="">
                                         <ItemTemplate>
-                                            <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/images/Cancel.png"   OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" />
+                                            <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/images/Cancel.png"   OnClientClick="parent.labelcount(); return ConfirmDelete();" OnClick="ImgBtnDelete_Click" />
 
                                         </ItemTemplate>
                                     </asp:TemplateField>

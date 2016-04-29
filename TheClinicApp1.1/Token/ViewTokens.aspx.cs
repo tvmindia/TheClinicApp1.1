@@ -66,6 +66,10 @@ namespace TheClinicApp1._1.Token
            
             tokenObj.DeleteToken(id);
             gridviewbind();
+           
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "scriptid", "window.parent.location.href='Tokens.aspx';", true); 
+        
+
 
 
         }

@@ -10,8 +10,6 @@
             font-family: 'Footlight MT';
             font-weight: bold;
         }
-
-        
     </style>
     <script src="../Scripts/DeletionConfirmation.js"></script>
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
@@ -28,7 +26,7 @@
 
     <script>
         $(document).ready(function () {
-              debugger; 
+            debugger; 
             
             $('.alert_close').click(function () {                
             
@@ -38,8 +36,7 @@
             $('.nav_menu').click(function () {
                 
                 $(".main_body").toggleClass("active_close");
-            });
-          
+            });  
         
             var ac=null;
             debugger;
@@ -48,52 +45,63 @@
             var length= ac.length;
             var projects = new Array();
             for (i=0;i<length;i++)
-            {        
-
-             var name= ac[i].split('🏠');
-             projects.push({  value : name[0], label: name[0], desc: name[1]})   
-   
+            {  
+                var name= ac[i].split('🏠');
+                projects.push({  value : name[0], label: name[0], desc: name[1]})   
             }
 
             $( "#txtSearch" ).autocomplete({
-               maxResults: 10,
-    source: function(request, response) {
-        var results = $.ui.autocomplete.filter(projects, request.term);
-        response(results.slice(0, this.options.maxResults));
-    },
-         focus: function( event, ui ) {
-        $( "#txtSearch" ).val( ui.item.label );
-        return false;
-      },
-         select: function( event, ui ) {
-        $( "#project" ).val( ui.item.label );
+                maxResults: 10,
+                source: function(request, response) {
+                    var results = $.ui.autocomplete.filter(projects, request.term);
+                    response(results.slice(0, this.options.maxResults));
+                },
+                focus: function( event, ui ) {
+                    $( "#txtSearch" ).val( ui.item.label );
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $( "#project" ).val( ui.item.label );
       
-        $( "#project-description" ).html( ui.item.desc );        
+                    $( "#project-description" ).html( ui.item.desc );        
  
-        return false;
-      }
-    })
+                    return false;
+                }
+            })
     .autocomplete( "instance" )._renderItem = function( ul, item ) {
-      return $( "<li>" )
-        .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
-        .appendTo( ul );
+        return $( "<li>" )
+          .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+          .appendTo( ul );
     };             
-            });   
+        });   
     </script>
 
     <script>
-         function SetIframeSrc(HyperlinkID) {          
-             if (HyperlinkID == "AllTokenIframe") {
-                 var AllTokenIframe = document.getElementById('AllTokenIframe');
-                 AllTokenIframe.src = "ViewTokens.aspx";
-                 //$('#OutOfStock').modal('show');
-             }
-         }
-    </script>    
+        function SetIframeSrc(HyperlinkID) {          
+            if (HyperlinkID == "AllTokenIframe") {
+                var AllTokenIframe = document.getElementById('AllTokenIframe');
+                AllTokenIframe.src = "ViewTokens.aspx";
+                //$('#OutOfStock').modal('show');
+            }
+        }
+    </script>
     <script> 
+
+
+        function labelcount(str)
+        {
+            debugger;
+            
+            document.getElementById('lblCaseCount').value=str;
+        }
+
+
+
         function bindPatientDetails()
         {
             debugger;
+
+      
  
             var PatientName = document.getElementById("project-description").innerText;
             document.getElementById('<%=lblToken.ClientID%>').innerHTML="_";
@@ -140,8 +148,6 @@
 
 
 
-
-
     <!-- #main-container -->
     <div class="main_body">
         <div class="left_part">
@@ -155,8 +161,8 @@
                 <li id="doctor"><a name="hello" onclick="selectTile('doctor','<%=RoleName %>')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
                 <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName %>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-              <li id="admin" ><a name="hello" onclick="selectTile('admin','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Admin</span></a></li>
-                 </ul>
+                <li id="admin"><a name="hello" onclick="selectTile('admin','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Admin</span></a></li>
+            </ul>
 
             <p class="copy">
                 <asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label>
@@ -170,15 +176,18 @@
                 Tokens
             </div>
             <div class="icon_box">
-                <a class="all_token_link" data-toggle="modal" data-target="#all_token"><span class="count">
-                    <asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span><span title="All Tokens" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllTokenIframe')">
-                        <img src="../images/tokens.png" /></span></a>
+                <a class="all_token_link" data-toggle="modal" data-target="#all_token">
+                    <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
+                    <span title="All Tokens" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllTokenIframe')">
+                        <img src="../images/tokens.png" />
+                    </span>
+                </a>
             </div>
             <div class="grey_sec">
                 <div class="search_div">
                     <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." />
-                    <input type="hidden" id="project-id"/>
-                    <p id="project-description" style="display:none"></p>
+                    <input type="hidden" id="project-id" />
+                    <p id="project-description" style="display: none"></p>
                     <%--  <input class="button" onserverclick="btnSearch_ServerClick" runat="server"  value="Search" />--%>
                     <input class="button" type="button" value="Search" />
                 </div>
@@ -216,7 +225,7 @@
                     <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
                 </div>
 
-                    <div class="alert alert-info"   id="info"  >
+                <div class="alert alert-info" id="info">
 
                     <label>Search & Select a Patient, then Book Token  </label>
 
@@ -227,7 +236,7 @@
 
 
 
-            <div>            
+            <div>
 
                 <div class="token_id_card">
                     <div class="name_field">
@@ -270,6 +279,8 @@
         </div>
     </div>
 
+
+     <!-- Hidden Fields -->
     <asp:HiddenField ID="HiddenPatientID" runat="server" />
     <asp:HiddenField ID="HiddenClinicID" runat="server" />
     <asp:HiddenField ID="hdnfileID" runat="server" />
@@ -289,34 +300,6 @@
 
                     <iframe id="AllTokenIframe" style="width: 100%; height: 100%" frameborder="0"></iframe>
 
-                    <%--<h4>Today's Patient Bookings</h4>--%>
-
-
-
-
-                    <%--    <h4>Doctor 2</h4>
-        <table class="table" width="100%" border="0">
-          <tr>
-            <th>Token No</th>
-            <th>Name</th>
-            <th>Time</th>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-        </table>--%>
                 </div>
             </div>
 
