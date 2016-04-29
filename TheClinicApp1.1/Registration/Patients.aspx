@@ -1,7 +1,6 @@
 ﻿
 <%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
    <script>
        function CustomAlert(){
            this.render = function(dialog){
@@ -28,16 +27,41 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
    <style type="text/css">
-/* Simple message styles customization */
-#errors {
+    /* Simple message styles customization */
+    #errors {
     border-left: 5px solid #a94442;
     padding-left: 15px;
-}
-#errors li {
+    }
+    #errors li {
     list-style-type: none;
-}
-#errors li:before {
+    }
+    #errors li:before {
     content: '\b7\a0';
+    }
+
+</style>
+    <style>
+  .modal table{
+    border-collapse: collapse;    
+    width: 100%;
+    }
+
+.modal table th, td {
+    text-align: center;
+    height:auto;
+    padding: 8px;
+    }
+.modal table td{
+    width:50px;
+}
+.modal table td+td+td{
+    width:auto;
+}
+.modal table tr:nth-child(even){background-color: #f2f2f2}
+
+.modal table th {
+    background-color: #5681e6;
+    color: white;
 }
 </style>
  
@@ -160,7 +184,7 @@
          Patients Registration</div>
          <div class="icon_box">
          <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>
-         <a class="Todays_registration_link" data-toggle="modal" data-target="#TokenRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
+         <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
          <div class="search_div">
@@ -255,17 +279,17 @@
       <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          <div class="col-lg-12" style="height:500px;"> 
-        <asp:GridView ID="GridView1" runat="server" CssClass="table" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" >
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal" >
             
             <Columns>
                  <asp:TemplateField>
                   <ItemTemplate>
-                   <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" Height="45px" Width="45px" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                   <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
                     </ItemTemplate>                                    
                      </asp:TemplateField>
                     <asp:TemplateField>
                     <ItemTemplate>
-                     <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Cancel.png" Height="45px" Width="45px" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
+                     <asp:ImageButton style="border:none!important" ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Cancel.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
                        </ItemTemplate>
                        </asp:TemplateField>
                 <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"></asp:BoundField>
@@ -328,18 +352,18 @@
                     </div>
                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
                      <div class="col-sm-12" style="height:500px;">
-                        <asp:GridView ID="dtgViewTodaysRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None">
+                        <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal">
                             
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Pencil-01.png" Height="45px" Width="45px" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                                        <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
 
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Cancel.png" Height="45px" Width="45px" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
+                                        <asp:ImageButton style="border:none!important" ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Cancel.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>
