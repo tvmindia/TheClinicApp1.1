@@ -131,6 +131,7 @@ namespace TheClinicApp1._1.Token
             
                 lblFileNo.Text = "";
                 lblPatientName.Text = "name";
+                lblAge.Text = "";
                 lblGender.Text = "";
                 lblAddress.Text = "";
                 lblMobile.Text = "";
