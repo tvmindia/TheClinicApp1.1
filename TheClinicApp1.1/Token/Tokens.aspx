@@ -93,7 +93,7 @@
         {
             debugger;
 
-      
+            $(".alert").hide(); 
  
             var PatientName = document.getElementById("project-description").innerText;
             document.getElementById('<%=lblToken.ClientID%>').innerHTML="_";
@@ -227,9 +227,9 @@
             </div>
 
 
-
+            <div style="height:40px"></div>
             <div>
-
+             
                 <div class="token_id_card">
                     <div class="name_field">
                         <asp:Label ID="lblPatientName" runat="server" Text="Name"></asp:Label><span class="generate_token"><asp:Label ID="lblToken" runat="server" Text="_"></asp:Label></span>
