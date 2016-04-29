@@ -40,20 +40,6 @@
             });
 
 
-            //$('[data-toggle="tooltip"]').tooltip();
-
-
-
-
-            $('.nav_menu').click(function () {
-
-
-                $(".main_body").toggleClass("active_close");
-
-            });
-
-
-
         });
 
 

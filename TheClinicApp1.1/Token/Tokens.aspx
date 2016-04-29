@@ -288,7 +288,7 @@
 
                     <h3 class="modal-title">Today's Patient Bookings</h3>
                 </div>
-                <div class="modal-body" style="/*overflow-y: scroll; overflow-x: hidden; */ height: 400px;">
+                <div class="modal-body" style="/*overflow-y: scroll; overflow-x: hidden; */ height: 500px;">
 
                     <iframe id="AllTokenIframe" style="width: 100%; height: 100%" frameborder="0"></iframe>
 

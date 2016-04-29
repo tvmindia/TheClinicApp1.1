@@ -50,21 +50,8 @@
             
             $(this).parent(".alert").hide();
             
-        });
-
-            
-            //$('[data-toggle="tooltip"]').tooltip();
-            
+        });           
          
-
-            
-        $('.nav_menu').click(function () {
-                
-            
-            $(".main_body").toggleClass("active_close");
-            
-        });
-            
 
             
             //date picker
