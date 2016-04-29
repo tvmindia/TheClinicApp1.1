@@ -46,21 +46,23 @@
     width: 100%;
     }
 
-.modal table th, td {
-    text-align: center;
+.modal table td {
+    text-align: left;
     height:auto;
     padding: 8px;
     }
 .modal table td{
-    width:50px;
+    width:60px;
 }
 .modal table td+td+td{
     width:auto;
+    height:auto;
 }
-.modal table tr:nth-child(even){background-color: #f2f2f2}
+/*.modal table tr:nth-child(even){background-color: #f2f2f2}*/
 
 .modal table th {
     background-color: #5681e6;
+    text-align: center;
     color: white;
 }
 </style>

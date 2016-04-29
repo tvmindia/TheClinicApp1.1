@@ -513,7 +513,7 @@ namespace TheClinicApp1._1.Doctor
        foreach (TableCell cell in e.Row.Cells)
        {
                  if (columnValue=="True")
-                     e.Row.BackColor = Color.Cyan; 
+                     e.Row.BackColor = Color.Green; 
        }
 
 
