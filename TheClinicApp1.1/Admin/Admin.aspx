@@ -163,8 +163,11 @@
                                        
                                         </div>
 
-                                         <div class="col-lg-4 ">
-                                         <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/Check.png" Width="30%" Height="10%" />
+                                       
+
+                                              
+                                    <label for="Login Name">.</label>
+                                         <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" />
 
 
                                             <asp:Image ID="errorLnames" runat="server" ToolTip="Login name is Unavailable" ImageUrl="~/Images/newClose.png" />
@@ -218,7 +221,7 @@
                                 </div>
 
                                 <div class="row field_row">
-                                    <div class="col-lg-4 ">
+                                    <div class="col-lg-8 ">
                                         <label for="Email">Email</label>
                                         <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
                                         <asp:RegularExpressionValidator ID="RegularExpressionValidator2" ControlToValidate="txtEmail" runat="server" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" ErrorMessage="Please enter a valid Email" ForeColor="Red"></asp:RegularExpressionValidator>
