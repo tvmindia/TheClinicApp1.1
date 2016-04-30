@@ -308,7 +308,7 @@
                                         <%--<asp:BoundField  HeaderText="Delete"  ItemStyle-CssClass="Match"  />--%>
                                         <asp:TemplateField HeaderText=" ">
                                             <ItemTemplate>
-                                                <asp:Image ID="img1" runat="server" Style="height: 100px; width: 100px"
+                                                <asp:Image ID="img1" runat="server" 
                                                     OnClientClick="ConfirmDelete()" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
