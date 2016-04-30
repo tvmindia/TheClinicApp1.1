@@ -44,13 +44,13 @@
         {
             //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
             debugger; 
-            var topcount =document.getElementById('<%=hdnRowCount.ClientID%>').value;
+            var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
  
             if (topcount==0)
             {
                 var ac=null; 
                 ac = <%=listFilter %>;
-                $( "#txtMedName"+controlID).autocomplete({
+                $( "#txtMedName0").autocomplete({
                     source: ac
                 });
             }
@@ -58,10 +58,10 @@
             {
                 var ac=null;
                 ac = <%=listFilter %>;
-                    var i=1;
+                    var i=0;
                     while(i<=topcount)
                     {
-                        if (i==1)
+                        if (i==0)
                         {
                             var item=  document.getElementById('txtMedName'+i).value                                  
                             var result = ac.filter(function(elem){
@@ -95,6 +95,7 @@
             function FillTextboxUsingXml(){
                 debugger;
                 alert("success!");
+                GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
                 RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
             }
             function reset(){
@@ -105,11 +106,55 @@
                 $('input[type=checkbox]').val('');  
             }
     </script>
+      <script> 
+          function bindPatientDetails()
+          {
+              debugger;
+               var PatientName = document.getElementById("project-description").innerText;
+             
+       
+                     
+            var file=PatientName.split('|')      
+            var file1=file[0].split('📰 ')
+            var fileNO=file1[1]
+            if (PatientName!="")
 
+            { 
+                                  
+                PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
+            }
+
+            function OnSuccess(response, userContext, methodName) 
+            {   
+                debugger;         
+                var string1 = new Array();
+                string1 = response.split('|');
+               
+                document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
+                document.getElementById('<%=lblFileNum.ClientID%>').innerHTML=string1[0];
+                document.getElementById('<%=lblPatientName.ClientID%>').innerHTML=string1[1];
+                document.getElementById('<%=lblAgeCount.ClientID%>').innerHTML=string1[2];
+                document.getElementById('<%=lblGenderDis.ClientID%>').innerHTML=string1[3];            
+                document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
+                var BtID=document.getElementById('<%=btnSearch.ClientID%>')
+                
+                $('#<%=btnSearch.ClientID%>').click();
+                document.getElementById('txtSearch').value="";//clearin the earch box
+
+                
+            }          
+            function onError(response, userContext, methodName)
+            {                   
+            }         
+        }
+
+
+    </script>
 
 
     <!-- #main-container -->
-
+    <asp:HiddenField ID="hdnfileID" runat="server" />
+     <asp:HiddenField ID="HiddenPatientID" runat="server" />
     <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
     <div class="main_body">
         <div class="left_part">
@@ -142,8 +187,11 @@
             </div>
             <div class="grey_sec">
                 <div class="search_div">
-                    <input class="field" id="txtSearch" name="txtSearch" type="search" placeholder="Search here..." />
-                    <input class="button" type="submit" value="Search" />
+                    <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." />
+                    <input type="hidden" id="project-id"/>
+                    <p id="project-description" style="display:none"></p>
+                    <asp:Button ID="btnSearch" runat="server" CssClass="button" Text="Search" OnClick="btnSearch_Click" />
+                    <%--<input class="button" type="submit" id="btnSearch" value="Search" />--%>
                 </div>
 
                 <ul class="top_right_links">
@@ -164,7 +212,7 @@
                 </div>
                 <div class="token_id_card">
                     <div class="name_field">
-                        <img id="ProfilePic" src="../images/UploadPic1.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Test_Name"></asp:Label>
+                        <img id="ProfilePic" src="../images/UploadPic1.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Patient Name"></asp:Label>
                     </div>
                     <div class="light_grey">
                         <div class="col3_div">
@@ -361,12 +409,13 @@
                                     <td>
                                         <input id="txtMedDay0" type="text" placeholder="Days" class="input" /></td>
                                     <td style="background: #E6E5E5">
-                                        <input type="button" value="-" class="bt1" style="width: 20px;" /></td>
+                                        <input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" /></td>
                                     <td style="background: #E6E5E5">
-                                        <input type="button" id="btAdd" onclick="clickAdd();this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
+                                        <input type="button" id="btAdd0" onclick="clickAdd(0);this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
                                     </td>
                                     <td style="background-color: transparent">
-                                        <input id="hdnDetailID0" type="hidden" /><input id="hdnQty0" type="hidden" /></td>
+                                        <input id="hdnDetailID0" type="hidden" />
+                                        <input id="hdnQty0" type="hidden" /></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -437,8 +486,8 @@
                 </div>
                 <div class="modal-body" style="height: 400px; overflow-y: scroll; overflow-x: hidden;">
                     <div class="col-lg-12">
-                        <asp:GridView ID="GridViewTokenlist" OnRowDataBound="GridViewTokenlist_RowDataBound" runat="server" AutoGenerateColumns="False" Style="text-align: center; width: 100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None" ForeColor="#333333">
-                            <AlternatingRowStyle BackColor="Wheat"></AlternatingRowStyle>
+                        <asp:GridView ID="GridViewTokenlist" OnRowDataBound="GridViewTokenlist_RowDataBound" runat="server" AutoGenerateColumns="False" Style="text-align: center; width: 100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None">
+                           
                             <Columns>
                                 <asp:TemplateField ItemStyle-Width="35px">
                                     <ItemTemplate>
@@ -538,20 +587,49 @@
         test(document).on('ready',function(){
             debugger;
             var ac=null;
-            ac = <%=listFilter %>;
+            ac = <%=NameBind %>;
+            var length= ac.length;
+            var projects = new Array();
+            for (i=0;i<length;i++)
+            {        
+
+                var name= ac[i].split('🏠');
+                projects.push({  value : name[0], label: name[0], desc: name[1]})   
+   
+            }
+
             $( "#txtSearch" ).autocomplete({
-                source: ac
-            });
+                //maxResults: 10,
+                source: function(request, response) {
+                    var results = $.ui.autocomplete.filter(projects, request.term);
+                    response(results.slice(0, this.options.maxResults));
+                },
+                focus: function( event, ui ) {
+                    $( "#txtSearch" ).val( ui.item.label );
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $( "#project" ).val( ui.item.label );
+      
+                    $( "#project-description" ).html( ui.item.desc );        
+ 
+                    return false;
+                }
+            })
+             .autocomplete( "instance" )._renderItem = function( ul, item ) {
+             return $( "<li>" )
+             .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+             .appendTo( ul );
+           }; 
+            //$( "#txtSearch" ).autocomplete({
+                //source: ac
+            //});
+            GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
+            RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
         });
              
     </script>
-    <style>
-        .gridcss {
-            background: #df5015;
-            font-weight: bold;
-            color: White;
-        }
-    </style>
+    
 
 
 </asp:Content>

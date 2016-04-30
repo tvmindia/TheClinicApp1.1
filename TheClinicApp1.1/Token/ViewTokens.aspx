@@ -7,7 +7,7 @@
 
     <script src="../js/DeletionConfirmation.js"></script>
 
-     
+    <asp:HiddenField ID="hdnCount" runat="server" />
 
 
                             <asp:GridView ID="GridViewTokenlist"  runat="server" AutoGenerateColumns="False" CssClass="footable" DataKeyNames="UniqueId">
@@ -22,7 +22,7 @@
                                     <asp:BoundField HeaderText="Doctor Name" DataField="DOCNAME" />
                                     <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
                                     <asp:BoundField HeaderText="Patient Name" DataField="Name" />
-                                    <asp:BoundField HeaderText="Time" DataField="DateTime" />
+                                    <asp:BoundField HeaderText="Time" DataField="Date" />
 
                                 </Columns>
 

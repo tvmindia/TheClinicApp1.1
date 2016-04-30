@@ -62,6 +62,7 @@ namespace TheClinicApp1._1.Token
         }
 
 
+
      
         #region listerfilterbind
         public void listerfilterbind()
@@ -125,7 +126,22 @@ namespace TheClinicApp1._1.Token
         }        
         #endregion WebMethod
  
+        public void ClearFields()
+        {
+            
+                lblFileNo.Text = "";
+                lblPatientName.Text = "name";
+                lblAge.Text = "";
+                lblGender.Text = "";
+                lblAddress.Text = "";
+                lblMobile.Text = "";
+                lblEmail.Text = "";
+                lblLastVisit.Text = "";
+                lblToken.Text = "_";
+                BookedDoctorName.Visible = false;
+                lblDoctor.Visible = false;
 
+        }
      
         protected void btnBookToken_ServerClick(object sender, EventArgs e)
         {
@@ -164,6 +180,7 @@ namespace TheClinicApp1._1.Token
                 lblAge.Text = Age.ToString();
 
                 BookedDoctorName.Visible = true;
+                lblDoctor.Visible = true;
                 lblDoctor.Text = Convert.ToString(dst.Tables[0].Rows[0]["DoctorName"]);
 
 
@@ -178,6 +195,7 @@ namespace TheClinicApp1._1.Token
 
                 eObj.InsertionNotSuccessMessage(page, msg);
 
+                ClearFields();
             
             }
             

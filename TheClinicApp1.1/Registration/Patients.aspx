@@ -26,7 +26,47 @@
 </script> 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
+   <style type="text/css">
+    /* Simple message styles customization */
+    #errors {
+    border-left: 5px solid #a94442;
+    padding-left: 15px;
+    }
+    #errors li {
+    list-style-type: none;
+    }
+    #errors li:before {
+    content: '\b7\a0';
+    }
+
+</style>
+    <style>
+  .modal table{
+    border-collapse: collapse;    
+    width: 100%;
+    }
+
+.modal table td {
+    text-align: left;
+    height:auto;
+    padding: 8px;
+    }
+.modal table td{
+    width:60px;
+}
+.modal table td+td+td{
+    width:auto;
+    height:auto;
+}
+/*.modal table tr:nth-child(even){background-color: #f2f2f2}*/
+
+.modal table th {
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+}
+</style>
+ 
     <!-- Script Files -->  
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/jquery-1.3.2.min.js"></script>
@@ -76,6 +116,7 @@
       <script type ="text/javascript" >
         $(document).ready(
         function () {
+           
             debugger;
             var ac=null;
             ac = <%=listFilter %>;
@@ -155,7 +196,8 @@
          </div>
          <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClick="btnSave_Click" /></li><li><a class="new" href="#" runat="server" id="btnNew" onserverclick="btnNew_ServerClick"><span></span>New</a></li></ul>
          </div>        
-         <div class="right_form">         
+         <div class="right_form">  
+                    
          <div id="Errorbox"  style="height:30%;display:none;" runat="server" ><a class="alert_close">X</a>
          <div>
          <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
@@ -171,7 +213,7 @@
       <div class="row field_row">  
       <div class="col-lg-8">
       <div class="row"> 
-      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required pattern="^[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." /></div>
+      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required="required" pattern="^[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." /></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
       <img id="ProfilePic" src="~/images/UploadPic1.png" style="height:142px;" runat="server"  />
@@ -184,7 +226,7 @@
       </div>
       <div class="col-lg-8"><label for="sex">Sex<asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" /><asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" /></label>
       </div>
-      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" min="1" pattern="\d*" required title="⚠ The Age is required and entry should be Numbers no Negative Values Expected." /></div>
+      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" min="1" pattern="\d*" required="required" title="⚠ The Age is required and entry should be Numbers no Negative Values Expected." /></div>
       </div>
       </div>            
       </div>
@@ -196,7 +238,7 @@
       
       <div class="row field_row">  
       <div class="col-lg-4">
-      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="number" name="mobile" minlength="5" pattern="{10}[0-9]" title="⚠ This entry can only contain Numbers." />
+      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="tel" name="mobile" minlength="5" pattern="\d*" title="⚠ This entry can only contain Numbers." />
       </div>
       <div class="col-lg-4">
       <label for="email">Email</label><input id="txtEmail" runat="server" type="email" name="email" title="⚠ Invalid Email Check format expects testname@test.te" />
@@ -228,28 +270,28 @@
         <!---------------------------------- Modal Section --------------------------------------->
         <!-- All Registration -->
         <div id="myModal" class="modal fade" role="dialog">
-          <div class="modal-dialog" style="height: 600px;">
+          <div class="modal-dialog" style="height:600px">
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">  
+      <div class="modal-header" style="border-color:#3661C7;">  
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
         <h3 class="modal-title">All Registration</h3>
       </div>
-      <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
+      <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         <div class="col-lg-12"> 
-        <asp:GridView ID="GridView1" runat="server" CssClass="table" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" >
+         <div class="col-lg-12" style="height:500px;"> 
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal" >
             
             <Columns>
                  <asp:TemplateField>
                   <ItemTemplate>
-                   <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" Height="45px" Width="45px" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                   <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
                     </ItemTemplate>                                    
                      </asp:TemplateField>
                     <asp:TemplateField>
                     <ItemTemplate>
-                     <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Cancel.png" Height="45px" Width="45px" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
+                     <asp:ImageButton style="border:none!important" ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Cancel.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
                        </ItemTemplate>
                        </asp:TemplateField>
                 <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"></asp:BoundField>
@@ -271,20 +313,18 @@
               
         <!-- Token Registration Modal -->
         <div class="modal fade" id="TokenRegistration" role="dialog">
-          <div class="modal-dialog" style="height: 600px;">
+          <div class="modal-dialog" >
 
                 <!-- Modal content-->
                 
                 <div class="modal-content" >
-                    <div class="modal-header">
+                    <div class="modal-header" style="border-color:#3661C7;">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h3 class="modal-title" >Token Registration</h3>
-
-                    </div>
-                 <div class="modal-body"  style=" height: 500px;">
-                       
-                        <div class="token_id_card">
-                             <div class="name_field">Would You like To Book a Token... <span class="generate_token">?</span></div>
+                     </div>
+                 <div class="modal-body"  style="">
+                 <div class="token_id_card">
+                             <div class="name_field1">Would You like To Book a Token...<span></span> ?</div>
                             <div class="light_grey">
 
                             </div>
@@ -293,10 +333,9 @@
                             <asp:DropDownList ID="ddlDoctorName" Height="70%" AppendDataBoundItems="true" Width="100%" runat="server"></asp:DropDownList>
                             </div>
                         </div>                      
-                    <div class="modal-footer" style="background-color:grey;">                       
-                      <ul class="top_right_links"><li><asp:Button ID="btntokenbooking" runat="server" Text="Book" CssClass="button1"  OnClick="btntokenbooking_Click" /><span></span><span></span><span></span></li><li><a class="new" href="#" id="NewA1" data-dismiss="modal" ><span></span>>Skip</a></li></ul>                    
-                    </div>
-                       
+                 </div>
+                     <div class="modal-footer" style="background-color:grey;">                       
+                      <ul class="top_right_links"><li><asp:Button ID="btntokenbooking" runat="server" Text="Book" CssClass="button1"  OnClick="btntokenbooking_Click" /><span></span><span></span><span></span></li><li><a class="new" href="#" id="NewA1" data-dismiss="modal" ><span></span>Skip</a></li></ul>                    
                     </div>
                 </div>
                 
@@ -308,25 +347,25 @@
              <div class="modal-dialog" style="height: 600px;">
                 <!-- Modal content-->               
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="border-color:#3661C7;" >
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h3 class="modal-title">Todays Registrations</h3>
 
                     </div>
                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
-                     <div class="col-sm-12">
-                        <asp:GridView ID="dtgViewTodaysRegistration" CssClass="table" runat="server" AutoGenerateColumns="False" style="text-align:center;width:100%;" CellPadding="4" ForeColor="#333333" GridLines="None">
+                     <div class="col-sm-12" style="height:500px;">
+                        <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal">
                             
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Pencil-01.png" Height="45px" Width="45px" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                                        <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
 
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Cancel.png" Height="45px" Width="45px" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
+                                        <asp:ImageButton style="border:none!important" ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Cancel.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>

@@ -37,19 +37,6 @@
             
            });
 
-            
-            //$('[data-toggle="tooltip"]').tooltip();
-            
-         
-
-            
-           $('.nav_menu').click(function () {
-                
-            
-               $(".main_body").toggleClass("active_close");
-            
-           });
-
               
         $("[id$=txtDate1]").datepicker({
             dateFormat: 'dd-mm-yy' 

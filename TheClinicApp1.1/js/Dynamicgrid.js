@@ -12,7 +12,7 @@ var CurrentRowCount;
 
 function ClearAndRemove()
 {
-  
+    debugger;
     document.getElementById('txtMedicine0').value = "";
     document.getElementById('txtUnit0').value = "";
 
@@ -33,6 +33,32 @@ function ClearAndRemove()
     }
 
     
+}
+
+
+function ClearAndRemove1() {
+    debugger;
+    document.getElementById('txtMedName0').value = "";
+    document.getElementById('txtMedUnit0').value = "";
+
+    document.getElementById('txtMedQty0').value = '';
+    document.getElementById('txtMedDos0').value = "";
+    document.getElementById('txtMedTime0').value = "";
+    document.getElementById('txtMedDay0').value = "";
+
+    RemovedIDs += document.getElementById('hdnDetailID0').value + ',';
+
+    if (RemovedIDs == ',') {
+        RemovedIDs = '';
+    }
+    //document.getElementById('<%=hdnRemovedIDs.ClientID%>').value = RemovedIDs;
+
+
+    if (RemovedIDs != '') {
+        document.getElementById(IdToRemove).value = RemovedIDs;
+    }
+
+
 }
 
 
@@ -149,7 +175,7 @@ var Removecount = 0;
 
 function clickdelete(id) {
    
-  
+    debugger;
     RemovedIDs += document.getElementById('hdnDetailID' + id).value + ',';
 
     if (RemovedIDs == ',') {
