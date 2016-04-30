@@ -165,8 +165,12 @@
     <Content Include="images\Cancel.png" />
     <Content Include="images\case-history.png" />
     <Content Include="images\Check.png" />
+    <Content Include="images\Deleteicon.png" />
+    <Content Include="images\Deleteicon1.png" />
     <Content Include="images\doctor-hover.png" />
     <Content Include="images\doctor.png" />
+    <Content Include="images\Editicon.png" />
+    <Content Include="images\Editicon1.png" />
     <Content Include="images\first.gif" />
     <Content Include="images\HerbeInWhite.jpg" />
     <Content Include="images\HerbNew.jpg" />

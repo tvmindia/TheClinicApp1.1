@@ -31,13 +31,7 @@
    vertical-align: middle;
    }
     
-    .table {
-    margin-bottom: 5px;
-    background-color:transparent;
-    max-width: 100%;
-    width: 100%;
-    border-color:white;
-   }
+    
     .button1{
         background: url("../images/save.png") no-repeat 0 0;
         height: 31px;
@@ -57,7 +51,30 @@
         border-radius: 2px;
 
     }
+     #dialogoverlay{
+	        display: none;
+	        opacity: .8;
+	        position: fixed;
+	        top: 0px;
+	        left: 0px;
+	        background: #FFF;
+	        width: 100%;
+	        z-index: 10;
+            }
+          #dialogbox{
+	        display: none;
+	        position: fixed;
+	        background: #F2F2F2;
+	        border-radius:7px; 
+	        width:550px;
+	        z-index: 10;
+            }
+          #dialogbox > div{ background:#FFF; margin:8px; }
+          #dialogbox > div > #dialogboxhead{ background: #ebeffa; font-size:19px; padding:10px; color:red; }
+          #dialogbox > div > #dialogboxbody{ background:#FFF; padding:20px; color:#1a1a00; }
+          #dialogbox > div > #dialogboxfoot{ background: #595959; padding:10px; text-align:right; }
      </style>  
+     
     <asp:ContentPlaceHolder ID="head" runat="server">
         
     </asp:ContentPlaceHolder>
