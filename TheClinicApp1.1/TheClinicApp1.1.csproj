@@ -126,7 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Admin.aspx" />
-    <Content Include="Admin\ViewAllUsers.aspx" />
     <Content Include="Button-Warning-iconedited.png" />
     <Content Include="common\test page.txt" />
     <Content Include="css\bootstrap-spinner.css" />
@@ -340,13 +339,6 @@
     </Compile>
     <Compile Include="Admin\Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\ViewAllUsers.aspx.cs">
-      <DependentUpon>ViewAllUsers.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\ViewAllUsers.aspx.designer.cs">
-      <DependentUpon>ViewAllUsers.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClinicDAL\CaseSheet.cs" />
     <Compile Include="ClinicDAL\Category.cs" />
