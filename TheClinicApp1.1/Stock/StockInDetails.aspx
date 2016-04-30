@@ -39,7 +39,7 @@
 
               
         $("[id$=txtDate1]").datepicker({
-            dateFormat: 'dd-mm-yy' 
+            dateFormat: 'dd-M-yy' 
             
            
         });           
