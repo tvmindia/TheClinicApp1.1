@@ -257,8 +257,8 @@
                                         <div>
                                             <label for="sex">
                                                 Active
-                                                    <asp:RadioButton ID="rdoActiveYes" runat="server" GroupName="Active" Text="Yes" CssClass="checkbox-inline" Width="9%" Checked="true" />
-                                                <asp:RadioButton ID="rdoActiveNo" runat="server" GroupName="Active" Text="No" CssClass="checkbox-inline" Width="9%" />
+                                                    <asp:RadioButton ID="rdoActiveYes" runat="server" GroupName="Active" Text="Yes" CssClass="checkbox-inline" Checked="true" />
+                                                <asp:RadioButton ID="rdoActiveNo" runat="server" GroupName="Active" Text="No" CssClass="checkbox-inline" />
                                             </label>
                                         </div>
                                     </div>
@@ -268,8 +268,8 @@
                                         <div>
                                             <label for="sex">
                                                 IsDoctor
-                                                    <asp:RadioButton ID="rdoDoctor" runat="server" GroupName="Doctor" Text="Yes" CssClass="checkbox-inline" Width="9%" />
-                                                <asp:RadioButton ID="rdoNotDoctor" runat="server" GroupName="Doctor" Text="No" CssClass="checkbox-inline" Width="9%" Checked="true" />
+                                                    <asp:RadioButton ID="rdoDoctor" runat="server" GroupName="Doctor" Text="Yes" CssClass="checkbox-inline"  />
+                                                <asp:RadioButton ID="rdoNotDoctor" runat="server" GroupName="Doctor" Text="No" CssClass="checkbox-inline" Checked="true" />
                                             </label>
                                         </div>
                                     </div>
