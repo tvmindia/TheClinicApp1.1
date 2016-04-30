@@ -202,7 +202,7 @@
 
             document.getElementById('<%=txtmedicineName.ClientID %>').value= " ";
             document.getElementById('<%=txtCode.ClientID %>').value = " ";
-            document.getElementById('<%=txtOrderQuantity.ClientID %>').value = " ";
+            document.getElementById('<%=txtOrderQuantity.ClientID %>').value = "1";
           
             document.getElementById('<%=ddlCategory.ClientID %>').value = "--Select--";
             document.getElementById('<%=ddlUnits.ClientID %>').value = "--Select--";
@@ -425,7 +425,8 @@ border-spacing:0.5em;">
                                    
                                     <li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" onclick="SetValidatorColor();"  ><span></span>Save</a></li>
                                     <li><a class="new" id="btnNew"   runat="server" onserverclick="btnNew_ServerClick"  onclick="ClearControls();"><span></span>New</a></li>
-                                </ul
+       <%--<li><a class="new" id="btnNew" href="AddNewMedicine.aspx"><span></span>New</a></li>--%>
+                                </ul>
          </div>
     <%-- <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="save" Width="45%" OnClick="btnSave_Click" ValidationGroup="Required" />
         <asp:Button ID="btnNew" runat="server" Text="New" CssClass="new" Width="45%" OnClick="btnNew_Click" ValidationGroup="Required" OnClientClick="RemoveRequiredAttribute();"  />--%>

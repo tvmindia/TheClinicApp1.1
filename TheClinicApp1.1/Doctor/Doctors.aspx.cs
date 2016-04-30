@@ -512,8 +512,8 @@ namespace TheClinicApp1._1.Doctor
         string columnValue = e.Row.Cells[index].Text;
        foreach (TableCell cell in e.Row.Cells)
        {
-                 if (columnValue=="True")
-                     e.Row.BackColor = Color.Cyan; 
+           if (columnValue == "True")
+               e.Row.BackColor = Color.LightGray;
        }
 
 

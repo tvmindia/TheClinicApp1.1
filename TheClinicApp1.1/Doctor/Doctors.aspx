@@ -486,8 +486,8 @@
                 </div>
                 <div class="modal-body" style="height: 400px; overflow-y: scroll; overflow-x: hidden;">
                     <div class="col-lg-12">
-                        <asp:GridView ID="GridViewTokenlist" OnRowDataBound="GridViewTokenlist_RowDataBound" runat="server" AutoGenerateColumns="False" Style="text-align: center; width: 100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None" ForeColor="#333333">
-                            <AlternatingRowStyle BackColor="Wheat"></AlternatingRowStyle>
+                        <asp:GridView ID="GridViewTokenlist" OnRowDataBound="GridViewTokenlist_RowDataBound" runat="server" AutoGenerateColumns="False" Style="text-align: center; width: 100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None">
+                           
                             <Columns>
                                 <asp:TemplateField ItemStyle-Width="35px">
                                     <ItemTemplate>
