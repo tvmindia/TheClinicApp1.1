@@ -12,12 +12,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- FAVICON -->
 <link rel="shortcut icon" href="favicon.ico" type="../image/x-icon"  />
-        <link href="../css/bootstrap.min.css" rel="stylesheet" />
+       <%-- <link href="../css/bootstrap.min.css" rel="stylesheet" />
         <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
         <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
         <link href="../css/jquery-ui.css" rel="stylesheet" />
         <link href="../css/normalize.min.css" rel="stylesheet" />
-        <link href="../css/main.css" rel="stylesheet" />
+        <link href="../css/main.css" rel="stylesheet" />--%>
+
+      <!-- Css Files -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="../css/fileinput.css" rel="stylesheet" />
+    <link href="../css/normalize.min.css" rel="stylesheet" />
+    <link href="../css/main.css" rel="stylesheet" />
+    <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
+    <link href="../css/mui.css" rel="stylesheet" />
+    <link href="../css/jquery-ui.css" rel="stylesheet" />
+    <!------Other Styles----->
+
     <!--Other Style----->
      <style>
        

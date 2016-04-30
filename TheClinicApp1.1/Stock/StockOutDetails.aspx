@@ -264,7 +264,7 @@
             </div>
             <div class="icon_box">
                 <a class="add_medicine" data-toggle="modal" data-target="#add_medicine"><span title="Add New Medicine" data-toggle="tooltip" data-placement="left"  onclick="SetIframeSrc('NewMedicineIframe')">
-                    <img src="../images/add_medicine.png" /></span></a>
+                    <img src="../images/add_medicinedemo.png" /></span></a>
             </div>
             <div class="right_form tab_right_form">
 
@@ -333,8 +333,8 @@
                                         <td>
                                             <asp:TextBox ID="txtIssueNO" Width="80%" runat="server" required onchange="CheckIssueNoDuplication(this)"></asp:TextBox></td>
 
-                                        <td width="10%">
-                                            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Issue No is Available" ImageUrl="~/Images/Check.png" Width="30%" Height="10%" />
+                                        <td >
+                                            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Issue No is Available" ImageUrl="~/Images/newfff.png"  />
 
                                             <asp:Image ID="errorLnames" runat="server" ToolTip="Issue No is Unavailable" ImageUrl="~/Images/newClose.png" /></td>
 

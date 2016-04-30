@@ -3,6 +3,17 @@
 
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
+
+    <%-- <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../js/jquery-1.3.2.min.js"></script>
+    <script src="../js/jquery-1.12.0.min.js"></script>    
+   <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/fileinput.js"></script>
+    <script src="../js/JavaScript_selectnav.js"></script>--%>
+
+
+
+
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
@@ -10,9 +21,10 @@
     <script src="../js/bootstrap.min.js"></script>
         
     <script src="../js/JavaScript_selectnav.js"></script>
+   
     <script src="../js/jquery-1.12.0.min.js"></script>
         
-      
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <script>
 
 
@@ -39,7 +51,7 @@
   
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-   
+  
               
         <script>
             var test = jQuery.noConflict();
@@ -50,7 +62,7 @@
                 });
 
                 
-
+                $('[data-toggle="tooltip"]').tooltip();
 
             });
 		</script>
@@ -59,6 +71,7 @@
     <script src="../js/jquery-1.8.3.min.js"></script>
     
     <script src="../js/ASPSnippets_Pager.min.js"></script>
+
 
     <script type="text/javascript">
 
@@ -151,6 +164,11 @@
  
         </script>
 
+
+    
+
+
+
     <div class="main_body">
           
           
@@ -175,9 +193,9 @@
          Stock</div>
 
          <div class="icon_box">
-         <a class="all_registration_link" data-toggle="modal" data-target="#add_medicine" ><span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')"><img src="../images/add_medicine.png"/></span></a>
+         <a class="all_registration_link" data-toggle="modal" data-target="#add_medicine" ><span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')"><img src="../images/add_medicinedemo.png"/></span></a>
         
-         <a class="Todays_registration_link" data-toggle="modal" data-target="#View_OutOfStock" ><span title="Out Of Stock Medicines" data-toggle="tooltip" data-placement="left"  onclick="SetIframeSrc('OutOfStockIframe')" ><img src="../images/Pill_New(1).png"/></span></a>
+         <a class="Todays_registration_link" data-toggle="modal" data-target="#View_OutOfStock" ><span title="Reorder Alert" data-toggle="tooltip" data-placement="left"  onclick="SetIframeSrc('OutOfStockIframe')" ><img src="../images/edited.png"/></span></a>
          </div>
 
          <div class="right_form tab_right_form">
@@ -214,7 +232,7 @@
                 <asp:BoundField DataField="CategoryName" HeaderText="Category Name"  ItemStyle-CssClass="Match"  />
                  <asp:BoundField DataField="Unit" HeaderText="Unit"  ItemStyle-CssClass="Match"  />
                  <asp:BoundField DataField="Qty" HeaderText="Existing Qty"  ItemStyle-CssClass="Match" ItemStyle-HorizontalAlign="Right" />
-                 <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right"/>
+                 <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" ItemStyle-CssClass="Match"/>
 
 
             </Columns>
@@ -330,7 +348,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         
-        <h3 class="modal-title">Out Of Stock Medicines</h3>
+        <h3 class="modal-title">Reorder Alert</h3>
       </div>
       <div class="modal-body" style="height:500px;">
            <iframe id="OutOfStockIframe" style ="width: 100%; height: 100%" frameBorder="0" ></iframe>

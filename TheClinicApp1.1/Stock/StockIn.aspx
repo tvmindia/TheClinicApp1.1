@@ -235,7 +235,7 @@
             </div>
             <div class="icon_box">
                 <a class="add_medicine" data-toggle="modal" data-target="#add_medicine"><span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')">
-                    <img src="../images/add_medicine.png" /></span></a>
+                    <img src="../images/add_medicinedemo.png" /></span></a>
             </div>
             <div class="right_form tab_right_form">
 
@@ -302,7 +302,7 @@
 
                                                 <asp:TemplateField HeaderText=" ">
                                                     <ItemTemplate>
-                                                        <asp:Image ID="img1" runat="server" Style="height: 100px; width: 100px"
+                                                        <asp:Image ID="img1" runat="server" 
                                                             OnClientClick="ConfirmDelete()" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>

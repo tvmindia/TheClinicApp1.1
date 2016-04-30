@@ -3857,9 +3857,9 @@ function Datepicker() {
 			// if not applicable, false to just disable them
 		navigationAsDateFormat: false, // True if date formatting applied to prev/today/next links
 		gotoCurrent: false, // True if today link goes back to current selection instead
-		changeMonth: false, // True if month can be selected directly, false if only prev/next
-		changeYear: false, // True if year can be selected directly, false if only prev/next
-		yearRange: "c-10:c+10", // Range of years to display in drop-down,
+		changeMonth: true, // True if month can be selected directly, false if only prev/next
+		changeYear: true, // True if year can be selected directly, false if only prev/next
+		yearRange: "c-10:c+1", // Range of years to display in drop-down,
 			// either relative to today's year (-nn:+nn), relative to currently displayed year
 			// (c-nn:c+nn), absolute (nnnn:nnnn), or a combination of the above (nnnn:-n)
 		showOtherMonths: false, // True to show dates in other months, false to leave blank
@@ -5421,8 +5421,8 @@ $.extend(Datepicker.prototype, {
 
 		prevText = this._get(inst, "prevText");
 		prevText = (!navigationAsDateFormat ? prevText : this.formatDate(prevText,
-			this._daylightSavingAdjust(new Date(drawYear, drawMonth - stepMonths, 1)),
-			this._getFormatConfig(inst)));
+		this._daylightSavingAdjust(new Date(drawYear, drawMonth - stepMonths, 1)),
+		this._getFormatConfig(inst)));
 
 		prev = (this._canAdjustMonth(inst, -1, drawYear, drawMonth) ?
 			"<a class='ui-datepicker-prev ui-corner-all' data-handler='prev' data-event='click'" +
@@ -5431,8 +5431,8 @@ $.extend(Datepicker.prototype, {
 
 		nextText = this._get(inst, "nextText");
 		nextText = (!navigationAsDateFormat ? nextText : this.formatDate(nextText,
-			this._daylightSavingAdjust(new Date(drawYear, drawMonth + stepMonths, 1)),
-			this._getFormatConfig(inst)));
+		this._daylightSavingAdjust(new Date(drawYear, drawMonth + stepMonths, 1)),
+		this._getFormatConfig(inst)));
 
 		next = (this._canAdjustMonth(inst, +1, drawYear, drawMonth) ?
 			"<a class='ui-datepicker-next ui-corner-all' data-handler='next' data-event='click'" +
@@ -5752,15 +5752,15 @@ $.extend(Datepicker.prototype, {
  * Global datepicker_instActive, set by _updateDatepicker allows the handlers to find their way back to the active picker.
  */
 function datepicker_bindHover(dpDiv) {
-	var selector = "button, .ui-datepicker-prev, .ui-datepicker-next, .ui-datepicker-calendar td a";
+	var selector = "button, .ui-datepicker-calendar td a";//
 	return dpDiv.delegate(selector, "mouseout", function() {
 			$(this).removeClass("ui-state-hover");
-			if (this.className.indexOf("ui-datepicker-prev") !== -1) {
-				$(this).removeClass("ui-datepicker-prev-hover");
-			}
-			if (this.className.indexOf("ui-datepicker-next") !== -1) {
-				$(this).removeClass("ui-datepicker-next-hover");
-			}
+			//if (this.className.indexOf("ui-datepicker-prev") !== -1) {
+			//	$(this).removeClass("ui-datepicker-prev-hover");
+			//}
+			//if (this.className.indexOf("ui-datepicker-next") !== -1) {
+			//	$(this).removeClass("ui-datepicker-next-hover");
+			//}
 		})
 		.delegate( selector, "mouseover", datepicker_handleMouseover );
 }
@@ -5769,12 +5769,12 @@ function datepicker_handleMouseover() {
 	if (!$.datepicker._isDisabledDatepicker( datepicker_instActive.inline? datepicker_instActive.dpDiv.parent()[0] : datepicker_instActive.input[0])) {
 		$(this).parents(".ui-datepicker-calendar").find("a").removeClass("ui-state-hover");
 		$(this).addClass("ui-state-hover");
-		if (this.className.indexOf("ui-datepicker-prev") !== -1) {
-			$(this).addClass("ui-datepicker-prev-hover");
-		}
-		if (this.className.indexOf("ui-datepicker-next") !== -1) {
-			$(this).addClass("ui-datepicker-next-hover");
-		}
+		//if (this.className.indexOf("ui-datepicker-prev") !== -1) {
+		//	$(this).addClass("ui-datepicker-prev-hover");
+		//}
+		//if (this.className.indexOf("ui-datepicker-next") !== -1) {
+		//	$(this).addClass("ui-datepicker-next-hover");
+		//}
 	}
 }
 
