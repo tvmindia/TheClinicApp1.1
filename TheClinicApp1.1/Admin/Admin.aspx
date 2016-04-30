@@ -87,7 +87,7 @@
             </div>
 
             <div class="icon_box">
-         <a class="all_registration_link" data-toggle="modal" data-target="#View_AllUsers" ><span title="View All Users" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllUsersIframe')"><img src="../images/add_medicine.png"/></span></a>
+         <a class="all_registration_link" data-toggle="modal" data-target="#View_AllUsers" ><span title="View All Users" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllUsersIframe')"><img src="../images/add_medicinedemo.png"/></span></a>
         
      
          </div>
