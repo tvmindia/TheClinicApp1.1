@@ -11,8 +11,9 @@
     
     }
 .modal table td{
-    width:40px;
+    width:30px;
     height:auto;
+    padding-left:4px;
 }
 .modal table td+td{
     width:auto;
@@ -483,9 +484,13 @@
                                         <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText = "Sl.No">
+                                 <ItemTemplate>
+                                  <asp:Label ID="lblRowNumber" Text='<%# Container.DataItemIndex + 1 %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>                             
                                 <asp:BoundField HeaderText="Remarks" DataField="Remarks" />
-                                <asp:BoundField HeaderText="Date" DataField="CreatedDate" />
-                                
+                                <asp:BoundField DataField="CreatedDate" HeaderText="Date" DataFormatString="{0:D}"></asp:BoundField>
                             </Columns>
 
 
