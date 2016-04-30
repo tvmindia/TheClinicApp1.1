@@ -21,6 +21,7 @@ using System.Data.SqlClient;
 
 using TheClinicApp1._1.ClinicDAL;
 using System.Web.Services;
+using System.Configuration;
 
 #endregion Included Namespaces
 
@@ -31,12 +32,14 @@ namespace TheClinicApp1._1.Admin
 
         #region Global Variables
 
+        private static int PageSize = 8;
         ClinicDAL.CryptographyFunctions CryptObj = new CryptographyFunctions();
         ClinicDAL.User userObj = new ClinicDAL.User();
         ClinicDAL.Master mstrObj = new ClinicDAL.Master();
         ClinicDAL.RoleAssign roleObj = new RoleAssign();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
+        ErrorHandling eObj = new ErrorHandling();
 
         #endregion Global Variables
 
@@ -178,6 +181,112 @@ namespace TheClinicApp1._1.Admin
 
         #endregion ValidateLoginName
 
+        #region Bind Gridview
+        public void BindGriewWithDetailsOfAllUsers()
+        {
+            DataTable dtUsers = userObj.GetDetailsOfAllUsers();
+            dtgViewAllUsers.DataSource = dtUsers;
+            dtgViewAllUsers.DataBind();
+        }
+
+        #endregion Bind Gridview
+
+        #region Bind Dummy Row
+
+        private void BindDummyRow()
+        {
+            DataTable dummy = new DataTable();
+
+            dummy.Columns.Add(" ");
+            dummy.Columns.Add("LoginName");
+            dummy.Columns.Add("FirstName");
+            dummy.Columns.Add("LastName");
+            dummy.Columns.Add("Active");
+            dummy.Columns.Add("UserID");
+
+            dummy.Rows.Add();
+            dtgViewAllUsers.DataSource = dummy;
+            dtgViewAllUsers.DataBind();
+        }
+
+        #endregion Bind Dummy Row
+
+        #region Delete User By UserID
+
+         [WebMethod]
+        public static bool DeleteUserByID(string UsrID)
+        {
+
+            bool UserDeleted = false;
+            ClinicDAL.User userObj = new ClinicDAL.User();
+
+
+            Guid UserID = Guid.Parse(UsrID);
+            userObj.UserID = UserID;
+            userObj.DeleteUserByUserID();
+            UserDeleted = true;
+            //hdnUserCountChanged.Value = "True";
+            return UserDeleted;
+        }
+
+        #endregion Delete User By UserID
+
+
+        [WebMethod]
+        public static string GetMedicines(string searchTerm, int pageIndex)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            string query = "ViewAndFilterUsers";
+            SqlCommand cmd = new SqlCommand(query);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
+            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
+
+            cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+            cmd.Parameters.AddWithValue("@PageSize", PageSize);
+            cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            var xml = GetData(cmd, pageIndex).GetXml();
+            return xml;
+        }
+
+        private static DataSet GetData(SqlCommand cmd, int pageIndex)
+        {
+
+            string strConnString = ConfigurationManager.ConnectionStrings["ClinicAppConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(strConnString))
+            {
+                using (SqlDataAdapter sda = new SqlDataAdapter())
+                {
+                    cmd.Connection = con;
+                    sda.SelectCommand = cmd;
+                    using (DataSet ds = new DataSet())
+                    {
+                        sda.Fill(ds, "Medicines");
+                        DataTable dt = new DataTable("Pager");
+                        dt.Columns.Add("PageIndex");
+                        dt.Columns.Add("PageSize");
+                        dt.Columns.Add("RecordCount");
+                        dt.Rows.Add();
+                        dt.Rows[0]["PageIndex"] = pageIndex;
+                        dt.Rows[0]["PageSize"] = PageSize;
+                        dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                        ds.Tables.Add(dt);
+                        return ds;
+                    }
+                }
+            }
+        }
+
+
+
+
         #endregion Methods
 
         #region Events
@@ -187,33 +296,66 @@ namespace TheClinicApp1._1.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                BindDummyRow();
 
+                //BindGriewWithDetailsOfAllUsers();
+            }
+            if (Request.QueryString["UsrID"] != null)
+            {
+
+                Guid UserID = Guid.Parse(Request.QueryString["UsrID"].ToString());
+                userObj.UserID = UserID;
+                userObj.DeleteUserByUserID();
+
+                hdnUserCountChanged.Value = "True";
+            }
+           
         }
 
         #endregion Page Load
+
+
 
         #region Save Server Click
 
         protected void Save_ServerClick(object sender, EventArgs e)
         {
+            string msg = string.Empty;
 
-            //---------*User is not doctor , operation :add user to user table 
-
-            if (rdoNotDoctor.Checked == true)
+            var page = HttpContext.Current.CurrentHandler as Page;
+            if (txtLoginName.Text != string.Empty || txtPassword.Text != string.Empty || txtFirstName.Text != string.Empty || txtEmail.Text != string.Empty)
             {
-                AddUserToUserTable();
-            }
 
-//---------* User is a doctor , Operations : 1.add user to user table , 2.add user to the doctor table , 3.add user - role(doctor) to assignroles table
+
+
+
+                //---------*User is not doctor , operation :add user to user table 
+
+                if (rdoNotDoctor.Checked == true)
+                {
+                    AddUserToUserTable();
+                }
+
+    //---------* User is a doctor , Operations : 1.add user to user table , 2.add user to the doctor table , 3.add user - role(doctor) to assignroles table
+
+                else
+                {
+                    if (rdoDoctor.Checked == true)
+                    {
+                        AddUserToUserTable();
+                        AddUserToDoctorTable();
+                        AddUserRole();
+                    }
+                }
+            }
 
             else
             {
-                if (rdoDoctor.Checked == true)
-                {
-                    AddUserToUserTable();
-                    AddUserToDoctorTable();
-                    AddUserRole();
-                }
+                msg = "Please fill out the mandatory fields";
+
+                eObj.InsertionNotSuccessMessage(page, msg);
             }
 
         }

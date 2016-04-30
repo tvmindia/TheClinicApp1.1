@@ -7,7 +7,7 @@ using System.Data;
 
 namespace TheClinicApp1._1.ClinicDAL
 {
-    public class Pharmacy
+    public class pharmacy
     {
        #region Precription
 
@@ -27,14 +27,25 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-
+        public Guid PatientID
+        {
+            get;
+            set;
+        }
+        public Guid DoctorID
+        {
+            get;
+            set;
+        }
 
 
         #endregion PrescriptionpropertyDoctorInsert
         #endregion DoctorPrescription
-        #region PhramacyPatientDetails
 
-        public DataSet PhramacyPatientDetails(Guid PatientID)
+
+        #region GetPatientPharmacyDetails
+
+        public DataSet GetPatientPharmacyDetails()
         {
 
             SqlConnection con = null;
@@ -43,15 +54,16 @@ namespace TheClinicApp1._1.ClinicDAL
             try
             {
 
+                DateTime now = DateTime.Now;
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[PharmacyPatientDetails]";
+                cmd.CommandText = "[GetPatientPharmacyDetails]";
 
-                cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
-
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;               
+                cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
 
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
@@ -81,11 +93,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
         }
 
-        #endregion PhramacyPatientDetails
+        #endregion GetPatientPharmacyDetails
 
         #region PrescriptionDetails
 
-        public DataSet PrescriptionDetails(Guid PatientID)
+        public DataSet PrescriptionDetails()
         {
 
             SqlConnection con = null;
@@ -102,7 +114,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandText = "[PrescriptionDetails]";
 
                 cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
-                
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 // PrescriptionDT.PrescID,MedicineID,Qty,Unit,Dosage,Timing,Days will be diplayed
 
                 sda = new SqlDataAdapter();

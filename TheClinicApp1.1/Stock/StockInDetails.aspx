@@ -39,7 +39,7 @@
 
               
         $("[id$=txtDate1]").datepicker({
-            dateFormat: 'dd-mm-yy' 
+            dateFormat: 'dd-M-yy' 
             
            
         });           
@@ -237,6 +237,8 @@
                                         <td>
                                             <asp:TextBox ID="txtRefNo2" TabIndex="3" runat="server"></asp:TextBox>
                                         </td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </table>
                                 <div class="prescription_grid">
