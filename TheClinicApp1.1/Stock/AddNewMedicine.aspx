@@ -301,7 +301,7 @@ border-spacing:0.5em;">
 
                     <td style="width:10%;border:none;">
 
- <asp:Image ID="imgWebLnames" runat="server" ToolTip="Medicine Name is Available" ImageUrl="~/Images/Check.png" Width="90%" Height="18%" />
+ <asp:Image ID="imgWebLnames" runat="server" ToolTip="Medicine Name is Available" ImageUrl="~/Images/newfff.png" />
 
                     <asp:Image ID="errorLnames" runat="server" ToolTip="Medicine Name is Unavailable" ImageUrl="~/Images/newClose.png" />
 
@@ -324,7 +324,7 @@ border-spacing:0.5em;">
 </asp:RequiredFieldValidator>
                     </td>
                     <td >
-                         <asp:Image ID="imgCodeAvailable" runat="server" ToolTip="Medicine Code is Available" ImageUrl="~/Images/Check.png" Width="90%" Height="18%" />
+                         <asp:Image ID="imgCodeAvailable" runat="server" ToolTip="Medicine Code is Available" ImageUrl="~/Images/newfff.png"  />
 
                     <asp:Image ID="imgCodeUnavailable" runat="server" ToolTip="Medicine Code is Unavailable" ImageUrl="~/Images/newClose.png" />
                     </td>

@@ -333,8 +333,8 @@
                                         <td>
                                             <asp:TextBox ID="txtIssueNO" Width="80%" runat="server" required onchange="CheckIssueNoDuplication(this)"></asp:TextBox></td>
 
-                                        <td width="10%">
-                                            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Issue No is Available" ImageUrl="~/Images/Check.png" Width="30%" Height="10%" />
+                                        <td >
+                                            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Issue No is Available" ImageUrl="~/Images/newfff.png"  />
 
                                             <asp:Image ID="errorLnames" runat="server" ToolTip="Issue No is Unavailable" ImageUrl="~/Images/newClose.png" /></td>
 
