@@ -348,6 +348,9 @@
                                             <asp:TextBox ID="txtIssuedTo" Width="80%" runat="server" EnableViewState="false" required></asp:TextBox>
 
                                         </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </table>
                                 <div class="prescription_grid">
