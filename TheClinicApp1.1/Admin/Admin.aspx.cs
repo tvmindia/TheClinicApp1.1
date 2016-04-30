@@ -20,6 +20,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 using TheClinicApp1._1.ClinicDAL;
+using System.Web.Services;
 
 #endregion Included Namespaces
 
@@ -160,6 +161,22 @@ namespace TheClinicApp1._1.Admin
         }
 
         #endregion USER-In-ROLES
+
+        #region ValidateLoginName
+        [WebMethod]
+        public static bool ValidateLoginName(string LogName)
+        {
+            string loginName = LogName;
+
+            ClinicDAL.User userObj = new ClinicDAL.User();
+            if (userObj.ValidateUsername(loginName))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion ValidateLoginName
 
         #endregion Methods
 
