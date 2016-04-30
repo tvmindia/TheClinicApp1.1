@@ -33,9 +33,9 @@
 			prevArrow : (new Image()).src="../images/prev.gif",
 			lastArrow : (new Image()).src="../images/last.gif",
 			nextArrow : (new Image()).src="../images/next.gif",
-			rowsPerPage : 5,
+			rowsPerPage : 7,
 			currPage : 1,
-			optionsForRows : [5,10,25,50,100],
+			optionsForRows : [7,14,21,50,100],
 			ignoreRows : []
 		};  
 		settings = $.extend(defaults, settings);
@@ -115,7 +115,7 @@
         var htmlBuffer = [];
         htmlBuffer.push("<div id='tablePagination'>");
         htmlBuffer.push("<span id='tablePagination_perPage'>");
-        htmlBuffer.push("<select id='tablePagination_rowsPerPage'><option value='5'>5</option></select>");
+        htmlBuffer.push("<select id='tablePagination_rowsPerPage'><option value='7'>7</option></select>");
         htmlBuffer.push("per page");
         htmlBuffer.push("</span>");
         htmlBuffer.push("<span id='tablePagination_paginater'>");

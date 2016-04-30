@@ -13,7 +13,7 @@
                dialogbox.style.left = (winW/2) - (550 * .5)+"px";
                dialogbox.style.top = "100px";
                dialogbox.style.display = "block";
-               document.getElementById('dialogboxhead').innerHTML = "This Alert Needs Your Attention !";
+               document.getElementById('dialogboxhead').innerHTML = " Alert !";
                document.getElementById('dialogboxbody').innerHTML = dialog;
                document.getElementById('dialogboxfoot').innerHTML = '<input type="button" class="buttonAlert" onclick="Alert.ok()" value="OK"/>';
            }
@@ -23,10 +23,47 @@
            }
        }
        var Alert = new CustomAlert();
+       function deletePost(id){
+           debugger;
+           return;
+           var db_id = id.replace("post_", "");
+           // Run Ajax request here to delete post from database
+           document.body.removeChild(document.getElementById(id));
+       }
+       function CustomConfirm(){
+           debugger;
+           this.render = function(dialog,op,id){
+               var winW = window.innerWidth;
+               var winH = window.innerHeight;
+               var dialogoverlay = document.getElementById('dialogoverlay');
+               var dialogbox = document.getElementById('dialogbox');
+               dialogoverlay.style.display = "block";
+               dialogoverlay.style.height = winH+"px";
+               dialogbox.style.left = (winW/2) - (550 * .5)+"px";
+               dialogbox.style.top = "100px";
+               dialogbox.style.display = "block";
+		
+               document.getElementById('dialogboxhead').innerHTML = "Confirm that action";
+               document.getElementById('dialogboxbody').innerHTML = dialog;
+               document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Confirm.yes(\''+op+'\',\''+id+'\')">Yes</button> <button onclick="Confirm.no()">No</button>';
+           }
+           this.no = function(){
+               document.getElementById('dialogbox').style.display = "none";
+               document.getElementById('dialogoverlay').style.display = "none";
+           }
+           this.yes = function(op,id){
+               if(op == "delete_post"){
+                   deletePost(id);
+               }
+               document.getElementById('dialogbox').style.display = "none";
+               document.getElementById('dialogoverlay').style.display = "none";
+           }
+       }
+       var Confirm = new CustomConfirm();
 </script> 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-   <style type="text/css">
+     <style type="text/css">
     /* Simple message styles customization */
     #errors {
     border-left: 5px solid #a94442;
@@ -40,7 +77,82 @@
     }
 
 </style>
-    <style>
+    <!--[if !IE]><!-->
+	<%--<style>
+	
+	/* 
+	Max width before this PARTICULAR table gets nasty
+	This query will take effect for any screen smaller than 760px
+	and also iPads specifically.
+	*/
+	@media 
+	only screen and (max-width: 760px),
+	(min-device-width: 768px) and (max-device-width: 1024px)  {
+	
+		/* Force table to not be like tables anymore */
+		table, thead, tbody, th, td, tr { 
+			display: block; 
+		}
+		
+		/* Hide table headers (but not display: none;, for accessibility) */
+		thead tr { 
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+		
+		tr { border: 1px solid #ccc; }
+		
+		td { 
+			/* Behave  like a "row" */
+			border: none;
+			border-bottom: 1px solid #eee; 
+			position: relative;
+			padding-left: 50%; 
+		}
+		
+		td:before { 
+			/* Now like a table header */
+			position: absolute;
+			/* Top/left values mimic padding */
+			top: 6px;
+			left: 6px;
+			width: 45%; 
+			padding-right: 10px; 
+			white-space: nowrap;
+		}
+		
+		/*
+		Label the data
+		*/
+		td:nth-of-type(1):before { content: "Edit"; }
+		td:nth-of-type(2):before { content: "Delete"; }
+		td:nth-of-type(3):before { content: "Name"; }
+		td:nth-of-type(4):before { content: "Address"; }
+		td:nth-of-type(5):before { content: "Phone"; }
+		
+	}
+	
+	/* Smartphones (portrait and landscape) ----------- */
+	@media only screen
+	and (min-device-width : 320px)
+	and (max-device-width : 480px) {
+		body { 
+			padding: 0; 
+			margin: 0; 
+			width: 320px; }
+		}
+	
+	/* iPads (portrait and landscape) ----------- */
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		body { 
+			width: 495px; 
+		}
+	}
+	
+	</style>--%>
+	<!--<![endif]-->
+     <style>
   .modal table{
     border-collapse: collapse;    
     width: 100%;
@@ -52,11 +164,14 @@
     padding: 8px;
     }
 .modal table td{
-    width:60px;
+    width:45px;
 }
 .modal table td+td+td{
     width:auto;
     height:auto;
+    font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:14px;
+    font-weight:200;
 }
 /*.modal table tr:nth-child(even){background-color: #f2f2f2}*/
 
@@ -64,8 +179,12 @@
     background-color: #5681e6;
     text-align: center;
     color: white;
+    font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:16px;
+    
 }
 </style>
+ 
  
     <!-- Script Files -->  
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -74,6 +193,7 @@
     <script src="../js/bootstrap.min.js"></script>  
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/DeletionConfirmation.js"></script>
 
      <!---   Script for fileupload preview & FileType Checking  Created By:Thomson Kattingal --->    
       <script type="text/javascript">
@@ -103,7 +223,7 @@
             }
             if (i >= validFiles.length) 
             {
-                Alert.render("Not Valid Format\nPlease load with an extention as follows\n\n\n" + validFiles.join(", "));
+                Alert.render("Format Not Supporting\n\n Try:" + validFiles.join(", "));
                 document.getElementById("<%=FileUpload1.ClientID%>").value = '';
             }
             return true;
@@ -117,7 +237,6 @@
         $(document).ready(
         function () {
            
-            debugger;
             var ac=null;
             ac = <%=listFilter %>;
             $( "#txtSearch" ).autocomplete({
@@ -185,7 +304,8 @@
          <a class="nav_menu">Menu</a>
          Patients Registration</div>
          <div class="icon_box">
-         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>
+         <%--<a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>--%>
+         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left"><img src="../images/registerd9724185.png" /></span></a>
          <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
@@ -270,7 +390,7 @@
         <!---------------------------------- Modal Section --------------------------------------->
         <!-- All Registration -->
         <div id="myModal" class="modal fade" role="dialog">
-          <div class="modal-dialog" style="height:600px">
+          <div class="modal-dialog" style="height: 600px;min-width:550px;">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -278,7 +398,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
         <h3 class="modal-title">All Registration</h3>
       </div>
-      <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px">
+      <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          <div class="col-lg-12" style="height:500px;"> 
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal" >
@@ -286,12 +406,12 @@
             <Columns>
                  <asp:TemplateField>
                   <ItemTemplate>
-                   <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                   <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Editicon1.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
                     </ItemTemplate>                                    
                      </asp:TemplateField>
                     <asp:TemplateField>
                     <ItemTemplate>
-                     <asp:ImageButton style="border:none!important" ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Cancel.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
+                     <asp:ImageButton style="border:none!important" ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Deleteicon1.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return ConfirmDelete();" OnCommand="ImgBtnDelete_Command" formnovalidate />
                        </ItemTemplate>
                        </asp:TemplateField>
                 <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"></asp:BoundField>
@@ -302,7 +422,9 @@
         </asp:GridView>
        <%-- <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
         <asp:Button ID="Button1" runat="server" Text="Button" OnClientClick ="return check();" />--%>
- </div>
+ 
+         </div>
+
     </div>
          
          
@@ -344,7 +466,7 @@
       
         <!-- Todays Registration Modal -->
         <div class="modal fade" id="TodaysRegistration" role="dialog">
-             <div class="modal-dialog" style="height: 600px;">
+             <div class="modal-dialog" style="height: 600px;min-width:550px;">
                 <!-- Modal content-->               
                 <div class="modal-content">
                     <div class="modal-header" style="border-color:#3661C7;" >
@@ -359,13 +481,13 @@
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                                        <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
 
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton style="border:none!important" ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Cancel.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return confirm('Deletion Confirmation \n\n\n\n\ Are you sure you want to delete this item ?');" OnCommand="ImgBtnDelete_Command" formnovalidate />
+                                        <asp:ImageButton style="border:none!important" ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Deleteicon.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return ConfirmDelete();" OnCommand="ImgBtnDelete_Command" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>
@@ -409,7 +531,7 @@
     <script type="text/javascript">  
     <!---Function for Open Token Registration Modal and All Registarion Modal----->
     function openModal() {
-        debugger;
+        
         $('#TokenRegistration').modal('show');
            
     }

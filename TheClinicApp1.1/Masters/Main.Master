@@ -26,6 +26,7 @@
     <link href="../css/mui.css" rel="stylesheet" />
     <link href="../css/jquery-ui.css" rel="stylesheet" />
     <!------Other Styles----->
+      
       <style>
        
     .bt,.bt1 {
@@ -174,7 +175,7 @@
 	        z-index: 10;
             }
           #dialogbox > div{ background:#FFF; margin:8px; }
-          #dialogbox > div > #dialogboxhead{ background: #3661C7; font-size:19px; padding:10px; color:#CCC; }
+          #dialogbox > div > #dialogboxhead{ background: #ebeffa; font-size:19px; padding:10px; color:red; }
           #dialogbox > div > #dialogboxbody{ background:#FFF; padding:20px; color:#1a1a00; }
           #dialogbox > div > #dialogboxfoot{ background: #595959; padding:10px; text-align:right; }
     </style>    

@@ -26,7 +26,7 @@
 
     <script>
         $(document).ready(function () {
-            debugger; 
+            
             
             $('.alert_close').click(function () {                
             
@@ -39,7 +39,7 @@
             });  
         
             var ac=null;
-            debugger;
+           
 
             ac = <%=listFilter %>;
             var length= ac.length;
@@ -91,7 +91,7 @@
 
         function bindPatientDetails()
         {
-            debugger;
+           
 
             $(".alert").hide(); 
  
@@ -111,7 +111,7 @@
 
             function OnSuccess(response, userContext, methodName) 
             {   
-                debugger;         
+                      
                 var string1 = new Array();
                 string1 = response.split('|');
                
@@ -283,7 +283,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="border-color:royalblue;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                     <h3 class="modal-title">Today's Patient Bookings</h3>

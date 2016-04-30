@@ -4,7 +4,30 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
-
+    <style>
+        .modal table td {
+    text-align: left;
+    height:auto;
+    
+    }
+.modal table td{
+    width:60px;
+    height:auto;
+}
+.modal table td+td{
+    width:auto;
+    height:auto;
+    font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:14px;
+    font-weight:200;
+}
+.modal table th {
+   
+    font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:16px;
+    
+}
+    </style>
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
@@ -13,7 +36,7 @@
     <script>
         function BindMedunitbyMedicneName(ControlNo) 
         {
-            debugger;
+           
   
             if (ControlNo >= 0) {
                 var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
@@ -35,7 +58,7 @@
 
         function focuscontrol(ControlNo)
         {
-            debugger; 
+           
             document.getElementById('txtMedDos' + ControlNo).focus();
         }                 
            
@@ -43,7 +66,7 @@
         function autocompleteonfocus(controlID)
         {
             //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
-            debugger; 
+            
             var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
  
             if (topcount==0)
@@ -93,8 +116,7 @@
             }
                     
             function FillTextboxUsingXml(){
-                debugger;
-                alert("success!");
+                
                 GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
                 RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
             }
@@ -109,7 +131,7 @@
       <script> 
           function bindPatientDetails()
           {
-              debugger;
+              
                var PatientName = document.getElementById("project-description").innerText;
              
        
@@ -126,7 +148,7 @@
 
             function OnSuccess(response, userContext, methodName) 
             {   
-                debugger;         
+                      
                 var string1 = new Array();
                 string1 = response.split('|');
                
@@ -445,23 +467,24 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="border-color:royalblue;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h3 class="modal-title">Case History</h3>
                 </div>
-                <div class="modal-body" style="height: 400px; overflow-y: scroll; overflow-x: hidden;">
-                    <div class="col-lg-12">
-                        <asp:GridView ID="GridViewVisitsHistory" runat="server" AutoGenerateColumns="False" Style="max-width: 100%; min-width: 100%;" DataKeyNames="FileID" CellPadding="4" GridLines="None" ForeColor="#333333">
+                <div class="modal-body" style="height: 500px; overflow-y: scroll; overflow-x: hidden;">
+                    <div class="col-lg-12" style="height:500px;">
+                        <asp:GridView ID="GridViewVisitsHistory" runat="server" AutoGenerateColumns="False" DataKeyNames="FileID" >
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
                                         
-                                        <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" Width="50%" formnovalidate />
+                                        <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" style="border:none!important" ImageUrl="~/images/Editicon.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField HeaderText="Date" DataField="CreatedDate" />
                                 <asp:BoundField HeaderText="Remarks" DataField="Remarks" />
+                                <asp:BoundField HeaderText="Date" DataField="CreatedDate" />
+                                
                             </Columns>
 
 
@@ -479,13 +502,13 @@
         <div class="modal-dialog" style="height: 600px;">
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="border-color:royalblue;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                     <h3 class="modal-title">Tokens</h3>
                 </div>
-                <div class="modal-body" style="height: 400px; overflow-y: scroll; overflow-x: hidden;">
-                    <div class="col-lg-12">
+                <div class="modal-body" style="height: 500px; overflow-y: scroll; overflow-x: hidden;">
+                    <div class="col-lg-12" style="height:500px;">
                         <asp:GridView ID="GridViewTokenlist" OnRowDataBound="GridViewTokenlist_RowDataBound" runat="server" AutoGenerateColumns="False" Style="text-align: center; width: 100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None">
                            
                             <Columns>
@@ -585,7 +608,7 @@
     <script>
         var test=jQuery.noConflict();
         test(document).on('ready',function(){
-            debugger;
+            
             var ac=null;
             ac = <%=NameBind %>;
             var length= ac.length;

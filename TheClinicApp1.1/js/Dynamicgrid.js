@@ -568,7 +568,6 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
     $('.input').each(function () {
         i++;
     });
-    alert(values);
     var NumberOfColumns = i - 1;
     var NumberOfRows = NumberOfColumns / 6;
     var topId = iCnt;
@@ -606,8 +605,6 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
         //}
 
     }
-
-    alert(values);
     document.getElementById(hdnTextboxValues).value = values;
 
 }
