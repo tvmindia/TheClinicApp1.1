@@ -16,15 +16,22 @@ table td {
     
     }
 table td{
-    width:40px;
+    width:auto;
     height:auto;
+    
+    font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:14px;
+    font-weight:200;
+    padding-left:4px;
 }
-table td+td+td+td{
+table td+td+td{
     width:150px;
     height:auto;
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size:14px;
     font-weight:200;
+    padding-left:4px;
+   
 }
 /*.modal table tr:nth-child(even){background-color: #f2f2f2}*/
 

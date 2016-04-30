@@ -319,6 +319,17 @@ input {display: block; padding: 5px; width: 100%; border: 1px solid #dbdbdb; hei
 border-radius: 3px;
 }
 
+input[type=image]{
+    display:block;
+    padding:0;
+    width:auto;
+    font-family:'roboto-light';
+    font-weight: bold;
+    font-size: 14px; 
+    -webkit-border-radius: 3px;
+    height:auto;
+}
+
 .btn-file input[type="file"] {
 -webkit-border-top-right-radius: 3px;
 -webkit-border-bottom-right-radius: 3px;
@@ -771,7 +782,7 @@ border-radius: 0;
 	width: 50%;
 	max-width: 630px;
 	min-width: 320px;
-	height: auto;
+	height: 600px;
 	z-index: 2000;
 	visibility: hidden;
 	-webkit-backface-visibility: hidden;
@@ -808,8 +819,11 @@ border-radius: 0;
 
 
 @media only screen and (max-width:47.937em) {/*(max-width:767px)*/
-	
 
+    .modal.fade .modal-dialog {        
+        top: 30%;
+        height:350px;
+    }
 span[data-toggle="tooltip"] + .tooltip {display: none !important;}
 
 .icon_box {
@@ -930,6 +944,10 @@ ul.top_right_links {display: block; float: none; text-align: center;}
 
 @media only screen and (min-width:30em) and (max-width:47.937em) {/*(min-width:480px)(max-width:767px)*/
 
+.modal.fade .modal-dialog {        
+        top: 30%;
+        height:300px;
+    }
 
 #accordion .ui-accordion-content#ui-id-2 .field_row:first-child .col-lg-4:first-child .col-lg-8 { display: inline-block; vertical-align: top; width: 68%; margin: 0;}
 #accordion .ui-accordion-content#ui-id-2 .field_row:first-child .col-lg-4:first-child .col-lg-4 { display: inline-block; vertical-align: top; width: 30%;}

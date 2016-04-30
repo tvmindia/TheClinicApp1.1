@@ -11,7 +11,7 @@
     
     }
 .modal table td{
-    width:60px;
+    width:40px;
     height:auto;
 }
 .modal table td+td{
@@ -20,6 +20,7 @@
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size:14px;
     font-weight:200;
+    padding-left:4px;
 }
 .modal table th {
    
@@ -479,7 +480,7 @@
                                 <asp:TemplateField>
                                     <ItemTemplate>
                                         
-                                        <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" style="border:none!important" ImageUrl="~/images/Editicon.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" formnovalidate />
+                                        <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField HeaderText="Remarks" DataField="Remarks" />

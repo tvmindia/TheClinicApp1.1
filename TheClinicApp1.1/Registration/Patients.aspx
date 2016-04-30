@@ -165,6 +165,7 @@
     }
 .modal table td{
     width:45px;
+    height:10px;
 }
 .modal table td+td+td{
     width:auto;
@@ -172,6 +173,7 @@
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size:14px;
     font-weight:200;
+    padding-left:4px;
 }
 /*.modal table tr:nth-child(even){background-color: #f2f2f2}*/
 
@@ -390,7 +392,7 @@
         <!---------------------------------- Modal Section --------------------------------------->
         <!-- All Registration -->
         <div id="myModal" class="modal fade" role="dialog">
-          <div class="modal-dialog" style="height: 600px;min-width:550px;">
+          <div class="modal-dialog" style="min-width:550px;">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -409,7 +411,7 @@
                    <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Editicon1.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
                     </ItemTemplate>                                    
                      </asp:TemplateField>
-                    <asp:TemplateField>
+                    <asp:TemplateField >
                     <ItemTemplate>
                      <asp:ImageButton style="border:none!important" ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Deleteicon1.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return ConfirmDelete();" OnCommand="ImgBtnDelete_Command" formnovalidate />
                        </ItemTemplate>
@@ -481,13 +483,13 @@
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                                        <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon1.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
 
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton style="border:none!important" ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Deleteicon.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return ConfirmDelete();" OnCommand="ImgBtnDelete_Command" formnovalidate />
+                                        <asp:ImageButton style="border:none!important" ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Deleteicon1.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return ConfirmDelete();" OnCommand="ImgBtnDelete_Command" formnovalidate />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>
