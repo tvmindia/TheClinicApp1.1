@@ -197,6 +197,7 @@ namespace TheClinicApp1._1.Admin
         {
             DataTable dummy = new DataTable();
 
+            dummy.Columns.Add("Edit");
             dummy.Columns.Add(" ");
             dummy.Columns.Add("LoginName");
             dummy.Columns.Add("FirstName");

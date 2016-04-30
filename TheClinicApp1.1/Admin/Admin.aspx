@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
-
+    <link href="../css/main.css" rel="stylesheet" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -200,20 +200,26 @@ var   UserID = '';
             $("[id*=dtgViewAllUsers] tr").not($("[id*=dtgViewAllUsers] tr:first-child")).remove();
             if (Medicines.length > 0) {
                 $.each(Medicines, function () {
-                    var medicine = $(this);
 
+debugger;
+
+                    var medicine = $(this);
+ $("th", row).eq(0).text(" ");
 
                     //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
-
  $("td", row).eq(0).html($('<img />')
-                       .attr('src', "" + '../images/Cancel.png' + "")).addClass('CursorShow');
+                       .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
 
-                    $("td", row).eq(1).html($(this).find("LoginName").text());
-                    $("td", row).eq(2).html($(this).find("FirstName").text());
-                    $("td", row).eq(3).html($(this).find("LastName").text());
-                    $("td", row).eq(4).html($(this).find("Active").text());
+
+ $("td", row).eq(1).html($('<img />')
+                       .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+
+                    $("td", row).eq(2).html($(this).find("LoginName").text());
+                    $("td", row).eq(3).html($(this).find("FirstName").text());
+                    $("td", row).eq(4).html($(this).find("LastName").text());
+                    $("td", row).eq(5).html($(this).find("Active").text());
                    
-                    $("td", row).eq(5).html($(this).find("UserID").text());
+                    $("td", row).eq(6).html($(this).find("UserID").text());
 
                     $("[id*=dtgViewAllUsers]").append(row);
                     row = $("[id*=dtgViewAllUsers] tr:last-child").clone(true);
@@ -239,6 +245,7 @@ var   UserID = '';
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=dtgViewAllUsers]").append(empty_row);
             }
+
 
 
  var th = $("[id*=dtgViewAllUsers] th:contains('UserID')");
@@ -503,6 +510,14 @@ var   UserID = '';
 
                                 </ItemTemplate>
                             </asp:TemplateField>--%>
+                            <asp:TemplateField HeaderText="Edit">
+                                                    <ItemTemplate>
+                                                        <asp:Image ID="img2" runat="server" 
+                                                            OnClientClick="ConfirmDelete()" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
+                            
 
                              <asp:TemplateField HeaderText=" ">
                                                     <ItemTemplate>
