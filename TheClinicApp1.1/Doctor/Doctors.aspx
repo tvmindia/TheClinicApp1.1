@@ -464,7 +464,7 @@
 
     <!-- Modal -->
     <div id="casehistory" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="height: 600px;">
+        <div class="modal-dialog" style="min-width:550px">
 
             <!-- Modal content-->
             <div class="modal-content">
@@ -472,7 +472,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h3 class="modal-title">Case History</h3>
                 </div>
-                <div class="modal-body" style="height: 500px; overflow-y: scroll; overflow-x: hidden;">
+                <div class="modal-body" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden;">
                     <div class="col-lg-12" style="height:500px;">
                         <asp:GridView ID="GridViewVisitsHistory" runat="server" AutoGenerateColumns="False" DataKeyNames="FileID" >
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
@@ -496,15 +496,14 @@
                         </asp:GridView>
                     </div>
                 </div>
-                <div class="modal-footer">
-                </div>
+                
             </div>
 
         </div>
     </div>
 
     <div id="tokens" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="height: 600px;">
+        <div class="modal-dialog" style="min-width:550px;">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header" style="border-color:royalblue;">
@@ -512,7 +511,7 @@
 
                     <h3 class="modal-title">Tokens</h3>
                 </div>
-                <div class="modal-body" style="height: 500px; overflow-y: scroll; overflow-x: hidden;">
+                <div class="modal-body" style="max-height: 500px;overflow-y: scroll; overflow-x: hidden;">
                     <div class="col-lg-12" style="height:500px;">
                         <asp:GridView ID="GridViewTokenlist" OnRowDataBound="GridViewTokenlist_RowDataBound" runat="server" AutoGenerateColumns="False" Style="text-align: center; width: 100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None">
                            
@@ -530,8 +529,7 @@
                         </asp:GridView>
                     </div>
                 </div>
-                <div class="modal-footer">
-                </div>
+                
             </div>
             <asp:HiddenField ID="HdnPrescID" runat="server" />
         </div>

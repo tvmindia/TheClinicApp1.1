@@ -279,7 +279,7 @@
 
     <!-- Modal -->
     <div id="all_token" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="height: 600px;">
+        <div class="modal-dialog" style="min-width:550px;">
 
             <!-- Modal content-->
             <div class="modal-content">
@@ -288,10 +288,10 @@
 
                     <h3 class="modal-title">Today's Patient Bookings</h3>
                 </div>
-                <div class="modal-body" style="/*overflow-y: scroll; overflow-x: hidden; */ height: 500px;">
-
-                    <iframe id="AllTokenIframe" style="width: 100%; height: 100%" frameborder="0"></iframe>
-
+                <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
+                    <div class="col-lg-12" style="height:500px;">
+                    <iframe id="AllTokenIframe" style="width: 100%; height: 100%;" frameborder="0"></iframe>
+                    </div>
                 </div>
             </div>
 
