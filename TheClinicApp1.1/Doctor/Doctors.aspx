@@ -205,8 +205,7 @@
             <div class="icon_box">
                 <a class="records" data-toggle="modal" data-target="#casehistory"><span class="count">
                     <asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span><span title="Case HIstory" data-toggle="tooltip" data-placement="left"><img src="../images/case-history.png" /></span></a>
-                <a class="casehistory_link" data-toggle="modal" data-target="#tokens"><span title="Tokens" data-toggle="tooltip" data-placement="left">
-                    <img src="../images/tokens.png" /></span></a>
+                <a class="casehistory_link" data-toggle="modal" data-target="#tokens"><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png" /></span></a>
                 <%-- <a class="tokens_link" data-toggle="modal" data-target="#tokens" ><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png"/></span></a>--%>
             </div>
             <div class="grey_sec">

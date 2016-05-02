@@ -238,18 +238,21 @@
       <script type ="text/javascript" >
         $(document).ready(
         function () {
-           
+            debugger;
             var ac=null;
             ac = <%=listFilter %>;
             $( "#txtSearch" ).autocomplete({
                 source: ac
             });
             
-             $('.alert_close').click(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('.alert_close').click(function () {
+                debugger;
                 $(this).parent(".alert").hide();
               });
 
-             $('[data-toggle="tooltip"]').tooltip();
+            
         
 
 
@@ -257,7 +260,9 @@
                 $(".main_body").toggleClass("active_close");
                });
 
-            $('table').tablePagination({});       
+              $('table').tablePagination({});     
+            
+              
             
             });
         
@@ -307,7 +312,7 @@
          Patients Registration</div>
          <div class="icon_box">
          <%--<a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>--%>
-         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left"><img src="../images/registerd9724185.png" /></span></a>
+         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registered" data-toggle="tooltip" data-placement="left"><img src="../images/registerd9724185.png" /></span></a>
          <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
@@ -468,7 +473,7 @@
       
         <!-- Todays Registration Modal -->
         <div class="modal fade" id="TodaysRegistration" role="dialog">
-             <div class="modal-dialog" style="height: 600px;min-width:550px;">
+             <div class="modal-dialog" style="min-width:550px;">
                 <!-- Modal content-->               
                 <div class="modal-content">
                     <div class="modal-header" style="border-color:#3661C7;" >
