@@ -239,11 +239,22 @@ border-radius: 50%;
     box-shadow:0 0 1px #000;
 }
 
+
 a.casehistory_link {position: fixed; top: 364px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
+a.casehistory_link span.count {position: absolute; top: -15px; right: 5px; background: rgba(255,0,0,1); color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
+-webkit-border-radius: 50%;
+-moz-border-radius: 50%;
+border-radius: 50%;
+
+    -moz-box-shadow:0 0 1px #000;
+    -webkit-box-shadow:0 0 1px #000;
+    box-shadow:0 0 1px #000;
+}
+
 a.tokens_link {position: fixed; top: 428px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 
-a.all_registration_link {position: fixed; top: 300px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 201px;}
-a.Todays_registration_link {position: fixed; top: 364px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 201px;}
+a.all_registration_link {position: fixed; top: 300px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
+a.Todays_registration_link {position: fixed; top: 364px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 
 a.all_token_link {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 a.all_token_link span.count {position: absolute; top: -15px; right: 5px; background: #036F09; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
@@ -822,7 +833,11 @@ border-radius: 0;
 
     .modal.fade .modal-dialog {        
         top: 30%;
-        height:350px;
+        height:300px;
+    }
+    .modal.fade .modal-dialog .modal-body {        
+        
+        height:300px;
     }
 span[data-toggle="tooltip"] + .tooltip {display: none !important;}
 
@@ -838,6 +853,7 @@ span[data-toggle="tooltip"] + .tooltip {display: none !important;}
 a.records { position: relative; right: 0; top: auto; width: 50px; height: 50px;}	
 a.records span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 a.casehistory_link { position: relative;right: 0; top: auto; width: 50px; height: 50px;}	
+a.casehistory_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 a.tokens_link { position: relative;right: 0; top: auto; width: 50px; height: 50px;}	
 
 a.all_registration_link { position: relative; right: 0; top: auto; width: 50px; height: 50px;}	
@@ -946,7 +962,11 @@ ul.top_right_links {display: block; float: none; text-align: center;}
 
 .modal.fade .modal-dialog {        
         top: 30%;
-        height:300px;
+        height:250px;
+    }
+.modal.fade .modal-dialog .modal-body {        
+        top: 30%;
+        height:250px;
     }
 
 #accordion .ui-accordion-content#ui-id-2 .field_row:first-child .col-lg-4:first-child .col-lg-8 { display: inline-block; vertical-align: top; width: 68%; margin: 0;}
@@ -960,6 +980,7 @@ span[data-toggle="tooltip"] + .tooltip {display: none !important;}
 a.records {right: 0; top: 300px; width: 60px; height: 60px;}	
 a.records span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 a.casehistory_link {right: 0; top: 361px; width: 60px; height: 60px;}	
+a.casehistory_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 a.tokens_link {right: 0; top: 422px; width: 60px; height: 60px;}
 
 a.all_registration_link {right: 0; top: 300px; width: 60px; height: 60px;}

@@ -77,81 +77,7 @@
     }
 
 </style>
-    <!--[if !IE]><!-->
-	<%--<style>
-	
-	/* 
-	Max width before this PARTICULAR table gets nasty
-	This query will take effect for any screen smaller than 760px
-	and also iPads specifically.
-	*/
-	@media 
-	only screen and (max-width: 760px),
-	(min-device-width: 768px) and (max-device-width: 1024px)  {
-	
-		/* Force table to not be like tables anymore */
-		table, thead, tbody, th, td, tr { 
-			display: block; 
-		}
-		
-		/* Hide table headers (but not display: none;, for accessibility) */
-		thead tr { 
-			position: absolute;
-			top: -9999px;
-			left: -9999px;
-		}
-		
-		tr { border: 1px solid #ccc; }
-		
-		td { 
-			/* Behave  like a "row" */
-			border: none;
-			border-bottom: 1px solid #eee; 
-			position: relative;
-			padding-left: 50%; 
-		}
-		
-		td:before { 
-			/* Now like a table header */
-			position: absolute;
-			/* Top/left values mimic padding */
-			top: 6px;
-			left: 6px;
-			width: 45%; 
-			padding-right: 10px; 
-			white-space: nowrap;
-		}
-		
-		/*
-		Label the data
-		*/
-		td:nth-of-type(1):before { content: "Edit"; }
-		td:nth-of-type(2):before { content: "Delete"; }
-		td:nth-of-type(3):before { content: "Name"; }
-		td:nth-of-type(4):before { content: "Address"; }
-		td:nth-of-type(5):before { content: "Phone"; }
-		
-	}
-	
-	/* Smartphones (portrait and landscape) ----------- */
-	@media only screen
-	and (min-device-width : 320px)
-	and (max-device-width : 480px) {
-		body { 
-			padding: 0; 
-			margin: 0; 
-			width: 320px; }
-		}
-	
-	/* iPads (portrait and landscape) ----------- */
-	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-		body { 
-			width: 495px; 
-		}
-	}
-	
-	</style>--%>
-	<!--<![endif]-->
+  
      <style>
   .modal table{
     border-collapse: collapse;    
@@ -238,18 +164,21 @@
       <script type ="text/javascript" >
         $(document).ready(
         function () {
-           
+            debugger;
             var ac=null;
             ac = <%=listFilter %>;
             $( "#txtSearch" ).autocomplete({
                 source: ac
             });
             
-             $('.alert_close').click(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('.alert_close').click(function () {
+                debugger;
                 $(this).parent(".alert").hide();
               });
 
-             $('[data-toggle="tooltip"]').tooltip();
+            
         
 
 
@@ -257,7 +186,9 @@
                 $(".main_body").toggleClass("active_close");
                });
 
-            $('table').tablePagination({});       
+              $('table').tablePagination({});     
+            
+              
             
             });
         
@@ -297,7 +228,7 @@
              <li id="admin" ><a name="hello" onclick="selectTile('admin','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Admin</span></a></li>
          </ul>
          
-         <p class="copy"><asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
+         <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
          </div>
          
          <!-- Right Main Section -->
@@ -307,7 +238,7 @@
          Patients Registration</div>
          <div class="icon_box">
          <%--<a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>--%>
-         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left"><img src="../images/registerd9724185.png" /></span></a>
+         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registered" data-toggle="tooltip" data-placement="left"><img src="../images/registerd9724185.png" /></span></a>
          <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
@@ -468,7 +399,7 @@
       
         <!-- Todays Registration Modal -->
         <div class="modal fade" id="TodaysRegistration" role="dialog">
-             <div class="modal-dialog" style="height: 600px;min-width:550px;">
+             <div class="modal-dialog" style="min-width:550px;">
                 <!-- Modal content-->               
                 <div class="modal-content">
                     <div class="modal-header" style="border-color:#3661C7;" >
@@ -476,7 +407,7 @@
                         <h3 class="modal-title">Todays Registrations</h3>
 
                     </div>
-                   <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
+                   <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
                      <div class="col-sm-12" style="height:500px;">
                         <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal">
                             
