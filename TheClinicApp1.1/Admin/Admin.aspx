@@ -307,7 +307,7 @@ var   UserID = '';
 
             <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllUsers" ><span title="View All Users" data-toggle="tooltip" data-placement="left" ><img src="../images/multy-user copy.png" /></span></a>
+ <a class="all_registration_link" data-toggle="modal" data-target="#AllUsers" ><span title="View All Users" data-toggle="tooltip" data-placement="left" ><img src="../images/multiuser.png" /></span></a>
 
 
                 

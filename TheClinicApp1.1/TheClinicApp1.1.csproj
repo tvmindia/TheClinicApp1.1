@@ -179,6 +179,7 @@
     <Content Include="images\logo-small.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\menu_separator.png" />
+    <Content Include="images\multiuser.png" />
     <Content Include="images\multy-user copy.png" />
     <Content Include="images\nav.png" />
     <Content Include="images\new.png" />
