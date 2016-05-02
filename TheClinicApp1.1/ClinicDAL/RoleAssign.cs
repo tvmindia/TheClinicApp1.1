@@ -137,6 +137,48 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion View All Roles
 
+
+        #region GetAssignedRoleByUniqueID
+
+        public DataTable GetAssignedRoleByUniqueID()
+        {
+            SqlConnection con = null;
+            DataTable dtRoles = null;
+            try
+            {
+                dtRoles = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetAssignedRoleByUniqueID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = UniqueID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtRoles);
+                return dtRoles;
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+                throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+
+        #endregion GetAssignedRoleByUniqueID
+
         #region View Assigned Roles
 
         public DataTable GetDetailsOfAllAssignedRoles()
@@ -265,7 +307,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //not successfull   
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavingFailureMessage(page);
+                    eObj.DeletionNotSuccessMessage(page);
 
                 }
                 else
@@ -273,7 +315,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //successfull
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
+                    eObj.DeleteSuccessMessage(page);
 
 
                 }

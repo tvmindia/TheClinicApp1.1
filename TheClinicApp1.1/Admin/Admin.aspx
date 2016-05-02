@@ -321,7 +321,7 @@ var   UserID = '';
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="Admin.aspx">Create User</a></li>
 
-                        <li role="presentation"><a href="StockOut.aspx">Assign Role</a></li>
+                        <li role="presentation"><a href="AssignRoles.aspx">Assign Role</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">

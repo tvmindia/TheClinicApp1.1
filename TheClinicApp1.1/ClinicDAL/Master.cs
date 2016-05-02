@@ -509,7 +509,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //not successfull   
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavingFailureMessage(page);
+                    eObj.DeletionNotSuccessMessage(page);
 
                 }
                 else
@@ -517,7 +517,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //successfull
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
+                    eObj.DeleteSuccessMessage(page);
 
 
                 }
