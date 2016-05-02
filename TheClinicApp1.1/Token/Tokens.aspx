@@ -26,7 +26,7 @@
 
     <script>
         $(document).ready(function () {
-            debugger; 
+            
             
             $('.alert_close').click(function () {                
             
@@ -39,7 +39,7 @@
             });  
         
             var ac=null;
-            debugger;
+           
 
             ac = <%=listFilter %>;
             var length= ac.length;
@@ -91,7 +91,7 @@
 
         function bindPatientDetails()
         {
-            debugger;
+           
 
             $(".alert").hide(); 
  
@@ -111,7 +111,7 @@
 
             function OnSuccess(response, userContext, methodName) 
             {   
-                debugger;         
+                      
                 var string1 = new Array();
                 string1 = response.split('|');
                
@@ -279,19 +279,19 @@
 
     <!-- Modal -->
     <div id="all_token" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="height: 600px;">
+        <div class="modal-dialog" style="min-width:550px;">
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="border-color:royalblue;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                     <h3 class="modal-title">Today's Patient Bookings</h3>
                 </div>
-                <div class="modal-body" style="/*overflow-y: scroll; overflow-x: hidden; */ height: 500px;">
-
-                    <iframe id="AllTokenIframe" style="width: 100%; height: 100%" frameborder="0"></iframe>
-
+                <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
+                    <div class="col-lg-12" style="height:500px;">
+                    <iframe id="AllTokenIframe" style="width: 100%; height: 100%;" frameborder="0"></iframe>
+                    </div>
                 </div>
             </div>
 

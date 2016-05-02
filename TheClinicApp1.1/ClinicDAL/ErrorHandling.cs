@@ -311,10 +311,10 @@ namespace TheClinicApp1._1.ClinicDAL
             mpContentPlaceHolder1 = (ContentPlaceHolder)master1.FindControl("ContentPlaceHolder1");
             HtmlControl divMask1 = (HtmlControl)mpContentPlaceHolder1.FindControl("Errorbox") as HtmlControl;
             Label lblMsgges = mpContentPlaceHolder1.FindControl("lblMsgges") as Label;
-            lblMsgges.Text = Messages.FailureMsgCaption;
+            lblMsgges.Text = Messages.SavingFailure;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
-            lblErrorCaption.Text = Messages.SavingFailure;
+            lblErrorCaption.Text = Messages.FailureMsgCaption;
             divMask1.Attributes["class"] = "alert alert-danger";
         }
 

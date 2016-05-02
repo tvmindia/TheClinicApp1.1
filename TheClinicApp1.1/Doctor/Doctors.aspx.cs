@@ -98,21 +98,7 @@ namespace TheClinicApp1._1.Doctor
         #region BindSearch
         private string BindName()
         {
-            //DataTable dt = PatientObj.GetSearchBoxData();
-
-            //StringBuilder output = new StringBuilder();
-            //output.Append("[");
-            //for (int i = 0; i < dt.Rows.Count; ++i)
-            //{
-            //    output.Append("\"" + dt.Rows[i]["Name"].ToString() + "\"");
-
-            //    if (i != (dt.Rows.Count - 1))
-            //    {
-            //        output.Append(",");
-            //    }
-            //}
-            //output.Append("]");
-            //return output.ToString();
+           
             DataTable dt = tok.GetSearchBoxData();
             StringBuilder output = new StringBuilder();
             output.Append("[");
@@ -128,10 +114,7 @@ namespace TheClinicApp1._1.Doctor
             return output.ToString();
         }
         #endregion BindSearch
-
-        #region SearchFill
-       
-        #endregion SearchFill
+      
         #region MainButton
         /// <summary>
         /// Save Button with Insert and Update of Visits, PrescriptionHeader,PrescriptionDetails 
@@ -397,7 +380,7 @@ namespace TheClinicApp1._1.Doctor
             GridViewTokenlist.EmptyDataText = "No Records Found";
             GridViewTokenlist.DataSource = gds;
             GridViewTokenlist.DataBind();
-
+            lblTokenCount.Text=GridViewTokenlist.Rows.Count.ToString();
 
         }
         #endregion GridBindTokens
@@ -487,6 +470,14 @@ namespace TheClinicApp1._1.Doctor
         }
         #endregion WebMethod
 
+        #region Row Coloring for Tokens View
+        /// <summary>
+        /// color the Isprocessed rows in the Token View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
+
         int GetColumnIndexByName(GridViewRow row, string columnName)
         {
             int columnIndex = 0;
@@ -500,44 +491,22 @@ namespace TheClinicApp1._1.Doctor
             return columnIndex;
         }
 
-
-
-
-
         protected void GridViewTokenlist_RowDataBound(object sender, GridViewRowEventArgs e)
         {
              if (e.Row.RowType == DataControlRowType.DataRow)
-    {
+        {
         int index = GetColumnIndexByName(e.Row,"IsProcessed");
         string columnValue = e.Row.Cells[index].Text;
-       foreach (TableCell cell in e.Row.Cells)
-       {
-           if (columnValue == "True")
+          foreach (TableCell cell in e.Row.Cells)
+            {
+               if (columnValue == "True")
                e.Row.BackColor = Color.LightGray;
-       }
-
-
-
-    }
-            
-            //foreach (GridViewRow row in GridViewTokenlist)
-            //{
-
-            //}
-           
-            //for (int i = 0; i <= GridViewTokenlist.Rows.Count;i++ )
-            //{
-            //    string str = e.Row.Cells[i].Text;
-            //    string str1 = e.Row.Cells[i+2].Text;
-
-                //if ((GridViewTokenlist.Rows[ == "1"))
-                //{
-                    
-                //   GridViewTokenlist.Rows[i].Cells[6].CssClass = "gridcss";
-                //}
-            //}
+             }
+             }
         }
+        #endregion Row Coloring for Tokens View
 
+        #region Search And Find the Patient Visits
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             lblErrorCaption.Text = string.Empty;
@@ -583,7 +552,7 @@ namespace TheClinicApp1._1.Doctor
                 HiddenField1.Value = PatientID.ToString();
             }
         }
-
+        #endregion Search And Find the Patient Visits
     }
         #endregion Methods
 }

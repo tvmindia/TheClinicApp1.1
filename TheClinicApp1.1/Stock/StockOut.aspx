@@ -140,7 +140,7 @@
 
 
                     $("td", row).eq(0).html($('<img />')
-                        .attr('src', "" + '../images/Cancel.png' + "")).addClass('CursorShow');
+                        .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
 
 

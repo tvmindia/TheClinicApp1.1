@@ -205,7 +205,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //not successfull   
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionNotSuccessMessage(page);
+                    eObj.SavingFailureMessage(page);
 
                 }
                 else
@@ -213,7 +213,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //successfull
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionSuccessMessage(page);
+                    eObj.SavedSuccessMessage(page);
 
 
                 }
@@ -265,7 +265,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //not successfull   
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.WarningMessage(page);
+                    eObj.SavingFailureMessage(page);
 
                 }
                 else
@@ -273,7 +273,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //successfull
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeleteSuccessMessage(page);
+                    eObj.SavedSuccessMessage(page);
 
 
                 }
@@ -298,6 +298,146 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion Delete Assigned Role By UniqueID
+
+
+        #region Delete Assigned Role By UserID
+
+        public void DeleteAssignedRoleByUserID()
+        {
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteUserInRolesByUserID";
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() == "")
+                {
+                    //not successfull   
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.SavingFailureMessage(page);
+
+                }
+                else
+                {
+                    //successfull
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.SavedSuccessMessage(page);
+
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+        #endregion Delete Assigned Role By UserID
+
+
+        //#region Update Assigned Role By UserID
+
+
+        //public void UpdateAssignedRoleByUserID()
+        //{
+        //    dbConnection dcon = new dbConnection();
+
+        //    try
+        //    {
+
+        //        dcon.GetDBConnection();
+        //        SqlCommand cmd = new SqlCommand();
+        //        cmd.Connection = dcon.SQLCon;
+        //        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+        //        cmd.CommandText = "[UpdateDoctorByName]";
+
+        //        cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+        //        cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+        //        cmd.Parameters.Add("@RoleID", SqlDbType.UniqueIdentifier).Value = RoleID;
+        //        cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+               
+
+
+        //        //cmd.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = ;
+
+               
+
+
+        //        SqlParameter Output = new SqlParameter();
+        //        Output.DbType = DbType.Int32;
+        //        Output.ParameterName = "@Status";
+        //        Output.Direction = ParameterDirection.Output;
+        //        cmd.Parameters.Add(Output);
+        //        cmd.ExecuteNonQuery();
+
+        //        if (Output.Value.ToString() == "")
+        //        {
+        //            //not successfull   
+
+        //            var page = HttpContext.Current.CurrentHandler as Page;
+        //            eObj.SavingFailureMessage(page);
+        //            //eObj.UpdationNotSuccessMessage(page);
+
+        //        }
+        //        else
+        //        {
+        //            //successfull
+
+        //            var page = HttpContext.Current.CurrentHandler as Page;
+        //            eObj.SavedSuccessMessage(page);
+        //            //eObj.UpdationSuccessMessage(page);
+
+        //        }
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var page = HttpContext.Current.CurrentHandler as Page;
+        //        eObj.ErrorData(ex, page);
+
+        //    }
+
+        //    finally
+        //    {
+        //        if (dcon.SQLCon != null)
+        //        {
+        //            dcon.DisconectDB();
+        //        }
+
+        //    }
+        //}
+
+
+        //#endregion Update Assigned Role By UserID
 
         #endregion Methods
     }

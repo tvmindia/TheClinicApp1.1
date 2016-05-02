@@ -66,7 +66,7 @@ function openSettings() {
 
 function OpenPageOnHyperLinkClick(HyperLinkid) {
     var url = "";
-    debugger;
+  
     if (HyperLinkid == "hlkAssignRoles") {
         NavigateUrl = "../Admin/AssignRoles.aspx";
     }

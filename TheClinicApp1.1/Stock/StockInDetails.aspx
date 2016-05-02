@@ -39,7 +39,7 @@
 
               
         $("[id$=txtDate1]").datepicker({
-            dateFormat: 'dd-mm-yy' 
+            dateFormat: 'dd-M-yy' 
             
            
         });           
@@ -76,7 +76,7 @@
             {
                 //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
 
-                debugger;
+                
                 var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
  
                 if (topcount==0)
@@ -237,6 +237,8 @@
                                         <td>
                                             <asp:TextBox ID="txtRefNo2" TabIndex="3" runat="server"></asp:TextBox>
                                         </td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </table>
                                 <div class="prescription_grid">
