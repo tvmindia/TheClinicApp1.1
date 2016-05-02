@@ -274,7 +274,7 @@
       <div class="upload">
       <label class="control-label">Upload Picture</label>
           
-      <asp:FileUpload ID="FileUpload1" ForeColor="Green" Font-Size="12px" runat="server" onchange="OnUpload();showpreview(this);" />
+      <asp:FileUpload ID="FileUpload1" ForeColor="Red" Font-Size="12px" runat="server" onchange="OnUpload();showpreview(this);" />
       </div>
       </div>
       <div class="col-lg-8"><label for="sex">Sex<asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" /><asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" /></label>
