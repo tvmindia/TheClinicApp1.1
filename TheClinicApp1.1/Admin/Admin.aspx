@@ -116,14 +116,14 @@ var   UserID = '';
 
 
    $(function () {
-            $("[id*=dtgViewAllUsers] td:first").click(function () {
+       $("[id*=dtgViewAllUsers] td:eq(1)").click(function () {
 
 
 
                 var DeletionConfirmation = ConfirmDelete();
 
                 if (DeletionConfirmation == true) {
-                    UserID = $(this).closest('tr').find('td:eq(5)').text();
+                    UserID = $(this).closest('tr').find('td:eq(6)').text();
 
 
  window.location = "Admin.aspx?UsrID=" + UserID;
@@ -152,6 +152,20 @@ var   UserID = '';
 
 
         });
+
+
+   
+   $(function () {
+       $("[id*=dtgViewAllUsers] td:eq(0)").click(function () {
+
+           debugger;
+           UserID = $(this).closest('tr').find('td:eq(6)').text();
+           window.location = "Admin.aspx?UsrIDtoEdit=" + UserID;
+       });
+
+
+   });
+
 
 
         $(function () {
@@ -305,7 +319,7 @@ debugger;
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="Admin.aspx">User</a></li>
+                        <li role="presentation" class="active"><a href="Admin.aspx">Create User</a></li>
 
                         <li role="presentation"><a href="StockOut.aspx">Assign Role</a></li>
                     </ul>
@@ -566,5 +580,5 @@ debugger;
 
 
     <asp:HiddenField ID="hdnUserCountChanged" runat="server" />
-
+      <asp:HiddenField ID="hdnUserID" runat="server" />
 </asp:Content>

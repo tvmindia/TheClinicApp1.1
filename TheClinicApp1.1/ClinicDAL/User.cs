@@ -230,9 +230,55 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion AddUsers
 
-        #region Update User By UserID
+        #region Get User Details By UserID
 
-        public void UpdateuserByUserID()
+
+        public DataTable GetUserDetailsByUserID()
+        {
+            SqlConnection con = null;
+            DataTable dtUsers = null;
+            try
+            {
+                dtUsers = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetUserDetailsByUserID", con);
+               
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUsers);
+                
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+               
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUsers;
+        }
+
+
+
+        #endregion Get User Details By UserID
+
+
+           #region Update User By UserID
+
+           public void UpdateuserByUserID()
         {
             dbConnection dcon = new dbConnection();
 

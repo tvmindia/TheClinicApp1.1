@@ -77,12 +77,18 @@ namespace TheClinicApp1._1.Admin
             userObj.Email = txtEmail.Text;
             userObj.PhoneNo = txtPhoneNumber.Text;
 
-            
+            if (hdnUserID.Value == string.Empty)
+            {
                 userObj.AddUser();
+            }
+            else
+            {
+                userObj.UserID = Guid.Parse(hdnUserID.Value);
+                userObj.UpdateuserByUserID();
+                //BindGriewWithDetailsOfAllUsers();
+            }
               
-                    //userObj.UserID = Guid.Parse(hdnUserID.Value);
-                    //userObj.UpdateuserByUserID();
-                    //BindGriewWithDetailsOfAllUsers();
+                 
 
                
 
@@ -127,7 +133,49 @@ namespace TheClinicApp1._1.Admin
             mstrObj.createdBy = UA.userName;
             mstrObj.updatedBy = UA.userName;
 
-            mstrObj.InsertDoctors();
+
+
+
+            if (hdnUserID.Value != string.Empty)
+                {
+
+
+                    DataTable dts = mstrObj.GetDoctorDetails();
+                    userObj.UserID = Guid.Parse(hdnUserID.Value);
+                    userObj.ClinicID = UA.ClinicID;
+                    DataTable dt = userObj.GetUserDetailsByUserID();
+
+                    foreach (DataRow dr in dts.Rows)
+                    {
+                        string drname = dr["Name"].ToString();
+
+                        if (drname == dt.Rows[0]["FirstName"].ToString())
+                        {
+                            if (dt.Rows.Count > 0)
+                            {
+                                mstrObj.UpdateDoctorByName(dt.Rows[0]["FirstName"].ToString());
+                                break;
+                            }
+
+
+                        }
+
+                        else
+                        {
+                            mstrObj.InsertDoctors();
+                            break;
+                        }
+
+                    }
+
+                } 
+            else
+            {
+                mstrObj.InsertDoctors();
+            }
+          
+            
+           
         }
 
         #endregion Add User To Doctor Table
@@ -157,7 +205,14 @@ namespace TheClinicApp1._1.Admin
                 }
             }
 
-            roleObj.AssignRole();
+
+            if (hdnUserID.Value == string.Empty)
+            {
+                roleObj.AssignRole();
+            }
+
+           
+           
             //roleObj.UserID = Guid.Parse(foundRow["UserID"].ToString());
 
 
@@ -297,6 +352,13 @@ namespace TheClinicApp1._1.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+              string msg = string.Empty;
+
+            var page = HttpContext.Current.CurrentHandler as Page;
+
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
             if (!IsPostBack)
             {
                 BindDummyRow();
@@ -306,13 +368,178 @@ namespace TheClinicApp1._1.Admin
             if (Request.QueryString["UsrID"] != null)
             {
 
+                bool IsDoctor = false;
+
+
                 Guid UserID = Guid.Parse(Request.QueryString["UsrID"].ToString());
                 userObj.UserID = UserID;
-                userObj.DeleteUserByUserID();
+                userObj.ClinicID = UA.ClinicID;
+                DataTable dt = userObj.GetUserDetailsByUserID();
+
+                if (dt.Rows.Count > 0)
+                {
+
+
+                    mstrObj.ClinicID = UA.ClinicID;
+                    DataTable dts = mstrObj.GetDoctorDetails();
+
+                    foreach (DataRow dr in dts.Rows)
+                    {
+                        string drname = dr["Name"].ToString();
+
+
+                        if (drname == dt.Rows[0]["FirstName"].ToString())
+                        {
+                            IsDoctor = true;
+
+                            mstrObj.DoctorID = Guid.Parse(dr["DoctorID"].ToString());
+                            bool IDUsedOrNot = mstrObj.GetDoctorIDInVisits() | mstrObj.GetDoctorIDInTokens() | mstrObj.GetDoctorIDInPrescHD();
+
+                            if (IDUsedOrNot)
+                            {
+                                msg="Already used . Can't be deleted";
+                                eObj.DeletionNotSuccessMessage(page, msg);
+                                break;
+                            }
+
+                            else
+                            {
+                                roleObj.UserID = UserID;
+                                roleObj.DeleteAssignedRoleByUserID();
+
+                                mstrObj.ClinicID = UA.ClinicID;
+                                mstrObj.DoctorName = dt.Rows[0]["FirstName"].ToString();
+                                mstrObj.DeleteDoctorByName();
+
+                                userObj.DeleteUserByUserID();
+                                break;
+                            }
+
+                           
+                        }
+
+                      
+                            //userObj.DeleteUserByUserID();
+                       
+                    }
+
+
+
+                    if (IsDoctor == false)
+                    {
+                        userObj.DeleteUserByUserID();
+                    }
+                    
+
+                }
+
+
+                //Guid UserID = Guid.Parse(Request.QueryString["UsrID"].ToString());
+                //userObj.UserID = UserID;
+                //userObj.DeleteUserByUserID();
+
+                //  userObj.UserID = UserID;
+                //  userObj.ClinicID = UA.ClinicID;
+                //   DataTable dt =      userObj.GetUserDetailsByUserID();
+
+                //   if (dt.Rows.Count > 0)
+                //   {
+                //       mstrObj.ClinicID = UA.ClinicID;
+                //       mstrObj.DoctorName = dt.Rows[0]["FirstName"].ToString();
+                //       mstrObj.DeleteDoctorByName();
+
+
+                //       roleObj.UserID = UserID;
+                //       roleObj.DeleteAssignedRoleByUserID();
+                       
+                //   }
+
+                 
 
                 hdnUserCountChanged.Value = "True";
             }
-           
+
+            if (Request.QueryString["UsrIDtoEdit"] != null)
+              {
+
+                if (txtLoginName.Text == string.Empty)
+	{
+		 
+	
+
+
+                  Guid UserID = Guid.Parse(Request.QueryString["UsrIDtoEdit"].ToString());
+                  userObj.UserID = UserID;
+                  userObj.ClinicID = UA.ClinicID;
+                   DataTable dt =      userObj.GetUserDetailsByUserID();
+
+
+             txtLoginName.Text = dt.Rows[0]["LoginName"].ToString();
+             txtFirstName.Text = dt.Rows[0]["FirstName"].ToString();
+             txtLastName.Text = dt.Rows[0]["LastName"].ToString();
+             txtPassword.Text = CryptObj.Decrypt(dt.Rows[0]["Password"].ToString());
+
+             txtPhoneNumber.Text = dt.Rows[0]["PhoneNo"].ToString();
+
+             txtEmail.Text = dt.Rows[0]["Email"].ToString();
+             bool isActive = Convert.ToBoolean(dt.Rows[0]["Active"].ToString());
+
+             if (isActive)
+             {
+                 rdoActiveYes.Checked = true;
+                 rdoActiveNo.Checked = false;
+             }
+             else
+             {
+                 rdoActiveNo.Checked = true;
+                 rdoActiveYes.Checked = false;
+             }
+
+             userObj.ClinicID = UA.ClinicID;
+             userObj.firstName = dt.Rows[0]["FirstName"].ToString();
+
+
+             mstrObj.ClinicID = UA.ClinicID;
+             DataTable dts = mstrObj.GetDoctorDetails();
+
+
+             foreach (DataRow dr in dts.Rows)
+             {
+                 string drname = dr["Name"].ToString();
+                 if (drname == dt.Rows[0]["FirstName"].ToString())
+                 {
+                     rdoDoctor.Checked = true;
+                     rdoNotDoctor.Checked = false;
+                     break;
+                 }
+
+                 else
+                 {
+                     rdoNotDoctor.Checked = true;
+                     rdoDoctor.Checked = false;
+                     
+                 }
+             }
+
+             //int DoctorCount = userObj.CheckUserIsDoctor();
+
+             //if (DoctorCount == 1)
+             //{
+             //    rdoDoctor.Checked = true;
+             //    rdoNotDoctor.Checked = false;
+             //}
+
+             //else
+             //{
+             //    rdoNotDoctor.Checked = true;
+             //    rdoDoctor.Checked = false;
+             //}
+
+             hdnUserID.Value = UserID.ToString();
+            }
+
+              }
+
         }
 
         #endregion Page Load
@@ -323,6 +550,7 @@ namespace TheClinicApp1._1.Admin
 
         protected void Save_ServerClick(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
@@ -337,6 +565,18 @@ namespace TheClinicApp1._1.Admin
                 if (rdoNotDoctor.Checked == true)
                 {
                     AddUserToUserTable();
+
+                    if (hdnUserID.Value !=string.Empty)
+                    {
+                        mstrObj.ClinicID = UA.ClinicID;
+                        mstrObj.DoctorName = txtFirstName.Text;
+                        mstrObj.DeleteDoctorByName();
+
+                        roleObj.UserID = Guid.Parse(hdnUserID.Value);
+                        roleObj.DeleteAssignedRoleByUserID();
+                    }
+
+
                 }
 
     //---------* User is a doctor , Operations : 1.add user to user table , 2.add user to the doctor table , 3.add user - role(doctor) to assignroles table
@@ -350,6 +590,8 @@ namespace TheClinicApp1._1.Admin
                         AddUserRole();
                     }
                 }
+
+
             }
 
             else
