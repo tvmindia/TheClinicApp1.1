@@ -109,6 +109,7 @@
 			border-bottom: 1px solid #eee; 
 			position: relative;
 			padding-left: 50%; 
+            background-color:red;
 		}
 		
 		td:before { 
@@ -481,7 +482,7 @@
                         <h3 class="modal-title">Todays Registrations</h3>
 
                     </div>
-                   <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; height: 500px;">
+                   <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
                      <div class="col-sm-12" style="height:500px;">
                         <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal">
                             

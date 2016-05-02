@@ -205,7 +205,7 @@
             <div class="icon_box">
                 <a class="records" data-toggle="modal" data-target="#casehistory"><span class="count">
                     <asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span><span title="Case HIstory" data-toggle="tooltip" data-placement="left"><img src="../images/case-history.png" /></span></a>
-                <a class="casehistory_link" data-toggle="modal" data-target="#tokens"><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png" /></span></a>
+                <a class="casehistory_link" data-toggle="modal" data-target="#tokens"><span class="count"><asp:Label ID="lblTokenCount" runat="server" Text="0"></asp:Label></span><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png" /></span></a>
                 <%-- <a class="tokens_link" data-toggle="modal" data-target="#tokens" ><span title="Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png"/></span></a>--%>
             </div>
             <div class="grey_sec">
@@ -369,8 +369,8 @@
                     <h3>Remarks</h3>
                     <div>
                         <div class="row">
-                            <div class="col-lg-6">
-                                <label for="remarks">Remarks</label><input id="remarks" type="text" name="remarks" runat="server" />
+                            <div class="col-lg-12">
+                                <label for="remarks">Remarks</label><textarea id="remarks" runat="server"></textarea>
                             </div>
                         </div>
                     </div>
