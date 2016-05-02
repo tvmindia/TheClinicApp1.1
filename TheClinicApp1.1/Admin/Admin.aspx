@@ -54,7 +54,7 @@
 
 
         function SetIframeSrc(HyperlinkID) {
-            debugger;
+            
             if (HyperlinkID == "AllUsersIframe") {
                 var AllUsersIframe = document.getElementById('AllUsersIframe');
                 AllUsersIframe.src = "AddNewMedicine.aspx";
@@ -65,7 +65,7 @@
 
 
         function LoginNameCheck(txtLoginName) {
-            debugger;
+           
             var name = document.getElementById('<%=txtLoginName.ClientID %>').value;
 
 if(name != " ")
@@ -215,7 +215,7 @@ var   UserID = '';
             if (Medicines.length > 0) {
                 $.each(Medicines, function () {
 
-debugger;
+
 
                     var medicine = $(this);
  $("th", row).eq(0).text(" ");

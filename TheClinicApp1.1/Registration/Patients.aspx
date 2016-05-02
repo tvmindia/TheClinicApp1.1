@@ -24,14 +24,14 @@
        }
        var Alert = new CustomAlert();
        function deletePost(id){
-           debugger;
+        
            return;
            var db_id = id.replace("post_", "");
            // Run Ajax request here to delete post from database
            document.body.removeChild(document.getElementById(id));
        }
        function CustomConfirm(){
-           debugger;
+          
            this.render = function(dialog,op,id){
                var winW = window.innerWidth;
                var winH = window.innerHeight;
@@ -274,7 +274,7 @@
         function getPatientId(Patient)
         {
             var PatientDetails=Patient;
-            alert(PatientDetails);
+           
         }
 
         </script>   
@@ -483,7 +483,7 @@
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon1.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("image")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                                        <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon1.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
 
                                     </ItemTemplate>
                                 </asp:TemplateField>

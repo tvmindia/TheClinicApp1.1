@@ -29,7 +29,7 @@
 
 
         function SetIframeSrc(HyperlinkID) {
-            debugger;
+          
             if (HyperlinkID == "NewMedicineIframe") {
                 var NewMedicineIframe = document.getElementById('NewMedicineIframe');
                 NewMedicineIframe.src = "AddNewMedicine.aspx";

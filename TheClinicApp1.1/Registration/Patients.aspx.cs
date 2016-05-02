@@ -159,6 +159,11 @@ namespace TheClinicApp1._1.Registration
                 rdoMale.Checked = false;
                 rdoFemale.Checked = true;
             }
+            else
+            {
+                rdoMale.Checked = false;
+                rdoFemale.Checked = false;
+            }
             
             DateTime dt = Convert.ToDateTime(Patient[5]);
             int Age = year - dt.Year;
@@ -302,6 +307,10 @@ namespace TheClinicApp1._1.Registration
                     if (rdoFemale.Checked == true)
                     {
                         PatientObj.Gender = "Female";
+                    }
+                    else
+                    {
+                        PatientObj.Gender = "";
                     }
                 }
                 PatientObj.MaritalStatus = ddlMarital.SelectedItem.ToString();
