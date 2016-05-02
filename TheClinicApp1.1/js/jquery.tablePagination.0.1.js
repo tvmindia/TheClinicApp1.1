@@ -29,10 +29,10 @@
 
 	$.fn.tablePagination = function(settings) {
 		var defaults = {  
-			firstArrow : (new Image()).src="../images/first.gif",  
-			prevArrow : (new Image()).src="../images/prev.gif",
-			lastArrow : (new Image()).src="../images/last.gif",
-			nextArrow : (new Image()).src="../images/next.gif",
+		    firstArrow: (new Image()).src = "../images/First.png",
+		    prevArrow: (new Image()).src = "../images/Previous.png",
+			lastArrow: (new Image()).src = "../images/Last.png",
+			nextArrow: (new Image()).src = "../images/Next.png",
 			rowsPerPage : 7,
 			currPage : 1,
 			optionsForRows : [7,14,21,50,100],
@@ -76,6 +76,7 @@
       }
       
       function resetTotalPages() {
+          
         var preTotalPages = Math.round(numRows / defaults.rowsPerPage);
         var totalPages = (preTotalPages * defaults.rowsPerPage < numRows) ? preTotalPages + 1 : preTotalPages;
         if ($(totalPagesId).length > 0)
@@ -116,14 +117,16 @@
         htmlBuffer.push("<div id='tablePagination'>");
         htmlBuffer.push("<span id='tablePagination_perPage'>");
         htmlBuffer.push("<select id='tablePagination_rowsPerPage'><option value='7'>7</option></select>");
-        htmlBuffer.push("per page");
+        htmlBuffer.push(" Per Page");
         htmlBuffer.push("</span>");
         htmlBuffer.push("<span id='tablePagination_paginater'>");
+        htmlBuffer.push("Records of");
+        htmlBuffer.push(" "+ currPageNumber + " - <span id='tablePagination_totalPages'>" + totalPages + "</span>");
         htmlBuffer.push("<img id='tablePagination_firstPage' src='"+defaults.firstArrow+"'>");
         htmlBuffer.push("<img id='tablePagination_prevPage' src='"+defaults.prevArrow+"'>");
-        htmlBuffer.push("Page");
+        
         //htmlBuffer.push("<input id='tablePagination_currPage' type='input' value='"+currPageNumber+"' size='1'>");
-        htmlBuffer.push("of <span id='tablePagination_totalPages'>"+totalPages+"</span>");
+        
         htmlBuffer.push("<img id='tablePagination_nextPage' src='"+defaults.nextArrow+"'>");
         htmlBuffer.push("<img id='tablePagination_lastPage' src='"+defaults.lastArrow+"'>");
         htmlBuffer.push("</span>");

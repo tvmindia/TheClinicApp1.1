@@ -133,10 +133,11 @@
           }
           
           #tablePagination { 
-            background-color:  Transparent; 
-            font-size: 0.8em; 
-            padding: 0px 5px; 
-            height: 20px
+            background-color:  transparent; 
+            padding: 10px 5px; 
+            height: 20px;
+            font-weight:bold;
+            font-size:14px;
           }
           
           #tablePagination_paginater { 
@@ -145,15 +146,16 @@
           }
           
           #tablePagination img { 
-            padding: 0px 2px; 
+            padding: 0px 4px; 
+            
           }
           
           #tablePagination_perPage { 
-            float: left; 
+            float: right; 
           }
           
           #tablePagination_paginater { 
-            float: right; 
+            float: left; 
              }
          
           #dialogoverlay{
