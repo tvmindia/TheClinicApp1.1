@@ -189,8 +189,7 @@
 
         function ClearControls()
         {
-            debugger;
-
+            
 
             var Errorbox = document.getElementById('<%=Errorbox.ClientID %>');
 

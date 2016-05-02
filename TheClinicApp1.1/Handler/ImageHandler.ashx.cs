@@ -61,6 +61,7 @@ namespace TheClinicApp.Handler
                 {
                     ImageByteArray = (byte[])rd["image"];
                 }
+               
                 rd.Close();
                 con.Close();
                 return ImageByteArray;

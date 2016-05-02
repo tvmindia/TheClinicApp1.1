@@ -98,7 +98,7 @@
     <%-- <script src="../js/jquery-1.12.0.min.js"></script>
   <script>
       function Fill(Patient) {
-          debugger;
+         
           parent.getPatientId(Patient); 
       }   
   </script>
@@ -164,9 +164,9 @@
     <asp:ScriptManager runat="server"></asp:ScriptManager>   
     <script type="text/javascript">
         function SetFields() {
-            debugger;
+            
             if (window.showModalDialog != null && !window.showModalDialog.closed) {
-                debugger;
+              
                 var txtName = window.showModalDialog.document.getElementById("txtName");
                 txtName.value = document.getElementById("HiddenField2").value;
             }

@@ -12,7 +12,7 @@ var CurrentRowCount;
 
 function ClearAndRemove()
 {
-    debugger;
+   
     document.getElementById('txtMedicine0').value = "";
     document.getElementById('txtUnit0').value = "";
 
@@ -37,7 +37,7 @@ function ClearAndRemove()
 
 
 function ClearAndRemove1() {
-    debugger;
+  
     document.getElementById('txtMedName0').value = "";
     document.getElementById('txtMedUnit0').value = "";
 
@@ -71,7 +71,7 @@ function SetPageIDCalled(page)
 
 function GetClientIDOfRemovedID(DetailID,rowCnt )
 {
-     debugger;
+    
      IdToRemove = DetailID;
      CurrentRowCount = rowCnt;
       
@@ -175,7 +175,7 @@ var Removecount = 0;
 
 function clickdelete(id) {
    
-    debugger;
+    
     RemovedIDs += document.getElementById('hdnDetailID' + id).value + ',';
 
     if (RemovedIDs == ',') {
@@ -350,7 +350,7 @@ function GetTextBoxValues(hdnTextboxValues, hdnRemovedIDs) {
 
 //-----* Function to bind textboxes by medicine name -- fills textboxes when focus is lost from medicine textbox  *----//
 function BindControlsByMedicneName(ControlNo) {
-    debugger;
+   
   
     if (ControlNo >= 0) {
         var MedicineName = document.getElementById('txtMedicine' + ControlNo).value;
@@ -421,7 +421,7 @@ function BindControlsByMedicneName(ControlNo) {
 //-----------* Checks whether medicine is out of stock , when user input quantity , and is called onblur event of quantity textbox *-----------// 
 function CheckMedicineIsOutOfStock(ControlNo) {
     
-    debugger;
+    
 
     if(   PageCalledFrom != 'StockIn')
 
@@ -531,7 +531,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
     {
         if (PageCalledFrom == 'StockIn')
         {
-            debugger;
+            
 
             var InputQty = document.getElementById('txtQuantity' + ControlNo).value;
 
@@ -613,7 +613,7 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
 //----------------------------------- * Function to rebind medicine textboxes -- refills controls by retrieving data from xml *--------------------//
 function RefillTextboxesWithXmlData(hdnXmlData) {
   
-    debugger;
+    
     //var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
 
     var XmlDataFromHF = document.getElementById(hdnXmlData).value;
@@ -627,14 +627,14 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
         //document.getElementById('<%=txtIssueNO.ClientID %>').readOnly = true;
 
         $.each(Medicines, function () {
-            debugger;
+       
             if (i > 0) {
                 clickStockAdd(i);
             }
 
             if (Medicines.length >1)
             {
-                debugger;
+             
 
                 $('#btAdd').css('visibility', 'hidden');
                 $('#btAdd' + (Medicines.length - 1)).css('visibility', 'visible');
@@ -687,7 +687,7 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
 
 function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
-    debugger;
+
     //var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
 
     var XmlDataFromHF = document.getElementById(hdnXmlData).value;
@@ -700,7 +700,7 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
         //document.getElementById('<%=txtIssueNO.ClientID %>').readOnly = true;
 
         $.each(Medicines, function () {
-            debugger;
+           
             if (i > 0) {
                 clickAdd(i);
             }
