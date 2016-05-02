@@ -116,14 +116,14 @@ var   UserID = '';
 
 
    $(function () {
-            $("[id*=dtgViewAllUsers] td:first").click(function () {
+       $("[id*=dtgViewAllUsers] td:eq(1)").click(function () {
 
 
 
                 var DeletionConfirmation = ConfirmDelete();
 
                 if (DeletionConfirmation == true) {
-                    UserID = $(this).closest('tr').find('td:eq(5)').text();
+                    UserID = $(this).closest('tr').find('td:eq(6)').text();
 
 
  window.location = "Admin.aspx?UsrID=" + UserID;
@@ -152,6 +152,20 @@ var   UserID = '';
 
 
         });
+
+
+   
+   $(function () {
+       $("[id*=dtgViewAllUsers] td:eq(0)").click(function () {
+
+           debugger;
+           UserID = $(this).closest('tr').find('td:eq(6)').text();
+           window.location = "Admin.aspx?UsrIDtoEdit=" + UserID;
+       });
+
+
+   });
+
 
 
         $(function () {
@@ -293,7 +307,7 @@ var   UserID = '';
 
             <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllUsers" ><span title="View All Users" data-toggle="tooltip" data-placement="left" ><img src="../images/multy-user copy.png" /></span></a>
+ <a class="all_registration_link" data-toggle="modal" data-target="#AllUsers" ><span title="View All Users" data-toggle="tooltip" data-placement="left" ><img src="../images/multiuser.png" /></span></a>
 
 
                 
@@ -305,7 +319,7 @@ var   UserID = '';
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="Admin.aspx">User</a></li>
+                        <li role="presentation" class="active"><a href="Admin.aspx">Create User</a></li>
 
                         <li role="presentation"><a href="StockOut.aspx">Assign Role</a></li>
                     </ul>
@@ -566,5 +580,5 @@ var   UserID = '';
 
 
     <asp:HiddenField ID="hdnUserCountChanged" runat="server" />
-
+      <asp:HiddenField ID="hdnUserID" runat="server" />
 </asp:Content>

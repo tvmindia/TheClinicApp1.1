@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Admin.aspx" />
+    <Content Include="Admin\AssignRoles.aspx" />
     <Content Include="Button-Warning-iconedited.png" />
     <Content Include="common\test page.txt" />
     <Content Include="css\bootstrap-spinner.css" />
@@ -179,6 +180,7 @@
     <Content Include="images\logo-small.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\menu_separator.png" />
+    <Content Include="images\multiuser.png" />
     <Content Include="images\multy-user copy.png" />
     <Content Include="images\nav.png" />
     <Content Include="images\new.png" />
@@ -342,6 +344,13 @@
     </Compile>
     <Compile Include="Admin\Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\AssignRoles.aspx.cs">
+      <DependentUpon>AssignRoles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AssignRoles.aspx.designer.cs">
+      <DependentUpon>AssignRoles.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClinicDAL\CaseSheet.cs" />
     <Compile Include="ClinicDAL\Category.cs" />
