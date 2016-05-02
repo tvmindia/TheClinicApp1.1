@@ -214,7 +214,7 @@
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AssignedRoles" ><span title="View All Users" data-toggle="tooltip" data-placement="left" ><img src="../images/multiuser.png" /></span></a>
+ <a class="all_registration_link" data-toggle="modal" data-target="#AssignedRoles" ><span title="View All Users" data-toggle="tooltip" data-placement="left" ><img src="../images/AssignUser.png" /></span></a>
 
 
                 

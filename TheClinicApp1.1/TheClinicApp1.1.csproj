@@ -159,6 +159,7 @@
     <Content Include="images\add_medicine.png" />
     <Content Include="images\add_medicinedemo.png" />
     <Content Include="images\Alert.png" />
+    <Content Include="images\AssignUser.png" />
     <Content Include="images\back.png" />
     <Content Include="images\book_token.png" />
     <Content Include="images\Button-Warning-iconedited1.png" />
