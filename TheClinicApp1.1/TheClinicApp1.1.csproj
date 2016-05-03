@@ -158,6 +158,7 @@
     <Content Include="images\accordion_arrow.png" />
     <Content Include="images\add_medicine.png" />
     <Content Include="images\add_medicinedemo.png" />
+    <Content Include="images\admin.png" />
     <Content Include="images\Alert.png" />
     <Content Include="images\AssignUser.png" />
     <Content Include="images\back.png" />
@@ -180,6 +181,7 @@
     <Content Include="images\Last.png" />
     <Content Include="images\logo-small.png" />
     <Content Include="images\logo.png" />
+    <Content Include="images\master.png" />
     <Content Include="images\menu_separator.png" />
     <Content Include="images\multiuser.png" />
     <Content Include="images\multy-user copy.png" />
@@ -237,6 +239,7 @@
     <Content Include="Login\Forgot.aspx" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Login\Reset.aspx" />
+    <Content Include="MasterAdd\Categories.aspx" />
     <Content Include="Masters\Main.Master" />
     <Content Include="Masters\popup.Master" />
     <Content Include="Pharmacy\Pharmacy.aspx" />
@@ -416,6 +419,13 @@
     </Compile>
     <Compile Include="Login\Reset.aspx.designer.cs">
       <DependentUpon>Reset.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterAdd\Categories.aspx.cs">
+      <DependentUpon>Categories.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdd\Categories.aspx.designer.cs">
+      <DependentUpon>Categories.aspx</DependentUpon>
     </Compile>
     <Compile Include="Masters\Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>

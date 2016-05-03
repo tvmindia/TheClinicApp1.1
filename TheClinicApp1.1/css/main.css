@@ -398,6 +398,8 @@ ul.menu li a span.icon.token {background: url(../images/token.png) no-repeat cen
 ul.menu li a span.icon.doctor {background: url(../images/doctor.png) no-repeat center center #fff;}
 ul.menu li a span.icon.pharmacy {background: url(../images/pharmacy.png) no-repeat center center #fff;}
 ul.menu li a span.icon.stock {background: url(../images/stock.png) no-repeat center center #fff;}
+ul.menu li a span.icon.admin {background: url(../images/admin.png) no-repeat center center #fff;}
+ul.menu li a span.icon.master {background: url(../images/master.png) no-repeat center center #fff;}
 
 ul.menu li a span.text {display: inline-block; vertical-align: top; width: 75%; line-height: 58px; position: absolute;} 
 
@@ -438,6 +440,8 @@ ul.menu li.active a span.icon.token {background: url(../images/token-hover.png) 
 ul.menu li.active a span.icon.doctor {background: url(../images/doctor-hover.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.pharmacy {background: url(../images/pharmacy-hover.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.stock {background: url(../images/stock-hover.png) no-repeat center center #3661c7;}
+ul.menu li.active a span.icon.admin {background: url(../images/admin.png) no-repeat center center #3661c7;}
+ul.menu li.active a span.icon.master {background: url(../images/master.png) no-repeat center center #3661c7;}
 
 
 
