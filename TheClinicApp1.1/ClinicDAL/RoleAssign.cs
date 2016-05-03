@@ -179,6 +179,48 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion GetAssignedRoleByUniqueID
 
+        #region GetAssignedRoleByUserID
+
+        public DataTable GetAssignedRoleByUserID()
+        {
+            SqlConnection con = null;
+            DataTable dtRoles = null;
+            try
+            {
+                dtRoles = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetAssignedRoleByUserID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtRoles);
+                return dtRoles;
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+                throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+
+        #endregion GetAssignedRoleByUserID
+
+
         #region View Assigned Roles
 
         public DataTable GetDetailsOfAllAssignedRoles()
