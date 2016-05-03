@@ -470,7 +470,7 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                string Msg="Token Is been Generated Against this Patient For Deletion Contact Admin";
+                string Msg="Can't Delete hence Token Is been Generated for this Patient";
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.DeletePatientErrorData(Msg,page);
 
