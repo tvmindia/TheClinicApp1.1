@@ -1,6 +1,25 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="AssignRoles.aspx.cs" Inherits="TheClinicApp1._1.Admin.AssignRoles" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+
+    <style type="text/css">
+.scroll_checkboxes
+{
+    height: 120px;
+    width: 200px;
+    padding: 5px;
+    overflow: auto;
+    border: 1px solid #ccc;
+}
+
+.FormText
+{
+    FONT-SIZE: 11px;
+    FONT-FAMILY: tahoma,sans-serif
+}
+</style>
+
+
      <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -184,7 +203,11 @@
 
         };
 
-
+        $(function() {
+            $('#chkveg').multiselect({
+                includeSelectAllOption: true
+            });
+        });
 
         </script>
 
@@ -214,7 +237,7 @@
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AssignedRoles" ><span title="View All Users" data-toggle="tooltip" data-placement="left" ><img src="../images/AssignUser.png" /></span></a>
+ <a class="all_registration_link" data-toggle="modal" data-target="#AssignedRoles" ><span title="View Assigned Roles" data-toggle="tooltip" data-placement="left" ><img src="../images/AssignUser.png" /></span></a>
 
 
                 
@@ -299,22 +322,34 @@
       </div>
       <div class="col-lg-4">
        <label for="marital">Role</label>
-          <asp:DropDownList ID="ddlRoles" runat="server" Width="100%" Height="40px">
-              
-          </asp:DropDownList>
 
-           <asp:RequiredFieldValidator
+      
+
+          <asp:CheckBoxList ID="chklstRoles" runat="server"   > 
+             </asp:CheckBoxList>
+
+           
+        <%--  <asp:DropDownList ID="ddlRoles" runat="server" Width="100%"  multiple="multiple">
+             
+          </asp:DropDownList>--%>
+
+           <%--<asp:RequiredFieldValidator
              ID="RequiredFieldValidator1"
              runat="server"
-             ControlToValidate="ddlRoles"
+             ControlToValidate="chklstRoles"
              InitialValue="--Select--"
              ErrorMessage="* Please select an item."
              ForeColor="Red"
             
              >
-        </asp:RequiredFieldValidator>
+        </asp:RequiredFieldValidator>--%>
 
       </div>
+
+
+
+
+
 
       </div>
 
@@ -350,7 +385,7 @@
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          
 
-            <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" >
+            <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" class="table" >
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
 

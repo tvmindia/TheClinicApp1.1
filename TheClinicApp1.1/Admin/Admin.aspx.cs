@@ -122,6 +122,8 @@ namespace TheClinicApp1._1.Admin
         #region Add User To Doctor Table
         public void AddUserToDoctorTable()
         {
+            bool IsDoctor = false;
+
         UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             mstrObj.loginName = txtLoginName.Text;
@@ -151,6 +153,8 @@ namespace TheClinicApp1._1.Admin
 
                         if (drname == dt.Rows[0]["FirstName"].ToString())
                         {
+                            IsDoctor = true;
+
                             if (dt.Rows.Count > 0)
                             {
                                 mstrObj.UpdateDoctorByName(dt.Rows[0]["FirstName"].ToString());
@@ -160,13 +164,19 @@ namespace TheClinicApp1._1.Admin
 
                         }
 
-                        else
-                        {
-                            mstrObj.InsertDoctors();
-                            break;
-                        }
+                        //else
+                        //{
+                           
+                        //    break;
+                        //}
 
                     }
+
+                    if (IsDoctor == false)
+                    {
+                        mstrObj.InsertDoctors();
+                    }
+
 
                 } 
             else
@@ -202,14 +212,25 @@ namespace TheClinicApp1._1.Admin
                 if (dr["LoginName"].ToString() == txtLoginName.Text)
                 {
                     roleObj.UserID = Guid.Parse(dr["UserID"].ToString());
+
+                      DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+                       roleObj.UserID = Guid.Parse(dr["UserID"].ToString());
+
+                    if (dtAssignedRoles.Rows.Count == 0)
+	{
+		  roleObj.AssignRole();
+	}
+
                 }
             }
 
 
-            if (hdnUserID.Value == string.Empty)
-            {
-                roleObj.AssignRole();
-            }
+          
+
+            //if (hdnUserID.Value == string.Empty)
+            //{
+               
+            
 
            
            

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
@@ -99,11 +100,23 @@ namespace TheClinicApp1._1.Admin
         {
             DataTable dtRoles = roleObj.GetDetailsOfAllRoles();
 
-            ddlRoles.DataTextField = "RoleName";
-            ddlRoles.DataValueField = "RoleID";
-            ddlRoles.DataSource = dtRoles;
-            ddlRoles.DataBind();
-            ddlRoles.Items.Insert(0, "--Select--");
+
+            chklstRoles.DataTextField = "RoleName";
+            chklstRoles.DataValueField = "RoleID";
+            chklstRoles.DataSource = dtRoles;
+            chklstRoles.DataBind();
+
+            //chklstRoles.Items.Insert(0, "--Select--");
+
+
+
+
+
+            //ddlRoles.DataTextField = "RoleName";
+            //ddlRoles.DataValueField = "RoleID";
+            //ddlRoles.DataSource = dtRoles;
+            //ddlRoles.DataBind();
+            //ddlRoles.Items.Insert(0, "--Select--");
         }
 
         #endregion Bind Roles Dropdown
@@ -183,8 +196,8 @@ namespace TheClinicApp1._1.Admin
 
             }
 
-           
-                if (Request.QueryString["UniqueID"] != null)
+
+            if (Request.QueryString["UniqueID"] != null && Request.QueryString["UniqueID"].ToString() != string.Empty)
                 {
                     Guid UniqueID = Guid.Parse(Request.QueryString["UniqueID"].ToString());
                     roleObj.UniqueID = UniqueID;
@@ -199,6 +212,8 @@ namespace TheClinicApp1._1.Admin
 
                     if (IDUsedOrNot)
                     {
+
+                        
                         msg = "Already used . Can't be deleted";
                         eObj.DeletionNotSuccessMessage(page, msg);
                         
@@ -209,6 +224,8 @@ namespace TheClinicApp1._1.Admin
                         mstrObj.ClinicID = UA.ClinicID;
                         mstrObj.DoctorName = dt.Rows[0]["FirstName"].ToString();
                         mstrObj.DeleteDoctorByName();
+                        roleObj.DeleteAssignedRoleByUniqueID();
+                       
                     }
 
                 } 
@@ -216,10 +233,20 @@ namespace TheClinicApp1._1.Admin
                 else
                 {
                     roleObj.DeleteAssignedRoleByUniqueID();
+
                 }
 
-                   
+                PropertyInfo isreadonly =
+  typeof(System.Collections.Specialized.NameValueCollection).GetProperty(
+  "IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
+                // make collection editable
+                isreadonly.SetValue(this.Request.QueryString, false, null);
+                // remove
+                this.Request.QueryString.Remove("UniqueID");
 
+
+               
+                
                     hdnUserCountChanged.Value = "True";
                 }
            
@@ -233,15 +260,43 @@ namespace TheClinicApp1._1.Admin
 
             dtUsers = (DataTable)ViewState["dtUsers"];
 
-          
-
-            roleObj.RoleID = new Guid(ddlRoles.SelectedValue);
-
             roleObj.ClinicID = UA.ClinicID;
-           
-
             roleObj.CreatedBy = UA.userName;
-            roleObj.AssignRole();
+
+            foreach (ListItem item in chklstRoles.Items)
+            {
+                if (item.Selected)
+                {
+                    roleObj.RoleID = new Guid(item.Value);
+
+                    if (item.Value == GetRoleIDOFDoctor())
+                    {
+                        foreach (DataRow dr in dtUsers.Rows)
+                        {
+                            if (dr["UserID"].ToString() == ddlUsers.SelectedValue )
+                            {
+                                mstrObj.ClinicID = UA.ClinicID;
+                                mstrObj.DoctorName = dr["FirstName"].ToString();
+                                mstrObj.DoctorPhone = dr["PhoneNo"].ToString();
+                                mstrObj.DoctorEmail = dr["Email"].ToString();
+                                mstrObj.createdBy = UA.userName;
+                                mstrObj.updatedBy = UA.userName;
+                                mstrObj.InsertDoctors();
+                            }
+                        }
+                    }
+
+
+
+                    roleObj.AssignRole();
+                }
+            }
+
+
+            //roleObj.RoleID = new Guid(ddlRoles.SelectedValue);
+
+            
+           
 
             hdnUserCountChanged.Value = "True";
         }

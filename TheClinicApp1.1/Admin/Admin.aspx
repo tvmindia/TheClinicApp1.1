@@ -2,8 +2,14 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <link href="../css/main.css" rel="stylesheet" />
+
+    
+
+
+
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -372,9 +378,11 @@ var   UserID = '';
                                 <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
                             </div>
 
-                            <div class="tab_table">
+                            <%--<div class="tab_table">--%>
 
                                 <div class="row field_row">
+
+                                     
 
                                     <div class="col-lg-4">
 
@@ -385,20 +393,22 @@ var   UserID = '';
                                         </asp:RequiredFieldValidator>
 
                                     </div>
+                                      <div class="col-lg-4">
+                               
+                                          <br />
+                                             <br />
 
-
-
-                                       <div class="col-lg-4">
-                                 <br />
-                                           <br />
                                     <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" />
 
 
                                     <asp:Image ID="errorLnames" runat="server" ToolTip="Login name is Unavailable" ImageUrl="~/Images/newClose.png" />
                                            </div>
+
+                                       
+                                     
                                 </div>
 
-                            </div>
+                            <%--</div>--%>
 
 
                             <div class="row field_row">
@@ -439,8 +449,7 @@ var   UserID = '';
                                 </div>
                             </div>
 
-                            <div class="row field_row">
-                            </div>
+                          
 
                             <div class="row field_row">
                                 <div class="col-lg-8 ">
@@ -460,8 +469,8 @@ var   UserID = '';
                                     <div class="row">
                                         <div>
                                             <label for="sex">
-                                                Active
-                                                    <asp:RadioButton ID="rdoActiveYes" runat="server" GroupName="Active" Text="Yes" CssClass="checkbox-inline" Checked="true" />
+                                                IsActive
+                                                <asp:RadioButton ID="rdoActiveYes" runat="server" GroupName="Active" Text="Yes" CssClass="checkbox-inline" Checked="true" />
                                                 <asp:RadioButton ID="rdoActiveNo" runat="server" GroupName="Active" Text="No" CssClass="checkbox-inline" />
                                             </label>
                                         </div>
