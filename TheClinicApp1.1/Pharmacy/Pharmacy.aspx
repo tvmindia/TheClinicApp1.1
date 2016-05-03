@@ -12,9 +12,114 @@
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/fileinput.js"></script>
+    
+    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
+ 
+    <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
+
+    <script>
+        var test = jQuery.noConflict();
+        test(document).ready(function () {
+
+            test('.nav_menu').click(function () {
+                test(".main_body").toggleClass("active_close");
+            });
+
+ var ac=null;
+            ac = <%=NameBind %>;
+            var length= ac.length;
+            var projects = new Array();
+            for (i=0;i<length;i++)
+            {        
+
+                var name= ac[i].split('🏠');
+                projects.push({  value : name[0], label: name[0], desc: name[1]})   
+   
+            }
+
+            $( "#txtSearch" ).autocomplete({
+                //maxResults: 10,
+                source: function(request, response) {
+                    var results = $.ui.autocomplete.filter(projects, request.term);
+                    response(results.slice(0, this.options.maxResults));
+                },
+                focus: function( event, ui ) {
+                    $( "#txtSearch" ).val( ui.item.label );
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $( "#project" ).val( ui.item.label );
+      
+                    $( "#project-description" ).html( ui.item.desc );        
+ 
+                    return false;
+                }
+            })
+             .autocomplete( "instance" )._renderItem = function( ul, item ) {
+             return $( "<li>" )
+             .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+             .appendTo( ul );
+           }; 
+
+
+        });
+    </script>
+
+     <script> 
+          function bindPatientDetails()
+          {
+              debugger;
+               var PatientName = document.getElementById("project-description").innerText;
+             
+       
+                     
+            var file=PatientName.split('|')      
+            var file1=file[0].split('📰 ')
+            var fileNO=file1[1]
+            if (PatientName!="")
+
+            { 
+                                  
+                PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
+            }
+
+            function OnSuccess(response, userContext, methodName) 
+            {   
+                      
+                var string1 = new Array();
+                string1 = response.split('|');
+               
+                document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
+                document.getElementById('<%=lblFileNum.ClientID%>').innerHTML=string1[0];
+                document.getElementById('<%=lblPatientName.ClientID%>').innerHTML=string1[1];
+                document.getElementById('<%=lblAgeCount.ClientID%>').innerHTML=string1[2];
+                document.getElementById('<%=lblGenderDis.ClientID%>').innerHTML=string1[3];            
+                document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
+               
+            
+                document.getElementById('txtSearch').value="";//clearin the Search box
+
+                
+            }          
+            function onError(response, userContext, methodName)
+            {                   
+            }         
+        }
+
+
+    </script>
 
     <!-- #main-container -->
         <script>
+
+    function FillTextboxUsingXml(){
+                debugger;
+                GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
+                RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+            }
+
+
             function BindMedunitbyMedicneName(ControlNo) 
             {
                 
@@ -121,20 +226,22 @@
             </div>
             <div class="grey_sec">
                 <div class="search_div">
-                    <input class="field" type="search" placeholder="Search here..." />
-                    <input class="button" type="submit" value="Search" />
+                    <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." />
+                   <input type="hidden" id="project-id"/>
+                    <p id="project-description" style="display:none"></p>
+                     <input class="button" type="button" value="Search" />
                 </div>
                 <ul class="top_right_links">
                     <li>
                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" /></li>
-                    <li><a class="new" href="#"><span></span>New</a></li>
+                    <li><a class="new" href="Pharmacy.aspx"><span></span>New</a></li>
                 </ul>
             </div>
             <div class="right_form">
 
                 <div class="token_id_card">
                     <div class="name_field">
-                        <img src="../images/UploadPic1.png" width="80" height="80" /><asp:Label ID="lblPatientName" runat="server" Text="Patient_Name"></asp:Label></div>
+                        <img src="../images/UploadPic1.png" id="ProfilePic" runat="server" width="80" height="80" /><asp:Label ID="lblPatientName" runat="server" Text="Patient_Name"></asp:Label></div>
                     <div class="light_grey">
                         <div class="col3_div">
                             <asp:Label ID="lblAgeCount" runat="server" Text="Age"></asp:Label>
@@ -168,7 +275,7 @@
                                     <td>
                                         <input id="txtMedName0" type="text" placeholder="Medicine" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
                                     <td>
-                                        <input id="txtMedQty0" type="text" placeholder="Qty" class="input" onblur="focuscontrol(0)" /></td>
+                                        <input id="txtMedQty0" type="text" placeholder="Qty" class="input"  onblur="CheckPharmacyMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" autocomplete="off" /></td>
                                     <td>
                                         <input id="txtMedUnit0" class="input" readonly="true" type="text" placeholder="Unit" /></td>
                                     <td>
@@ -196,8 +303,8 @@
 
         </div>
 
-
-        
+         <asp:HiddenField ID="hdnfileID" runat="server" />
+     <asp:HiddenField ID="HiddenPatientID" runat="server" />        
                 <asp:HiddenField ID="hdnXmlData" runat="server" />
                <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
                 <asp:HiddenField ID="hdnTextboxValues" runat="server" />             
@@ -247,19 +354,4 @@
 
 
 
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/JavaScript_selectnav.js"></script>
-    <script src="../js/Dynamicgrid.js"></script>
-
-    <script>
-        var test = jQuery.noConflict();
-        test(document).ready(function () {
-
-            test('.nav_menu').click(function () {
-                test(".main_body").toggleClass("active_close");
-            });
-
-        });
-    </script>
 </asp:Content>
