@@ -427,13 +427,13 @@ namespace TheClinicApp1._1.Registration
                 }
                 else
                 {
-                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", "Alert.render('Invalid Suggesion');", true);
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "FUNNNN", "Alert.render('Invalid Suggesion');", true);
 
                 }
             }
             catch
             {
-                Response.Redirect("../Registration/Patient.aspx");
+                Response.Redirect("../Registration/Patients.aspx");
             }
         }
         #endregion SearchButtonClick

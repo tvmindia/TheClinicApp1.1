@@ -176,7 +176,7 @@
             </div>
             <div class="grey_sec">
                 <div class="search_div">
-                    <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." />
+                    <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." autofocus="autofocus"/>
                     <input type="hidden" id="project-id" />
                     <p id="project-description" style="display: none"></p>
                     <%--  <input class="button" onserverclick="btnSearch_ServerClick" runat="server"  value="Search" />--%>
