@@ -283,6 +283,8 @@ namespace TheClinicApp1._1.Registration
             {
 
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+                string msg = string.Empty;
+                var page = HttpContext.Current.CurrentHandler as Page;
                 PatientObj.ClinicID = UA.ClinicID;
                 DateTime _date = DateTime.Now;
                 if (txtAge.Value != "")
@@ -317,7 +319,7 @@ namespace TheClinicApp1._1.Registration
                 PatientObj.Occupation = (txtOccupation.Value != "") ? txtOccupation.Value.ToString() : null;
                 PatientObj.CreatedBy = UA.userName;
                 PatientObj.UpdatedBy = UA.userName;
-                if (PatientObj.Name != null)
+                if (PatientObj.Name != null&PatientObj.DOB!=null)
                 {
                     
                     PatientObj.FileNumber = PatientObj.Generate_File_Number().ToString();
@@ -340,8 +342,6 @@ namespace TheClinicApp1._1.Registration
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
                         ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + g.ToString();
-                        var page = HttpContext.Current.CurrentHandler as Page;
-
                     }
                     else
                     {
@@ -356,14 +356,18 @@ namespace TheClinicApp1._1.Registration
 
                         }
                         PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
-                        PatientObj.UpdatePatientDetails();                 
-                        var page = HttpContext.Current.CurrentHandler as Page;
+                        PatientObj.UpdatePatientDetails();
                         ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + HiddenField1.Value.ToString();
                         if(ProfilePic.Src=="")
                         {
                             ProfilePic.Src = "../images/UploadPic1.png";
                         }
                     }
+                }
+                else
+                {
+                    msg = "Please fill out the mandatory fields And Try Again";
+                    eObj.InsertionNotSuccessMessage(page, msg);
                 }
                 gridDataBind();
                 lblFileCount.Text = PatientObj.FileNumber;
@@ -393,7 +397,7 @@ namespace TheClinicApp1._1.Registration
                 DataRow dr = null;
                 string path = Server.MapPath("~/Content/ProfilePics/").ToString();
                 string Name = Request.Form["txtSearch"];
-                if (Name != "")
+                if (Name !=string.Empty)
                 {
                     DataTable dt = PatientObj.GetSearchWithName(Name);
                     dr = dt.NewRow();
@@ -434,6 +438,7 @@ namespace TheClinicApp1._1.Registration
             catch
             {
                 Response.Redirect("../Registration/Patients.aspx");
+                
             }
         }
         #endregion SearchButtonClick
