@@ -65,7 +65,7 @@
 
     .button1{
         background: url("../images/save.png") no-repeat 0 center;
-        height: 31px;
+        height: 33px;
         width: 60px;
         display: inline-block;
         vertical-align: top;
