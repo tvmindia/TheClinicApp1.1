@@ -60,7 +60,7 @@ namespace TheClinicApp1._1.Doctor
                 this.admin.Style.Add("Visibility", "Visible");
                 this.master.Style.Add("Visibility", "Visible");
             }
-            if (RoleName.Contains(Const.RoleAdministrator))
+            if (RoleName.Contains(Const.RoleDoctor))
             {
                 DataTable dt = new DataTable();
                 dt = UA.GetDoctorAndDoctorID(Login);
