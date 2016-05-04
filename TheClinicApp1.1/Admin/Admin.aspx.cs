@@ -32,6 +32,7 @@ namespace TheClinicApp1._1.Admin
 
         #region Global Variables
 
+        public string RoleName = null;
         private static int PageSize = 8;
         ClinicDAL.CryptographyFunctions CryptObj = new CryptographyFunctions();
         ClinicDAL.User userObj = new ClinicDAL.User();

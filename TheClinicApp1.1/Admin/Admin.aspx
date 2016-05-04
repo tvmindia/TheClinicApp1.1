@@ -296,7 +296,8 @@ var   UserID = '';
                 <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
                 <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-                <li id="admin" class="active"><a name="hello" onclick="selectTile('admin','')"><span class="icon registration"></span><span class="text">Admin</span></a></li>
+                 <li id="master" ><a name="hello" onclick="selectTile('master','<%=RoleName %>')"><span class="icon master"></span><span class="text">Master</span></a></li>
+                <li id="admin" class="active"><a name="hello" onclick="selectTile('admin','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
             </ul>
 
             <p class="copy">
