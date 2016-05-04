@@ -199,13 +199,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
                 adapter.Fill(dtRoles);
-                return dtRoles;
+               
             }
             catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.ErrorData(ex, page);
-                throw ex;
+                //throw ex;
             }
             finally
             {
@@ -215,6 +215,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return dtRoles;
         }
 
 
