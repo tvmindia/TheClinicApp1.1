@@ -340,6 +340,15 @@ input[type=image]{
     -webkit-border-radius: 3px;
     height:auto;
 }
+input[type=checkbox]
+{
+    display:block;
+    padding :0;
+    width:auto;
+    border:none;
+    height:auto;
+
+}
 
 .btn-file input[type="file"] {
 -webkit-border-top-right-radius: 3px;

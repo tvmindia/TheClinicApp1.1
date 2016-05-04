@@ -3,19 +3,46 @@
 
 
     <style type="text/css">
-.scroll_checkboxes
+
+table
 {
-    height: 120px;
-    width: 200px;
-    padding: 5px;
-    overflow: auto;
-    border: 1px solid #ccc;
+    width:150px!important;
+    border-color:rgb(169, 169, 169);
 }
 
-.FormText
+
+ table td
 {
-    FONT-SIZE: 11px;
-    FONT-FAMILY: tahoma,sans-serif
+     border-top:none!important;
+}
+ label {
+    color: #666666;
+    display: block;
+    font-family: "raleway-semibold";
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 18px;
+    margin: 0 0 5px;
+
+    padding-left: 15px;
+    text-indent: -15px;
+}
+ .checkboxes label {
+    display: inline!important;
+    float: right!important;
+}
+.checkboxes input {
+    vertical-align: central!important;
+
+}
+.checkboxes label span {
+    vertical-align: central!important;
+}
+.checkboxlist_nowrap tr td label
+{
+    white-space:nowrap;
+    overflow:hidden;
+    width:100%;
 }
 </style>
 
@@ -322,12 +349,7 @@
 
       </div>
       <div class="col-lg-4">
-       <label for="marital">Role</label>
-
-      
-
-          <asp:CheckBoxList ID="chklstRoles" runat="server"   > 
-             </asp:CheckBoxList>
+       <label for="marital">Role</label> <asp:CheckBoxList ID="chklstRoles" runat="server" CssClass="mui-checkbox--inline checkboxlist_nowrap"  ></asp:CheckBoxList>
 
            
         <%--  <asp:DropDownList ID="ddlRoles" runat="server" Width="100%"  multiple="multiple">
