@@ -51,6 +51,7 @@ namespace TheClinicApp1._1.Doctor
             {
                 //this.hide.style.Add("display", "none");
                 this.admin.Style.Add("Visibility", "Visible");
+                this.master.Style.Add("Visibility", "Visible");
             }
             if(RoleName=="Doctor")
             {

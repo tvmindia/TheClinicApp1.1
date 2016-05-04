@@ -40,6 +40,7 @@ namespace TheClinicApp1._1.Token
             {
                 //this.hide.style.Add("display", "none");
                 this.admin.Style.Add("Visibility", "Visible");
+                this.master.Style.Add("Visibility", "Visible");
             }
             tokenObj.ClinicID = UA.ClinicID.ToString();
 

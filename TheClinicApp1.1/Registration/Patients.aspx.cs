@@ -48,6 +48,7 @@ namespace TheClinicApp1._1.Registration
             {
                 //this.hide.style.Add("display", "none");
                 this.admin.Style.Add("Visibility", "Visible");
+                this.master.Style.Add("Visibility", "Visible");
             }
             tok.ClinicID = UA.ClinicID.ToString();
             PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
