@@ -13,8 +13,121 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/fileinput.js"></script>
 
+   
+    <script src="../js/jquery-1.12.0.min.js"></script>
+    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+   
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/fileinput.js"></script>
+    
+    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
+ 
+    <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
+
+    <script>
+        var test = jQuery.noConflict();
+        test(document).ready(function () {
+
+            test('.nav_menu').click(function () {
+                test(".main_body").toggleClass("active_close");
+            });
+
+ var ac=null;
+            ac = <%=NameBind %>;
+            var length= ac.length;
+            var projects = new Array();
+            for (i=0;i<length;i++)
+            {        
+
+                var name= ac[i].split('🏠');
+                projects.push({  value : name[0], label: name[0], desc: name[1]})   
+   
+            }
+
+            $( "#txtSearch" ).autocomplete({
+                //maxResults: 10,
+                source: function(request, response) {
+                    var results = $.ui.autocomplete.filter(projects, request.term);
+                    response(results.slice(0, this.options.maxResults));
+                },
+                focus: function( event, ui ) {
+                    $( "#txtSearch" ).val( ui.item.label );
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $( "#project" ).val( ui.item.label );
+      
+                    $( "#project-description" ).html( ui.item.desc );        
+ 
+                    return false;
+                }
+            })
+             .autocomplete( "instance" )._renderItem = function( ul, item ) {
+             return $( "<li>" )
+             .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+             .appendTo( ul );
+           }; 
+
+
+        });
+    </script>
+
+     <script> 
+          function bindPatientDetails()
+          {
+              debugger;
+               var PatientName = document.getElementById("project-description").innerText;
+             
+       
+                     
+            var file=PatientName.split('|')      
+            var file1=file[0].split('📰 ')
+            var fileNO=file1[1]
+            if (PatientName!="")
+
+            { 
+                                  
+                PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
+            }
+
+            function OnSuccess(response, userContext, methodName) 
+            {   
+                      
+                var string1 = new Array();
+                string1 = response.split('|');
+               
+                document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
+                document.getElementById('<%=lblFileNum.ClientID%>').innerHTML=string1[0];
+                document.getElementById('<%=lblPatientName.ClientID%>').innerHTML=string1[1];
+                document.getElementById('<%=lblAgeCount.ClientID%>').innerHTML=string1[2];
+                document.getElementById('<%=lblGenderDis.ClientID%>').innerHTML=string1[3];            
+                document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
+               
+            
+                document.getElementById('txtSearch').value="";//clearin the Search box
+
+                
+            }          
+            function onError(response, userContext, methodName)
+            {                   
+            }         
+        }
+
+
+    </script>
+
     <!-- #main-container -->
         <script>
+
+    function FillTextboxUsingXml(){
+                debugger;
+                GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
+                RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+            }
+
+
             function BindMedunitbyMedicneName(ControlNo) 
             {
                 
@@ -92,6 +205,7 @@
             </script>
 
 
+
     <div class="main_body">
 
         <div class="left_part">
@@ -104,7 +218,7 @@
                 <li id="pharmacy" class="active"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName %>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
                  <li id="master" ><a name="hello" onclick="selectTile('master','<%=RoleName %>')"><span class="icon master"></span><span class="text">Master</span></a></li>
-                <li id="admin"><a name="hello" onclick="selectTile('admin','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+                <li id="admin"> <a name="hello" onclick="selectTile('admin','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
             </ul>
 
             <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
@@ -118,7 +232,7 @@
             </div>
             <div class="icon_box">
                 <a class="patient_list" data-toggle="modal" data-target="#patient_list"><span title="Patient List" data-toggle="tooltip" data-placement="left">
-                    <img src="../images/patient_list.png" /></span></a>
+                    <img  src="../images/patient_list.png" /></span></a>
             </div>
             <div class="grey_sec">
                 <div class="search_div">
@@ -135,7 +249,7 @@
 
                 <div class="token_id_card">
                     <div class="name_field">
-                        <img src="../images/UploadPic1.png" width="80" height="80" /><asp:Label ID="lblPatientName" runat="server" Text="Patient_Name"></asp:Label></div>
+                        <img src="../images/UploadPic1.png" id="ProfilePic" runat="server" width="80" height="80" /><asp:Label ID="lblPatientName" runat="server" Text="Patient_Name"></asp:Label></div>
                     <div class="light_grey">
                         <div class="col3_div">
                             <asp:Label ID="lblAgeCount" runat="server" Text="Age"></asp:Label>
@@ -198,7 +312,9 @@
         </div>
 
 
-        
+                 <asp:HiddenField ID="hdnfileID" runat="server" />
+     <asp:HiddenField ID="HiddenPatientID" runat="server" />        
+
                 <asp:HiddenField ID="hdnXmlData" runat="server" />
                <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
                 <asp:HiddenField ID="hdnTextboxValues" runat="server" />             

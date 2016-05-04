@@ -224,7 +224,7 @@ namespace TheClinicApp1._1.Pharmacy
             Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
 
 
-            //ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientId.ToString();
+            ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientId.ToString();
 
 
         }
@@ -232,6 +232,59 @@ namespace TheClinicApp1._1.Pharmacy
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
+            issuehdobj.IssuedTo = lblPatientName.Text;
+            issuehdobj.Date = DateTime.Now;
+            issuehdobj.CreatedBy = UA.userName;
+            issuehdobj.ClinicID = UA.ClinicID.ToString();
+
+            //issuehdobj.InsertIssueHeader();
+
+
+
+               string last = string.Empty;
+               
+               string values = hdnTextboxValues.Value;
+
+               string[] Rows = values.Split('$');
+
+
+
+               for (int i = 0; i < Rows.Length - 1; i++)
+               {
+                   IssueDetails IssuedtlObj = new IssueDetails(); //Object is created in loop as each entry should have different uniqueID
+                   string[] tempRow = Rows;
+
+                   last = tempRow[i].Split('|').Last();
+
+                   string[] columns = tempRow[i].Split('|');
+
+                   if (last == string.Empty || last == "")
+                   {
+
+                       //----------------- * CASE : INSERT *-----------------------------------//
+                       if ((columns[0] != null) && (columns[4] != null))
+                       {
+
+
+                           IssuedtlObj.MedicineName = columns[0];
+                           IssuedtlObj.Unit = columns[1];
+                           IssuedtlObj.Qty = Convert.ToInt32(columns[4]);
+
+                           IssuedtlObj.CreatedBy = UA.userName; ;
+                           IssuedtlObj.ClinicID = UA.ClinicID.ToString();
+
+                           if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
+                           {
+                               IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
+                           }
+                           //IssuedtlObj.InsertIssueDetails();
+
+                       }
+                   }
+               }
+
+
 
         }
 
