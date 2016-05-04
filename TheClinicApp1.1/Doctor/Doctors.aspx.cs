@@ -47,7 +47,7 @@ namespace TheClinicApp1._1.Doctor
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
             RoleName = UA.GetRoleName(Login);
-            if (RoleName == "Administrator")
+            if (RoleName == Const.RoleAdministrator)
             {
                 //this.hide.style.Add("display", "none");
                 this.admin.Style.Add("Visibility", "Visible");

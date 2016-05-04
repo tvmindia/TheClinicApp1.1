@@ -20,11 +20,11 @@ namespace TheClinicApp1._1.Login
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
-            if (RoleName == "Administrator")
-            {
-                //this.hide.style.Add("display", "none");
-                this.admin.Style.Add("Visibility", "Visible");
-            }
+            //if (RoleName == "Administrator")
+            //{
+            //    //this.hide.style.Add("display", "none");
+            //    this.admin.Style.Add("Visibility", "Visible");
+            //}
             if (Request.QueryString["From"] != null) {
                 From = Request.QueryString["From"].ToString();
                 module.InnerText = From.ToUpper();
