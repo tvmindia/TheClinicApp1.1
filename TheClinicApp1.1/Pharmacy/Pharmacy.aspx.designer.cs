@@ -22,15 +22,6 @@ namespace TheClinicApp1._1.Pharmacy {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
-        /// admin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl admin;
-        
-        /// <summary>
         /// lblClinicName control.
         /// </summary>
         /// <remarks>
@@ -47,15 +38,6 @@ namespace TheClinicApp1._1.Pharmacy {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
-        
-        /// <summary>
-        /// ProfilePic control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic;
         
         /// <summary>
         /// lblPatientName control.
@@ -101,24 +83,6 @@ namespace TheClinicApp1._1.Pharmacy {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDoctor;
-        
-        /// <summary>
-        /// hdnfileID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnfileID;
-        
-        /// <summary>
-        /// HiddenPatientID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenPatientID;
         
         /// <summary>
         /// hdnXmlData control.
