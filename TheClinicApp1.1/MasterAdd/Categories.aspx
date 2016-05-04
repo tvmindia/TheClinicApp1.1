@@ -120,7 +120,7 @@
 
             <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllUsers" ><span title="View All Users" data-toggle="tooltip" data-placement="left" ><img src="../images/categories-512 copy.png" /></span></a>
+ <a class="all_registration_link" data-toggle="modal" data-target="#AllCategories" ><span title="View All Categories" data-toggle="tooltip" data-placement="left" ><img src="../images/categories-512 copy.png" /></span></a>
 
 
                 
@@ -248,5 +248,52 @@
             </div>
         </div>
     </div>
+
+
+    <div id="AllCategories" class="modal fade" role="dialog">
+          <div class="modal-dialog" style="height:600px">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-color:#3661C7;">  
+          <button type="button" class="close" data-dismiss="modal">&times;</button>     
+        <h3 class="modal-title">View All Categories</h3>
+      </div>
+      <div class="modal-body" style="height:500px" >
+       <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
+         
+
+        <asp:GridView ID="dtgViewAllCategories" runat="server" AutoGenerateColumns="False"  >
+                        
+                        <Columns>
+                          
+                       <asp:TemplateField HeaderText="">
+             <ItemTemplate>
+              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click"/>
+               </ItemTemplate>
+                </asp:TemplateField>
+
+
+
+                            <asp:BoundField DataField="Name" HeaderText="Category Name">
+                               
+                            </asp:BoundField>
+                           
+
+
+                        
+
+                        </Columns>
+                        
+                    </asp:GridView>
+           
+    
+    </div>
+         
+         
+    </div>
+
+  </div>
+        </div>
 
 </asp:Content>

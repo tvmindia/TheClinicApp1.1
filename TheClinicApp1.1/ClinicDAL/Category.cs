@@ -173,6 +173,46 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Validate Category Name
 
+        #region View All Category
+
+        public DataTable ViewAllCategory()
+        {
+            SqlConnection con = null;
+            DataTable dtUsers = null;
+            try
+            {
+                dtUsers = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ViewCategory", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUsers);
+                return dtUsers;
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+                throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+        #endregion View All Category
+
         #endregion Methods
 
     }

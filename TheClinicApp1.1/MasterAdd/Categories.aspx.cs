@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -53,10 +54,32 @@ namespace TheClinicApp1._1.MasterAdd
         #endregion Add New Category
 
 
+        #region Bind Category Gridview
+
+        public void BindGridview()
+        { 
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            CategoryObj.ClinicID = UA.ClinicID;
+           DataTable dt = CategoryObj.ViewAllCategory();
+
+           dtgViewAllCategories.DataSource = dt;
+           dtgViewAllCategories.DataBind();
+
+        }
+
+        #endregion Bind Category Gridview
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             lblClinicName.Text = UA.Clinic;
+
+            if (!IsPostBack)
+            {
+                BindGridview();
+            }
+
         }
 
         protected void Save_ServerClick(object sender, EventArgs e)
@@ -67,6 +90,11 @@ namespace TheClinicApp1._1.MasterAdd
         protected void btnSave_Click(object sender, EventArgs e)
         {
             AddNewCategory();
+        }
+
+        protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
+        {
+
         }
     }
 }
