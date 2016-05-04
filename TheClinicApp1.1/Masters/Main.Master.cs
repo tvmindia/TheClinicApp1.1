@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -45,12 +46,24 @@ namespace TheClinicApp1._1.Masters
 
             try
             {
-                string currRole = UA.GetRoleName(UA.userName);
+               
+                List<string> currRole = new List<string>();
+                DataTable dt = null;
+                dt=UA.GetRoleName1(UA.userName);
+                foreach (DataRow dr in dt.Rows)
+                {
+
+                    currRole.Add(dr["RoleName"].ToString());
+                
+                }
+                 
                 string currPage = Const.GetCurrentPageName(Request);
                 string From = "?From=";
                 string redirectURL = "";
 
-                if (currRole == "") { Response.Redirect(Const.AccessDeniedURL); }
+                
+
+                if (currRole==null) { Response.Redirect(Const.AccessDeniedURL); }
 
                 if (currPage != Const.AccessDenied)
                 {

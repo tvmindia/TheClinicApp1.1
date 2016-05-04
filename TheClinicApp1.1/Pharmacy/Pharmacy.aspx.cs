@@ -23,10 +23,11 @@ namespace TheClinicApp1._1.Pharmacy
         public string listFilter = null;
         public string NameBind = null;
 
+        ErrorHandling eObj = new ErrorHandling();
         PrescriptionDetails PrescriptionObj = new PrescriptionDetails();
         pharmacy pharmacypobj = new pharmacy();
         TokensBooking tokobj = new TokensBooking();
-        IssueDetails issuedtobj = new IssueDetails();
+       
         IssueHeaderDetails issuehdobj = new IssueHeaderDetails();
 
         
@@ -34,11 +35,19 @@ namespace TheClinicApp1._1.Pharmacy
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            List<string> RoleName = new List<string>();
+            DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
-            RoleName = UA.GetRoleName(Login);
-            if (RoleName == Const.RoleAdministrator)
+            dtRols = UA.GetRoleName1(Login);
+            foreach (DataRow dr in dtRols.Rows)
+            {
+
+                RoleName.Add(dr["RoleName"].ToString());
+
+            }
+            if (RoleName.Contains(Const.RoleAdministrator))
             {
                 //this.hide.style.Add("display", "none");
                 this.admin.Style.Add("Visibility", "Visible");
@@ -55,7 +64,8 @@ namespace TheClinicApp1._1.Pharmacy
             gridviewbind();
 
 
-           
+
+            btnSave.Attributes.Add("onclick", "GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "')");
 
 
         }
@@ -233,13 +243,15 @@ namespace TheClinicApp1._1.Pharmacy
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            issuehdobj.ClinicID = UA.ClinicID.ToString();
             issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
             issuehdobj.IssuedTo = lblPatientName.Text;
             issuehdobj.Date = DateTime.Now;
             issuehdobj.CreatedBy = UA.userName;
             issuehdobj.ClinicID = UA.ClinicID.ToString();
+            ViewState["IssueHdrID"] = issuehdobj.IssueID;
 
-            //issuehdobj.InsertIssueHeader();
+            issuehdobj.InsertIssueHeader();
 
 
 
@@ -254,35 +266,24 @@ namespace TheClinicApp1._1.Pharmacy
                for (int i = 0; i < Rows.Length - 1; i++)
                {
                    IssueDetails IssuedtlObj = new IssueDetails(); //Object is created in loop as each entry should have different uniqueID
-                   string[] tempRow = Rows;
-
-                   last = tempRow[i].Split('|').Last();
+                   string[] tempRow = Rows;                   
 
                    string[] columns = tempRow[i].Split('|');
+                   IssuedtlObj.MedicineName = columns[0];
+                  
+                   IssuedtlObj.Qty = Convert.ToInt32(columns[1]);
 
-                   if (last == string.Empty || last == "")
-                   {
-
-                       //----------------- * CASE : INSERT *-----------------------------------//
-                       if ((columns[0] != null) && (columns[4] != null))
-                       {
-
-
-                           IssuedtlObj.MedicineName = columns[0];
-                           IssuedtlObj.Unit = columns[1];
-                           IssuedtlObj.Qty = Convert.ToInt32(columns[4]);
-
-                           IssuedtlObj.CreatedBy = UA.userName; ;
-                           IssuedtlObj.ClinicID = UA.ClinicID.ToString();
+                   IssuedtlObj.CreatedBy = UA.userName; 
+                   
+                   IssuedtlObj.ClinicID = UA.ClinicID.ToString();
 
                            if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
                            {
                                IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
                            }
-                           //IssuedtlObj.InsertIssueDetails();
+                         IssuedtlObj.InsertIssueDetails();
 
-                       }
-                   }
+                  
                }
 
 

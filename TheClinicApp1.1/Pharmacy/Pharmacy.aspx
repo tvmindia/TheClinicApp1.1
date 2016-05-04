@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="Pharmacy.aspx.cs" Inherits="TheClinicApp1._1.Pharmacy.Pharmacy" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" ValidateRequest="false" EnableEventValidation="false" CodeBehind="Pharmacy.aspx.cs" Inherits="TheClinicApp1._1.Pharmacy.Pharmacy" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -34,7 +34,7 @@
                 test(".main_body").toggleClass("active_close");
             });
 
- var ac=null;
+            var ac=null;
             ac = <%=NameBind %>;
             var length= ac.length;
             var projects = new Array();
@@ -79,9 +79,7 @@
           {
               debugger;
                var PatientName = document.getElementById("project-description").innerText;
-             
-       
-                     
+                    
             var file=PatientName.split('|')      
             var file1=file[0].split('📰 ')
             var fileNO=file1[1]
@@ -130,7 +128,7 @@
 
             function BindMedunitbyMedicneName(ControlNo) 
             {
-                
+                debugger;
   
                 if (ControlNo >= 0) {
                     var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
@@ -222,7 +220,7 @@
             </ul>
 
             <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
-        </div>
+        </div>        
 
 
         <div class="right_part">
@@ -246,6 +244,40 @@
                 </ul>
             </div>
             <div class="right_form">
+
+                
+                            <div id="Errorbox" style="display: none;" runat="server">
+                                <a class="alert_close">X</a>
+                                <div>
+                                    <strong>
+                                        <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                                    </strong>
+                                    <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+
+                                </div>
+
+                            </div>
+
+                            <div class="alert alert-success" style="display: none">
+                                <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+                            </div>
+                            <div class="alert alert-info" style="display: none">
+                                <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+                            </div>
+
+                            <div class="alert alert-warning" style="display: none">
+                                <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+                            </div>
+
+                            <div class="alert alert-danger" style="display: none">
+                                <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+                            </div>
+
+
+
+
+
+
 
                 <div class="token_id_card">
                     <div class="name_field">

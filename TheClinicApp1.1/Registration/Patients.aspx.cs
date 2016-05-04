@@ -40,11 +40,19 @@ namespace TheClinicApp1._1.Registration
         #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
         {
+            List<string> RoleName = new List<string>();
+            DataTable dt = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
-            RoleName = UA.GetRoleName(Login);
-            if(RoleName==Const.RoleAdministrator)
+            dt=UA.GetRoleName1(Login);
+            foreach (DataRow dr in dt.Rows)
+            {
+
+                RoleName.Add(dr["RoleName"].ToString());
+
+            }
+            if(RoleName.Contains(Const.RoleAdministrator))
             {
                 //this.hide.style.Add("display", "none");
                 this.admin.Style.Add("Visibility", "Visible");
