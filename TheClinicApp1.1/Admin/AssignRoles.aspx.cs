@@ -300,5 +300,42 @@ namespace TheClinicApp1._1.Admin
 
             hdnUserCountChanged.Value = "True";
         }
+
+        protected void ddlUsers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+      DataTable dt =      roleObj.GetAssignedRoleByUserID();
+
+      if (dt.Rows.Count > 0)
+      {
+          foreach (DataRow dr in dt.Rows)
+          {
+
+              foreach (ListItem item in chklstRoles.Items)
+              {
+
+                  if (item.Value == dr["RoleID"].ToString())
+                  {
+                      item.Selected = true;
+                  }
+
+
+              }
+
+             
+          }
+      }
+
+     
+
+
+
+
+        }
+
+
+
+
+
     }
 }

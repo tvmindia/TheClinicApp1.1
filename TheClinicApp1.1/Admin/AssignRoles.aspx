@@ -304,7 +304,7 @@
                                 <div class="row field_row">  
       <div class="col-lg-4">
       <label for="marital">User</label>
-          <asp:DropDownList ID="ddlUsers" runat="server" Width="100%" Height="40px">
+          <asp:DropDownList ID="ddlUsers" runat="server" Width="100%" Height="40px" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">
              
           </asp:DropDownList>
            <asp:RequiredFieldValidator
