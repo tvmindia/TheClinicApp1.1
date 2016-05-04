@@ -54,9 +54,9 @@ namespace TheClinicApp1._1.Admin
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-            userObj.firstName = txtFirstName.Text;
-            userObj.loginName = txtLoginName.Text;
-            userObj.lastName = txtLastName.Text;
+            userObj.firstName = txtFirstName.Value;
+            userObj.loginName = txtLoginName.Value;
+            userObj.lastName = txtLastName.Value;
 
             if (rdoActiveYes.Checked == true)
             {
@@ -73,9 +73,9 @@ namespace TheClinicApp1._1.Admin
             //userObj.ClinicID = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
             userObj.createdBy = UA.userName;
             userObj.updatedBy = UA.userName;
-            userObj.passWord = CryptObj.Encrypt(txtPassword.Text);
-            userObj.Email = txtEmail.Text;
-            userObj.PhoneNo = txtPhoneNumber.Text;
+            userObj.passWord = CryptObj.Encrypt(txtPassword.Value);
+            userObj.Email = txtEmail.Value;
+            userObj.PhoneNo = txtPhoneNumber.Value;
 
             if (hdnUserID.Value == string.Empty)
             {
@@ -126,12 +126,12 @@ namespace TheClinicApp1._1.Admin
 
         UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-            mstrObj.loginName = txtLoginName.Text;
+        mstrObj.loginName = txtLoginName.Value;
 
             mstrObj.ClinicID = UA.ClinicID;
-            mstrObj.DoctorName = txtFirstName.Text;
-            mstrObj.DoctorPhone = txtPhoneNumber.Text;
-            mstrObj.DoctorEmail = txtEmail.Text;
+            mstrObj.DoctorName = txtFirstName.Value;
+            mstrObj.DoctorPhone = txtPhoneNumber.Value;
+            mstrObj.DoctorEmail = txtEmail.Value;
             mstrObj.createdBy = UA.userName;
             mstrObj.updatedBy = UA.userName;
 
@@ -209,7 +209,7 @@ namespace TheClinicApp1._1.Admin
 
             foreach (DataRow dr in dtUsers.Rows)
             {
-                if (dr["LoginName"].ToString() == txtLoginName.Text)
+                if (dr["LoginName"].ToString() == txtLoginName.Value)
                 {
                     roleObj.UserID = Guid.Parse(dr["UserID"].ToString());
 
@@ -483,7 +483,7 @@ namespace TheClinicApp1._1.Admin
             if (Request.QueryString["UsrIDtoEdit"] != null)
               {
 
-                if (txtLoginName.Text == string.Empty)
+                if (txtLoginName.Value == string.Empty)
 	{
 		 
 	
@@ -495,14 +495,14 @@ namespace TheClinicApp1._1.Admin
                    DataTable dt =      userObj.GetUserDetailsByUserID();
 
 
-             txtLoginName.Text = dt.Rows[0]["LoginName"].ToString();
-             txtFirstName.Text = dt.Rows[0]["FirstName"].ToString();
-             txtLastName.Text = dt.Rows[0]["LastName"].ToString();
-             txtPassword.Text = CryptObj.Decrypt(dt.Rows[0]["Password"].ToString());
+             txtLoginName.Value = dt.Rows[0]["LoginName"].ToString();
+             txtFirstName.Value = dt.Rows[0]["FirstName"].ToString();
+             txtLastName.Value = dt.Rows[0]["LastName"].ToString();
+             txtPassword.Value = CryptObj.Decrypt(dt.Rows[0]["Password"].ToString());
 
-             txtPhoneNumber.Text = dt.Rows[0]["PhoneNo"].ToString();
+             txtPhoneNumber.Value = dt.Rows[0]["PhoneNo"].ToString();
 
-             txtEmail.Text = dt.Rows[0]["Email"].ToString();
+             txtEmail.Value = dt.Rows[0]["Email"].ToString();
              bool isActive = Convert.ToBoolean(dt.Rows[0]["Active"].ToString());
 
              if (isActive)
@@ -571,11 +571,18 @@ namespace TheClinicApp1._1.Admin
 
         protected void Save_ServerClick(object sender, EventArgs e)
         {
+          
+        }
+
+        #endregion Save Server Click
+
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
-            if (txtLoginName.Text != string.Empty || txtPassword.Text != string.Empty || txtFirstName.Text != string.Empty || txtEmail.Text != string.Empty)
+            if (txtLoginName.Value != string.Empty || txtPassword.Value != string.Empty || txtFirstName.Value != string.Empty || txtEmail.Value != string.Empty)
             {
 
 
@@ -587,10 +594,10 @@ namespace TheClinicApp1._1.Admin
                 {
                     AddUserToUserTable();
 
-                    if (hdnUserID.Value !=string.Empty)
+                    if (hdnUserID.Value != string.Empty)
                     {
                         mstrObj.ClinicID = UA.ClinicID;
-                        mstrObj.DoctorName = txtFirstName.Text;
+                        mstrObj.DoctorName = txtFirstName.Value;
                         mstrObj.DeleteDoctorByName();
 
                         roleObj.UserID = Guid.Parse(hdnUserID.Value);
@@ -623,8 +630,6 @@ namespace TheClinicApp1._1.Admin
             }
 
         }
-
-        #endregion Save Server Click
 
 
         #endregion Events

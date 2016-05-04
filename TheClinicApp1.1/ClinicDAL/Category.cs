@@ -14,6 +14,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.UI;
 
 #endregion Included Namespaces
 
@@ -36,6 +37,9 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion constructor
 
         #region Public Properties
+
+        ErrorHandling eObj = new ErrorHandling();
+
 
         public Guid CategoryID
         {
@@ -93,12 +97,17 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 if (Outputval == 1)
                 {
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.SavedSuccessMessage(page);
                     //Success
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
+                          var page = HttpContext.Current.CurrentHandler as Page;
+                          eObj.AlreadyExistsMessage(page);
+                        
                         //Already exists!
                     }
                 }
@@ -106,8 +115,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
 
-                throw ex;
+                //throw ex;
             }
 
             finally

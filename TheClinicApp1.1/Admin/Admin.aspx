@@ -338,7 +338,10 @@ var   UserID = '';
                                     <input class="button" type="submit" value="Search" />
                                 </div>--%>
                                 <ul class="top_right_links">
-                                    <li><a class="save" id="Save" runat="server" onserverclick="Save_ServerClick"><span></span>Save</a></li>
+                                    <li>
+                                        <%--<a class="save" id="Save" runat="server" onserverclick="Save_ServerClick"><span></span>Save</a>--%>
+                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click"/>
+                                    </li>
                                     <li><a class="new" href="Admin.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
@@ -378,51 +381,67 @@ var   UserID = '';
                                 <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
                             </div>
 
-                            <%--<div class="tab_table">--%>
+                          <div class="tab_table">
 
                                 <div class="row field_row">
 
                                      
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-8">
 
-                                        <label for="Login Name">Login Name</label>
-                                        <asp:TextBox ID="txtLoginName" runat="server" onchange="LoginNameCheck(this)"></asp:TextBox>
+
+                                        <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" name="name" required onchange="LoginNameCheck(this)" />
+
+                                          <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" />
+
+
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Login name is Unavailable" ImageUrl="~/Images/newClose.png" />
+                                         </div>
+
+                                        <%--<label for="Login Name">Login Name</label>--%>
+
+
+                                        <%--<asp:TextBox ID="txtLoginName" runat="server" onchange="LoginNameCheck(this)"></asp:TextBox>
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtLoginName" ErrorMessage="Please fill out this field" ForeColor="Red">
 
-                                        </asp:RequiredFieldValidator>
+                                        </asp:RequiredFieldValidator>--%>
 
-                                    </div>
-                                      <div class="col-lg-4">
+                                   
+                                     <%-- <div class="col-lg-4">
                                
                                           <br />
                                              <br />
 
-                                    <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" />
-
-
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Login name is Unavailable" ImageUrl="~/Images/newClose.png" />
-                                           </div>
+                                  
+                                           </div>--%>
 
                                        
                                      
                                 </div>
 
-                            <%--</div>--%>
+                        </div>
 
 
                             <div class="row field_row">
                                 <div class="col-lg-4 ">
-                                    <label for="First Name">First Name</label>
+
+                                        <label for="name">First Name</label><input id="txtFirstName" runat="server" type="text" name="name" required  />
+
+
+                                  <%--  <label for="First Name">First Name</label>
                                     <asp:TextBox ID="txtFirstName" runat="server"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtFirstName" ErrorMessage="Please fill out this field" ForeColor="Red">
 
-                                    </asp:RequiredFieldValidator>
+                                    </asp:RequiredFieldValidator>--%>
                                 </div>
 
                                 <div class="col-lg-4 ">
-                                    <label for="First Name">Last Name</label>
-                                    <asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>
+
+                                     <label for="name">Last Name</label><input id="txtLastName" runat="server" type="text" name="name"   />
+
+
+                                    <%--<label for="First Name">Last Name</label>
+                                    <asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>--%>
                                     <%--  <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtLastName" ErrorMessage="Please fill out this field" ForeColor="Red">
 
                                         </asp:RequiredFieldValidator>--%>
@@ -434,17 +453,23 @@ var   UserID = '';
 
                             <div class="row field_row">
                                 <div class="col-lg-4 ">
-                                    <label for="Password">Password</label>
+
+                                     <label for="name">Password</label><input id="txtPassword" runat="server" type="text" name="name"  required />
+
+                                   <%-- <label for="Password">Password</label>
                                     <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtPassword" ErrorMessage="Please fill out this field" ForeColor="Red">
 
-                                    </asp:RequiredFieldValidator>
+                                    </asp:RequiredFieldValidator>--%>
                                 </div>
 
                                 <div class="col-lg-4 ">
-                                    <label for="Phone">Phone</label>
+
+                                      <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" name="name"  pattern="^[0-9+-]*$"  required />
+
+                                   <%-- <label for="Phone">Phone</label>
                                     <asp:TextBox ID="txtPhoneNumber" runat="server"></asp:TextBox>
-                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtPhoneNumber" runat="server" ValidationExpression="^[0-9+-]*$" ErrorMessage="Please enter a valid phone number" ForeColor="Red"></asp:RegularExpressionValidator>
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtPhoneNumber" runat="server" ValidationExpression="^[0-9+-]*$" ErrorMessage="Please enter a valid phone number" ForeColor="Red"></asp:RegularExpressionValidator>--%>
 
                                 </div>
                             </div>
@@ -453,12 +478,14 @@ var   UserID = '';
 
                             <div class="row field_row">
                                 <div class="col-lg-8 ">
-                                    <label for="Email">Email</label>
+                                    <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name"  pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"  required />
+
+                                  <%--  <label for="Email">Email</label>
                                     <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
                                     <asp:RegularExpressionValidator ID="RegularExpressionValidator2" ControlToValidate="txtEmail" runat="server" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" ErrorMessage="Please enter a valid Email" ForeColor="Red"></asp:RegularExpressionValidator>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtEmail" ErrorMessage="Please fill out this field" ForeColor="Red">
 
-                                    </asp:RequiredFieldValidator>
+                                    </asp:RequiredFieldValidator>--%>
 
                                 </div>
                             </div>
