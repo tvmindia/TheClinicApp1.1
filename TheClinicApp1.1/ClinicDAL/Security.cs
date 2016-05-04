@@ -286,7 +286,43 @@ namespace TheClinicApp1._1.ClinicDAL
                 
         #endregion Get RoleID
 
+        public DataTable GetRoleName1(string LoginName)
+        {
 
+            SqlConnection con = null;
+
+            try
+            {
+                DataTable dt = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetUserandRolesJoineddemo", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add("@LoginName", SqlDbType.NVarChar, 50).Value = LoginName;
+                //SqlParameter OutparamId = pud.Parameters.Add("@OutRole", SqlDbType.NVarChar,255);
+                //OutparamId.Direction = ParameterDirection.Output;
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                dt = new DataTable();
+                adapter.Fill(dt);
+                con.Close();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+                throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
         //#region Encrypt Password
         //private string Encrypt(string clearText)
         //{
