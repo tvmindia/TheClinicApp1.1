@@ -184,7 +184,13 @@ namespace TheClinicApp1._1.Admin
 
 
         protected void Page_Load(object sender, EventArgs e)
+        
         {
+
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            lblClinicName.Text = UA.Clinic;
+
             var page = HttpContext.Current.CurrentHandler as Page;
             string msg = string.Empty;
             if (!Page.IsPostBack)

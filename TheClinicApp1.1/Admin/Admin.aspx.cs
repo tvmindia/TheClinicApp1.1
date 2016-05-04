@@ -374,6 +374,9 @@ namespace TheClinicApp1._1.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            lblClinicName.Text = UA.Clinic;
+
               string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;

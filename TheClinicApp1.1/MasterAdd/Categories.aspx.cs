@@ -55,7 +55,8 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            lblClinicName.Text = UA.Clinic;
         }
 
         protected void Save_ServerClick(object sender, EventArgs e)

@@ -14,14 +14,9 @@
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    
 
-
-
-
-
-
-
+   
 
 
 
@@ -198,11 +193,11 @@
                                 <div class="row field_row">
 
                                      
-                                    <div class="row field_row">      
+                                    
       <div class="col-lg-8">
       <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" required/>
       </div>      
-      </div>
+     
 
 
 
