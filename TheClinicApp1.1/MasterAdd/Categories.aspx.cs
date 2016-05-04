@@ -16,6 +16,7 @@ namespace TheClinicApp1._1.MasterAdd
         Category CategoryObj = new Category();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
+        public string RoleName = null;
 
         #endregion Global Variables
 
