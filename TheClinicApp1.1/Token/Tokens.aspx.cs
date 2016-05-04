@@ -36,7 +36,11 @@ namespace TheClinicApp1._1.Token
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             RoleName = UA.GetRoleName(Login);
-
+            if (RoleName == "Administrator")
+            {
+                //this.hide.style.Add("display", "none");
+                this.admin.Style.Add("Visibility", "Visible");
+            }
             tokenObj.ClinicID = UA.ClinicID.ToString();
 
             DataSet gds = tokenObj.ViewToken();

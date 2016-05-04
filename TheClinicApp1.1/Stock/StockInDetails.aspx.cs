@@ -30,7 +30,7 @@ namespace TheClinicApp1._1.Stock
 
         DataTable dtReceipthdr = null;
         public string listFilter = null;
-
+        public string RoleName = null;
         ErrorHandling eObj = new ErrorHandling();
         Stocks stok = new Stocks();
         Receipt rpt = new Receipt();
@@ -199,6 +199,16 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            rpt.ClinicID = UA.ClinicID.ToString();
+            lblClinicName.Text = UA.Clinic;
+            string Login = UA.userName;
+            RoleName = UA.GetRoleName(Login);
+            if (RoleName == Const.RoleAdministrator)
+            {
+                //this.hide.style.Add("display", "none");
+                this.admin.Style.Add("Visibility", "Visible");
+            }
    
             txtDate1.Attributes.Add("readonly", "readonly");
             btSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','" + hdnRemovedIDs.ClientID + "')");
