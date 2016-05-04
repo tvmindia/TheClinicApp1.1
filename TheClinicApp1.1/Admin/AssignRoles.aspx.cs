@@ -254,43 +254,162 @@ namespace TheClinicApp1._1.Admin
 
         protected void btSave_ServerClick(object sender, EventArgs e)
         {
+
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             roleObj.UserID = new Guid(ddlUsers.SelectedValue);
 
-            dtUsers = (DataTable)ViewState["dtUsers"];
-
             roleObj.ClinicID = UA.ClinicID;
             roleObj.CreatedBy = UA.userName;
 
+            roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+          
+
             foreach (ListItem item in chklstRoles.Items)
             {
-                if (item.Selected)
-                {
-                    roleObj.RoleID = new Guid(item.Value);
+                roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+                DataTable dt = roleObj.GetAssignedRoleByUserID();
+               
 
-                    if (item.Value == GetRoleIDOFDoctor())
-                    {
-                        foreach (DataRow dr in dtUsers.Rows)
+                if (dt.Rows.Count > 0)
+	    {
+		 
+	
+
+                foreach (DataRow drr in dt.Rows)
+                {
+                    dt = roleObj.GetAssignedRoleByUserID();
+                   
+                        if (item.Value != drr["RoleID"].ToString())
                         {
-                            if (dr["UserID"].ToString() == ddlUsers.SelectedValue )
+                            if (item.Selected)
                             {
-                                mstrObj.ClinicID = UA.ClinicID;
-                                mstrObj.DoctorName = dr["FirstName"].ToString();
-                                mstrObj.DoctorPhone = dr["PhoneNo"].ToString();
-                                mstrObj.DoctorEmail = dr["Email"].ToString();
-                                mstrObj.createdBy = UA.userName;
-                                mstrObj.updatedBy = UA.userName;
-                                mstrObj.InsertDoctors();
+                                if (item.Value == GetRoleIDOFDoctor())
+                                {
+                                    dtUsers = (DataTable)ViewState["dtUsers"];
+                                    foreach (DataRow dr in dtUsers.Rows)
+                                    {
+                                        if (dr["UserID"].ToString() == ddlUsers.SelectedValue)
+                                        {
+                                            mstrObj.ClinicID = UA.ClinicID;
+                                            mstrObj.DoctorName = dr["FirstName"].ToString();
+                                            mstrObj.DoctorPhone = dr["PhoneNo"].ToString();
+                                            mstrObj.DoctorEmail = dr["Email"].ToString();
+                                            mstrObj.createdBy = UA.userName;
+                                            mstrObj.updatedBy = UA.userName;
+                                            mstrObj.InsertDoctors();
+
+                                            //roleObj.RoleID = Guid.Parse(item.Value);
+                                            //roleObj.AssignRole();
+                                        }
+                                    }
+                                }
+
+                                roleObj.RoleID = Guid.Parse(item.Value);
+                                roleObj.AssignRole();
+
                             }
                         }
-                    }
+
+                        else
+                        {
+                            if (item.Selected == false)
+                            {
+                                roleObj.UniqueID = Guid.Parse(drr["UniqueID"].ToString());
+                                roleObj.DeleteAssignedRoleByUniqueID();
+
+                            }
+                        }
 
 
+                   
 
-                    roleObj.AssignRole();
                 }
             }
+
+                else
+                {
+                    if (item.Selected)
+                    {
+                        roleObj.RoleID = Guid.Parse(item.Value);
+                        roleObj.AssignRole();
+                    }
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+            //dtUsers = (DataTable)ViewState["dtUsers"];
+
+         
+
+
+            //foreach (ListItem item in chklstRoles.Items)
+            //{
+               
+            //        roleObj.RoleID = new Guid(item.Value);
+
+            //        foreach (DataRow drr in dt.Rows)
+            //        {
+            //            if (item.Selected)
+            //            {
+
+
+            //            if (item.Value != drr["RoleID"].ToString())
+            //        {
+
+            //        if (item.Value == GetRoleIDOFDoctor())
+            //        {
+            //            foreach (DataRow dr in dtUsers.Rows)
+            //            {
+            //                if (dr["UserID"].ToString() == ddlUsers.SelectedValue )
+            //                {
+            //                    mstrObj.ClinicID = UA.ClinicID;
+            //                    mstrObj.DoctorName = dr["FirstName"].ToString();
+            //                    mstrObj.DoctorPhone = dr["PhoneNo"].ToString();
+            //                    mstrObj.DoctorEmail = dr["Email"].ToString();
+            //                    mstrObj.createdBy = UA.userName;
+            //                    mstrObj.updatedBy = UA.userName;
+            //                    mstrObj.InsertDoctors();
+            //                }
+            //            }
+            //        }
+
+            //        roleObj.AssignRole();
+            //    }
+
+
+            //            else
+            //            {
+            //                if (item.Selected == false )
+            //                {
+            //               roleObj.UniqueID =     Guid.Parse(drr["UniqueID"].ToString());
+            //               roleObj.DeleteAssignedRoleByUniqueID();
+
+            //                }
+            //            }
+
+
+
+            //        }
+            //    }
+
+            //        if (dt.Rows.Count == 0)
+            //         {
+            //              roleObj.AssignRole();
+            //        }
+ 
+
+
+            //    //}
+            //}
 
 
             //roleObj.RoleID = new Guid(ddlRoles.SelectedValue);
@@ -303,6 +422,8 @@ namespace TheClinicApp1._1.Admin
 
         protected void ddlUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Errorbox.Attributes.Add("style", "display:none");
+
             roleObj.UserID = new Guid(ddlUsers.SelectedValue);
       DataTable dt =      roleObj.GetAssignedRoleByUserID();
 
@@ -319,7 +440,13 @@ namespace TheClinicApp1._1.Admin
                       item.Selected = true;
                   }
 
-
+                  //else
+                  //{
+                  //    if (item.Selected == true)
+                  //    {
+                  //        item.Selected = false;
+                  //    }
+                  //}
               }
 
              
@@ -327,6 +454,22 @@ namespace TheClinicApp1._1.Admin
       }
 
      
+      else
+      {
+          foreach (ListItem item in chklstRoles.Items)
+          {
+              if (item.Selected == true)
+              {
+                  item.Selected = false;
+              }
+
+
+          }
+
+      }
+
+
+
 
 
 
