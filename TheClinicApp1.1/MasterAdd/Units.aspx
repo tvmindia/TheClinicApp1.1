@@ -86,7 +86,11 @@
                                     <input class="button" type="submit" value="Search" />
                                 </div>--%>
                                 <ul class="top_right_links">
-                                    <li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick"><span></span>Save</a></li>
+                                    <li>
+                                        <%--<a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick"><span></span>Save</a>--%>
+                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btSave_ServerClick" />
+
+                                    </li>
                                     <li><a class="new"  href="Units.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
