@@ -243,6 +243,10 @@ namespace TheClinicApp1._1.Pharmacy
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            string msg = string.Empty;
+
+            if (hdnsave.Value == "" && lblPatientName.Text != "Patient_Name")
+            {
             issuehdobj.ClinicID = UA.ClinicID.ToString();
             issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
             issuehdobj.IssuedTo = lblPatientName.Text;
@@ -281,15 +285,22 @@ namespace TheClinicApp1._1.Pharmacy
                            {
                                IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
                            }
-                         IssuedtlObj.InsertIssueDetails();
-
-                  
+                         IssuedtlObj.InsertIssueDetails();                  
                }
+               hdnsave.Value = "saved";
+            }
+              else 
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
 
+                msg = "NOT SAVED";
 
+                eObj.InsertionNotSuccessMessage(page, msg);
+
+                 
+            
+            }
 
         }
-
-
     }
 }
