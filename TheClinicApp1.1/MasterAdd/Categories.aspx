@@ -134,7 +134,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="Categories.aspx">Add Categories</a></li>
 
-                        <%--<li role="presentation"><a href="AssignRoles.aspx">Assign Role</a></li>--%>
+                        <li role="presentation"><a href="Units.aspx">Add Units</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -263,13 +263,13 @@
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          
 
-        <asp:GridView ID="dtgViewAllCategories" runat="server" AutoGenerateColumns="False"  >
+        <asp:GridView ID="dtgViewAllCategories" runat="server" AutoGenerateColumns="False"   DataKeyNames="CategoryID">
                         
                         <Columns>
                           
                        <asp:TemplateField HeaderText="">
              <ItemTemplate>
-              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click"/>
+              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate/>
                </ItemTemplate>
                 </asp:TemplateField>
 

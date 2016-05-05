@@ -762,14 +762,14 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Connection = con;
                 pud.CommandType = System.Data.CommandType.StoredProcedure;
                 pud.CommandText = "[InsertUnits]";
-                pud.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
+                //pud.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
                 pud.Parameters.Add("@Code", SqlDbType.NVarChar, 255).Value = Code;
                 pud.Parameters.Add("@Description", SqlDbType.VarBinary, 255).Value = Description;
                 pud.Parameters.Add("@ClinicID", SqlDbType.VarBinary, 255).Value = ClinicID;
-                pud.Parameters.Add("@CreatedBY", SqlDbType.DateTime).Value = "Thomson";
-                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@CreatedBY", SqlDbType.DateTime).Value = createdBy;
+                //pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                //pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
+                //pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
@@ -782,7 +782,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //not successfull   
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionNotSuccessMessage(page);
+                    eObj.SavingFailureMessage(page);
 
                 }
                 else
@@ -790,7 +790,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //successfull
 
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionSuccessMessage(page);
+                    eObj.SavedSuccessMessage(page);
 
 
                 }
@@ -816,6 +816,116 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion AddUnits
+
+
+
+        #region View All Units
+        public DataTable ViewAllUnits()
+        {
+            SqlConnection con = null;
+            DataTable dtUsers = null;
+            try
+            {
+                dtUsers = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ViewUnits", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUsers);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUsers;
+        }
+
+        #endregion  View All Units
+
+
+        #region Delete unit By UnitId
+
+        public void  DeleteUnitByUnitId()
+        {
+
+
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteunitByID";
+            
+                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() == "")
+                {
+                    //not successfull   
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.DeletionNotSuccessMessage(page);
+
+                }
+                else
+                {
+                    //successfull
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.DeleteSuccessMessage(page);
+
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+        #endregion  Delete unit By UnitId
+
+
 
         #region BindGroupName
         public DataTable BindGroupName()

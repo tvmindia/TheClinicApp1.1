@@ -7,6 +7,8 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
+   
+
 
 namespace TheClinicApp1._1.MasterAdd
 {
@@ -14,6 +16,7 @@ namespace TheClinicApp1._1.MasterAdd
     {
         #region Global Variables
 
+        ErrorHandling eObj = new ErrorHandling();
         Category CategoryObj = new Category();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
@@ -94,7 +97,27 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
+            var page = HttpContext.Current.CurrentHandler as Page;
 
+            string msg = string.Empty;
+            ImageButton ib = sender as ImageButton;
+            GridViewRow row = ib.NamingContainer as GridViewRow;
+            Guid Ctgryid = Guid.Parse(dtgViewAllCategories.DataKeys[row.RowIndex].Value.ToString());
+
+            CategoryObj.CategoryID = Ctgryid;
+         DataTable dtCtgry =    CategoryObj.ViewMedicinesByCategoryID();
+
+         if (dtCtgry.Rows.Count == 0)
+         {
+             CategoryObj.CategoryID = Ctgryid;
+             CategoryObj.DeleteCategoryById();
+         } 
+
+         else
+         {
+             msg = "Already used . Can't be deleted";
+             eObj.DeletionNotSuccessMessage(page, msg);
+         }
         }
     }
 }
