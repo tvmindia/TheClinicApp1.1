@@ -241,6 +241,8 @@
     <Content Include="Login\Login.aspx" />
     <Content Include="Login\Reset.aspx" />
     <Content Include="MasterAdd\Categories.aspx" />
+    <Content Include="MasterAdd\Medicnes.aspx" />
+    <Content Include="MasterAdd\Units.aspx" />
     <Content Include="Masters\Main.Master" />
     <Content Include="Masters\popup.Master" />
     <Content Include="Pharmacy\Pharmacy.aspx" />
@@ -427,6 +429,20 @@
     </Compile>
     <Compile Include="MasterAdd\Categories.aspx.designer.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterAdd\Medicnes.aspx.cs">
+      <DependentUpon>Medicnes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdd\Medicnes.aspx.designer.cs">
+      <DependentUpon>Medicnes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterAdd\Units.aspx.cs">
+      <DependentUpon>Units.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdd\Units.aspx.designer.cs">
+      <DependentUpon>Units.aspx</DependentUpon>
     </Compile>
     <Compile Include="Masters\Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
