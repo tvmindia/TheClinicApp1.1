@@ -3,6 +3,35 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+         <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+    <script src="../js/jquery-1.12.0.min.js"></script>
+
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/fileinput.js"></script>
+    <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/DeletionConfirmation.js"></script>
+
+
+     <script>
+      $(document).ready(function () {
+         
+         
+
+          $('.alert_close').click(function () {
+              $(this).parent(".alert").hide();
+          });
+
+
+
+          $('.nav_menu').click(function () {
+              $(".main_body").toggleClass("active_close");
+          });
+
+
+
+      });
+         </script>
 
 
                      <div class="main_body">   
@@ -31,7 +60,7 @@
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AssignedRoles" ><span title="View Assigned Roles" data-toggle="tooltip" data-placement="left" ><img src="../images/AssignUser.png" /></span></a>
+ <a class="all_registration_link" data-toggle="modal" data-target="#AllUnits" ><span title="View All Units" data-toggle="tooltip" data-placement="left" ><img src="../images/AssignUser.png" /></span></a>
 
 
                 
@@ -133,7 +162,53 @@
       
  </div>  
 
+    <div id="AllUnits" class="modal fade" role="dialog">
+          <div class="modal-dialog" style="height:600px">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-color:#3661C7;">  
+          <button type="button" class="close" data-dismiss="modal">&times;</button>     
+        <h3 class="modal-title">View All Units</h3>
+      </div>
+      <div class="modal-body" style="height:500px" >
+       <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
+         
+
+        <asp:GridView ID="dtgViewAllUnits" runat="server" AutoGenerateColumns="False"   DataKeyNames="UnitID">
+                        
+                        <Columns>
+                          
+                       <asp:TemplateField HeaderText="">
+             <ItemTemplate>
+              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate/>
+               </ItemTemplate>
+                </asp:TemplateField>
+
+
+
+                            <asp:BoundField DataField="Description" HeaderText="Description">
+                               
+                            </asp:BoundField>
+                           
+                               <asp:BoundField DataField="Code" HeaderText="Code">
+                               
+                            </asp:BoundField>
+
+                        
+
+                        </Columns>
+                        
+                    </asp:GridView>
+           
+    
+    </div>
+         
+         
+    </div>
+
+  </div>
+        </div>
 
 
 </asp:Content>
