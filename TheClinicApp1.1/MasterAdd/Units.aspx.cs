@@ -61,6 +61,7 @@ namespace TheClinicApp1._1.MasterAdd
                 mstrObj.createdBy = UA.userName;
 
                 mstrObj.InsertUnits();
+                BindGridview();
             }
 
             else
@@ -85,7 +86,7 @@ namespace TheClinicApp1._1.MasterAdd
             mstrObj.UnitID = UnitId;
             mstrObj.DeleteUnitByUnitId();
 
-
+            BindGridview();
         }
     }
 }
