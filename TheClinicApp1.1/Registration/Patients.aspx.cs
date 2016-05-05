@@ -43,68 +43,55 @@ namespace TheClinicApp1._1.Registration
             List<string> RoleName = new List<string>();
             DataTable dt = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            //*Binding Clinic Name 
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
             dt=UA.GetRoleName1(Login);
             foreach (DataRow dr in dt.Rows)
             {
-
                 RoleName.Add(dr["RoleName"].ToString());
-
             }
+
+            //*Check Roles Assigned and Giving Visibility For Admin Tab
             if(RoleName.Contains(Const.RoleAdministrator))
             {
-                //this.hide.style.Add("display", "none");
+                
                 this.admin.Style.Add("Visibility", "Visible");
                 this.master.Style.Add("Visibility", "Visible");
             }
             tok.ClinicID = UA.ClinicID.ToString();
             PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
             gridDataBind();
+
+            //*Binding The Search Box 
             listFilter = null;
-            listFilter = BindName();
-            
-        
-            
+            listFilter = BindName();           
         }
         #endregion PageLoad
 
         #region Methods
-        #region Bind Dummy Row
-
-        //private void BindDummyRow()
-        //{
-        //    DataTable dummy = new DataTable();
-        //    dummy.Columns.Add("MedicineName");
-        //    dummy.Columns.Add("CategoryName");
-        //    dummy.Columns.Add("MedicineCode");
-        //    dummy.Columns.Add("Unit");
-        //    dummy.Columns.Add("Qty");
-        //    dummy.Columns.Add("ReOrderQty");
-        //    dummy.Rows.Add();
-        //    gvMedicines.DataSource = dummy;
-        //    gvMedicines.DataBind();
-        //}
-
-        #endregion Bind Dummy Row
-
+       
         #region GridBind
         public void gridDataBind()
         {
             
-            #region GridAllRegistration
-            //dtgViewAllRegistration.EmptyDataText = "No Records Found";
+            #region GridAllRegistration   
+            //*Grid Bind Showing All Registered Patients In the Modal POPUP
+
             GridView1.EmptyDataText = "No Records Found";
-            //dtgViewAllRegistration.DataSource = PatientObj.GetAllRegistration();
             GridView1.DataSource = PatientObj.GetAllRegistration();
-            //dtgViewAllRegistration.DataBind();
             GridView1.DataBind();
             #endregion GridAllRegistration
-            #region GridDateRegistration
+
+            #region GridTodaysRegistration
+            //*Grid Bind Showing Todays Registered Patients In the Modal POPUP
+
             dtgViewTodaysRegistration.EmptyDataText = "....Till Now No Registration....";
             dtgViewTodaysRegistration.DataSource = PatientObj.GetDateRegistration();
             dtgViewTodaysRegistration.DataBind();
-            #endregion GridDateRegistration
+            #endregion GridTodaysRegistration
+
             listFilter = null;
             listFilter = BindName();
             if (!IsPostBack)
@@ -116,6 +103,9 @@ namespace TheClinicApp1._1.Registration
         #endregion GridBind
 
         #region BindDropdownDoc
+        /// <summary>
+        /// Bind Dropdown For Selecting Doctor While Booking
+        /// </summary>
         public void DropdownDoctors()
         {
             DataSet ds = tok.DropBindDoctorsName();
@@ -128,6 +118,10 @@ namespace TheClinicApp1._1.Registration
         #endregion BindDropdownDOc
 
         #region BindDataAutocomplete
+        /// <summary>
+        /// Binding Data From DataBase For the Search Field
+        /// </summary>
+        /// <returns></returns>
         private string BindName()
         {
           
@@ -148,9 +142,83 @@ namespace TheClinicApp1._1.Registration
             output.Append("]");
             return output.ToString();
         }
-        #endregion BindDataAutocomplete
+        #endregion BindDataAutocomplete     
+       
+        #region clearfield
+        /// <summary>
+        /// Clear The Fields For New Registration
+        /// </summary>
+        public void ClearFields()
+        {
+            txtName.Value = "";
+            txtAge.Value = "";
+            txtAddress.Value = "";
+            txtEmail.Value = "";
+            txtMobile.Value = "";
+            txtOccupation.Value = "";
+            rdoFemale.Checked=false;
+            rdoMale.Checked=false;            
+            ProfilePic.Src = "../Images/UploadPic.png";
+        }
+        #endregion clearfield      
+
+        #region convertImage
+        /// <summary>
+        /// Conveting Image into Bytes Array
+        /// </summary>
+        /// <param name="fuImage"></param>
+        /// <returns></returns>
+        private byte[] ConvertImageToByteArray(FileUpload fuImage)
+        {
+            byte[] ImageByteArray;
+            try
+            {
+                MemoryStream ms = new MemoryStream(fuImage.FileBytes);
+                ImageByteArray = ms.ToArray();
+                return ImageByteArray;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        #endregion convertImage
+
+        
+        #endregion Methods
+
+        #region Events
+
+        #region GridDelete
+        /// <summary>
+        /// Delete Patient Details and File If Exist Token and more Cant delete Msg
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void ImgBtnDelete_Command(object sender, CommandEventArgs e)
+        {
+            lblErrorCaption.Text = string.Empty;
+            lblMsgges.Text = string.Empty;
+            Errorbox.Style["display"] = "none";
+            lblFileCount.Text = string.Empty;
+            lblTokencount.Text = string.Empty;
+            divDisplayNumber.Style["display"] = "none";
+            Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
+            PatientObj.PatientID = PatientID;
+            PatientObj.DeleteFile();
+            PatientObj.DeletePatientDetails();
+            gridDataBind();
+        }
+
+
+        #endregion GridDelete
 
         #region EditPatients
+        /// <summary>
+        /// Fill the Patient Details For Update
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
         {
             lblErrorCaption.Text = string.Empty;
@@ -179,7 +247,7 @@ namespace TheClinicApp1._1.Registration
                 rdoMale.Checked = false;
                 rdoFemale.Checked = false;
             }
-            
+
             DateTime dt = Convert.ToDateTime(Patient[5]);
             int Age = year - dt.Year;
             txtAge.Value = Age.ToString();
@@ -187,51 +255,39 @@ namespace TheClinicApp1._1.Registration
             txtMobile.Value = Patient[3];
             txtEmail.Value = Patient[4];
             ddlMarital.SelectedValue = Patient[7];
-            txtOccupation.Value = Patient[8];            
+            txtOccupation.Value = Patient[8];
             ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
             ProfilePic.Visible = true;
             //btnnew.Visible = true;
             HiddenField1.Value = PatientID.ToString();
-            
+
         }
         #endregion EditPatients       
-       
-        #region GridDelete
-        protected void ImgBtnDelete_Command(object sender, CommandEventArgs e)
+
+        #region ClearScreen
+        /// <summary>
+        /// New Button click for New screen where field get cleared
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnNew_ServerClick(object sender, EventArgs e)
         {
-            lblErrorCaption.Text = string.Empty;
+            ClearFields();
+            ProfilePic.Src = "../Images/UploadPic1.png";
+            divDisplayNumber.Visible = false;
             lblMsgges.Text = string.Empty;
-            Errorbox.Style["display"] = "none";
-            lblFileCount.Text = string.Empty;
-            lblTokencount.Text = string.Empty;
-            divDisplayNumber.Style["display"] = "none";
-            Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
-            PatientObj.PatientID = PatientID;
-            PatientObj.DeleteFile();
-            PatientObj.DeletePatientDetails();
-            gridDataBind();
+            lblErrorCaption.Text = string.Empty;
+            Errorbox.Visible = false;
+            HiddenField1.Value = string.Empty;
         }
-
-       
-        #endregion GridDelete
-
-        #region clearfield
-        public void ClearFields()
-        {
-            txtName.Value = "";
-
-            txtAge.Value = "";
-            txtAddress.Value = "";
-            txtEmail.Value = "";
-            txtMobile.Value = "";
-            txtOccupation.Value = "";
-            rdoFemale.Checked=false;
-            rdoMale.Checked=false;            
-            ProfilePic.Src = "../Images/UploadPic.png";
-        }
-        #endregion clearfield
+        #endregion ClearScreen
 
         #region BookingToken
+        /// <summary>
+        /// Button Event For Token Registration
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btntokenbooking_Click(object sender, EventArgs e)
         {
             //btnnew.Visible = true;
@@ -245,7 +301,7 @@ namespace TheClinicApp1._1.Registration
             {
                 tok.PatientID = HiddenField1.Value;
             }
-            
+
             tok.ClinicID = UA.ClinicID.ToString();
             tok.CreateDate = DateTime.Now;
             tok.DateTime = DateTime.Now;
@@ -257,40 +313,12 @@ namespace TheClinicApp1._1.Registration
         }
         #endregion BookingToken
 
-        #region ClearScreen
-        protected void btnNew_ServerClick(object sender, EventArgs e)
-        {
-            ClearFields();
-            ProfilePic.Src = "../Images/UploadPic1.png";
-            divDisplayNumber.Visible = false;
-            lblMsgges.Text = string.Empty;
-            lblErrorCaption.Text = string.Empty;
-            Errorbox.Visible = false;
-            HiddenField1.Value = string.Empty;
-        }
-        #endregion ClearScreen
-
-        #region convertImage
-        private byte[] ConvertImageToByteArray(FileUpload fuImage)
-        {
-            byte[] ImageByteArray;
-            try
-            {
-                MemoryStream ms = new MemoryStream(fuImage.FileBytes);
-                ImageByteArray = ms.ToArray();
-                return ImageByteArray;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-        #endregion convertImage
-
-        
-        #endregion Methods
-
         #region MainButton
+        /// <summary>
+        /// Save and Update Checking The Hiddenfield Value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnSave_Click(object sender, EventArgs e)
         {
            
@@ -399,6 +427,11 @@ namespace TheClinicApp1._1.Registration
         #endregion MainButton
 
         #region SearchButtonClick
+        /// <summary>
+        /// Search Button click which check the String from txtsearch
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnSearch_ServerClick(object sender, EventArgs e)
         {
             try
@@ -458,10 +491,26 @@ namespace TheClinicApp1._1.Registration
         }
         #endregion SearchButtonClick
 
+        #region Paging
+        /// <summary>
+        /// Paging for Grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void GridView1_PreRender(object sender, EventArgs e)
         {
             GridView1.UseAccessibleHeader = false;
             GridView1.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+        #endregion Paging
+
+       
+        #endregion Events
+
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
         }
     }
 }

@@ -609,6 +609,12 @@ else
 
         #endregion Save Button Click
 
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
         #endregion Events
     }
 }

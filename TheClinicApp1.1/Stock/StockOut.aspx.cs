@@ -177,5 +177,11 @@ namespace TheClinicApp1._1.Stock
         {
              
         }
+
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
     }
 }

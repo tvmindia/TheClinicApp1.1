@@ -119,5 +119,11 @@ namespace TheClinicApp1._1.MasterAdd
              eObj.DeletionNotSuccessMessage(page, msg);
          }
         }
+
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
     }
 }
