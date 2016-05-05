@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
@@ -61,6 +62,7 @@ namespace TheClinicApp1._1.MasterAdd
                 mstrObj.createdBy = UA.userName;
 
                 mstrObj.InsertUnits();
+                BindGridview();
             }
 
             else
@@ -74,18 +76,81 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
-
+            bool isUsed = false;
             var page = HttpContext.Current.CurrentHandler as Page;
 
             string msg = string.Empty;
+
+
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            mstrObj.ClinicID = UA.ClinicID;
+            DataTable dtUnits = mstrObj.ViewAllUnits();
+
+           
+
+
             ImageButton ib = sender as ImageButton;
             GridViewRow row = ib.NamingContainer as GridViewRow;
             Guid UnitId = Guid.Parse(dtgViewAllUnits.DataKeys[row.RowIndex].Value.ToString());
 
-            mstrObj.UnitID = UnitId;
-            mstrObj.DeleteUnitByUnitId();
+
+            foreach (DataRow dr in dtUnits.Rows)
+            {
+                if (dr["UnitID"].ToString() == UnitId.ToString())
+                {
+                    mstrObj.Description = dr["Description"].ToString();
+
+                    DataTable dt1 = mstrObj.GetPrescDTByUnit();
+                    DataTable dt2 = mstrObj.GetReceiptDTByUnit();
+                    DataTable dt3 = mstrObj.GetMedicineByUnit();
 
 
+                    if ( (dt1.Rows.Count > 0) || (dt2.Rows.Count > 0) || (dt3.Rows.Count > 0))
+                    {
+                         msg = "Already used . Can't be deleted";
+                          eObj.DeletionNotSuccessMessage(page, msg);
+                          isUsed = true;
+                          break;
+                    }
+
+
+
+                }
+            }
+
+            if (isUsed == false)
+            {
+                mstrObj.UnitID = UnitId;
+                mstrObj.DeleteUnitByUnitId();
+
+                BindGridview();
+            }
+           
+        }
+
+
+        #region Validate Unit 
+
+        [WebMethod]
+        public static bool ValidateUnit(string Unit)
+        {
+            Master mstrObj = new Master();
+
+            if (mstrObj.CheckUnitDuplication(Unit))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion  Validate Unit
+
+
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
         }
     }
 }

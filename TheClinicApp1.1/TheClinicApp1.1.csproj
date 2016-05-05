@@ -182,6 +182,7 @@
     <Content Include="images\Last.png" />
     <Content Include="images\logo-small.png" />
     <Content Include="images\logo.png" />
+    <Content Include="images\Logout.png" />
     <Content Include="images\master.png" />
     <Content Include="images\menu_separator.png" />
     <Content Include="images\multiuser.png" />

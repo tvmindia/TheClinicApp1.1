@@ -213,7 +213,26 @@ namespace TheClinicApp1._1.Admin
 
                 if (dt.Rows[0]["RoleID"].ToString() == GetRoleIDOFDoctor())
                 {
-                    mstrObj.DoctorID = Guid.Parse(dt.Rows[0]["RoleID"].ToString());
+
+                    dtUsers = (DataTable)ViewState["dtUsers"];
+
+                    foreach (DataRow dr in dtUsers.Rows)
+                    {
+                        if (dr["UserID"].ToString() == dt.Rows[0]["UserID"].ToString())
+                        {
+                            mstrObj.DoctorName = dr["FirstName"].ToString();
+                            string id = mstrObj.GetDoctorIdByName();
+
+                            mstrObj.ClinicID = UA.ClinicID;
+                            mstrObj.DoctorID = Guid.Parse(id);
+                            break;
+                        }
+                    }
+
+                    //mstrObj.DoctorID = Guid.Parse(dt.Rows[0]["RoleID"].ToString());
+
+                    
+
                     bool IDUsedOrNot = mstrObj.GetDoctorIDInVisits() | mstrObj.GetDoctorIDInTokens() | mstrObj.GetDoctorIDInPrescHD();
 
                     if (IDUsedOrNot)
@@ -260,6 +279,10 @@ namespace TheClinicApp1._1.Admin
 
         protected void btSave_ServerClick(object sender, EventArgs e)
         {
+
+            string msg = string.Empty;
+
+            var page = HttpContext.Current.CurrentHandler as Page;
 
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
@@ -321,8 +344,53 @@ namespace TheClinicApp1._1.Admin
                         {
                             if (item.Selected == false)
                             {
-                                roleObj.UniqueID = Guid.Parse(drr["UniqueID"].ToString());
-                                roleObj.DeleteAssignedRoleByUniqueID();
+                                if (item.Value != GetRoleIDOFDoctor())
+                                {
+                                    roleObj.UniqueID = Guid.Parse(drr["UniqueID"].ToString());
+                                    roleObj.DeleteAssignedRoleByUniqueID();
+                                }
+
+                                 if (item.Value == GetRoleIDOFDoctor())
+                                 {
+                                     dtUsers = (DataTable)ViewState["dtUsers"];
+                                    foreach (DataRow dr in dtUsers.Rows)
+                                    {
+                                        if (dr["UserID"].ToString() == ddlUsers.SelectedValue)
+                                        {
+                                            mstrObj.DoctorName = dr["FirstName"].ToString();
+                                            string id = mstrObj.GetDoctorIdByName();
+
+                                            mstrObj.ClinicID = UA.ClinicID;
+                                            mstrObj.DoctorID = Guid.Parse(id);
+                                            break;
+                                        }
+                                    }
+
+
+
+
+                                   
+
+                                     bool IDUsedOrNot = mstrObj.GetDoctorIDInVisits() | mstrObj.GetDoctorIDInTokens() | mstrObj.GetDoctorIDInPrescHD();
+
+                                     if (IDUsedOrNot)
+                                     {
+                                         msg = "Already used . Can't be deleted";
+                                         eObj.DeletionNotSuccessMessage(page, msg);
+                                         break;
+                                     }
+
+                                     else
+                                     {
+                                         mstrObj.ClinicID = UA.ClinicID;
+                                         mstrObj.DoctorName = dt.Rows[0]["FirstName"].ToString();
+                                         mstrObj.DeleteDoctorByName();
+
+                                         roleObj.UniqueID = Guid.Parse(drr["UniqueID"].ToString());
+                                         roleObj.DeleteAssignedRoleByUniqueID();
+
+                                     }
+                                 }
 
                             }
                         }
@@ -337,6 +405,30 @@ namespace TheClinicApp1._1.Admin
                 {
                     if (item.Selected)
                     {
+
+                        if (item.Value == GetRoleIDOFDoctor())
+                        {
+                            dtUsers = (DataTable)ViewState["dtUsers"];
+                            foreach (DataRow dr in dtUsers.Rows)
+                            {
+                                if (dr["UserID"].ToString() == ddlUsers.SelectedValue)
+                                {
+                                    mstrObj.ClinicID = UA.ClinicID;
+                                    mstrObj.DoctorName = dr["FirstName"].ToString();
+                                    mstrObj.DoctorPhone = dr["PhoneNo"].ToString();
+                                    mstrObj.DoctorEmail = dr["Email"].ToString();
+                                    mstrObj.createdBy = UA.userName;
+                                    mstrObj.updatedBy = UA.userName;
+                                    mstrObj.InsertDoctors();
+
+                                    //roleObj.RoleID = Guid.Parse(item.Value);
+                                    //roleObj.AssignRole();
+                                }
+                            }
+                        }
+
+
+
                         roleObj.RoleID = Guid.Parse(item.Value);
                         roleObj.AssignRole();
                     }
@@ -480,6 +572,12 @@ namespace TheClinicApp1._1.Admin
 
 
 
+        }
+
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
         }
 
 

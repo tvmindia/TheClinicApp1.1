@@ -13,6 +13,15 @@ namespace TheClinicApp1._1.MasterAdd {
     public partial class Units {
         
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        
+        /// <summary>
         /// admin control.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,15 @@ namespace TheClinicApp1._1.MasterAdd {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl master;
         
         /// <summary>
+        /// Logout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor Logout;
+        
+        /// <summary>
         /// lblClinicName control.
         /// </summary>
         /// <remarks>
@@ -40,13 +58,13 @@ namespace TheClinicApp1._1.MasterAdd {
         protected global::System.Web.UI.WebControls.Label lblClinicName;
         
         /// <summary>
-        /// btSave control.
+        /// btnSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor btSave;
+        protected global::System.Web.UI.WebControls.Button btnSave;
         
         /// <summary>
         /// Errorbox control.
@@ -83,6 +101,24 @@ namespace TheClinicApp1._1.MasterAdd {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtDescription;
+        
+        /// <summary>
+        /// imgWebLnames control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgWebLnames;
+        
+        /// <summary>
+        /// errorLnames control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image errorLnames;
         
         /// <summary>
         /// txtCOde control.

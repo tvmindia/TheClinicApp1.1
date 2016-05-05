@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+     <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
 
          <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -16,7 +17,11 @@
      <script>
       $(document).ready(function () {
          
-         
+          var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+          LnameImage.style.display = "none";
+          var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+          errLname.style.display = "none";
+
 
           $('.alert_close').click(function () {
               $(this).parent(".alert").hide();
@@ -31,6 +36,43 @@
 
 
       });
+
+         //---------------* Function to check  Unit duplication *--------------//
+
+         function CheckUnitDuplication(txtCategoryName) {
+             debugger;
+             var name = document.getElementById('<%=txtDescription.ClientID %>').value;
+             name = name.replace(/\s/g, '');
+
+             PageMethods.ValidateUnit(name, OnSuccess, onError);
+
+             function OnSuccess(response, userContext, methodName) {
+
+                 var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                 var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                 if (response == false) {
+
+                     LnameImage.style.display = "block";
+                     errLname.style.display = "none";
+
+                 }
+                 if (response == true) {
+                     errLname.style.display = "block";
+                     errLname.style.color = "Red";
+                     errLname.innerHTML = "Name Alreay Exists"
+                     LnameImage.style.display = "none";
+
+                 }
+             }
+             function onError(response, userContext, methodName) {
+
+             }
+         }
+
+
+
+
+
          </script>
 
 
@@ -47,6 +89,7 @@
          <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
           <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
          <li id="master" runat="server" class="active"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+             <li><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
          </ul>
          
          <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
@@ -86,7 +129,11 @@
                                     <input class="button" type="submit" value="Search" />
                                 </div>--%>
                                 <ul class="top_right_links">
-                                    <li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick"><span></span>Save</a></li>
+                                    <li>
+                                        <%--<a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick"><span></span>Save</a>--%>
+                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btSave_ServerClick" />
+
+                                    </li>
                                     <li><a class="new"  href="Units.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
@@ -124,13 +171,16 @@
                             <div class="tab_table">
 
                                 <div class="row field_row">  
-      <div class="col-lg-4">
+      <div class="col-lg-8">
      
-              <label for="name">Description</label><input id="txtDescription" runat="server" type="text" name="name" required  />
+              <label for="name">Description</label><input id="txtDescription" runat="server" type="text" name="name" required onchange="CheckUnitDuplication();"  />
+           <asp:Image ID="imgWebLnames" runat="server" ToolTip="Desciption is Available" ImageUrl="~/Images/newfff.png" />
 
+
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Desciption is Unavailable" ImageUrl="~/Images/newClose.png" />
 
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-8">
           <label for="name">Code</label><input id="txtCOde" runat="server" type="text" name="name" required  />
 
       </div>

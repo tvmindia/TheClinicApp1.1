@@ -543,6 +543,96 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Delete Doctor By Name
 
+
+        #region Get Doctor By Name
+
+        public string GetDoctorIdByName()
+        {
+            string DoctorRoleID = string.Empty;
+
+            dbConnection dcon = null;
+
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetDoctorIdByDoctorName]";
+
+                cmd.Parameters.Add("@DoctorName", SqlDbType.NVarChar,255).Value = DoctorName;
+             
+
+                object ID = cmd.ExecuteScalar();
+                if (ID != null)
+                {
+                    DoctorRoleID = ID.ToString();
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+
+            return DoctorRoleID;
+
+
+        }
+
+
+        #endregion Get Doctor By Name
+
+        
+
+            //SqlConnection con = null;
+            //DataTable dtUsers = null;
+            //try
+            //{
+            //    dtUsers = new DataTable();
+            //    dbConnection dcon = new dbConnection();
+            //    con = dcon.GetDBConnection();
+            //    SqlCommand cmd = new SqlCommand("GetDoctorIdByDoctorName", con);
+
+            //    cmd.CommandType = CommandType.StoredProcedure;
+
+
+            //    cmd.Parameters.Add("@DoctorName", SqlDbType.NVarChar,255).Value = DoctorName;
+
+            //    SqlDataAdapter adapter = new SqlDataAdapter();
+            //    adapter.SelectCommand = cmd;
+            //    adapter.Fill(dtUsers);
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    var page = HttpContext.Current.CurrentHandler as Page;
+            //    eObj.ErrorData(ex, page);
+
+            //}
+            //finally
+            //{
+            //    if (con != null)
+            //    {
+            //        con.Dispose();
+            //    }
+
+            //}
+            //return dtUsers;
+       
+
         public bool GetDoctorIDInVisits()
         {
             bool IDusedOrNot = false;
@@ -924,6 +1014,169 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion  Delete unit By UnitId
+
+
+        #region View PrescDT By Unit
+        public DataTable GetPrescDTByUnit()
+        {
+            SqlConnection con = null;
+            DataTable dtUnit = null;
+            try
+            {
+                dtUnit = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetPrescDTByUnit", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar,255).Value = Description;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUnit);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUnit;
+        }
+
+        #endregion View PrescDT By Unit
+
+        #region View ReceiptDT By Unit
+        public DataTable GetReceiptDTByUnit()
+        {
+            SqlConnection con = null;
+            DataTable dtUnit = null;
+            try
+            {
+                dtUnit = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetReceiptDTByUnit", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 255).Value = Description;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUnit);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUnit;
+        }
+
+        #endregion  View ReceiptDT By Unit
+
+        #region Get Medicine By Unit
+        public DataTable GetMedicineByUnit()
+        {
+            SqlConnection con = null;
+            DataTable dtUnit = null;
+            try
+            {
+                dtUnit = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetMedicineByUnit", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 255).Value = Description;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUnit);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUnit;
+        }
+
+        #endregion  Get Medicine By Unit
+
+        #region Validate Unit
+        public bool CheckUnitDuplication(string UnitDescription)
+        {
+            bool flag;
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckUnitDuplication", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@unit", SqlDbType.VarChar, 255).Value = UnitDescription;
+                SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
+                outflag.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                flag = (bool)outflag.Value;
+                if (flag == true)
+                {
+                    return flag;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+            return false;
+        }
+
+        #endregion Validate Unit
 
 
 

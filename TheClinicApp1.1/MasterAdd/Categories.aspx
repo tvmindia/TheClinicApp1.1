@@ -104,6 +104,7 @@
                 <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
                 <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                 <li id="master" runat="server" class="active"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+                <li><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
             </ul>
 
             <p class="copy">&copy;
@@ -195,13 +196,17 @@
                                      
                                     
       <div class="col-lg-8">
-      <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" required/>
+      <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" onchange="CheckCategoryNameDuplication(this)"   />
+       <asp:Image ID="imgWebLnames" runat="server" ToolTip="Category name is Available" ImageUrl="~/Images/newfff.png" />
+
+
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Category name is Unavailable" ImageUrl="~/Images/newClose.png" />
       </div>      
      
 
 
 
-                                    <div class="col-lg-4">
+                                    <%--<div class="col-lg-4">--%>
 
                                       
 
@@ -214,17 +219,14 @@
 
                                         </asp:RequiredFieldValidator>--%>
 
-                                    </div>
-                                      <div class="col-lg-4">
+                                   <%-- </div>--%>
+                                      <%--<div class="col-lg-4">--%>
                                
-                                          <br />
-                                             <br />
+                                          <%--<br />
+                                             <br />--%>
 
-                                    <asp:Image ID="imgWebLnames" runat="server" ToolTip="Category name is Available" ImageUrl="~/Images/newfff.png" />
-
-
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Category name is Unavailable" ImageUrl="~/Images/newClose.png" />
-                                           </div>
+                                   
+                                           <%--</div>--%>
 
                                        
                                      

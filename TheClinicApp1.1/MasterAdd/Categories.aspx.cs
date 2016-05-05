@@ -28,6 +28,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         [WebMethod]
         public static bool ValidateCategoryName(string CategoryName)
+        
         {
             Category CategoryObj = new Category();
 
@@ -118,6 +119,12 @@ namespace TheClinicApp1._1.MasterAdd
              msg = "Already used . Can't be deleted";
              eObj.DeletionNotSuccessMessage(page, msg);
          }
+        }
+
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
         }
     }
 }
