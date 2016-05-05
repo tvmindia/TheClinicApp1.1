@@ -42,6 +42,7 @@ namespace TheClinicApp1._1.Doctor
             listFilter = GetMedicineNames();
             NameBind = null;
             NameBind = BindName();
+            
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];          
