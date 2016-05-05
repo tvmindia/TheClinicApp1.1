@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
 
-
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
    
@@ -27,6 +27,8 @@
             test('.nav_menu').click(function () {
                 test(".main_body").toggleClass("active_close");
             });
+
+            SetPageIDCalled('Pharmacy');
 
             var ac=null;
             ac = <%=NameBind %>;
@@ -135,7 +137,9 @@
                 {        
                     if (ControlNo >= 0) 
                     {                  
-                        document.getElementById('txtMedUnit' + ControlNo).value = response;                       
+                        var MedicineDetails = new Array();
+                        MedicineDetails = response.split('|');
+                        document.getElementById('txtMedUnit' + ControlNo).value = MedicineDetails[0];                       
                     }   
                 }  
                 function onError(response, userContext, methodName) {       
@@ -144,7 +148,7 @@
 
             function focuscontrol(ControlNo)
             {
-                document.getElementById('txtMedDos' + ControlNo).focus();
+                document.getElementById('txtMedQty' + ControlNo).value="";
             }                 
            
 
@@ -311,7 +315,7 @@
                                     <td>
                                         <input id="txtMedName0" type="text" placeholder="Medicine" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
                                     <td>
-                                        <input id="txtMedQty0" type="text" placeholder="Qty" class="input" onblur="focuscontrol(0)" /></td>
+                                        <input id="txtMedQty0" type="text" placeholder="Qty" class="input" onfocus="focuscontrol(0)" onblur="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
                                     <td>
                                         <input id="txtMedUnit0" class="input" readonly="true" type="text" placeholder="Unit" /></td>
                                     <td>

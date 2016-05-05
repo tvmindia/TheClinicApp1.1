@@ -179,7 +179,7 @@ namespace TheClinicApp1._1.Pharmacy
         [WebMethod]
 
         public static string MedDetails(string MedName)
-        {
+            {
             IssueHeaderDetails IssuedtlsObj = new IssueHeaderDetails();
 
             UIClasses.Const Const = new UIClasses.Const();
@@ -191,15 +191,16 @@ namespace TheClinicApp1._1.Pharmacy
 
             DataSet ds = IssuedtlsObj.GetMedicineDetailsByMedicineName(MedName);
             string Unit = "";
-
+            string Quantity="";
 
             if (ds.Tables[0].Rows.Count > 0)
             {
                 Unit = Convert.ToString(ds.Tables[0].Rows[0]["Unit"]);
+                Quantity = Convert.ToString(ds.Tables[0].Rows[0]["Qty"]);
 
             }
 
-            return String.Format("{0}", Unit);
+            return String.Format("{0}"+"|"+"{1}", Unit,Quantity);
 
 
         }
@@ -244,6 +245,7 @@ namespace TheClinicApp1._1.Pharmacy
         protected void btnSave_Click(object sender, EventArgs e)
         {
             string msg = string.Empty;
+             
 
             if (hdnsave.Value == "" && lblPatientName.Text != "Patient_Name")
             {
