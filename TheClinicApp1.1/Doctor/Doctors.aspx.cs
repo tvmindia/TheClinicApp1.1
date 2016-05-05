@@ -315,6 +315,7 @@ namespace TheClinicApp1._1.Doctor
         #region FillPatientDetails
         protected void ImgBtnUpdate_Command1(object sender, CommandEventArgs e)
         {
+            ClearButton();
             lblErrorCaption.Text = string.Empty;
             lblMsgges.Text = string.Empty;
             Errorbox.Style["display"] = "none";
@@ -459,13 +460,18 @@ namespace TheClinicApp1._1.Doctor
         #region NewButtonClickEvent
         protected void btnNew_ServerClick(object sender, EventArgs e)
         {
+            ClearButton();
+        }
+        #endregion NewButtonClickEvent
+
+        public void ClearButton()
+        {
             HdnForVisitID.Value = string.Empty;
             HdnPrescID.Value = string.Empty;
             lblErrorCaption.Text = string.Empty;
             lblMsgges.Text = string.Empty;
             Errorbox.Style["display"] = "none";
         }
-        #endregion NewButtonClickEvent
 
         #region WebMethod
 
