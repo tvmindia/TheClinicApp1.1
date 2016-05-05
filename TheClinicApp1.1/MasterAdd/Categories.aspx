@@ -195,13 +195,17 @@
                                      
                                     
       <div class="col-lg-8">
-      <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" required/>
+      <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" onchange="CheckCategoryNameDuplication(this)"   />
+       <asp:Image ID="imgWebLnames" runat="server" ToolTip="Category name is Available" ImageUrl="~/Images/newfff.png" />
+
+
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Category name is Unavailable" ImageUrl="~/Images/newClose.png" />
       </div>      
      
 
 
 
-                                    <div class="col-lg-4">
+                                    <%--<div class="col-lg-4">--%>
 
                                       
 
@@ -214,17 +218,14 @@
 
                                         </asp:RequiredFieldValidator>--%>
 
-                                    </div>
-                                      <div class="col-lg-4">
+                                   <%-- </div>--%>
+                                      <%--<div class="col-lg-4">--%>
                                
-                                          <br />
-                                             <br />
+                                          <%--<br />
+                                             <br />--%>
 
-                                    <asp:Image ID="imgWebLnames" runat="server" ToolTip="Category name is Available" ImageUrl="~/Images/newfff.png" />
-
-
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Category name is Unavailable" ImageUrl="~/Images/newClose.png" />
-                                           </div>
+                                   
+                                           <%--</div>--%>
 
                                        
                                      

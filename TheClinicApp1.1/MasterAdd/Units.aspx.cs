@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
@@ -127,5 +128,23 @@ namespace TheClinicApp1._1.MasterAdd
             }
            
         }
+
+
+        #region Validate Unit 
+
+        [WebMethod]
+        public static bool ValidateUnit(string Unit)
+        {
+            Master mstrObj = new Master();
+
+            if (mstrObj.CheckUnitDuplication(Unit))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion  Validate Unit
+
     }
 }
