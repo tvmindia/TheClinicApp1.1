@@ -764,9 +764,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.CommandText = "[InsertUnits]";
                 //pud.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
                 pud.Parameters.Add("@Code", SqlDbType.NVarChar, 255).Value = Code;
-                pud.Parameters.Add("@Description", SqlDbType.VarBinary, 255).Value = Description;
-                pud.Parameters.Add("@ClinicID", SqlDbType.VarBinary, 255).Value = ClinicID;
-                pud.Parameters.Add("@CreatedBY", SqlDbType.DateTime).Value = createdBy;
+                pud.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
+                pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar,255).Value = createdBy;
                 //pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 //pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
                 //pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
