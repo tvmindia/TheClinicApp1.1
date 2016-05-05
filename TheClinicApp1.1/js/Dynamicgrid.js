@@ -687,7 +687,7 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
 
 function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
-
+   
     //var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
 
     var XmlDataFromHF = document.getElementById(hdnXmlData).value;
@@ -700,7 +700,7 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
         //document.getElementById('<%=txtIssueNO.ClientID %>').readOnly = true;
 
         $.each(Medicines, function () {
-           
+        
             if (i > 0) {
                 clickAdd(i);
             }
@@ -718,7 +718,15 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
             //var MedicineCategory = $(this).find("CategoryName").text();
             var MedicineQuantity = $(this).find("Qty").text();
             var UniqueID = $(this).find("UniqueID").text();
-            //var QtyInStock = $(this).find("QtyInStock").text();
+            var QtyInStock = $(this).find("MedQTY").text();
+
+            var PresQty = parseInt(MedicineQuantity);
+            var  stockQty=parseInt(QtyInStock);
+
+            if (stockQty < PresQty)
+            {
+                document.getElementById('txtMedQty' + i).style.color = "red";
+            }
 
             document.getElementById('txtMedName' + i).value = MedicineName;
             document.getElementById('txtMedQty' + i).value = MedicineQuantity;

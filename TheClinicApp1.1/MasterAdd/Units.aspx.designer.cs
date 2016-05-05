@@ -10,16 +10,7 @@
 namespace TheClinicApp1._1.MasterAdd {
     
     
-    public partial class Categories {
-        
-        /// <summary>
-        /// ScriptManager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
+    public partial class Units {
         
         /// <summary>
         /// admin control.
@@ -49,13 +40,13 @@ namespace TheClinicApp1._1.MasterAdd {
         protected global::System.Web.UI.WebControls.Label lblClinicName;
         
         /// <summary>
-        /// btnSave control.
+        /// btSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btSave;
         
         /// <summary>
         /// Errorbox control.
@@ -85,84 +76,30 @@ namespace TheClinicApp1._1.MasterAdd {
         protected global::System.Web.UI.WebControls.Label lblMsgges;
         
         /// <summary>
-        /// divDisplayNumber control.
+        /// txtDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDisplayNumber;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtDescription;
         
         /// <summary>
-        /// lblDisplayFileNumber control.
+        /// txtCOde control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDisplayFileNumber;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCOde;
         
         /// <summary>
-        /// lblFileCount control.
+        /// dtgViewAllUnits control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFileCount;
-        
-        /// <summary>
-        /// lblTokenNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTokenNumber;
-        
-        /// <summary>
-        /// lblTokencount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTokencount;
-        
-        /// <summary>
-        /// txtCategoryName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCategoryName;
-        
-        /// <summary>
-        /// imgWebLnames control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgWebLnames;
-        
-        /// <summary>
-        /// errorLnames control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image errorLnames;
-        
-        /// <summary>
-        /// dtgViewAllCategories control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dtgViewAllCategories;
+        protected global::System.Web.UI.WebControls.GridView dtgViewAllUnits;
     }
 }

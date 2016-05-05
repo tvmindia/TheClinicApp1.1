@@ -11,24 +11,18 @@
    
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/fileinput.js"></script>
-
-   
-    <script src="../js/jquery-1.12.0.min.js"></script>
-    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-   
-    <script src="../js/jquery-ui.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/fileinput.js"></script>
-    
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
- 
+    <script src="../js/fileinput.js"></script> 
+    <script src="../js/vendor/jquery-1.11.1.min.js"></script> 
     <script src="../js/JavaScript_selectnav.js"></script>
-    <script src="../js/Dynamicgrid.js"></script>
+    <script src="../js/Dynamicgrid.js"></script> 
 
     <script>
         var test = jQuery.noConflict();
         test(document).ready(function () {
+   
+            test('.alert_close').click(function () {
+                test(this).parent(".alert").hide();
+            });	
 
             test('.nav_menu').click(function () {
                 test(".main_body").toggleClass("active_close");
@@ -77,7 +71,7 @@
      <script> 
           function bindPatientDetails()
           {
-              debugger;
+              
                var PatientName = document.getElementById("project-description").innerText;
                     
             var file=PatientName.split('|')      
@@ -234,13 +228,15 @@
             </div>
             <div class="grey_sec">
                 <div class="search_div">
-                    <input class="field" type="search" placeholder="Search here..." />
-                    <input class="button" type="submit" value="Search" />
+                     <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." autofocus="autofocus"/>
+                    <input type="hidden" id="project-id"/>
+                    <p id="project-description" style="display:none"></p>
+                    <input class="button" type="button" value="Search" />
                 </div>
                 <ul class="top_right_links">
                     <li>
                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" /></li>
-                    <li><a class="new" href="#"><span></span>New</a></li>
+                    <li><a class="new" href="Pharmacy.aspx"><span></span>New</a></li>
                 </ul>
             </div>
             <div class="right_form">
@@ -351,6 +347,9 @@
                <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
                 <asp:HiddenField ID="hdnTextboxValues" runat="server" />             
                 <asp:HiddenField ID="hdnRemovedIDs" runat="server" />
+
+          <asp:HiddenField ID="hdnsave" Value="" runat="server" />
+
     </div>
 
 
@@ -396,19 +395,4 @@
 
 
 
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/JavaScript_selectnav.js"></script>
-    <script src="../js/Dynamicgrid.js"></script>
-
-    <script>
-        var test = jQuery.noConflict();
-        test(document).ready(function () {
-
-            test('.nav_menu').click(function () {
-                test(".main_body").toggleClass("active_close");
-            });
-
-        });
-    </script>
 </asp:Content>

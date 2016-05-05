@@ -173,6 +173,155 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Validate Category Name
 
+        #region View All Category
+
+        public DataTable ViewAllCategory()
+        {
+            SqlConnection con = null;
+            DataTable dtUsers = null;
+            try
+            {
+                dtUsers = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ViewCategory", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUsers);
+                return dtUsers;
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+                throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+        #endregion View All Category
+
+        public void DeleteCategoryById()
+        {
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteCategories";
+                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value =CategoryID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() == "")
+                {
+                    //not successfull   
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.DeletionNotSuccessMessage(page);
+
+                }
+                else
+                {
+                    //successfull
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.DeleteSuccessMessage(page);
+
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+
+         #region View Medicines By CategoryID
+
+
+
+        public DataTable ViewMedicinesByCategoryID()
+        {
+            SqlConnection con = null;
+            DataTable dtRoles = null;
+            try
+            {
+                dtRoles = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ViewMedicinesByCategoryID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = CategoryID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtRoles);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+                //throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+            return dtRoles;
+        }
+
+
+
+
+
+
+
+        #endregion View Medicines By CategoryID
+       
+
         #endregion Methods
 
     }
