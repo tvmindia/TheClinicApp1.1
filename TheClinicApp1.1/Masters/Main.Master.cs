@@ -26,12 +26,6 @@ namespace TheClinicApp1._1.Masters
 
             AccessCheck();
            
-            
-
-
-
-
-
         }
 
 

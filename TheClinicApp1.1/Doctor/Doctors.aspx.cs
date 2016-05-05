@@ -170,11 +170,12 @@ namespace TheClinicApp1._1.Doctor
             VisitsObj.Others = (others.Value != "") ? others.Value.ToString() : null;
             if (HdnForVisitID.Value == "")
             {
-                if (hdnRemovedIDs.Value == "")
+                if (hdnRemovedIDs.Value.Trim()==string.Empty)
                 {
                     VisitsObj.AddVisits();
                     PrescriptionHeadObj.PrescID = VisitsObj.PrescriptionID.ToString();
                     PrescriptionHeadObj.VisitID = VisitsObj.VisitID.ToString();
+                    HdnForVisitID.Value = VisitsObj.VisitID.ToString();
                     PrescriptionHeadObj.ClinicID = UA.ClinicID.ToString();
                     PrescriptionHeadObj.CreatedBy = UA.userName;
                     PrescriptionHeadObj.UpdatedBy = UA.userName;
@@ -217,10 +218,26 @@ namespace TheClinicApp1._1.Doctor
                     {
 
                         PrescriptionObj.MedicineName = columns[0];
-                        if (columns[1] != "")
+                        //if(int.Equals(columns[1].GetType()))
+                        //{
+
+                        //}
+                        int parsedValue;
+                        if (int.TryParse(columns[1], out parsedValue))
                         {
-                            PrescriptionObj.Qty = Convert.ToInt32(columns[1]);
+                            if (parsedValue >=1)
+                            {
+                                PrescriptionObj.Qty = parsedValue;
+                            }
                         }
+                        else
+                        {
+                            string msg = string.Empty;
+                            var page = HttpContext.Current.CurrentHandler as Page;
+                            msg = "Your Entered Quantity Fails to Match Please Update With a Valid Quantity";
+                            eObj.InsertionNotSuccessMessage(page, msg);
+                        }
+                        
                         PrescriptionObj.Unit = columns[2];
                         PrescriptionObj.Dosage = columns[3];
                         PrescriptionObj.Timing = columns[4];
