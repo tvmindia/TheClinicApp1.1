@@ -28,6 +28,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         [WebMethod]
         public static bool ValidateCategoryName(string CategoryName)
+        
         {
             Category CategoryObj = new Category();
 
