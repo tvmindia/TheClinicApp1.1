@@ -687,7 +687,7 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
 
 function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
-    debugger;
+   
     //var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
 
     var XmlDataFromHF = document.getElementById(hdnXmlData).value;
@@ -700,7 +700,7 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
         //document.getElementById('<%=txtIssueNO.ClientID %>').readOnly = true;
 
         $.each(Medicines, function () {
-            debugger;
+        
             if (i > 0) {
                 clickAdd(i);
             }
