@@ -244,6 +244,7 @@
     <Content Include="Login\Forgot.aspx" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Login\Reset.aspx" />
+    <Content Include="MasterAdd\AddDoctor.aspx" />
     <Content Include="MasterAdd\Categories.aspx" />
     <Content Include="MasterAdd\Medicnes.aspx" />
     <Content Include="MasterAdd\Units.aspx" />
@@ -426,6 +427,13 @@
     </Compile>
     <Compile Include="Login\Reset.aspx.designer.cs">
       <DependentUpon>Reset.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterAdd\AddDoctor.aspx.cs">
+      <DependentUpon>AddDoctor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdd\AddDoctor.aspx.designer.cs">
+      <DependentUpon>AddDoctor.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterAdd\Categories.aspx.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
