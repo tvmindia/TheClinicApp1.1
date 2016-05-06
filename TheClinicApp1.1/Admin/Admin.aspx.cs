@@ -376,6 +376,7 @@ namespace TheClinicApp1._1.Admin
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             lblClinicName.Text = UA.Clinic;
+            lblUserName.Text = "👤 " + UA.userName + " "; 
 
               string msg = string.Empty;
 
@@ -639,6 +640,12 @@ namespace TheClinicApp1._1.Admin
         #endregion Events
 
         protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");

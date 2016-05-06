@@ -99,7 +99,9 @@
          <div class="right_part">
          <div class="tagline">
          <a class="nav_menu">Menu</a>
-        Masters</div>
+        Masters <ul class="top_right_links"><li>
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click"  formnovalidate /></li></ul></div>
           
               <div class="icon_box">
 
@@ -173,17 +175,17 @@
                                 <div class="row field_row">  
       <div class="col-lg-8">
      
-              <label for="name">Description</label><input id="txtDescription" runat="server" type="text" name="name" required onchange="CheckUnitDuplication();"  />
+              <label for="name">Unit</label><input id="txtDescription" runat="server" type="text" name="name" required onchange="CheckUnitDuplication();"  />
            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Desciption is Available" ImageUrl="~/Images/newfff.png" />
 
 
                                     <asp:Image ID="errorLnames" runat="server" ToolTip="Desciption is Unavailable" ImageUrl="~/Images/newClose.png" />
 
       </div>
-      <div class="col-lg-8">
+     <%-- <div class="col-lg-8">
           <label for="name">Code</label><input id="txtCOde" runat="server" type="text" name="name" required  />
 
-      </div>
+      </div>--%>
 
 
 
@@ -237,13 +239,13 @@
 
 
 
-                            <asp:BoundField DataField="Description" HeaderText="Description">
+                            <asp:BoundField DataField="Description" HeaderText="Unit">
                                
                             </asp:BoundField>
                            
-                               <asp:BoundField DataField="Code" HeaderText="Code">
+                               <%--<asp:BoundField DataField="Code" HeaderText="Code">
                                
-                            </asp:BoundField>
+                            </asp:BoundField>--%>
 
                         
 
