@@ -434,6 +434,7 @@ ul.menu li:first-child.active { border-top: 1px solid #1f4bb4;}
 ul.menu li.active a, ul.menu li.active:hover a { color: #fff; border-left: 5px solid #3661c7; }
 
 ul.menu li:hover a { color: #3661c7; border-left: 5px solid #3661c7; }
+ul.menu li:hover a.logout { color: #ff0000; border-left: 5px solid #ff0000; }
 
 .active_close ul.menu li a, .active_close ul.menu li:hover a, .active_close ul.menu li.active a {border: 0;}
 .active_close ul.menu li:hover a span.text {opacity: 1; left: 50px; background: #3661c7; color: #fff; padding-left: 10px;

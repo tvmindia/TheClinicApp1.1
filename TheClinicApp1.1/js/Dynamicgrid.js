@@ -144,7 +144,7 @@ function clickAdd(id) {
     // ADD new row with fields needed.
     $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;border:0;">'
              + ' <td ><input id="txtMedName' + iCnt + '" type="text" placeholder="Medicine' + iCnt + '" class="input"  onblur="BindMedunitbyMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
-                + '<td ><input id="txtMedQty' + iCnt + '" type="text"  placeholder="Qty' + iCnt + '" class="input" onblur="focuscontrol(' + iCnt + ')"/></td>'
+                + '<td ><input id="txtMedQty' + iCnt + '" type="text"  placeholder="Qty' + iCnt + '" class="input" onfocus="focuscontrol(' + iCnt + ')" onblur="CheckPharmacyMedicineIsOutOfStock(' + iCnt + ')" onchange="RemoveWarningPharm(' + iCnt + ')" autocomplete="off"/></td>'
                 + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true"  class="input" type="text" placeholder="Unit' + iCnt + '" /></td>'
                 + '<td ><input id="txtMedDos' + iCnt + '" type="text" placeholder="Dosage' + iCnt + '" class="input"/></td>'
                 + '<td><input id="txtMedTime' + iCnt + '" type="text" placeholder="Timing' + iCnt + '" class="input"/></td>'
@@ -763,3 +763,139 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
 
 }
+
+
+
+
+//----------------------Pharmacy-------------//
+
+function RemoveWarningPharm(ControlNo) {
+    debugger;
+
+    //--------------* To remove warning msg from textbox if the medicine is not out of stock , and is called onfocus event of quantity textbox *-------------------//
+    if ((document.getElementById('txtMedQty' + ControlNo).value) != 'Sorry! Out Of stock') {
+
+
+        $("#txtMedQty" + ControlNo).removeClass("warning");
+        $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
+        $("#txtMedQty" + ControlNo).attr('type', 'number');
+    }
+
+}
+
+function CheckPharmacyMedicineIsOutOfStock(ControlNo)
+{
+
+    debugger;
+    var Qty1
+
+    if (PageCalledFrom != 'doctor page')
+    {
+        if (document.getElementById('txtMedName' + ControlNo) != null && document.getElementById('txtMedQty' + ControlNo) != null)
+        {
+
+            if (isNaN(document.getElementById('txtMedQty' + ControlNo).value) == false && (document.getElementById('txtMedQty' + ControlNo).value != ""))
+            {
+                var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
+
+                debugger;
+                PageMethods.MedDetails(MedicineName, OnSuccess, onError);
+                debugger;
+                function OnSuccess(response, userContext, methodName)
+                {
+                    debugger;
+                    if (ControlNo >= 0)
+                    {
+                        var MedicineDetails = new Array();
+                        MedicineDetails = response.split('|');
+                        debugger;
+                        Qty1 = MedicineDetails[1]; //  setting existing stock quantity using page method
+
+                        if (isNaN(Qty1) == false) {
+                           
+                            var Qty = Number(Qty1);
+                            var InputQty = Number(document.getElementById('txtMedQty' + ControlNo).value);
+
+
+                            if ((MedicineName != "") && (Qty != 0))
+                            {
+
+                              
+                              
+
+                                    if (Qty <= 0) {
+                                        $("#txtMedQty" + ControlNo).addClass("warning");
+                                        $("#txtMedQty" + ControlNo).attr('type', 'text');
+                                        $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
+
+                                        $("#txtMedQty" + ControlNo).val('No Stock');
+
+                                    }
+
+                                    else if (InputQty > Qty || InputQty <= 0) {
+                                        $("#txtMedQty" + ControlNo).addClass("warning");
+                                        $("#txtMedQty" + ControlNo).attr('type', 'text');
+                                        $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
+
+                                        if (InputQty > Qty) {
+                                            $("#txtMedQty" + ControlNo).val('Qty<=' + Qty);
+                                        }
+
+                                        if (InputQty <= 0) {
+                                            $("#txtMedQty" + ControlNo).val('Qty > 0');
+                                        }
+
+                                    }
+                                    else {
+                                        $("#txtMedQty" + ControlNo).removeClass("warning");
+                                        $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
+                                        $("#txtMedQty" + ControlNo).attr('type', 'number');
+                                    }
+                               
+                               
+                            }
+
+                        }
+                    }
+
+                }
+                function onError(response, userContext, methodName) { }
+               
+            }
+          
+            
+//
+
+        }
+    }
+
+
+
+    else {
+        if (PageCalledFrom == 'doctor page')//doctor page
+        {
+              debugger;
+
+            var InputQty = document.getElementById('txtMedQty' + ControlNo).value;
+
+            if (document.getElementById('txtMedQty' + ControlNo).value != "") {
+
+                InputQty = Number(document.getElementById('txtMedQty' + ControlNo).value);
+
+                if (InputQty <= 0) {
+                    $("#txtMedQty" + ControlNo).addClass("warning");
+                    $("#txtMedQty" + ControlNo).attr('type', 'text');
+                    $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
+
+                    if (InputQty <= 0)
+                        $("#txtMedQty" + ControlNo).val('Must be > 0');
+
+
+                }
+            }
+        }
+    }
+
+
+}
+
