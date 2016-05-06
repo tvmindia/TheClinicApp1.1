@@ -40,6 +40,7 @@ namespace TheClinicApp1._1.Pharmacy
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
+            lblUserName.Text = "👤 " + Login + " ";
             dtRols = UA.GetRoleName1(Login);
             foreach (DataRow dr in dtRols.Rows)
             {
@@ -306,6 +307,12 @@ namespace TheClinicApp1._1.Pharmacy
         }
 
         protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");

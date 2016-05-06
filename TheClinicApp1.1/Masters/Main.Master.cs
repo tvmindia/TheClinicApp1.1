@@ -57,7 +57,7 @@ namespace TheClinicApp1._1.Masters
 
                 
 
-                if (currRole==null) { Response.Redirect(Const.AccessDeniedURL); }
+                if (currRole.Count==0) { Response.Redirect(Const.AccessDeniedURL); }
 
                 if (currPage != Const.AccessDenied)
                 {
@@ -77,6 +77,14 @@ namespace TheClinicApp1._1.Masters
                             From = From + Const.Admin;
                             redirectURL = Const.AccessDeniedURL + From;
                         } 
+                    }
+                    if (currPage == Const.MasterPage)
+                    {
+                        if (!(currRole.Contains(Const.RoleAdministrator)))
+                        {
+                            From = From + Const.Admin;
+                            redirectURL = Const.AccessDeniedURL + From;
+                        }
                     }
 
 

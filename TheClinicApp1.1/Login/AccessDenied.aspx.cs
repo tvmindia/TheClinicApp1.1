@@ -22,7 +22,7 @@ namespace TheClinicApp1._1.Login
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
-            //lblUserName.Text = "👤 " + Login + " ";
+            lblUserName.Text = "👤 " + Login + " ";
             dtRols = UA.GetRoleName1(Login);
             foreach (DataRow dr in dtRols.Rows)
             {
@@ -40,6 +40,12 @@ namespace TheClinicApp1._1.Login
                 From = Request.QueryString["From"].ToString();
                 module.InnerText = From.ToUpper();
             }
+        }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
         }
     }
 }

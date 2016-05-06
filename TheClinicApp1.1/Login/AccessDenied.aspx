@@ -25,7 +25,10 @@
          <div class="right_part">
               <div class="tagline">
          <a class="nav_menu">nav</a>
-               Sorry, You are not authorized to access <span id="module" runat="server" style="width:auto;"></span>info!</div>   
+               Sorry, You are not authorized to access <span id="module" runat="server" style="width:auto;"></span>info!<ul class="top_right_links"><li>
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li></ul>
+         </div>   
     <div class="content padding-t-100">
         <img src="../images/403.png" alt="403- Access denied" style="opacity:0.4; margin:auto;height:100%; width:100%;padding-top:10%;background-color:#FFFFFF"  /> 
     </div>

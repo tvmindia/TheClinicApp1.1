@@ -108,7 +108,13 @@ namespace TheClinicApp1._1.UIClasses
                 return "Admin.aspx";
             }
         }
-
+        public string MasterPage
+        {
+            get
+            {
+                return "Categories.aspx";
+            }
+        }
 
         public string Patient
         {
