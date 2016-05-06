@@ -60,6 +60,7 @@ namespace TheClinicApp1._1.Stock
             rpt.ClinicID = UA.ClinicID.ToString();
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
+            lblUserName.Text = "👤 " + Login + " ";
             dtRols = UA.GetRoleName1(Login);
             foreach (DataRow dr in dtRols.Rows)
             {

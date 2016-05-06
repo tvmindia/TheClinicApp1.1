@@ -205,6 +205,7 @@ namespace TheClinicApp1._1.Stock
             rpt.ClinicID = UA.ClinicID.ToString();
             lblClinicName.Text = UA.Clinic;
             string Login = UA.userName;
+            lblUserName.Text = "👤 " + Login + " ";
             dtRols = UA.GetRoleName1(Login);
             foreach (DataRow dr in dtRols.Rows)
             {
@@ -614,6 +615,12 @@ namespace TheClinicApp1._1.Stock
         #endregion Save Button Click
 
         protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
