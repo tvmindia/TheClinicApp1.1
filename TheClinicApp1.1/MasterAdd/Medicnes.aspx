@@ -167,7 +167,7 @@
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllMedicines" ><span title="View All Medicines" data-toggle="tooltip" data-placement="left" ><img src="../images/AssignUser.png" /></span></a>
+ <a class="all_registration_link" data-toggle="modal" data-target="#AllMedicines" ><span title="View All Medicines" data-toggle="tooltip" data-placement="left" ><img src="../images/medicinesview copy.png" /></span></a>
 
 
                 

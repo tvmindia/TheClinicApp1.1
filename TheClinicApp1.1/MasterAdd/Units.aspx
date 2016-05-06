@@ -103,7 +103,7 @@
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllUnits" ><span title="View All Units" data-toggle="tooltip" data-placement="left" ><img src="../images/AssignUser.png" /></span></a>
+ <a class="all_registration_link" data-toggle="modal" data-target="#AllUnits" ><span title="View All Units" data-toggle="tooltip" data-placement="left" ><img src="../images/units.png" /></span></a>
 
 
                 
