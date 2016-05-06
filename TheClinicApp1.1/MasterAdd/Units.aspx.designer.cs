@@ -121,15 +121,6 @@ namespace TheClinicApp1._1.MasterAdd {
         protected global::System.Web.UI.WebControls.Image errorLnames;
         
         /// <summary>
-        /// txtCOde control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCOde;
-        
-        /// <summary>
         /// dtgViewAllUnits control.
         /// </summary>
         /// <remarks>

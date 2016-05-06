@@ -173,17 +173,17 @@
                                 <div class="row field_row">  
       <div class="col-lg-8">
      
-              <label for="name">Description</label><input id="txtDescription" runat="server" type="text" name="name" required onchange="CheckUnitDuplication();"  />
+              <label for="name">Unit</label><input id="txtDescription" runat="server" type="text" name="name" required onchange="CheckUnitDuplication();"  />
            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Desciption is Available" ImageUrl="~/Images/newfff.png" />
 
 
                                     <asp:Image ID="errorLnames" runat="server" ToolTip="Desciption is Unavailable" ImageUrl="~/Images/newClose.png" />
 
       </div>
-      <div class="col-lg-8">
+     <%-- <div class="col-lg-8">
           <label for="name">Code</label><input id="txtCOde" runat="server" type="text" name="name" required  />
 
-      </div>
+      </div>--%>
 
 
 
@@ -237,13 +237,13 @@
 
 
 
-                            <asp:BoundField DataField="Description" HeaderText="Description">
+                            <asp:BoundField DataField="Description" HeaderText="Unit">
                                
                             </asp:BoundField>
                            
-                               <asp:BoundField DataField="Code" HeaderText="Code">
+                               <%--<asp:BoundField DataField="Code" HeaderText="Code">
                                
-                            </asp:BoundField>
+                            </asp:BoundField>--%>
 
                         
 

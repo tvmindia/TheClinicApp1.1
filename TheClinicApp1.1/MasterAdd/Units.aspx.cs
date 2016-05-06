@@ -52,11 +52,12 @@ namespace TheClinicApp1._1.MasterAdd
 
             string msg = string.Empty;
 
-            if (txtCOde.Value !=string.Empty && txtDescription.Value != string.Empty)
+            if (txtDescription.Value != string.Empty)
             {
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-                mstrObj.Code = txtCOde.Value;
+                //mstrObj.Code = txtCOde.Value;
+                mstrObj.Code = txtDescription.Value;
                 mstrObj.Description = txtDescription.Value;
                 mstrObj.ClinicID = UA.ClinicID;
                 mstrObj.createdBy = UA.userName;
