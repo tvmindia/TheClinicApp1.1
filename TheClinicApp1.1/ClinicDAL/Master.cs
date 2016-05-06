@@ -1249,6 +1249,55 @@ namespace TheClinicApp1._1.ClinicDAL
 
         }
         #endregion BindClinicName
+
+
+
+
+        #region View All Medicines
+        public DataTable ViewAllMedicines()
+        {
+            SqlConnection con = null;
+            DataTable dtMedicines = null;
+            try
+            {
+                dtMedicines = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ViewMedicines", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtMedicines);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtMedicines;
+        }
+
+        #endregion  View All Medicines
+
+
+
+
+
+
+
+
         #endregion Methods
     }
 }

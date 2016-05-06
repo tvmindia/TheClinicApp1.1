@@ -512,7 +512,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion UpdateMedicines 
 
         #region DeleteMedicines
-        public void DeleteMedicines(string MedicineID)
+        public void DeleteMedicines(Guid MedicineID)
         {
 
             dbConnection dcon = null;
@@ -527,7 +527,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandText = "[DeleteMedicines]";
 
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(MedicineID);
+                cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = MedicineID;
 
                 cmd.ExecuteNonQuery();
 
@@ -667,6 +667,130 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         #endregion Search And View MedicineStock
+
+
+
+
+
+        public bool CheckMedicineIDIsUsed()
+        {
+            bool isUsed = false;
+          
+            //dbConnection dcon = null;
+
+            
+          
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckMedicineIDIsUsed", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = MedicineID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
+
+
+
+                SqlParameter outflag = cmd.Parameters.Add("@Cnt", SqlDbType.Bit);
+                outflag.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+
+                object ID = outflag.Value;
+
+
+              isUsed =  Convert.ToBoolean(ID);
+                //if (cnt > 0)
+                //{
+                //    isUsed = true;
+                //}
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+           
+              
+
+
+
+
+
+
+
+
+
+
+
+                //dcon = new dbConnection();
+                //dcon.GetDBConnection();
+                //SqlCommand cmd = new SqlCommand();
+                //cmd.Connection = dcon.SQLCon;
+                //cmd.CommandType = CommandType.StoredProcedure;
+                //cmd.CommandText = "[CheckMedicineIDIsUsed]";
+
+                //cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = MedicineID;
+                //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
+                //object ID = cmd.ExecuteScalar();
+                //if (ID != null)
+                //{
+                // int c =    Convert.ToInt32(ID);
+
+                //    if(c >0)
+                //    {
+                //        isUsed = true;
+                //    }
+                //}
+
+            return isUsed;
+
+
+            }
+
+            //catch (Exception ex)
+            //{
+            //    var page = HttpContext.Current.CurrentHandler as Page;
+            //    //eObj.ErrorData(ex, page);
+
+            //}
+
+            //finally
+            //{
+            //    if (dcon.SQLCon != null)
+            //    {
+            //        dcon.DisconectDB();
+            //    }
+            //}
+
+            //return ds;
+
+            //return isUsed;
+
+
+     
+
+        //}
+
+
+
+
+
+
+
 
         #endregion Medicines
 
