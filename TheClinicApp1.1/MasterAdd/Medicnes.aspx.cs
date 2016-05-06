@@ -231,6 +231,10 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            lblClinicName.Text = UA.Clinic;
+            lblUserName.Text = "👤 " + UA.userName + " "; 
+
             if (!IsPostBack)
             {
                 BindCategory();
@@ -344,6 +348,12 @@ namespace TheClinicApp1._1.MasterAdd
             //StockObj.UpdateMedicines(MedId);
     
 
+        }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
         }
     }
 }

@@ -163,7 +163,9 @@
          <div class="right_part">
          <div class="tagline">
          <a class="nav_menu">Menu</a>
-        Masters</div>
+        Masters <ul class="top_right_links"><li>
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click"   formnovalidate /></li></ul></div>
           
               <div class="icon_box">
 
