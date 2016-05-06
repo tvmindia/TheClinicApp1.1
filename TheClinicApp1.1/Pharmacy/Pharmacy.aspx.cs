@@ -65,7 +65,7 @@ namespace TheClinicApp1._1.Pharmacy
 
 
 
-            btnSave.Attributes.Add("onclick", "GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "')");
+            btnSave.Attributes.Add("onclick", "GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "','"+hdnconfirmsave.ClientID+"')");
 
 
         }
@@ -217,6 +217,8 @@ namespace TheClinicApp1._1.Pharmacy
             string DoctorID = Visits[1];
             pharmacypobj.DoctorID = Guid.Parse(DoctorID);
             pharmacypobj.PatientID = Guid.Parse(PatientId);
+            
+            Patientidtorefill.Value = PatientId;//saving in a hidden field to reill
 
             DataSet ds = tokobj.GetPatientTokenDetailsbyID(PatientId);
 
@@ -245,9 +247,9 @@ namespace TheClinicApp1._1.Pharmacy
         protected void btnSave_Click(object sender, EventArgs e)
         {
             string msg = string.Empty;
-             
 
-            if (hdnsave.Value == "" && lblPatientName.Text != "Patient_Name")
+
+            if (hdnsave.Value == "" && lblPatientName.Text != "Patient_Name" && hdnconfirmsave.Value != "exit")
             {
             issuehdobj.ClinicID = UA.ClinicID.ToString();
             issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
@@ -290,6 +292,13 @@ namespace TheClinicApp1._1.Pharmacy
                          IssuedtlObj.InsertIssueDetails();                  
                }
                hdnsave.Value = "saved";
+               lblPatientName.Text = "PATIENT_NAME";
+               lblAgeCount.Text = "AGE";
+               lblGenderDis.Text = "GENDER";
+               lblFileNum.Text = "FILE NO";
+               lblDoctor.Text = "";
+
+
             }
               else 
             {
@@ -299,7 +308,16 @@ namespace TheClinicApp1._1.Pharmacy
 
                 eObj.InsertionNotSuccessMessage(page, msg);
 
+
+
+                pharmacypobj.PatientID = Guid.Parse(Patientidtorefill.Value);
+
+                DataSet MedicinList = pharmacypobj.PrescriptionDetails();
+                var xml = MedicinList.GetXml();
+                hdnXmlData.Value = xml;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
                  
+            
             
             }
 
