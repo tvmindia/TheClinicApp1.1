@@ -99,11 +99,11 @@
          <div class="right_part">
          <div class="tagline">
          <a class="nav_menu">Menu</a>
-        Administrator</div>
+        Masters</div>
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllUnits" ><span title="View All Units" data-toggle="tooltip" data-placement="left" ><img src="../images/AssignUser.png" /></span></a>
+ <a class="all_registration_link" data-toggle="modal" data-target="#AllUnits" ><span title="View All Units" data-toggle="tooltip" data-placement="left" ><img src="../images/units.png" /></span></a>
 
 
                 
@@ -117,7 +117,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation"><a href="Categories.aspx">Add Categories</a></li>
                         <li role="presentation" class="active"><a href="Units.aspx">Add Units</a></li>
-                        
+                        <li role="presentation" ><a href="Medicnes.aspx">Add Medicines</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">

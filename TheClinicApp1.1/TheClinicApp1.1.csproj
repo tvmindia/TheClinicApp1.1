@@ -185,6 +185,7 @@
     <Content Include="images\Logout.png" />
     <Content Include="images\LogoutWhite.png" />
     <Content Include="images\master.png" />
+    <Content Include="images\medicinesview copy.png" />
     <Content Include="images\menu_separator.png" />
     <Content Include="images\multiuser.png" />
     <Content Include="images\multy-user copy.png" />
@@ -221,7 +222,9 @@
     <Content Include="images\token-hover.png" />
     <Content Include="images\token.png" />
     <Content Include="images\tokens.png" />
+    <Content Include="images\units.png" />
     <Content Include="images\UploadPic1.png" />
+    <Content Include="images\viewdoctor.png" />
     <Content Include="js\ASPSnippets_Pager.min.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\DeletionConfirmation.js" />
@@ -242,6 +245,7 @@
     <Content Include="Login\Forgot.aspx" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Login\Reset.aspx" />
+    <Content Include="MasterAdd\AddDoctor.aspx" />
     <Content Include="MasterAdd\Categories.aspx" />
     <Content Include="MasterAdd\Medicnes.aspx" />
     <Content Include="MasterAdd\Units.aspx" />
@@ -424,6 +428,13 @@
     </Compile>
     <Compile Include="Login\Reset.aspx.designer.cs">
       <DependentUpon>Reset.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterAdd\AddDoctor.aspx.cs">
+      <DependentUpon>AddDoctor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdd\AddDoctor.aspx.designer.cs">
+      <DependentUpon>AddDoctor.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterAdd\Categories.aspx.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
