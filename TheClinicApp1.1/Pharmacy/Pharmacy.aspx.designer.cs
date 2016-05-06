@@ -229,6 +229,24 @@ namespace TheClinicApp1._1.Pharmacy {
         protected global::System.Web.UI.WebControls.HiddenField hdnsave;
         
         /// <summary>
+        /// hdnconfirmsave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnconfirmsave;
+        
+        /// <summary>
+        /// Patientidtorefill control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField Patientidtorefill;
+        
+        /// <summary>
         /// GridViewPharmacylist control.
         /// </summary>
         /// <remarks>

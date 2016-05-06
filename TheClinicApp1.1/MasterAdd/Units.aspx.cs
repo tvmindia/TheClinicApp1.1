@@ -61,9 +61,51 @@ namespace TheClinicApp1._1.MasterAdd
                 mstrObj.Code = txtDescription.Value;
                 mstrObj.Description = txtDescription.Value;
                 mstrObj.ClinicID = UA.ClinicID;
-                mstrObj.createdBy = UA.userName;
+               
 
-                mstrObj.InsertUnits();
+                if (hdnUnitID.Value == string.Empty)
+                {
+
+                     mstrObj.createdBy = UA.userName;
+                    mstrObj.InsertUnits();
+                }
+
+                else
+                {
+                    mstrObj.UnitID = Guid.Parse(hdnUnitID.Value);
+                    mstrObj.updatedBy = UA.userName;
+
+                   
+                    DataTable dt = mstrObj.GetUnitByID();
+
+                    if (dt.Rows.Count > 0)
+                    {
+                         mstrObj.Description =   dt.Rows[0]["Description"].ToString();
+                    }
+
+
+                  bool isUsed = mstrObj.CheckUnitIsUsed();
+
+                  if (isUsed == false)
+                    {
+
+                        mstrObj.Description = txtDescription.Value;
+                        mstrObj.UpdateUnits();
+                    }
+                    else
+                  {
+                      msg = "Already used . Can't be changed";
+                      eObj.InsertionNotSuccessMessage(page, msg);
+                  }
+                  
+
+                    
+                }
+
+
+
+
+
                 BindGridview();
             }
 
@@ -78,6 +120,8 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
+            Errorbox.Attributes.Add("style", "display:none");
+
             bool isUsed = false;
             var page = HttpContext.Current.CurrentHandler as Page;
 
@@ -96,30 +140,42 @@ namespace TheClinicApp1._1.MasterAdd
             GridViewRow row = ib.NamingContainer as GridViewRow;
             Guid UnitId = Guid.Parse(dtgViewAllUnits.DataKeys[row.RowIndex].Value.ToString());
 
+            mstrObj.UnitID = UnitId;
 
-            foreach (DataRow dr in dtUnits.Rows)
+            DataTable dt = mstrObj.GetUnitByID();
+
+            if (dt.Rows.Count > 0)
             {
-                if (dr["UnitID"].ToString() == UnitId.ToString())
-                {
-                    mstrObj.Description = dr["Description"].ToString();
-
-                    DataTable dt1 = mstrObj.GetPrescDTByUnit();
-                    DataTable dt2 = mstrObj.GetReceiptDTByUnit();
-                    DataTable dt3 = mstrObj.GetMedicineByUnit();
-
-
-                    if ( (dt1.Rows.Count > 0) || (dt2.Rows.Count > 0) || (dt3.Rows.Count > 0))
-                    {
-                         msg = "Already used . Can't be deleted";
-                          eObj.DeletionNotSuccessMessage(page, msg);
-                          isUsed = true;
-                          break;
-                    }
-
-
-
-                }
+                mstrObj.Description = dt.Rows[0]["Description"].ToString();
             }
+
+
+             isUsed = mstrObj.CheckUnitIsUsed();
+
+
+            //foreach (DataRow dr in dtUnits.Rows)
+            //{
+            //    if (dr["UnitID"].ToString() == UnitId.ToString())
+            //    {
+            //        mstrObj.Description = dr["Description"].ToString();
+
+            //        DataTable dt1 = mstrObj.GetPrescDTByUnit();
+            //        DataTable dt2 = mstrObj.GetReceiptDTByUnit();
+            //        DataTable dt3 = mstrObj.GetMedicineByUnit();
+
+
+            //        if ( (dt1.Rows.Count > 0) || (dt2.Rows.Count > 0) || (dt3.Rows.Count > 0))
+            //        {
+            //             msg = "Already used . Can't be deleted";
+            //              eObj.DeletionNotSuccessMessage(page, msg);
+            //              isUsed = true;
+            //              break;
+            //        }
+
+
+
+            //    }
+            //}
 
             if (isUsed == false)
             {
@@ -128,7 +184,14 @@ namespace TheClinicApp1._1.MasterAdd
 
                 BindGridview();
             }
-           
+
+            else
+            {
+                msg = "Already used . Can't be deleted";
+                eObj.DeletionNotSuccessMessage(page, msg);
+            }
+
+
         }
 
 
@@ -159,6 +222,32 @@ namespace TheClinicApp1._1.MasterAdd
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
+        }
+
+        protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
+        {
+            Errorbox.Attributes.Add("style", "display:none");
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+
+            ImageButton ib = sender as ImageButton;
+            GridViewRow row = ib.NamingContainer as GridViewRow;
+            Guid UnitID = Guid.Parse(dtgViewAllUnits.DataKeys[row.RowIndex].Value.ToString());
+            hdnUnitID.Value = UnitID.ToString();
+
+            mstrObj.UnitID = UnitID;
+            DataTable dt = mstrObj.GetUnitByID();
+
+            if (dt.Rows.Count > 0)
+            {
+                txtDescription.Value = dt.Rows[0]["Description"].ToString();
+            }
+
+
+
+
+
         }
     }
 }

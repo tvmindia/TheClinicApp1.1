@@ -256,6 +256,8 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
+            Errorbox.Attributes.Add("style", "display:none");
+
             bool isUsed = false;
 
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -296,6 +298,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
         {
+            Errorbox.Attributes.Add("style", "display:none");
 
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 

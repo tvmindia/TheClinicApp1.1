@@ -231,6 +231,15 @@
                         
                         <Columns>
                           
+                            <asp:TemplateField>
+                                    <ItemTemplate>
+                                        
+                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment"  formnovalidate OnClick="ImgBtnUpdate_Click"  />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+
+
                        <asp:TemplateField HeaderText="">
              <ItemTemplate>
               <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate/>
@@ -261,6 +270,6 @@
 
   </div>
         </div>
-
+     <asp:HiddenField ID="hdnUnitID" runat="server" />
 
 </asp:Content>

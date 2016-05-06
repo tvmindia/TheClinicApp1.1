@@ -561,7 +561,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
 // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
 var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
-function GetTextBoxValuesPres(hdnTextboxValues) {
+function GetTextBoxValuesPres(hdnTextboxValues, hdnconfirmsave) {
    
     values = '';
     var i = 1;
@@ -572,7 +572,22 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
     var NumberOfRows = NumberOfColumns / 6;
     var topId = iCnt;
 
-    for (var k = 0; k <= topId; k++) {
+    for (var k = 0; k <= topId; k++)
+    {
+
+        debugger;
+
+        if (document.getElementById('txtMedQty' + k).style.color == "red")
+        {
+            document.getElementById(hdnconfirmsave).value = "exit";
+
+        }
+        else
+        {
+            document.getElementById(hdnconfirmsave).value = "";
+        }
+
+
 
         if (document.getElementById('txtMedName' + k) == null) {
             continue;
@@ -817,7 +832,7 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
                             var InputQty = Number(document.getElementById('txtMedQty' + ControlNo).value);
 
 
-                            if ((MedicineName != "") && (Qty != 0))
+                            if ((MedicineName != ""))
                             {
 
                               

@@ -839,6 +839,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion AddCategories
 
+
+        //--------------Unit
+
+
         #region AddUnit
         public void InsertUnits()
         {
@@ -949,6 +953,47 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion  View All Units
+
+
+        #region Get Unit By UnitID
+        public DataTable GetUnitByID()
+        {
+            SqlConnection con = null;
+            DataTable dtUsers = null;
+            try
+            {
+                dtUsers = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetUnitByID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUsers);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUsers;
+        }
+
+        #endregion  Get Unit By UnitID
 
 
         #region Delete unit By UnitId
@@ -1179,6 +1224,135 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Validate Unit
 
 
+        #region Update Unit
+
+        public void UpdateUnits()
+        {
+            dbConnection dcon = new dbConnection();
+
+            try
+            {
+
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "[UpdateUnits]";
+
+                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
+
+                cmd.Parameters.Add("@Code", SqlDbType.NVarChar, 255).Value = Code;
+                cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
+                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
+                
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+
+                if (Output.Value.ToString() == "")
+                {
+                    //not successfull   
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.SavingFailureMessage(page);
+                    //eObj.UpdationNotSuccessMessage(page);
+
+                }
+                else
+                {
+                    //successfull
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.SavedSuccessMessage(page);
+                    //eObj.UpdationSuccessMessage(page);
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+        }
+
+
+        #endregion Update Unit
+
+
+        public bool CheckUnitIsUsed()
+        {
+            bool isUsed = false;
+
+
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckUnitIsUsed", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar,255).Value = Description;
+
+                object ID = cmd.ExecuteScalar();
+
+                if (ID != null )
+                {
+                    //isUsed = Convert.ToBoolean(ID); 
+
+                    int c = Convert.ToInt32(ID);
+
+                    if (c > 0)
+                    {
+                        isUsed = true;
+                    }
+
+
+
+                }
+             
+
+               
+               
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+
+            return isUsed;
+
+
+        }
+
+        //------------------------------------*Unit *--------------------------------------------//
 
         #region BindGroupName
         public DataTable BindGroupName()
@@ -1249,7 +1423,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
         }
         #endregion BindClinicName
-
 
 
 
