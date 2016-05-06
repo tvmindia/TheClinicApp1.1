@@ -270,12 +270,12 @@
      <div class="col-lg-4">
 
            <label for="name">Category</label>
-  <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                            <ContentTemplate>
+  <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <ContentTemplate>--%>
                                 <asp:DropDownList ID="ddlCategory"  runat="server" AutoPostBack="true"  Width="100%" Height="40px">
                                 </asp:DropDownList>
                                   
-                               <asp:RequiredFieldValidator
+                              <%-- <asp:RequiredFieldValidator
              ID="RequiredFieldValidator1"
              runat="server"
              ControlToValidate="ddlCategory"
@@ -287,17 +287,17 @@
         </asp:RequiredFieldValidator>
 
                             </ContentTemplate>
-                        </asp:UpdatePanel>
+                        </asp:UpdatePanel>--%>
 
          </div>
 
     <div class="col-lg-4">
          <label for="name">Category</label>
-     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-                            <ContentTemplate>
+   <%--  <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                            <ContentTemplate>--%>
                                 <asp:DropDownList ID="ddlUnits"  runat="server" AutoPostBack="true"  Width="100%" Height="40px">
                                 </asp:DropDownList>
-                            <asp:RequiredFieldValidator
+                           <%-- <asp:RequiredFieldValidator
              ID="RequiredFieldValidator2"
              runat="server"
              ControlToValidate="ddlUnits"
@@ -308,7 +308,7 @@
              >
         </asp:RequiredFieldValidator>
                                   </ContentTemplate>
-                        </asp:UpdatePanel>
+                        </asp:UpdatePanel>--%>
 
 
          </div>
@@ -368,6 +368,15 @@
            
             <Columns>
             
+                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        
+                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment"  formnovalidate OnClick="ImgBtnUpdate_Click"  />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+
+
                 <asp:TemplateField HeaderText="">
              <ItemTemplate>
               <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate/>
@@ -399,5 +408,6 @@
   </div>
         </div>
 
-
+    <asp:HiddenField ID="hdnInsertedorNot" runat="server" />
+     <asp:HiddenField ID="hdnMedID" runat="server" />
 </asp:Content>

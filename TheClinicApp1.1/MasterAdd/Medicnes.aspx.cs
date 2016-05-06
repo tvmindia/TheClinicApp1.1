@@ -71,6 +71,14 @@ namespace TheClinicApp1._1.MasterAdd
 
           //    eObj.InsertionNotSuccessMessage(page, msg);
             //}
+            else if (ddlUnits.SelectedItem.Text == "--Select--")
+            {
+                msg = "Please select a unit ! ";
+
+                eObj.InsertionNotSuccessMessage(page, msg);
+            }
+
+
 
             else if ((txtmedicineName.Value.Contains("$")) || (txtmedicineName.Value.Contains("|")))
             {
@@ -108,7 +116,23 @@ namespace TheClinicApp1._1.MasterAdd
                 //StockObj.Unit = txtUnit.Text;
                 StockObj.Unit = ddlUnits.SelectedItem.Text;
 
-                StockObj.InsertMedicines();
+                if (hdnMedID.Value == string.Empty)
+                {
+                    StockObj.InsertMedicines();
+
+                    hdnInsertedorNot.Value = "True";
+                    BindGridview();
+                }
+
+                else
+                {
+                    StockObj.UpdatedBy = UA.userName;
+                    StockObj.UpdateMedicines(hdnMedID.Value);
+                    BindGridview();
+                }
+
+
+
                 //hdnManageGridBind.Value = "True";
             }
 
@@ -264,6 +288,62 @@ namespace TheClinicApp1._1.MasterAdd
                 eObj.DeletionNotSuccessMessage(page, msg);
             }
             
+        }
+
+        protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
+        {
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+
+            ImageButton ib = sender as ImageButton;
+            GridViewRow row = ib.NamingContainer as GridViewRow;
+            Guid MedId = Guid.Parse(gvMedicines.DataKeys[row.RowIndex].Value.ToString());
+            hdnMedID.Value = MedId.ToString();
+
+
+            StockObj.ClinicID = UA.ClinicID.ToString();
+            DataSet ds = StockObj.GetMedicineDetailsByMedicineID(MedId);
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+              DataTable  dt = ds.Tables[0];
+
+              txtmedicineName.Value = dt.Rows[0]["MedicineName"].ToString();
+              txtCode.Value = dt.Rows[0]["MedCode"].ToString();
+              txtOrderQuantity.Value = dt.Rows[0]["ReOrderQty"].ToString();
+
+              //ddlCategory.Items.FindByText(dt.Rows[0]["CategoryName"].ToString()).Selected = true;
+
+              //ddlCategory.SelectedItem.Text = dt.Rows[0]["CategoryName"].ToString();
+              //ddlUnits.SelectedItem.Text = dt.Rows[0]["Unit"].ToString();
+
+              ddlCategory.SelectedIndex = ddlCategory.Items.IndexOf(ddlCategory.Items.FindByText(dt.Rows[0]["CategoryName"].ToString()));
+              ddlUnits.SelectedIndex = ddlUnits.Items.IndexOf(ddlUnits.Items.FindByText(dt.Rows[0]["Unit"].ToString()));
+            
+
+
+            }
+
+
+
+
+            //StockObj.ClinicID = UA.ClinicID.ToString();
+
+            //StockObj.Name = txtmedicineName.Value;
+            //StockObj.MedCode = txtCode.Value;
+            //StockObj.CategoryID = ddlCategory.SelectedValue;
+            //StockObj.ReOrderQty = Convert.ToInt32(txtOrderQuantity.Value);
+            //StockObj.ClinicID = UA.ClinicID.ToString();
+            //StockObj.UpdatedBy = UA.userName;
+            ////StockObj.Unit = txtUnit.Text;
+            //StockObj.Unit = ddlUnits.SelectedItem.Text;
+
+
+
+            //StockObj.UpdateMedicines(MedId);
+    
+
         }
     }
 }

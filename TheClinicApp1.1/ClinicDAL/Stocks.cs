@@ -106,6 +106,57 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Medicines
 
+        #region Get Medicine Details By MedicineID
+
+        public DataSet GetMedicineDetailsByMedicineID(Guid medid)
+        {
+            dbConnection dcon = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetMedicineDetailsByMedicineID";
+
+                cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = medid;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+
+
+                return ds;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+        }
+
+        #endregion Get Medicine Details By MedicineID
+
         #region Get Quantity By Medicine Name
 
         public string GetQtyByMedicineName(string MedicineName)
@@ -412,7 +463,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 int Outputval = (int)cmd.Parameters["@Status"].Value;
 
-                cmd.ExecuteNonQuery();
+               
 
                 if (Outputval == 1)
                {
@@ -477,24 +528,52 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(MedicineID);
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-               
-                cmd.Parameters.Add("@CateoryID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(CategoryID);
+
+                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(CategoryID);
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = Name;
                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit; 
-                cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
-                             
-                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;                
+                //cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
+
+                cmd.Parameters.Add("@Updatedby", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@ReOrderQty", SqlDbType.Real).Value = ReOrderQty;
                 cmd.Parameters.Add("@MedCode", SqlDbType.NVarChar, 20).Value = MedCode;
 
+                //cmd.ExecuteNonQuery();
+
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
                 cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() == "")
+                {
+                    //not successfull   
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.SavingFailureMessage(page);
+
+                }
+                else
+                {
+                    //successfull
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.SavedSuccessMessage(page);
+
+
+                }
+
 
             }
 
             catch (Exception ex)
             {
 
-                throw ex;
+                //throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
