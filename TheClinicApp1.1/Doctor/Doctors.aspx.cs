@@ -362,6 +362,7 @@ namespace TheClinicApp1._1.Doctor
         #region Update Visits
         protected void ImgBtnUpdateVisits_Command(object sender, CommandEventArgs e)
         {
+
             lblErrorCaption.Text = string.Empty;
             lblMsgges.Text = string.Empty;
             Errorbox.Style["display"] = "none";
@@ -593,6 +594,12 @@ namespace TheClinicApp1._1.Doctor
         #endregion Search And Find the Patient Visits
 
         protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");

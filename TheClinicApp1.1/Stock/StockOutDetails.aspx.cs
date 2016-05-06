@@ -616,5 +616,11 @@ else
         }
 
         #endregion Events
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
     }
 }

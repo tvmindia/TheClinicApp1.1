@@ -57,12 +57,7 @@
             }
         }
 
-        function focuscontrol(ControlNo)
-        {
-           
-            document.getElementById('txtMedDos' + ControlNo).focus();
-        }                 
-           
+       
 
         function autocompleteonfocus(controlID)
         {
@@ -201,7 +196,10 @@
         <div class="right_part">
             <div class="tagline">
                 <a class="nav_menu">Menu</a>
-                <span>Doctors...</span>
+                Doctors...<ul class="top_right_links"><li>
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li></ul>        
+            
             </div>
             <div class="icon_box">
                 <a class="records" data-toggle="modal" data-target="#casehistory"><span class="count">
@@ -423,7 +421,7 @@
                                     <td>
                                         <input id="txtMedName0" type="text" placeholder="Medicine" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
                                     <td>
-                                        <input id="txtMedQty0" type="text" placeholder="Qty" class="input" onblur="focuscontrol(0)" /></td>
+                                        <input id="txtMedQty0" type="text" placeholder="Qty" class="input"  /></td>
                                     <td>
                                         <input id="txtMedUnit0" class="input" readonly="true" type="text" placeholder="Unit" /></td>
                                     <td>
@@ -654,7 +652,7 @@
             GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
             RefillTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
         });
-             
+              
     </script>
     
 

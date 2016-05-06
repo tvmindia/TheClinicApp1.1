@@ -219,6 +219,12 @@ namespace TheClinicApp1._1.Token
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
+        }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
         }    
     }
 }
