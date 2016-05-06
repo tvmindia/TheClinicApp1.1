@@ -160,7 +160,9 @@
         <div class="right_part">
             <div class="tagline">
                 <a class="nav_menu">nav</a>
-                Stock In Details...
+                Stock In Details...<ul class="top_right_links"><li>
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li></ul>                    
             </div>
             <div class="icon_box">
                 <a class="add_medicine" data-toggle="modal" data-target="#add_medicine"><span title="Add New Medicine" data-toggle="tooltip" data-placement="left"  onclick="SetIframeSrc('NewMedicineIframe')">
