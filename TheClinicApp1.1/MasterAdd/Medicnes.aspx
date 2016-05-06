@@ -198,7 +198,7 @@
                                          <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" />
 
                                     </li>
-                                    <li><a class="new"  href="Units.aspx"><span></span>New</a></li>
+                                    <li><a class="new"  href="Medicnes.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
 
