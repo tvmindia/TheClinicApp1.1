@@ -108,7 +108,7 @@
 
 
             function GetTextBoxValuesPresLocal(){    
-        alert("kk");
+       
                 GetTextBoxValuesPresDoc('<%=hdnTextboxValues.ClientID%>');
             }
                     

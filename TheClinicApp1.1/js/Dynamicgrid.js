@@ -628,8 +628,8 @@ function GetTextBoxValuesPres(hdnTextboxValues, hdnconfirmsave) {
 var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
 function GetTextBoxValuesPresDoc(hdnTextboxValues) {
-    alert("hai");
-    debugger;
+  
+    
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -670,9 +670,9 @@ function GetTextBoxValuesPresDoc(hdnTextboxValues) {
         //}
 
     }
-    alert(values);
+   
     document.getElementById(hdnTextboxValues).value = values;
-    alert(values);
+   
 
 }
 
