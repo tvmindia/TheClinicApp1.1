@@ -311,10 +311,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 pud.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.NewGuid();
                 pud.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = DoctorName;
-                pud.Parameters.Add("@Phone", SqlDbType.NVarChar, 50).Value = DoctorPhone;
-                pud.Parameters.Add("@Email", SqlDbType.NVarChar, 50).Value = DoctorEmail;
+                pud.Parameters.Add("@Phone", SqlDbType.NVarChar, 255).Value = DoctorPhone;
+                pud.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = createdBy;
-                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = updatedBy;
+                //pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = updatedBy;
 
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
