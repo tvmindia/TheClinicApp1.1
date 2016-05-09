@@ -58,9 +58,9 @@ namespace TheClinicApp1._1.Stock
             string receiptID = string.Empty;
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();
-            lblClinicName.Text = UA.Clinic;
+           
             string Login = UA.userName;
-            lblUserName.Text = "👤 " + Login + " ";
+           
             dtRols = UA.GetRoleName1(Login);
             foreach (DataRow dr in dtRols.Rows)
             {
@@ -68,13 +68,7 @@ namespace TheClinicApp1._1.Stock
                 RoleName.Add(dr["RoleName"].ToString());
 
             }
-            if (RoleName.Contains(Const.RoleAdministrator))
-            {
-                //this.hide.style.Add("display", "none");
-                this.admin.Style.Add("Visibility", "Visible");
-                this.master.Style.Add("Visibility", "Visible");
-            }
-
+           
             //GridViewStockIN();
 
             if (!IsPostBack)

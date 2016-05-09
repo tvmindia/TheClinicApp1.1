@@ -34,39 +34,18 @@ namespace TheClinicApp1._1.Registration
         ErrorHandling eObj = new ErrorHandling();
         public string listFilter = null;
         public string RoleName = null;
-        private static int PageSize = 8;
+        //private static int PageSize = 8;
         #endregion GlobalVariables
 
         #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
         {
             List<string> RoleName = new List<string>();
-            DataTable dt = new DataTable();
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
-            //*Binding Clinic Name 
-            lblClinicName.Text = UA.Clinic;
-            string Login = UA.userName;
-            lblUserName.Text = "👤 " + Login+" ";
-            dt=UA.GetRoleName1(Login);
-            foreach (DataRow dr in dt.Rows)
-            {
-                RoleName.Add(dr["RoleName"].ToString());
-            }
-
-            //*Check Roles Assigned and Giving Visibility For Admin Tab
-            if(RoleName.Contains(Const.RoleAdministrator))
-            {
-                admin.Visible = true;
-                master.Visible = true;
-                //this.admin.Style.Add("Visibility", "Visible");
-                //this.master.Style.Add("Visibility", "Visible");
-            }
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];           
             tok.ClinicID = UA.ClinicID.ToString();
             PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
             gridDataBind();
 
-            //*Binding The Search Box 
             listFilter = null;
             listFilter = BindName();           
         }

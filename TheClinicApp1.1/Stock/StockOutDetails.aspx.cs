@@ -271,9 +271,9 @@ namespace TheClinicApp1._1.Stock
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
-            lblClinicName.Text = UA.Clinic;
+            
             string Login = UA.userName;
-            lblUserName.Text = "👤 " + Login + " ";
+            
             dtRols = UA.GetRoleName1(Login);
             foreach (DataRow dr in dtRols.Rows)
             {
@@ -281,13 +281,7 @@ namespace TheClinicApp1._1.Stock
                 RoleName.Add(dr["RoleName"].ToString());
 
             }
-            if (RoleName.Contains(Const.RoleAdministrator))
-            {
-                //this.hide.style.Add("display", "none");
-                this.admin.Style.Add("Visibility", "Visible");
-                this.master.Style.Add("Visibility", "Visible");
-            }
-
+            
             txtDate1.Attributes.Add("readonly", "readonly");
 
             btnSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','"+hdnRemovedIDs.ClientID+"')");

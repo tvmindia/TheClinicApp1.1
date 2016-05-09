@@ -34,36 +34,19 @@ namespace TheClinicApp1._1.Token
         {
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            lblClinicName.Text = UA.Clinic;
-            string Login = UA.userName;
-            lblUserName.Text = "👤 " + Login + " ";
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];           
+            string Login = UA.userName;           
             dtRols = UA.GetRoleName1(Login);
             foreach (DataRow dr in dtRols.Rows)
             {
-
                 RoleName.Add(dr["RoleName"].ToString());
-
-            }
-            if (RoleName.Contains(Const.RoleAdministrator))
-            {
-                //this.hide.style.Add("display", "none");
-                this.admin.Style.Add("Visibility", "Visible");
-                this.master.Style.Add("Visibility", "Visible");
-            }
+            }            
             tokenObj.ClinicID = UA.ClinicID.ToString();
-
             DataSet gds = tokenObj.ViewToken();
             lblCaseCount.Text = gds.Tables[0].Rows.Count.ToString();
-
-
             listerfilterbind();
-           
-
             if (!IsPostBack)
-            {
-
-          
+            {       
                 //binding the values of doctor dropdownlist
                 DataSet ds = tokenObj.DropBindDoctorsName();
                 ddlDoctor.DataSource = ds.Tables[0];
