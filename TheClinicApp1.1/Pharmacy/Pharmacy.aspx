@@ -70,7 +70,7 @@
         });
     </script>
 
-     <script> 
+    <script> 
           function bindPatientDetails()
           {
               
@@ -118,7 +118,7 @@
     function FillTextboxUsingXml(){
                 debugger;
                 GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
-                RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+                RefillPresMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
             }
 
 
@@ -243,7 +243,7 @@
                 </div>
                 <ul class="top_right_links">
                     <li>
-                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" /></li>
+                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClientClick="return GetTextBoxValuesPres('<%=hdnTextboxValues.ClientID%>')" OnClick="btnSave_Click" /></li>
                     <li><a class="new" href="Pharmacy.aspx"><span></span>New</a></li>
                 </ul>
             </div>
