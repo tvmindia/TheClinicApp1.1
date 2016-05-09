@@ -44,12 +44,12 @@ namespace TheClinicApp1._1.Doctor
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];                     
-            string Login = UA.userName;            
-            dtRols = UA.GetRoleName1(Login);
-            foreach (DataRow dr in dtRols.Rows)
-            {
-                RoleName.Add(dr["RoleName"].ToString());
-            }           
+            string Login = UA.userName;
+            RoleName = UA.GetRoleName1(Login);
+            //foreach (DataRow dr in dtRols.Rows)
+            //{
+            //    RoleName.Add(dr["RoleName"].ToString());
+            //}           
             if (RoleName.Contains(Const.RoleDoctor))
             {
                 DataTable dt = new DataTable();

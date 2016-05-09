@@ -286,13 +286,14 @@ namespace TheClinicApp1._1.ClinicDAL
                 
         #endregion Get RoleID
 
-        public DataTable GetRoleName1(string LoginName)
+        public List<string> GetRoleName1(string LoginName)
         {
 
             SqlConnection con = null;
 
             try
             {
+                List<string> RoleName = new List<string>();
                 DataTable dt = new DataTable();
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
@@ -305,8 +306,12 @@ namespace TheClinicApp1._1.ClinicDAL
                 adapter.SelectCommand = cmd;
                 dt = new DataTable();
                 adapter.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    RoleName.Add(dr["RoleName"].ToString());
+                }
                 con.Close();
-                return dt;
+                return RoleName;
             }
             catch (Exception ex)
             {

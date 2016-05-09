@@ -33,14 +33,12 @@ namespace TheClinicApp1._1.Registration
         TokensBooking tok = new TokensBooking();
         ErrorHandling eObj = new ErrorHandling();
         public string listFilter = null;
-        public string RoleName = null;
-        //private static int PageSize = 8;
         #endregion GlobalVariables
 
         #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<string> RoleName = new List<string>();
+            
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];           
             tok.ClinicID = UA.ClinicID.ToString();
             PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
@@ -423,19 +421,17 @@ namespace TheClinicApp1._1.Registration
                 lblFileCount.Text = string.Empty;
                 lblTokencount.Text = string.Empty;
                 divDisplayNumber.Style["display"] = "none";
-                DataRow dr = null;
+               
                 string path = Server.MapPath("~/Content/ProfilePics/").ToString();
                 string Name = Request.Form["txtSearch"];
                 if (Name !=string.Empty)
                 {
-                    DataTable dt = PatientObj.GetSearchWithName(Name);
-                    dr = dt.NewRow();
-                    dr = dt.Rows[0];
+                    PatientObj.GetSearchWithName(Name);            
                     DateTime date = DateTime.Now;
                     int year = date.Year;
-                    Guid PatientID = Guid.Parse(dr["PatientID"].ToString());
-                    txtName.Value = dr["Name"].ToString();
-                    string Gender = dr["Gender"].ToString();
+                    Guid PatientID = PatientObj.PatientID;
+                    txtName.Value = PatientObj.Name;
+                    string Gender = PatientObj.Gender;
                     if (Gender.Trim() == "Male")
                     {
 
@@ -445,15 +441,20 @@ namespace TheClinicApp1._1.Registration
                     {
                         rdoFemale.Checked = true;
                     }
-                    DateTime DT = Convert.ToDateTime(dr["DOB"].ToString());
+                    else
+                    {
+                        rdoMale.Checked = false;
+                        rdoFemale.Checked = false;
+                    }
+                    DateTime DT = PatientObj.DOB;
                     int Age = year - DT.Year;
                     txtAge.Value = Age.ToString();
-                    txtAddress.Value = dr["Address"].ToString();
-                    txtMobile.Value = dr["Phone"].ToString();
-                    txtEmail.Value = dr["Email"].ToString();
-                    string Status = dr["MaritalStatus"].ToString();
+                    txtAddress.Value = PatientObj.Address;
+                    txtMobile.Value = PatientObj.Phone;
+                    txtEmail.Value = PatientObj.Email;
+                    string Status = PatientObj.MaritalStatus;
                     ddlMarital.SelectedValue = Status;
-                    txtOccupation.Value = dr["Occupation"].ToString();
+                    txtOccupation.Value = PatientObj.Occupation;
 
                     ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
                     HiddenField1.Value = PatientID.ToString();

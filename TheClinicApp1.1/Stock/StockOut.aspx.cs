@@ -135,19 +135,19 @@ namespace TheClinicApp1._1.Stock
         protected void Page_Load(object sender, EventArgs e)
         {
             List<string> RoleName = new List<string>();
-            DataTable dtRols = new DataTable();
+            //DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string issueID = string.Empty;
             
             string Login = UA.userName;
-           
-            dtRols = UA.GetRoleName1(Login);
-            foreach (DataRow dr in dtRols.Rows)
-            {
 
-                RoleName.Add(dr["RoleName"].ToString());
+            RoleName = UA.GetRoleName1(Login);
+            //foreach (DataRow dr in dtRols.Rows)
+            //{
 
-            }
+            //    RoleName.Add(dr["RoleName"].ToString());
+
+            //}
             
             if (!IsPostBack)
             {

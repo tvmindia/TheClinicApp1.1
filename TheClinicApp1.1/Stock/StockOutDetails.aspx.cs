@@ -273,14 +273,14 @@ namespace TheClinicApp1._1.Stock
             DataTable dtRols = new DataTable();
             
             string Login = UA.userName;
-            
-            dtRols = UA.GetRoleName1(Login);
-            foreach (DataRow dr in dtRols.Rows)
-            {
 
-                RoleName.Add(dr["RoleName"].ToString());
+            RoleName = UA.GetRoleName1(Login);
+            //foreach (DataRow dr in dtRols.Rows)
+            //{
 
-            }
+            //    RoleName.Add(dr["RoleName"].ToString());
+
+            //}
             
             txtDate1.Attributes.Add("readonly", "readonly");
 

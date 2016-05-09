@@ -40,14 +40,9 @@ namespace TheClinicApp1._1.Pharmacy
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             
             string Login = UA.userName;
+
+            RoleName= UA.GetRoleName1(Login);
             
-            dtRols = UA.GetRoleName1(Login);
-            foreach (DataRow dr in dtRols.Rows)
-            {
-
-                RoleName.Add(dr["RoleName"].ToString());
-
-            }
             
             pharmacypobj.ClinicID = UA.ClinicID;
 
