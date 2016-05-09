@@ -123,7 +123,6 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
-
      <!---   Script for fileupload preview & FileType Checking  Created By:Thomson Kattingal --->    
       <script type="text/javascript">
         function showpreview(input) 
@@ -165,7 +164,6 @@
       <script type ="text/javascript" >
         $(document).ready(
         function () {
-            debugger;
             var ac=null;
             ac = <%=listFilter %>;
             $( "#txtSearch" ).autocomplete({
@@ -175,7 +173,6 @@
             $('[data-toggle="tooltip"]').tooltip();
 
             $('.alert_close').click(function () {
-                debugger;
                 $(this).parent(".alert").hide();
               });
 
@@ -204,6 +201,10 @@
         {
             var PatientDetails=Patient;
            
+        }
+        function redirect()
+        {
+             window.location.href ="../Default.aspx";
         }
 
         </script>   
@@ -234,8 +235,8 @@
          <div class="tagline">
          <a class="nav_menu">Menu</a>
          Patients Registration <ul class="top_right_links"><li>
-         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
-         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate="true" /></li></ul>
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>         
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClientClick="redirect();" OnClick="LogoutButton_Click" formnovalidate /></li></ul>
          </div>
              <div class="icon_box">
          <%--<a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>--%>
