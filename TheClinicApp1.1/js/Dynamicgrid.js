@@ -558,71 +558,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
 }
 
 
-// PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
-var divValue, values = '';
-//------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
-function GetTextBoxValuesPres(hdnTextboxValues, hdnconfirmsave) {
-   
-    values = '';
-    var i = 1;
-    $('.input').each(function () {
-        i++;
-    });
-    var NumberOfColumns = i - 1;
-    var NumberOfRows = NumberOfColumns / 6;
-    var topId = iCnt;
 
-    for (var k = 0; k <= topId; k++)
-    {
-
-        debugger;
-
-        if (document.getElementById('txtMedQty' + k).style.color == "red")
-        {
-            document.getElementById(hdnconfirmsave).value = "exit";
-
-        }
-        else
-        {
-            document.getElementById(hdnconfirmsave).value = "";
-        }
-
-
-
-        if (document.getElementById('txtMedName' + k) == null) {
-            continue;
-        }
-        if (((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == '')) || ((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == ''))) {
-            continue;
-        }
-        //if (((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value != '') && (isNaN(document.getElementById('txtMedName' + k).value)) == false) && ((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value != ''))) {
-            var CurrentMedName = document.getElementById('txtMedName' + k).value;
-            if (values.indexOf(CurrentMedName) > -1)
-            {
-
-
-            }
-            else
-            {
-
-
-                //if (((document.getElementById('txtUnit' + k) != null) && (document.getElementById('txtUnit' + k).value == '')) || ((document.getElementById('txtCode' + k) != null) && (document.getElementById('txtCode' + k).value == '')) || ((document.getElementById('txtCategory' + k) != null) && (document.getElementById('txtCategory' + k).value == '')))
-                //{
-                //    continue;
-                //}
-                //else
-                //{
-
-                values += document.getElementById('txtMedName' + k).value + '|' + document.getElementById('txtMedQty' + k).value + '|' + document.getElementById('txtMedUnit' + k).value + '|' + document.getElementById('txtMedDos' + k).value + '|' + document.getElementById('txtMedTime' + k).value + '|' + document.getElementById('txtMedDay' + k).value + '|' + document.getElementById('hdnDetailID' + k).value + '$';
-                //}
-
-            }
-        //}
-
-    }
-    document.getElementById(hdnTextboxValues).value = values;
-
-}
 
 // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
 var divValue, values = '';
@@ -756,7 +692,7 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
 
 function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
-   
+   debugger;
     //var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
 
     var XmlDataFromHF = document.getElementById(hdnXmlData).value;
@@ -838,6 +774,118 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
 //----------------------Pharmacy-------------//
 
+function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
+
+    debugger;
+   
+
+    var XmlDataFromHF = document.getElementById(hdnXmlData).value;
+    var xmlDoc = $.parseXML(XmlDataFromHF);
+    var xml = $(xmlDoc);
+    var Medicines = xml.find("Medicines");
+    var i = 0;
+
+    if (Medicines.length > 0) {
+      
+
+        $.each(Medicines, function () {
+            debugger;
+
+            if (i > 0) {
+                clickAdd(i);
+            }
+
+            var MedicineName = $(this).find("MedicineName").text();
+            var MedicineDosage = $(this).find("Dosage").text();
+            var MedicineTiming = $(this).find("Timing").text();
+            var MedicineDays = $(this).find("Days").text();
+            var PrescriptionID = $(this).find("PrescriptionID").text();            
+            var MedicineUnit = $(this).find("Unit").text();
+            var MedicineQuantity = $(this).find("Qty").text();
+            var UniqueID = $(this).find("UniqueID").text();
+            var QtyInStock = $(this).find("MedQTY").text();
+
+            var PresQty = parseInt(MedicineQuantity);
+            var stockQty = parseInt(QtyInStock);
+
+            if (stockQty < PresQty) {
+                document.getElementById('txtMedQty' + i).style.color = "red";
+            }
+
+            document.getElementById('txtMedName' + i).value = MedicineName;
+            document.getElementById('txtMedQty' + i).value = MedicineQuantity;
+            document.getElementById('txtMedUnit' + i).value = MedicineUnit;
+            document.getElementById('txtMedDos' + i).value = MedicineDosage;
+            document.getElementById('txtMedTime' + i).value = MedicineTiming;
+            document.getElementById('txtMedDay' + i).value = MedicineDays;
+            document.getElementById('hdnQty' + i).value = QtyInStock;
+            document.getElementById('hdnDetailID' + i).value = UniqueID; //PrescDT uniqueid
+
+            document.getElementById('txtMedName' + i).readOnly = true; // --------* medicine name set to non-editable after saving *--------//
+
+
+            i = i + 1;
+        });
+
+    }
+
+
+}
+
+// PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
+var divValue, values = '';
+//------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
+function GetTextBoxValuesPres(hdnTextboxValues) {
+
+    values = '';
+    var i = 1;
+    $('.input').each(function () {
+        i++;
+    });
+    var NumberOfColumns = i - 1;
+    var NumberOfRows = NumberOfColumns / 6;
+    var topId = iCnt;
+
+    for (var k = 0; k <= topId; k++)
+    {
+        debugger;
+
+        var  MEDQTY=document.getElementById('txtMedQty' + k).value;
+        var STOCKQTY=document.getElementById('hdnQty' + k).value;
+        var x = parseInt(MEDQTY);
+        var y = parseInt(STOCKQTY);
+        if (x > y) {
+
+            return false;
+            continue;
+
+
+        }
+
+      
+        if (document.getElementById('txtMedName' + k) == null)
+        {
+            continue;
+        }
+        if (((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == '')) || ((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == '')))
+        {
+            continue;
+        }     
+        var CurrentMedName = document.getElementById('txtMedName' + k).value;
+        if (values.indexOf(CurrentMedName) > -1)
+        {
+        }
+        else
+        {
+            values += document.getElementById('txtMedName' + k).value + '|' + document.getElementById('txtMedQty' + k).value + '|' + document.getElementById('txtMedUnit' + k).value + '|' + document.getElementById('txtMedDos' + k).value + '|' + document.getElementById('txtMedTime' + k).value + '|' + document.getElementById('txtMedDay' + k).value + '|' + document.getElementById('hdnDetailID' + k).value + '$';
+        }    
+
+    }
+    document.getElementById(hdnTextboxValues).value = values;
+    return true;
+
+}
+
 function RemoveWarningPharm(ControlNo) {
     debugger;
 
@@ -887,9 +935,7 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 
 
                             if ((MedicineName != ""))
-                            {
-
-                              
+                            {                             
                               
 
                                     if (Qty <= 0) {

@@ -38,9 +38,9 @@ namespace TheClinicApp1._1.Pharmacy
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            lblClinicName.Text = UA.Clinic;
+            
             string Login = UA.userName;
-            lblUserName.Text = "👤 " + Login + " ";
+            
             dtRols = UA.GetRoleName1(Login);
             foreach (DataRow dr in dtRols.Rows)
             {
@@ -48,13 +48,7 @@ namespace TheClinicApp1._1.Pharmacy
                 RoleName.Add(dr["RoleName"].ToString());
 
             }
-            if (RoleName.Contains(Const.RoleAdministrator))
-            {
-                //this.hide.style.Add("display", "none");
-                this.admin.Style.Add("Visibility", "Visible");
-                this.master.Style.Add("Visibility", "Visible");
-            }
-
+            
             pharmacypobj.ClinicID = UA.ClinicID;
 
             listFilter = null;
@@ -66,7 +60,7 @@ namespace TheClinicApp1._1.Pharmacy
 
 
 
-            btnSave.Attributes.Add("onclick", "GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "','"+hdnconfirmsave.ClientID+"')");
+          
 
 
         }
@@ -250,7 +244,7 @@ namespace TheClinicApp1._1.Pharmacy
             string msg = string.Empty;
 
 
-            if (hdnsave.Value == "" && lblPatientName.Text != "Patient_Name" && hdnconfirmsave.Value != "exit")
+            if (hdnsave.Value == "" )
             {
             issuehdobj.ClinicID = UA.ClinicID.ToString();
             issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();

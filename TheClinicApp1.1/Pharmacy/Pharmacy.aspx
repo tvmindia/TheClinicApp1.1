@@ -70,7 +70,7 @@
         });
     </script>
 
-     <script> 
+    <script> 
           function bindPatientDetails()
           {
               
@@ -118,7 +118,7 @@
     function FillTextboxUsingXml(){
                 debugger;
                 GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
-                RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+                RefillPresMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
             }
 
 
@@ -213,8 +213,8 @@
                 <li id="doctor"><a name="hello" onclick="selectTile('doctor','<%=RoleName %>')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
                 <li id="pharmacy" class="active"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName %>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-                <li id="admin" runat="server" style="visibility:hidden"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
-                <li id="master" runat="server" style="visibility:hidden;"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+                <li id="admin" runat="server" visible="false"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+                <li id="master" runat="server" visible="false"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
                 <li><a class="logout" name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
             </ul>
 
@@ -243,7 +243,7 @@
                 </div>
                 <ul class="top_right_links">
                     <li>
-                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" /></li>
+                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClientClick="return GetTextBoxValuesPres('<%=hdnTextboxValues.ClientID%>')" OnClick="btnSave_Click" /></li>
                     <li><a class="new" href="Pharmacy.aspx"><span></span>New</a></li>
                 </ul>
             </div>
