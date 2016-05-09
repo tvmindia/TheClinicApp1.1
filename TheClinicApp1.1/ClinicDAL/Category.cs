@@ -288,7 +288,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = CategoryID;
+                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
 
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
