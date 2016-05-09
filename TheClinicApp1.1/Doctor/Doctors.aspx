@@ -107,8 +107,9 @@
             } 
 
 
-            function GetTextBoxValuesPresLocal(){            
-                GetTextBoxValuesPres('<%=hdnTextboxValues.ClientID%>');
+            function GetTextBoxValuesPresLocal(){    
+        alert("kk");
+                GetTextBoxValuesPresDoc('<%=hdnTextboxValues.ClientID%>');
             }
                     
             function FillTextboxUsingXml(){

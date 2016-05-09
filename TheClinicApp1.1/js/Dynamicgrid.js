@@ -624,6 +624,60 @@ function GetTextBoxValuesPres(hdnTextboxValues, hdnconfirmsave) {
 
 }
 
+// PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
+var divValue, values = '';
+//------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
+function GetTextBoxValuesPresDoc(hdnTextboxValues) {
+    alert("hai");
+    debugger;
+    values = '';
+    var i = 1;
+    $('.input').each(function () {
+        i++;
+    });
+    var NumberOfColumns = i - 1;
+    var NumberOfRows = NumberOfColumns / 6;
+    var topId = iCnt;
+
+    for (var k = 0; k <= topId; k++) {
+
+        if (document.getElementById('txtMedName' + k) == null) {
+            continue;
+        }
+        if (((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == '')) || ((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == ''))) {
+            continue;
+        }
+        //if (((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value != '') && (isNaN(document.getElementById('txtMedName' + k).value)) == false) && ((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value != ''))) {
+        var CurrentMedName = document.getElementById('txtMedName' + k).value;
+        if (values.indexOf(CurrentMedName) > -1) {
+
+
+        }
+        else {
+
+
+            //if (((document.getElementById('txtUnit' + k) != null) && (document.getElementById('txtUnit' + k).value == '')) || ((document.getElementById('txtCode' + k) != null) && (document.getElementById('txtCode' + k).value == '')) || ((document.getElementById('txtCategory' + k) != null) && (document.getElementById('txtCategory' + k).value == '')))
+            //{
+            //    continue;
+            //}
+            //else
+            //{
+
+            values += document.getElementById('txtMedName' + k).value + '|' + document.getElementById('txtMedQty' + k).value + '|' + document.getElementById('txtMedUnit' + k).value + '|' + document.getElementById('txtMedDos' + k).value + '|' + document.getElementById('txtMedTime' + k).value + '|' + document.getElementById('txtMedDay' + k).value + '|' + document.getElementById('hdnDetailID' + k).value + '$';
+            //}
+
+        }
+        //}
+
+    }
+    alert(values);
+    document.getElementById(hdnTextboxValues).value = values;
+    alert(values);
+
+}
+
+
+
 
 //----------------------------------- * Function to rebind medicine textboxes -- refills controls by retrieving data from xml *--------------------//
 function RefillTextboxesWithXmlData(hdnXmlData) {

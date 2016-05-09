@@ -970,7 +970,6 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.Parameters.Add("@LymphClinic", SqlDbType.NVarChar, 255).Value = LymphClinic;
                     pud.Parameters.Add("@RespRate", SqlDbType.NVarChar, 255).Value = RespRate;
                     pud.Parameters.Add("@Others", SqlDbType.NVarChar, 255).Value = Others;
-                    pud.Parameters.Add("@PrescriptionID", SqlDbType.UniqueIdentifier).Value = PrescriptionID;
                     pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                     pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                     //SqlParameter OutparamId = pud.Parameters.Add("@OutparamId", SqlDbType.SmallInt);

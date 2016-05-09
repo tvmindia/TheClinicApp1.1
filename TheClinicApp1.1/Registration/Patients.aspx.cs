@@ -57,9 +57,10 @@ namespace TheClinicApp1._1.Registration
             //*Check Roles Assigned and Giving Visibility For Admin Tab
             if(RoleName.Contains(Const.RoleAdministrator))
             {
-                
-                this.admin.Style.Add("Visibility", "Visible");
-                this.master.Style.Add("Visibility", "Visible");
+                admin.Visible = true;
+                master.Visible = true;
+                //this.admin.Style.Add("Visibility", "Visible");
+                //this.master.Style.Add("Visibility", "Visible");
             }
             tok.ClinicID = UA.ClinicID.ToString();
             PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
