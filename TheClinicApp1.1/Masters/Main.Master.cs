@@ -31,14 +31,15 @@ namespace TheClinicApp1._1.Masters
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<string> RoleName = new List<string>();
-            DataTable dt = new DataTable();
+            List<string> RoleName = new List<string>();       
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];            
             string Login = UA.userName;
             Label lblClinic = (Label)ContentPlaceHolder1.FindControl("lblClinicName");
             Label lblUser = (Label)ContentPlaceHolder1.FindControl("lblUserName");
             System.Web.UI.HtmlControls.HtmlGenericControl admin = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("admin");
             System.Web.UI.HtmlControls.HtmlGenericControl master = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("master");
+            System.Web.UI.HtmlControls.HtmlGenericControl logout = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("log");
+            logout.Visible = false;
             lblClinic.Text = UA.Clinic;           
             lblUser.Text = "👤 " + Login + " ";
             RoleName= UA.GetRoleName1(Login);           
@@ -57,16 +58,11 @@ namespace TheClinicApp1._1.Masters
             try
             {
                
-                List<string> currRole = new List<string>();
-                
-                currRole = UA.GetRoleName1(UA.userName);
-               
-                 
+                List<string> currRole = new List<string>();               
+                currRole = UA.GetRoleName1(UA.userName);                               
                 string currPage = Const.GetCurrentPageName(Request);
                 string From = "?From=";
                 string redirectURL = "";
-
-                
 
                 if (currRole.Count==0) { Response.Redirect(Const.AccessDeniedURL); }
 
