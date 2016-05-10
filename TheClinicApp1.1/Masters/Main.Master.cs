@@ -39,7 +39,10 @@ namespace TheClinicApp1._1.Masters
             System.Web.UI.HtmlControls.HtmlGenericControl admin = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("admin");
             System.Web.UI.HtmlControls.HtmlGenericControl master = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("master");
             System.Web.UI.HtmlControls.HtmlGenericControl logout = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("log");
-            logout.Visible = false;
+            if (logout != null)
+            {
+                logout.Visible = false;
+            }
             lblClinic.Text = UA.Clinic;           
             lblUser.Text = "👤 " + Login + " ";
             RoleName= UA.GetRoleName1(Login);           
