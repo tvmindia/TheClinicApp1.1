@@ -17,6 +17,9 @@ namespace TheClinicApp1._1.Pharmacy
 {
     public partial class Pharmacy : System.Web.UI.Page
     {
+
+        #region Gobalvariables
+
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         public string RoleName = null;
@@ -27,40 +30,31 @@ namespace TheClinicApp1._1.Pharmacy
         PrescriptionDetails PrescriptionObj = new PrescriptionDetails();
         pharmacy pharmacypobj = new pharmacy();
         TokensBooking tokobj = new TokensBooking();
+        Patient patobj = new Patient();
        
         IssueHeaderDetails issuehdobj = new IssueHeaderDetails();
 
-        
+        #endregion Gobalvariables
 
-
+        #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
         {
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            
             string Login = UA.userName;
-
-            RoleName= UA.GetRoleName1(Login);
-            
-            
+            RoleName= UA.GetRoleName1(Login);  
             pharmacypobj.ClinicID = UA.ClinicID;
-
             listFilter = null;
             listFilter = GetMedicineNames();
             NameBind = null;
             NameBind = BindName();
-
             gridviewbind();
-
-
-
-          
-
-
+            btnSave.Attributes.Add("onclick", "GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "')");
         }
+        #endregion Pageload
 
-
+        #region Gridviewbind
         public void gridviewbind()
         {
             DataSet gds = pharmacypobj.GetPatientPharmacyDetails();
@@ -69,8 +63,7 @@ namespace TheClinicApp1._1.Pharmacy
             GridViewPharmacylist.DataBind();
 
         }
-
-
+        #endregion Gridviewbind
 
         #region WebMethod
 
@@ -198,7 +191,7 @@ namespace TheClinicApp1._1.Pharmacy
 
         #endregion Get MedicineDetails By Medicine Name
 
-
+        #region ClickEvents
         protected void ImgBtn_Command(object sender, CommandEventArgs e)
         {
 
@@ -233,16 +226,23 @@ namespace TheClinicApp1._1.Pharmacy
 
         }
 
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             string msg = string.Empty;
+            DataRow dr = null;
+         
 
-
-            if (hdnsave.Value == "" )
+            if (hdnsave.Value == "")
             {
+               patobj.PatientID = Guid.Parse(HiddenPatientID.Value);
+               DataTable dt = patobj.SelectPatient();
+               dr = dt.NewRow();
+               dr = dt.Rows[0];
+               lblPatientName.Text = dr["Name"].ToString();
+
             issuehdobj.ClinicID = UA.ClinicID.ToString();
             issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
+
             issuehdobj.IssuedTo = lblPatientName.Text;
             issuehdobj.Date = DateTime.Now;
             issuehdobj.CreatedBy = UA.userName;
@@ -324,5 +324,7 @@ namespace TheClinicApp1._1.Pharmacy
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
         }
+
+        #endregion ClickEvents
     }
 }

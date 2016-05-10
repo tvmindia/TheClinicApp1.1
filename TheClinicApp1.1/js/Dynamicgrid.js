@@ -776,8 +776,7 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
 function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
 
-    debugger;
-   
+    debugger;   
 
     var XmlDataFromHF = document.getElementById(hdnXmlData).value;
     var xmlDoc = $.parseXML(XmlDataFromHF);
@@ -823,12 +822,10 @@ function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
 
             document.getElementById('txtMedName' + i).readOnly = true; // --------* medicine name set to non-editable after saving *--------//
 
-
             i = i + 1;
         });
 
     }
-
 
 }
 
@@ -850,19 +847,7 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
     {
         debugger;
 
-        var  MEDQTY=document.getElementById('txtMedQty' + k).value;
-        var STOCKQTY=document.getElementById('hdnQty' + k).value;
-        var x = parseInt(MEDQTY);
-        var y = parseInt(STOCKQTY);
-        if (x > y) {
-
-            return false;
-            continue;
-
-
-        }
-
-      
+            
         if (document.getElementById('txtMedName' + k) == null)
         {
             continue;
@@ -870,7 +855,20 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
         if (((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == '')) || ((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == '')))
         {
             continue;
-        }     
+        }
+
+        var MEDQTY = document.getElementById('txtMedQty' + k).value;
+        var STOCKQTY = document.getElementById('hdnQty' + k).value;
+        var x = parseInt(MEDQTY);
+        var y = parseInt(STOCKQTY);
+        if (x > y || isNaN(x) || isNaN(y)) {
+
+            return false;
+            continue;
+
+
+        }
+
         var CurrentMedName = document.getElementById('txtMedName' + k).value;
         if (values.indexOf(CurrentMedName) > -1)
         {
@@ -882,7 +880,7 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
 
     }
     document.getElementById(hdnTextboxValues).value = values;
-    return true;
+    
 
 }
 
@@ -902,10 +900,8 @@ function RemoveWarningPharm(ControlNo) {
 
 function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 {
-
     debugger;
     var Qty1
-
     if (PageCalledFrom != 'doctor page')
     {
         if (document.getElementById('txtMedName' + ControlNo) != null && document.getElementById('txtMedQty' + ControlNo) != null)
@@ -935,16 +931,13 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 
 
                             if ((MedicineName != ""))
-                            {                             
-                              
-
+                            {   
                                     if (Qty <= 0) {
                                         $("#txtMedQty" + ControlNo).addClass("warning");
                                         $("#txtMedQty" + ControlNo).attr('type', 'text');
                                         $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
 
                                         $("#txtMedQty" + ControlNo).val('No Stock');
-
                                     }
 
                                     else if (InputQty > Qty || InputQty <= 0) {
@@ -965,51 +958,42 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
                                         $("#txtMedQty" + ControlNo).removeClass("warning");
                                         $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
                                         $("#txtMedQty" + ControlNo).attr('type', 'number');
-                                    }
-                               
-                               
+                                    }  
                             }
-
                         }
                     }
-
                 }
                 function onError(response, userContext, methodName) { }
-               
-            }
-          
-            
-//
-
+            }  
         }
     }
 
 
 
-    else {
-        if (PageCalledFrom == 'doctor page')//doctor page
-        {
-              debugger;
+    //else {
+    //    if (PageCalledFrom == 'doctor page')//doctor page
+    //    {
+    //          debugger;
 
-            var InputQty = document.getElementById('txtMedQty' + ControlNo).value;
+    //        var InputQty = document.getElementById('txtMedQty' + ControlNo).value;
 
-            if (document.getElementById('txtMedQty' + ControlNo).value != "") {
+    //        if (document.getElementById('txtMedQty' + ControlNo).value != "") {
 
-                InputQty = Number(document.getElementById('txtMedQty' + ControlNo).value);
+    //            InputQty = Number(document.getElementById('txtMedQty' + ControlNo).value);
 
-                if (InputQty <= 0) {
-                    $("#txtMedQty" + ControlNo).addClass("warning");
-                    $("#txtMedQty" + ControlNo).attr('type', 'text');
-                    $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
+    //            if (InputQty <= 0) {
+    //                $("#txtMedQty" + ControlNo).addClass("warning");
+    //                $("#txtMedQty" + ControlNo).attr('type', 'text');
+    //                $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
 
-                    if (InputQty <= 0)
-                        $("#txtMedQty" + ControlNo).val('Must be > 0');
+    //                if (InputQty <= 0)
+    //                    $("#txtMedQty" + ControlNo).val('Must be > 0');
 
 
-                }
-            }
-        }
-    }
+    //            }
+    //        }
+    //    }
+    //}
 
 
 }
