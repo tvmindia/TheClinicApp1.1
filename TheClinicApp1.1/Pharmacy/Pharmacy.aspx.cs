@@ -230,16 +230,18 @@ namespace TheClinicApp1._1.Pharmacy
         {
             string msg = string.Empty;
             DataRow dr = null;
-         
 
-            if (HiddenPatientID.Value!="")
+
+            if (HiddenPatientID.Value != "" || Patientidtorefill.Value!="")
             {
-               patobj.PatientID = Guid.Parse(HiddenPatientID.Value);
-               DataTable dt = patobj.SelectPatient();
-               dr = dt.NewRow();
-               dr = dt.Rows[0];
-               lblPatientName.Text = dr["Name"].ToString();
-
+                if (HiddenPatientID.Value != "")
+                {
+                    patobj.PatientID = Guid.Parse(HiddenPatientID.Value);
+                    DataTable dt = patobj.SelectPatient();
+                    dr = dt.NewRow();
+                    dr = dt.Rows[0];
+                    lblPatientName.Text = dr["Name"].ToString();
+                }
             issuehdobj.ClinicID = UA.ClinicID.ToString();
             issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
 
@@ -288,6 +290,7 @@ namespace TheClinicApp1._1.Pharmacy
                lblFileNum.Text = "FILE NO";
                lblDoctor.Text = "";
                HiddenPatientID.Value = "";
+               Patientidtorefill.Value = "";
 
 
             }
