@@ -486,20 +486,22 @@ namespace TheClinicApp1._1.Registration
         }
         #endregion Paging
 
-       
-        #endregion Events
-
+        #region Logout
         protected void Logout_ServerClick(object sender, EventArgs e)
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
         }
 
-        
+
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
         }
+        #endregion Logout
+       
+        #endregion Events
+       
     }
 }

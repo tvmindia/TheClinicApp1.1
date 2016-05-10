@@ -22,9 +22,10 @@ namespace TheClinicApp1._1.Masters
             if (UA == null)
             {
                 Response.Redirect(Const.LoginPageURL);
+                
             }
-
             AccessCheck();
+           
            
         }
 

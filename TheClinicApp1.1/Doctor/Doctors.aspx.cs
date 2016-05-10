@@ -1,4 +1,10 @@
-﻿#region Namespaces
+﻿#region CopyRight
+
+//Author      : Thomson K Varkey
+//Created Date: March-04-2016
+
+#endregion CopyRight
+#region Namespaces
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,6 +16,7 @@ using System.Web.UI;
 using System.Drawing;  
 using System.Web.UI.WebControls;
 #endregion Namespaces
+
 
 using TheClinicApp1._1.ClinicDAL; 
 
@@ -454,6 +461,7 @@ namespace TheClinicApp1._1.Doctor
         }
         #endregion NewButtonClickEvent
 
+        #region ClearButton Method
         public void ClearButton()
         {
             HdnForVisitID.Value = string.Empty;
@@ -462,6 +470,7 @@ namespace TheClinicApp1._1.Doctor
             lblMsgges.Text = string.Empty;
             Errorbox.Style["display"] = "none";
         }
+        #endregion ClearButton Method
 
         #region WebMethod
 
@@ -582,6 +591,7 @@ namespace TheClinicApp1._1.Doctor
         }
         #endregion Search And Find the Patient Visits
 
+        #region Logout
         protected void Logout_ServerClick(object sender, EventArgs e)
         {
             Session.Remove(Const.LoginSession);
@@ -593,6 +603,7 @@ namespace TheClinicApp1._1.Doctor
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
         }
+        #endregion Logout
     }
         #endregion Methods
 }
