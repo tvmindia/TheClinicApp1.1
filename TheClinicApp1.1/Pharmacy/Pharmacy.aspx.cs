@@ -232,7 +232,7 @@ namespace TheClinicApp1._1.Pharmacy
             DataRow dr = null;
          
 
-            if (hdnsave.Value == "")
+            if (HiddenPatientID.Value!="")
             {
                patobj.PatientID = Guid.Parse(HiddenPatientID.Value);
                DataTable dt = patobj.SelectPatient();
@@ -281,12 +281,13 @@ namespace TheClinicApp1._1.Pharmacy
                            }
                          IssuedtlObj.InsertIssueDetails();                  
                }
-               hdnsave.Value = "saved";
+              // hdnsave.Value = "saved";
                lblPatientName.Text = "PATIENT_NAME";
                lblAgeCount.Text = "AGE";
                lblGenderDis.Text = "GENDER";
                lblFileNum.Text = "FILE NO";
                lblDoctor.Text = "";
+               HiddenPatientID.Value = "";
 
 
             }
@@ -294,20 +295,20 @@ namespace TheClinicApp1._1.Pharmacy
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
 
-                msg = "NOT SAVED";
+                msg = "Patient Details not found ";
 
                 eObj.InsertionNotSuccessMessage(page, msg);
 
 
+                if (Patientidtorefill.Value != "")
+                {
+                    pharmacypobj.PatientID = Guid.Parse(Patientidtorefill.Value);
 
-                pharmacypobj.PatientID = Guid.Parse(Patientidtorefill.Value);
-
-                DataSet MedicinList = pharmacypobj.PrescriptionDetails();
-                var xml = MedicinList.GetXml();
-                hdnXmlData.Value = xml;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
-                 
-            
+                    DataSet MedicinList = pharmacypobj.PrescriptionDetails();
+                    var xml = MedicinList.GetXml();
+                    hdnXmlData.Value = xml;
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
+                }           
             
             }
 

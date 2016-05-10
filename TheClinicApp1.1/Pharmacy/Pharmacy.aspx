@@ -73,6 +73,9 @@
     <script> 
         function bindPatientDetails()
         {
+            
+                $(".alert").hide();
+          
               
             var PatientName = document.getElementById("project-description").innerText;
                     
@@ -216,7 +219,7 @@
                 <li id="stock"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
                 <li id="admin" runat="server" visible="false"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                 <li id="master" runat="server" visible="false"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
-                <li><a class="logout" name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
+                <li id="log" runat="server"><a class="logout" name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
             </ul>
 
             <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text=""></asp:Label></p>
@@ -363,8 +366,8 @@
         <asp:HiddenField ID="hdnTextboxValues" runat="server" />
         <asp:HiddenField ID="hdnRemovedIDs" runat="server" />
 
-        <asp:HiddenField ID="hdnsave" Value="" runat="server" />
-        <asp:HiddenField ID="hdnconfirmsave" Value="" runat="server" />
+        <%--<asp:HiddenField ID="hdnsave" Value="" runat="server" />--%>
+        <%--<asp:HiddenField ID="hdnconfirmsave" Value="" runat="server" />--%>
         <asp:HiddenField ID="Patientidtorefill" runat="server" />
     </div>
 
