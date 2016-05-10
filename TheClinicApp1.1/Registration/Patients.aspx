@@ -123,7 +123,6 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
-
      <!---   Script for fileupload preview & FileType Checking  Created By:Thomson Kattingal --->    
       <script type="text/javascript">
         function showpreview(input) 
@@ -165,7 +164,6 @@
       <script type ="text/javascript" >
         $(document).ready(
         function () {
-            debugger;
             var ac=null;
             ac = <%=listFilter %>;
             $( "#txtSearch" ).autocomplete({
@@ -175,7 +173,6 @@
             $('[data-toggle="tooltip"]').tooltip();
 
             $('.alert_close').click(function () {
-                debugger;
                 $(this).parent(".alert").hide();
               });
 
@@ -202,8 +199,12 @@
         }--%>
         function getPatientId(Patient)
         {
-            var PatientDetails=Patient;
-           
+            var PatientDetails=Patient;           
+        }
+
+        function redirect()
+        {
+             window.location.href ="../Default.aspx";
         }
 
         </script>   
@@ -218,12 +219,12 @@
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
          <ul class="menu">
-         <li  id="patients" class="active"><a name="hello" onclick="selectTile('patients','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
-         <li id="token"><a name="hello" onclick="selectTile('token','<%=RoleName %>')"><span class="icon token"></span><span class="text">Token</span></a></li>
-         <li id="doctor"><a name="hello" onclick="selectTile('doctor','<%=RoleName %>')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
-         <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName %>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
-         <li id="stock"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-         <li id="admin" visible="false" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+         <li  id="patients" class="active"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+         <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
+         <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+         <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
+         <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
+         <li id="admin" visible="false" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
          <li id="master" runat="server" visible="false"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
          <li><a class="logout" name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
          
@@ -234,8 +235,8 @@
          <div class="tagline">
          <a class="nav_menu">Menu</a>
          Patients Registration <ul class="top_right_links"><li>
-         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
-         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate="true" /></li></ul>
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>         
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClientClick="redirect();" OnClick="LogoutButton_Click" formnovalidate /></li></ul>
          </div>
              <div class="icon_box">
          <%--<a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>--%>

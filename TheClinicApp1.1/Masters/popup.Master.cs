@@ -38,11 +38,8 @@ namespace TheClinicApp1._1.Masters
             System.Web.UI.HtmlControls.HtmlGenericControl master = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("master");
             lblClinic.Text = UA.Clinic;
             lblUser.Text = "👤 " + Login + " ";
-            dt = UA.GetRoleName1(Login);
-            foreach (DataRow dr in dt.Rows)
-            {
-                RoleName.Add(dr["RoleName"].ToString());
-            }
+            RoleName = UA.GetRoleName1(Login);
+            
             //*Check Roles Assigned and Giving Visibility For Admin Tab
             if (RoleName.Contains(Const.RoleAdministrator))
             {

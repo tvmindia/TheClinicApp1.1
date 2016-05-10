@@ -806,7 +806,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion SearchWithAny
 
         #region SearchWithName
-        public DataTable GetSearchWithName(string SearchName)
+        public void GetSearchWithName(string SearchName)
         {
 
             DataTable dt = null;
@@ -820,8 +820,20 @@ namespace TheClinicApp1._1.ClinicDAL
             adapter.SelectCommand = cmd;
             dt = new DataTable();
             adapter.Fill(dt);
-            con.Close();
-            return dt;
+            if (dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                PatientID = Guid.Parse(dr["PatientID"].ToString());
+                Name = dr["Name"].ToString();
+                Gender = dr["Gender"].ToString();
+                DOB = Convert.ToDateTime(dr["DOB"].ToString());
+                Address = dr["Address"].ToString();
+                Phone = dr["Phone"].ToString();
+                Email = dr["Email"].ToString();
+                MaritalStatus = dr["MaritalStatus"].ToString();
+                Occupation = dr["Occupation"].ToString();
+            }
+            con.Close();        
 
         }
         #endregion SearchWithName

@@ -184,6 +184,7 @@
                         <li role="presentation"><a href="Categories.aspx">Add Categories</a></li>
                         <li role="presentation" ><a href="Units.aspx">Add Units</a></li>
                         <li role="presentation" class="active"><a href="Medicnes.aspx">Add Medicines</a></li>
+                         <li role="presentation"   ><a href="AddDoctor.aspx">Add Doctor</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">

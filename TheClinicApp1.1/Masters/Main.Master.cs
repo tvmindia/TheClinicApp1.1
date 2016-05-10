@@ -41,11 +41,7 @@ namespace TheClinicApp1._1.Masters
             System.Web.UI.HtmlControls.HtmlGenericControl master = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("master");
             lblClinic.Text = UA.Clinic;           
             lblUser.Text = "👤 " + Login + " ";
-            dt = UA.GetRoleName1(Login);
-            foreach (DataRow dr in dt.Rows)
-            {
-                RoleName.Add(dr["RoleName"].ToString());
-            }
+            RoleName= UA.GetRoleName1(Login);           
             //*Check Roles Assigned and Giving Visibility For Admin Tab
             if (RoleName.Contains(Const.RoleAdministrator))
             {
@@ -62,14 +58,9 @@ namespace TheClinicApp1._1.Masters
             {
                
                 List<string> currRole = new List<string>();
-                DataTable dt = null;
-                dt=UA.GetRoleName1(UA.userName);
-                foreach (DataRow dr in dt.Rows)
-                {
-
-                    currRole.Add(dr["RoleName"].ToString());
                 
-                }
+                currRole = UA.GetRoleName1(UA.userName);
+               
                  
                 string currPage = Const.GetCurrentPageName(Request);
                 string From = "?From=";

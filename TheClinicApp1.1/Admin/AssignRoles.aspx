@@ -221,9 +221,9 @@ table
                     $("td", row).eq(0).html($('<img />')
                                           .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
-                    $("td", row).eq(1).html($(this).find("Role").text());
+                    $("td", row).eq(2).html($(this).find("Role").text());
 
-                    $("td", row).eq(2).html($(this).find("Name").text());
+                    $("td", row).eq(1).html($(this).find("Name").text());
                    
                     $("td", row).eq(3).html($(this).find("UniqueID").text());
                   
@@ -454,16 +454,19 @@ table
                                                             OnClientClick="ConfirmDelete()" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+
+                                   <asp:BoundField DataField="Name" HeaderText="Name">
+
+                                </asp:BoundField>
+
+
                                 <asp:BoundField DataField="Role" HeaderText="Assigned Role">
                                    
                                 </asp:BoundField>
 
-                                <asp:BoundField DataField="Name" HeaderText="Name">
+                              
                                    
-                                   
-
-                                </asp:BoundField>
-
+                                  
                                      <asp:BoundField DataField="UniqueID" HeaderText="UniqueID">
                                    
                                    

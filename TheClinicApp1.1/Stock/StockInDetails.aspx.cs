@@ -203,14 +203,14 @@ namespace TheClinicApp1._1.Stock
             DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();            
-            string Login = UA.userName;           
-            dtRols = UA.GetRoleName1(Login);
-            foreach (DataRow dr in dtRols.Rows)
-            {
+            string Login = UA.userName;
+            RoleName = UA.GetRoleName1(Login);
+            //foreach (DataRow dr in dtRols.Rows)
+            //{
 
-                RoleName.Add(dr["RoleName"].ToString());
+            //    RoleName.Add(dr["RoleName"].ToString());
 
-            }
+            //}
             
    
             txtDate1.Attributes.Add("readonly", "readonly");
