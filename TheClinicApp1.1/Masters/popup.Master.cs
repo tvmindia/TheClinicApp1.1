@@ -54,7 +54,9 @@ namespace TheClinicApp1._1.Masters
             //*Check Roles Assigned and Giving Visibility For Admin Tab
             if (RoleName.Contains(Const.RoleAdministrator))
             {
+                if (admin !=null)
                 admin.Visible = true;
+                if(master!=null)
                 master.Visible = true;
             }
         }
