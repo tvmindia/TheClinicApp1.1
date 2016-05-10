@@ -850,19 +850,7 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
     {
         debugger;
 
-        var  MEDQTY=document.getElementById('txtMedQty' + k).value;
-        var STOCKQTY=document.getElementById('hdnQty' + k).value;
-        var x = parseInt(MEDQTY);
-        var y = parseInt(STOCKQTY);
-        if (x > y) {
-
-            return false;
-            continue;
-
-
-        }
-
-      
+            
         if (document.getElementById('txtMedName' + k) == null)
         {
             continue;
@@ -870,7 +858,20 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
         if (((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == '')) || ((document.getElementById('txtMedName' + k) != null) && (document.getElementById('txtMedName' + k).value == '')))
         {
             continue;
-        }     
+        }
+
+        var MEDQTY = document.getElementById('txtMedQty' + k).value;
+        var STOCKQTY = document.getElementById('hdnQty' + k).value;
+        var x = parseInt(MEDQTY);
+        var y = parseInt(STOCKQTY);
+        if (x > y || isNaN(x) || isNaN(y)) {
+
+            return false;
+            continue;
+
+
+        }
+
         var CurrentMedName = document.getElementById('txtMedName' + k).value;
         if (values.indexOf(CurrentMedName) > -1)
         {
@@ -882,7 +883,7 @@ function GetTextBoxValuesPres(hdnTextboxValues) {
 
     }
     document.getElementById(hdnTextboxValues).value = values;
-    return true;
+    
 
 }
 

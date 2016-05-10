@@ -93,10 +93,10 @@
                 string1 = response.split('|');
                
                 document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
-                document.getElementById('<%=lblFileNum.ClientID%>').innerHTML=string1[0];
-                document.getElementById('<%=lblPatientName.ClientID%>').innerHTML=string1[1];
-                document.getElementById('<%=lblAgeCount.ClientID%>').innerHTML=string1[2];
-                document.getElementById('<%=lblGenderDis.ClientID%>').innerHTML=string1[3];            
+                document.getElementById('<%=lblFileNum.ClientID%>').innerText=string1[0];
+                document.getElementById('<%=lblPatientName.ClientID%>').innerText=string1[1];
+                document.getElementById('<%=lblAgeCount.ClientID%>').innerText=string1[2];
+                document.getElementById('<%=lblGenderDis.ClientID%>').innerText=string1[3];            
                 document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
                
             
@@ -139,7 +139,8 @@
                     {                  
                         var MedicineDetails = new Array();
                         MedicineDetails = response.split('|');
-                        document.getElementById('txtMedUnit' + ControlNo).value = MedicineDetails[0];                       
+                        document.getElementById('txtMedUnit' + ControlNo).value = MedicineDetails[0];  
+                      document.getElementById('hdnQty' + ControlNo).value=MedicineDetails[1];  
                     }   
                 }  
                 function onError(response, userContext, methodName) {       
@@ -236,14 +237,14 @@
             </div>
             <div class="grey_sec">
                 <div class="search_div">
-                     <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." autofocus="autofocus"/>
+                     <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." />
                     <input type="hidden" id="project-id"/>
                     <p id="project-description" style="display:none"></p>
                     <input class="button" type="button" value="Search" />
                 </div>
                 <ul class="top_right_links">
                     <li>
-                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClientClick="return GetTextBoxValuesPres('<%=hdnTextboxValues.ClientID%>')" OnClick="btnSave_Click" /></li>
+                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1"  OnClick="btnSave_Click" /></li>
                     <li><a class="new" href="Pharmacy.aspx"><span></span>New</a></li>
                 </ul>
             </div>

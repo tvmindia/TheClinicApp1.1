@@ -48,7 +48,13 @@ namespace TheClinicApp1._1.Pharmacy
                 RoleName.Add(dr["RoleName"].ToString());
 
             }
-            
+            if (RoleName.Contains(Const.RoleAdministrator))
+            {
+                //this.hide.style.Add("display", "none");
+                this.admin.Style.Add("Visibility", "Visible");
+                this.master.Style.Add("Visibility", "Visible");
+            }
+
             pharmacypobj.ClinicID = UA.ClinicID;
 
             listFilter = null;
@@ -58,6 +64,7 @@ namespace TheClinicApp1._1.Pharmacy
 
             gridviewbind();
 
+            btnSave.Attributes.Add("onclick", "GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "')");
 
 
           
@@ -244,7 +251,7 @@ namespace TheClinicApp1._1.Pharmacy
             string msg = string.Empty;
 
 
-            if (hdnsave.Value == "" )
+            if (hdnsave.Value == "")
             {
             issuehdobj.ClinicID = UA.ClinicID.ToString();
             issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
@@ -287,11 +294,11 @@ namespace TheClinicApp1._1.Pharmacy
                          IssuedtlObj.InsertIssueDetails();                  
                }
                hdnsave.Value = "saved";
-               lblPatientName.Text = "PATIENT_NAME";
-               lblAgeCount.Text = "AGE";
-               lblGenderDis.Text = "GENDER";
-               lblFileNum.Text = "FILE NO";
-               lblDoctor.Text = "";
+               //lblPatientName.Text = "PATIENT_NAME";
+               //lblAgeCount.Text = "AGE";
+               //lblGenderDis.Text = "GENDER";
+               //lblFileNum.Text = "FILE NO";
+               //lblDoctor.Text = "";
 
 
             }
