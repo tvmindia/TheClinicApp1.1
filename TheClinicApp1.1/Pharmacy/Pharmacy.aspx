@@ -3,18 +3,18 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
+    <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
 
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-   
+
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/fileinput.js"></script> 
-    <script src="../js/vendor/jquery-1.11.1.min.js"></script> 
+    <script src="../js/fileinput.js"></script>
+    <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
-    <script src="../js/Dynamicgrid.js"></script> 
+    <script src="../js/Dynamicgrid.js"></script>
 
     <script>
         var test = jQuery.noConflict();
@@ -61,20 +61,20 @@
                 }
             })
              .autocomplete( "instance" )._renderItem = function( ul, item ) {
-             return $( "<li>" )
-             .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
-             .appendTo( ul );
-           }; 
+                 return $( "<li>" )
+                 .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+                 .appendTo( ul );
+             }; 
 
 
         });
     </script>
 
     <script> 
-          function bindPatientDetails()
-          {
+        function bindPatientDetails()
+        {
               
-               var PatientName = document.getElementById("project-description").innerText;
+            var PatientName = document.getElementById("project-description").innerText;
                     
             var file=PatientName.split('|')      
             var file1=file[0].split('📰 ')
@@ -91,17 +91,15 @@
                       
                 var string1 = new Array();
                 string1 = response.split('|');
-               
+                debugger;
                 document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
                 document.getElementById('<%=lblFileNum.ClientID%>').innerText=string1[0];
                 document.getElementById('<%=lblPatientName.ClientID%>').innerText=string1[1];
                 document.getElementById('<%=lblAgeCount.ClientID%>').innerText=string1[2];
                 document.getElementById('<%=lblGenderDis.ClientID%>').innerText=string1[3];            
-                document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
-               
+                document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];               
             
                 document.getElementById('txtSearch').value="";//clearin the Search box
-
                 
             }          
             function onError(response, userContext, methodName)
@@ -113,56 +111,56 @@
     </script>
 
     <!-- #main-container -->
-        <script>
+    <script>
 
-    function FillTextboxUsingXml(){
-                debugger;
-                GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
+        function FillTextboxUsingXml(){
+            debugger;
+            GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
                 RefillPresMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
-            }
+    }
 
 
-            function BindMedunitbyMedicneName(ControlNo) 
-            {
-                debugger;
+    function BindMedunitbyMedicneName(ControlNo) 
+    {
+        debugger;
   
-                if (ControlNo >= 0) {
-                    var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
-                }
-                if (MedicineName != "") 
-                {
-                    PageMethods.MedDetails(MedicineName, OnSuccess, onError);       
-                }    
-                function OnSuccess(response, userContext, methodName) 
-                {        
-                    if (ControlNo >= 0) 
-                    {                  
-                        var MedicineDetails = new Array();
-                        MedicineDetails = response.split('|');
-                        document.getElementById('txtMedUnit' + ControlNo).value = MedicineDetails[0];  
-                      document.getElementById('hdnQty' + ControlNo).value=MedicineDetails[1];  
-                    }   
-                }  
-                function onError(response, userContext, methodName) {       
-                }
-            }
+        if (ControlNo >= 0) {
+            var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
+        }
+        if (MedicineName != "") 
+        {
+            PageMethods.MedDetails(MedicineName, OnSuccess, onError);       
+        }    
+        function OnSuccess(response, userContext, methodName) 
+        {        
+            if (ControlNo >= 0) 
+            {                  
+                var MedicineDetails = new Array();
+                MedicineDetails = response.split('|');
+                document.getElementById('txtMedUnit' + ControlNo).value = MedicineDetails[0];  
+                document.getElementById('hdnQty' + ControlNo).value=MedicineDetails[1];  
+            }   
+        }  
+        function onError(response, userContext, methodName) {       
+        }
+    }
 
-            function focuscontrol(ControlNo)
-            {
-                document.getElementById('txtMedQty' + ControlNo).value="";
-            }                 
+    function focuscontrol(ControlNo)
+    {
+        document.getElementById('txtMedQty' + ControlNo).value="";
+    }                 
            
 
-            function autocompleteonfocus(controlID)
-            {
-                //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
+    function autocompleteonfocus(controlID)
+    {
+        //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
                 
-                var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
+        var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
  
-            if (topcount==0)
-            {
-                var ac=null; 
-                ac = <%=listFilter %>;
+                if (topcount==0)
+                {
+                    var ac=null; 
+                    ac = <%=listFilter %>;
                 $( "#txtMedName0").autocomplete({
                     source: ac
                 });
@@ -198,16 +196,18 @@
                     source: result
                 });
             }
-            } 
-            </script>
+        } 
+    </script>
 
 
 
     <div class="main_body">
 
         <div class="left_part">
-            <div class="logo"><a href="#">
-                <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
+            <div class="logo">
+                <a href="#">
+                    <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
+            </div>
             <ul class="menu">
                 <li id="patients"><a name="hello" onclick="selectTile('patients','<%=RoleName %>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
                 <li id="token"><a name="hello" onclick="selectTile('token','<%=RoleName %>')"><span class="icon token"></span><span class="text">Token</span></a></li>
@@ -220,63 +220,67 @@
             </ul>
 
             <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text=""></asp:Label></p>
-        </div>        
+        </div>
 
 
         <div class="right_part">
             <div class="tagline">
                 <a class="nav_menu">Menu</a>
-                Pharmacy <ul class="top_right_links"><li>
-         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
-         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li></ul>
-            
+                Pharmacy
+                <ul class="top_right_links">
+                    <li>
+                        <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li>
+                    <li>
+                        <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png" BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li>
+                </ul>
+
             </div>
             <div class="icon_box">
                 <a class="patient_list" data-toggle="modal" data-target="#patient_list"><span title="Patient List" data-toggle="tooltip" data-placement="left">
-                    <img  src="../images/patient_list.png" /></span></a>
+                    <img src="../images/patient_list.png" /></span></a>
             </div>
             <div class="grey_sec">
                 <div class="search_div">
-                     <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." />
-                    <input type="hidden" id="project-id"/>
-                    <p id="project-description" style="display:none"></p>
+                    <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search here..." />
+                    <input type="hidden" id="project-id" />
+                    <p id="project-description" style="display: none"></p>
                     <input class="button" type="button" value="Search" />
                 </div>
                 <ul class="top_right_links">
                     <li>
-                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1"  OnClick="btnSave_Click" /></li>
+                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" /></li>
                     <li><a class="new" href="Pharmacy.aspx"><span></span>New</a></li>
                 </ul>
             </div>
             <div class="right_form">
 
-                
-                            <div id="Errorbox" style="display: none;" runat="server">
-                                <a class="alert_close">X</a>
-                                <div>
-                                    <strong>
-                                        <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
-                                    </strong>
-                                    <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
 
-                                </div>
+                <div id="Errorbox" style="display: none;" runat="server">
+                    <a class="alert_close">X</a>
+                    <div>
+                        <strong>
+                            <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                        </strong>
+                        <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
 
-                            </div>
+                    </div>
 
-                            <div class="alert alert-success" style="display: none">
-                                <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-                            </div>
-                            <div class="alert alert-info" style="display: none">
-                                <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
-                            </div>
+                </div>
 
-                            <div class="alert alert-warning" style="display: none">
-                                <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
-                            </div>
+                <div class="alert alert-success" style="display: none">
+                    <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
+                </div>
+                <div class="alert alert-info" style="display: none">
+                    <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
+                </div>
 
-                            <div class="alert alert-danger" style="display: none">
-                                <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-                            </div>
+                <div class="alert alert-warning" style="display: none">
+                    <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
+                </div>
+
+                <div class="alert alert-danger" style="display: none">
+                    <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
+                </div>
 
 
 
@@ -286,7 +290,8 @@
 
                 <div class="token_id_card">
                     <div class="name_field">
-                        <img src="../images/UploadPic1.png" id="ProfilePic" runat="server" width="80" height="80" /><asp:Label ID="lblPatientName" runat="server" Text="Patient_Name"></asp:Label></div>
+                        <img src="../images/UploadPic1.png" id="ProfilePic" runat="server" width="80" height="80" /><asp:Label ID="lblPatientName" runat="server" Text="Patient_Name"></asp:Label>
+                    </div>
                     <div class="light_grey">
                         <div class="col3_div">
                             <asp:Label ID="lblAgeCount" runat="server" Text="Age"></asp:Label>
@@ -300,7 +305,8 @@
                     </div>
                     <div class="card_white">
                         <div class="field_label">
-                            <label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text=""></asp:Label></div>
+                            <label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text=""></asp:Label>
+                        </div>
                     </div>
                 </div>
 
@@ -316,28 +322,28 @@
                                 <th>Timing</th>
                                 <th>Days</th>
                             </tr>
-                             <tr>
-                                    <td>
-                                        <input id="txtMedName0" type="text" placeholder="Medicine" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
-                                    <td>
-                                        <input id="txtMedQty0" type="text" placeholder="Qty" class="input" onfocus="focuscontrol(0)" onblur="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
-                                    <td>
-                                        <input id="txtMedUnit0" class="input" readonly="true" type="text" placeholder="Unit" /></td>
-                                    <td>
-                                        <input id="txtMedDos0" type="text" placeholder="Dosage" class="input" /></td>
-                                    <td>
-                                        <input id="txtMedTime0" type="text" placeholder="Timing" class="input" /></td>
-                                    <td>
-                                        <input id="txtMedDay0" type="text" placeholder="Days" class="input" /></td>
-                                    <td style="background: #E6E5E5">
-                                        <input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" /></td>
-                                    <td style="background: #E6E5E5">
-                                        <input type="button" id="btAdd" onclick="clickAdd(0); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
-                                    </td>
-                                    <td style="background-color: transparent">
-                                        <input id="hdnDetailID0" type="hidden" />
-                                        <input id="hdnQty0" type="hidden" /></td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    <input id="txtMedName0" type="text" placeholder="Medicine" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
+                                <td>
+                                    <input id="txtMedQty0" type="text" placeholder="Qty" class="input" onfocus="focuscontrol(0)" onblur="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
+                                <td>
+                                    <input id="txtMedUnit0" class="input" readonly="true" type="text" placeholder="Unit" /></td>
+                                <td>
+                                    <input id="txtMedDos0" type="text" placeholder="Dosage" class="input" /></td>
+                                <td>
+                                    <input id="txtMedTime0" type="text" placeholder="Timing" class="input" /></td>
+                                <td>
+                                    <input id="txtMedDay0" type="text" placeholder="Days" class="input" /></td>
+                                <td style="background: #E6E5E5">
+                                    <input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" /></td>
+                                <td style="background: #E6E5E5">
+                                    <input type="button" id="btAdd" onclick="clickAdd(0); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
+                                </td>
+                                <td style="background-color: transparent">
+                                    <input id="hdnDetailID0" type="hidden" />
+                                    <input id="hdnQty0" type="hidden" /></td>
+                            </tr>
                         </tbody>
                     </table>
                     <div id="maindiv">
@@ -349,17 +355,17 @@
         </div>
 
 
-                 <asp:HiddenField ID="hdnfileID" runat="server" />
-     <asp:HiddenField ID="HiddenPatientID" runat="server" />        
+        <asp:HiddenField ID="hdnfileID" runat="server" />
+        <asp:HiddenField ID="HiddenPatientID" runat="server" />
 
-                <asp:HiddenField ID="hdnXmlData" runat="server" />
-               <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
-                <asp:HiddenField ID="hdnTextboxValues" runat="server" />             
-                <asp:HiddenField ID="hdnRemovedIDs" runat="server" />
+        <asp:HiddenField ID="hdnXmlData" runat="server" />
+        <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
+        <asp:HiddenField ID="hdnTextboxValues" runat="server" />
+        <asp:HiddenField ID="hdnRemovedIDs" runat="server" />
 
-          <asp:HiddenField ID="hdnsave" Value="" runat="server" />
-         <asp:HiddenField ID="hdnconfirmsave" Value="" runat="server" />
-        <asp:HiddenField ID="Patientidtorefill" runat="server" />        
+        <asp:HiddenField ID="hdnsave" Value="" runat="server" />
+        <asp:HiddenField ID="hdnconfirmsave" Value="" runat="server" />
+        <asp:HiddenField ID="Patientidtorefill" runat="server" />
     </div>
 
 
