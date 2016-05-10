@@ -43,7 +43,11 @@ namespace TheClinicApp1._1.Masters
             {
                 logout.Visible = false;
             }
-            lblClinic.Text = UA.Clinic;           
+            if(lblClinic!=null)
+            {
+                lblClinic.Text = UA.Clinic;
+            }
+                       
             lblUser.Text = "👤 " + Login + " ";
             RoleName= UA.GetRoleName1(Login);           
             //*Check Roles Assigned and Giving Visibility For Admin Tab

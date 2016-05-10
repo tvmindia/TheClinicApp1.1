@@ -63,6 +63,7 @@
 </script> 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:Panel DefaultButton="btnSave" runat="server">
      <style type="text/css">
     /* Simple message styles customization */
     #errors {
@@ -206,6 +207,7 @@
         {
              window.location.href ="../Default.aspx";
         }
+        
 
         </script>   
     <!------------------------------------------------------------------------------>  
@@ -478,5 +480,5 @@
    
    <!----------------------------------------------------------------------------------------> 
    <!------------------------------------->
-            
+         </asp:Panel>   
 </asp:Content>
