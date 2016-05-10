@@ -231,71 +231,80 @@ namespace TheClinicApp1._1.Pharmacy
             string msg = string.Empty;
             DataRow dr = null;
 
-
+          
             if (HiddenPatientID.Value != "" || Patientidtorefill.Value!="")
             {
-
-               
-
-                if (HiddenPatientID.Value != "")
+                if (hdnTextboxValues.Value != "")
                 {
-                    patobj.PatientID = Guid.Parse(HiddenPatientID.Value);
-                    DataTable dt = patobj.SelectPatient();
-                    dr = dt.NewRow();
-                    dr = dt.Rows[0];
-                    lblPatientName.Text = dr["Name"].ToString();
+
+                    if (HiddenPatientID.Value != "")
+                    {
+                        patobj.PatientID = Guid.Parse(HiddenPatientID.Value);
+                        DataTable dt = patobj.SelectPatient();
+                        dr = dt.NewRow();
+                        dr = dt.Rows[0];
+                        lblPatientName.Text = dr["Name"].ToString();
+                    }
+                    issuehdobj.ClinicID = UA.ClinicID.ToString();
+                    issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
+
+                    issuehdobj.IssuedTo = lblPatientName.Text;
+                    issuehdobj.Date = DateTime.Now;
+                    issuehdobj.CreatedBy = UA.userName;
+                    issuehdobj.ClinicID = UA.ClinicID.ToString();
+                    ViewState["IssueHdrID"] = issuehdobj.IssueID;
+
+
+                    issuehdobj.InsertIssueHeader();
+
+
+
+                    string last = string.Empty;
+
+                    string values = hdnTextboxValues.Value;
+
+                    string[] Rows = values.Split('$');
+
+
+
+                    for (int i = 0; i < Rows.Length - 1; i++)
+                    {
+                        IssueDetails IssuedtlObj = new IssueDetails(); //Object is created in loop as each entry should have different uniqueID
+                        string[] tempRow = Rows;
+
+                        string[] columns = tempRow[i].Split('|');
+                        IssuedtlObj.MedicineName = columns[0];
+
+                        IssuedtlObj.Qty = Convert.ToInt32(columns[1]);
+
+                        IssuedtlObj.CreatedBy = UA.userName;
+
+                        IssuedtlObj.ClinicID = UA.ClinicID.ToString();
+
+                        if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
+                        {
+                            IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
+                        }
+                        IssuedtlObj.InsertIssueDetails();
+                    }
+                    // hdnsave.Value = "saved";
+                    lblPatientName.Text = "PATIENT_NAME";
+                    lblAgeCount.Text = "AGE";
+                    lblGenderDis.Text = "GENDER";
+                    lblFileNum.Text = "FILE NO";
+                    lblDoctor.Text = "";
+                    HiddenPatientID.Value = "";
+                    Patientidtorefill.Value = "";
                 }
-            issuehdobj.ClinicID = UA.ClinicID.ToString();
-            issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
+                else
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;
 
-            issuehdobj.IssuedTo = lblPatientName.Text;
-            issuehdobj.Date = DateTime.Now;
-            issuehdobj.CreatedBy = UA.userName;
-            issuehdobj.ClinicID = UA.ClinicID.ToString();
-            ViewState["IssueHdrID"] = issuehdobj.IssueID;
+                    msg = "Please fill all the fields ";
 
-            if (hdnTextboxValues.Value!="")
-            issuehdobj.InsertIssueHeader();
+                    eObj.InsertionNotSuccessMessage(page, msg);
 
-
-
-               string last = string.Empty;
-               
-               string values = hdnTextboxValues.Value;
-
-               string[] Rows = values.Split('$');
-
-
-
-               for (int i = 0; i < Rows.Length - 1; i++)
-               {
-                   IssueDetails IssuedtlObj = new IssueDetails(); //Object is created in loop as each entry should have different uniqueID
-                   string[] tempRow = Rows;                   
-
-                   string[] columns = tempRow[i].Split('|');
-                   IssuedtlObj.MedicineName = columns[0];
-                  
-                   IssuedtlObj.Qty = Convert.ToInt32(columns[1]);
-
-                   IssuedtlObj.CreatedBy = UA.userName; 
-                   
-                   IssuedtlObj.ClinicID = UA.ClinicID.ToString();
-
-                           if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
-                           {
-                               IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
-                           }
-                         IssuedtlObj.InsertIssueDetails();                  
-               }
-              // hdnsave.Value = "saved";
-               lblPatientName.Text = "PATIENT_NAME";
-               lblAgeCount.Text = "AGE";
-               lblGenderDis.Text = "GENDER";
-               lblFileNum.Text = "FILE NO";
-               lblDoctor.Text = "";
-               HiddenPatientID.Value = "";
-               Patientidtorefill.Value = "";
-
+                }
 
             }
               else 
