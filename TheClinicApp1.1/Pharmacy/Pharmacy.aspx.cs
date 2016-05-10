@@ -50,7 +50,7 @@ namespace TheClinicApp1._1.Pharmacy
             NameBind = null;
             NameBind = BindName();
             gridviewbind();
-            btnSave.Attributes.Add("onclick", "GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "')");
+            btnSave.Attributes.Add("onclick", "return  GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "');");
         }
         #endregion Pageload
 
@@ -234,6 +234,9 @@ namespace TheClinicApp1._1.Pharmacy
 
             if (HiddenPatientID.Value != "" || Patientidtorefill.Value!="")
             {
+
+               
+
                 if (HiddenPatientID.Value != "")
                 {
                     patobj.PatientID = Guid.Parse(HiddenPatientID.Value);
@@ -251,6 +254,7 @@ namespace TheClinicApp1._1.Pharmacy
             issuehdobj.ClinicID = UA.ClinicID.ToString();
             ViewState["IssueHdrID"] = issuehdobj.IssueID;
 
+            if (hdnTextboxValues.Value!="")
             issuehdobj.InsertIssueHeader();
 
 
