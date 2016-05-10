@@ -43,7 +43,7 @@ namespace TheClinicApp1._1.Pharmacy
             
             RoleName= UA.GetRoleName1(Login);
 
-            }
+            
             
             pharmacypobj.ClinicID = UA.ClinicID;
 
