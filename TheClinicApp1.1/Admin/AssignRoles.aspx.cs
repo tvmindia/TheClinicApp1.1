@@ -234,7 +234,9 @@ namespace TheClinicApp1._1.Admin
 
                     
 
-                    bool IDUsedOrNot = mstrObj.GetDoctorIDInVisits() | mstrObj.GetDoctorIDInTokens() | mstrObj.GetDoctorIDInPrescHD();
+                    //bool IDUsedOrNot = mstrObj.GetDoctorIDInVisits() | mstrObj.GetDoctorIDInTokens() | mstrObj.GetDoctorIDInPrescHD();
+
+                    bool IDUsedOrNot = false;
 
                     if (IDUsedOrNot)
                     {
@@ -372,7 +374,9 @@ namespace TheClinicApp1._1.Admin
 
                                    
 
-                                     bool IDUsedOrNot = mstrObj.GetDoctorIDInVisits() | mstrObj.GetDoctorIDInTokens() | mstrObj.GetDoctorIDInPrescHD();
+                                     //bool IDUsedOrNot = mstrObj.GetDoctorIDInVisits() | mstrObj.GetDoctorIDInTokens() | mstrObj.GetDoctorIDInPrescHD();
+
+                                    bool IDUsedOrNot = false;
 
                                      if (IDUsedOrNot)
                                      {

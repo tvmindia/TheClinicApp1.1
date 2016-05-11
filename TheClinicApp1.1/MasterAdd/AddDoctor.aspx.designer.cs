@@ -139,21 +139,21 @@ namespace TheClinicApp1._1.MasterAdd {
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtEmail;
         
         /// <summary>
-        /// dtgViewAllUnits control.
+        /// dtgDoctors control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dtgViewAllUnits;
+        protected global::System.Web.UI.WebControls.GridView dtgDoctors;
         
         /// <summary>
-        /// hdnUnitID control.
+        /// hdnDrID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnUnitID;
+        protected global::System.Web.UI.WebControls.HiddenField hdnDrID;
     }
 }

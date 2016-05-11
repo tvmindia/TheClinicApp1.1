@@ -560,6 +560,7 @@ var   UserID = '';
                             </asp:TemplateField>--%>
                             <asp:TemplateField HeaderText="Edit">
                                                     <ItemTemplate>
+
                                                         <asp:Image ID="img2" runat="server" 
                                                             OnClientClick="ConfirmDelete()" />
                                                     </ItemTemplate>

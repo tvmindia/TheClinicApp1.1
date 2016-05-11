@@ -167,7 +167,11 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.CommandText = "[InsertUsers]";
-               
+
+                UserID = Guid.NewGuid();
+
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+
                 cmd.Parameters.Add("@LoginName", SqlDbType.NVarChar,255).Value = loginName;
                 cmd.Parameters.Add("@FirstName", SqlDbType.NVarChar, 255).Value = firstName;
                 cmd.Parameters.Add("@LastName", SqlDbType.NVarChar, 255).Value = lastName;

@@ -22,6 +22,7 @@ using System.Data.SqlClient;
 using TheClinicApp1._1.ClinicDAL;
 using System.Web.Services;
 using System.Configuration;
+using System.Reflection;
 
 #endregion Included Namespaces
 
@@ -71,8 +72,7 @@ namespace TheClinicApp1._1.Admin
                 }
             }
             userObj.ClinicID = UA.ClinicID;
-            //userObj.ClinicID = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
-            userObj.createdBy = UA.userName;
+             userObj.createdBy = UA.userName;
             userObj.updatedBy = UA.userName;
             userObj.passWord = CryptObj.Encrypt(txtPassword.Value);
             userObj.Email = txtEmail.Value;
@@ -80,23 +80,99 @@ namespace TheClinicApp1._1.Admin
 
             if (hdnUserID.Value == string.Empty)
             {
+                //INSERT
+
                 userObj.AddUser();
+                hdnUserID.Value = userObj.UserID.ToString();
+
             }
             else
             {
+                //UPDATE
+
                 userObj.UserID = Guid.Parse(hdnUserID.Value);
                 userObj.UpdateuserByUserID();
-                //BindGriewWithDetailsOfAllUsers();
+                
             }
-              
-                 
-
-               
-
-            
+             
         }
 
         #endregion Add User To User Table
+
+        #region Delete User By UserID
+
+        public void DeleteUserByUserID(Guid UserID)
+        {
+            userObj.UserID = UserID;
+            userObj.DeleteUserByUserID();
+        }
+
+        #endregion Delete User By UserID
+
+        #region Refill User Details 
+
+        /// <summary>
+        /// Controls will be refilled on edit click
+        /// </summary>
+        /// <param name="UserID"></param>
+
+        public void RefillUserDetailsOnEditClick(Guid UserID)
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            userObj.UserID = UserID;
+            userObj.ClinicID = UA.ClinicID;
+            DataTable dtuser = userObj.GetUserDetailsByUserID();
+
+            txtLoginName.Value = dtuser.Rows[0]["LoginName"].ToString();
+            txtFirstName.Value = dtuser.Rows[0]["FirstName"].ToString();
+            txtLastName.Value = dtuser.Rows[0]["LastName"].ToString();
+            txtPassword.Value = CryptObj.Decrypt(dtuser.Rows[0]["Password"].ToString());
+
+            txtPhoneNumber.Value = dtuser.Rows[0]["PhoneNo"].ToString();
+
+            txtEmail.Value = dtuser.Rows[0]["Email"].ToString();
+            bool isActive = Convert.ToBoolean(dtuser.Rows[0]["Active"].ToString());
+
+            if (isActive)
+            {
+                rdoActiveYes.Checked = true;
+                rdoActiveNo.Checked = false;
+            }
+            else
+            {
+                rdoActiveNo.Checked = true;
+                rdoActiveYes.Checked = false;
+            }
+
+            userObj.ClinicID = UA.ClinicID;
+            userObj.firstName = dtuser.Rows[0]["FirstName"].ToString();
+
+                     mstrObj.UsrID = UserID;
+                    mstrObj.ClinicID = UA.ClinicID;
+                    DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
+
+                    if (dtDoctor.Rows.Count > 0) //Checking whether user is doctor , then activate Isdoctor YES radio button
+                    {
+                        //-----User Is Doctor
+                        rdoDoctor.Checked = true;
+                        rdoNotDoctor.Checked = false;
+                       
+                    }
+
+                    else
+                    {
+
+                        //--- User Is Not a doctor
+
+                        rdoNotDoctor.Checked = true;
+                        rdoDoctor.Checked = false;
+
+                    }
+
+        }
+
+        #endregion Refill User Details
 
         #endregion User
 
@@ -106,6 +182,10 @@ namespace TheClinicApp1._1.Admin
 
         #region GetRoleIDOFDoctor
 
+        /// <summary>
+        /// To get the roleID of doctor  : If the user is doctor , user has to assign the doctor role
+        /// </summary>
+        /// <returns></returns>
         public string GetRoleIDOFDoctor()
         {
             string DoctorRoleID = string.Empty;
@@ -136,54 +216,40 @@ namespace TheClinicApp1._1.Admin
             mstrObj.createdBy = UA.userName;
             mstrObj.updatedBy = UA.userName;
 
-
-
-
             if (hdnUserID.Value != string.Empty)
                 {
 
+                    mstrObj.UsrID = Guid.Parse(hdnUserID.Value);
+                    mstrObj.ClinicID = UA.ClinicID;
+                    DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
 
-                    DataTable dts = mstrObj.GetDoctorDetails();
-                    userObj.UserID = Guid.Parse(hdnUserID.Value);
-                    userObj.ClinicID = UA.ClinicID;
-                    DataTable dt = userObj.GetUserDetailsByUserID();
-
-                    foreach (DataRow dr in dts.Rows)
+                    if (dtDoctor.Rows.Count > 0) //Checking whether user is already a doctor 
                     {
-                        string drname = dr["Name"].ToString();
+                        //--------Already a doctor , So UPDATE
 
-                        if (drname == dt.Rows[0]["FirstName"].ToString())
-                        {
-                            IsDoctor = true;
-
-                            if (dt.Rows.Count > 0)
-                            {
-                                mstrObj.UpdateDoctorByName(dt.Rows[0]["FirstName"].ToString());
-                                break;
-                            }
-
-
-                        }
-
-                        //else
-                        //{
-                           
-                        //    break;
-                        //}
-
+                        IsDoctor = true;
+                         mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
+                         mstrObj.UpdateDoctors();
+                        
                     }
+
+                   
 
                     if (IsDoctor == false)
                     {
+                        //----User is not in doctor table , so INSERT
+
+                        mstrObj.UsrID = Guid.Parse(hdnUserID.Value);
                         mstrObj.InsertDoctors();
                     }
 
 
-                } 
-            else
-            {
-                mstrObj.InsertDoctors();
-            }
+                }
+            //else
+            //{
+            //    mstrObj.UsrID = Guid.Parse(hdnUserID.Value);
+            //    mstrObj.InsertDoctors();
+            //}
           
             
            
@@ -191,59 +257,109 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Add User To Doctor Table
 
+        #region Delete Doctor By UserID
+
+        /// <summary>
+        /// Doctor will be deleted from doctor and userinroles tables iff DoctorID is not not used yet , otherwise shows 'already used' message
+        /// </summary>
+        /// <param name="UserID"></param>
+        public void DeleteDoctorByUserID(Guid UserID)
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            string msg = string.Empty;
+            var page = HttpContext.Current.CurrentHandler as Page;
+
+
+            mstrObj.ClinicID = UA.ClinicID;
+            mstrObj.UsrID = UserID;
+            DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
+
+            if (dtDoctor.Rows.Count > 0) //Checking whether user is doctor or not
+            {
+                //---user is DOCTOR
+
+                mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
+
+                bool IDUsedOrNot = mstrObj.CheckDoctorIdUsed();
+
+                if (IDUsedOrNot) //checking whether doctorid is already used ,if not used doctor is get deleted
+                {
+                    msg = "Already used . Can't be deleted";
+                    eObj.DeletionNotSuccessMessage(page, msg);
+
+                }
+
+                else
+                {
+                    DeleteAssignedRoleByUserID(UserID);
+
+                    mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
+                    mstrObj.DeleteDoctorByID();
+
+                }
+
+            }
+
+            
+        }
+
+
+        #endregion Delete Doctor By UserID
+
+       
         #endregion DOCTOR
 
         //---* To USER-In-ROLES *--//
 
         #region USER-In-ROLES
 
+        #region Assign Role
+
+        /// <summary>
+        /// Assigns doctor role for the user
+        /// </summary>
         public void AddUserRole()
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             roleObj.ClinicID = UA.ClinicID;
-            roleObj.RoleID = Guid.Parse(GetRoleIDOFDoctor());
+
+            string roleid = GetRoleIDOFDoctor();
+
+            roleObj.RoleID = Guid.Parse(roleid);
             roleObj.CreatedBy = UA.userName;
+            roleObj.UserID = Guid.Parse(hdnUserID.Value);
 
+            DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
-            DataTable dtUsers = roleObj.GetDetailsOfAllUsers();
+            DataRow[] DoctorRoleAssigned = dtAssignedRoles.Select("RoleID = '" + roleid + "'"); //CHecking whether user has already doctor role, if not , assigns doctor role for the user
 
-            foreach (DataRow dr in dtUsers.Rows)
+            if (DoctorRoleAssigned.Length == 0)
             {
-                if (dr["LoginName"].ToString() == txtLoginName.Value)
-                {
-                    roleObj.UserID = Guid.Parse(dr["UserID"].ToString());
-
-                      DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
-                       roleObj.UserID = Guid.Parse(dr["UserID"].ToString());
-
-                    if (dtAssignedRoles.Rows.Count == 0)
-	{
-		  roleObj.AssignRole();
-	}
-
-                }
+                roleObj.AssignRole();
             }
-
-
-          
-
-            //if (hdnUserID.Value == string.Empty)
-            //{
-               
-            
-
-           
-           
-            //roleObj.UserID = Guid.Parse(foundRow["UserID"].ToString());
-
 
         }
 
+        #endregion Assign Role
+
+        #region Delete Assigned role By UserID
+
+        public void DeleteAssignedRoleByUserID(Guid UserID)
+        {
+            roleObj.UserID = UserID;
+            roleObj.DeleteAssignedRoleByUserID();
+        }
+
+        #endregion Delete Assigned role By UserID
+
         #endregion USER-In-ROLES
+
+        //----------------------//
 
         #region ValidateLoginName
         [WebMethod]
+        ///Checking login name duplication
         public static bool ValidateLoginName(string LogName)
         {
             string loginName = LogName;
@@ -257,16 +373,6 @@ namespace TheClinicApp1._1.Admin
         }
 
         #endregion ValidateLoginName
-
-        #region Bind Gridview
-        public void BindGriewWithDetailsOfAllUsers()
-        {
-            DataTable dtUsers = userObj.GetDetailsOfAllUsers();
-            dtgViewAllUsers.DataSource = dtUsers;
-            dtgViewAllUsers.DataBind();
-        }
-
-        #endregion Bind Gridview
 
         #region Bind Dummy Row
 
@@ -309,8 +415,9 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Delete User By UserID
 
+        #region Bind Gridview
 
-        [WebMethod]
+         [WebMethod]
         public static string GetMedicines(string searchTerm, int pageIndex)
         {
             ClinicDAL.UserAuthendication UA;
@@ -362,7 +469,7 @@ namespace TheClinicApp1._1.Admin
             }
         }
 
-
+         #endregion Bind Gridview
 
 
         #endregion Methods
@@ -374,6 +481,12 @@ namespace TheClinicApp1._1.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            PropertyInfo isreadonly = typeof(System.Collections.Specialized.NameValueCollection).GetProperty("IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
+            isreadonly.SetValue(this.Request.QueryString, false, null);
+
+
+            
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             lblClinicName.Text = UA.Clinic;
             lblUserName.Text = "👤 " + UA.userName + " "; 
@@ -389,198 +502,48 @@ namespace TheClinicApp1._1.Admin
             {
                 BindDummyRow();
 
-                //BindGriewWithDetailsOfAllUsers();
+               
             }
-            if (Request.QueryString["UsrID"] != null)
+            if (Request.QueryString["UsrID"] != null)  //DELETE Button Click
             {
-
-                bool IsDoctor = false;
-
-
                 Guid UserID = Guid.Parse(Request.QueryString["UsrID"].ToString());
-                userObj.UserID = UserID;
-                userObj.ClinicID = UA.ClinicID;
-                DataTable dt = userObj.GetUserDetailsByUserID();
+                 DeleteDoctorByUserID(UserID);
+                 DeleteUserByUserID(UserID);
 
-                if (dt.Rows.Count > 0)
-                {
-
-
-                    mstrObj.ClinicID = UA.ClinicID;
-                    DataTable dts = mstrObj.GetDoctorDetails();
-
-                    foreach (DataRow dr in dts.Rows)
-                    {
-                        string drname = dr["Name"].ToString();
+                 this.Request.QueryString.Remove("UsrID");
+             }
 
 
-                        if (drname == dt.Rows[0]["FirstName"].ToString())
-                        {
-                            IsDoctor = true;
+        
 
-                            mstrObj.DoctorID = Guid.Parse(dr["DoctorID"].ToString());
-                            bool IDUsedOrNot = mstrObj.GetDoctorIDInVisits() | mstrObj.GetDoctorIDInTokens() | mstrObj.GetDoctorIDInPrescHD();
-
-                            if (IDUsedOrNot)
-                            {
-                                msg="Already used . Can't be deleted";
-                                eObj.DeletionNotSuccessMessage(page, msg);
-                                break;
-                            }
-
-                            else
-                            {
-                                roleObj.UserID = UserID;
-                                roleObj.DeleteAssignedRoleByUserID();
-
-                                mstrObj.ClinicID = UA.ClinicID;
-                                mstrObj.DoctorName = dt.Rows[0]["FirstName"].ToString();
-                                mstrObj.DeleteDoctorByName();
-
-                                userObj.DeleteUserByUserID();
-                                break;
-                            }
-
-                           
-                        }
-
-                      
-                            //userObj.DeleteUserByUserID();
-                       
-                    }
-
-
-
-                    if (IsDoctor == false)
-                    {
-                        userObj.DeleteUserByUserID();
-                    }
-                    
-
-                }
-
-
-                //Guid UserID = Guid.Parse(Request.QueryString["UsrID"].ToString());
-                //userObj.UserID = UserID;
-                //userObj.DeleteUserByUserID();
-
-                //  userObj.UserID = UserID;
-                //  userObj.ClinicID = UA.ClinicID;
-                //   DataTable dt =      userObj.GetUserDetailsByUserID();
-
-                //   if (dt.Rows.Count > 0)
-                //   {
-                //       mstrObj.ClinicID = UA.ClinicID;
-                //       mstrObj.DoctorName = dt.Rows[0]["FirstName"].ToString();
-                //       mstrObj.DeleteDoctorByName();
-
-
-                //       roleObj.UserID = UserID;
-                //       roleObj.DeleteAssignedRoleByUserID();
-                       
-                //   }
-
-                 
-
-                hdnUserCountChanged.Value = "True";
-            }
-
-            if (Request.QueryString["UsrIDtoEdit"] != null)
+            if (Request.QueryString["UsrIDtoEdit"] != null)  //EDIT Button Click
               {
 
                 if (txtLoginName.Value == string.Empty)
-	{
-		 
-	
+	            {
+                    Guid UserID = Guid.Parse(Request.QueryString["UsrIDtoEdit"].ToString());
+                    RefillUserDetailsOnEditClick(UserID);
+                     hdnUserID.Value = UserID.ToString();
 
-
-                  Guid UserID = Guid.Parse(Request.QueryString["UsrIDtoEdit"].ToString());
-                  userObj.UserID = UserID;
-                  userObj.ClinicID = UA.ClinicID;
-                   DataTable dt =      userObj.GetUserDetailsByUserID();
-
-
-             txtLoginName.Value = dt.Rows[0]["LoginName"].ToString();
-             txtFirstName.Value = dt.Rows[0]["FirstName"].ToString();
-             txtLastName.Value = dt.Rows[0]["LastName"].ToString();
-             txtPassword.Value = CryptObj.Decrypt(dt.Rows[0]["Password"].ToString());
-
-             txtPhoneNumber.Value = dt.Rows[0]["PhoneNo"].ToString();
-
-             txtEmail.Value = dt.Rows[0]["Email"].ToString();
-             bool isActive = Convert.ToBoolean(dt.Rows[0]["Active"].ToString());
-
-             if (isActive)
-             {
-                 rdoActiveYes.Checked = true;
-                 rdoActiveNo.Checked = false;
-             }
-             else
-             {
-                 rdoActiveNo.Checked = true;
-                 rdoActiveYes.Checked = false;
-             }
-
-             userObj.ClinicID = UA.ClinicID;
-             userObj.firstName = dt.Rows[0]["FirstName"].ToString();
-
-
-             mstrObj.ClinicID = UA.ClinicID;
-             DataTable dts = mstrObj.GetDoctorDetails();
-
-
-             foreach (DataRow dr in dts.Rows)
-             {
-                 string drname = dr["Name"].ToString();
-                 if (drname == dt.Rows[0]["FirstName"].ToString())
-                 {
-                     rdoDoctor.Checked = true;
-                     rdoNotDoctor.Checked = false;
-                     break;
-                 }
-
-                 else
-                 {
-                     rdoNotDoctor.Checked = true;
-                     rdoDoctor.Checked = false;
-                     
-                 }
-             }
-
-             //int DoctorCount = userObj.CheckUserIsDoctor();
-
-             //if (DoctorCount == 1)
-             //{
-             //    rdoDoctor.Checked = true;
-             //    rdoNotDoctor.Checked = false;
-             //}
-
-             //else
-             //{
-             //    rdoNotDoctor.Checked = true;
-             //    rdoDoctor.Checked = false;
-             //}
-
-             hdnUserID.Value = UserID.ToString();
-            }
+                     this.Request.QueryString.Remove("UsrIDtoEdit");
+                }
 
               }
 
+            //Removing query string
+
+           
+            hdnUserCountChanged.Value = "True";
         }
 
         #endregion Page Load
 
-
-
-        #region Save Server Click
-
-        protected void Save_ServerClick(object sender, EventArgs e)
-        {
-          
-        }
-
-        #endregion Save Server Click
-
+        #region Save
+        /// <summary>
+        /// Based on radio button of is doctor , user will be added to respective tables
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnSave_Click(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -589,41 +552,39 @@ namespace TheClinicApp1._1.Admin
             var page = HttpContext.Current.CurrentHandler as Page;
             if (txtLoginName.Value != string.Empty || txtPassword.Value != string.Empty || txtFirstName.Value != string.Empty || txtEmail.Value != string.Empty)
             {
-
-
-
-
-                //---------*User is not doctor , operation :add user to user table 
-
                 if (rdoNotDoctor.Checked == true)
                 {
-                    AddUserToUserTable();
+                    AddUserToUserTable();    //INSERT Case  //---------*User is not doctor , operation :add user to user table 
 
-                    if (hdnUserID.Value != string.Empty)
+                    if (hdnUserID.Value != string.Empty) 
                     {
-                        mstrObj.ClinicID = UA.ClinicID;
-                        mstrObj.DoctorName = txtFirstName.Value;
-                        mstrObj.DeleteDoctorByName();
 
-                        roleObj.UserID = Guid.Parse(hdnUserID.Value);
-                        roleObj.DeleteAssignedRoleByUserID();
+                        //----------Case of UPDATE : user has to be deleted from (1).USER table and conditionally from  [ (2).USER In ROLES   (3).Doctor ]
+
+                        Guid UserID = Guid.Parse(hdnUserID.Value);
+
+                        DeleteDoctorByUserID(UserID);
+                        
                     }
-
-
                 }
 
     //---------* User is a doctor , Operations : 1.add user to user table , 2.add user to the doctor table , 3.add user - role(doctor) to assignroles table
 
-                else
-                {
-                    if (rdoDoctor.Checked == true)
+                    else
                     {
-                        AddUserToUserTable();
-                        AddUserToDoctorTable();
-                        AddUserRole();
+                        if (rdoDoctor.Checked == true)
+                        {
+                            AddUserToUserTable();
+                            AddUserToDoctorTable();
+                            AddUserRole();
+                        }
                     }
-                }
 
+
+               
+
+               
+                hdnUserCountChanged.Value = "True";
 
             }
 
@@ -633,9 +594,9 @@ namespace TheClinicApp1._1.Admin
 
                 eObj.InsertionNotSuccessMessage(page, msg);
             }
-
         }
 
+        #endregion Save
 
         #endregion Events
 
@@ -651,7 +612,14 @@ namespace TheClinicApp1._1.Admin
             Response.Redirect("../Default.aspx");
         }
 
+        //#region Bind Gridview
+        //public void BindGriewWithDetailsOfAllUsers()
+        //{
+        //    DataTable dtUsers = userObj.GetDetailsOfAllUsers();
+        //    dtgViewAllUsers.DataSource = dtUsers;
+        //    dtgViewAllUsers.DataBind();
+        //}
 
-
+        //#endregion Bind Gridview
     }
 }
