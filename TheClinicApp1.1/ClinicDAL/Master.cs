@@ -42,6 +42,13 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
+        public Guid UsrID
+        {
+            get;
+            set;
+        }
+
+
         #region Connectionstring
         dbConnection dcon = new dbConnection();
         #endregion Connectionstring
@@ -289,6 +296,104 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion AddClinics
 
+
+        public bool CheckDoctorIdUsed()
+        {
+            bool isUsed = false;
+
+            //dbConnection dcon = null;
+
+
+
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckDoctorIdUsed", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlParameter outflag = cmd.Parameters.Add("@Cnt", SqlDbType.Bit);
+                outflag.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+
+                object ID = outflag.Value;
+
+
+                isUsed = Convert.ToBoolean(ID);
+                //if (cnt > 0)
+                //{
+                //    isUsed = true;
+                //}
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+
+            return isUsed;
+
+        }
+
+
+        #region View Doctors
+
+        public DataTable ViewDoctors()
+        {
+            SqlConnection conn = null;
+            DataTable ds = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter da = null;
+            dbConnection dcon = new dbConnection();
+            try
+            {
+                conn = dcon.GetDBConnection();
+                //conn.Open();
+
+                cmd = new SqlCommand("[ViewDoctors]", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataTable();
+                da.Fill(ds);
+
+                conn.Close();
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+
+            }
+
+        }
+       
+        #endregion View Doctors
+
         #region AddDoctors
         public void InsertDoctors()
         {
@@ -314,6 +419,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@Phone", SqlDbType.NVarChar, 255).Value = DoctorPhone;
                 pud.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = createdBy;
+
+
+                if (UsrID != null)
+                {
+                    pud.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UsrID;
+                }
+
                 //pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = updatedBy;
 
                 SqlParameter Output = new SqlParameter();
@@ -333,10 +445,25 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
-                    //successfull
+                    
 
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
+                    int rslt = Convert.ToInt32(Output.Value.ToString());
+
+                    if (rslt == 1)
+                    {
+                        //successfull
+
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.SavedSuccessMessage(page);
+                    }
+
+                    if (rslt == 0)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
+                            
+                    }
+                   
 
 
                 }
@@ -362,81 +489,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
         }
         #endregion AddDoctors
-
-        #region Update Doctor By Doctor Name
-
-        public void UpdateDoctorByName(string OldName)
-        {
-            dbConnection dcon = new dbConnection();
-
-            try
-            {
-
-                dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = dcon.SQLCon;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandText = "[UpdateDoctorByName]";
-
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-               
-                cmd.Parameters.Add("@OldName", SqlDbType.NVarChar, 255).Value = OldName;
-                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = DoctorName;
-                cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 50).Value = DoctorPhone;
-                cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 50).Value = DoctorEmail;
-                
-                cmd.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = updatedBy;
-
-               
-
-
-                SqlParameter Output = new SqlParameter();
-                Output.DbType = DbType.Int32;
-                Output.ParameterName = "@Status";
-                Output.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(Output);
-                cmd.ExecuteNonQuery();
-
-                if (Output.Value.ToString() == "")
-                {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavingFailureMessage(page);
-                    //eObj.UpdationNotSuccessMessage(page);
-
-                }
-                else
-                {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
-                    //eObj.UpdationSuccessMessage(page);
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (dcon.SQLCon != null)
-                {
-                    dcon.DisconectDB();
-                }
-
-            }
-        }
-
-
-        #endregion Update Doctor  Doctor Name
 
         #region Get Doctor Details
         public DataTable GetDoctorDetails()
@@ -478,6 +530,277 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion  Get Doctor Details
+
+
+        #region Get Doctor Details By ID
+        public DataTable GetDoctorDetailsByID()
+        {
+            SqlConnection con = null;
+            DataTable dtDoctorById = null;
+            try
+            {
+                dtDoctorById = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetDoctorDetailsByID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtDoctorById);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtDoctorById;
+        }
+
+        #endregion  Get Doctor Details By ID
+
+
+        #region GetDoctorDetailsByUserID
+        public DataTable GetDoctorDetailsByUserID()
+        {
+            SqlConnection con = null;
+            DataTable dtDoctorByUsrId = null;
+            try
+            {
+                dtDoctorByUsrId = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetDoctorDetailsByUserID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UsrID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtDoctorByUsrId);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtDoctorByUsrId;
+        }
+
+        #endregion GetDoctorDetailsByUserID
+
+        #region Delete Doctor By DoctorID
+
+        public void DeleteDoctorByID()
+        {
+
+
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteDoctors";
+
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() == "")
+                {
+                    //not successfull   
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.DeletionNotSuccessMessage(page);
+
+                }
+                else
+                {
+                    //successfull
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.DeleteSuccessMessage(page);
+
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+        #endregion Delete Doctor By DoctorID
+
+
+        
+
+
+        #region Validate Doctor Name
+        public bool CheckDoctorNameDuplication()
+        {
+            bool flag;
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckDoctorNameDuplication", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@DoctorName", SqlDbType.VarChar, 255).Value = DoctorName;
+                SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
+                outflag.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                flag = (bool)outflag.Value;
+                if (flag == true)
+                {
+                    return flag;
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+            return false;
+        }
+
+        #endregion Validate Doctor Name
+
+
+
+        #region Update Doctors
+        public void UpdateDoctors()
+        {
+            dbConnection dcon = null;
+
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[UpdateDoctors]";
+
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
+                //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = DoctorName;
+                cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 15).Value = DoctorPhone;
+                cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
+                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
+
+                //cmd.ExecuteNonQuery();
+
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() == "")
+                {
+                    //not successfull   
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.SavingFailureMessage(page);
+
+                }
+                else
+                {
+                    //successfull
+
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.SavedSuccessMessage(page);
+
+
+                }
+
+
+            }
+
+            catch (Exception ex)
+            {
+
+                //throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+        }
+
+
+        #endregion Update Doctors
+
 
         #region Delete Doctor By Name
 
@@ -632,144 +955,6 @@ namespace TheClinicApp1._1.ClinicDAL
             //}
             //return dtUsers;
        
-
-        public bool GetDoctorIDInVisits()
-        {
-            bool IDusedOrNot = false;
-            string DoctorRoleID = string.Empty;
-
-            dbConnection dcon = null;
-
-            try
-            {
-                dcon = new dbConnection();
-                dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = dcon.SQLCon;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[GetDoctorIDInVisits]";
-
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-
-                object ID = cmd.ExecuteScalar();
-                if (ID != null)
-                {
-                    IDusedOrNot = true;
-                }
-
-            }
-
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (dcon.SQLCon != null)
-                {
-                    dcon.DisconectDB();
-                }
-            }
-
-            return IDusedOrNot;
-        }
-
-
-        public bool GetDoctorIDInTokens()
-        {
-            bool IDusedOrNot = false;
-            string DoctorRoleID = string.Empty;
-
-            dbConnection dcon = null;
-
-            try
-            {
-                dcon = new dbConnection();
-                dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = dcon.SQLCon;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[GetDoctorIDInTokens]";
-
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-
-                object ID = cmd.ExecuteScalar();
-                if (ID != null)
-                {
-                    IDusedOrNot = true;
-                }
-
-            }
-
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (dcon.SQLCon != null)
-                {
-                    dcon.DisconectDB();
-                }
-            }
-
-            return IDusedOrNot;
-        }
-
-
-        public bool GetDoctorIDInPrescHD()
-        {
-            bool IDusedOrNot = false;
-            string DoctorRoleID = string.Empty;
-
-            dbConnection dcon = null;
-
-            try
-            {
-                dcon = new dbConnection();
-                dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = dcon.SQLCon;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[GetDoctorIDInPrescHD]";
-
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-
-                object ID = cmd.ExecuteScalar();
-                if (ID != null)
-                {
-                    IDusedOrNot = true;
-                }
-
-            }
-
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (dcon.SQLCon != null)
-                {
-                    dcon.DisconectDB();
-                }
-            }
-
-            return IDusedOrNot;
-        }
-
 
 
         #region AddCategoryID

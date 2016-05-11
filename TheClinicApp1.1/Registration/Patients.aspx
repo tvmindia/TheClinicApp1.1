@@ -1,6 +1,7 @@
 ﻿
 <%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <%--Script for Custom Alert Box For Checking Uploded image is Supported or not--%>
    <script>
        function CustomAlert(){
            this.render = function(dialog){
@@ -22,49 +23,12 @@
                document.getElementById('dialogoverlay').style.display = "none";
            }
        }
-       var Alert = new CustomAlert();
-       function deletePost(id){
-        
-           return;
-           var db_id = id.replace("post_", "");
-           // Run Ajax request here to delete post from database
-           document.body.removeChild(document.getElementById(id));
-       }
-       function CustomConfirm(){
-          
-           this.render = function(dialog,op,id){
-               var winW = window.innerWidth;
-               var winH = window.innerHeight;
-               var dialogoverlay = document.getElementById('dialogoverlay');
-               var dialogbox = document.getElementById('dialogbox');
-               dialogoverlay.style.display = "block";
-               dialogoverlay.style.height = winH+"px";
-               dialogbox.style.left = (winW/2) - (550 * .5)+"px";
-               dialogbox.style.top = "100px";
-               dialogbox.style.display = "block";
-		
-               document.getElementById('dialogboxhead').innerHTML = "Confirm that action";
-               document.getElementById('dialogboxbody').innerHTML = dialog;
-               document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Confirm.yes(\''+op+'\',\''+id+'\')">Yes</button> <button onclick="Confirm.no()">No</button>';
-           }
-           this.no = function(){
-               document.getElementById('dialogbox').style.display = "none";
-               document.getElementById('dialogoverlay').style.display = "none";
-           }
-           this.yes = function(op,id){
-               if(op == "delete_post"){
-                   deletePost(id);
-               }
-               document.getElementById('dialogbox').style.display = "none";
-               document.getElementById('dialogoverlay').style.display = "none";
-           }
-       }
-       var Confirm = new CustomConfirm();
+       var Alert = new CustomAlert();      
 </script> 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Panel DefaultButton="btnSave" runat="server">
-     <style type="text/css">
+<asp:Panel DefaultButton="btnSave" runat="server">
+  <style type="text/css">
     /* Simple message styles customization */
     #errors {
     border-left: 5px solid #a94442;
@@ -76,44 +40,40 @@
     #errors li:before {
     content: '\b7\a0';
     }
-
-</style>
+    </style>
   
-     <style>
+  <style>
+      /*Custom Style for the table inside the modal popup*/
   .modal table{
     border-collapse: collapse;    
     width: 100%;
     }
-
-.modal table td {
+   .modal table td {
     text-align: left;
     height:auto;
     padding: 8px;
     }
-.modal table td{
+   .modal table td{
     width:45px;
     height:10px;
-}
-.modal table td+td+td{
+    }
+   .modal table td+td+td{
     width:auto;
     height:auto;
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size:14px;
     font-weight:200;
     padding-left:4px;
-}
-/*.modal table tr:nth-child(even){background-color: #f2f2f2}*/
-
-.modal table th {
+    }
+ /*.modal table tr:nth-child(even){background-color: #f2f2f2}*/
+   .modal table th {
     background-color: #5681e6;
     text-align: center;
     color: white;
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
-    font-size:16px;
-    
-}
-
-</style>
+    font-size:16px;    
+    }
+   </style>
  
  
     <!-- Script Files -->  
@@ -124,8 +84,8 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
-     <!---   Script for fileupload preview & FileType Checking  Created By:Thomson Kattingal --->    
-      <script type="text/javascript">
+    <!---   Script for fileupload preview & FileType Checking  Created By:Thomson Kattingal --->    
+    <script type="text/javascript">
         function showpreview(input) 
         {
           if (input.files && input.files[0]) 
@@ -162,7 +122,7 @@
     <!--------------------------------------------------------------------->
     <!---   Script Nav button to srink and reform, AutoComplete Textbox, Table Pagination in document Ready --->
     <script src="../js/jquery.tablePagination.0.1.js"></script>
-      <script type ="text/javascript" >
+    <script type ="text/javascript" >
         $(document).ready(
         function () {
             var ac=null;
@@ -186,18 +146,7 @@
             
               
             
-            });
-        
-       <%-- function check() {
-
-            var name = document.getElementById('<%=TextBox1.ClientID%>').value;
-            var first = name.substring(0, 1);
-            if (!(first >= "A" && first <= "Z")) {
-                alert("First character is capital");
-                return false;
-            }
-
-        }--%>
+            });      
         function getPatientId(Patient)
         {
             var PatientDetails=Patient;           
@@ -212,7 +161,7 @@
         </script>   
     <!------------------------------------------------------------------------------>  
     <!---------------------------------------------------------------------->
-   <!------------------------------------->
+    <!------------------------------------->
   
         <!-- Main Container -->
         <div class="main_body">   
@@ -237,7 +186,7 @@
          <div class="tagline">
          <a class="nav_menu">Menu</a>
          Patients Registration <ul class="top_right_links"><li>
-         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>         
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"></asp:Label></li><li>         
          <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClientClick="redirect();" OnClick="LogoutButton_Click" formnovalidate /></li></ul>
          </div>
              <div class="icon_box">
@@ -465,6 +414,7 @@
      <script src="../js/jquery.tablePagination.0.1.js"></script>
     <!---   Script includes function for open Modals preview, Created By:Thomson Kattingal --->     
     <asp:ScriptManager runat="server"></asp:ScriptManager>   
+
     <script type="text/javascript">  
     <!---Function for Open Token Registration Modal and All Registarion Modal----->
     function openModal() {
@@ -480,5 +430,5 @@
    
    <!----------------------------------------------------------------------------------------> 
    <!------------------------------------->
-         </asp:Panel>   
+</asp:Panel>   
 </asp:Content>

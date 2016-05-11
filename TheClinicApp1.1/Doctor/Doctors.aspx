@@ -3,32 +3,33 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:Panel DefaultButton="btnSave" runat="server">
     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
     <style>
-        .modal table td {
+    .modal table td {
     text-align: left;
-    height:auto;
-    
+    height:auto;    
     }
-.modal table td{
+    .modal table td{
     width:30px;
     height:auto;
     padding-left:4px;
-}
-.modal table td+td{
+    }
+    .modal table td+td{
     width:auto;
     height:auto;
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size:14px;
     font-weight:200;
     padding-left:4px;
-}
-.modal table th {
+
+    }
+    .modal table th {
    
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size:16px;
     
-}
+     }
     </style>
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -124,6 +125,14 @@
                 $('input[type=radio]').val('');
                 $('input[type=checkbox]').val('');  
             }
+            function CheckEmpty()
+            {
+                debugger;
+                if(($('input[type=text]').val=="")&&($('textarea').val==""))
+                {
+                    return false;
+                }
+            }
     </script>
       <script> 
           function bindPatientDetails()
@@ -198,7 +207,7 @@
             <div class="tagline">
                 <a class="nav_menu">Menu</a>
                 Doctors...<ul class="top_right_links"><li>
-         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"  ></asp:Label></li><li>
          <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li></ul>        
             
             </div>
@@ -219,7 +228,7 @@
 
                 <ul class="top_right_links">
                     <li>
-                        <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li>
+                        <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();CheckEmpty();" OnClick="btnSave_Click" /></li>
                     <li><a class="new" href="#" id="btnNew" runat="server" onclick="reset();" onserverclick="btnNew_ServerClick"><span></span>New</a></li>
                 </ul>
             </div>
@@ -656,6 +665,6 @@
               
     </script>
     
-
+</asp:Panel>
 
 </asp:Content>
