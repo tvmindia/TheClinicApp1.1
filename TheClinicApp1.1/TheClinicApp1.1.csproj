@@ -239,6 +239,7 @@
     <Content Include="js\jquery.spinner.js" />
     <Content Include="js\jquery.tablePagination.0.1.js" />
     <Content Include="js\materialize.min.js" />
+    <Content Include="js\Messages.js" />
     <Content Include="js\vendor\jquery-1.11.1.min.js" />
     <Content Include="js\vendor\modernizr-2.6.2-respond-1.1.0.min.js" />
     <Content Include="Login\AccessDenied.aspx" />
