@@ -455,7 +455,7 @@ var   UserID = '';
                             <div class="row field_row">
                                 <div class="col-lg-4 ">
 
-                                     <label for="name">Password</label><input id="txtPassword" runat="server" type="password" name="name"  required />
+                                     <label for="name">Password</label><input id="txtPassword" runat="server" type="password" name="name" required autocomplete="off" />
 
                                    <%-- <label for="Password">Password</label>
                                     <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
@@ -467,7 +467,7 @@ var   UserID = '';
                                 
                                 <div class="col-lg-4 ">
 
-                                       <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name"  required  />
+                                       <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name"  required  autocomplete="off" />
 
                                     
 
@@ -511,7 +511,7 @@ var   UserID = '';
                                 <div class="col-lg-4">
                                     <div class="row">
                                         <div>
-                                            <label for="sex">
+                                            <label for="sex" style="margin-left:15px">
                                                 IsActive
                                                 <asp:RadioButton ID="rdoActiveYes" runat="server" GroupName="Active" Text="Yes" CssClass="checkbox-inline" Checked="true" />
                                                 <asp:RadioButton ID="rdoActiveNo" runat="server" GroupName="Active" Text="No" CssClass="checkbox-inline" />
@@ -522,7 +522,7 @@ var   UserID = '';
                                 <div class="col-lg-4">
                                     <div class="row">
                                         <div>
-                                            <label for="sex">
+                                            <label for="sex" style="margin-left:15px">
                                                 IsDoctor
                                                     <asp:RadioButton ID="rdoDoctor" runat="server" GroupName="Doctor" Text="Yes" CssClass="checkbox-inline"  />
                                                 <asp:RadioButton ID="rdoNotDoctor" runat="server" GroupName="Doctor" Text="No" CssClass="checkbox-inline" Checked="true" />
