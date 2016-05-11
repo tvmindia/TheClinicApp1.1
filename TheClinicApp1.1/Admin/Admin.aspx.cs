@@ -488,8 +488,6 @@ namespace TheClinicApp1._1.Admin
 
             
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            lblClinicName.Text = UA.Clinic;
-            lblUserName.Text = "👤 " + UA.userName + " "; 
 
               string msg = string.Empty;
 
