@@ -14,6 +14,7 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/Messages.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
 
     <script>

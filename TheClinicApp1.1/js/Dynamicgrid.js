@@ -863,17 +863,17 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
         var y = parseInt(STOCKQTY);
         if (x > y || isNaN(x) || isNaN(y)) {
 
-           // ErrorMessagesDisplay(lblErrorCaption, lblMsgges, Errorbox);
+            ErrorMessagesDisplay(lblErrorCaption, lblMsgges, Errorbox);
 
-            document.getElementById(Errorbox).style.display = "";
-            document.getElementById(Errorbox).className = "alert alert-danger";
-            var lblmsg = "Fields may be empty or invaild";
-            var lblcaptn = "Confirm Please !";
-            document.getElementById(lblErrorCaption).innerHTML =lblcaptn;
-            document.getElementById(lblMsgges).innerHTML = lblmsg;
+            //document.getElementById(Errorbox).style.display = "";
+            //document.getElementById(Errorbox).className = "alert alert-danger";
+            //var lblmsg = "Fields may be empty or invaild";
+            //var lblcaptn = "Confirm Please !";
+            //document.getElementById(lblErrorCaption).innerHTML =lblcaptn;
+            //document.getElementById(lblMsgges).innerHTML = lblmsg;
          
-            document.getElementById(lblErrorCaption).style.display = "";
-            document.getElementById(lblMsgges).style.display = "";
+            //document.getElementById(lblErrorCaption).style.display = "";
+            //document.getElementById(lblMsgges).style.display = "";
            
 
             return false;
@@ -1014,22 +1014,22 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 
 //-----------Error Messages--------------//
 
-//function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox)
-//{
-//    debugger;
+function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox)
+{
+    debugger;
 
-//    document.getElementById(Errorbox).style.display = "";
-//    document.getElementById(Errorbox).className = "alert alert-danger";
+    document.getElementById(Errorbox).style.display = "";
+    document.getElementById(Errorbox).className = Alertclasses.danger;
 
-//    var lblmsg = "Fields may be empty or invaild";
-//    var lblcaptn = "Confirm Please !";
+    var lblmsg = msg.Requiredfields;
+    var lblcaptn = Caption.Confirm;
     
-//    document.getElementById(ErrorCaption).innerHTML = lblcaptn;
-//    document.getElementById(lblMsgges).innerHTML = lblmsg;
+    document.getElementById(ErrorCaption).innerHTML = lblcaptn;
+    document.getElementById(lblMsgges).innerHTML = lblmsg;
 
-//    document.getElementById(lblErrorCaption).style.display = "";
-//    document.getElementById(lblMsgges).style.display = "";
+   // document.getElementById(lblErrorCaption).style.display = "";
+ //   document.getElementById(lblMsgges).style.display = "";
 
 
-//}
+}
  
