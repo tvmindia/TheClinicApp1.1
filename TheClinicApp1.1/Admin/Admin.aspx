@@ -452,7 +452,7 @@ var   UserID = '';
                             <div class="row field_row">
                                 <div class="col-lg-4 ">
 
-                                     <label for="name">Password</label><input id="txtPassword" runat="server" type="text" name="name"  required />
+                                     <label for="name">Password</label><input id="txtPassword" runat="server" type="password" name="name"  required />
 
                                    <%-- <label for="Password">Password</label>
                                     <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
@@ -460,6 +460,24 @@ var   UserID = '';
 
                                     </asp:RequiredFieldValidator>--%>
                                 </div>
+
+                                
+                                <div class="col-lg-4 ">
+
+                                       <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name"  required  />
+
+                                    
+
+
+                                </div>
+
+
+                            </div>
+
+                          
+
+                            <div class="row field_row">
+
 
                                 <div class="col-lg-4 ">
 
@@ -470,12 +488,9 @@ var   UserID = '';
                                     <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtPhoneNumber" runat="server" ValidationExpression="^[0-9+-]*$" ErrorMessage="Please enter a valid phone number" ForeColor="Red"></asp:RegularExpressionValidator>--%>
 
                                 </div>
-                            </div>
 
-                          
 
-                            <div class="row field_row">
-                                <div class="col-lg-8 ">
+                                <div class="col-lg-4 ">
                                     <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name"  pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"  required />
 
                                   <%--  <label for="Email">Email</label>
