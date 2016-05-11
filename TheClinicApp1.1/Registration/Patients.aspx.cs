@@ -43,7 +43,6 @@ namespace TheClinicApp1._1.Registration
             tok.ClinicID = UA.ClinicID.ToString();
             PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
             gridDataBind();
-
             listFilter = null;
             listFilter = BindName();           
         }
@@ -76,8 +75,7 @@ namespace TheClinicApp1._1.Registration
             if (!IsPostBack)
             {
                 DropdownDoctors();
-            }
-         
+            }        
         }
         #endregion GridBind
 

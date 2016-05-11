@@ -130,85 +130,89 @@ namespace TheClinicApp1._1.Doctor
         /// <summary>
         /// Save Button with Insert and Update of Visits, PrescriptionHeader,PrescriptionDetails 
         /// </summary>
-        
+
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];                        
-            VisitsObj.ClinicID = UA.ClinicID;
-            VisitsObj.FileID = Guid.Parse(HiddenField2.Value);
-            int feet = Convert.ToInt32(txtHeightFeet.Value);
-            int inch = Convert.ToInt32(txtHeightInch.Value);
-            VisitsObj.Height = float.Parse(feet.ToString() + "." + inch.ToString());
-            VisitsObj.Weight = float.Parse(txtWeight.Value);
-            VisitsObj.Symptoms = (symptoms.Value != "") ? symptoms.Value.ToString() : null;
-            VisitsObj.Cardiovascular = (cardiovascular.Value != "") ? cardiovascular.Value.ToString() : null;
-            VisitsObj.Nervoussystem = (nervoussystem.Value != "") ? nervoussystem.Value.ToString() : null;
-            VisitsObj.Musculoskeletal = (musculoskeletal.Value != "") ? musculoskeletal.Value.ToString() : null;
-            VisitsObj.Palloe = (palloe.Value != "") ? palloe.Value.ToString() : null;
-            VisitsObj.Icterus = (icterus.Value != "") ? icterus.Value.ToString() : null;
-            VisitsObj.Clubbing = (clubbing.Value != "") ? clubbing.Value.ToString() : null;
-            VisitsObj.Cyanasis = (cyanasis.Value != "") ? cyanasis.Value.ToString() : null;
-            VisitsObj.Edima = (edima.Value != "") ? edima.Value.ToString() : null;
-            VisitsObj.Bowel = (bowel.Value != "") ? bowel.Value.ToString() : null;
-            VisitsObj.Appettie = (appettie.Value != "") ? appettie.Value.ToString() : null;
-            VisitsObj.Micturation = (micturation.Value != "") ? micturation.Value.ToString() : null;
-            VisitsObj.Sleep = (sleep.Value != "") ? sleep.Value.ToString() : null;
-            VisitsObj.Diagnosys = (diagnosys.Value != "") ? diagnosys.Value.ToString() : null;
-            VisitsObj.Remarks = (remarks.Value != "") ? remarks.Value.ToString() : null;
-            VisitsObj.CreatedBy = UA.userName;
-            VisitsObj.UpdatedBy = UA.userName;
-            VisitsObj.Bp = (bp.Value != "") ? bp.Value.ToString() : null;
-            VisitsObj.Pulse = (pulse.Value != "") ? pulse.Value.ToString() : null;
-            VisitsObj.Tounge = (tounge.Value != "") ? tounge.Value.ToString() : null;
-            VisitsObj.Heart = (heart.Value != "") ? heart.Value.ToString() : null;
-            VisitsObj.LymphGen = (lymphGen.Value != "") ? lymphGen.Value.ToString() : null;
-            VisitsObj.LymphClinic = (lymphnodes.Value != "") ? lymphnodes.Value.ToString() : null;
-            VisitsObj.RespRate = (resp_rate.Value != "") ? resp_rate.Value.ToString() : null;
-            VisitsObj.Others = (others.Value != "") ? others.Value.ToString() : null;
-            if (HdnForVisitID.Value == "")
+            try
             {
-                if (hdnRemovedIDs.Value.Trim()==string.Empty)
+                if(HiddenField2.Value!=string.Empty)
+                { 
+                UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+                VisitsObj.ClinicID = UA.ClinicID;
+                VisitsObj.FileID = Guid.Parse(HiddenField2.Value);
+                int feet = Convert.ToInt32(txtHeightFeet.Value);
+                int inch = Convert.ToInt32(txtHeightInch.Value);
+                VisitsObj.Height = float.Parse(feet.ToString() + "." + inch.ToString());
+                VisitsObj.Weight = float.Parse(txtWeight.Value);
+                VisitsObj.Symptoms = (symptoms.Value != "") ? symptoms.Value.ToString() : null;
+                VisitsObj.Cardiovascular = (cardiovascular.Value != "") ? cardiovascular.Value.ToString() : null;
+                VisitsObj.Nervoussystem = (nervoussystem.Value != "") ? nervoussystem.Value.ToString() : null;
+                VisitsObj.Musculoskeletal = (musculoskeletal.Value != "") ? musculoskeletal.Value.ToString() : null;
+                VisitsObj.Palloe = (palloe.Value != "") ? palloe.Value.ToString() : null;
+                VisitsObj.Icterus = (icterus.Value != "") ? icterus.Value.ToString() : null;
+                VisitsObj.Clubbing = (clubbing.Value != "") ? clubbing.Value.ToString() : null;
+                VisitsObj.Cyanasis = (cyanasis.Value != "") ? cyanasis.Value.ToString() : null;
+                VisitsObj.Edima = (edima.Value != "") ? edima.Value.ToString() : null;
+                VisitsObj.Bowel = (bowel.Value != "") ? bowel.Value.ToString() : null;
+                VisitsObj.Appettie = (appettie.Value != "") ? appettie.Value.ToString() : null;
+                VisitsObj.Micturation = (micturation.Value != "") ? micturation.Value.ToString() : null;
+                VisitsObj.Sleep = (sleep.Value != "") ? sleep.Value.ToString() : null;
+                VisitsObj.Diagnosys = (diagnosys.Value != "") ? diagnosys.Value.ToString() : null;
+                VisitsObj.Remarks = (remarks.Value != "") ? remarks.Value.ToString() : null;
+                VisitsObj.CreatedBy = UA.userName;
+                VisitsObj.UpdatedBy = UA.userName;
+                VisitsObj.Bp = (bp.Value != "") ? bp.Value.ToString() : null;
+                VisitsObj.Pulse = (pulse.Value != "") ? pulse.Value.ToString() : null;
+                VisitsObj.Tounge = (tounge.Value != "") ? tounge.Value.ToString() : null;
+                VisitsObj.Heart = (heart.Value != "") ? heart.Value.ToString() : null;
+                VisitsObj.LymphGen = (lymphGen.Value != "") ? lymphGen.Value.ToString() : null;
+                VisitsObj.LymphClinic = (lymphnodes.Value != "") ? lymphnodes.Value.ToString() : null;
+                VisitsObj.RespRate = (resp_rate.Value != "") ? resp_rate.Value.ToString() : null;
+                VisitsObj.Others = (others.Value != "") ? others.Value.ToString() : null;
+                if (HdnForVisitID.Value == "")
                 {
-                    VisitsObj.AddVisits();
-                    PrescriptionHeadObj.PrescID = VisitsObj.PrescriptionID.ToString();
-                    PrescriptionHeadObj.VisitID = VisitsObj.VisitID.ToString();
-                    HdnForVisitID.Value = VisitsObj.VisitID.ToString();
-                    PrescriptionHeadObj.ClinicID = UA.ClinicID.ToString();
-                    PrescriptionHeadObj.CreatedBy = UA.userName;
-                    PrescriptionHeadObj.UpdatedBy = UA.userName;
-                    PrescriptionHeadObj.CreatedDate = DateTime.Now;
-                    PrescriptionHeadObj.UpdatedDate = DateTime.Now;
-                    PrescriptionHeadObj.InsertPrescriptionHeaderDetails();
+                    if (hdnRemovedIDs.Value.Trim() == string.Empty)
+                    {
+                        VisitsObj.AddVisits();
+                        PrescriptionHeadObj.PrescID = VisitsObj.PrescriptionID.ToString();
+                        PrescriptionHeadObj.VisitID = VisitsObj.VisitID.ToString();
+                        HdnForVisitID.Value = VisitsObj.VisitID.ToString();
+                        PrescriptionHeadObj.ClinicID = UA.ClinicID.ToString();
+                        PrescriptionHeadObj.CreatedBy = UA.userName;
+                        PrescriptionHeadObj.UpdatedBy = UA.userName;
+                        PrescriptionHeadObj.CreatedDate = DateTime.Now;
+                        PrescriptionHeadObj.UpdatedDate = DateTime.Now;
+                        PrescriptionHeadObj.InsertPrescriptionHeaderDetails();
+                    }
                 }
-            }
-            else
-            {
-                VisitsObj.VisitID = Guid.Parse(HdnForVisitID.Value.ToString());
-                VisitsObj.UpdateVisits();
-            }
-            if (HdnPrescID.Value != string.Empty)
-            {
-                PrescriptionObj.PrescID = HdnPrescID.Value.ToString();
-            }
-            else
-            {
-                PrescriptionObj.PrescID = VisitsObj.PrescriptionID.ToString();
-                HdnPrescID.Value = VisitsObj.PrescriptionID.ToString();
-            }
+                else
+                {
+                    VisitsObj.VisitID = Guid.Parse(HdnForVisitID.Value.ToString());
+                    VisitsObj.UpdateVisits();
+                }
+                if (HdnPrescID.Value != string.Empty)
+                {
+                    PrescriptionObj.PrescID = HdnPrescID.Value.ToString();
+                }
+                else
+                {
+                    PrescriptionObj.PrescID = VisitsObj.PrescriptionID.ToString();
+                    HdnPrescID.Value = VisitsObj.PrescriptionID.ToString();
+                }
 
-            string last = string.Empty;
-            string values = hdnTextboxValues.Value;
-            string[] Rows = values.Split('$');
-            for (int i = 0; i < Rows.Length - 1; i++)
-            {
-                string[] tempRow = Rows;
+                string last = string.Empty;
+                string values = hdnTextboxValues.Value;
+                string[] Rows = values.Split('$');
+                for (int i = 0; i < Rows.Length - 1; i++)
+                {
+                    string[] tempRow = Rows;
 
-                last = tempRow[i].Split('|').Last();
+                    last = tempRow[i].Split('|').Last();
 
-                string[] columns = tempRow[i].Split('|');
+                    string[] columns = tempRow[i].Split('|');
 
-                //if (last == string.Empty || last == "")
-               // {
+                    //if (last == string.Empty || last == "")
+                    // {
 
                     //----------------- * CASE : INSERT *-----------------------------------//
                     if ((columns[0] != null) && (columns[1] != null))
@@ -222,7 +226,7 @@ namespace TheClinicApp1._1.Doctor
                         int parsedValue;
                         if (int.TryParse(columns[1], out parsedValue))
                         {
-                            if (parsedValue >=1)
+                            if (parsedValue >= 1)
                             {
                                 PrescriptionObj.Qty = parsedValue;
                             }
@@ -234,78 +238,94 @@ namespace TheClinicApp1._1.Doctor
                             msg = "Your Entered Quantity Fails to Match Please Update With a Valid Quantity";
                             eObj.InsertionNotSuccessMessage(page, msg);
                         }
-                        
+
                         PrescriptionObj.Unit = columns[2];
                         PrescriptionObj.Dosage = columns[3];
                         PrescriptionObj.Timing = columns[4];
-                        PrescriptionObj.Days =columns[5];
+                        PrescriptionObj.Days = columns[5];
                         if (columns[6] != "")
                         {
-                            
+
                             PrescriptionObj.ClinicID = UA.ClinicID.ToString();
                             PrescriptionObj.UpdatedBy = UA.userName;
                             PrescriptionObj.UpdatePrescriptionDetails(columns[6].ToString());
-                        
+
                         }
                         else
                         {
-                        PrescriptionObj.CreatedBy = UA.userName;
-                        PrescriptionObj.ClinicID = UA.ClinicID.ToString();
-                        PrescriptionObj.UpdatedBy = UA.userName;                       
-                        PrescriptionObj.InsertPrescriptionDetails();
+                            PrescriptionObj.CreatedBy = UA.userName;
+                            PrescriptionObj.ClinicID = UA.ClinicID.ToString();
+                            PrescriptionObj.UpdatedBy = UA.userName;
+                            PrescriptionObj.InsertPrescriptionDetails();
                         }
 
                     }
-               // }
-            }
-            if (hdnRemovedIDs.Value != string.Empty)
-            {
-
-                //----------------- * CASE : DELETE *-----------------------------------//
-
-                string hdRemovedIDValue = hdnRemovedIDs.Value;
-
-                string[] RemovedIDs = hdRemovedIDValue.Split(',');
-
-                for (int i = 0; i < RemovedIDs.Length - 1; i++)
+                    // }
+                }
+                if (hdnRemovedIDs.Value != string.Empty)
                 {
 
-                    if ((RemovedIDs[i] != "") || (RemovedIDs[i] != string.Empty))
+                    //----------------- * CASE : DELETE *-----------------------------------//
+
+                    string hdRemovedIDValue = hdnRemovedIDs.Value;
+
+                    string[] RemovedIDs = hdRemovedIDValue.Split(',');
+
+                    for (int i = 0; i < RemovedIDs.Length - 1; i++)
                     {
 
-                        
-                        string UniqueId = RemovedIDs[i].ToString();
+                        if ((RemovedIDs[i] != "") || (RemovedIDs[i] != string.Empty))
+                        {
 
-                        //string medId =   DetailObj.GetMedicineIDByUniqueID(Guid.Parse(UniqueId));
-                        PrescriptionObj.ClinicID = UA.ClinicID.ToString();
-                        PrescriptionObj.DeletePrescriptionDetails(UniqueId);
-                        //DetailObj.DeleteReceiptDetails(UniqueId);
-                        hdnRemovedIDs.Value = "";
 
+                            string UniqueId = RemovedIDs[i].ToString();
+
+                            //string medId =   DetailObj.GetMedicineIDByUniqueID(Guid.Parse(UniqueId));
+                            PrescriptionObj.ClinicID = UA.ClinicID.ToString();
+                            PrescriptionObj.DeletePrescriptionDetails(UniqueId);
+                            //DetailObj.DeleteReceiptDetails(UniqueId);
+                            hdnRemovedIDs.Value = "";
+
+                        }
                     }
+
+                }
+                //}
+                gridviewbind();
+                if (HdnPrescID.Value != string.Empty)
+                {
+                    DataSet MedicinList = PrescriptionObj.ViewPrescriptionDetails(HdnPrescID.Value.ToString());
+                    var xml = MedicinList.GetXml();
+                    hdnXmlData.Value = xml;
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
+                }
+                else
+                {
+                    DataSet MedicinList = PrescriptionObj.ViewPrescriptionDetails(HdnPrescID.Value.ToString());
+                    var xml = MedicinList.GetXml();
+                    hdnXmlData.Value = xml;
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
+                    //PrescriptionObj.PrescID = VisitsObj.PrescriptionID.ToString();
                 }
 
+
             }
-           //}
-            gridviewbind();
-            if (HdnPrescID.Value != string.Empty)
-            {
-                DataSet MedicinList = PrescriptionObj.ViewPrescriptionDetails(HdnPrescID.Value.ToString());
-                var xml = MedicinList.GetXml();
-                hdnXmlData.Value = xml;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
-            }
-            else
-            {
-                DataSet MedicinList = PrescriptionObj.ViewPrescriptionDetails(HdnPrescID.Value.ToString());
-                var xml = MedicinList.GetXml();
-                hdnXmlData.Value = xml;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
-                //PrescriptionObj.PrescID = VisitsObj.PrescriptionID.ToString();
+                else
+                {
+                    string msg = string.Empty;
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    msg = "Select A Token Or Search And Find Patient";
+                    eObj.InsertionNotSuccessMessage(page, msg);
+                }
             }
             
-            
+
+            catch
+            {
+                Response.Redirect("../Doctor/Doctors.aspx");
+            }
         }
+        
         #endregion MainButton
 
         #region FillPatientDetails
