@@ -497,10 +497,11 @@ namespace TheClinicApp1._1.Registration
         {
             Session.Remove(Const.LoginSession);
             Session.Clear();
-            Session.Abandon();
             Response.Redirect("../Default.aspx");
         }
+        
         #endregion Logout
+
        
         #endregion Events
        

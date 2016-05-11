@@ -2,29 +2,7 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Script for Custom Alert Box For Checking Uploded image is Supported or not--%>
-   <script>
-       function CustomAlert(){
-           this.render = function(dialog){
-               var winW = window.innerWidth;
-               var winH = window.innerHeight;
-               var dialogoverlay = document.getElementById('dialogoverlay');
-               var dialogbox = document.getElementById('dialogbox');
-               dialogoverlay.style.display = "block";
-               dialogoverlay.style.height = winH+"px";
-               dialogbox.style.left = (winW/2) - (550 * .5)+"px";
-               dialogbox.style.top = "100px";
-               dialogbox.style.display = "block";
-               document.getElementById('dialogboxhead').innerHTML = " Alert !";
-               document.getElementById('dialogboxbody').innerHTML = dialog;
-               document.getElementById('dialogboxfoot').innerHTML = '<input type="button" class="buttonAlert" onclick="Alert.ok()" value="OK"/>';
-           }
-           this.ok = function(){
-               document.getElementById('dialogbox').style.display = "none";
-               document.getElementById('dialogoverlay').style.display = "none";
-           }
-       }
-       var Alert = new CustomAlert();      
-</script> 
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <asp:Panel DefaultButton="btnSave" runat="server">
@@ -152,10 +130,7 @@
             var PatientDetails=Patient;           
         }
 
-        function redirect()
-        {
-             window.location.href ="../Default.aspx";
-        }
+        
         
 
         </script>   

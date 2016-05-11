@@ -4,6 +4,7 @@
 //Created Date: March-04-2016
 
 #endregion CopyRight
+
 #region Namespaces
 using System;
 using System.Collections.Generic;
@@ -497,10 +498,12 @@ namespace TheClinicApp1._1.Doctor
         [WebMethod(EnableSession = true)]
         public static string PatientDetails(string file)
         {
+            try { 
             ClinicDAL.TokensBooking obj = new ClinicDAL.TokensBooking();
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            
             obj.ClinicID = UA.ClinicID.ToString();
 
             DataSet ds = obj.GetpatientDetails(file);
@@ -521,9 +524,15 @@ namespace TheClinicApp1._1.Doctor
             DateTime DT = Convert.ToDateTime(ds.Tables[0].Rows[0]["DOB"].ToString());
             int Age = year - DT.Year;
             string DOB = Age.ToString();
-
+          
             return String.Format("{0}" + "|" + "{1}" + " | " + "{2}" + "|" + "{3}" + " | " + "{4}" + "|" + "{5}" + " | " + "{6}" + "|" + "{7}" + " | " + "{8}", FileNumber, Name, DOB, Gender, Address, Phone, Email, PatientID, ClinicID);
-
+            }
+            catch
+            {
+                
+                return null;
+            }
+           
         }
         #endregion WebMethod
 

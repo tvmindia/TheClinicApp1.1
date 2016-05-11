@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" ValidateRequest="false" EnableEventValidation="false" CodeBehind="Doctors.aspx.cs" Inherits="TheClinicApp1._1.Doctor.Doctors" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:Panel DefaultButton="btnSave" runat="server">
@@ -128,10 +129,19 @@
             function CheckEmpty()
             {
                 debugger;
-                if(($('input[type=text]').val=="")&&($('textarea').val==""))
+                if(($('#<%=txtHeightFeet.ClientID%>').val() != '')&&($('#<%=txtHeightInch.ClientID%>').val()!='')&&($('#<%=txtWeight.ClientID%>').val()!=''))
                 {
+                    $('#<%=txtHeightFeet.ClientID%>').val('');
+                    $('#<%=txtHeightInch.ClientID%>').val('');
+                    $('#<%=txtWeight.ClientID%>').val('');
+                }        
+                if(($('input[type=text]').val()=='')&&($('textarea').val()==''))
+                {
+                    Alert.render("Sorry...");
                     return false;
+                    
                 }
+                
             }
     </script>
       <script> 
@@ -167,7 +177,7 @@
                 var BtID=document.getElementById('<%=btnSearch.ClientID%>')
                 
                 $('#<%=btnSearch.ClientID%>').click();
-                document.getElementById('txtSearch').value="";//clearin the earch box
+                document.getElementById('txtSearch').value="";//clear search box
 
                 
             }          
@@ -228,7 +238,7 @@
 
                 <ul class="top_right_links">
                     <li>
-                        <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();CheckEmpty();" OnClick="btnSave_Click" /></li>
+                        <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li>
                     <li><a class="new" href="#" id="btnNew" runat="server" onclick="reset();" onserverclick="btnNew_ServerClick"><span></span>New</a></li>
                 </ul>
             </div>
@@ -274,14 +284,14 @@
                                     <div class="col-lg-8">
                                         <label for="height">Height</label>
                                         <div class="input-group spinner height" data-trigger="spinner" id="customize-spinner">
-                                            <input type="text" class="form-control text-center" id="txtHeightFeet" runat="server" value="1" data-max="200" data-min="1" data-step="1" />
+                                            <input type="text" class="form-control text-center" id="txtHeightFeet" runat="server" data-max="200" data-step="1" />
                                             <div class="input-group-addon">
                                                 <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                 <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
                                             </div>
                                         </div>
                                         <div class="input-group spinner height" data-trigger="spinner" id="customize-spinner">
-                                            <input type="text" class="form-control text-center" id="txtHeightInch" runat="server" value="1" data-max="200" data-min="1" data-step="1" />
+                                            <input type="text" class="form-control text-center" id="txtHeightInch" runat="server" data-max="200" data-step="1" />
                                             <div class="input-group-addon">
                                                 <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                 <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
@@ -291,7 +301,7 @@
                                     <div class="col-lg-4">
                                         <label for="weight">Weight</label>
                                         <div class="input-group spinner weight" data-trigger="spinner" id="customize-spinner">
-                                            <input type="text" class="form-control text-center" id="txtWeight" runat="server" value="1" data-max="200" data-min="1" data-step="1" />
+                                            <input type="text" class="form-control text-center" id="txtWeight" runat="server" data-max="200" data-step="1" />
                                             <div class="input-group-addon">
                                                 <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                 <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
@@ -472,6 +482,15 @@
     </div>
 
     <!-- Modal -->
+         <!-- Alert Container -->
+        <div id="dialogoverlay"></div>
+        <div id="dialogbox">
+  <div>
+    <div id="dialogboxhead"></div>
+    <div id="dialogboxbody"></div>
+    <div id="dialogboxfoot"></div>
+  </div>
+  </div>
     <div id="casehistory" class="modal fade" role="dialog">
         <div class="modal-dialog" style="min-width:550px">
 
