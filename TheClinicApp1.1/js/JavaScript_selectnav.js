@@ -8,7 +8,7 @@ var adminPageURL = '../Admin/Admin.aspx';
 var masterPageURL = '../MasterAdd/Categories.aspx';
 
 function selectTile(id, RoleName) {
-      debugger;
+     
     
       var tileList = ['patients', 'token', 'doctor', 'pharmacy', 'stock', 'ContentPlaceHolder1_admin', 'ContentPlaceHolder1_master'];
     var Url = [patientPageURL, tokenPageURL, doctorPageURL, pharmacyPageURL, stockPageURL,adminPageURL,masterPageURL];

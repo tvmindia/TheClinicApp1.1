@@ -19,6 +19,14 @@ namespace TheClinicApp1._1.UIClasses
 
             }
         }
+        public string LogoutSession
+        {
+            get
+            {
+                return "logout";
+
+            }
+        }
 
 
         public string HomePage
