@@ -737,6 +737,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("ViewDateRegistration", con);
                 cmd.Parameters.Add("@CreatedDate", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
