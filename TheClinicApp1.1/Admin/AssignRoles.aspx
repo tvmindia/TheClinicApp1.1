@@ -135,31 +135,31 @@ table
         var UniqueID = '';
 
 
-        $(function () {
-            $("[id*=dtgViewAllUserInRoles] td:eq(0)").click(function () {
+        //$(function () {
+        //    $("[id*=dtgViewAllUserInRoles] td:eq(0)").click(function () {
 
 
 
-                var DeletionConfirmation = ConfirmDelete();
+        //        var DeletionConfirmation = ConfirmDelete();
 
-                if (DeletionConfirmation == true) {
+        //        if (DeletionConfirmation == true) {
 
-                    debugger;
+        //            debugger;
 
-                    UniqueID = $(this).closest('tr').find('td:eq(3)').text();
+        //            UniqueID = $(this).closest('tr').find('td:eq(3)').text();
 
 
-                    window.location = "AssignRoles.aspx?UniqueID=" + UniqueID;
+        //            window.location = "AssignRoles.aspx?UniqueID=" + UniqueID;
 
 
                     
 
 
-                }
-            });
+        //        }
+        //    });
 
 
-        });
+        //});
 
 
   
@@ -218,14 +218,16 @@ table
                    
 
 
-                    $("td", row).eq(0).html($('<img />')
-                                          .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+                    //$("td", row).eq(0).html($('<img />')
+                    //                      .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
-                    $("td", row).eq(2).html($(this).find("Role").text());
-
-                    $("td", row).eq(1).html($(this).find("Name").text());
                    
-                    $("td", row).eq(3).html($(this).find("UniqueID").text());
+
+                    $("td", row).eq(0).html($(this).find("Name").text());
+
+                    $("td", row).eq(1).html($(this).find("Role").text());
+                   
+                    $("td", row).eq(2).html($(this).find("UniqueID").text());
                   
 
                     $("[id*=dtgViewAllUserInRoles]").append(row);
@@ -285,7 +287,7 @@ table
          <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
           <li id="admin" class="active" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
          <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
-         <li><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
+         <li id="log" runat="server"><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
          </ul>
          
          <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
@@ -296,7 +298,7 @@ table
          <div class="tagline">
          <a class="nav_menu">Menu</a>
         Administrator <ul class="top_right_links"><li>
-         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" ></asp:Label></li><li>
          <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li></ul> </div>
           
               <div class="icon_box">
@@ -448,12 +450,12 @@ table
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
 
-                                 <asp:TemplateField HeaderText=" ">
+                              <%--   <asp:TemplateField HeaderText=" ">
                                                     <ItemTemplate>
                                                         <asp:Image ID="img1" runat="server" 
                                                             OnClientClick="ConfirmDelete()" />
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
+                                                </asp:TemplateField>--%>
 
                                    <asp:BoundField DataField="Name" HeaderText="Name">
 

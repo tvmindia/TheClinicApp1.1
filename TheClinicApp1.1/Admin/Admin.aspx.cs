@@ -372,6 +372,7 @@ namespace TheClinicApp1._1.Admin
                 return true;
             }
             return false;
+
         }
 
         #endregion ValidateLoginName

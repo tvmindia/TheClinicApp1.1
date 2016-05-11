@@ -72,9 +72,12 @@
 
         function LoginNameCheck(txtLoginName) {
            
-            var name = document.getElementById('<%=txtLoginName.ClientID %>').value;
+debugger;
 
-if(name != " ")
+
+            var name = document.getElementById('<%=txtLoginName.ClientID %>').value;
+name=name.trim();
+if(name != "")
 {
 
             name = name.replace(/\s/g, '');
