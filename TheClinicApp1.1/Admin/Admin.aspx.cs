@@ -127,7 +127,9 @@ namespace TheClinicApp1._1.Admin
             txtLoginName.Value = dtuser.Rows[0]["LoginName"].ToString();
             txtFirstName.Value = dtuser.Rows[0]["FirstName"].ToString();
             txtLastName.Value = dtuser.Rows[0]["LastName"].ToString();
-            txtPassword.Value = CryptObj.Decrypt(dtuser.Rows[0]["Password"].ToString());
+            //txtPassword.Value = CryptObj.Decrypt(dtuser.Rows[0]["Password"].ToString());
+            txtPassword.Value = string.Empty;
+
 
             txtPhoneNumber.Value = dtuser.Rows[0]["PhoneNo"].ToString();
 
@@ -550,6 +552,13 @@ namespace TheClinicApp1._1.Admin
             var page = HttpContext.Current.CurrentHandler as Page;
             if (txtLoginName.Value != string.Empty || txtPassword.Value != string.Empty || txtFirstName.Value != string.Empty || txtEmail.Value != string.Empty)
             {
+
+                if (txtPassword.Value == txtConfirmPassword.Value)
+	        {
+		 
+	
+
+
                 if (rdoNotDoctor.Checked == true)
                 {
                     AddUserToUserTable();    //INSERT Case  //---------*User is not doctor , operation :add user to user table 
@@ -583,6 +592,17 @@ namespace TheClinicApp1._1.Admin
 
                
                 hdnUserCountChanged.Value = "True";
+
+
+            }
+
+                else
+                {
+                    msg = "Passwords do not match ! ";
+
+                    eObj.InsertionNotSuccessMessage(page, msg);
+                }
+
 
             }
 
