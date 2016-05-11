@@ -50,7 +50,7 @@ namespace TheClinicApp1._1.Pharmacy
             NameBind = null;
             NameBind = BindName();
             gridviewbind();
-            btnSave.Attributes.Add("onclick", "return  GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "');");
+            btnSave.Attributes.Add("onclick", "return  GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "','" + lblErrorCaption.ClientID + "','" + Errorbox.ClientID + "','" + lblMsgges.ClientID + "');");
         }
         #endregion Pageload
 
