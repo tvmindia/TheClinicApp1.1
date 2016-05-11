@@ -447,8 +447,10 @@ table
          <div class="col-lg-12" style="height:500px">
 
             <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" class="table" >
-                            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+             
                             <Columns>
+
+                                
 
                               <%--   <asp:TemplateField HeaderText=" ">
                                                     <ItemTemplate>
