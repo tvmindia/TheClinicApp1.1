@@ -18,7 +18,7 @@
      <script>
       $(document).ready(function () {
          
-         <%-- var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+  <%--var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
           LnameImage.style.display = "none";
           var errLname = document.getElementById('<%=errorLnames.ClientID %>');
           errLname.style.display = "none";--%>
@@ -40,12 +40,12 @@
 
          //---------------* Function to check  Unit duplication *--------------//
 
-       <%--  function CheckUnitDuplication(txtCategoryName) {
+<%--         function CheckDoctorNameDuplication(txtCategoryName) {
              debugger;
-             var name = document.getElementById('<%=txtDescription.ClientID %>').value;
+             var name = document.getElementById('<%=txtName.ClientID %>').value;
              name = name.replace(/\s/g, '');
 
-             PageMethods.ValidateUnit(name, OnSuccess, onError);
+             PageMethods.ValidateDoctorName(name, OnSuccess, onError);
 
              function OnSuccess(response, userContext, methodName) {
 
@@ -106,7 +106,7 @@
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllUnits" ><span title="View All Units" data-toggle="tooltip" data-placement="left" ><img src="../images/units.png" /></span></a>
+ <a class="all_registration_link" data-toggle="modal" data-target="#AllDoctors" ><span title="View All Doctors" data-toggle="tooltip" data-placement="left" ><img src="../images/viewdoctor.png" /></span></a>
 
 
                 
@@ -180,10 +180,10 @@
       <div class="col-lg-8">
      
               <label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required  />
-           <%--<asp:Image ID="imgWebLnames" runat="server" ToolTip="Desciption is Available" ImageUrl="~/Images/newfff.png" />
+           <%--<asp:Image ID="imgWebLnames" runat="server" ToolTip="Doctor name is Available" ImageUrl="~/Images/newfff.png"  />
 
 
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Desciption is Unavailable" ImageUrl="~/Images/newClose.png" />--%>
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Doctor name is Unavailable" ImageUrl="~/Images/newClose.png" />--%>
 
       </div>
 
@@ -228,27 +228,27 @@
       
  </div>  
 
-    <div id="AllUnits" class="modal fade" role="dialog">
+    <div id="AllDoctors" class="modal fade" role="dialog">
           <div class="modal-dialog" style="height:600px">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="border-color:#3661C7;">  
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
-        <h3 class="modal-title">View All Units</h3>
+        <h3 class="modal-title">View All Doctors</h3>
       </div>
       <div class="modal-body" style="height:500px" >
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          
 
-        <asp:GridView ID="dtgViewAllUnits" runat="server" AutoGenerateColumns="False"   DataKeyNames="UnitID">
+        <asp:GridView ID="dtgDoctors" runat="server" AutoGenerateColumns="False" CssClass="table" DataKeyNames="DoctorID"   >
                         
                         <Columns>
                           
                             <asp:TemplateField>
                                     <ItemTemplate>
                                         
-                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment"  formnovalidate   />
+                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment" OnClick="ImgBtnUpdate_Click"  formnovalidate   />
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
@@ -256,16 +256,24 @@
 
                        <asp:TemplateField HeaderText="">
              <ItemTemplate>
-              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();"  formnovalidate/>
+              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click"  formnovalidate/>
                </ItemTemplate>
                 </asp:TemplateField>
 
 
 
-                            <asp:BoundField DataField="Description" HeaderText="Unit">
-                               
+                            <asp:BoundField DataField="Name" HeaderText="Name">
                             </asp:BoundField>
                            
+
+                            <asp:BoundField DataField="Phone" HeaderText="Phone">
+                             </asp:BoundField>
+
+                            <asp:BoundField DataField="Email" HeaderText="Email">
+                             </asp:BoundField>
+
+                         
+
                                <%--<asp:BoundField DataField="Code" HeaderText="Code">
                                
                             </asp:BoundField>--%>
@@ -284,7 +292,7 @@
 
   </div>
         </div>
-     <asp:HiddenField ID="hdnUnitID" runat="server" />
+     <asp:HiddenField ID="hdnDrID" runat="server" />
 
 
 
