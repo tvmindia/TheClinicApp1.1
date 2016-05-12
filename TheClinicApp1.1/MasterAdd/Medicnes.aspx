@@ -15,7 +15,7 @@
 
     <script src="../js/DeletionConfirmation.js"></script>
 
-
+      <script src="../js/jquery.tablePagination.0.1.js"></script>
     <script>
 
      
@@ -50,7 +50,7 @@
 
       
 
-
+        $('table').tablePagination({}); 
           
 
 
@@ -367,7 +367,7 @@
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          <div class="col-lg-12" style="height:500px">
 
-             <asp:GridView ID="gvMedicines" runat="server" Style="width: 100%" AutoGenerateColumns="False"  class="table" DataKeyNames="MedicineID" >
+             <asp:GridView ID="gvMedicines" runat="server" Style="width: 100%" AutoGenerateColumns="False"  class="table" DataKeyNames="MedicineID" OnPreRender="gvMedicines_PreRender" >
            
             <Columns>
             

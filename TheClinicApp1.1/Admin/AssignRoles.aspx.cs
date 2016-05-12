@@ -35,24 +35,6 @@ namespace TheClinicApp1._1.Admin
 
         #region General Methods
 
-        #region Bind Dummy Row
-
-        private void BindDummyRow()
-        {
-            DataTable dummy = new DataTable();
-
-            //dummy.Columns.Add(" ");
-            dummy.Columns.Add("Role");
-            dummy.Columns.Add("Name");
-
-            dummy.Columns.Add("UniqueID");
-
-            dummy.Rows.Add();
-            dtgViewAllUserInRoles.DataSource = dummy;
-            dtgViewAllUserInRoles.DataBind();
-        }
-
-        #endregion Bind Dummy Row
 
         #region Bind Users Dropdown
 
@@ -100,67 +82,21 @@ namespace TheClinicApp1._1.Admin
         #endregion Bind Roles Dropdown
 
         #region Bind Gridview
-
-        [WebMethod]
-        public static string GetMedicines(string searchTerm, int pageIndex)
+        public void BindGriewWithDetailsOfAssignedRoles()
         {
-            ClinicDAL.UserAuthendication UA;
-            UIClasses.Const Const = new UIClasses.Const();
+            DataTable dtAssignedRoles = roleObj.GetDetailsOfAllAssignedRoles();
+            dtgViewAllUserInRoles.DataSource = dtAssignedRoles;
+            dtgViewAllUserInRoles.DataBind();
 
-            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            lblCaseCount.Text = dtgViewAllUserInRoles.Rows.Count.ToString();
 
-            string query = "ViewAllUserInRoles";
-            SqlCommand cmd = new SqlCommand(query);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
-            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
-
-            cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
-            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-            cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-            var xml = GetData(cmd, pageIndex).GetXml();
-            return xml;
         }
 
-        private static DataSet GetData(SqlCommand cmd, int pageIndex)
-        {
-
-            string strConnString = ConfigurationManager.ConnectionStrings["ClinicAppConnectionString"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(strConnString))
-            {
-                using (SqlDataAdapter sda = new SqlDataAdapter())
-                {
-                    cmd.Connection = con;
-                    sda.SelectCommand = cmd;
-                    using (DataSet ds = new DataSet())
-                    {
-                        sda.Fill(ds, "Medicines");
-                        DataTable dt = new DataTable("Pager");
-                        dt.Columns.Add("PageIndex");
-                        dt.Columns.Add("PageSize");
-                        dt.Columns.Add("RecordCount");
-                        dt.Rows.Add();
-                        dt.Rows[0]["PageIndex"] = pageIndex;
-                        dt.Rows[0]["PageSize"] = PageSize;
-                        dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
-                        ds.Tables.Add(dt);
-                        return ds;
-                    }
-                }
-            }
-        }
-
-
-
-        #endregion  Bind Gridview
+        #endregion Bind Gridview
 
         #endregion General Methods
 
         //--------------------//
-
 
         //---*  DOCTOR *--//
 
@@ -253,7 +189,10 @@ namespace TheClinicApp1._1.Admin
 
             }
 
-
+            else
+            {
+                DeleteAssignedRoleByUserID(UserID);
+            }
         }
 
 
@@ -263,7 +202,6 @@ namespace TheClinicApp1._1.Admin
         #endregion Doctor
 
         //------------------//
-
 
         //---*  USER IN ROLE *--//
 
@@ -317,7 +255,6 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Methods
 
-
         #region Events
 
         #region Page Load
@@ -330,7 +267,10 @@ namespace TheClinicApp1._1.Admin
 
             if (!Page.IsPostBack)
             {
-                BindDummyRow();
+                //BindDummyRow();
+
+                BindGriewWithDetailsOfAssignedRoles();
+
 
                 BindUsersDropdown();
                 BindRolesDropdown();
@@ -409,7 +349,9 @@ namespace TheClinicApp1._1.Admin
                 }
             }
 
-            hdnUserCountChanged.Value = "True";
+            BindGriewWithDetailsOfAssignedRoles();
+
+            //hdnUserCountChanged.Value = "True";
         }
 
         #endregion Save Click
@@ -465,17 +407,95 @@ namespace TheClinicApp1._1.Admin
 
         #endregion LogOut Click
 
+        #region Paging
+        protected void dtgViewAllUserInRoles_PreRender(object sender, EventArgs e)
+        {
+            dtgViewAllUserInRoles.UseAccessibleHeader = false;
+            dtgViewAllUserInRoles.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        #endregion Paging
+
         #endregion Events
 
-        //#region Bind Gridview
-        //public void BindGriewWithDetailsOfAssignedRoles()
-        //{
-        //    DataTable dtAssignedRoles = roleObj.GetDetailsOfAllAssignedRoles();
-        //    dtgViewAllUserInRoles.DataSource = dtAssignedRoles;
-        //    dtgViewAllUserInRoles.DataBind();
-        //}
+        //------------------------Filter (*Not using now) -----------------------//
 
-        //#endregion Bind Gridview
+        #region Bind Dummy Row
+
+        private void BindDummyRow()
+        {
+            DataTable dummy = new DataTable();
+
+            //dummy.Columns.Add(" ");
+            dummy.Columns.Add("Role");
+            dummy.Columns.Add("Name");
+
+            dummy.Columns.Add("UniqueID");
+
+            dummy.Rows.Add();
+            dtgViewAllUserInRoles.DataSource = dummy;
+            dtgViewAllUserInRoles.DataBind();
+        }
+
+        #endregion Bind Dummy Row
+
+        #region Bind Gridview
+
+        [WebMethod]
+        public static string GetMedicines(string searchTerm, int pageIndex)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            string query = "ViewAllUserInRoles";
+            SqlCommand cmd = new SqlCommand(query);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
+            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
+
+            cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+            cmd.Parameters.AddWithValue("@PageSize", PageSize);
+            cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            var xml = GetData(cmd, pageIndex).GetXml();
+            return xml;
+        }
+
+        private static DataSet GetData(SqlCommand cmd, int pageIndex)
+        {
+
+            string strConnString = ConfigurationManager.ConnectionStrings["ClinicAppConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(strConnString))
+            {
+                using (SqlDataAdapter sda = new SqlDataAdapter())
+                {
+                    cmd.Connection = con;
+                    sda.SelectCommand = cmd;
+                    using (DataSet ds = new DataSet())
+                    {
+                        sda.Fill(ds, "Medicines");
+                        DataTable dt = new DataTable("Pager");
+                        dt.Columns.Add("PageIndex");
+                        dt.Columns.Add("PageSize");
+                        dt.Columns.Add("RecordCount");
+                        dt.Rows.Add();
+                        dt.Rows[0]["PageIndex"] = pageIndex;
+                        dt.Rows[0]["PageSize"] = PageSize;
+                        dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                        ds.Tables.Add(dt);
+                        return ds;
+                    }
+                }
+            }
+        }
+
+
+
+        #endregion  Bind Gridview
 
     }
 }

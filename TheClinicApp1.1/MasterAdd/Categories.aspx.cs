@@ -134,5 +134,14 @@ namespace TheClinicApp1._1.MasterAdd
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
         }
+
+        #region Paging
+        protected void dtgViewAllCategories_PreRender(object sender, EventArgs e)
+        {
+            dtgViewAllCategories.UseAccessibleHeader = false;
+            dtgViewAllCategories.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        #endregion Paging
     }
 }

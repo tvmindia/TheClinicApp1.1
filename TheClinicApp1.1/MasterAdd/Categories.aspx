@@ -15,7 +15,7 @@
     <script src="../js/DeletionConfirmation.js"></script>
 
     
-
+    <script src="../js/jquery.tablePagination.0.1.js"></script>
    
 
 
@@ -41,7 +41,7 @@
               $(".main_body").toggleClass("active_close");
           });
 
-
+          $('table').tablePagination({});
 
       });
  //---------------* Function to check category name duplication *--------------//
@@ -271,7 +271,7 @@
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          
 
-        <asp:GridView ID="dtgViewAllCategories" runat="server" AutoGenerateColumns="False"   DataKeyNames="CategoryID">
+        <asp:GridView ID="dtgViewAllCategories" runat="server" AutoGenerateColumns="False"   DataKeyNames="CategoryID" OnPreRender="dtgViewAllCategories_PreRender">
                         
                         <Columns>
                           

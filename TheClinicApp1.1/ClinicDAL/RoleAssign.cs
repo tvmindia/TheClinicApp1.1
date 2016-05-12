@@ -138,47 +138,6 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion View All Roles
 
 
-        #region GetAssignedRoleByUniqueID
-
-        public DataTable GetAssignedRoleByUniqueID()
-        {
-            SqlConnection con = null;
-            DataTable dtRoles = null;
-            try
-            {
-                dtRoles = new DataTable();
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetAssignedRoleByUniqueID", con);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = UniqueID;
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtRoles);
-                return dtRoles;
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                throw ex;
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-        }
-
-
-        #endregion GetAssignedRoleByUniqueID
-
         #region GetAssignedRoleByUserID
 
         public DataTable GetAssignedRoleByUserID()
@@ -240,13 +199,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
                 adapter.Fill(dtRoles);
-                return dtRoles;
+               
             }
             catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.ErrorData(ex, page);
-                throw ex;
+              
             }
             finally
             {
@@ -256,6 +215,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return dtRoles;
         }
 
         #endregion View Assigned Roles
@@ -324,66 +285,7 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion Assign Role
 
-        #region Delete Assigned Role By UniqueID
-
-        public void DeleteAssignedRoleByUniqueID()
-        {
-            SqlConnection con = null;
-            try
-            {
-
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandText = "DeleteUserInRolesByUniqueID";
-                cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = UniqueID;
-
-                SqlParameter Output = new SqlParameter();
-                Output.DbType = DbType.Int32;
-                Output.ParameterName = "@Status";
-                Output.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(Output);
-                cmd.ExecuteNonQuery();
-                if (Output.Value.ToString() == "")
-                {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeletionNotSuccessMessage(page);
-
-                }
-                else
-                {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeleteSuccessMessage(page);
-
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-        }
-
-        #endregion Delete Assigned Role By UniqueID
+        
 
 
         #region Delete Assigned Role By UserID
