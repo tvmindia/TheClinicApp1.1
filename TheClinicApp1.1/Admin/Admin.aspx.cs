@@ -298,6 +298,7 @@ namespace TheClinicApp1._1.Admin
                     mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
                     mstrObj.DeleteDoctorByID();
 
+                    DeleteUserByUserID(UserID);
                 }
 
             }
@@ -305,6 +306,7 @@ namespace TheClinicApp1._1.Admin
             else
             {
                 DeleteAssignedRoleByUserID(UserID);
+                DeleteUserByUserID(UserID);
             }
             
         }
@@ -586,7 +588,7 @@ namespace TheClinicApp1._1.Admin
 
             Guid UserID = userid;
             DeleteDoctorByUserID(UserID);
-            DeleteUserByUserID(UserID);
+            //DeleteUserByUserID(UserID);
 
             BindGriewWithDetailsOfAllUsers();
 
