@@ -129,6 +129,31 @@ if(name != "")
 
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+
+
+function SetRequired()
+        {debugger;
+     document.getElementById('<%=txtLoginName.ClientID %>').required = true;
+     document.getElementById('<%=txtFirstName.ClientID %>').required = true;
+    document.getElementById('<%=txtPassword.ClientID %>').required = true;
+    document.getElementById('<%=txtConfirmPassword.ClientID %>').required = true;
+    document.getElementById('<%=txtLoginName.ClientID %>').required = true;
+ document.getElementById('<%=txtEmail.ClientID %>').required = true;
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 
@@ -387,7 +412,7 @@ var   UserID = '';
                                 <ul class="top_right_links">
                                     <li>
                                         <%--<a class="save" id="Save" runat="server" onserverclick="Save_ServerClick"><span></span>Save</a>--%>
-                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click"/>
+                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="SetRequired();"/>
                                     </li>
                                     <li><a class="new" href="Admin.aspx"><span></span>New</a></li>
                                 </ul>
