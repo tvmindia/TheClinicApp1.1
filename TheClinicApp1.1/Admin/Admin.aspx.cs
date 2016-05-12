@@ -302,6 +302,10 @@ namespace TheClinicApp1._1.Admin
 
             }
 
+            else
+            {
+                DeleteAssignedRoleByUserID(UserID);
+            }
             
         }
 
