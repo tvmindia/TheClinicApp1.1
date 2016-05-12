@@ -55,7 +55,10 @@ namespace TheClinicApp1._1.UIClasses
         {
             get { return "Already exists!"; }
         }
-
+        public static string Mandatory
+        {
+            get { return "Please fill out the mandatory fields And Save"; }
+        }
        
 //----------------* Success Messages *--------------//
         public static string LoginSuccess
@@ -69,7 +72,11 @@ namespace TheClinicApp1._1.UIClasses
         }
         public static string PatInsertionSuccessFull
         {
-            get { return "Patient Successfully Saved"; }
+            get { return "Patient Successfully Saved with a Case File"; }
+        }
+        public static string TokenExist
+        {
+            get { return "Token Exist Cant able to Delete Patient"; }
         }
 
         public static string UpdationSuccessFull
@@ -84,6 +91,10 @@ namespace TheClinicApp1._1.UIClasses
         public static string DeletionSuccessFull
         {
             get { return "Deleted Successfully"; }
+        }
+        public static string PatientDeletionSuccessFull
+        {
+            get { return "The Patient Deleted Successfully"; }
         }
         public static string SuccessfulUpload
         {
@@ -120,6 +131,10 @@ namespace TheClinicApp1._1.UIClasses
         public static string DeletionFailure
         {
             get { return "Deletion Not Successful "; }
+        }
+        public static string PatientDeletionFailure
+        {
+            get { return "Deletion Not Successful For this Patient "; }
         }
 
         public static string SavingFailure

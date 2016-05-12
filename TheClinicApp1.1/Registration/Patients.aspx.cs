@@ -19,6 +19,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 #endregion Included Namespaces
 
 
@@ -28,6 +29,7 @@ namespace TheClinicApp1._1.Registration
     {
         #region GlobalVariables
         UIClasses.Const Const = new UIClasses.Const();
+        
         ClinicDAL.UserAuthendication UA;
         Patient PatientObj = new Patient();
         TokensBooking tok = new TokensBooking();
@@ -174,17 +176,35 @@ namespace TheClinicApp1._1.Registration
         /// <param name="e"></param>
         protected void ImgBtnDelete_Command(object sender, CommandEventArgs e)
         {
-            lblErrorCaption.Text = string.Empty;
-            lblMsgges.Text = string.Empty;
-            Errorbox.Style["display"] = "none";
-            lblFileCount.Text = string.Empty;
-            lblTokencount.Text = string.Empty;
-            divDisplayNumber.Style["display"] = "none";
-            Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
-            PatientObj.PatientID = PatientID;
-            PatientObj.DeleteFile();
-            PatientObj.DeletePatientDetails();
-            gridDataBind();
+            try
+            {
+                lblErrorCaption.Text = string.Empty;
+                lblMsgges.Text = string.Empty;
+                Errorbox.Style["display"] = "none";
+                lblFileCount.Text = string.Empty;
+                lblTokencount.Text = string.Empty;
+                divDisplayNumber.Style["display"] = "none";
+                Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
+                PatientObj.PatientID = PatientID;
+                if (!(PatientObj.CheckPatientTokenExist(PatientID)))
+                {
+                    PatientObj.DeletePatientDetails();
+                }
+                else
+                {
+                    string msg = string.Empty;
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    msg = Messages.TokenExist;
+                    eObj.DeletionNotSuccessMessage(page, msg);
+                }
+
+                gridDataBind();
+            }
+            catch
+            {
+                Response.Redirect("../Default.aspx");
+            }
+           
         }
 
 
@@ -198,45 +218,53 @@ namespace TheClinicApp1._1.Registration
         /// <param name="e"></param>
         protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
         {
-            lblErrorCaption.Text = string.Empty;
-            lblMsgges.Text = string.Empty;
-            Errorbox.Style["display"] = "none";
-            lblFileCount.Text = string.Empty;
-            lblTokencount.Text = string.Empty;
-            divDisplayNumber.Style["display"] = "none";
-            DateTime date = DateTime.Now;
-            int year = date.Year;
-            string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
-            Guid PatientID = Guid.Parse(Patient[0]);
-            txtName.Value = Patient[1];
-            if (Patient[6].Trim() == "Male")
+            try
             {
-                rdoFemale.Checked = false;
-                rdoMale.Checked = true;
-            }
-            else if (Patient[6].Trim() == "Female")
-            {
-                rdoMale.Checked = false;
-                rdoFemale.Checked = true;
-            }
-            else
-            {
-                rdoMale.Checked = false;
-                rdoFemale.Checked = false;
-            }
+                lblErrorCaption.Text = string.Empty;
+                lblMsgges.Text = string.Empty;
+                Errorbox.Style["display"] = "none";
+                lblFileCount.Text = string.Empty;
+                lblTokencount.Text = string.Empty;
+                divDisplayNumber.Style["display"] = "none";
+                DateTime date = DateTime.Now;
+                int year = date.Year;
+                string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
+                Guid PatientID = Guid.Parse(Patient[0]);
+                txtName.Value = Patient[1];
+                if (Patient[6].Trim() == "Male")
+                {
+                    rdoFemale.Checked = false;
+                    rdoMale.Checked = true;
+                }
+                else if (Patient[6].Trim() == "Female")
+                {
+                    rdoMale.Checked = false;
+                    rdoFemale.Checked = true;
+                }
+                else
+                {
+                    rdoMale.Checked = false;
+                    rdoFemale.Checked = false;
+                }
 
-            DateTime dt = Convert.ToDateTime(Patient[5]);
-            int Age = year - dt.Year;
-            txtAge.Value = Age.ToString();
-            txtAddress.Value = Patient[2];
-            txtMobile.Value = Patient[3];
-            txtEmail.Value = Patient[4];
-            ddlMarital.SelectedValue = Patient[7];
-            txtOccupation.Value = Patient[8];
-            ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
-            ProfilePic.Visible = true;
-            //btnnew.Visible = true;
-            HiddenField1.Value = PatientID.ToString();
+                DateTime dt = Convert.ToDateTime(Patient[5]);
+                int Age = year - dt.Year;
+                txtAge.Value = Age.ToString();
+                txtAddress.Value = Patient[2];
+                txtMobile.Value = Patient[3];
+                txtEmail.Value = Patient[4];
+                ddlMarital.SelectedValue = Patient[7];
+                txtOccupation.Value = Patient[8];
+                ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+                ProfilePic.Visible = true;
+                //btnnew.Visible = true;
+                HiddenField1.Value = PatientID.ToString();
+            }
+            catch
+            {
+                Response.Redirect("../Default.aspx");
+            }
+            
 
         }
         #endregion EditPatients       
@@ -307,14 +335,25 @@ namespace TheClinicApp1._1.Registration
                 var page = HttpContext.Current.CurrentHandler as Page;
                 PatientObj.ClinicID = UA.ClinicID;
                 DateTime _date = DateTime.Now;
-                if (txtAge.Value != "")
+                int parsedValue;
+                if (int.TryParse(txtAge.Value, out parsedValue))
                 {
-
-                    int age = Convert.ToInt32(txtAge.Value);
-                    int year = _date.Year;
-                    int DOB = year - age;
-                    PatientObj.DOB = DateTime.Parse(DOB + "-01-01");
+                    if (parsedValue >= 0)
+                    {
+                        int age = Convert.ToInt32(parsedValue);
+                        int year = _date.Year;
+                        int DOB = year - age;
+                        PatientObj.DOB = DateTime.Parse(DOB + "-01-01");
+                    }
                 }
+                //if (txtAge.Value != "")
+                //{
+
+                //    int age = Convert.ToInt32(txtAge.Value);
+                //    int year = _date.Year;
+                //    int DOB = year - age;
+                //    PatientObj.DOB = DateTime.Parse(DOB + "-01-01");
+                //}
                 string clinID = UA.ClinicID.ToString();
                 PatientObj.Name = (txtName.Value != "") ? txtName.Value.ToString() : null;
                 PatientObj.Address = (txtAddress.Value != "") ? txtAddress.Value.ToString() : null;
@@ -386,7 +425,7 @@ namespace TheClinicApp1._1.Registration
                 }
                 else
                 {
-                    msg = "Please fill out the mandatory fields And Try Again";
+                    msg = Messages.Mandatory;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
                 gridDataBind();

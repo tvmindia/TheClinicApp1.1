@@ -219,11 +219,7 @@ namespace TheClinicApp1._1.Doctor
                     if ((columns[0] != null) && (columns[1] != null))
                     {
 
-                        PrescriptionObj.MedicineName = columns[0];
-                        //if(int.Equals(columns[1].GetType()))
-                        //{
-
-                        //}
+                        PrescriptionObj.MedicineName = columns[0];                       
                         int parsedValue;
                         if (int.TryParse(columns[1], out parsedValue))
                         {
