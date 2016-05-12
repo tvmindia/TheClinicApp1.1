@@ -205,11 +205,30 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
-                    //successfull
 
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
-                    //eObj.InsertionSuccessMessage(page);
+                    int rslt = Convert.ToInt32(Output.Value.ToString());
+
+                   
+
+                    if (rslt == 2)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
+
+                    }
+
+                    else
+                    {
+                        if (rslt == 1)
+                        {
+                            //successfull
+
+                            var page = HttpContext.Current.CurrentHandler as Page;
+                            eObj.SavedSuccessMessage(page);
+                            //eObj.InsertionSuccessMessage(page);
+                        }
+                    }
+                    
 
 
                 }
