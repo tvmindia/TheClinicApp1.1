@@ -13,6 +13,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 #endregion Included Namespaces
 
 namespace TheClinicApp1._1.ClinicDAL
@@ -222,9 +223,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 else
                 {
                     //successfull
-                    
+                    string msg = Messages.PatInsertionSuccessFull;
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.PatientInsertionSuccessMessage(page);
+                    eObj.InsertionSuccessMessage1(page,msg);
 
 
                 }
@@ -442,27 +443,26 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.CommandType = System.Data.CommandType.StoredProcedure;
                 pud.CommandText = "DeletePatientDetails";
                 pud.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
-
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
                 Output.Direction = ParameterDirection.Output;
                 pud.Parameters.Add(Output);
                 pud.ExecuteNonQuery();
-                if (Output.Value.ToString() == "")
+                if (Output.Value.ToString() != "1")
                 {
                     //not successfull   
-
+                    string msg = Messages.PatientDeletionFailure;
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.WarningMessage(page);
+                    eObj.DeletionNotSuccessMessage(page, msg);
 
                 }
                 else
                 {
                     //successfull
-
+                    string msg = Messages.PatientDeletionSuccessFull;
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeleteSuccessMessage(page);
+                    eObj.DeleteSuccessMessage(page,msg);
 
 
                 }
@@ -471,7 +471,7 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                string Msg="Can't Delete hence Token Is been Generated for this Patient";
+                string Msg = Messages.TokenExist;
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.DeletePatientErrorData(Msg,page);
 
@@ -528,10 +528,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 else
                 {
                     //successfull
-
+                    string msg = Messages.PatInsertionSuccessFull;
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.PatientInsertionSuccessMessage(page);
-
+                    eObj.InsertionSuccessMessage1(page, msg);
 
                 }
 
@@ -556,66 +555,44 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion AddFile
 
-        #region DeleteFile
-        public void DeleteFile()
+        #region Validate Patient Exist
+        public bool CheckPatientTokenExist(Guid PatientID)
         {
+            bool flag;
             SqlConnection con = null;
             try
             {
 
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
-                SqlCommand pud = new SqlCommand();
-                pud.Connection = con;
-                pud.CommandType = System.Data.CommandType.StoredProcedure;
-                pud.CommandText = "DeleteFile";
-                pud.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
-
-                SqlParameter Output = new SqlParameter();
-                Output.DbType = DbType.Int32;
-                Output.ParameterName = "@Status";
-                Output.Direction = ParameterDirection.Output;
-                pud.Parameters.Add(Output);
-                pud.ExecuteNonQuery();
-                if (Output.Value.ToString() == "")
+                SqlCommand cmd = new SqlCommand("CheckPatientTokenExist", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
+                SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
+                outflag.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                flag = (bool)outflag.Value;
+                if (flag == true)
                 {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.WarningMessage(page);
-
+                    return flag;
                 }
-                else
-                {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeleteSuccessMessage(page);
-
-
-                }
-
-
             }
             catch (Exception ex)
             {
-                string Msg = "Visits Exist Against this Patient For Deletion Contact Admin";
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.DeletePatientErrorData(Msg, page);
-
+                throw ex;
             }
-
             finally
             {
                 if (con != null)
                 {
-                    con.Dispose();
+                    con.Close();
                 }
-
             }
 
+            return false;
         }
-        #endregion DeleteFile
+
+        #endregion Validate Patient Exist
 
         //***Generate File Number***//
         #region Generate_File_Number

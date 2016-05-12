@@ -10,13 +10,13 @@
  * @name tablePagination
  * @type jQuery
  * @param Object settings;
- *      firstArrow - Image - Pass in an image to replace default image. Default: (new Image()).src="./images/first.gif"
- *      prevArrow - Image - Pass in an image to replace default image. Default: (new Image()).src="./images/prev.gif"
- *      lastArrow - Image - Pass in an image to replace default image. Default: (new Image()).src="./images/last.gif"
- *      nextArrow - Image - Pass in an image to replace default image. Default: (new Image()).src="./images/next.gif"
+ *      firstArrow - Image - Pass in an image to replace default image. Default: (new Image()).src="../images/First.png"
+ *      prevArrow - Image - Pass in an image to replace default image. Default: (new Image()).src="../images/Previous.png"
+ *      lastArrow - Image - Pass in an image to replace default image. Default: (new Image()).src="../images/Last.png"
+ *      nextArrow - Image - Pass in an image to replace default image. Default: (new Image()).src="../images/Next.png"
  *      rowsPerPage - Number - used to determine the starting rows per page. Default: 5
  *      currPage - Number - This is to determine what the starting current page is. Default: 1
- *      optionsForRows - Array - This is to set the values on the rows per page. Default: [5,10,25,50,100]
+ *      optionsForRows - Array - This is to set the values on the rows per page. Default: [7,14,21,50,100]
  *      ignoreRows - Array - This is to specify which 'tr' rows to ignore. It is recommended that you have those rows be invisible as they will mess with page counts. Default: []
  *
  *
