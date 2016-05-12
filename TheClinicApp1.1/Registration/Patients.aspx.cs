@@ -28,8 +28,7 @@ namespace TheClinicApp1._1.Registration
     public partial class Patients : System.Web.UI.Page
     {
         #region GlobalVariables
-        UIClasses.Const Const = new UIClasses.Const();
-        
+        UIClasses.Const Const = new UIClasses.Const();    
         ClinicDAL.UserAuthendication UA;
         Patient PatientObj = new Patient();
         TokensBooking tok = new TokensBooking();
@@ -39,8 +38,7 @@ namespace TheClinicApp1._1.Registration
 
         #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
-        {
-            
+        {            
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];           
             tok.ClinicID = UA.ClinicID.ToString();
             PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
@@ -255,7 +253,14 @@ namespace TheClinicApp1._1.Registration
                 txtEmail.Value = Patient[4];
                 ddlMarital.SelectedValue = Patient[7];
                 txtOccupation.Value = Patient[8];
-                ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+                if(Patient[9]!=string.Empty)
+                {
+                    ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+                }
+                else
+                {
+                    ProfilePic.Src = "../images/UploadPic1.png";
+                }
                 ProfilePic.Visible = true;
                 //btnnew.Visible = true;
                 HiddenField1.Value = PatientID.ToString();
@@ -378,7 +383,7 @@ namespace TheClinicApp1._1.Registration
                 PatientObj.Occupation = (txtOccupation.Value != "") ? txtOccupation.Value.ToString() : null;
                 PatientObj.CreatedBy = UA.userName;
                 PatientObj.UpdatedBy = UA.userName;
-                if (PatientObj.Name != null&PatientObj.DOB!=null)
+                if ((PatientObj.Name != null)&&(PatientObj.DOB!=null))
                 {
                     
                     PatientObj.FileNumber = PatientObj.Generate_File_Number().ToString();
@@ -392,15 +397,21 @@ namespace TheClinicApp1._1.Registration
                             ImageByteArray = ConvertImageToByteArray(FileUpload1);
                             PatientObj.Picupload = ImageByteArray;
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
-
                         }
-
+                       
                         Guid g = Guid.NewGuid();
                         PatientObj.PatientID = g;
                         HdnFirstInsertID.Value = PatientObj.PatientID.ToString();
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
+                        if (FileUpload1.HasFile)
+                        { 
                         ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + g.ToString();
+                        }
+                        else
+                        {
+                            ProfilePic.Src = "../images/UploadPic1.png";
+                        }
                     }
                     else
                     {
@@ -416,8 +427,11 @@ namespace TheClinicApp1._1.Registration
                         }
                         PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
                         PatientObj.UpdatePatientDetails();
-                        ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + HiddenField1.Value.ToString();
-                        if(ProfilePic.Src=="")
+                        if (FileUpload1.HasFile)
+                        {
+                            ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + HiddenField1.Value.ToString();
+                        }
+                        else
                         {
                             ProfilePic.Src = "../images/UploadPic1.png";
                         }
@@ -432,7 +446,10 @@ namespace TheClinicApp1._1.Registration
                 lblFileCount.Text = PatientObj.FileNumber;
                 if (HiddenField1.Value == "")
                 {
-                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
+                    if ((PatientObj.Name != null) && (PatientObj.DOB != null))
+                    {
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
+                    }
                 }
             }
             catch
@@ -492,8 +509,15 @@ namespace TheClinicApp1._1.Registration
                     string Status = PatientObj.MaritalStatus;
                     ddlMarital.SelectedValue = Status;
                     txtOccupation.Value = PatientObj.Occupation;
-
-                    ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+                    string imagetype = PatientObj.ImageType;
+                    if(imagetype.Trim()!=string.Empty)
+                    {
+                        ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+                    }
+                    else
+                    {
+                        ProfilePic.Src = "../images/UploadPic1.png";
+                    }
                     HiddenField1.Value = PatientID.ToString();
                 }
                 else

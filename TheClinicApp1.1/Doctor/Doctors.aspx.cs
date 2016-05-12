@@ -364,7 +364,15 @@ namespace TheClinicApp1._1.Doctor
             lblAgeCount.Text = Age.ToString();
             //lblAddress.Text = dr["Address"].ToString();
             //lblLastVisitDate.Text = dr["CreatedDate"].ToString();
-            ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+            string imagetype=dr["ImageType"].ToString();
+            if(imagetype.Trim()!=string.Empty)
+            {
+                ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+            }
+            else
+            {
+                ProfilePic.Src = "../images/UploadPic1.png";
+            }
             //ProfilePic.Visible = true;
 
             HiddenField1.Value = PatientID.ToString();

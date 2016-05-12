@@ -267,7 +267,7 @@
             <Columns>
                  <asp:TemplateField>
                   <ItemTemplate>
-                   <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Editicon1.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                   <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Editicon1.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
                     </ItemTemplate>                                    
                      </asp:TemplateField>
                     <asp:TemplateField >
@@ -342,7 +342,7 @@
                             <Columns>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon1.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                                        <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon1.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
 
                                     </ItemTemplate>
                                 </asp:TemplateField>

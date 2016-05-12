@@ -53,11 +53,7 @@ namespace TheClinicApp1._1.Token
             }
 
            
-        }
-
-
-
-     
+        }   
         #region listerfilterbind
         public void listerfilterbind()
         { 
@@ -95,9 +91,7 @@ namespace TheClinicApp1._1.Token
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             obj.ClinicID = UA.ClinicID.ToString();
-
             DataSet ds = obj.GetpatientDetails(file);
-
             string FileNumber = Convert.ToString(ds.Tables[0].Rows[0]["FileNumber"]);
             string Name = Convert.ToString(ds.Tables[0].Rows[0]["Name"]);
             string Gender = Convert.ToString(ds.Tables[0].Rows[0]["Gender"]);

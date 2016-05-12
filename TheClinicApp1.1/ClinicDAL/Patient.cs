@@ -94,6 +94,7 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+        
         public string ImageType
         {
             get;
@@ -203,7 +204,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                pud.Parameters.Add("@image", SqlDbType.Image,0).Value =Picupload;
+                pud.Parameters.Add("@image", SqlDbType.Image, 0).Value = Picupload;
                 pud.Parameters.Add("@ImageType", SqlDbType.NVarChar, 6).Value = ImageType;               
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
@@ -810,6 +811,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 Email = dr["Email"].ToString();
                 MaritalStatus = dr["MaritalStatus"].ToString();
                 Occupation = dr["Occupation"].ToString();
+                ImageType = dr["ImageType"].ToString();
             }
             con.Close();        
 
