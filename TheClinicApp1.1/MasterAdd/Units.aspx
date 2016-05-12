@@ -12,8 +12,8 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
-
-
+    <script src="../js/jquery.tablePagination.0.1.js"></script>
+  
      <script>
       $(document).ready(function () {
          
@@ -33,7 +33,7 @@
               $(".main_body").toggleClass("active_close");
           });
 
-
+          $('table').tablePagination({});
 
       });
 
@@ -228,7 +228,7 @@
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          
 
-        <asp:GridView ID="dtgViewAllUnits" runat="server" AutoGenerateColumns="False"   DataKeyNames="UnitID">
+        <asp:GridView ID="dtgViewAllUnits" runat="server" AutoGenerateColumns="False"   DataKeyNames="UnitID" OnPreRender="dtgViewAllUnits_PreRender">
                         
                         <Columns>
                           

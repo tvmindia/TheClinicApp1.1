@@ -3,11 +3,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 
-    <link href="../css/TheClinicApp.css" rel="stylesheet" />
-    <link href="../css/main.css" rel="stylesheet" />
+   <%-- <link href="../css/TheClinicApp.css" rel="stylesheet" />
+    <link href="../css/main.css" rel="stylesheet" />--%>
 
     
+    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../js/jquery-1.3.2.min.js"></script>
+    <script src="../js/jquery-1.12.0.min.js"></script>
 
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/fileinput.js"></script>
+    <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/DeletionConfirmation.js"></script>
+    <script src="../js/jquery.tablePagination.0.1.js"></script>
 
 
 
@@ -16,26 +24,18 @@
 
       <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
     <!-- Script Files -->
-   <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
-    <script src="../js/jquery-1.12.0.min.js"></script>
-
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/fileinput.js"></script>
-    <script src="../js/JavaScript_selectnav.js"></script>
-    <script src="../js/DeletionConfirmation.js"></script>
-
+   
 
     <script>
 
       $(document).ready(function () 
 {
-         
+          debugger;
 
-  if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
+ <%-- if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
              GetMedicines(1);
                 $('#<%=hdnUserCountChanged.ClientID %>').val('False');
-            }
+            }--%>
 
 
                 //images that represents medicine name duplication hide and show
@@ -54,6 +54,8 @@
                 $(".main_body").toggleClass("active_close");
                });
 
+
+              $('table').tablePagination({});
 
 });
 
@@ -112,13 +114,31 @@ if(name != "")
     </script>
 
 
-      <%--  //------------- AUTOFILL SCRIPT ---------%>
-    <script src="../js/jquery-1.8.3.min.js"></script>
-    
-    <script src="../js/ASPSnippets_Pager.min.js"></script>
+     <script src="../js/jquery-1.3.2.min.js"></script>
+   <script src="../js/jquery-1.12.0.min.js"></script>
+   <script src="../js/jquery-ui.js"></script>
 
+
+        <script src="../js/bootstrap.min.js"></script>
+      <script src="../js/jquery.tablePagination.0.1.js"></script>
 
     <script type="text/javascript">
+
+       
+        $(function () {
+
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+</script>
+
+
+      <%--  //------------- AUTOFILL SCRIPT ---------%>
+   <%-- <script src="../js/jquery-1.8.3.min.js"></script>
+    
+    <script src="../js/ASPSnippets_Pager.min.js"></script>--%>
+
+
+    <%--<script type="text/javascript">
 
 var   UserID = '';
 
@@ -281,7 +301,7 @@ var   UserID = '';
 
 
  
-        </script>
+        </script>--%>
 
 
 
@@ -318,7 +338,33 @@ var   UserID = '';
             </div>
 
             <div class="icon_box">
-                <a class="all_registration_link" data-toggle="modal" data-target="#AllUsers" ><span title="View All Users" data-toggle="tooltip" data-placement="left" ><img src="../images/multiuser.png" /></span></a>
+               <%-- <a class="all_registration_link" data-toggle="modal" data-target="#AllUsers" >
+                    <span title="View All Users" data-toggle="tooltip" data-placement="left" >
+                        <img src="../images/multiuser.png" /></span> <span class="count">
+                            <asp:Label ID="lblCaseCount" runat="server" Text="0">
+
+                            </asp:Label></span>
+                   </a>--%>
+
+                <a class="all_token_link" data-toggle="modal" data-target="#AllUsers" >
+                  <span class="count">  <asp:Label ID="lblCaseCount" runat="server" Text="0">
+
+                            </asp:Label></span>
+                       <span title="View All Users" data-toggle="tooltip" data-placement="left" >
+                        <img src="../images/multiuser.png" /></span> 
+                          
+                   </a>
+
+
+              <%--  <a class="all_token_link" data-toggle="modal" data-target="#all_token" onclick="SetIframeSrc('AllTokenIframe')">
+                    <span class="count"><asp:Label ID="Label1" runat="server" Text="0"></asp:Label></span>
+                    <span title="All Tokens" data-toggle="tooltip" data-placement="left">
+                        <img src="../images/tokens.png" />
+                    </span>
+                </a>--%>
+
+
+
                   </div>
 
             <div class="right_form tab_right_form">
@@ -559,7 +605,7 @@ var   UserID = '';
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          
 
-        <asp:GridView ID="dtgViewAllUsers" runat="server" AutoGenerateColumns="False" class="table" >
+        <asp:GridView ID="dtgViewAllUsers" runat="server" AutoGenerateColumns="False" class="table" OnPreRender="dtgViewAllUsers_PreRender" DataKeyNames="UserID" >
                         
                         <Columns>
                            <%-- <asp:TemplateField>
@@ -576,7 +622,30 @@ var   UserID = '';
 
                                 </ItemTemplate>
                             </asp:TemplateField>--%>
-                            <asp:TemplateField HeaderText="Edit">
+
+
+                            
+                              <asp:TemplateField>
+                                    <ItemTemplate>
+                                        
+                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment"  formnovalidate OnClick="ImgBtnUpdate_Click"  />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+
+
+             <asp:TemplateField HeaderText="">
+             <ItemTemplate>
+              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate />
+               </ItemTemplate>
+                </asp:TemplateField>
+
+
+
+
+
+
+                          <%--  <asp:TemplateField HeaderText="Edit">
                                                     <ItemTemplate>
 
                                                         <asp:Image ID="img2" runat="server" 
@@ -591,7 +660,7 @@ var   UserID = '';
                                                         <asp:Image ID="img1" runat="server" 
                                                             OnClientClick="ConfirmDelete()" />
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
+                                                </asp:TemplateField>--%>
 
 
 
@@ -608,9 +677,9 @@ var   UserID = '';
                               
                             </asp:BoundField>
 
-                             <asp:BoundField DataField="UserID" HeaderText="UserID">
+                           <%--  <asp:BoundField DataField="UserID" HeaderText="UserID">
                               
-                            </asp:BoundField>
+                            </asp:BoundField>--%>
                             
 
 

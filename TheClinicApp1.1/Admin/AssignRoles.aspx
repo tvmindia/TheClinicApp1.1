@@ -15,6 +15,7 @@ table
 {
      border-top:none!important;
 }
+
  label {
     color: #666666;
     display: block;
@@ -45,16 +46,18 @@ table
     width:100%;
 }
 
-        .modal table td {
+.modal table td {
     text-align: left;
     height:auto;
     
     }
+
 .modal table td{
     width:30px;
     height:auto;
     padding-left:4px;
 }
+
 .modal table td+td{
     width:auto;
     height:auto;
@@ -63,6 +66,7 @@ table
     font-weight:200;
     padding-left:4px;
 }
+
 .modal table th {
    
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
@@ -91,21 +95,31 @@ table
 
     <script src="../js/DeletionConfirmation.js"></script>
 
+    <script src="../js/jquery.tablePagination.0.1.js"></script>
+    
+    
+
+
+    
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+      
 
     <script>
 
        var test = jQuery.noConflict();
         test(document).ready(function () {
 
+            debugger;
 
-
-            if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
+<%--            if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
                 GetMedicines(1);
                 $('#<%=hdnUserCountChanged.ClientID %>').val('False');
-            }
+            }--%>
+
+            //$('[data-toggle="tooltip"]').tooltip();
+
 
             test('.nav_menu').click(function () {
                 test(".main_body").toggleClass("active_close");
@@ -119,20 +133,37 @@ table
                 $(this).parent(".alert").hide();
 
             });
+            $('.table').tablePagination({});
 
+            
 
         });
 
     </script>
 
       <%--  //------------- AUTOFILL SCRIPT ---------%>
-    <script src="../js/jquery-1.8.3.min.js"></script>
+   <%-- <script src="../js/jquery-1.8.3.min.js"></script>
     
-    <script src="../js/ASPSnippets_Pager.min.js"></script>
+    <script src="../js/ASPSnippets_Pager.min.js"></script>--%>
+
+     <script src="../js/jquery-1.3.2.min.js"></script>
+   <script src="../js/jquery-1.12.0.min.js"></script>
+   <script src="../js/jquery-ui.js"></script>
+
+
+        <script src="../js/bootstrap.min.js"></script>
+      <script src="../js/jquery.tablePagination.0.1.js"></script>
 
     <script type="text/javascript">
 
-        var UniqueID = '';
+       
+        $(function () {
+
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+
+        //var UniqueID = '';
 
 
         //$(function () {
@@ -163,113 +194,113 @@ table
 
 
   
+        //-------------*SEARCH AND PAGING SCRIPT------------------------//
 
+        //$(function () {
 
-        $(function () {
+        //    GetMedicines(1);
+        //});
+        //$("[id*=txtSearch]").live("keyup", function () {
 
-            GetMedicines(1);
-        });
-        $("[id*=txtSearch]").live("keyup", function () {
+        //    GetMedicines(parseInt(1));
+        //});
+        //$(".Pager .page").live("click", function () {
+        //    GetMedicines(parseInt($(this).attr('page')));
+        //});
+        //function SearchTerm() {
+        //    return jQuery.trim($("[id*=txtSearch]").val());
+        //};
+        //function GetMedicines(pageIndex) {
 
-            GetMedicines(parseInt(1));
-        });
-        $(".Pager .page").live("click", function () {
-            GetMedicines(parseInt($(this).attr('page')));
-        });
-        function SearchTerm() {
-            return jQuery.trim($("[id*=txtSearch]").val());
-        };
-        function GetMedicines(pageIndex) {
+        //    $.ajax({
 
-            $.ajax({
+        //        type: "POST",
+        //        url: "../Admin/AssignRoles.aspx/GetMedicines",
+        //        data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: OnSuccess,
+        //        failure: function (response) {
 
-                type: "POST",
-                url: "../Admin/AssignRoles.aspx/GetMedicines",
-                data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: OnSuccess,
-                failure: function (response) {
+        //            alert(response.d);
+        //        },
+        //        error: function (response) {
 
-                    alert(response.d);
-                },
-                error: function (response) {
+        //            alert(response.d);
+        //        }
+        //    });
+        //}
+        //var row;
+        //function OnSuccess(response) {
 
-                    alert(response.d);
-                }
-            });
-        }
-        var row;
-        function OnSuccess(response) {
+        //    var xmlDoc = $.parseXML(response.d);
+        //    var xml = $(xmlDoc);
+        //    var Medicines = xml.find("Medicines");
+        //    if (row == null) {
+        //        row = $("[id*=dtgViewAllUserInRoles] tr:last-child").clone(true);
+        //    }
+        //    $("[id*=dtgViewAllUserInRoles] tr").not($("[id*=dtgViewAllUserInRoles] tr:first-child")).remove();
+        //    if (Medicines.length > 0) {
+        //        $.each(Medicines, function () {
 
-            var xmlDoc = $.parseXML(response.d);
-            var xml = $(xmlDoc);
-            var Medicines = xml.find("Medicines");
-            if (row == null) {
-                row = $("[id*=dtgViewAllUserInRoles] tr:last-child").clone(true);
-            }
-            $("[id*=dtgViewAllUserInRoles] tr").not($("[id*=dtgViewAllUserInRoles] tr:first-child")).remove();
-            if (Medicines.length > 0) {
-                $.each(Medicines, function () {
+        //            debugger;
 
-                    debugger;
-
-                    //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
+        //            //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
                    
 
 
-                    //$("td", row).eq(0).html($('<img />')
-                    //                      .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+        //            //$("td", row).eq(0).html($('<img />')
+        //            //                      .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
                    
 
-                    $("td", row).eq(0).html($(this).find("Name").text());
+        //            $("td", row).eq(0).html($(this).find("Name").text());
 
-                    $("td", row).eq(1).html($(this).find("Role").text());
+        //            $("td", row).eq(1).html($(this).find("Role").text());
                    
-                    $("td", row).eq(2).html($(this).find("UniqueID").text());
+        //            $("td", row).eq(2).html($(this).find("UniqueID").text());
                   
 
-                    $("[id*=dtgViewAllUserInRoles]").append(row);
-                    row = $("[id*=dtgViewAllUserInRoles] tr:last-child").clone(true);
-                });
-                var pager = xml.find("Pager");
-                $(".Pager").ASPSnippets_Pager({
-                    ActiveCssClass: "current",
-                    PagerCssClass: "pager",
-                    PageIndex: parseInt(pager.find("PageIndex").text()),
-                    PageSize: parseInt(pager.find("PageSize").text()),
-                    RecordCount: parseInt(pager.find("RecordCount").text())
-                });
+        //            $("[id*=dtgViewAllUserInRoles]").append(row);
+        //            row = $("[id*=dtgViewAllUserInRoles] tr:last-child").clone(true);
+        //        });
+        //        var pager = xml.find("Pager");
+        //        $(".Pager").ASPSnippets_Pager({
+        //            ActiveCssClass: "current",
+        //            PagerCssClass: "pager",
+        //            PageIndex: parseInt(pager.find("PageIndex").text()),
+        //            PageSize: parseInt(pager.find("PageSize").text()),
+        //            RecordCount: parseInt(pager.find("RecordCount").text())
+        //        });
 
-                $(".Match").each(function () {
-                    var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
-                    $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
-                });
-            } else {
-                var empty_row = row.clone(true);
-                $("td:first-child", empty_row).attr("colspan", $("td", row).length);
-                $("td:first-child", empty_row).attr("align", "center");
-                $("td:first-child", empty_row).html("No records found for the search criteria.");
-                $("td", empty_row).not($("td:first-child", empty_row)).remove();
-                $("[id*=dtgViewAllUserInRoles]").append(empty_row);
-            }
+        //        $(".Match").each(function () {
+        //            var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+        //            $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+        //        });
+        //    } else {
+        //        var empty_row = row.clone(true);
+        //        $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+        //        $("td:first-child", empty_row).attr("align", "center");
+        //        $("td:first-child", empty_row).html("No records found for the search criteria.");
+        //        $("td", empty_row).not($("td:first-child", empty_row)).remove();
+        //        $("[id*=dtgViewAllUserInRoles]").append(empty_row);
+        //    }
 
 
 
-            var th = $("[id*=dtgViewAllUserInRoles] th:contains('UniqueID')");
-            th.css("display", "none");
-            $("[id*=dtgViewAllUserInRoles] tr").each(function () {
-                $(this).find("td").eq(th.index()).css("display", "none");
-            });
+        //    var th = $("[id*=dtgViewAllUserInRoles] th:contains('UniqueID')");
+        //    th.css("display", "none");
+        //    $("[id*=dtgViewAllUserInRoles] tr").each(function () {
+        //        $(this).find("td").eq(th.index()).css("display", "none");
+        //    });
 
-        };
+        //};
 
-        $(function() {
-            $('#chkveg').multiselect({
-                includeSelectAllOption: true
-            });
-        });
+        //$(function() {
+        //    $('#chkveg').multiselect({
+        //        includeSelectAllOption: true
+        //    });
+        //});
 
         </script>
 
@@ -303,7 +334,21 @@ table
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AssignedRoles" ><span title="View Assigned Roles" data-toggle="tooltip" data-placement="left" ><img src="../images/AssignUser.png" /></span></a>
+ <%--<a class="all_registration_link" data-toggle="modal" data-target="#AssignedRoles" >
+     <span title="View Assigned Roles" data-toggle="tooltip" data-placement="left" >
+         <img src="../images/AssignUser.png" />
+
+     </span></a>--%>
+
+
+ <a class="all_token_link" data-toggle="modal" data-target="#AssignedRoles" >
+                  <span class="count">  <asp:Label ID="lblCaseCount" runat="server" Text="0">
+
+                            </asp:Label></span>
+                        <span title="View Assigned Roles" data-toggle="tooltip" data-placement="left" >
+                        <img src="../images/AssignUser.png" /></span> 
+                          
+                   </a>
 
 
                 
@@ -437,16 +482,16 @@ table
           <div class="modal-dialog" style="min-width:550px;">
 
     <!-- Modal content-->
-    <div class="modal-content">
+    <div class="modal-content"  >
       <div class="modal-header" style="border-color:#3661C7;">  
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
         <h3 class="modal-title">View All Assigned Roles</h3>
       </div>
       <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         <div class="col-lg-12" style="height:500px">
+         <div class="col-lg-12" style="height:500px;">
 
-            <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" class="table" >
+            <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" class="table" OnPreRender="dtgViewAllUserInRoles_PreRender" DataKeyNames="UserId"   >
              
                             <Columns>
 
@@ -471,11 +516,11 @@ table
                               
                                    
                                   
-                                     <asp:BoundField DataField="UniqueID" HeaderText="UniqueID">
+                                   <%--  <asp:BoundField DataField="UniqueID" HeaderText="UniqueID">
                                    
                                    
 
-                                </asp:BoundField>
+                                </asp:BoundField>--%>
                             </Columns>
                          
                            

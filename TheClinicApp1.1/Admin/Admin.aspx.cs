@@ -298,10 +298,16 @@ namespace TheClinicApp1._1.Admin
                     mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
                     mstrObj.DeleteDoctorByID();
 
+                    DeleteUserByUserID(UserID);
                 }
 
             }
 
+            else
+            {
+                DeleteAssignedRoleByUserID(UserID);
+                DeleteUserByUserID(UserID);
+            }
             
         }
 
@@ -377,26 +383,17 @@ namespace TheClinicApp1._1.Admin
 
         #endregion ValidateLoginName
 
-        #region Bind Dummy Row
-
-        private void BindDummyRow()
+        #region Bind Gridview
+        public void BindGriewWithDetailsOfAllUsers()
         {
-            DataTable dummy = new DataTable();
-
-            dummy.Columns.Add("Edit");
-            dummy.Columns.Add(" ");
-            dummy.Columns.Add("LoginName");
-            dummy.Columns.Add("FirstName");
-            dummy.Columns.Add("LastName");
-            dummy.Columns.Add("Active");
-            dummy.Columns.Add("UserID");
-
-            dummy.Rows.Add();
-            dtgViewAllUsers.DataSource = dummy;
+            DataTable dtUsers = userObj.GetDetailsOfAllUsers();
+            dtgViewAllUsers.DataSource = dtUsers;
             dtgViewAllUsers.DataBind();
+
+            lblCaseCount.Text = dtgViewAllUsers.Rows.Count.ToString();
         }
 
-        #endregion Bind Dummy Row
+        #endregion Bind Gridview
 
         #region Delete User By UserID
 
@@ -418,9 +415,200 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Delete User By UserID
 
+        #endregion Methods
+
+        #region Events
+
+        #region Page Load
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+            //PropertyInfo isreadonly = typeof(System.Collections.Specialized.NameValueCollection).GetProperty("IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
+            //isreadonly.SetValue(this.Request.QueryString, false, null);
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            string msg = string.Empty;
+
+            var page = HttpContext.Current.CurrentHandler as Page;
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            if (!IsPostBack)
+            {
+                //BindDummyRow();
+
+                BindGriewWithDetailsOfAllUsers();
+            }
+           
+            //hdnUserCountChanged.Value = "True";
+        }
+
+        #endregion Page Load
+
+        #region Save
+        /// <summary>
+        /// Based on radio button of is doctor , user will be added to respective tables
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            string msg = string.Empty;
+
+            var page = HttpContext.Current.CurrentHandler as Page;
+            if (txtLoginName.Value != string.Empty || txtPassword.Value != string.Empty || txtFirstName.Value != string.Empty || txtEmail.Value != string.Empty)
+            {
+
+                if (txtPassword.Value == txtConfirmPassword.Value)
+	        {
+		 
+                if (rdoNotDoctor.Checked == true)
+                {
+                    AddUserToUserTable();    //INSERT Case  //---------*User is not doctor , operation :add user to user table 
+
+                    if (hdnUserID.Value != string.Empty) 
+                    {
+
+                        //----------Case of UPDATE : user has to be deleted from (1).USER table and conditionally from  [ (2).USER In ROLES   (3).Doctor ]
+
+                        Guid UserID = Guid.Parse(hdnUserID.Value);
+
+                        DeleteDoctorByUserID(UserID);
+                        
+                    }
+                }
+
+    //---------* User is a doctor , Operations : 1.add user to user table , 2.add user to the doctor table , 3.add user - role(doctor) to assignroles table
+
+                    else
+                    {
+                        if (rdoDoctor.Checked == true)
+                        {
+                            AddUserToUserTable();
+                            AddUserToDoctorTable();
+                            AddUserRole();
+                        }
+                    }
+
+
+                BindGriewWithDetailsOfAllUsers();
+
+               
+                //hdnUserCountChanged.Value = "True";
+
+
+            }
+
+                else
+                {
+                    msg = "Passwords do not match ! ";
+
+                    eObj.InsertionNotSuccessMessage(page, msg);
+                }
+
+
+            }
+
+            else
+            {
+                msg = "Please fill out the mandatory fields";
+
+                eObj.InsertionNotSuccessMessage(page, msg);
+            }
+        }
+
+        #endregion Save
+
+        #region Logout
+
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        #endregion Logout
+
+        #region Paging
+        protected void dtgViewAllUsers_PreRender(object sender, EventArgs e)
+        {
+            dtgViewAllUsers.UseAccessibleHeader = false;
+            dtgViewAllUsers.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        #endregion Paging
+
+        #region Update Image Button Click
+        protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
+        {
+            Errorbox.Attributes.Add("style", "display:none");
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            var page = HttpContext.Current.CurrentHandler as Page;
+
+            string msg = string.Empty;
+
+            ImageButton ib = sender as ImageButton;
+            GridViewRow row = ib.NamingContainer as GridViewRow;
+            Guid userid = Guid.Parse(dtgViewAllUsers.DataKeys[row.RowIndex].Value.ToString());
+
+
+            Guid UserID = userid;
+            RefillUserDetailsOnEditClick(UserID);
+            hdnUserID.Value = UserID.ToString();
+
+            BindGriewWithDetailsOfAllUsers();
+        }
+
+        #endregion Update Image Button Click
+
+        #region Delete Image Button Click
+        protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
+        {
+            Errorbox.Attributes.Add("style", "display:none");
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            var page = HttpContext.Current.CurrentHandler as Page;
+
+            string msg = string.Empty;
+
+            ImageButton ib = sender as ImageButton;
+            GridViewRow row = ib.NamingContainer as GridViewRow;
+            Guid userid = Guid.Parse(dtgViewAllUsers.DataKeys[row.RowIndex].Value.ToString());
+
+            Guid UserID = userid;
+            DeleteDoctorByUserID(UserID);
+            //DeleteUserByUserID(UserID);
+
+            BindGriewWithDetailsOfAllUsers();
+
+
+        }
+
+        #endregion Delete Image Button Click
+
+        #endregion Events
+
+ //------------------------Filter (*Not using now) -----------------------//
+
+        #region Filter Gridview
+
+        //---------------- * FILTER GRIDVIEW *-----------------//
+
+
         #region Bind Gridview
 
-         [WebMethod]
+        [WebMethod]
         public static string GetMedicines(string searchTerm, int pageIndex)
         {
             ClinicDAL.UserAuthendication UA;
@@ -470,175 +658,62 @@ namespace TheClinicApp1._1.Admin
                     }
                 }
             }
-        }
 
-         #endregion Bind Gridview
+//EDIT DELETE
+            //if (Request.QueryString["UsrID"] != null)  //DELETE Button Click
+            //{
+            //    Guid UserID = Guid.Parse(Request.QueryString["UsrID"].ToString());
+            //     DeleteDoctorByUserID(UserID);
+            //     DeleteUserByUserID(UserID);
 
-
-        #endregion Methods
-
-        #region Events
-
-
-        #region Page Load
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-            PropertyInfo isreadonly = typeof(System.Collections.Specialized.NameValueCollection).GetProperty("IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
-            isreadonly.SetValue(this.Request.QueryString, false, null);
+            //     this.Request.QueryString.Remove("UsrID");
+            // }
 
 
-            
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
-              string msg = string.Empty;
-
-            var page = HttpContext.Current.CurrentHandler as Page;
 
 
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            //if (Request.QueryString["UsrIDtoEdit"] != null)  //EDIT Button Click
+            //  {
 
-            if (!IsPostBack)
-            {
-                BindDummyRow();
+            //    if (txtLoginName.Value == string.Empty)
+            //    {
+            //        Guid UserID = Guid.Parse(Request.QueryString["UsrIDtoEdit"].ToString());
+            //        RefillUserDetailsOnEditClick(UserID);
+            //         hdnUserID.Value = UserID.ToString();
 
-               
-            }
-            if (Request.QueryString["UsrID"] != null)  //DELETE Button Click
-            {
-                Guid UserID = Guid.Parse(Request.QueryString["UsrID"].ToString());
-                 DeleteDoctorByUserID(UserID);
-                 DeleteUserByUserID(UserID);
+            //         this.Request.QueryString.Remove("UsrIDtoEdit");
+            //    }
 
-                 this.Request.QueryString.Remove("UsrID");
-             }
-
-
-        
-
-            if (Request.QueryString["UsrIDtoEdit"] != null)  //EDIT Button Click
-              {
-
-                if (txtLoginName.Value == string.Empty)
-	            {
-                    Guid UserID = Guid.Parse(Request.QueryString["UsrIDtoEdit"].ToString());
-                    RefillUserDetailsOnEditClick(UserID);
-                     hdnUserID.Value = UserID.ToString();
-
-                     this.Request.QueryString.Remove("UsrIDtoEdit");
-                }
-
-              }
+            //  }
 
             //Removing query string
 
-           
-            hdnUserCountChanged.Value = "True";
+
         }
 
-        #endregion Page Load
+        #endregion Bind Gridview
 
-        #region Save
-        /// <summary>
-        /// Based on radio button of is doctor , user will be added to respective tables
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnSave_Click(object sender, EventArgs e)
+        #region Bind Dummy Row
+
+        private void BindDummyRow()
         {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            string msg = string.Empty;
+            DataTable dummy = new DataTable();
 
-            var page = HttpContext.Current.CurrentHandler as Page;
-            if (txtLoginName.Value != string.Empty || txtPassword.Value != string.Empty || txtFirstName.Value != string.Empty || txtEmail.Value != string.Empty)
-            {
+            dummy.Columns.Add("Edit");
+            dummy.Columns.Add(" ");
+            dummy.Columns.Add("LoginName");
+            dummy.Columns.Add("FirstName");
+            dummy.Columns.Add("LastName");
+            dummy.Columns.Add("Active");
+            dummy.Columns.Add("UserID");
 
-                if (txtPassword.Value == txtConfirmPassword.Value)
-	        {
-		 
-	
-
-
-                if (rdoNotDoctor.Checked == true)
-                {
-                    AddUserToUserTable();    //INSERT Case  //---------*User is not doctor , operation :add user to user table 
-
-                    if (hdnUserID.Value != string.Empty) 
-                    {
-
-                        //----------Case of UPDATE : user has to be deleted from (1).USER table and conditionally from  [ (2).USER In ROLES   (3).Doctor ]
-
-                        Guid UserID = Guid.Parse(hdnUserID.Value);
-
-                        DeleteDoctorByUserID(UserID);
-                        
-                    }
-                }
-
-    //---------* User is a doctor , Operations : 1.add user to user table , 2.add user to the doctor table , 3.add user - role(doctor) to assignroles table
-
-                    else
-                    {
-                        if (rdoDoctor.Checked == true)
-                        {
-                            AddUserToUserTable();
-                            AddUserToDoctorTable();
-                            AddUserRole();
-                        }
-                    }
-
-
-               
-
-               
-                hdnUserCountChanged.Value = "True";
-
-
-            }
-
-                else
-                {
-                    msg = "Passwords do not match ! ";
-
-                    eObj.InsertionNotSuccessMessage(page, msg);
-                }
-
-
-            }
-
-            else
-            {
-                msg = "Please fill out the mandatory fields";
-
-                eObj.InsertionNotSuccessMessage(page, msg);
-            }
+            dummy.Rows.Add();
+            dtgViewAllUsers.DataSource = dummy;
+            dtgViewAllUsers.DataBind();
         }
 
-        #endregion Save
+        #endregion Bind Dummy Row
 
-        #endregion Events
-
-        protected void Logout_ServerClick(object sender, EventArgs e)
-        {
-            Session.Remove(Const.LoginSession);
-            Response.Redirect("../Default.aspx");
-        }
-
-        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
-        {
-            Session.Remove(Const.LoginSession);
-            Response.Redirect("../Default.aspx");
-        }
-
-        //#region Bind Gridview
-        //public void BindGriewWithDetailsOfAllUsers()
-        //{
-        //    DataTable dtUsers = userObj.GetDetailsOfAllUsers();
-        //    dtgViewAllUsers.DataSource = dtUsers;
-        //    dtgViewAllUsers.DataBind();
-        //}
-
-        //#endregion Bind Gridview
+        #endregion Filter Gridview
     }
 }

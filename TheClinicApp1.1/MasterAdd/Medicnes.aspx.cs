@@ -226,9 +226,6 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion  Validate Medicine Code
 
-
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -358,5 +355,15 @@ namespace TheClinicApp1._1.MasterAdd
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
         }
+
+        #region Paging
+        protected void gvMedicines_PreRender(object sender, EventArgs e)
+        {
+            gvMedicines.UseAccessibleHeader = false;
+            gvMedicines.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+        }
+        #endregion Paging
+
     }
 }
