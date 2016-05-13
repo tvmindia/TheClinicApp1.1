@@ -3,14 +3,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 
-   <%-- <link href="../css/TheClinicApp.css" rel="stylesheet" />
-    <link href="../css/main.css" rel="stylesheet" />--%>
-
+   <%-- <link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
+     <link href="../css/main.css" rel="stylesheet" />
     
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/jquery-1.3.2.min.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
-
+   
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
@@ -19,12 +18,27 @@
 
 
 
+
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+
 
       <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
     <!-- Script Files -->
    
+    <style>
+    .modal table thead {
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+     
+    }
+    </style>
+
+
 
     <script>
 
@@ -39,10 +53,10 @@
 
 
                 //images that represents medicine name duplication hide and show
-                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+               <%-- var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
                 LnameImage.style.display = "none";
                 var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                errLname.style.display = "none";
+                errLname.style.display = "none";--%>
 
   $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
@@ -111,6 +125,22 @@ if(name != "")
 }
         }
 
+
+        function PassowrdEqualityCheck()
+        {
+            if(  document.getElementById('<%=txtConfirmPassword.ClientID %>').value != document.getElementById('<%=txtPassword.ClientID %>').value)
+            {
+                document.getElementById('<%=txtConfirmPassword.ClientID %>').style.borderColor = "#ff0000";
+            }
+
+            else
+            {
+                document.getElementById('<%=txtConfirmPassword.ClientID %>').style.borderColor = "#00b300";
+            }
+
+        }
+
+
     </script>
 
 
@@ -129,6 +159,31 @@ if(name != "")
 
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+
+
+function SetRequired()
+        {debugger;
+     document.getElementById('<%=txtLoginName.ClientID %>').required = true;
+     document.getElementById('<%=txtFirstName.ClientID %>').required = true;
+    document.getElementById('<%=txtPassword.ClientID %>').required = true;
+    document.getElementById('<%=txtConfirmPassword.ClientID %>').required = true;
+    document.getElementById('<%=txtLoginName.ClientID %>').required = true;
+ document.getElementById('<%=txtEmail.ClientID %>').required = true;
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 
@@ -346,7 +401,7 @@ var   UserID = '';
                             </asp:Label></span>
                    </a>--%>
 
-                <a class="all_token_link" data-toggle="modal" data-target="#AllUsers" >
+                <a class="all_admin_link" data-toggle="modal" data-target="#AllUsers" >
                   <span class="count">  <asp:Label ID="lblCaseCount" runat="server" Text="0">
 
                             </asp:Label></span>
@@ -387,7 +442,7 @@ var   UserID = '';
                                 <ul class="top_right_links">
                                     <li>
                                         <%--<a class="save" id="Save" runat="server" onserverclick="Save_ServerClick"><span></span>Save</a>--%>
-                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click"/>
+                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="SetRequired();"/>
                                     </li>
                                     <li><a class="new" href="Admin.aspx"><span></span>New</a></li>
                                 </ul>
@@ -437,12 +492,12 @@ var   UserID = '';
                                     <div class="col-lg-8">
 
 
-                                        <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" name="name" required onchange="LoginNameCheck(this)" />
+                                        <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" name="name" required onchange="LoginNameCheck(this)"     />
 
-                                          <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" />
+                                          <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" style="display:none"/>
 
 
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Login name is Unavailable" ImageUrl="~/Images/newClose.png" />
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Login name is Unavailable" ImageUrl="~/Images/newClose.png" style="display:none"/>
                                          </div>
 
                                         <%--<label for="Login Name">Login Name</label>--%>
@@ -484,7 +539,7 @@ var   UserID = '';
 
                                 <div class="col-lg-4 ">
 
-                                     <label for="name">Last Name</label><input id="txtLastName" runat="server" type="text" name="name"   />
+                                     <label for="name">Last Name</label><input id="txtLastName" runat="server" type="text" name="name" />
 
 
                                     <%--<label for="First Name">Last Name</label>
@@ -513,7 +568,7 @@ var   UserID = '';
                                 
                                 <div class="col-lg-4 ">
 
-                                       <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name"  required  autocomplete="off" />
+                                       <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name"  required  autocomplete="off"  onkeyup="PassowrdEqualityCheck()"/>
 
                                     
 

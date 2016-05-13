@@ -28,6 +28,9 @@ table
     padding-left: 15px;
     text-indent: -15px;
 }
+
+
+
  .checkboxes label {
     display: inline!important;
     float: right!important;
@@ -55,6 +58,10 @@ table
 .modal table td{
     width:30px;
     height:auto;
+     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    padding-left:4px;
+    font-size:14px;
+    font-weight:200;
     padding-left:4px;
 }
 
@@ -81,10 +88,39 @@ table
 }
 
 
+.button1{
+        background: url("../images/save.png") no-repeat 0 center;
+        height: 33px;
+        width: 60px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px 10px 7px;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        font-family:'raleway-semibold';
+        min-width: 83px;
+        background-color:#abd357 ;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        text-indent: 20px;
+        background-position-x:5px;
+
+        color: inherit;
+
+    }
+
+
+
+
 </style>
 
 
      <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
+
+    <%--<link href="../css/main.css" rel="stylesheet" />--%>
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -150,7 +186,7 @@ table
    <script src="../js/jquery-1.12.0.min.js"></script>
    <script src="../js/jquery-ui.js"></script>
 
-
+ 
         <script src="../js/bootstrap.min.js"></script>
       <script src="../js/jquery.tablePagination.0.1.js"></script>
 
@@ -341,7 +377,7 @@ table
      </span></a>--%>
 
 
- <a class="all_token_link" data-toggle="modal" data-target="#AssignedRoles" >
+ <a class="all_assignrole_link" data-toggle="modal" data-target="#AssignedRoles" >
                   <span class="count">  <asp:Label ID="lblCaseCount" runat="server" Text="0">
 
                             </asp:Label></span>
@@ -374,7 +410,12 @@ table
                                     <input class="button" type="submit" value="Search" />
                                 </div>--%>
                                 <ul class="top_right_links">
-                                    <li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick"><span></span>Save</a></li>
+                                    <li>
+                                        <%--<a  id="btSave" runat="server" CssClass="button1" onserverclick="btSave_ServerClick"><span></span>Save</a>--%>
+
+                                          <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btSave_ServerClick" />
+
+                                    </li>
                                     <li><a class="new"  href="AssignRoles.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>

@@ -6,6 +6,47 @@
       <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
      <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
 
+    <style>
+    
+     .modal table thead {
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+     
+    }
+
+
+
+.button1{
+        background: url("../images/save.png") no-repeat 0 center;
+        height: 33px;
+        width: 60px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px 10px 7px;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        font-family:'raleway-semibold';
+        min-width: 83px;
+        background-color:#abd357 ;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        text-indent: 20px;
+        background-position-x:5px;
+
+        color: inherit;
+
+    }
+
+
+    </style>
+
+
+
+
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
@@ -24,10 +65,10 @@
           
 
         //images that represents medicine name duplication hide and show
-        var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+      <%--  var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
         LnameImage.style.display = "none";
         var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-        errLname.style.display = "none";
+        errLname.style.display = "none";--%>
 
         var CodeAvailableImage = document.getElementById('<%=imgCodeAvailable.ClientID %>');
         CodeAvailableImage.style.display = "none";
@@ -169,7 +210,10 @@
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllMedicines" ><span title="View All Medicines" data-toggle="tooltip" data-placement="left" ><img src="../images/medicinesview copy.png" /></span></a>
+ <a class="all_medicine_link" data-toggle="modal" data-target="#AllMedicines" >
+     <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
+     <span title="View All Medicines" data-toggle="tooltip" data-placement="left" >
+         <img src="../images/medicinesview copy.png" /></span></a>
 
 
                 
@@ -242,10 +286,10 @@
       <div class="col-lg-8">
      
               <label for="name">Medicine Name</label><input id="txtmedicineName" runat="server" type="text" name="name" required onchange="CheckMedicineNameDuplication(this)"  />
-           <asp:Image ID="imgWebLnames" runat="server" ToolTip="Medicne name is Available" ImageUrl="~/Images/newfff.png" />
+           <asp:Image ID="imgWebLnames" runat="server" ToolTip="Medicne name is Available" ImageUrl="~/Images/newfff.png" style="display:none" />
 
 
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Medicne name Unavailable" ImageUrl="~/Images/newClose.png" />
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Medicne name Unavailable" ImageUrl="~/Images/newClose.png" style="display:none" />
 
       </div>
 
@@ -257,10 +301,10 @@
           <label for="name">Medicine Code </label><input id="txtCode" runat="server" type="text" name="name" onchange="CheckMedicineCodeDuplication(this)" required  />
 
 
-          <asp:Image ID="imgCodeAvailable" runat="server" ToolTip="Medicne code is Available" ImageUrl="~/Images/newfff.png" />
+          <asp:Image ID="imgCodeAvailable" runat="server" ToolTip="Medicne code is Available" ImageUrl="~/Images/newfff.png"  style="display:none"/>
 
 
-                                    <asp:Image ID="imgCodeUnavailable" runat="server" ToolTip="Medicne code Unavailable" ImageUrl="~/Images/newClose.png" />
+                                    <asp:Image ID="imgCodeUnavailable" runat="server" ToolTip="Medicne code Unavailable" ImageUrl="~/Images/newClose.png"  style="display:none"/>
 
       </div>
 
@@ -295,7 +339,7 @@
          </div>
 
     <div class="col-lg-4">
-         <label for="name">Category</label>
+         <label for="name">Unit</label>
    <%--  <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                             <ContentTemplate>--%>
                                 <asp:DropDownList ID="ddlUnits"  runat="server" AutoPostBack="true"  Width="100%" Height="40px">
@@ -325,7 +369,7 @@
      <div class="col-lg-8">
 
          <label for="name"> Reorder Quantity</label>
-         <input id="txtOrderQuantity" runat="server" type="number" name="age" min="1" pattern="\d*" required="required" title="⚠ Should be greater than 0" />
+         <input id="txtOrderQuantity" runat="server" value="1" type="number" name="age" min="1" pattern="\d*" required="required" title="⚠ Should be greater than 0" />
         
          </div>
 
@@ -386,11 +430,11 @@
                </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:BoundField DataField="MedCode" HeaderText="Medicine Code"   />
+                
               <%--<asp:BoundField DataField="MedicineCode" HeaderText="Medicine Code"   ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow Match" />--%>
 
                 <asp:BoundField DataField="Name" HeaderText="Medicine Name"   />
-               
+               <asp:BoundField DataField="MedCode" HeaderText="Medicine Code"   />
                  <asp:BoundField DataField="Unit" HeaderText="Unit"   />
                  <asp:BoundField DataField="Qty" HeaderText="Existing Qty"  ItemStyle-HorizontalAlign="Right" />
                  <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" />
