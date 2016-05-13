@@ -351,6 +351,7 @@ namespace TheClinicApp1._1.Registration
                         PatientObj.DOB = DateTime.Parse(DOB + "-01-01");
                     }
                 }
+                
                 //if (txtAge.Value != "")
                 //{
 
@@ -383,7 +384,7 @@ namespace TheClinicApp1._1.Registration
                 PatientObj.Occupation = (txtOccupation.Value != "") ? txtOccupation.Value.ToString() : null;
                 PatientObj.CreatedBy = UA.userName;
                 PatientObj.UpdatedBy = UA.userName;
-                if ((PatientObj.Name != null)&&(PatientObj.DOB!=null))
+                if ((PatientObj.Name != null)&&(parsedValue!=0))
                 {
                     
                     PatientObj.FileNumber = PatientObj.Generate_File_Number().ToString();
@@ -437,16 +438,21 @@ namespace TheClinicApp1._1.Registration
                         }
                     }
                 }
-                else
+                else if ((PatientObj.Name == null))
                 {
                     msg = Messages.Mandatory;
+                    eObj.InsertionNotSuccessMessage(page, msg);
+                }
+                else
+                {
+                    msg = Messages.AgeIssue;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
                 gridDataBind();
                 lblFileCount.Text = PatientObj.FileNumber;
                 if (HiddenField1.Value == "")
                 {
-                    if ((PatientObj.Name != null) && (PatientObj.DOB != null))
+                    if ((PatientObj.Name != null) && (parsedValue != 0))
                     {
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
                     }

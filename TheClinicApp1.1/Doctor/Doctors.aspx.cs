@@ -374,7 +374,6 @@ namespace TheClinicApp1._1.Doctor
                 ProfilePic.Src = "../images/UploadPic1.png";
             }
             //ProfilePic.Visible = true;
-
             HiddenField1.Value = PatientID.ToString();
 
         }
@@ -452,15 +451,18 @@ namespace TheClinicApp1._1.Doctor
 
         public static string MedDetails(string MedName)
         {
+
             IssueHeaderDetails IssuedtlsObj = new IssueHeaderDetails();
 
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
 
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-
-            IssuedtlsObj.ClinicID = UA.ClinicID.ToString();
-
+            if(UA!=null)
+            {
+                IssuedtlsObj.ClinicID = UA.ClinicID.ToString();
+            }
+            
             DataSet ds = IssuedtlsObj.GetMedicineDetailsByMedicineName(MedName);
             string Unit = "";
           

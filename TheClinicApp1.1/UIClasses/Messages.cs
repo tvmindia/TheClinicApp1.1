@@ -57,7 +57,15 @@ namespace TheClinicApp1._1.UIClasses
         }
         public static string Mandatory
         {
-            get { return "Please fill out the mandatory fields And Save"; }
+            get { return "Please fill out the mandatory fields Name and Age"; }
+        }
+        public static string AgeIssue
+        {
+            get { return "Age seems to Empty or Not a number"; }
+        }
+        public static string Imagesupport
+        {
+            get { return "The Image Is not Supporting Save a new one"; }
         }
        
 //----------------* Success Messages *--------------//

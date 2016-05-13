@@ -126,6 +126,7 @@
                 $('input[type=radio]').val('');
                 $('input[type=checkbox]').val('');  
             }
+
             function CheckEmpty()
             {
                 debugger;
@@ -188,8 +189,6 @@
 
 
     </script>
-
-
     <!-- #main-container -->
     <asp:HiddenField ID="hdnfileID" runat="server" />
      <asp:HiddenField ID="HiddenPatientID" runat="server" />
@@ -218,7 +217,7 @@
                 <a class="nav_menu">Menu</a>
                 Doctors...<ul class="top_right_links"><li>
          <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"  ></asp:Label></li><li>
-         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li></ul>        
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" ToolTip="Logout" formnovalidate /></li></ul>        
             
             </div>
             <div class="icon_box">
@@ -563,17 +562,12 @@
         </div>
     </div>
 
-
-
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/jquery.spinner.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
-
-
-
 
     <script>
         var test=jQuery.noConflict();
@@ -624,13 +618,28 @@
                     return false; // Cancels the default action
                 }
             });
-			
-							
+										
             test('.nav_menu').click(function(){
                 test(".main_body").toggleClass("active_close");
             });
 					
-				
+            test('body').on('keydown', 'input[type=text], select, textarea', function(e) {
+                var self = $(this)
+                  , form = self.parents('form:eq(0)')
+                  , focusable
+                  , next
+                ;
+                if (e.keyCode == 13) {
+                    focusable = form.find('input,a,select,button,textarea').filter(':visible');
+                    next = focusable.eq(focusable.index(this)+1);
+                    if (next.length) {
+                        next.focus();
+                    } else {
+                        form.submit();
+                    }
+                    return false;
+                }
+            });	
         });
                
         
