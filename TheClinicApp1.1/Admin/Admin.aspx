@@ -39,10 +39,10 @@
 
 
                 //images that represents medicine name duplication hide and show
-                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+               <%-- var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
                 LnameImage.style.display = "none";
                 var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                errLname.style.display = "none";
+                errLname.style.display = "none";--%>
 
   $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
@@ -480,10 +480,10 @@ var   UserID = '';
 
                                         <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" name="name" required onchange="LoginNameCheck(this)"     />
 
-                                          <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" />
+                                          <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" style="display:none"/>
 
 
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Login name is Unavailable" ImageUrl="~/Images/newClose.png" />
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Login name is Unavailable" ImageUrl="~/Images/newClose.png" style="display:none"/>
                                          </div>
 
                                         <%--<label for="Login Name">Login Name</label>--%>
