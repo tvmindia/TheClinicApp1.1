@@ -4,6 +4,47 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
 
+
+
+    <style>
+    
+     .modal table thead {
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+     
+    }
+
+
+
+.button1{
+        background: url("../images/save.png") no-repeat 0 center;
+        height: 33px;
+        width: 60px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px 10px 7px;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        font-family:'raleway-semibold';
+        min-width: 83px;
+        background-color:#abd357 ;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        text-indent: 20px;
+        background-position-x:5px;
+
+        color: inherit;
+
+    }
+
+
+    </style>
+
+
          <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
     <script src="../js/jquery-1.12.0.min.js"></script>
@@ -42,30 +83,38 @@
          function CheckUnitDuplication(txtCategoryName) {
              debugger;
              var name = document.getElementById('<%=txtDescription.ClientID %>').value;
-             name = name.replace(/\s/g, '');
 
-             PageMethods.ValidateUnit(name, OnSuccess, onError);
+             name = name.trim();
 
-             function OnSuccess(response, userContext, methodName) {
 
-                 var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-                 var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                 if (response == false) {
+             if (name != "") {
 
-                     LnameImage.style.display = "block";
-                     errLname.style.display = "none";
+
+                 name = name.replace(/\s/g, '');
+
+                 PageMethods.ValidateUnit(name, OnSuccess, onError);
+
+                 function OnSuccess(response, userContext, methodName) {
+
+                     var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                     var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                     if (response == false) {
+
+                         LnameImage.style.display = "block";
+                         errLname.style.display = "none";
+
+                     }
+                     if (response == true) {
+                         errLname.style.display = "block";
+                         errLname.style.color = "Red";
+                         errLname.innerHTML = "Name Alreay Exists"
+                         LnameImage.style.display = "none";
+
+                     }
+                 }
+                 function onError(response, userContext, methodName) {
 
                  }
-                 if (response == true) {
-                     errLname.style.display = "block";
-                     errLname.style.color = "Red";
-                     errLname.innerHTML = "Name Alreay Exists"
-                     LnameImage.style.display = "none";
-
-                 }
-             }
-             function onError(response, userContext, methodName) {
-
              }
          }
 
@@ -89,7 +138,7 @@
          <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
           <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
          <li id="master" runat="server" class="active"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
-             <li><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
+             <li id="log" runat="server"><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
          </ul>
          
          <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
@@ -100,7 +149,7 @@
          <div class="tagline">
          <a class="nav_menu">Menu</a>
         Masters <ul class="top_right_links"><li>
-         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" Font-Underline="true"></asp:Label></li><li>
+         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"></asp:Label></li><li>
          <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click"  formnovalidate /></li></ul></div>
           
               <div class="icon_box">

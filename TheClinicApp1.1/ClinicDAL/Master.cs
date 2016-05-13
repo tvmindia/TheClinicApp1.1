@@ -421,7 +421,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = createdBy;
 
 
-                if (UsrID != null)
+                if (UsrID != Guid.Empty)
                 {
                     pud.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UsrID;
                 }
@@ -949,10 +949,24 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
-                    //successfull
+                    int rslt = Convert.ToInt32(Output.Value.ToString());
 
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
+                    if (rslt == 1)
+                    {
+                        //successfull
+
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.SavedSuccessMessage(page);
+                    }
+
+                    if (rslt == 2)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
+
+                    }
+                   
+
 
 
                 }

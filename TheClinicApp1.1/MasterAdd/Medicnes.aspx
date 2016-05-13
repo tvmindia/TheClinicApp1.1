@@ -6,6 +6,47 @@
       <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
      <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
 
+    <style>
+    
+     .modal table thead {
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+     
+    }
+
+
+
+.button1{
+        background: url("../images/save.png") no-repeat 0 center;
+        height: 33px;
+        width: 60px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px 10px 7px;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        font-family:'raleway-semibold';
+        min-width: 83px;
+        background-color:#abd357 ;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        text-indent: 20px;
+        background-position-x:5px;
+
+        color: inherit;
+
+    }
+
+
+    </style>
+
+
+
+
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
@@ -328,7 +369,7 @@
      <div class="col-lg-8">
 
          <label for="name"> Reorder Quantity</label>
-         <input id="txtOrderQuantity" runat="server" type="number" name="age" min="1" pattern="\d*" required="required" title="⚠ Should be greater than 0" />
+         <input id="txtOrderQuantity" runat="server" value="1" type="number" name="age" min="1" pattern="\d*" required="required" title="⚠ Should be greater than 0" />
         
          </div>
 
@@ -389,11 +430,11 @@
                </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:BoundField DataField="MedCode" HeaderText="Medicine Code"   />
+                
               <%--<asp:BoundField DataField="MedicineCode" HeaderText="Medicine Code"   ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow Match" />--%>
 
                 <asp:BoundField DataField="Name" HeaderText="Medicine Name"   />
-               
+               <asp:BoundField DataField="MedCode" HeaderText="Medicine Code"   />
                  <asp:BoundField DataField="Unit" HeaderText="Unit"   />
                  <asp:BoundField DataField="Qty" HeaderText="Existing Qty"  ItemStyle-HorizontalAlign="Right" />
                  <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" />

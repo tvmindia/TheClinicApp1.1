@@ -30,6 +30,8 @@ namespace TheClinicApp1._1.MasterAdd
       dtgViewAllUnits.DataSource = dtUnits;
       dtgViewAllUnits.DataBind();
 
+      lblCaseCount.Text = dtgViewAllUnits.Rows.Count.ToString();
+
         }
 
         #endregion Bind Units Gridview
@@ -37,8 +39,8 @@ namespace TheClinicApp1._1.MasterAdd
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            lblClinicName.Text = UA.Clinic;
-            lblUserName.Text = "👤 " + UA.userName + " "; 
+            //lblClinicName.Text = UA.Clinic;
+            //lblUserName.Text = "👤 " + UA.userName + " "; 
 
             if (!IsPostBack)
             {

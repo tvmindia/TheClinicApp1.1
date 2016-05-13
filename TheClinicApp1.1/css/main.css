@@ -1109,6 +1109,7 @@ ul.menu li:hover a span.text { background: #3661c7; color: #fff; opacity: 1; pad
 
 .search_div {width: 52%; max-width: 300px;}
 .search_div input.field {padding: 2px 82px 2px 20px; width: 100%; box-sizing: border-box;}
+.search_div input.field { width: 100%; box-sizing: border-box;}
 .search_div input.button {height: 32px; line-height: 32px;}
 
 

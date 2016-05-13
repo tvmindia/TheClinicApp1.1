@@ -35,7 +35,7 @@
 			nextArrow: (new Image()).src = "../images/Next.png",
 			rowsPerPage : 7,
 			currPage : 1,
-			optionsForRows : [7,14,21,50,100],
+			optionsForRows : [7,14,21,50],
 			ignoreRows : []
 		};  
 		settings = $.extend(defaults, settings);

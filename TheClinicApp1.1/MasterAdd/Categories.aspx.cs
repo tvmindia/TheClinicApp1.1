@@ -69,6 +69,8 @@ namespace TheClinicApp1._1.MasterAdd
            dtgViewAllCategories.DataSource = dt;
            dtgViewAllCategories.DataBind();
 
+           lblCaseCount.Text = dtgViewAllCategories.Rows.Count.ToString();
+
         }
 
         #endregion Bind Category Gridview
@@ -77,8 +79,8 @@ namespace TheClinicApp1._1.MasterAdd
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            lblClinicName.Text = UA.Clinic;
-            lblUserName.Text = "👤 " + UA.userName + " "; 
+            //lblClinicName.Text = UA.Clinic;
+            //lblUserName.Text = "👤 " + UA.userName + " "; 
 
             if (!IsPostBack)
             {
@@ -95,6 +97,8 @@ namespace TheClinicApp1._1.MasterAdd
         protected void btnSave_Click(object sender, EventArgs e)
         {
             AddNewCategory();
+
+            BindGridview();
         }
 
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
@@ -120,6 +124,10 @@ namespace TheClinicApp1._1.MasterAdd
              msg = "Already used . Can't be deleted";
              eObj.DeletionNotSuccessMessage(page, msg);
          }
+
+         BindGridview();
+
+
         }
 
         protected void Logout_ServerClick(object sender, EventArgs e)

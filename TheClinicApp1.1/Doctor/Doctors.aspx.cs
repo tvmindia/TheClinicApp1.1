@@ -374,7 +374,6 @@ namespace TheClinicApp1._1.Doctor
                 ProfilePic.Src = "../images/UploadPic1.png";
             }
             //ProfilePic.Visible = true;
-
             HiddenField1.Value = PatientID.ToString();
 
         }
