@@ -169,7 +169,10 @@
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllMedicines" ><span title="View All Medicines" data-toggle="tooltip" data-placement="left" ><img src="../images/medicinesview copy.png" /></span></a>
+ <a class="all_medicine_link" data-toggle="modal" data-target="#AllMedicines" >
+     <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
+     <span title="View All Medicines" data-toggle="tooltip" data-placement="left" >
+         <img src="../images/medicinesview copy.png" /></span></a>
 
 
                 

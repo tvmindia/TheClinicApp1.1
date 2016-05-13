@@ -132,7 +132,10 @@
 
             <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllCategories" ><span title="View All Categories" data-toggle="tooltip" data-placement="left" ><img src="../images/categories-512 copy.png" /></span></a>
+ <a class="all_admin_link" data-toggle="modal" data-target="#AllCategories" >
+     <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
+     <span title="View All Categories" data-toggle="tooltip" data-placement="left" >
+         <img src="../images/categories-512 copy.png" /></span></a>
 
 
                 

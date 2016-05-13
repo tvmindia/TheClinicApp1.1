@@ -105,7 +105,10 @@
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllUnits" ><span title="View All Units" data-toggle="tooltip" data-placement="left" ><img src="../images/units.png" /></span></a>
+ <a class="all_assignrole_link" data-toggle="modal" data-target="#AllUnits" >
+     <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
+     <span title="View All Units" data-toggle="tooltip" data-placement="left" >
+         <img src="../images/units.png" /></span></a>
 
 
                 

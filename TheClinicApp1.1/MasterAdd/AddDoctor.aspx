@@ -108,7 +108,9 @@
           
               <div class="icon_box">
 
- <a class="all_registration_link" data-toggle="modal" data-target="#AllDoctors" ><span title="View All Doctors" data-toggle="tooltip" data-placement="left" ><img src="../images/viewdoctor.png" /></span></a>
+ <a class="all_admin_link" data-toggle="modal" data-target="#AllDoctors" >
+      <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
+     <span title="View All Doctors" data-toggle="tooltip" data-placement="left" ><img src="../images/viewdoctor.png" /></span></a>
 
 
                 
