@@ -28,6 +28,9 @@ table
     padding-left: 15px;
     text-indent: -15px;
 }
+
+
+
  .checkboxes label {
     display: inline!important;
     float: right!important;
@@ -55,6 +58,10 @@ table
 .modal table td{
     width:30px;
     height:auto;
+     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    padding-left:4px;
+    font-size:14px;
+    font-weight:200;
     padding-left:4px;
 }
 
