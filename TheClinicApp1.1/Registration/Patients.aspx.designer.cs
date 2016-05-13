@@ -244,7 +244,7 @@ namespace TheClinicApp1._1.Registration {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtMobile;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtMobile;
         
         /// <summary>
         /// txtEmail control.

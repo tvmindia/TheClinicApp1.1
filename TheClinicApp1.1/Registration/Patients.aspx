@@ -22,9 +22,17 @@
   
   <style>
       /*Custom Style for the table inside the modal popup*/
+   .modal thead{
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+    font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:16px;
+    }
   .modal table{
     border-collapse: collapse;    
     width: 100%;
+   
     }
    .modal table td {
     text-align: left;
@@ -51,6 +59,7 @@
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size:16px;    
     }
+     
    </style>
  
  
@@ -62,6 +71,7 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
+    
     <!---   Script for fileupload preview & FileType Checking  Created By:Thomson Kattingal --->    
     <script type="text/javascript">
         function showpreview(input) 
@@ -100,9 +110,9 @@
     <!--------------------------------------------------------------------->
     <!---   Script Nav button to srink and reform, AutoComplete Textbox, Table Pagination in document Ready --->
     <script src="../js/jquery.tablePagination.0.1.js"></script>
+    <script src="../js/jquery.dataTables.js"></script>
     <script type ="text/javascript" >
-        $(document).ready(
-        function () {
+        $(document).ready( function (){
             var ac=null;
             ac = <%=listFilter %>;
             $( "#txtSearch" ).autocomplete({
@@ -116,21 +126,35 @@
               });
 
 
-              $('.nav_menu').click(function () {
-                $(".main_body").toggleClass("active_close");
+            $('.nav_menu').click(function () {
+            $(".main_body").toggleClass("active_close");
                });
 
-              $('table').tablePagination({});     
+            $('table').tablePagination({});
+
             
-              
-            
-            });      
+
+
+
+            var $rows = $('#<%=GridView1.ClientID%> tr');
+            $('#txtSearchPatient').keyup(function() {
+                var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+                reg = RegExp(val, 'i'),
+                 text; 
+                $rows.show().filter(function() {
+                    text = $(this).text().replace(/\s+/g, ' ');
+                    return !reg.test(text);
+                }).hide();
+            });
+
+        }); 
+        
         function getPatientId(Patient)
         {
             var PatientDetails=Patient;           
         }
 
-        
+
         
 
         </script>   
@@ -162,7 +186,7 @@
          <a class="nav_menu">Menu</a>
          Patients Registration <ul class="top_right_links"><li>
          <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"></asp:Label></li><li>         
-         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClientClick="redirect();" OnClick="LogoutButton_Click" formnovalidate /></li></ul>
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClientClick="redirect();" OnClick="LogoutButton_Click" ToolTip="Logout" formnovalidate /></li></ul>
          </div>
              <div class="icon_box">
          <%--<a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>--%>
@@ -219,7 +243,7 @@
       
       <div class="row field_row">  
       <div class="col-lg-4">
-      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="tel" name="mobile" minlength="5" pattern="\d*" title="⚠ This entry can only contain Numbers." />
+      <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="5" pattern="\d*" title="⚠ This entry can only contain Numbers." />
       </div>
       <div class="col-lg-4">
       <label for="email">Email</label><input id="txtEmail" runat="server" type="email" name="email" title="⚠ Invalid Email Check format expects testname@test.te" />
@@ -243,9 +267,9 @@
 
       </div>
 
-         </div>
+      </div>
 
-         </div>
+     </div>
     </div> 
   
         <!---------------------------------- Modal Section --------------------------------------->
@@ -256,12 +280,23 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="border-color:#3661C7;">  
-          <button type="button" class="close" data-dismiss="modal">&times;</button>     
-        <h3 class="modal-title">All Registration</h3>
+      <button type="button" class="close" data-dismiss="modal">&times;</button>            
+      <h3 class="modal-title">All Registration</h3>       
       </div>
-      <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
+        <div class="search_div">
+         <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchPatient" />
+         <input class="button" type="button" value="Search" />           
+       </div>    
+       <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         <div class="col-lg-12" style="height:500px;"> 
+           <div class="col-lg-12" style="height:480px;"> 
+          <div class="col-lg-12" style="height:10px">
+              <%--<div class="search_div">
+              <input class="field" type="text" placeholder="Search with Name.." id="txtSearchPatient" />
+                  <input class="button" type="button" value="Search" />
+                  </div>--%>
+          </div>
+         <div class="col-lg-12" style="height:400px;"> 
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal" >
             
             <Columns>
@@ -280,12 +315,10 @@
                 <asp:BoundField DataField="Phone" HeaderText="Phone" SortExpression="Phone"></asp:BoundField>               
             </Columns>
             
-        </asp:GridView>
-       <%-- <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-        <asp:Button ID="Button1" runat="server" Text="Button" OnClientClick ="return check();" />--%>
+        </asp:GridView>     
  
          </div>
-
+               </div>
     </div>
          
          
@@ -359,11 +392,7 @@
                             
                         </asp:GridView>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                       
-
-                    </div>
+                    </div>                  
                 </div>
                 <asp:HiddenField ID="HiddenField1" runat="server" />
             </div>
@@ -402,7 +431,31 @@
     }
         </script>
    
-   
+<style>
+.search_div input.field1 {
+    width: 100%;
+    /* padding: 2px 77px 2px 20px; */
+    box-sizing: border-box;
+    padding-right:2px;
+}
+
+.search_div input.field1 {
+    padding: 2px 2px 2px 20px;
+    height: 34px;
+    line-height: 34px;
+    background: #D7E2EA;
+    border: burlywood;
+    display: block;
+    color: #000;
+    font-size: 14px;
+    font-family: 'caviardreams-regular';
+    width: 322px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+</style>
    <!----------------------------------------------------------------------------------------> 
    <!------------------------------------->
 </asp:Panel>   

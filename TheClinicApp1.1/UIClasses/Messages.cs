@@ -59,6 +59,10 @@ namespace TheClinicApp1._1.UIClasses
         {
             get { return "Please fill out the mandatory fields And Save"; }
         }
+        public static string Imagesupport
+        {
+            get { return "The Image Is not Supporting Save a new one"; }
+        }
        
 //----------------* Success Messages *--------------//
         public static string LoginSuccess

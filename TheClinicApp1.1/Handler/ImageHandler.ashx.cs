@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
 
+
 namespace TheClinicApp.Handler
 {
     /// <summary>
@@ -16,24 +17,32 @@ namespace TheClinicApp.Handler
     /// </summary>
     public class ImageHandler : IHttpHandler
     {
+      
 
         public void ProcessRequest(HttpContext context)
         {
-           
-            context.Response.ContentType = "image/jpeg";
-
-            if (context.Request.QueryString["PatientID"] != null)
+            try
             {
-                Guid PatientID;
-                PatientID = Guid.Parse(context.Request.QueryString["PatientID"]);
-                if(GetImageFromDB(PatientID)!=null)
+                context.Response.ContentType = "image/jpeg";
+
+                if (context.Request.QueryString["PatientID"] != null)
                 {
-                MemoryStream memoryStream = new MemoryStream(GetImageFromDB(PatientID), false);
-                Image imgFromGB = Image.FromStream(memoryStream);
-                imgFromGB.Save(context.Response.OutputStream, ImageFormat.Jpeg);
+                    Guid PatientID;
+                    PatientID = Guid.Parse(context.Request.QueryString["PatientID"]);
+                    if (GetImageFromDB(PatientID) != null)
+                    {
+                        MemoryStream memoryStream = new MemoryStream(GetImageFromDB(PatientID), false);
+                        Image imgFromGB = Image.FromStream(memoryStream);
+                        imgFromGB.Save(context.Response.OutputStream, ImageFormat.Jpeg);
+                    }
+
                 }
-               
             }
+            catch
+            {
+                                
+            }
+            
         }
 
 
