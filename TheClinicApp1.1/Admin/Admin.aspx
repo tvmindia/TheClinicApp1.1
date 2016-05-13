@@ -18,12 +18,27 @@
 
 
 
+
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+
 
       <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
     <!-- Script Files -->
    
+    <style>
+    .modal table thead {
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+     
+    }
+    </style>
+
+
 
     <script>
 
