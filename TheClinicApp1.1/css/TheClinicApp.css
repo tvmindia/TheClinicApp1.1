@@ -58,8 +58,11 @@
     background: rgb(34,34,34); /* for IE */
     background: rgba(34,34,34,0.75);
     background-image: url('../Images/HerbNew.jpg');
-    background-size: 100%;
-    
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-attachment:fixed;
+    background-color:#464646;
 
 }
 
@@ -102,8 +105,9 @@
 
 html, body {
     height: 100%;
-    /*background-image: url('../Images/HerbeInWhite.jpg');*/
+    /*background-image: url('../Images/HerbNew.jpg');*/
     background-size: 100%;
+    
 }
 
 .outer {
@@ -425,7 +429,7 @@ html, body {
 
 
 /*written by gibin*/
-  <%--Date picker styles--%>
+  /*Date picker styles*/
 
 
     .ui-autocomplete {
@@ -444,3 +448,8 @@ html, body {
             background: url('../images/calendar4.png') no-repeat right center;
             padding-right:15px;  
         }
+
+
+
+
+    

@@ -61,7 +61,7 @@
           <label for="username" class="captions">User Name</label>
         </div>                
         <div class="input-field">
-          <input id="password" type="password" class="validate" runat="server" style="color:white;" readonly onfocus="this.removeAttribute('readonly');" />
+          <input id="password" type="password" class="validate" runat="server" style="color:white;" />
           <label for="password" class="captions">Password</label>
         </div>
        
