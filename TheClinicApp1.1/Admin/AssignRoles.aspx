@@ -86,7 +86,7 @@ table
 
      <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
 
-    
+    <link href="../css/main.css" rel="stylesheet" />
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -152,7 +152,7 @@ table
    <script src="../js/jquery-1.12.0.min.js"></script>
    <script src="../js/jquery-ui.js"></script>
 
-    <link href="../css/main.css" rel="stylesheet" />
+ 
         <script src="../js/bootstrap.min.js"></script>
       <script src="../js/jquery.tablePagination.0.1.js"></script>
 
