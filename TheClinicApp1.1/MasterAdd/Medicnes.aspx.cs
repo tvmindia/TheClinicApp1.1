@@ -32,6 +32,9 @@ namespace TheClinicApp1._1.MasterAdd
            DataTable dt = mstrObj.ViewAllMedicines();
            gvMedicines.DataSource = dt;
            gvMedicines.DataBind();
+
+           lblCaseCount.Text = gvMedicines.Rows.Count.ToString();
+
         }
 
 
@@ -290,7 +293,7 @@ namespace TheClinicApp1._1.MasterAdd
                 msg = "Already used . Can't be deleted";
                 eObj.DeletionNotSuccessMessage(page, msg);
             }
-            
+            BindGridview();
         }
 
         protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
@@ -346,8 +349,8 @@ namespace TheClinicApp1._1.MasterAdd
 
 
             //StockObj.UpdateMedicines(MedId);
-    
 
+            BindGridview();
         }
 
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)

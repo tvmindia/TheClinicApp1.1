@@ -369,7 +369,7 @@
      <div class="col-lg-8">
 
          <label for="name"> Reorder Quantity</label>
-         <input id="txtOrderQuantity" runat="server" type="number" name="age" min="1" pattern="\d*" required="required" title="⚠ Should be greater than 0" />
+         <input id="txtOrderQuantity" runat="server" value="1" type="number" name="age" min="1" pattern="\d*" required="required" title="⚠ Should be greater than 0" />
         
          </div>
 
@@ -430,11 +430,11 @@
                </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:BoundField DataField="MedCode" HeaderText="Medicine Code"   />
+                
               <%--<asp:BoundField DataField="MedicineCode" HeaderText="Medicine Code"   ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow Match" />--%>
 
                 <asp:BoundField DataField="Name" HeaderText="Medicine Name"   />
-               
+               <asp:BoundField DataField="MedCode" HeaderText="Medicine Code"   />
                  <asp:BoundField DataField="Unit" HeaderText="Unit"   />
                  <asp:BoundField DataField="Qty" HeaderText="Existing Qty"  ItemStyle-HorizontalAlign="Right" />
                  <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" />

@@ -421,7 +421,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = createdBy;
 
 
-                if (UsrID != null)
+                if (UsrID != Guid.Empty)
                 {
                     pud.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UsrID;
                 }

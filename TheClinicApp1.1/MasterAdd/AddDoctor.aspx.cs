@@ -26,6 +26,8 @@ namespace TheClinicApp1._1.MasterAdd
        DataTable dtDoctors =     mstrObj.ViewDoctors();
        dtgDoctors.DataSource = dtDoctors;
        dtgDoctors.DataBind();
+
+       lblCaseCount.Text = dtgDoctors.Rows.Count.ToString();
         }
 
 
@@ -130,6 +132,8 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
+            Errorbox.Attributes.Add("style", "display:none");
+
              UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
 
@@ -145,9 +149,13 @@ namespace TheClinicApp1._1.MasterAdd
 
             mstrObj.ClinicID = UA.ClinicID;
             mstrObj.DoctorID = DoctorID;
+
+
+            bool IDUsedOrNot = mstrObj.CheckDoctorIdUsed();
+
             //bool IDUsedOrNot = mstrObj.GetDoctorIDInVisits() | mstrObj.GetDoctorIDInTokens() | mstrObj.GetDoctorIDInPrescHD();
 
-            bool IDUsedOrNot = false;
+            
             if (IDUsedOrNot)
             {
                 msg = "Already used . Can't be deleted";
@@ -157,7 +165,7 @@ namespace TheClinicApp1._1.MasterAdd
          else
             {
                 mstrObj.DoctorID = DoctorID;
-             mstrObj.DeleteDoctorByID();
+                mstrObj.DeleteDoctorByID();
 
              BindGridview();
          }
@@ -167,6 +175,9 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
         {
+            Errorbox.Attributes.Add("style", "display:none");
+
+
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
             var page = HttpContext.Current.CurrentHandler as Page;

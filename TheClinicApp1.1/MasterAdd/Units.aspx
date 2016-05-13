@@ -83,30 +83,38 @@
          function CheckUnitDuplication(txtCategoryName) {
              debugger;
              var name = document.getElementById('<%=txtDescription.ClientID %>').value;
-             name = name.replace(/\s/g, '');
 
-             PageMethods.ValidateUnit(name, OnSuccess, onError);
+             name = name.trim();
 
-             function OnSuccess(response, userContext, methodName) {
 
-                 var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-                 var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                 if (response == false) {
+             if (name != "") {
 
-                     LnameImage.style.display = "block";
-                     errLname.style.display = "none";
+
+                 name = name.replace(/\s/g, '');
+
+                 PageMethods.ValidateUnit(name, OnSuccess, onError);
+
+                 function OnSuccess(response, userContext, methodName) {
+
+                     var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                     var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                     if (response == false) {
+
+                         LnameImage.style.display = "block";
+                         errLname.style.display = "none";
+
+                     }
+                     if (response == true) {
+                         errLname.style.display = "block";
+                         errLname.style.color = "Red";
+                         errLname.innerHTML = "Name Alreay Exists"
+                         LnameImage.style.display = "none";
+
+                     }
+                 }
+                 function onError(response, userContext, methodName) {
 
                  }
-                 if (response == true) {
-                     errLname.style.display = "block";
-                     errLname.style.color = "Red";
-                     errLname.innerHTML = "Name Alreay Exists"
-                     LnameImage.style.display = "none";
-
-                 }
-             }
-             function onError(response, userContext, methodName) {
-
              }
          }
 
