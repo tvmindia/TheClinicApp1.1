@@ -81,12 +81,39 @@ table
 }
 
 
+.button1{
+        background: url("../images/save.png") no-repeat 0 center;
+        height: 33px;
+        width: 60px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px 10px 7px;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        font-family:'raleway-semibold';
+        min-width: 83px;
+        background-color:#abd357 ;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        text-indent: 20px;
+        background-position-x:5px;
+
+        color: inherit;
+
+    }
+
+
+
+
 </style>
 
 
      <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
 
-    <link href="../css/main.css" rel="stylesheet" />
+    <%--<link href="../css/main.css" rel="stylesheet" />--%>
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
