@@ -57,7 +57,7 @@
 .Semitransparent_1 {
     background: rgb(34,34,34); /* for IE */
     background: rgba(34,34,34,0.75);
-    background-image: url('../Images/HerbNew.jpg');
+    background-image: url('../Images/Backgroundnew.jpg');
     background-size:cover;
     background-repeat:no-repeat;
     background-position:center center;
