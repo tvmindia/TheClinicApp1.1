@@ -630,7 +630,7 @@
                   , next
                 ;
                 if (e.keyCode == 13) {
-                    focusable = form.find('input,a,select,button,textarea').filter(':visible');,kjraebfvrejfv
+                    focusable = form.find('input,a,select,button,textarea').filter(':visible');
                     next = focusable.eq(focusable.index(this)+1);
                     if (next.length) {
                         next.focus();
