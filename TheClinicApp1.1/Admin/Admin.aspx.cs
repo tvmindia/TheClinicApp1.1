@@ -306,11 +306,11 @@ namespace TheClinicApp1._1.Admin
 
             }
 
-            //else
-            //{
-            //    //DeleteAssignedRoleByUserID(UserID);
-            //    DeleteUserByUserID(UserID);
-            //}
+            else
+            {
+                //DeleteAssignedRoleByUserID(UserID);
+                DeleteUserByUserID(UserID);
+            }
             
         }
 
