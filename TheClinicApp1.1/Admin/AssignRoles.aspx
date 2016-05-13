@@ -86,6 +86,8 @@ table
 
      <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
 
+    
+
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
@@ -374,7 +376,12 @@ table
                                     <input class="button" type="submit" value="Search" />
                                 </div>--%>
                                 <ul class="top_right_links">
-                                    <li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick"><span></span>Save</a></li>
+                                    <li>
+                                        <%--<a  id="btSave" runat="server" CssClass="button1" onserverclick="btSave_ServerClick"><span></span>Save</a>--%>
+
+                                          <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btSave_ServerClick" />
+
+                                    </li>
                                     <li><a class="new"  href="AssignRoles.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>

@@ -17,10 +17,10 @@
      <script>
       $(document).ready(function () {
          
-          var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+          <%--var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
           LnameImage.style.display = "none";
           var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-          errLname.style.display = "none";
+          errLname.style.display = "none";--%>
 
 
           $('.alert_close').click(function () {
@@ -177,10 +177,10 @@
       <div class="col-lg-8">
      
               <label for="name">Unit</label><input id="txtDescription" runat="server" type="text" name="name" required onchange="CheckUnitDuplication();"  />
-           <asp:Image ID="imgWebLnames" runat="server" ToolTip="Desciption is Available" ImageUrl="~/Images/newfff.png" />
+           <asp:Image ID="imgWebLnames" runat="server" ToolTip="Desciption is Available" ImageUrl="~/Images/newfff.png" style="display:none" />
 
 
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Desciption is Unavailable" ImageUrl="~/Images/newClose.png" />
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Desciption is Unavailable" ImageUrl="~/Images/newClose.png" style="display:none"/>
 
       </div>
      <%-- <div class="col-lg-8">

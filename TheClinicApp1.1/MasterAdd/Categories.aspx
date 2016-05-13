@@ -24,10 +24,10 @@
       $(document).ready(function () {
          
           //images that represents medicine name duplication hide and show
-          var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+         <%-- var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
           LnameImage.style.display = "none";
           var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-          errLname.style.display = "none";
+          errLname.style.display = "none";--%>
 
 
 
@@ -49,30 +49,39 @@
       function CheckCategoryNameDuplication(txtCategoryName) {
           debugger;
           var name = document.getElementById('<%=txtCategoryName.ClientID %>').value;
-          name = name.replace(/\s/g, '');
 
-          PageMethods.ValidateCategoryName(name, OnSuccess, onError);
+          name = name.trim();
 
-          function OnSuccess(response, userContext, methodName) {
 
-              var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-              var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-              if (response == false) {
+          if (name != "")
+          {
 
-                  LnameImage.style.display = "block";
-                  errLname.style.display = "none";
+
+              name = name.replace(/\s/g, '');
+
+              PageMethods.ValidateCategoryName(name, OnSuccess, onError);
+
+              function OnSuccess(response, userContext, methodName) {
+
+                  var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                  var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                  if (response == false) {
+
+                      LnameImage.style.display = "block";
+                      errLname.style.display = "none";
+
+                  }
+                  if (response == true) {
+                      errLname.style.display = "block";
+                      errLname.style.color = "Red";
+                      errLname.innerHTML = "Name Alreay Exists"
+                      LnameImage.style.display = "none";
+
+                  }
+              }
+              function onError(response, userContext, methodName) {
 
               }
-              if (response == true) {
-                  errLname.style.display = "block";
-                  errLname.style.color = "Red";
-                  errLname.innerHTML = "Name Alreay Exists"
-                  LnameImage.style.display = "none";
-
-              }
-          }
-          function onError(response, userContext, methodName) {
-
           }
       }
 
@@ -202,11 +211,11 @@
                                      
                                     
       <div class="col-lg-8">
-      <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" onchange="CheckCategoryNameDuplication(this)"   />
-       <asp:Image ID="imgWebLnames" runat="server" ToolTip="Category name is Available" ImageUrl="~/Images/newfff.png" />
+      <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" onchange="CheckCategoryNameDuplication(this)"  required />
+       <asp:Image ID="imgWebLnames" runat="server" ToolTip="Category name is Available" ImageUrl="~/Images/newfff.png" style="display:none" />
 
 
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Category name is Unavailable" ImageUrl="~/Images/newClose.png" />
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Category name is Unavailable" ImageUrl="~/Images/newClose.png" style="display:none" />
       </div>      
      
 

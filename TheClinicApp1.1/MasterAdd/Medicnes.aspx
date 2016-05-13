@@ -24,10 +24,10 @@
           
 
         //images that represents medicine name duplication hide and show
-        var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+      <%--  var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
         LnameImage.style.display = "none";
         var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-        errLname.style.display = "none";
+        errLname.style.display = "none";--%>
 
         var CodeAvailableImage = document.getElementById('<%=imgCodeAvailable.ClientID %>');
         CodeAvailableImage.style.display = "none";
@@ -242,10 +242,10 @@
       <div class="col-lg-8">
      
               <label for="name">Medicine Name</label><input id="txtmedicineName" runat="server" type="text" name="name" required onchange="CheckMedicineNameDuplication(this)"  />
-           <asp:Image ID="imgWebLnames" runat="server" ToolTip="Medicne name is Available" ImageUrl="~/Images/newfff.png" />
+           <asp:Image ID="imgWebLnames" runat="server" ToolTip="Medicne name is Available" ImageUrl="~/Images/newfff.png" style="display:none" />
 
 
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Medicne name Unavailable" ImageUrl="~/Images/newClose.png" />
+                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Medicne name Unavailable" ImageUrl="~/Images/newClose.png" style="display:none" />
 
       </div>
 
@@ -257,10 +257,10 @@
           <label for="name">Medicine Code </label><input id="txtCode" runat="server" type="text" name="name" onchange="CheckMedicineCodeDuplication(this)" required  />
 
 
-          <asp:Image ID="imgCodeAvailable" runat="server" ToolTip="Medicne code is Available" ImageUrl="~/Images/newfff.png" />
+          <asp:Image ID="imgCodeAvailable" runat="server" ToolTip="Medicne code is Available" ImageUrl="~/Images/newfff.png"  style="display:none"/>
 
 
-                                    <asp:Image ID="imgCodeUnavailable" runat="server" ToolTip="Medicne code Unavailable" ImageUrl="~/Images/newClose.png" />
+                                    <asp:Image ID="imgCodeUnavailable" runat="server" ToolTip="Medicne code Unavailable" ImageUrl="~/Images/newClose.png"  style="display:none"/>
 
       </div>
 
@@ -295,7 +295,7 @@
          </div>
 
     <div class="col-lg-4">
-         <label for="name">Category</label>
+         <label for="name">Unit</label>
    <%--  <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                             <ContentTemplate>--%>
                                 <asp:DropDownList ID="ddlUnits"  runat="server" AutoPostBack="true"  Width="100%" Height="40px">
