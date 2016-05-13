@@ -118,6 +118,9 @@ namespace TheClinicApp1._1.Admin
 
         public void RefillUserDetailsOnEditClick(Guid UserID)
         {
+
+            txtLoginName.Attributes.Add("readonly", "readonly"); //LOGIN NAME READ ONLY in case of edit
+
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             userObj.UserID = UserID;

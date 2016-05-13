@@ -111,6 +111,22 @@ if(name != "")
 }
         }
 
+
+        function PassowrdEqualityCheck()
+        {
+            if(  document.getElementById('<%=txtConfirmPassword.ClientID %>').value != document.getElementById('<%=txtPassword.ClientID %>').value)
+            {
+                document.getElementById('<%=txtConfirmPassword.ClientID %>').style.borderColor = "#ff0000";
+            }
+
+            else
+            {
+                document.getElementById('<%=txtConfirmPassword.ClientID %>').style.borderColor = "#00b300";
+            }
+
+        }
+
+
     </script>
 
 
@@ -462,7 +478,7 @@ var   UserID = '';
                                     <div class="col-lg-8">
 
 
-                                        <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" name="name" required onchange="LoginNameCheck(this)" pattern="^\S+[A-z][A-z\.\s]+$" title="⚠  Allows alphabets only." />
+                                        <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" name="name" required onchange="LoginNameCheck(this)"     />
 
                                           <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" />
 
@@ -497,7 +513,7 @@ var   UserID = '';
                             <div class="row field_row">
                                 <div class="col-lg-4 ">
 
-                                        <label for="name">First Name</label><input id="txtFirstName" runat="server" type="text" name="name" required  pattern="^\S+[A-z][A-z\.\s]+$" title="⚠  Allows alphabets only."/>
+                                        <label for="name">First Name</label><input id="txtFirstName" runat="server" type="text" name="name" required  />
 
 
                                   <%--  <label for="First Name">First Name</label>
@@ -509,7 +525,7 @@ var   UserID = '';
 
                                 <div class="col-lg-4 ">
 
-                                     <label for="name">Last Name</label><input id="txtLastName" runat="server" type="text" name="name"  pattern="^\S+[A-z][A-z\.\s]+$" title="⚠  Allows alphabets only." />
+                                     <label for="name">Last Name</label><input id="txtLastName" runat="server" type="text" name="name" />
 
 
                                     <%--<label for="First Name">Last Name</label>
@@ -538,7 +554,7 @@ var   UserID = '';
                                 
                                 <div class="col-lg-4 ">
 
-                                       <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name"  required  autocomplete="off" />
+                                       <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name"  required  autocomplete="off"  onkeyup="PassowrdEqualityCheck()"/>
 
                                     
 
