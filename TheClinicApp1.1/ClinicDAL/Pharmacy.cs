@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Data;
+using System.Web.UI;
 
 namespace TheClinicApp1._1.ClinicDAL
 {
@@ -11,17 +12,20 @@ namespace TheClinicApp1._1.ClinicDAL
     {
        #region Precription
 
-        /* PATIENT DETAILS SP NAME: VIEWPATIENTDETAILS,VIEWPATIENTBOOKING
-         * 
-         */
-        #region DoctorPrescription
-        #region PrescriptionpropertyDoctorInsert
+        #region Global Variables
+
+        ErrorHandling eObj = new ErrorHandling();
+
+        #endregion Global Variables
+
+        /* PATIENT DETAILS SP NAME: VIEWPATIENTDETAILS,VIEWPATIENTBOOKING */
+        #region DoctorPrescriptionproperty
+    
         public Guid PrescriptionID
         {
             get;
             set;
-        }
-        
+        }        
         public Guid ClinicID
         {
             get;
@@ -37,11 +41,8 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-
-
-        #endregion PrescriptionpropertyDoctorInsert
-        #endregion DoctorPrescription
-
+    
+        #endregion DoctorPrescriptionproperty
 
         #region GetPatientPharmacyDetails
 
@@ -70,26 +71,22 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds);
-
-
-                return ds;
-
             }
-
             catch (Exception ex)
             {
-
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+                //throw ex;
             }
-
             finally
-            {
+            {              
                 if (con != null)
                 {
                     con.Dispose();
                 }
 
             }
+            return ds;
 
         }
 
@@ -121,28 +118,23 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
-                sda.Fill(ds,"Medicines");
-
-
-                return ds;
-
+                sda.Fill(ds, "Medicines");
             }
 
             catch (Exception ex)
             {
-
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+                //throw ex;
             }
-
             finally
             {
                 if (con != null)
                 {
                     con.Dispose();
                 }
-
             }
-
+            return ds;
         }
 
         #endregion PrescriptionDetails
