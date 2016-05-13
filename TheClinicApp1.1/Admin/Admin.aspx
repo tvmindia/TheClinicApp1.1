@@ -5,12 +5,12 @@
 
    <%-- <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <link href="../css/main.css" rel="stylesheet" />--%>
-
+     <link href="../css/main.css" rel="stylesheet" />
     
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/jquery-1.3.2.min.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
-
+   
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
@@ -387,7 +387,7 @@ var   UserID = '';
                             </asp:Label></span>
                    </a>--%>
 
-                <a class="all_token_link" data-toggle="modal" data-target="#AllUsers" >
+                <a class="all_admin_link" data-toggle="modal" data-target="#AllUsers" >
                   <span class="count">  <asp:Label ID="lblCaseCount" runat="server" Text="0">
 
                             </asp:Label></span>

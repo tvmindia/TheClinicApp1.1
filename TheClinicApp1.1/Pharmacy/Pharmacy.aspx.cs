@@ -99,6 +99,7 @@ namespace TheClinicApp1._1.Pharmacy
             return String.Format("{0}" + "|" + "{1}" + " | " + "{2}" + "|" + "{3}" + " | " + "{4}" + "|" + "{5}" + " | " + "{6}" + "|" + "{7}" + " | " + "{8}", FileNumber, Name, DOB, Gender, Address, Phone, Email, PatientID, ClinicID);
 
         }
+
         #endregion WebMethod
 
         #region Get Medicine Names
@@ -153,14 +154,8 @@ namespace TheClinicApp1._1.Pharmacy
 
         #region Get MedicineDetails By Medicine Name
 
-        /// <summary>
-        /// To fill textboxes with medicine details when when medicne name is inserted
-        /// </summary>
-        /// <param name="MedName"></param>
-        /// <returns>String of medicine details</returns>
-
+     
         [WebMethod]
-
         public static string MedDetails(string MedName)
             {
             IssueHeaderDetails IssuedtlsObj = new IssueHeaderDetails();

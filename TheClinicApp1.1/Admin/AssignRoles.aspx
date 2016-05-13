@@ -152,7 +152,7 @@ table
    <script src="../js/jquery-1.12.0.min.js"></script>
    <script src="../js/jquery-ui.js"></script>
 
-
+    <link href="../css/main.css" rel="stylesheet" />
         <script src="../js/bootstrap.min.js"></script>
       <script src="../js/jquery.tablePagination.0.1.js"></script>
 
@@ -343,7 +343,7 @@ table
      </span></a>--%>
 
 
- <a class="all_token_link" data-toggle="modal" data-target="#AssignedRoles" >
+ <a class="all_assignrole_link" data-toggle="modal" data-target="#AssignedRoles" >
                   <span class="count">  <asp:Label ID="lblCaseCount" runat="server" Text="0">
 
                             </asp:Label></span>
