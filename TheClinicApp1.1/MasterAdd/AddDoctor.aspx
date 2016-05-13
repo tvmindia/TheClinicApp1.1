@@ -131,7 +131,7 @@
          <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
           <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
          <li id="master" runat="server" class="active"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
-             <li><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
+             <li id="log" runat="server"><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
          </ul>
          
          <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
@@ -284,7 +284,7 @@
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          
 
-        <asp:GridView ID="dtgDoctors" runat="server" AutoGenerateColumns="False" CssClass="table" DataKeyNames="DoctorID" OnPreRender="dtgDoctors_PreRender"   >
+        <asp:GridView ID="dtgDoctors" runat="server" AutoGenerateColumns="False" CssClass="table" DataKeyNames="DoctorID,UserID" OnPreRender="dtgDoctors_PreRender"   >
                         
                         <Columns>
                           
@@ -336,7 +336,7 @@
   </div>
         </div>
      <asp:HiddenField ID="hdnDrID" runat="server" />
-
-
+    <asp:HiddenField ID="hdnUserID" runat="server" />
+    
 
 </asp:Content>

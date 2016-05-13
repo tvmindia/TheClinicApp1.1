@@ -40,6 +40,15 @@ namespace TheClinicApp1._1.MasterAdd {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl master;
         
         /// <summary>
+        /// log control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl log;
+        
+        /// <summary>
         /// Logout control.
         /// </summary>
         /// <remarks>
@@ -164,5 +173,14 @@ namespace TheClinicApp1._1.MasterAdd {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnDrID;
+        
+        /// <summary>
+        /// hdnUserID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnUserID;
     }
 }
