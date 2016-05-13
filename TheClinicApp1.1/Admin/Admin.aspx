@@ -406,7 +406,7 @@ var   UserID = '';
 
                             </asp:Label></span>
                        <span title="View All Users" data-toggle="tooltip" data-placement="left" >
-                        <img src="../images/multiuser.png" /></span> 
+                        <img src="../images/multiuser.png" /> </span> 
                           
                    </a>
 
