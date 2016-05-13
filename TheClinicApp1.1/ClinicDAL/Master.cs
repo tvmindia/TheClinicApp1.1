@@ -949,10 +949,24 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
-                    //successfull
+                    int rslt = Convert.ToInt32(Output.Value.ToString());
 
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
+                    if (rslt == 1)
+                    {
+                        //successfull
+
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.SavedSuccessMessage(page);
+                    }
+
+                    if (rslt == 2)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
+
+                    }
+                   
+
 
 
                 }

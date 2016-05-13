@@ -5,6 +5,45 @@
 
      <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
 
+<style>
+    
+     .modal table thead {
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+     
+    }
+
+
+
+.button1{
+        background: url("../images/save.png") no-repeat 0 center;
+        height: 33px;
+        width: 60px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px 10px 7px;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        font-family:'raleway-semibold';
+        min-width: 83px;
+        background-color:#abd357 ;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        text-indent: 20px;
+        background-position-x:5px;
+
+        color: inherit;
+
+    }
+
+
+    </style>
+
+
          <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
     <script src="../js/jquery-1.12.0.min.js"></script>
