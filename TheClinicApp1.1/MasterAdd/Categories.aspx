@@ -190,12 +190,12 @@
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="Categories.aspx">Add Categories</a></li>
+                        <li role="presentation" class="active"><a href="Categories.aspx">Categories</a></li>
 
-                        <li role="presentation"><a href="Units.aspx">Add Units</a></li>
+                        <li role="presentation"><a href="Units.aspx">Units</a></li>
 
-                          <li role="presentation" ><a href="Medicnes.aspx">Add Medicines</a></li>
-                        <li role="presentation"   ><a href="AddDoctor.aspx">Add Doctor</a></li>
+                          <li role="presentation" ><a href="Medicnes.aspx">Medicines</a></li>
+                        <li role="presentation"   ><a href="AddDoctor.aspx">Doctor</a></li>
 
                     </ul>
                     <!-- Tab panes -->
