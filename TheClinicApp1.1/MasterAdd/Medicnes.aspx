@@ -454,6 +454,7 @@
                 <asp:BoundField DataField="Name" HeaderText="Medicine Name"   />
                <asp:BoundField DataField="MedCode" HeaderText="Medicine Code"   />
                  <asp:BoundField DataField="Unit" HeaderText="Unit"   />
+               <asp:BoundField DataField="CategoryName" HeaderText="Category Name"   /> 
                  <asp:BoundField DataField="Qty" HeaderText="Existing Qty"  ItemStyle-HorizontalAlign="Right" />
                  <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" />
 
