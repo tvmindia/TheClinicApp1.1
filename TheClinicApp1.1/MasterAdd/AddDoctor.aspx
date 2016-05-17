@@ -52,7 +52,7 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+  
     <script src="../js/jquery.tablePagination.0.1.js"></script>
 
 
@@ -76,6 +76,8 @@
           });
 
           $('table').tablePagination({});
+
+          $('[data-toggle="tooltip"]').tooltip();
 
       });
 

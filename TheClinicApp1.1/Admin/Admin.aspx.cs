@@ -110,8 +110,23 @@ namespace TheClinicApp1._1.Admin
 
         public void DeleteUserByUserID(Guid UserID)
         {
-            userObj.UserID = UserID;
-            userObj.DeleteUserByUserID();
+            string msg = string.Empty;
+            var page = HttpContext.Current.CurrentHandler as Page;
+
+            roleObj.UserID = UserID;
+            DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+
+            if (dtAssignedRoles.Rows.Count == 0)
+            {
+                userObj.UserID = UserID;
+                userObj.DeleteUserByUserID();
+            }
+
+            else
+            {
+                msg = Messages.AlreadyUsedForDeletion;
+                eObj.DeletionNotSuccessMessage(page, msg);
+            }
         }
 
         #endregion Delete User By UserID
@@ -322,6 +337,7 @@ namespace TheClinicApp1._1.Admin
             else
             {
                 //DeleteAssignedRoleByUserID(UserID);
+
                 DeleteUserByUserID(UserID);
             }
             

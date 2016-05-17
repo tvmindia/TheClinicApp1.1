@@ -526,20 +526,21 @@ table
 
       
  </div> 
-<div id="AssignedRoles" class="modal fade" role="dialog">
+
+    <div id="AssignedRoles" class="modal fade" role="dialog">
           <div class="modal-dialog" style="min-width:550px;">
 
     <!-- Modal content-->
-    <div class="modal-content"  >
+    <div class="modal-content">
       <div class="modal-header" style="border-color:#3661C7;">  
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
-        <h3 class="modal-title">View All Assigned Roles</h3>
+        <h3 class="modal-title">View All AssignedRoles</h3>
       </div>
       <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         <div class="col-lg-12" style="height:500px;">
+         <div class="col-lg-12" style="height:500px">
 
-            <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" class="table" OnPreRender="dtgViewAllUserInRoles_PreRender" DataKeyNames="UserId"   >
+             <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" class="table" OnPreRender="dtgViewAllUserInRoles_PreRender" DataKeyNames="UserId"   >
              
                             <Columns>
 
@@ -576,6 +577,8 @@ table
 
 
             <div class="Pager"></div>
+
+           
     </div>
     </div>
          
@@ -584,6 +587,10 @@ table
 
   </div>
         </div>
+
+
+
+
 
       <asp:HiddenField ID="hdnUserCountChanged" runat="server" />
 </asp:Content>

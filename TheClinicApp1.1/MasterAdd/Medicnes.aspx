@@ -93,7 +93,7 @@
 
         $('table').tablePagination({}); 
           
-
+       
 
     });
 
@@ -177,7 +177,25 @@
 
     </script>
 
+    
+     <script src="../js/jquery-1.3.2.min.js"></script>
+   <script src="../js/jquery-1.12.0.min.js"></script>
+   <script src="../js/jquery-ui.js"></script>
 
+
+        <script src="../js/bootstrap.min.js"></script>
+      <script src="../js/jquery.tablePagination.0.1.js"></script>
+
+    <script type="text/javascript">
+
+
+        $(function () {
+
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+
+</script>
 
 
 
@@ -436,6 +454,7 @@
                 <asp:BoundField DataField="Name" HeaderText="Medicine Name"   />
                <asp:BoundField DataField="MedCode" HeaderText="Medicine Code"   />
                  <asp:BoundField DataField="Unit" HeaderText="Unit"   />
+               <asp:BoundField DataField="CategoryName" HeaderText="Category Name"   /> 
                  <asp:BoundField DataField="Qty" HeaderText="Existing Qty"  ItemStyle-HorizontalAlign="Right" />
                  <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" />
 

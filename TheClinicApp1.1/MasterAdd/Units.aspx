@@ -76,6 +76,8 @@
 
           $('table').tablePagination({});
 
+          $('[data-toggle="tooltip"]').tooltip();
+
       });
 
          //---------------* Function to check  Unit duplication *--------------//
