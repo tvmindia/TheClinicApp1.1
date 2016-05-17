@@ -386,7 +386,14 @@ namespace TheClinicApp1._1.Admin
           }
 
       }
-
+      else
+      {
+          foreach (ListItem item in chklstRoles.Items)
+          {
+              item.Selected = false; 
+          }
+      }
+                
      
         }
 

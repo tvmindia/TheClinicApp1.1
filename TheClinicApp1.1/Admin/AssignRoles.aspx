@@ -140,7 +140,14 @@ table
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-      
+        <style>
+    .modal table thead {
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+     
+    }
+    </style>
 
     <script>
 
