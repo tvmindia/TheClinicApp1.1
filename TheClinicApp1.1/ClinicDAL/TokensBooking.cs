@@ -157,15 +157,15 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 ds = new DataSet();
                 sda.Fill(ds);
-
-                return ds;
+           
 
             }
 
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -176,6 +176,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+            return ds;
         }
 
         #endregion GetPatientDetails
@@ -205,7 +206,7 @@ namespace TheClinicApp1._1.ClinicDAL
                  ds = new DataSet();
                  sda.Fill(ds);
 
-                 return ds;
+                
                 
 
             }
@@ -213,7 +214,8 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -224,7 +226,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return ds;
         
     
         }
@@ -329,14 +331,14 @@ namespace TheClinicApp1._1.ClinicDAL
             sda.Fill(ds);
           
 
-            return ds;
+          
 
             }
 
             catch (Exception ex)
             {
-                 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -347,6 +349,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+            return ds;
 
         }
 
@@ -378,14 +381,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds);
-                return ds;
+               
 
             }
 
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -396,6 +400,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+            return ds;
 
         }
 
@@ -428,13 +433,15 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
             {
                 if (con != null)
                 {
+                  
                     con.Dispose();
                 }
             }

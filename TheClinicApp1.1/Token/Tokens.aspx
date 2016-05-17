@@ -111,7 +111,7 @@
 
             function OnSuccess(response, userContext, methodName) 
             {   
-                      
+                debugger;      
                 var string1 = new Array();
                 string1 = response.split('|');
                
@@ -125,8 +125,13 @@
                 document.getElementById('<%=lblEmail.ClientID%>').innerHTML=string1[6];
                 document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
                 document.getElementById('<%=HiddenClinicID.ClientID%>').value=string1[8];
+                if(document.getElementById('<%=BookedDoctorName.ClientID%>') != null)
+                {
+                    document.getElementById('<%=BookedDoctorName.ClientID%>').style.visibility= 'hidden';
+                }
+                
 
-                document.getElementById('txtSearch').value="";//clearin the earch box
+                document.getElementById('txtSearch').value="";//clearin the earch box            
 
                 document.getElementById('DropDownDoctor').style.visibility= 'visible';
             }          
@@ -211,16 +216,14 @@
                 <div class="alert alert-info" style="display: none">
                     <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
                 </div>
-
                 <div class="alert alert-warning" style="display: none">
                     <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
                 </div>
-
                 <div class="alert alert-danger" style="display: none">
                     <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
                 </div>
 
-                <div class="alert alert-info" id="info">
+                <div class="alert alert-info" id="info" runat="server">
 
                     <label>Search & Select a Patient, then Book Token  </label>
 
@@ -259,7 +262,8 @@
                         </div>
 
                         <div class="field_label" id="BookedDoctorName" visible="false" runat="server">
-                            <label>Doctor</label><asp:Label ID="lblDoctor" runat="server"></asp:Label>
+                            <label id ="labelbookeddoctor">Doctor</label>
+                            <asp:Label ID="lblDoctor" runat="server"></asp:Label>
                         </div>
                         <br />
                         <br />
