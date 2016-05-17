@@ -7,6 +7,7 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../css/Masterw3.css" rel="stylesheet" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
 </head>
     <body>
 
@@ -23,7 +24,7 @@
 <input class="w3-input" type="text" runat="server" id="txtEmail" style="width:90%" required="required" readonly onfocus="this.removeAttribute('readonly');"/></p>
 
 <p>
-<button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnVerificationCode" onclick="this.style.visibility='hidden';" onserverclick="btnVerificationCode_ServerClick1"> Send me verification code </button></p>
+<button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnVerificationCode" onserverclick="btnVerificationCode_ServerClick1"> Send me verification code </button></p>
 
 
 <p>

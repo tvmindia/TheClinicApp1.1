@@ -152,7 +152,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Doctor\Doctors.aspx" />
     <Content Include="Doctor\test page.txt" />
-    <Content Include="favicon.ico" />
+    <CodeAnalysisDictionary Include="favicon.ico" />
     <Content Include="Handler\ImageHandler.ashx" />
     <Content Include="images\403.png" />
     <Content Include="images\accordion_arrow.png" />
