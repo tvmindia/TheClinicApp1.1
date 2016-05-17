@@ -149,5 +149,45 @@ namespace TheClinicApp1._1.UIClasses
         {
             get { return "Saving Not Successful "; }
         }
+
+        public static string MandatoryFields
+        {
+            get { return "Please fill out all the fields"; }
+        }
+
+        public static string AlreadyUsedForDeletion
+        {
+            get { return "Already used . Can't be deleted"; }
+        }
+
+        public static string AlreadyUsedForUpdation
+        {
+            get { return "Already used . Can't be changed"; }
+        }
+
+        public static string SelectCatergory
+        {
+            get { return "Please select a category ! "; }
+        }
+
+        public static string Selectunit
+        {
+            get { return "Please select a unit ! "; }
+        }
+        public static string ValidMedicineName
+        {
+            get { return "Please enter a valid medicine name"; }
+        }
+
+        public static string ReorderQtyMandatory
+        {
+            get { return "Please enter reorder quantity"; }
+        }
+      
+         public static string validReorderQty
+        {
+            get { return "Please enter a quantity greater than 0"; }
+        }
+        
     }
 }

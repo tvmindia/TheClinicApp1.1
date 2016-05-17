@@ -8,6 +8,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
 
+using Messages = TheClinicApp1._1.UIClasses.Messages;
+
 namespace TheClinicApp1._1.MasterAdd
 {
     public partial class Medicnes : System.Web.UI.Page
@@ -54,35 +56,18 @@ namespace TheClinicApp1._1.MasterAdd
             if (txtmedicineName.Value != string.Empty || txtCode.Value != string.Empty || txtOrderQuantity.Value != string.Empty)
             {
 
-
-
-
-
                 if (ddlCategory.SelectedItem.Text == "--Select--")
                 {
-                    msg = "Please select a category ! ";
+                    //msg = "Please select a category ! ";
 
+                    msg = Messages.SelectCatergory;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
-              //  else  if (txtmedicineName.Text.Contains("$") )
-                //{
-                //    msg = "Medicine Name is not valid as it contains $";
-
-              //    eObj.InsertionNotSuccessMessage(page, msg);
-                //    //Medicine Name is not valid as it contains $ ,|
-                //}
-
-              //  else if (txtmedicineName.Text.Contains("|"))
-                //{
-                //    msg = "Medicine Name is not valid as it contains |";
-
-              //    eObj.InsertionNotSuccessMessage(page, msg);
-                //}
                 else if (ddlUnits.SelectedItem.Text == "--Select--")
                 {
-                    msg = "Please select a unit ! ";
-
+                    //msg = "Please select a unit ! ";
+                    msg = Messages.Selectunit;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
@@ -90,21 +75,23 @@ namespace TheClinicApp1._1.MasterAdd
 
                 else if ((txtmedicineName.Value.Contains("$")) || (txtmedicineName.Value.Contains("|")))
                 {
-                    msg = "Please enter a valid medicine name";
+                    //msg = "Please enter a valid medicine name";
+                    msg = Messages.ValidMedicineName;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
                 else if (txtOrderQuantity.Value == string.Empty)
                 {
-                    msg = "Please enter reorder quantity";
+                    //msg = "Please enter reorder quantity";
+                    msg = Messages.ReorderQtyMandatory;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
 
                 else if (Convert.ToInt32(txtOrderQuantity.Value) <= 0)
                 {
-                    msg = "Please enter a quantity greater than 0";
-
+                    //msg = "Please enter a quantity greater than 0";
+                    msg = Messages.validReorderQty;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
@@ -148,7 +135,9 @@ namespace TheClinicApp1._1.MasterAdd
 
             else
             {
-                msg = "Please fill out all the fields";
+                //msg = "Please fill out all the fields";
+
+                msg = Messages.MandatoryFields;
                 eObj.InsertionNotSuccessMessage(page, msg);
             }
         }

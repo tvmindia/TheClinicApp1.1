@@ -7,7 +7,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
-
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 
 namespace TheClinicApp1._1.MasterAdd
 {
@@ -96,7 +96,9 @@ namespace TheClinicApp1._1.MasterAdd
                     }
                     else
                   {
-                      msg = "Already used . Can't be changed";
+                      //msg = "Already used . Can't be changed";
+
+                      msg = Messages.AlreadyUsedForUpdation;
                       eObj.InsertionNotSuccessMessage(page, msg);
                   }
                   
@@ -113,7 +115,8 @@ namespace TheClinicApp1._1.MasterAdd
 
             else
             {
-                msg = "Please fill out all the fields";
+                //msg = "Please fill out all the fields";
+                msg = Messages.MandatoryFields;
                 eObj.InsertionNotSuccessMessage(page, msg);
             }
 
@@ -189,7 +192,8 @@ namespace TheClinicApp1._1.MasterAdd
 
             else
             {
-                msg = "Already used . Can't be deleted";
+                //msg = "Already used . Can't be deleted";
+                msg = Messages.AlreadyUsedForDeletion;
                 eObj.DeletionNotSuccessMessage(page, msg);
             }
 

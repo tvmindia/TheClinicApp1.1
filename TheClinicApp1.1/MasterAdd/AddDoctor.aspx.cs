@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 
 using TheClinicApp1._1.ClinicDAL;
 using System.Web.Services;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 
 #endregion Included Namespcaes
 
@@ -249,7 +250,8 @@ namespace TheClinicApp1._1.MasterAdd
 
             else
             {
-                msg = "Please fill out all the fields";
+                //msg = "Please fill out all the fields";
+                msg = Messages.MandatoryFields;
                 eObj.InsertionNotSuccessMessage(page, msg);
             }
 
@@ -285,7 +287,8 @@ namespace TheClinicApp1._1.MasterAdd
 
             if (IDUsedOrNot)
             {
-                msg = "Already used . Can't be deleted";
+                //msg = "Already used . Can't be deleted";
+                msg = Messages.AlreadyUsedForDeletion;
                 eObj.DeletionNotSuccessMessage(page, msg); 
             }
 
