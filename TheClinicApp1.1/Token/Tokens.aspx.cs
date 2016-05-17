@@ -52,7 +52,14 @@ namespace TheClinicApp1._1.Token
                 ddlDoctor.DataBind();
             }
 
-           
+            
+            if (Request.QueryString["id"]!=null)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.DeleteSuccessMessage(page);
+                info.Visible = false;
+
+            }
         }   
         #region listerfilterbind
         public void listerfilterbind()
@@ -170,10 +177,8 @@ namespace TheClinicApp1._1.Token
                 BookedDoctorName.Visible = true;
                 lblDoctor.Visible = true;
                 lblDoctor.Text = Convert.ToString(dst.Tables[0].Rows[0]["DoctorName"]);
-
-
-
-
+                
+                info.Visible = false;
             }
             else 
             {
@@ -182,6 +187,8 @@ namespace TheClinicApp1._1.Token
                 msg = "Please select Patient Details in Search";
 
                 eObj.InsertionNotSuccessMessage(page, msg);
+
+                info.Visible = true;
 
                 ClearFields();
             
