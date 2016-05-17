@@ -110,7 +110,7 @@ namespace TheClinicApp1._1.MasterAdd
             {
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-                StockObj.Name = txtmedicineName.Value;
+                StockObj.Name = txtmedicineName.Value.TrimStart();
                 StockObj.MedCode = txtCode.Value;
                 StockObj.CategoryID = ddlCategory.SelectedValue;
                 StockObj.ReOrderQty = Convert.ToInt32(txtOrderQuantity.Value);

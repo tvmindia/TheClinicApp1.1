@@ -47,11 +47,13 @@ namespace TheClinicApp1._1.MasterAdd
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-            CategoryObj.CategoryName = txtCategoryName.Value;
+            CategoryObj.CategoryName = txtCategoryName.Value.TrimStart();
             CategoryObj.ClinicID = UA.ClinicID;
             CategoryObj.CreatedBy = UA.userName;
 
             CategoryObj.AddNewCategory();
+
+
 
         }
 

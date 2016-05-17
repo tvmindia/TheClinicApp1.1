@@ -60,8 +60,8 @@ namespace TheClinicApp1._1.MasterAdd
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
                 //mstrObj.Code = txtCOde.Value;
-                mstrObj.Code = txtDescription.Value;
-                mstrObj.Description = txtDescription.Value;
+                mstrObj.Code = txtDescription.Value.TrimStart();
+                mstrObj.Description = txtDescription.Value.TrimStart();
                 mstrObj.ClinicID = UA.ClinicID;
                
 

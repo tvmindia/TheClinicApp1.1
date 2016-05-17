@@ -211,7 +211,7 @@
                                         <%--<a class="save" id="Save" runat="server" onserverclick="Save_ServerClick"><span></span>Save</a>--%>
                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" />
                                     </li>
-                                    <li><a class="new" href="Admin.aspx"><span></span>New</a></li>
+                                    <li><a class="new" href="Categories.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
 
