@@ -93,7 +93,7 @@
 
         $('table').tablePagination({}); 
           
-
+       
 
     });
 
@@ -177,7 +177,25 @@
 
     </script>
 
+    
+     <script src="../js/jquery-1.3.2.min.js"></script>
+   <script src="../js/jquery-1.12.0.min.js"></script>
+   <script src="../js/jquery-ui.js"></script>
 
+
+        <script src="../js/bootstrap.min.js"></script>
+      <script src="../js/jquery.tablePagination.0.1.js"></script>
+
+    <script type="text/javascript">
+
+
+        $(function () {
+
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+
+</script>
 
 
 
