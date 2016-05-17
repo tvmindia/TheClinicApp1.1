@@ -28,6 +28,7 @@ namespace TheClinicApp1._1.MasterAdd
         Master mstrObj = new Master();
         ErrorHandling eObj = new ErrorHandling();
         ClinicDAL.CryptographyFunctions CryptObj = new CryptographyFunctions();
+        ClinicDAL.RoleAssign roleObj = new RoleAssign();
 
         #endregion Global Variables
 
@@ -148,6 +149,16 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion Add User To User Table
 
+        #region Delete User By UserID
+
+        public void DeleteUserByUserID(Guid UserID)
+        {
+            userObj.UserID = UserID;
+            userObj.DeleteUserByUserID();
+        }
+
+        #endregion Delete User By UserID
+
         #endregion User
 
         //---------- *  DOCTOR *------------//
@@ -216,6 +227,74 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion Doctror
 
+
+        //---------- *  USER IN ROLES    *--------------//
+
+        #region UserInRoles
+
+
+        #region GetRoleIDOFDoctor
+
+        /// <summary>
+        /// To get the roleID of doctor  : If the user is doctor , user has to assign the doctor role
+        /// </summary>
+        /// <returns></returns>
+        public string GetRoleIDOFDoctor()
+        {
+            string DoctorRoleID = string.Empty;
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            userObj.ClinicID = UA.ClinicID;
+
+            DoctorRoleID = userObj.GetRoleIDOfDoctor();
+
+            return DoctorRoleID;
+        }
+
+        #endregion GetRoleIDOFDoctor
+
+        #region Assign Role
+
+        /// <summary>
+        /// Assigns doctor role for the user
+        /// </summary>
+        public void AddUserRole()
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            roleObj.ClinicID = UA.ClinicID;
+
+            string roleid = GetRoleIDOFDoctor();
+
+            roleObj.RoleID = Guid.Parse(roleid);
+            roleObj.CreatedBy = UA.userName;
+            roleObj.UserID = Guid.Parse(hdnUserID.Value);
+
+            DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+
+            DataRow[] DoctorRoleAssigned = dtAssignedRoles.Select("RoleID = '" + roleid + "'"); //CHecking whether user has already doctor role, if not , assigns doctor role for the user
+
+            if (DoctorRoleAssigned.Length == 0)
+            {
+                roleObj.AssignRole();
+            }
+
+        }
+
+        #endregion Assign Role
+
+        #region Delete Assigned role By UserID
+
+        public void DeleteAssignedRoleByUserID(Guid UserID)
+        {
+            roleObj.UserID = UserID;
+            roleObj.DeleteAssignedRoleByUserID();
+        }
+
+        #endregion Delete Assigned role By UserID
+
+        #endregion UserInRoles
+
         #endregion Methods
 
         #region Events
@@ -245,7 +324,7 @@ namespace TheClinicApp1._1.MasterAdd
             {
                 AddUserToUserTable();
                 AddDoctorToDoctorTable();
-
+                AddUserRole();
             }
 
             else
@@ -275,8 +354,10 @@ namespace TheClinicApp1._1.MasterAdd
 
              ImageButton ib = sender as ImageButton;
             GridViewRow row = ib.NamingContainer as GridViewRow;
-            Guid DoctorID = Guid.Parse(dtgDoctors.DataKeys[row.RowIndex].Value.ToString());
+            //Guid DoctorID = Guid.Parse(dtgDoctors.DataKeys[row.RowIndex].Value.ToString());
 
+            Guid DoctorID = Guid.Parse(dtgDoctors.DataKeys[row.RowIndex].Values[0].ToString());
+            Guid UserID = Guid.Parse(dtgDoctors.DataKeys[row.RowIndex].Values[1].ToString());
 
             mstrObj.ClinicID = UA.ClinicID;
             mstrObj.DoctorID = DoctorID;
@@ -294,12 +375,15 @@ namespace TheClinicApp1._1.MasterAdd
 
          else
             {
+                DeleteAssignedRoleByUserID(UserID);
+
                 mstrObj.DoctorID = DoctorID;
                 mstrObj.DeleteDoctorByID();
 
-             BindGridview();
-         }
+                DeleteUserByUserID(UserID);
 
+         }
+            BindGridview();
 
         }
 

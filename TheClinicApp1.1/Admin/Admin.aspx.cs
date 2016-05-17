@@ -85,7 +85,12 @@ namespace TheClinicApp1._1.Admin
                 //INSERT
 
                 userObj.AddUser();
-                hdnUserID.Value = userObj.UserID.ToString();
+
+                if (rdoDoctor.Checked == true)
+                {
+                    hdnUserID.Value = userObj.UserID.ToString();
+                }
+             
 
             }
             else
@@ -246,7 +251,12 @@ namespace TheClinicApp1._1.Admin
                     {
                         //----User is not in doctor table , so INSERT
 
-                        mstrObj.UsrID = Guid.Parse(hdnUserID.Value);
+                        if (rdoDoctor.Checked == true)
+                        {
+                            mstrObj.UsrID = Guid.Parse(hdnUserID.Value);
+                        }
+
+                      
                         mstrObj.InsertDoctors();
                     }
 
