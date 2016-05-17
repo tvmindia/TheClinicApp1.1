@@ -7,6 +7,7 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="../css/Masterw3.css" rel="stylesheet" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
 </head>
     <body>
 
@@ -20,19 +21,21 @@
 
 <p>    
 <label class="w3-label w3-validate">Email</label>
-<input class="w3-input" type="text" runat="server" id="txtEmail" style="width:90%" required readonly onfocus="this.removeAttribute('readonly');"/></p>
+<input class="w3-input" type="text" runat="server" id="txtEmail" style="width:90%" required="required" readonly onfocus="this.removeAttribute('readonly');"/></p>
 
 <p>
-<button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnVerificationCode" onclick="this.style.visibility='hidden';" onserverclick="btnVerificationCode_ServerClick1"> Send me verification code </button></p>
+<button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnVerificationCode" onserverclick="btnVerificationCode_ServerClick1"> Send me verification code </button></p>
 
 
 <p>
 <label class="w3-label w3-validate">Verification Code</label>
-<input class="w3-input" type="password" runat="server" id="txtVerificationCode" style="width:90%"></p>
+<input class="w3-input" type="password" runat="server" id="txtVerificationCode" style="width:90%" /></p>
 
 <p>
 <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnVerify" onserverclick="btnVerify_ServerClick" formnovalidate>Verify</button></p>
-    <asp:Label ID="lblError" runat="server" Text=""></asp:Label>
+ <p>
+    <asp:Label ID="lblError" runat="server" Text="" ForeColor="Red" Font-Bold="true"></asp:Label>
+</p>
 </form>
 
 </div>
