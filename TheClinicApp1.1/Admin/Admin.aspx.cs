@@ -16,7 +16,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-using System.Data;
+
 using System.Data.SqlClient;
 
 using TheClinicApp1._1.ClinicDAL;
@@ -327,9 +327,14 @@ namespace TheClinicApp1._1.Admin
                     DeleteAssignedRoleByUserID(UserID);
 
                     mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
-                    mstrObj.DeleteDoctorByID();
+                    mstrObj.DeleteDoctorByID(true);
 
-                    DeleteUserByUserID(UserID);
+                    if ( hdnDeleteButtonClick.Value == "True")
+                    {
+                        DeleteUserByUserID(UserID);
+                    }
+
+               
                 }
 
             }
@@ -607,6 +612,9 @@ namespace TheClinicApp1._1.Admin
         #region Delete Image Button Click
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
+            hdnDeleteButtonClick.Value = "True";
+
+
             Errorbox.Attributes.Add("style", "display:none");
 
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];

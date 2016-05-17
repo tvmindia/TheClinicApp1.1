@@ -301,15 +301,6 @@ namespace TheClinicApp1._1.Admin {
         protected global::System.Web.UI.WebControls.GridView dtgViewAllUsers;
         
         /// <summary>
-        /// hdnUserCountChanged control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnUserCountChanged;
-        
-        /// <summary>
         /// hdnUserID control.
         /// </summary>
         /// <remarks>
@@ -317,5 +308,14 @@ namespace TheClinicApp1._1.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnUserID;
+        
+        /// <summary>
+        /// hdnDeleteButtonClick control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnDeleteButtonClick;
     }
 }

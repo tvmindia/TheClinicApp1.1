@@ -764,6 +764,8 @@ var   UserID = '';
     
 
 
-    <asp:HiddenField ID="hdnUserCountChanged" runat="server" />
+    <%--<asp:HiddenField ID="hdnUserCountChanged" runat="server" />--%>
       <asp:HiddenField ID="hdnUserID" runat="server" />
+    <asp:HiddenField ID="hdnDeleteButtonClick" runat="server" />
+
 </asp:Content>

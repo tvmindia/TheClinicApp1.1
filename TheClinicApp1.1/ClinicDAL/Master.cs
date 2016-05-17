@@ -619,7 +619,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Delete Doctor By DoctorID
 
-        public void DeleteDoctorByID()
+        public void DeleteDoctorByID(bool rdoNotDoctor = false)
         {
 
 
@@ -645,17 +645,36 @@ namespace TheClinicApp1._1.ClinicDAL
                 if (Output.Value.ToString() == "")
                 {
                     //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeletionNotSuccessMessage(page);
+                    if (rdoNotDoctor == true)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.SavingFailureMessage(page);
+                    }
+                    else
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.DeletionNotSuccessMessage(page);
+                    }
+                    
 
                 }
                 else
                 {
                     //successfull
 
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeleteSuccessMessage(page);
+                    if (rdoNotDoctor == true)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                      eObj.SavedSuccessMessage(page);
+                    }
+
+                    else
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.DeleteSuccessMessage(page);
+                    }
+
+                    
 
 
                 }
