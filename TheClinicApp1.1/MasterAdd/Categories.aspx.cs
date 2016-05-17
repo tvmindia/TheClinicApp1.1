@@ -93,7 +93,22 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void Save_ServerClick(object sender, EventArgs e)
         {
-            AddNewCategory();
+            var page = HttpContext.Current.CurrentHandler as Page;
+
+            string msg = string.Empty;
+
+            if (txtCategoryName.Value != string.Empty)
+            {
+
+                AddNewCategory();
+            }
+
+            else
+            {
+                msg = "Please fill out all the fields";
+                eObj.InsertionNotSuccessMessage(page, msg);
+            }
+
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
