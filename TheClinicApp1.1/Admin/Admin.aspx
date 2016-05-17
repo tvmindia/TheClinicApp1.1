@@ -647,8 +647,9 @@ var   UserID = '';
         </div>
     </div>
 
+
     <div id="AllUsers" class="modal fade" role="dialog">
-          <div class="modal-dialog" style="height:600px">
+          <div class="modal-dialog" style="min-width:550px;">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -656,11 +657,11 @@ var   UserID = '';
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
         <h3 class="modal-title">View All Users</h3>
       </div>
-      <div class="modal-body" style="height:500px" >
+      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         
+         <div class="col-lg-12" style="height:500px">
 
-        <asp:GridView ID="dtgViewAllUsers" runat="server" AutoGenerateColumns="False" class="table" OnPreRender="dtgViewAllUsers_PreRender" DataKeyNames="UserID" >
+             <asp:GridView ID="dtgViewAllUsers" runat="server" AutoGenerateColumns="False" class="table" OnPreRender="dtgViewAllUsers_PreRender" DataKeyNames="UserID" >
                         
                         <Columns>
                            <%-- <asp:TemplateField>
@@ -746,7 +747,10 @@ var   UserID = '';
                         
                     </asp:GridView>
             <div class="Pager"></div>
-    
+
+
+           
+    </div>
     </div>
          
          
@@ -754,6 +758,10 @@ var   UserID = '';
 
   </div>
         </div>
+
+
+
+    
 
 
     <asp:HiddenField ID="hdnUserCountChanged" runat="server" />
