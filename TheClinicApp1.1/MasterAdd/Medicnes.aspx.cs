@@ -290,7 +290,8 @@ namespace TheClinicApp1._1.MasterAdd
 
             else
             {
-                msg = "Already used . Can't be deleted";
+                //msg = "Already used . Can't be deleted";
+                msg = Messages.AlreadyUsedForDeletion;
                 eObj.DeletionNotSuccessMessage(page, msg);
             }
             BindGridview();
