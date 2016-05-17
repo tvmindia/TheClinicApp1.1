@@ -144,9 +144,11 @@
     <Content Include="css\MasterRed.css" />
     <Content Include="css\Masterw3.css" />
     <Content Include="css\materialize.min.css" />
+    <Content Include="css\materialize1.min.css" />
     <Content Include="css\mui.css" />
     <Content Include="css\normalize.css" />
     <Content Include="css\normalize.min.css" />
+    <Content Include="css\style.css" />
     <Content Include="css\TheClinicApp.css" />
     <Content Include="css\uniform.default.css" />
     <Content Include="Default.aspx" />
