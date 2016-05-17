@@ -188,6 +188,9 @@ namespace TheClinicApp1._1.UIClasses
         {
             get { return "Please enter a quantity greater than 0"; }
         }
-        
+         public static string PassowrdMismatch
+         {
+             get { return "Passwords do not match ! "; }
+         }
     }
 }

@@ -11,6 +11,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
 
+using Messages = TheClinicApp1._1.UIClasses.Messages;
+
 namespace TheClinicApp1._1.Admin
 {
     public partial class AssignRoles : System.Web.UI.Page
@@ -169,7 +171,8 @@ namespace TheClinicApp1._1.Admin
 
                 if (IDUsedOrNot) //checking whether doctorid is already used ,if not used doctor is get deleted
                 {
-                    msg = "Already used . Can't be deleted";
+                    //msg = "Already used . Can't be deleted";
+                    msg = Messages.AlreadyUsedForDeletion;
                     eObj.DeletionNotSuccessMessage(page, msg);
 
                     ListItem listItem = chklstRoles.Items.FindByValue(GetRoleIDOFDoctor());

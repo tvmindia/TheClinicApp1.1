@@ -23,6 +23,8 @@ using TheClinicApp1._1.ClinicDAL;
 using System.Web.Services;
 using System.Configuration;
 using System.Reflection;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
+
 
 #endregion Included Namespaces
 
@@ -289,7 +291,8 @@ namespace TheClinicApp1._1.Admin
 
                 if (IDUsedOrNot) //checking whether doctorid is already used ,if not used doctor is get deleted
                 {
-                    msg = "Already used . Can't be deleted";
+                    //msg = "Already used . Can't be deleted";
+                    msg = Messages.AlreadyUsedForDeletion;
                     eObj.DeletionNotSuccessMessage(page, msg);
 
                 }
@@ -506,8 +509,8 @@ namespace TheClinicApp1._1.Admin
 
                 else
                 {
-                    msg = "Passwords do not match ! ";
-
+                    //msg = "Passwords do not match ! ";
+                    msg = Messages.PassowrdMismatch;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
@@ -516,7 +519,8 @@ namespace TheClinicApp1._1.Admin
 
             else
             {
-                msg = "Please fill out the mandatory fields";
+                //msg = "Please fill out the mandatory fields";
+                msg = Messages.MandatoryFields;
 
                 eObj.InsertionNotSuccessMessage(page, msg);
             }
