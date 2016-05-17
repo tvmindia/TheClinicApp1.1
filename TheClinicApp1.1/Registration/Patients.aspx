@@ -105,6 +105,9 @@
             }
             return true;
         }
+        function bindPatient(){
+            $('#<%=btnSearch.ClientID%>').click();
+        }
          
     </script>
     <!--------------------------------------------------------------------->
@@ -196,7 +199,7 @@
          <div class="grey_sec">
          <div class="search_div">
             
-         <input class="field" type="search" id="txtSearch" name="txtSearch" placeholder="Search here..." />
+         <input class="field" type="search" id="txtSearch" onblur="bindPatient();" name="txtSearch" placeholder="Search here..." />
          <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" />
          </div>
          <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClick="btnSave_Click" /></li><li><a class="new" href="#" runat="server" id="btnNew" onserverclick="btnNew_ServerClick"><span></span>New</a></li></ul>
@@ -218,7 +221,7 @@
       <div class="row field_row">  
       <div class="col-lg-8">
       <div class="row"> 
-      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required="required" pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." autofocus="autofocus" /></div>
+      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required="required" pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only."/></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
       <img id="ProfilePic" src="~/images/UploadPic1.png" style="height:142px;" runat="server"  />
