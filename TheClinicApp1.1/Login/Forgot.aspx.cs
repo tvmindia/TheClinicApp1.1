@@ -26,45 +26,54 @@ namespace TheClinicApp1._1.Login
         #region Verify Code
         protected void btnVerify_ServerClick(object sender, EventArgs e)
         {
-            userObj.Email = txtEmail.Value;
-            DataTable dtCode = userObj.GetUserVerificationCodeByEmailID();
-            int verificationCode = Convert.ToInt32(dtCode.Rows[0]["VerificationCode"]);
-            DateTime vcCreatedTime = Convert.ToDateTime(dtCode.Rows[0]["VerificatinCreatedTime"]);
-            string UserID = dtCode.Rows[0]["UserID"].ToString();
-            ;
-            DateTime CurrentTime = DateTime.Now;
-            if ((CurrentTime - vcCreatedTime) < TimeSpan.FromDays(1))
+            try
             {
-                if (verificationCode.ToString() == txtVerificationCode.Value)
+                userObj.Email = txtEmail.Value;
+                DataTable dtCode = userObj.GetUserVerificationCodeByEmailID();
+                int verificationCode = Convert.ToInt32(dtCode.Rows[0]["VerificationCode"]);
+                DateTime vcCreatedTime = Convert.ToDateTime(dtCode.Rows[0]["VerificatinCreatedTime"]);
+                string UserID = dtCode.Rows[0]["UserID"].ToString();
+                ;
+                DateTime CurrentTime = DateTime.Now;
+                if ((CurrentTime - vcCreatedTime) < TimeSpan.FromDays(1))
                 {
-                    Response.Redirect("Reset.aspx?UserID=" + UserID);
+                    if (verificationCode.ToString() == txtVerificationCode.Value)
+                    {
+                        Response.Redirect("Reset.aspx?UserID=" + UserID);
+                    }
+                    else
+                    {
+                        lblError.Text = "Verification Code is not correct";
+                    }
+
                 }
                 else
                 {
-                    lblError.Text = "Verification Code is not correct";
+                    lblError.Text = "Time expired";
                 }
-
             }
-            else
+            catch
             {
-                lblError.Text = "Time expired";
+                lblError.Text = "Failure! Enter A valid Code";
             }
+            
         }
         #endregion Verify Code
 
         #region Send Verification Code
         protected void btnVerificationCode_ServerClick1(object sender, EventArgs e)
         {
-            //----------*Add verification code*------------//
+            try
+            {
+                 //----------*Add verification code*------------//
             Random random = new Random();
             int verificationCode = random.Next(1000, 10000);
 
             userObj.verificationCode = verificationCode.ToString();
             userObj.Email = txtEmail.Value;
+            if(txtEmail.Value!="")
+            { 
             userObj.AddVerificationCode();
-
-
-
 
             //----------*Get verification code*------------//
             userObj.Email = txtEmail.Value;
@@ -75,10 +84,8 @@ namespace TheClinicApp1._1.Login
             DateTime CurrentTime = DateTime.Now;
             MailMessage Msg = new MailMessage();
 
-
             // Sender e-mail address.
             Msg.From = new MailAddress("info.thrithvam@gmail.com");
-
 
             // Recipient e-mail address.
             Msg.To.Add(txtEmail.Value);
@@ -89,8 +96,6 @@ namespace TheClinicApp1._1.Login
             Msg.Body = message;
             Msg.IsBodyHtml = true;
 
-
-
             // your remote SMTP server IP.
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.gmail.com";
@@ -99,6 +104,16 @@ namespace TheClinicApp1._1.Login
             smtp.EnableSsl = true;
             smtp.Send(Msg);
             Msg = null;
+            }
+            else
+            {
+                lblError.Text = "Enter A valid Email";
+            }
+            }
+            catch
+            {
+                
+            }
         }
         #endregion Send Verification Code
         #endregion Methods

@@ -27,7 +27,7 @@
           position:absolute;
           transition: .5s ease;
           top: 60%;
-          left: 30%;      
+          left: 33%;      
           }         
           
         @media (max-width: 768px) {
@@ -74,11 +74,11 @@
         <img src="../favicon.ico"  style="width:50px"/>        
     </div>    
     <div class="login">         
-        <div class="input-field col s12">
+        <div class="input-field">
           <input id="username" runat="server" type="text"  class="validate" style="color:white;font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif" autocomplete="off" />
           <label for="username" class="captions" id="user">User Name</label>
         </div>                
-        <div class="input-field col s12">
+        <div class="input-field">
           <input id="password" type="password" class="validate" runat="server" style="color:white;" autocomplete="off" />
           <label for="password" class="captions" id="pass">Password</label>
         </div>
