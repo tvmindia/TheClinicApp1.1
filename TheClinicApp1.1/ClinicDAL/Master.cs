@@ -1285,33 +1285,60 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Code", SqlDbType.NVarChar, 255).Value = Code;
                 cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
-                
 
-                SqlParameter Output = new SqlParameter();
-                Output.DbType = DbType.Int32;
-                Output.ParameterName = "@Status";
-                Output.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(Output);
+
+
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
+
                 cmd.ExecuteNonQuery();
 
-                if (Output.Value.ToString() == "")
+                if (Outputval == 1)
                 {
-                    //not successfull   
-
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavingFailureMessage(page);
-                    //eObj.UpdationNotSuccessMessage(page);
-
+                    eObj.SavedSuccessMessage(page);
+                    //Success
                 }
                 else
                 {
-                    //successfull
+                    if (Outputval == 2)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
 
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
-                    //eObj.UpdationSuccessMessage(page);
-
+                        //Already exists!
+                    }
                 }
+
+
+
+                //SqlParameter Output = new SqlParameter();
+                //Output.DbType = DbType.Int32;
+                //Output.ParameterName = "@Status";
+                //Output.Direction = ParameterDirection.Output;
+                //cmd.Parameters.Add(Output);
+                //cmd.ExecuteNonQuery();
+
+                //if (Output.Value.ToString() == "")
+                //{
+                //    //not successfull   
+
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    eObj.SavingFailureMessage(page);
+                //    //eObj.UpdationNotSuccessMessage(page);
+
+                //}
+                //else
+                //{
+                //    //successfull
+
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    eObj.SavedSuccessMessage(page);
+                //    //eObj.UpdationSuccessMessage(page);
+
+                //}
 
 
             }

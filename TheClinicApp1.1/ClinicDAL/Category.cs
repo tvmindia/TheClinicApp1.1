@@ -65,6 +65,12 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
+        public string UpdatedBy
+        {
+            get;
+            set;
+        }
+
         #endregion Public Properties
 
         #region Methods
@@ -83,8 +89,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[InsertCategories]";
 
-                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = Guid.NewGuid();
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID; 
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = CategoryName; 
 
@@ -133,6 +139,107 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion Add New Category
+
+        #region Update Category
+        public void UpdateCategory()
+        {
+            dbConnection dcon = null;
+
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[UpdateCategories]";
+
+                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
+
+                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
+                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = CategoryName; 
+
+                //cmd.ExecuteNonQuery();
+
+
+
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
+
+                cmd.ExecuteNonQuery();
+
+                if (Outputval == 1)
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.SavedSuccessMessage(page);
+                    //Success
+                }
+                else
+                {
+                    if (Outputval == 0)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
+
+                        //Already exists!
+                    }
+                }
+
+
+
+
+
+                //SqlParameter Output = new SqlParameter();
+                //Output.DbType = DbType.Int32;
+                //Output.ParameterName = "@Status";
+                //Output.Direction = ParameterDirection.Output;
+                //cmd.Parameters.Add(Output);
+                //cmd.ExecuteNonQuery();
+                //if (Output.Value.ToString() == "")
+                //{
+                //    //not successfull   
+
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    eObj.SavingFailureMessage(page);
+
+                //}
+                //else
+                //{
+                //    //successfull
+
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    eObj.SavedSuccessMessage(page);
+
+
+                //}
+
+
+            }
+
+            catch (Exception ex)
+            {
+
+                //throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+        }
+
+
+        #endregion Update Category
+
 
         #region Validate Category Name
         public bool ValidateCategoryName(string CheckCategory)
@@ -271,7 +378,60 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
 
-         #region View Medicines By CategoryID
+        #region View Category By CategoryID
+
+
+
+        public DataTable ViewCategoryByCategoryID()
+        {
+            SqlConnection con = null;
+            DataTable dtRoles = null;
+            try
+            {
+                dtRoles = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetCategoryDetailsByID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtRoles);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+                //throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+            return dtRoles;
+        }
+
+
+
+
+
+
+
+        #endregion View Category By CategoryID
+
+
+
+
+        #region View Medicines By CategoryID
 
 
 
