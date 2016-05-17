@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 
 using TheClinicApp1._1.ClinicDAL;
 using System.Web.Services;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 
 #endregion Included Namespcaes
 
@@ -112,8 +113,8 @@ namespace TheClinicApp1._1.MasterAdd
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
 
-            userObj.firstName = txtName.Value;
-            userObj.loginName = txtName.Value;
+            userObj.firstName = txtName.Value.TrimStart();
+            userObj.loginName = txtName.Value.TrimStart();
             userObj.lastName = string.Empty;
             userObj.isActive = true;
             userObj.ClinicID = UA.ClinicID;
@@ -124,7 +125,7 @@ namespace TheClinicApp1._1.MasterAdd
             userObj.PhoneNo = txtPhoneNumber.Value;
 
 
-            string password = SetDefaultPassword(txtName.Value);
+            string password = SetDefaultPassword(txtName.Value.TrimStart());
 
             userObj.passWord = CryptObj.Encrypt(password);
 
@@ -175,7 +176,7 @@ namespace TheClinicApp1._1.MasterAdd
         public void AddDoctorToDoctorTable()
         {
             mstrObj.ClinicID = UA.ClinicID;
-            mstrObj.DoctorName = txtName.Value;
+            mstrObj.DoctorName = txtName.Value.TrimStart();
             mstrObj.DoctorEmail = txtEmail.Value;
             mstrObj.DoctorPhone = txtPhoneNumber.Value;
 
@@ -249,7 +250,8 @@ namespace TheClinicApp1._1.MasterAdd
 
             else
             {
-                msg = "Please fill out all the fields";
+                //msg = "Please fill out all the fields";
+                msg = Messages.MandatoryFields;
                 eObj.InsertionNotSuccessMessage(page, msg);
             }
 
@@ -285,7 +287,8 @@ namespace TheClinicApp1._1.MasterAdd
 
             if (IDUsedOrNot)
             {
-                msg = "Already used . Can't be deleted";
+                //msg = "Already used . Can't be deleted";
+                msg = Messages.AlreadyUsedForDeletion;
                 eObj.DeletionNotSuccessMessage(page, msg); 
             }
 

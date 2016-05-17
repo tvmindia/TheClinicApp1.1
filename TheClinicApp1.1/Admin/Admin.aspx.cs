@@ -56,9 +56,9 @@ namespace TheClinicApp1._1.Admin
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-            userObj.firstName = txtFirstName.Value;
-            userObj.loginName = txtLoginName.Value;
-            userObj.lastName = txtLastName.Value;
+            userObj.firstName = txtFirstName.Value.TrimStart();
+            userObj.loginName = txtLoginName.Value.TrimStart();
+            userObj.lastName = txtLastName.Value.TrimStart();
 
             if (rdoActiveYes.Checked == true)
             {
@@ -212,10 +212,10 @@ namespace TheClinicApp1._1.Admin
 
         UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-        mstrObj.loginName = txtLoginName.Value;
+        mstrObj.loginName = txtLoginName.Value.TrimStart();
 
             mstrObj.ClinicID = UA.ClinicID;
-            mstrObj.DoctorName = txtFirstName.Value;
+            mstrObj.DoctorName = txtFirstName.Value.TrimStart();
             mstrObj.DoctorPhone = txtPhoneNumber.Value;
             mstrObj.DoctorEmail = txtEmail.Value;
             mstrObj.createdBy = UA.userName;

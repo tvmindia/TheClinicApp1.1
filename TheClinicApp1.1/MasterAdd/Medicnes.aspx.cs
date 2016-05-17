@@ -8,6 +8,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
 
+using Messages = TheClinicApp1._1.UIClasses.Messages;
+
 namespace TheClinicApp1._1.MasterAdd
 {
     public partial class Medicnes : System.Web.UI.Page
@@ -51,95 +53,93 @@ namespace TheClinicApp1._1.MasterAdd
             var page = HttpContext.Current.CurrentHandler as Page;
 
 
-
-
-            if (ddlCategory.SelectedItem.Text == "--Select--")
+            if (txtmedicineName.Value != string.Empty || txtCode.Value != string.Empty || txtOrderQuantity.Value != string.Empty)
             {
-                msg = "Please select a category ! ";
 
-                eObj.InsertionNotSuccessMessage(page, msg);
-            }
-
-          //  else  if (txtmedicineName.Text.Contains("$") )
-            //{
-            //    msg = "Medicine Name is not valid as it contains $";
-
-          //    eObj.InsertionNotSuccessMessage(page, msg);
-            //    //Medicine Name is not valid as it contains $ ,|
-            //}
-
-          //  else if (txtmedicineName.Text.Contains("|"))
-            //{
-            //    msg = "Medicine Name is not valid as it contains |";
-
-          //    eObj.InsertionNotSuccessMessage(page, msg);
-            //}
-            else if (ddlUnits.SelectedItem.Text == "--Select--")
-            {
-                msg = "Please select a unit ! ";
-
-                eObj.InsertionNotSuccessMessage(page, msg);
-            }
-
-
-
-            else if ((txtmedicineName.Value.Contains("$")) || (txtmedicineName.Value.Contains("|")))
-            {
-                msg = "Please enter a valid medicine name";
-                eObj.InsertionNotSuccessMessage(page, msg);
-            }
-
-            else if (txtOrderQuantity.Value == string.Empty)
-            {
-                msg = "Please enter reorder quantity";
-                eObj.InsertionNotSuccessMessage(page, msg);
-            }
-
-
-            else if (Convert.ToInt32(txtOrderQuantity.Value) <= 0)
-            {
-                msg = "Please enter a quantity greater than 0";
-
-                eObj.InsertionNotSuccessMessage(page, msg);
-            }
-
-
-
-
-            else
-            {
-                UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
-                StockObj.Name = txtmedicineName.Value;
-                StockObj.MedCode = txtCode.Value;
-                StockObj.CategoryID = ddlCategory.SelectedValue;
-                StockObj.ReOrderQty = Convert.ToInt32(txtOrderQuantity.Value);
-                StockObj.ClinicID = UA.ClinicID.ToString();
-                StockObj.CreatedBy = UA.userName;
-                //StockObj.Unit = txtUnit.Text;
-                StockObj.Unit = ddlUnits.SelectedItem.Text;
-
-                if (hdnMedID.Value == string.Empty)
+                if (ddlCategory.SelectedItem.Text == "--Select--")
                 {
-                    StockObj.InsertMedicines();
+                    //msg = "Please select a category ! ";
 
-                    hdnInsertedorNot.Value = "True";
-                    BindGridview();
+                    msg = Messages.SelectCatergory;
+                    eObj.InsertionNotSuccessMessage(page, msg);
                 }
+
+                else if (ddlUnits.SelectedItem.Text == "--Select--")
+                {
+                    //msg = "Please select a unit ! ";
+                    msg = Messages.Selectunit;
+                    eObj.InsertionNotSuccessMessage(page, msg);
+                }
+
+
+
+                else if ((txtmedicineName.Value.Contains("$")) || (txtmedicineName.Value.Contains("|")))
+                {
+                    //msg = "Please enter a valid medicine name";
+                    msg = Messages.ValidMedicineName;
+                    eObj.InsertionNotSuccessMessage(page, msg);
+                }
+
+                else if (txtOrderQuantity.Value == string.Empty)
+                {
+                    //msg = "Please enter reorder quantity";
+                    msg = Messages.ReorderQtyMandatory;
+                    eObj.InsertionNotSuccessMessage(page, msg);
+                }
+
+
+                else if (Convert.ToInt32(txtOrderQuantity.Value) <= 0)
+                {
+                    //msg = "Please enter a quantity greater than 0";
+                    msg = Messages.validReorderQty;
+                    eObj.InsertionNotSuccessMessage(page, msg);
+                }
+
+
+
 
                 else
                 {
-                    StockObj.UpdatedBy = UA.userName;
-                    StockObj.UpdateMedicines(hdnMedID.Value);
-                    BindGridview();
+                    UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+                    StockObj.Name = txtmedicineName.Value.TrimStart();
+                    StockObj.MedCode = txtCode.Value;
+                    StockObj.CategoryID = ddlCategory.SelectedValue;
+                    StockObj.ReOrderQty = Convert.ToInt32(txtOrderQuantity.Value);
+                    StockObj.ClinicID = UA.ClinicID.ToString();
+                    StockObj.CreatedBy = UA.userName;
+                    //StockObj.Unit = txtUnit.Text;
+                    StockObj.Unit = ddlUnits.SelectedItem.Text;
+
+                    if (hdnMedID.Value == string.Empty)
+                    {
+                        StockObj.InsertMedicines();
+
+                        hdnInsertedorNot.Value = "True";
+                        BindGridview();
+                    }
+
+                    else
+                    {
+                        StockObj.UpdatedBy = UA.userName;
+                        StockObj.UpdateMedicines(hdnMedID.Value);
+                        BindGridview();
+                    }
+
+
+
+                    //hdnManageGridBind.Value = "True";
                 }
 
-
-
-                //hdnManageGridBind.Value = "True";
             }
 
+            else
+            {
+                //msg = "Please fill out all the fields";
 
+                msg = Messages.MandatoryFields;
+                eObj.InsertionNotSuccessMessage(page, msg);
+            }
         }
 
         #endregion Add New Medicine
