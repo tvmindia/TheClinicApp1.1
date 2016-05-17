@@ -6,68 +6,6 @@
 <head runat="server">
     <title></title>
     <style type="text/css">
-
-/* Smartphones (portrait and landscape) ----------- 
-@media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 480px) {
- Styles 
-}
-
- Smartphones (landscape) ----------- 
-@media only screen 
-and (min-width : 321px) {
- Styles 
-}
-
- Smartphones (portrait) ----------- 
-@media only screen 
-and (max-width : 320px) {
- Styles 
-}
-
- iPads (portrait and landscape) ----------- 
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) {
- Styles 
-}
-
- iPads (landscape) ----------- 
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : landscape) {
- Styles 
-}
-
- iPads (portrait) ----------- 
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : portrait) {
- Styles 
-}
-
- Desktops and laptops ----------- 
-@media only screen 
-and (min-width : 1224px) {
- Styles 
-}
-
- Large screens ----------- 
-@media only screen 
-and (min-width : 1824px) {
- Styles 
-}
-
- iPhone 4 ----------- 
-@media
-only screen and (-webkit-min-device-pixel-ratio : 1.5),
-only screen and (min-device-pixel-ratio : 1.5) {
- Styles 
-}*/
-
         .auto-style1 {
             width: 203px;
             height: 117px;
@@ -77,26 +15,38 @@ only screen and (min-device-pixel-ratio : 1.5) {
             z-index:-1;
         }
  
-  .auto-style2 {
+         .auto-style2 {
             width: 203px;
             height: 117px;
             left:40%;
             top:70%;
             position:fixed;
             z-index:-1;
-        }
+          }
           #bt_forgot{
           position:absolute;
           transition: .5s ease;
           top: 60%;
-          left: 30%;
-         
+          left: 30%;      
+          }         
+          
+        @media (max-width: 768px) {
+           #bt_forgot {
+           font-size:60%;
+           top:85%;
            }
-          @media (max-width: 768px) {
-  #bt_forgot {
-    font-size:50%;
-    
-  }
+           #user,#pass
+           {
+           font-size:40%;
+           }
+           #logins{
+              font-size:0.875em;
+              display:block;
+              left:-20px;
+              margin-top:35px;
+           }
+           
+           
 }
     </style>
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
@@ -126,16 +76,16 @@ only screen and (min-device-pixel-ratio : 1.5) {
     <div class="login">         
         <div class="input-field col s12">
           <input id="username" runat="server" type="text"  class="validate" style="color:white;font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif" autocomplete="off" />
-          <label for="username" class="captions">User Name</label>
+          <label for="username" class="captions" id="user">User Name</label>
         </div>                
         <div class="input-field col s12">
           <input id="password" type="password" class="validate" runat="server" style="color:white;" autocomplete="off" />
-          <label for="password" class="captions">Password</label>
+          <label for="password" class="captions" id="pass">Password</label>
         </div>
        
      <div class="input-field col s12" style="text-align:right">
 
-          <button class="btn waves-effect waves-light" type="submit" name="action">Login</button>       
+          <button class="btn waves-effect waves-light" type="submit" name="action" id="logins">Login</button>       
      </div>  
  
 
