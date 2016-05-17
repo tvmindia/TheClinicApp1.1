@@ -163,7 +163,7 @@
     </script>
 
     <script src="../js/jquery-1.12.0.min.js"></script>
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <%--<link href="../css/bootstrap.min.css" rel="stylesheet" />--%>
     <script src="../js/jquery-ui.js"></script>
     <link href="../css/jquery-ui.css" rel="stylesheet" />
 
