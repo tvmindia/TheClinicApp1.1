@@ -105,7 +105,7 @@
         function CheckMedicineNameDuplication(txtmedicineName) {
 
             var name = document.getElementById('<%=txtmedicineName.ClientID %>').value;
-            name = name.replace(/\s/g, '');
+            //name = name.replace(/\s/g, '');
 
             if (name != "") {
 
@@ -151,7 +151,7 @@
         function CheckMedicineCodeDuplication(txtCode) {
 
             var name = document.getElementById('<%=txtCode.ClientID %>').value;
-            name = name.replace(/\s/g, '');
+            //name = name.replace(/\s/g, '');
 
             if (name != "") {
 

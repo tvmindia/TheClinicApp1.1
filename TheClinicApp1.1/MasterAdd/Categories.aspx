@@ -102,7 +102,7 @@
           {
 
 
-              name = name.replace(/\s/g, '');
+              //name = name.replace(/\s/g, '');
 
               PageMethods.ValidateCategoryName(name, OnSuccess, onError);
 

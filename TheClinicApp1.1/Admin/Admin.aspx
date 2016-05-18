@@ -96,7 +96,7 @@ name=name.trim();
 if(name != "")
 {
 
-            name = name.replace(/\s/g, '');
+            //name = name.replace(/\s/g, '');
 
             PageMethods.ValidateLoginName(name, OnSuccess, onError);
 

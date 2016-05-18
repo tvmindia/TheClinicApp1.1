@@ -116,17 +116,28 @@ namespace TheClinicApp1._1.Admin
             roleObj.UserID = UserID;
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
-            if (dtAssignedRoles.Rows.Count == 0)
+            //RoleID
+
+            foreach (DataRow dr in dtAssignedRoles.Rows)
             {
-                userObj.UserID = UserID;
-                userObj.DeleteUserByUserID();
+                roleObj.RoleID = Guid.Parse(dr["RoleID"].ToString());
+                DeleteAssignedRoleByUserID(UserID);
             }
 
-            else
-            {
-                msg = Messages.AlreadyUsedForDeletion;
-                eObj.DeletionNotSuccessMessage(page, msg);
-            }
+
+
+                    
+            //if (dtAssignedRoles.Rows.Count == 0)
+            //{
+            userObj.UserID = UserID;
+            userObj.DeleteUserByUserID();
+            //}
+
+            //else
+            //{
+            //    msg = Messages.AlreadyUsedForDeletion;
+            //    eObj.DeletionNotSuccessMessage(page, msg);
+            //}
         }
 
         #endregion Delete User By UserID
