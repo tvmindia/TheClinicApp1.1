@@ -186,7 +186,7 @@ namespace TheClinicApp1._1.Admin
                     DeleteAssignedRoleByUserID(UserID);
 
                     mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
-                    mstrObj.DeleteDoctorByID();
+                    mstrObj.DeleteDoctorByID(true);
 
                 }
 
