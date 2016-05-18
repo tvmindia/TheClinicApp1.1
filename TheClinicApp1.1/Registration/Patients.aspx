@@ -292,6 +292,7 @@
       </div>
       </div>
           <asp:HiddenField ID="HdnFirstInsertID" runat="server" />
+          <asp:HiddenField ID="Hdnimagetype" runat="server" />
       <div class="row field_row">  
       <div class="col-lg-4">
       <label for="marital">Marital</label>
