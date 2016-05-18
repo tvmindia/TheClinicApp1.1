@@ -46,15 +46,19 @@
         $(function () {
             $("[id*=GridViewStockin] td:first").click(function () {
 
+                //var rowCount = $("[id*=GridViewStockin] td").closest("tr").length;
+                if ($(this).text() == "") {
 
 
-                var DeletionConfirmation = ConfirmDelete();
 
-                if (DeletionConfirmation == true) {
-                    receiptID = $(this).closest('tr').find('td:eq(5)').text();
+                    var DeletionConfirmation = ConfirmDelete();
+
+                    if (DeletionConfirmation == true) {
+                        receiptID = $(this).closest('tr').find('td:eq(5)').text();
 
 
-                    window.location = "StockIn.aspx?HdrID=" + receiptID;
+                        window.location = "StockIn.aspx?HdrID=" + receiptID;
+                    }
                 }
             });
         });
@@ -105,7 +109,7 @@
             return jQuery.trim($("[id*=txtSearch]").val());
         };
         function GetMedicines(pageIndex) {
-
+           
             $.ajax({
 
                 type: "POST",
@@ -127,7 +131,7 @@
         var row;
 
         function OnSuccess(response) {
-
+         
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
             var Medicines = xml.find("Medicines");
@@ -139,54 +143,59 @@
                 $.each(Medicines, function () {
                     var medicine = $(this);
 
+                   
+                        //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
 
-                    //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
+                    //if ($(this).find("ReceiptID").text().trim() != "") {
 
-                    $("td", row).eq(0).html($('<img />')
-                       .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
-
-
-
-
-
-
-                    $("td", row).eq(1).html($(this).find("RefNo1").text());
-                    $("td", row).eq(2).html($(this).find("RefNo2").text());
-                    $("td", row).eq(3).html($(this).find("Date").text());
-
-
-                    $("td", row).eq(4).html('Details').click(function () {
-
-                        receiptID = $(this).closest('tr').find('td:eq(5)').text();
-                        window.location = "StockInDetails.aspx?receiptID=" + receiptID;
-                    }).addClass('CursorShow');
-
-                    $("td", row).eq(5).html($(this).find("ReceiptID").text());
+                        $("td", row).eq(0).html($('<img />')
+                           .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
 
 
-                    $("[id*=GridViewStockin]").append(row);
-                    row = $("[id*=GridViewStockin] tr:last-child").clone(true);
-                });
-                var pager = xml.find("Pager");
-                $(".Pager").ASPSnippets_Pager({
-                    ActiveCssClass: "current",
-                    PagerCssClass: "pager",
-                    PageIndex: parseInt(pager.find("PageIndex").text()),
-                    PageSize: parseInt(pager.find("PageSize").text()),
-                    RecordCount: parseInt(pager.find("RecordCount").text())
-                });
 
-                $(".Match").each(function () {
 
-                    var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
-                    $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
-                });
+
+                        $("td", row).eq(1).html($(this).find("RefNo1").text());
+                        $("td", row).eq(2).html($(this).find("RefNo2").text());
+                        $("td", row).eq(3).html($(this).find("Date").text());
+
+
+                        $("td", row).eq(4).html('Details').click(function () {
+
+                            receiptID = $(this).closest('tr').find('td:eq(5)').text();
+                            window.location = "StockInDetails.aspx?receiptID=" + receiptID;
+                        }).addClass('CursorShow');
+
+                        $("td", row).eq(5).html($(this).find("ReceiptID").text());
+
+
+
+                        $("[id*=GridViewStockin]").append(row);
+                        row = $("[id*=GridViewStockin] tr:last-child").clone(true);
+                  
+                    });
+                    var pager = xml.find("Pager");
+                    $(".Pager").ASPSnippets_Pager({
+                        ActiveCssClass: "current",
+                        PagerCssClass: "pager",
+                        PageIndex: parseInt(pager.find("PageIndex").text()),
+                        PageSize: parseInt(pager.find("PageSize").text()),
+                        RecordCount: parseInt(pager.find("RecordCount").text())
+                    });
+
+                    $(".Match").each(function () {
+
+                        var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+                        $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                    });
+
+                
             } else {
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                 $("td:first-child", empty_row).attr("align", "center");
-                $("td:first-child", empty_row).html("No records found for the search criteria.");
+                $("td:first-child", empty_row).html("No records found for the search criteria.").removeClass('CursorShow');
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=GridViewStockin]").append(empty_row);
             }
@@ -308,7 +317,7 @@
                                                 <asp:TemplateField HeaderText=" ">
                                                     <ItemTemplate>
                                                         <asp:Image ID="img1" runat="server" 
-                                                            OnClientClick="ConfirmDelete()" />
+                                                            />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
