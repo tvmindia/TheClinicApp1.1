@@ -135,6 +135,16 @@
                 }
 
             }
+
+
+            else {
+                if (name == "") {
+                    var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                    LnameImage.style.display = "none";
+                    var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                    errLname.style.display = "none";
+                }
+            }
         }
 
 
@@ -167,6 +177,16 @@
                 }
                 function onError(response, userContext, methodName) {
 
+                }
+            }
+
+
+            else {
+                if (name == "") {
+                    var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                    LnameImage.style.display = "none";
+                    var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                    errLname.style.display = "none";
                 }
             }
         }

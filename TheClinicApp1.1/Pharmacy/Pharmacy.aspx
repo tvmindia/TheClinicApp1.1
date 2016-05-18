@@ -328,17 +328,17 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input id="txtMedName0" type="text" placeholder="Medicine" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
+                                    <input id="txtMedName0" type="text" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
                                 <td>
-                                    <input id="txtMedQty0" type="text" placeholder="Qty" class="input" onfocus="focuscontrol(0)" onblur="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
+                                    <input id="txtMedQty0" type="text"  class="input" onfocus="focuscontrol(0)" onblur="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
                                 <td>
-                                    <input id="txtMedUnit0" class="input" readonly="true" type="text" placeholder="Unit" /></td>
+                                    <input id="txtMedUnit0" class="input" readonly="true" type="text"  /></td>
                                 <td>
-                                    <input id="txtMedDos0" type="text" placeholder="Dosage" class="input" /></td>
+                                    <input id="txtMedDos0" type="text" class="input" /></td>
                                 <td>
-                                    <input id="txtMedTime0" type="text" placeholder="Timing" class="input" /></td>
+                                    <input id="txtMedTime0" type="text"  class="input" /></td>
                                 <td>
-                                    <input id="txtMedDay0" type="text" placeholder="Days" class="input" /></td>
+                                    <input id="txtMedDay0" type="text" class="input" /></td>
                                 <td style="background: #E6E5E5">
                                     <input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" /></td>
                                 <td style="background: #E6E5E5">

@@ -186,7 +186,7 @@ namespace TheClinicApp1._1.Admin
                     DeleteAssignedRoleByUserID(UserID);
 
                     mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
-                    mstrObj.DeleteDoctorByID();
+                    mstrObj.DeleteDoctorByID(true);
 
                 }
 
@@ -246,6 +246,7 @@ namespace TheClinicApp1._1.Admin
 
         public void DeleteAssignedRoleByUserID(Guid UserID)
         {
+          
             roleObj.UserID = UserID;
             roleObj.DeleteAssignedRoleByUserID();
         }
@@ -347,6 +348,7 @@ namespace TheClinicApp1._1.Admin
 
                      if (RoleAssigned.Length > 0)
                         {
+                            roleObj.RoleID = Guid.Parse(item.Value);
                         DeleteDoctorByUserID(UserID); //Function deleted both assigned role and doctor entry if exists
                         }
                 }

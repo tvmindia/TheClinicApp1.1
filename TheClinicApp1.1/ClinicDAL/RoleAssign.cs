@@ -304,6 +304,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandText = "DeleteUserInRolesByUserID";
                 cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
 
+                cmd.Parameters.Add("@RoleID", SqlDbType.UniqueIdentifier).Value = RoleID;
+
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";

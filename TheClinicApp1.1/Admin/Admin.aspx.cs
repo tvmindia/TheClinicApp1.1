@@ -324,6 +324,7 @@ namespace TheClinicApp1._1.Admin
 
                 else
                 {
+                    roleObj.RoleID = Guid.Parse(GetRoleIDOFDoctor());
                     DeleteAssignedRoleByUserID(UserID);
 
                     mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
@@ -343,7 +344,10 @@ namespace TheClinicApp1._1.Admin
             {
                 //DeleteAssignedRoleByUserID(UserID);
 
-                DeleteUserByUserID(UserID);
+                if (hdnDeleteButtonClick.Value == "True")
+                {
+                    DeleteUserByUserID(UserID);
+                }
             }
             
         }
