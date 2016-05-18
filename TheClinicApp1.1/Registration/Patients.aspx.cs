@@ -404,9 +404,10 @@ namespace TheClinicApp1._1.Registration
                         Guid g = Guid.NewGuid();
                         PatientObj.PatientID = g;
                         HdnFirstInsertID.Value = PatientObj.PatientID.ToString();
+                        
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
-                        if (Hdnimagetype.Value!="")
+                        if (FileUpload1.HasFile)
                         { 
                         ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + g.ToString();
                         }
@@ -429,7 +430,7 @@ namespace TheClinicApp1._1.Registration
                         }
                         PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
                         PatientObj.UpdatePatientDetails();
-                        if (FileUpload1.HasFile)
+                        if (Hdnimagetype.Value != "")
                         {
                             ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + HiddenField1.Value.ToString();
                         }
@@ -453,6 +454,7 @@ namespace TheClinicApp1._1.Registration
                 lblFileCount.Text = PatientObj.FileNumber;
                 if (HiddenField1.Value == "")
                 {
+                    HiddenField1.Value = PatientObj.PatientID.ToString();
                     if ((PatientObj.Name != null) && (parsedValue != 0))
                     {
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
