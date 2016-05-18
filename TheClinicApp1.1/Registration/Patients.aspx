@@ -119,7 +119,12 @@
             var ac=null;
             ac = <%=listFilter %>;
             $( "#txtSearch" ).autocomplete({
-                source: ac
+                source: ac,
+                select: function(event, ui){
+                    $( "#txtSearch" ).val( ui.item.label );
+                    $('#<%=btnSearch.ClientID%>').click();
+                }
+            
             });
             
             $('[data-toggle="tooltip"]').tooltip();
@@ -163,7 +168,7 @@
             var PatientDetails=Patient;           
         }
 
-
+        
         
 
         </script>   
