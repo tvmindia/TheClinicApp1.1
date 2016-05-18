@@ -375,6 +375,7 @@ namespace TheClinicApp1._1.MasterAdd
 
          else
             {
+                roleObj.RoleID = Guid.Parse(GetRoleIDOFDoctor());
                 DeleteAssignedRoleByUserID(UserID);
 
                 mstrObj.DoctorID = DoctorID;
