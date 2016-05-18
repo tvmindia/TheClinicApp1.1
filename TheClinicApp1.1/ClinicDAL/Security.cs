@@ -120,8 +120,9 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 string Name = dt.Rows[0]["LoginName"].ToString();
                 string Passwd = dt.Rows[0]["Password"].ToString();
+                bool Active = Convert.ToBoolean(dt.Rows[0]["Active"]);
 
-                if (userName == Name && (CryptObj.Encrypt(password) == Passwd))
+                if (userName == Name && (CryptObj.Encrypt(password) == Passwd) && Active == true)
                 {
                     isValidUser = true;
                     userN = userName;

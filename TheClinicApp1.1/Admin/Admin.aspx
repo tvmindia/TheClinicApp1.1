@@ -10,7 +10,7 @@
     <script src="../js/jquery-1.3.2.min.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
    
-    <script src="../js/bootstrap.min.js"></script>
+    <%--<script src="../js/bootstrap.min.js"></script>--%>
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
@@ -96,7 +96,7 @@ name=name.trim();
 if(name != "")
 {
 
-            name = name.replace(/\s/g, '');
+            //name = name.replace(/\s/g, '');
 
             PageMethods.ValidateLoginName(name, OnSuccess, onError);
 

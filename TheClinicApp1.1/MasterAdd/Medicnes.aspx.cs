@@ -53,7 +53,7 @@ namespace TheClinicApp1._1.MasterAdd
             var page = HttpContext.Current.CurrentHandler as Page;
 
 
-            if (txtmedicineName.Value != string.Empty || txtCode.Value != string.Empty || txtOrderQuantity.Value != string.Empty)
+            if (txtmedicineName.Value.TrimStart() != string.Empty || txtCode.Value.TrimStart() != string.Empty || txtOrderQuantity.Value.TrimStart() != string.Empty)
             {
 
                 if (ddlCategory.SelectedItem.Text == "--Select--")

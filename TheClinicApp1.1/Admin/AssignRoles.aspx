@@ -125,7 +125,7 @@ table
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <%--<script src="../js/bootstrap.min.js"></script>--%>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
 

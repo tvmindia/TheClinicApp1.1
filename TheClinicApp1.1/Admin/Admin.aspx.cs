@@ -116,17 +116,28 @@ namespace TheClinicApp1._1.Admin
             roleObj.UserID = UserID;
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
-            if (dtAssignedRoles.Rows.Count == 0)
+            //RoleID
+
+            foreach (DataRow dr in dtAssignedRoles.Rows)
             {
-                userObj.UserID = UserID;
-                userObj.DeleteUserByUserID();
+                roleObj.RoleID = Guid.Parse(dr["RoleID"].ToString());
+                DeleteAssignedRoleByUserID(UserID);
             }
 
-            else
-            {
-                msg = Messages.AlreadyUsedForDeletion;
-                eObj.DeletionNotSuccessMessage(page, msg);
-            }
+
+
+                    
+            //if (dtAssignedRoles.Rows.Count == 0)
+            //{
+            userObj.UserID = UserID;
+            userObj.DeleteUserByUserID();
+            //}
+
+            //else
+            //{
+            //    msg = Messages.AlreadyUsedForDeletion;
+            //    eObj.DeletionNotSuccessMessage(page, msg);
+            //}
         }
 
         #endregion Delete User By UserID
@@ -499,7 +510,7 @@ namespace TheClinicApp1._1.Admin
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
-            if (txtLoginName.Value != string.Empty || txtPassword.Value != string.Empty || txtFirstName.Value != string.Empty || txtEmail.Value != string.Empty)
+            if (txtLoginName.Value.TrimStart() != string.Empty || txtPassword.Value.TrimStart() != string.Empty || txtFirstName.Value.TrimStart() != string.Empty || txtEmail.Value.TrimStart() != string.Empty)
             {
 
                 if (txtPassword.Value == txtConfirmPassword.Value)

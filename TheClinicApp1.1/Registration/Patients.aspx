@@ -120,7 +120,12 @@
             var ac=null;
             ac = <%=listFilter %>;
             $( "#txtSearch" ).autocomplete({
-                source: ac
+                source: ac,
+                select: function(event, ui){
+                    $( "#txtSearch" ).val( ui.item.label );
+                    $('#<%=btnSearch.ClientID%>').click();
+                }
+            
             });
             
             $('[data-toggle="tooltip"]').tooltip();
@@ -140,7 +145,7 @@
 
 
 
-            var rows = $('#<%=GridView1.ClientID%> tr');
+            var rows = $('#<%=GridView1.ClientID%> tr').not('thead tr');
 
             $('#txtSearchPatient').keyup(function() {
                 var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
@@ -164,7 +169,7 @@
             var PatientDetails=Patient;           
         }
 
-
+        
         
 
         </script> 
