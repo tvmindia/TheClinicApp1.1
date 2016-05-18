@@ -839,6 +839,7 @@ var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
 function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsgges) {
 
+
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -866,18 +867,16 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
         var y = parseInt(STOCKQTY);
         if (x > y || isNaN(x) || isNaN(y)) {
 
-            ErrorMessagesDisplay(lblErrorCaption, lblMsgges, Errorbox);
+            debugger;
 
-            //document.getElementById(Errorbox).style.display = "";
-            //document.getElementById(Errorbox).className = "alert alert-danger";
-            //var lblmsg = "Fields may be empty or invaild";
-            //var lblcaptn = "Confirm Please !";
-            //document.getElementById(lblErrorCaption).innerHTML =lblcaptn;
-            //document.getElementById(lblMsgges).innerHTML = lblmsg;
-         
-            //document.getElementById(lblErrorCaption).style.display = "";
-            //document.getElementById(lblMsgges).style.display = "";
-           
+            //refering from messages.js
+            var lblclass = Alertclasses.danger;
+            var lblmsg = msg.Requiredfields;
+            var lblcaptn = Caption.Confirm;
+
+            ErrorMessagesDisplay(lblErrorCaption, lblMsgges, Errorbox, lblclass, lblcaptn, lblmsg);
+
+                   
 
             return false;
             continue;
@@ -990,16 +989,12 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 
 //-----------Error Messages--------------//
 
-function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox)
+function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox,lblclass,lblcaptn,lblmsg)
 {
-   
-    document.getElementById(Errorbox).style.display = "";
-    document.getElementById(Errorbox).className = Alertclasses.danger;
+    debugger;
 
-    //refering from messages.js
-
-    var lblmsg = msg.Requiredfields;
-    var lblcaptn = Caption.Confirm;
+   document.getElementById(Errorbox).style.display = "";
+   document.getElementById(Errorbox).className = lblclass;   
     
     document.getElementById(ErrorCaption).innerHTML = lblcaptn;
     document.getElementById(lblMsgges).innerHTML = lblmsg;

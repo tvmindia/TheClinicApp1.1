@@ -287,7 +287,7 @@ namespace TheClinicApp1._1.Registration
             divDisplayNumber.Visible = false;
             lblMsgges.Text = string.Empty;
             lblErrorCaption.Text = string.Empty;
-            Errorbox.Visible = false;
+            Errorbox.Attributes.Add("display", "none");
             HiddenField1.Value = string.Empty;
         }
         #endregion ClearScreen
