@@ -328,6 +328,7 @@ namespace TheClinicApp1._1.Doctor
         #region FillPatientDetails
         protected void ImgBtnUpdate_Command1(object sender, CommandEventArgs e)
         {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "func1", "reset();", true);
             ClearButton();
             lblErrorCaption.Text = string.Empty;
             lblMsgges.Text = string.Empty;
