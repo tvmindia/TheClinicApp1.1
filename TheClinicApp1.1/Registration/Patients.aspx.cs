@@ -255,6 +255,7 @@ namespace TheClinicApp1._1.Registration
                 txtOccupation.Value = Patient[8];
                 if(Patient[9]!=string.Empty)
                 {
+                    Hdnimagetype.Value = Patient[9].Trim();
                     ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
                 }
                 else
@@ -287,7 +288,7 @@ namespace TheClinicApp1._1.Registration
             divDisplayNumber.Visible = false;
             lblMsgges.Text = string.Empty;
             lblErrorCaption.Text = string.Empty;
-            Errorbox.Visible = false;
+            Errorbox.Attributes.Add("display", "none");
             HiddenField1.Value = string.Empty;
         }
         #endregion ClearScreen
@@ -403,6 +404,7 @@ namespace TheClinicApp1._1.Registration
                         Guid g = Guid.NewGuid();
                         PatientObj.PatientID = g;
                         HdnFirstInsertID.Value = PatientObj.PatientID.ToString();
+                        
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
                         if (FileUpload1.HasFile)
@@ -428,7 +430,7 @@ namespace TheClinicApp1._1.Registration
                         }
                         PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
                         PatientObj.UpdatePatientDetails();
-                        if (FileUpload1.HasFile)
+                        if (Hdnimagetype.Value != "")
                         {
                             ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + HiddenField1.Value.ToString();
                         }
@@ -452,6 +454,7 @@ namespace TheClinicApp1._1.Registration
                 lblFileCount.Text = PatientObj.FileNumber;
                 if (HiddenField1.Value == "")
                 {
+                    HiddenField1.Value = PatientObj.PatientID.ToString();
                     if ((PatientObj.Name != null) && (parsedValue != 0))
                     {
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
@@ -518,6 +521,7 @@ namespace TheClinicApp1._1.Registration
                     string imagetype = PatientObj.ImageType;
                     if(imagetype.Trim()!=string.Empty)
                     {
+                        Hdnimagetype.Value = imagetype.Trim();
                         ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
                     }
                     else

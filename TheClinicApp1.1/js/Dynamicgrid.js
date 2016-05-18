@@ -105,7 +105,7 @@ function RemoveWarning(ControlNo) {
 
 function clickStockAdd(id) {
     iCnt = iCnt + 1;
-
+    debugger;
      //ADD new row with fields needed.
    
     $(container).append('<div id="div' + iCnt + '"><table  style="width:100%;border:0;"><tr>'
@@ -138,9 +138,9 @@ function clickStockAdd(id) {
 }
 
 function clickAdd(id) {
-   
+    debugger;
     iCnt = iCnt + 1;
-
+   
     // ADD new row with fields needed.
     $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;border:0;">'
              + ' <td ><input id="txtMedName' + iCnt + '" type="text" class="input"  onblur="BindMedunitbyMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
@@ -189,12 +189,13 @@ function clickdelete(id) {
     }
 
 
-    if (ExistingRowCount >= 1)
+    if (ExistingRowCount > 1)
     {
-     
+        var status=0;
+        debugger;
         if (id == iCnt && id==ExistingRowCount)
         {
-          
+          debugger;
             $('#btAdd' + (iCnt - 1) + '').css('visibility', 'visible')
             last = id - 1;
             $('#btRemove' + id).closest("div").remove();
@@ -205,15 +206,18 @@ function clickdelete(id) {
             {
                 document.getElementById(CurrentRowCount).value = ExistingRowCount;
             }
+
+
+             status = 1;
         }
 //***********************************************************************************
 
-        if (id == iCnt) {
-          
+        if ( id == iCnt && status!=1 ) {
+            debugger;
             var loc = id;
             //find the id before this control
             while (id > 0) {
-                var myElem = document.getElementById('div' + (id - 1) + '')
+                var myElem = document.getElementById('div' + (id - 1) + '') 
                 if (myElem != null) {
                     $('#btAdd' + (id - 1) + '').css('visibility', 'visible')
                     last = id - 1;
@@ -241,7 +245,7 @@ function clickdelete(id) {
      
 
         else if (last == id) {
-          
+          debugger;
             var loc = id;
             //find the id before this control
             while (id > 0) {
@@ -253,6 +257,7 @@ function clickdelete(id) {
 
                 }
                 else {
+debugger;
                     id--
                 }
             }
@@ -267,20 +272,24 @@ function clickdelete(id) {
         }
 
 
-        else {
-          
+        else if ( status!=1) {
+          debugger;
             $('#btRemove' + id).closest("div").remove();
             // iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
             if (CurrentRowCount != null && CurrentRowCount != '') {
                 document.getElementById(CurrentRowCount).value = ExistingRowCount;
             }
+            else
+            {
+                //do nothing
+            }
         }
     }
 
     else
     {
-     
+     debugger;
         $('#btAdd').css('visibility', 'visible')
         $('#btRemove' + id).closest("div").remove();
         ExistingRowCount = ExistingRowCount - 1;
@@ -839,6 +848,7 @@ var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
 function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsgges) {
 
+
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -866,18 +876,16 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
         var y = parseInt(STOCKQTY);
         if (x > y || isNaN(x) || isNaN(y)) {
 
-            ErrorMessagesDisplay(lblErrorCaption, lblMsgges, Errorbox);
+            debugger;
 
-            //document.getElementById(Errorbox).style.display = "";
-            //document.getElementById(Errorbox).className = "alert alert-danger";
-            //var lblmsg = "Fields may be empty or invaild";
-            //var lblcaptn = "Confirm Please !";
-            //document.getElementById(lblErrorCaption).innerHTML =lblcaptn;
-            //document.getElementById(lblMsgges).innerHTML = lblmsg;
-         
-            //document.getElementById(lblErrorCaption).style.display = "";
-            //document.getElementById(lblMsgges).style.display = "";
-           
+            //refering from messages.js
+            var lblclass = Alertclasses.danger;
+            var lblmsg = msg.Requiredfields;
+            var lblcaptn = Caption.Confirm;
+
+            ErrorMessagesDisplay(lblErrorCaption, lblMsgges, Errorbox, lblclass, lblcaptn, lblmsg);
+
+                   
 
             return false;
             continue;
@@ -990,16 +998,12 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 
 //-----------Error Messages--------------//
 
-function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox)
+function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox,lblclass,lblcaptn,lblmsg)
 {
-   
-    document.getElementById(Errorbox).style.display = "";
-    document.getElementById(Errorbox).className = Alertclasses.danger;
+    debugger;
 
-    //refering from messages.js
-
-    var lblmsg = msg.Requiredfields;
-    var lblcaptn = Caption.Confirm;
+   document.getElementById(Errorbox).style.display = "";
+   document.getElementById(Errorbox).className = lblclass;   
     
     document.getElementById(ErrorCaption).innerHTML = lblcaptn;
     document.getElementById(lblMsgges).innerHTML = lblmsg;

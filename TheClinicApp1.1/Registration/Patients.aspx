@@ -71,7 +71,8 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
-    
+    <script src="../js/Messages.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
     <!---   Script for fileupload preview & FileType Checking  Created By:Thomson Kattingal --->    
     <script type="text/javascript">
         function showpreview(input) 
@@ -171,7 +172,34 @@
         
         
 
-        </script>   
+        </script> 
+    <script>
+
+        function validation()
+        {
+            debugger;
+          
+           
+            if( ($('#<%=txtName.ClientID%>').val()=="")||  ($('#<%=txtAge.ClientID%>').val()=="") )
+            {
+                debugger;
+
+                var lblclass = Alertclasses.danger;
+                var lblmsg = msg.Requiredfields;
+                var lblcaptn = Caption.Confirm;
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
+         
+    </script>  
     <!------------------------------------------------------------------------------>  
     <!---------------------------------------------------------------------->
     <!------------------------------------->
@@ -213,7 +241,7 @@
          <input class="field" type="search" id="txtSearch" onblur="bindPatient();" name="txtSearch" placeholder="Search here..." />
          <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" />
          </div>
-         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClick="btnSave_Click" /></li><li><a class="new" href="#" runat="server" id="btnNew" onserverclick="btnNew_ServerClick"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClientClick="return validation();" OnClick="btnSave_Click" /></li><li><a class="new" href="#" runat="server" id="btnNew" onserverclick="btnNew_ServerClick"><span></span>New</a></li></ul>
          </div>        
          <div class="right_form">  
                     
@@ -232,7 +260,7 @@
       <div class="row field_row">  
       <div class="col-lg-8">
       <div class="row"> 
-      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required="required" pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only."/></div>
+      <div class="col-lg-8 margin_bottom"><label for="name">Name</label><input id="txtName" runat="server" type="text" name="name"  pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only."/></div>
       <div class="col-lg-4 upload_photo_col">
       <div class="margin_bottom upload_photo">
       <img id="ProfilePic" src="~/images/UploadPic1.png" style="height:142px;" runat="server"  />
@@ -245,7 +273,7 @@
       </div>
       <div class="col-lg-8"><label for="sex">Sex<asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" /><asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" /></label>
       </div>
-      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" min="1" pattern="\d*" required="required" title="⚠ The Age is required and entry should be Numbers no Negative Values Expected." /></div>
+      <div class="col-lg-8"><label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" min="1" pattern="\d*" title="⚠ The Age is required and entry should be Numbers no Negative Values Expected." /></div>
       </div>
       </div>            
       </div>
@@ -264,6 +292,7 @@
       </div>
       </div>
           <asp:HiddenField ID="HdnFirstInsertID" runat="server" />
+          <asp:HiddenField ID="Hdnimagetype" runat="server" />
       <div class="row field_row">  
       <div class="col-lg-4">
       <label for="marital">Marital</label>
