@@ -320,7 +320,7 @@ namespace TheClinicApp1._1.MasterAdd
 
             var page = HttpContext.Current.CurrentHandler as Page;
 
-            if (txtName.Value != string.Empty || txtEmail.Value != string.Empty || txtPhoneNumber.Value != string.Empty)
+            if (txtName.Value.TrimStart() != string.Empty || txtEmail.Value.TrimStart() != string.Empty || txtPhoneNumber.Value.TrimStart() != string.Empty)
             {
                 AddUserToUserTable();
                 AddDoctorToDoctorTable();

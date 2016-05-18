@@ -510,7 +510,7 @@ namespace TheClinicApp1._1.Admin
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
-            if (txtLoginName.Value != string.Empty || txtPassword.Value != string.Empty || txtFirstName.Value != string.Empty || txtEmail.Value != string.Empty)
+            if (txtLoginName.Value.TrimStart() != string.Empty || txtPassword.Value.TrimStart() != string.Empty || txtFirstName.Value.TrimStart() != string.Empty || txtEmail.Value.TrimStart() != string.Empty)
             {
 
                 if (txtPassword.Value == txtConfirmPassword.Value)

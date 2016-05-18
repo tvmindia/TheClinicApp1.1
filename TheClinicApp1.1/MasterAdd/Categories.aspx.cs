@@ -131,7 +131,7 @@ namespace TheClinicApp1._1.MasterAdd
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
 
-            if (txtCategoryName.Value != string.Empty)
+            if (txtCategoryName.Value.TrimStart() != string.Empty)
             {
 
                 if (hdnCategoryId.Value != string.Empty)

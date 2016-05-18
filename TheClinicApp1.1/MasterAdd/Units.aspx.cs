@@ -55,7 +55,7 @@ namespace TheClinicApp1._1.MasterAdd
 
             string msg = string.Empty;
 
-            if (txtDescription.Value != string.Empty)
+            if (txtDescription.Value.TrimStart() != string.Empty)
             {
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
