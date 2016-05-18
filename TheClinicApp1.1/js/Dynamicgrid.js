@@ -174,7 +174,7 @@ var Removecount = 0;
 
 
 function clickdelete(id) {
-    debugger;
+  
     
     RemovedIDs += document.getElementById('hdnDetailID' + id).value + ',';
 
@@ -191,10 +191,10 @@ function clickdelete(id) {
 
     if (ExistingRowCount >= 1)
     {
-        debugger;
+     
         if (id == iCnt && id==ExistingRowCount)
         {
-            debugger;
+          
             $('#btAdd' + (iCnt - 1) + '').css('visibility', 'visible')
             last = id - 1;
             $('#btRemove' + id).closest("div").remove();
@@ -209,7 +209,7 @@ function clickdelete(id) {
 //***********************************************************************************
 
         if (id == iCnt) {
-            debugger;
+          
             var loc = id;
             //find the id before this control
             while (id > 0) {
@@ -241,7 +241,7 @@ function clickdelete(id) {
      
 
         else if (last == id) {
-            debugger;
+          
             var loc = id;
             //find the id before this control
             while (id > 0) {
@@ -268,7 +268,7 @@ function clickdelete(id) {
 
 
         else {
-            debugger;
+          
             $('#btRemove' + id).closest("div").remove();
             // iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
@@ -280,7 +280,7 @@ function clickdelete(id) {
 
     else
     {
-        debugger;
+     
         $('#btAdd').css('visibility', 'visible')
         $('#btRemove' + id).closest("div").remove();
         ExistingRowCount = ExistingRowCount - 1;
@@ -697,7 +697,7 @@ function RefillTextboxesWithXmlData(hdnXmlData) {
 
 function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
-   debugger;
+ 
     //var XmlDataFromHF = document.getElementById('<%=hdnXmlData.ClientID%>').value;
 
     var XmlDataFromHF = document.getElementById(hdnXmlData).value;
@@ -781,7 +781,7 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
 function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
 
-    debugger;   
+ 
 
     var XmlDataFromHF = document.getElementById(hdnXmlData).value;
     var xmlDoc = $.parseXML(XmlDataFromHF);
@@ -793,7 +793,7 @@ function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
       
 
         $.each(Medicines, function () {
-            debugger;
+       
 
             if (i > 0) {
                 clickAdd(i);
@@ -850,9 +850,7 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
 
     for (var k = 0; k <= topId; k++)
     {
-        debugger;
-
-            
+      
         if (document.getElementById('txtMedName' + k) == null)
         {
             continue;
@@ -903,7 +901,7 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
 }
 
 function RemoveWarningPharm(ControlNo) {
-    debugger;
+ 
 
     //--------------* To remove warning msg from textbox if the medicine is not out of stock , and is called onfocus event of quantity textbox *-------------------//
     if ((document.getElementById('txtMedQty' + ControlNo).value) != 'Sorry! Out Of stock') {
@@ -918,7 +916,7 @@ function RemoveWarningPharm(ControlNo) {
 
 function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 {
-    debugger;
+ 
     var Qty1
     if (PageCalledFrom != 'doctor page')
     {
@@ -929,17 +927,17 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
             {
                 var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
 
-                debugger;
+              
                 PageMethods.MedDetails(MedicineName, OnSuccess, onError);
-                debugger;
+              
                 function OnSuccess(response, userContext, methodName)
                 {
-                    debugger;
+                   
                     if (ControlNo >= 0)
                     {
                         var MedicineDetails = new Array();
                         MedicineDetails = response.split('|');
-                        debugger;
+                      
                         Qty1 = MedicineDetails[1]; //  setting existing stock quantity using page method
 
                         if (isNaN(Qty1) == false) {
@@ -987,33 +985,6 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
     }
 
 
-
-    //else {
-    //    if (PageCalledFrom == 'doctor page')//doctor page
-    //    {
-    //          debugger;
-
-    //        var InputQty = document.getElementById('txtMedQty' + ControlNo).value;
-
-    //        if (document.getElementById('txtMedQty' + ControlNo).value != "") {
-
-    //            InputQty = Number(document.getElementById('txtMedQty' + ControlNo).value);
-
-    //            if (InputQty <= 0) {
-    //                $("#txtMedQty" + ControlNo).addClass("warning");
-    //                $("#txtMedQty" + ControlNo).attr('type', 'text');
-    //                $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
-
-    //                if (InputQty <= 0)
-    //                    $("#txtMedQty" + ControlNo).val('Must be > 0');
-
-
-    //            }
-    //        }
-    //    }
-    //}
-
-
 }
 
 
@@ -1021,10 +992,11 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 
 function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox)
 {
-    debugger;
-
+   
     document.getElementById(Errorbox).style.display = "";
     document.getElementById(Errorbox).className = Alertclasses.danger;
+
+    //refering from messages.js
 
     var lblmsg = msg.Requiredfields;
     var lblcaptn = Caption.Confirm;
@@ -1032,8 +1004,6 @@ function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox)
     document.getElementById(ErrorCaption).innerHTML = lblcaptn;
     document.getElementById(lblMsgges).innerHTML = lblmsg;
 
-   // document.getElementById(lblErrorCaption).style.display = "";
- //   document.getElementById(lblMsgges).style.display = "";
 
 
 }
