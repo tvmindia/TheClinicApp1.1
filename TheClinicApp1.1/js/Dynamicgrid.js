@@ -174,7 +174,7 @@ var Removecount = 0;
 
 
 function clickdelete(id) {
-   
+    debugger;
     
     RemovedIDs += document.getElementById('hdnDetailID' + id).value + ',';
 
@@ -189,11 +189,12 @@ function clickdelete(id) {
     }
 
 
-    if (ExistingRowCount > 1)
+    if (ExistingRowCount >= 1)
     {
-         
+        debugger;
         if (id == iCnt && id==ExistingRowCount)
         {
+            debugger;
             $('#btAdd' + (iCnt - 1) + '').css('visibility', 'visible')
             last = id - 1;
             $('#btRemove' + id).closest("div").remove();
@@ -208,6 +209,7 @@ function clickdelete(id) {
 //***********************************************************************************
 
         if (id == iCnt) {
+            debugger;
             var loc = id;
             //find the id before this control
             while (id > 0) {
@@ -239,6 +241,7 @@ function clickdelete(id) {
      
 
         else if (last == id) {
+            debugger;
             var loc = id;
             //find the id before this control
             while (id > 0) {
@@ -265,6 +268,7 @@ function clickdelete(id) {
 
 
         else {
+            debugger;
             $('#btRemove' + id).closest("div").remove();
             // iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
@@ -276,6 +280,7 @@ function clickdelete(id) {
 
     else
     {
+        debugger;
         $('#btAdd').css('visibility', 'visible')
         $('#btRemove' + id).closest("div").remove();
         ExistingRowCount = ExistingRowCount - 1;
