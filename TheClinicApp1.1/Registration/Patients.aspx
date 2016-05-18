@@ -139,15 +139,21 @@
 
 
 
-            var $rows = $('#<%=GridView1.ClientID%> tr');
+            var rows = $('#<%=GridView1.ClientID%> tr');
+
             $('#txtSearchPatient').keyup(function() {
-                var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-                reg = RegExp(val, 'i'),
-                 text; 
-                $rows.show().filter(function() {
-                    text = $(this).text().replace(/\s+/g, ' ');
-                    return !reg.test(text);
-                }).hide();
+                var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
+
+                rows.hide().filter(function() {
+                    var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                    var matchesSearch = true;
+                    $(val).each(function(index, value) {
+                        debugger;
+                        matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
+                    });
+                    return matchesSearch;
+                }).show();
+           
             });
 
         }); 
@@ -286,18 +292,18 @@
       <button type="button" class="close" data-dismiss="modal">&times;</button>            
       <h3 class="modal-title">All Registration</h3>       
       </div>
-        <div class="search_div">
+        <%--<div class="search_div">
          <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchPatient" />
          <input class="button" type="button" value="Search" />           
-       </div>    
+       </div> --%>   
        <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
            <div class="col-lg-12" style="height:480px;"> 
-          <div class="col-lg-12" style="height:10px">
-              <%--<div class="search_div">
-              <input class="field" type="text" placeholder="Search with Name.." id="txtSearchPatient" />
-                  <input class="button" type="button" value="Search" />
-                  </div>--%>
+          <div class="col-lg-12" style="height:40px">
+              <div class="search_div">
+              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchPatient" />
+                  <input class="button3" type="button" value="Search" />
+                  </div>
           </div>
          <div class="col-lg-12" style="height:400px;"> 
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal" >
@@ -452,12 +458,44 @@
     color: #000;
     font-size: 14px;
     font-family: 'caviardreams-regular';
-    width: 322px;
+    width: 525px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
 }
+.search_div input.button3 {
+    position: absolute;
+    top: 0;
+    left: 425px;
+    bottom: 0;
+    margin: auto;
+    background: #1d49b2;
+    color: #fff;
+    font-family: 'caviardreams-regular';
+    height: 34px;
+    padding: 0;
+    text-align: center;
+    line-height: 34px;
+    font-size: 14px;
+    border: 0;
+    width: 98px;
+    -webkit-border-top-right-radius: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -moz-border-radius-topright: 20px;
+    -moz-border-radius-bottomright: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
 
+@media (max-width:1168px)
+{
+    .search_div input.field1 {
+    width: 448px;
+    }
+    .search_div input.button3 {
+        left: 348px;
+    }
+}
 </style>
    <!----------------------------------------------------------------------------------------> 
    <!------------------------------------->
