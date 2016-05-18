@@ -255,6 +255,7 @@ namespace TheClinicApp1._1.Registration
                 txtOccupation.Value = Patient[8];
                 if(Patient[9]!=string.Empty)
                 {
+                    Hdnimagetype.Value = Patient[9].Trim();
                     ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
                 }
                 else
@@ -405,7 +406,7 @@ namespace TheClinicApp1._1.Registration
                         HdnFirstInsertID.Value = PatientObj.PatientID.ToString();
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
-                        if (FileUpload1.HasFile)
+                        if (Hdnimagetype.Value!="")
                         { 
                         ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + g.ToString();
                         }
@@ -518,6 +519,7 @@ namespace TheClinicApp1._1.Registration
                     string imagetype = PatientObj.ImageType;
                     if(imagetype.Trim()!=string.Empty)
                     {
+                        Hdnimagetype.Value = imagetype.Trim();
                         ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
                     }
                     else
