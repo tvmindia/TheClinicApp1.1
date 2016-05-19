@@ -321,7 +321,7 @@
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          <div class="col-lg-12" style="height:500px">
 
-             <asp:GridView ID="dtgViewAllUnits" runat="server" AutoGenerateColumns="False"   DataKeyNames="UnitID" OnPreRender="dtgViewAllUnits_PreRender">
+             <asp:GridView ID="dtgViewAllUnits" runat="server" AutoGenerateColumns="False"   DataKeyNames="UnitID" OnPreRender="dtgViewAllUnits_PreRender" class="table">
                         
                         <Columns>
                           
