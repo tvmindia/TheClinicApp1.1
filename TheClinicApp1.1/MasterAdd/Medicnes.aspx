@@ -57,7 +57,33 @@
     <script src="../js/DeletionConfirmation.js"></script>
 
       <script src="../js/jquery.tablePagination.0.1.js"></script>
+
+    <script src="../js/Dynamicgrid.js"></script>
+
+    <script src="../js/Messages.js"></script>
     <script>
+
+
+        function Validation() {
+            debugger;
+            if (($('#<%=txtmedicineName.ClientID%>').val().trim() == "") || ($('#<%=txtCode.ClientID%>').val().trim() == "") || ($('#<%=txtOrderQuantity.ClientID%>').val().trim() == "")) {
+
+
+                var lblclass = Alertclasses.danger;
+                var lblmsg = msg.Requiredfields;
+                var lblcaptn = Caption.Confirm;
+
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        }
+
+
 
      
     $(document).ready(function () {
@@ -280,7 +306,7 @@
                                 <ul class="top_right_links">
                                     <li>
                                         <%--<a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick"><span></span>Save</a>--%>
-                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" />
+                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="return Validation();" />
 
                                     </li>
                                     <li><a class="new"  href="Medicnes.aspx"><span></span>New</a></li>
@@ -323,7 +349,7 @@
                                 <div class="row field_row">  
       <div class="col-lg-8">
      
-              <label for="name">Medicine Name</label><input id="txtmedicineName" runat="server" type="text" name="name" required onchange="CheckMedicineNameDuplication(this)"  />
+              <label for="name">Medicine Name</label><input id="txtmedicineName" runat="server" type="text" name="name"  onchange="CheckMedicineNameDuplication(this)"  />
            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Medicne name is Available" ImageUrl="~/Images/newfff.png" style="display:none" />
 
 
@@ -336,7 +362,7 @@
 <div class="row field_row"> 
 
       <div class="col-lg-8">
-          <label for="name">Medicine Code </label><input id="txtCode" runat="server" type="text" name="name" onchange="CheckMedicineCodeDuplication(this)" required  />
+          <label for="name">Medicine Code </label><input id="txtCode" runat="server" type="text" name="name" onchange="CheckMedicineCodeDuplication(this)"   />
 
 
           <asp:Image ID="imgCodeAvailable" runat="server" ToolTip="Medicne code is Available" ImageUrl="~/Images/newfff.png"  style="display:none"/>
@@ -407,7 +433,7 @@
      <div class="col-lg-8">
 
          <label for="name"> Reorder Quantity</label>
-         <input id="txtOrderQuantity" runat="server" value="1" type="number" name="age" min="1" pattern="\d*" required="required" title="⚠ Should be greater than 0" />
+         <input id="txtOrderQuantity" runat="server" value="1" type="number" name="age" min="1" pattern="\d*"  title="⚠ Should be greater than 0" />
         
          </div>
 

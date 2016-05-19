@@ -168,7 +168,7 @@
 
                     $("td", row).eq(5).html('Details').click(function () {
 
-                        issueID = $(this).closest('tr').find('td:eq(5)').text();
+                        issueID = $(this).closest('tr').find('td:eq(6)').text();
                         window.location = "StockOutDetails.aspx?issueID=" + issueID;
                     }).addClass('CursorShow');
 

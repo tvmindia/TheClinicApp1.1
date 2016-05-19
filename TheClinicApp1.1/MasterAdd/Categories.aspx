@@ -59,11 +59,45 @@
 
     
     <script src="../js/jquery.tablePagination.0.1.js"></script>
-   
-
-
+    <script src="../js/Dynamicgrid.js"></script>
+    
+    <script src="../js/Messages.js"></script>
 
     <script>
+
+
+
+
+        function Validation() {
+            debugger;
+            if (($('#<%=txtCategoryName.ClientID%>').val().trim() == "") ) {
+
+
+                var lblclass = Alertclasses.danger;
+                var lblmsg = msg.Requiredfields;
+                var lblcaptn = Caption.Confirm;
+
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
       $(document).ready(function () {
          
           //images that represents medicine name duplication hide and show
@@ -221,7 +255,7 @@
                                 <ul class="top_right_links">
                                     <li>
                                         <%--<a class="save" id="Save" runat="server" onserverclick="Save_ServerClick"><span></span>Save</a>--%>
-                                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" />
+                                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="return Validation(); "  />
                                     </li>
                                     <li><a class="new" href="Categories.aspx"><span></span>New</a></li>
                                 </ul>
@@ -269,7 +303,7 @@
                                      
                                     
       <div class="col-lg-8">
-      <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" onchange="CheckCategoryNameDuplication(this)"  required />
+      <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" onchange="CheckCategoryNameDuplication(this)"   />
        <asp:Image ID="imgWebLnames" runat="server" ToolTip="Category name is Available" ImageUrl="~/Images/newfff.png" style="display:none" />
 
 

@@ -54,7 +54,8 @@
     <script src="../js/DeletionConfirmation.js"></script>
   
     <script src="../js/jquery.tablePagination.0.1.js"></script>
-
+    <script src="../js/Dynamicgrid.js"></script>
+    <script src="../js/Messages.js"></script>
 
      <script>
       $(document).ready(function () {
@@ -80,6 +81,31 @@
           $('[data-toggle="tooltip"]').tooltip();
 
       });
+
+
+         function Validation()
+         {
+             debugger;
+             if ( ($('#<%=txtName.ClientID%>').val().trim() == "") || ($('#<%=txtPhoneNumber.ClientID%>').val().trim() == "") || ($('#<%=txtEmail.ClientID%>').val().trim() == ""))
+             {
+    
+            
+             var lblclass = Alertclasses.danger;
+             var lblmsg = msg.Requiredfields;
+             var lblcaptn = Caption.Confirm;
+
+             ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+             return false;
+             }
+             else
+             {
+                return true;
+             }
+
+         }
+
+
 
          //---------------* Function to check  Unit duplication *--------------//
 
@@ -182,7 +208,7 @@
                                 <ul class="top_right_links">
                                     <li>
                                         <%--<a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick"><span></span>Save</a>--%>
-                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click"  />
+                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="return Validation();"  />
 
                                     </li>
                                     <li><a class="new"  href="AddDoctor.aspx"><span></span>New</a></li>
@@ -224,7 +250,7 @@
                                 <div class="row field_row">  
       <div class="col-lg-8">
      
-              <label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" required  />
+              <label for="name">Name</label><input id="txtName" runat="server" type="text" name="name"   />
            <%--<asp:Image ID="imgWebLnames" runat="server" ToolTip="Doctor name is Available" ImageUrl="~/Images/newfff.png"  />
 
 
@@ -237,7 +263,7 @@
 
 <div class="row field_row">  
       <div class="col-lg-8">
-         <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" name="name"  pattern="^[0-9+-]*$"  required />
+         <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" name="name"  pattern="^[0-9+-]*$"   />
 
       </div>
 
@@ -245,7 +271,7 @@
 
                                     <div class="row field_row">  
       <div class="col-lg-8">
-           <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name"  pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"  required />
+           <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name"  pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"   />
           </div>
                                         </div>
 

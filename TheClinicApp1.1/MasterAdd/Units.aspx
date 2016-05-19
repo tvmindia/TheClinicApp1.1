@@ -54,8 +54,35 @@
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
     <script src="../js/jquery.tablePagination.0.1.js"></script>
+
+    <script src="../js/Dynamicgrid.js"></script>
+    <script src="../js/Messages.js"></script>
   
      <script>
+
+
+         function Validation() {
+             debugger;
+             if (($('#<%=txtDescription.ClientID%>').val().trim() == "")) {
+
+
+                 var lblclass = Alertclasses.danger;
+                 var lblmsg = msg.Requiredfields;
+                 var lblcaptn = Caption.Confirm;
+
+                 ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                 return false;
+             }
+             else {
+                 return true;
+             }
+
+         }
+
+
+
+
       $(document).ready(function () {
          
           <%--var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
@@ -198,7 +225,7 @@
                                 <ul class="top_right_links">
                                     <li>
                                         <%--<a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick"><span></span>Save</a>--%>
-                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btSave_ServerClick" />
+                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btSave_ServerClick"  OnClientClick="return Validation(); " />
 
                                     </li>
                                     <li><a class="new"  href="Units.aspx"><span></span>New</a></li>
@@ -240,7 +267,7 @@
                                 <div class="row field_row">  
       <div class="col-lg-8">
      
-              <label for="name">Unit</label><input id="txtDescription" runat="server" type="text" name="name" required onchange="CheckUnitDuplication();"  />
+              <label for="name">Unit</label><input id="txtDescription" runat="server" type="text" name="name"  onchange="CheckUnitDuplication();"  />
            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Desciption is Available" ImageUrl="~/Images/newfff.png" style="display:none" />
 
 
