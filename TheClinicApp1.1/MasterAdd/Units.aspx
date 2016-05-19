@@ -15,7 +15,13 @@
      
     }
 
+     /*.modal table td{
+        width:auto;
+        color:gray;
+     }*/
 
+
+    
 
 .button1{
         background: url("../images/save.png") no-repeat 0 center;
@@ -321,22 +327,22 @@
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          <div class="col-lg-12" style="height:500px">
 
-             <asp:GridView ID="dtgViewAllUnits" runat="server" AutoGenerateColumns="False"   DataKeyNames="UnitID" OnPreRender="dtgViewAllUnits_PreRender" class="table">
+             <asp:GridView ID="dtgViewAllUnits" runat="server" AutoGenerateColumns="False"   DataKeyNames="UnitID" OnPreRender="dtgViewAllUnits_PreRender" CssClass="table" >
                         
                         <Columns>
                           
-                            <asp:TemplateField>
+                            <asp:TemplateField ItemStyle-Width="20%"  >
                                     <ItemTemplate>
                                         
-                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment"  formnovalidate OnClick="ImgBtnUpdate_Click"  />
+                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment"  formnovalidate OnClick="ImgBtnUpdate_Click"   />
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
 
 
-                       <asp:TemplateField HeaderText="">
+                       <asp:TemplateField HeaderText="" ItemStyle-Width="20%" >
              <ItemTemplate>
-              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate/>
+              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click"  formnovalidate/>
                </ItemTemplate>
                 </asp:TemplateField>
 
