@@ -50,7 +50,13 @@ namespace TheClinicApp1._1.Stock
             //dummy.Columns.Add("IssueID");
 
             dummy.Columns.Add("Date");
+
+            dummy.Columns.Add("PrescID");
+
             dummy.Columns.Add("Details");
+
+           
+
             dummy.Columns.Add("IssueID");
 
             dummy.Rows.Add();
