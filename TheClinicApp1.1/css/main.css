@@ -359,10 +359,10 @@ label {
 .upload .fileinput-upload-button {display: none;}
 
 
-input {display: block; padding: 5px; width: 100%; border: 1px solid #dbdbdb; height: 41px; font-family:'roboto-light'; font-weight: bold; font-size: 14px; 
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
+input {display: block; padding: 5px; width: 100%; border: 1px solid #dbdbdb; height: 31px; font-family:'roboto-light'; font-weight: bold; font-size: 14px; 
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
 }
 
 input[type=image]{
@@ -609,22 +609,22 @@ border-radius: 0;
 }
 
 #accordion label { display: block; font-size: 14px; line-height: 14px; font-family:'raleway-semibold'; color: #666666; font-weight: 500; margin: 0 0 10px;}
-#accordion input {display: block; padding: 5px; width: 100%; border: 1px solid #dbdbdb; height: 41px; font-family:'roboto-light'; font-weight: bold; font-size: 14px; 
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
+#accordion input {display: block; padding: 5px; width: 100%; border: 1px solid #dbdbdb; height: 31px; font-family:'roboto-light'; font-weight: bold; font-size: 14px; 
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
 }
 
-#accordion textarea {display: block; padding: 5px; width: 100%; border: 1px solid #dbdbdb; height: 31px; font-family:'roboto-light'; font-weight: bold; font-size: 14px; height: 90px;
+#accordion textarea {display: block; padding: 5px; width: 100%; border: 1px solid #dbdbdb; height: 21px; font-family:'roboto-light'; font-weight: bold; font-size: 14px; height: 90px;
 -webkit-border-radius: 3px;
 -moz-border-radius: 3px;
-border-radius: 3px;
+border-radius: 5px;
 }
 
 #accordion #customize-spinner {width: 100%; float: left; border: 1px solid #dbdbdb; background: #fff; position: relative;
 -webkit-border-radius: 3px;
 -moz-border-radius: 3px;
-border-radius: 3px;
+border-radius: 5px;
 }
 
 #accordion #customize-spinner.height {width: 50%; float: left; border: 1px solid #dbdbdb; background: #fff; position: relative;
@@ -670,7 +670,7 @@ border-bottom-right-radius: 0;
 
 #accordion #customize-spinner.height:nth-child(2):after {   content: "ft";}
 
-#accordion #customize-spinner input {border: 0; width: 100%; outline: 0; height: 39px; font-family:'roboto-light'; font-weight: bold; font-size: 14px;
+#accordion #customize-spinner input {border: 0; width: 100%; outline: 0; height: 31px; font-family:'roboto-light'; font-weight: bold; font-size: 14px;
 -webkit-border-radius: 0;
 -moz-border-radius: 0;
 border-radius: 0;
