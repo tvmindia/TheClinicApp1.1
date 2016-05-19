@@ -80,6 +80,18 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+            //eObj.Description = "hello";
+            //eObj.Module = "mod";
+            //eObj.Method = "meth";
+            //eObj.UserID = Guid.Parse("9d2a967a-9111-4c3c-906c-1f88139be47c");
+
+
+            //eObj.InsertError();
+
+
+
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             //lblClinicName.Text = UA.Clinic;
             //lblUserName.Text = "👤 " + UA.userName + " "; 
