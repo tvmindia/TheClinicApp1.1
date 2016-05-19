@@ -27,7 +27,8 @@ namespace TheClinicApp1._1.ClinicDAL
        
         ErrorHandling eObj = new ErrorHandling();
         dbConnection dcon = new dbConnection();
-
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;
 
         private Guid Clinic_ID;
 
@@ -154,6 +155,45 @@ namespace TheClinicApp1._1.ClinicDAL
             return dtUsers;
         }
         #endregion View All Users
+
+        #region GetUserDetailsByLoginName
+        public DataTable GetUserDetailsByLoginName()
+        {
+            SqlConnection con = null;
+            DataTable dtUsers = null;
+            try
+            {
+                dtUsers = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetUserDetailsByLoginName", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                cmd.Parameters.Add("@LoginName", SqlDbType.UniqueIdentifier).Value = UA.userName;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUsers);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUsers;
+        }
+        #endregion GetUserDetailsByLoginName
 
         #region AddUser
         public void AddUser()
