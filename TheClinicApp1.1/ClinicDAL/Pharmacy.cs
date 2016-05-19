@@ -44,6 +44,8 @@ namespace TheClinicApp1._1.ClinicDAL
     
         #endregion DoctorPrescriptionproperty
 
+        #region Methods
+
         #region GetPatientPharmacyDetails
 
         public DataSet GetPatientPharmacyDetails()
@@ -76,7 +78,7 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.ErrorData(ex, page);
-                //throw ex;
+               
             }
             finally
             {              
@@ -125,7 +127,7 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.ErrorData(ex, page);
-                //throw ex;
+               
             }
             finally
             {
@@ -138,6 +140,8 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion PrescriptionDetails
+        
+        #endregion Methods
 
         #endregion Precription
 

@@ -111,7 +111,7 @@
 
             function OnSuccess(response, userContext, methodName) 
             {   
-                debugger;      
+                      
                 var string1 = new Array();
                 string1 = response.split('|');
                

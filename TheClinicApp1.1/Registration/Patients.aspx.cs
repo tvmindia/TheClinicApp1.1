@@ -265,6 +265,7 @@ namespace TheClinicApp1._1.Registration
                 ProfilePic.Visible = true;
                 //btnnew.Visible = true;
                 HiddenField1.Value = PatientID.ToString();
+                gridDataBind();
             }
             catch
             {
@@ -321,6 +322,7 @@ namespace TheClinicApp1._1.Registration
             lblTokencount.Text = ":" + tokenNo.ToString();
             //lblToken.Visible = true;
             divDisplayNumber.Visible = true;
+            gridDataBind();
         }
         #endregion BookingToken
 
@@ -399,12 +401,12 @@ namespace TheClinicApp1._1.Registration
                             ImageByteArray = ConvertImageToByteArray(FileUpload1);
                             PatientObj.Picupload = ImageByteArray;
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
+                            Hdnimagetype.Value = PatientObj.ImageType;
                         }
                        
                         Guid g = Guid.NewGuid();
                         PatientObj.PatientID = g;
-                        HdnFirstInsertID.Value = PatientObj.PatientID.ToString();
-                        
+                        HdnFirstInsertID.Value = PatientObj.PatientID.ToString();                      
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
                         if (FileUpload1.HasFile)
@@ -425,6 +427,7 @@ namespace TheClinicApp1._1.Registration
                             PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
                             PatientObj.Picupload = ImageByteArray;
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
+                            Hdnimagetype.Value = PatientObj.ImageType;
                             PatientObj.UpdatePatientPicture();
 
                         }
@@ -535,6 +538,7 @@ namespace TheClinicApp1._1.Registration
                     Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "FUNNNN", "Alert.render('Invalid Suggesion');", true);
 
                 }
+                gridDataBind();
             }
             catch
             {
@@ -554,6 +558,7 @@ namespace TheClinicApp1._1.Registration
         {
             GridView1.UseAccessibleHeader = false;
             GridView1.HeaderRow.TableSection = TableRowSection.TableHeader;
+            
         }
         #endregion Paging
 

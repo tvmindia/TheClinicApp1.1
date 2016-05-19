@@ -207,7 +207,7 @@
         }
         var Alert = new CustomAlert();
         function redirect() {
-            debugger;
+            
             window.location.href = "../Default.aspx?sessionclear=logout";
         }
 </script>

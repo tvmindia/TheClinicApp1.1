@@ -77,7 +77,7 @@
 
       $(document).ready(function () 
 {
-          debugger;
+          
 
  <%-- if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
              GetMedicines(1);
@@ -121,7 +121,7 @@
 
         function LoginNameCheck(txtLoginName) {
            
-debugger;
+
 
 
             var name = document.getElementById('<%=txtLoginName.ClientID %>').value;
@@ -209,7 +209,7 @@ else
 
 
 function SetRequired()
-        {debugger;
+        {
      document.getElementById('<%=txtLoginName.ClientID %>').required = true;
      document.getElementById('<%=txtFirstName.ClientID %>').required = true;
     document.getElementById('<%=txtPassword.ClientID %>').required = true;
@@ -288,7 +288,7 @@ var   UserID = '';
    $(function () {
        $("[id*=dtgViewAllUsers] td:eq(0)").click(function () {
 
-           debugger;
+           
            UserID = $(this).closest('tr').find('td:eq(6)').text();
            window.location = "Admin.aspx?UsrIDtoEdit=" + UserID;
        });

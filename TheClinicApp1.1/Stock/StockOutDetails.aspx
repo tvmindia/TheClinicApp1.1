@@ -179,7 +179,7 @@
             //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
 
             
-            //debugger;
+            //
             
             var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
  

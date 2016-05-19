@@ -131,6 +131,8 @@
         htmlBuffer.push("<img id='tablePagination_lastPage' src='"+defaults.lastArrow+"'>");
         htmlBuffer.push("</span>");
         htmlBuffer.push("</div>");
+        htmlBuffer.push("<div class='col-lg-12' style='height:8px;'>");
+        htmlBuffer.push("</div>");
         return htmlBuffer.join("").toString();
       }
       

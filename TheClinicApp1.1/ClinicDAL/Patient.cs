@@ -580,7 +580,9 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
             }
             finally
             {
@@ -600,7 +602,7 @@ namespace TheClinicApp1._1.ClinicDAL
         public string Generate_File_Number()
         {            
             string NUM;
-
+            string FileNO=string.Empty;
             dbConnection dcon = null;
           
             try
@@ -616,11 +618,33 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlParameter OutparmItemId = cmd.Parameters.Add("@String", SqlDbType.NVarChar,50);
                 OutparmItemId.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
-                NUM = OutparmItemId.Value.ToString();    
+                NUM = OutparmItemId.Value.ToString();
+
+                if (NUM != "")
+                {
+                    //trim here
+                    int x = Convert.ToInt32(NUM.Substring(NUM.IndexOf('-') + 1));
+                    x = x + 1;
+                    x.ToString();
+                    FileNO = "FF-" + x;
+
+                }
+
+                else
+                {
+
+                    int x = 1000;
+                     FileNO = "FF-" + x;
+
+                }
+
+
              }
             catch (Exception ex)
             {
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
             }
             finally
             {
@@ -630,28 +654,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
             }
 
-
-            if (NUM != "")
-            {
-                //trim here
-                int x = Convert.ToInt32(NUM.Substring(NUM.IndexOf('-') + 1));
-                x = x + 1;
-                x.ToString();
-                string FileNO = "FF-" + x;
-
-                return FileNO;
-
-            }
-
-            else
-            {
-                
-                int x = 1000;
-                string FileNO = "FF-" + x;
-
-                return FileNO ;
-
-            }
+            return FileNO;
+           
 
             
         }
@@ -661,17 +665,14 @@ namespace TheClinicApp1._1.ClinicDAL
         //***Grid Bind For All regisration && Todays Registration
         #region GridBind
         #region ViewAllRegistration
-        /// <summary>
-        /// ***********
-        /// </summary>
-        /// <returns></returns>
+     
         public DataTable GetAllRegistration()
         {
             SqlConnection con = null;
-           
+            DataTable dt = new DataTable();
             try
             {
-                DataTable dt = new DataTable();
+                
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("ViewAllRegistration", con);
@@ -682,13 +683,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 dt = new DataTable();
                 adapter.Fill(dt);
                 con.Close();
-                return dt;
+               
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+              
             }
             finally
             {
@@ -698,8 +699,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
-
+            return dt;
         }
         #endregion ViewAllRegistration
 
@@ -707,10 +707,11 @@ namespace TheClinicApp1._1.ClinicDAL
         public DataTable GetDateRegistration()
         {
             SqlConnection con = null;
+            DataTable dt1 = new DataTable();
             try
             {
                 DateTime now = DateTime.Now;
-                DataTable dt1 = new DataTable();
+               
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("ViewDateRegistration", con);
@@ -721,13 +722,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 adapter.SelectCommand = cmd;
                 dt1 = new DataTable();
                 adapter.Fill(dt1);
-                return dt1;
+               
             }
             catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.ErrorData(ex, page);
-                throw ex;
+                 
             }
             finally
             {
@@ -737,6 +738,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return dt1;
         }
         #endregion ViewDateRegistration
         #endregion GridBind      
