@@ -15,9 +15,9 @@
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
     <script src="../js/jquery.tablePagination.0.1.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
 
-
-
+    <script src="../js/Messages.js"></script>
 
 
 
@@ -41,6 +41,39 @@
 
 
     <script>
+
+
+        function Validation() {
+            debugger;
+            if (($('#<%=txtLoginName.ClientID%>').val().trim() == "") || ($('#<%=txtFirstName.ClientID%>').val().trim() == "") || ($('#<%=txtPassword.ClientID%>').val().trim() == "") || ($('#<%=txtConfirmPassword.ClientID%>').val().trim() == "")||($('#<%=txtPhoneNumber.ClientID%>').val().trim() == "") || ($('#<%=txtEmail.ClientID%>').val().trim() == "")) {
+
+
+                var lblclass = Alertclasses.danger;
+                var lblmsg = msg.Requiredfields;
+                var lblcaptn = Caption.Confirm;
+
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       $(document).ready(function () 
 {
@@ -455,7 +488,7 @@ var   UserID = '';
                                 <ul class="top_right_links">
                                     <li>
                                         <%--<a class="save" id="Save" runat="server" onserverclick="Save_ServerClick"><span></span>Save</a>--%>
-                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="SetRequired();"/>
+                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="return Validation();"/>
                                     </li>
                                     <li><a class="new" href="Admin.aspx"><span></span>New</a></li>
                                 </ul>
@@ -505,7 +538,7 @@ var   UserID = '';
                                     <div class="col-lg-8">
 
 
-                                        <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" name="name" required onchange="LoginNameCheck(this)"     />
+                                        <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" name="name"  onchange="LoginNameCheck(this)"     />
 
                                           <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" style="display:none"/>
 
@@ -540,7 +573,7 @@ var   UserID = '';
                             <div class="row field_row">
                                 <div class="col-lg-4 ">
 
-                                        <label for="name">First Name</label><input id="txtFirstName" runat="server" type="text" name="name" required  />
+                                        <label for="name">First Name</label><input id="txtFirstName" runat="server" type="text" name="name"   />
 
 
                                   <%--  <label for="First Name">First Name</label>
@@ -569,7 +602,7 @@ var   UserID = '';
                             <div class="row field_row">
                                 <div class="col-lg-4 ">
 
-                                     <label for="name">Password</label><input id="txtPassword" runat="server" type="password" name="name" required autocomplete="off" />
+                                     <label for="name">Password</label><input id="txtPassword" runat="server" type="password" name="name"  autocomplete="off" />
 
                                    <%-- <label for="Password">Password</label>
                                     <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
@@ -581,7 +614,7 @@ var   UserID = '';
                                 
                                 <div class="col-lg-4 ">
 
-                                       <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name"  required  autocomplete="off"  onkeyup="PassowrdEqualityCheck()"/>
+                                       <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name"    autocomplete="off"  onkeyup="PassowrdEqualityCheck()"/>
 
                                     
 
@@ -598,7 +631,7 @@ var   UserID = '';
 
                                 <div class="col-lg-4 ">
 
-                                      <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" name="name"  pattern="^[0-9+-]*$"  required />
+                                      <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" name="name"  pattern="^[0-9+-]*$"   />
 
                                    <%-- <label for="Phone">Phone</label>
                                     <asp:TextBox ID="txtPhoneNumber" runat="server"></asp:TextBox>
@@ -608,7 +641,7 @@ var   UserID = '';
 
 
                                 <div class="col-lg-4 ">
-                                    <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name"  pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"  required />
+                                    <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name"  pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"   />
 
                                   <%--  <label for="Email">Email</label>
                                     <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>

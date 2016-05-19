@@ -714,14 +714,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.Fill(ds);
 
 
-                return ds;
+               
 
             }
 
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -732,7 +733,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return ds;
         }
 
 #endregion Out_of_Stock_MedicineList
@@ -810,11 +811,7 @@ namespace TheClinicApp1._1.ClinicDAL
         public bool CheckMedicineIDIsUsed()
         {
             bool isUsed = false;
-          
-            //dbConnection dcon = null;
-
-            
-          
+     
             SqlConnection con = null;
             try
             {
@@ -838,14 +835,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
               isUsed =  Convert.ToBoolean(ID);
-                //if (cnt > 0)
-                //{
-                //    isUsed = true;
-                //}
+               
             }
             catch (Exception ex)
             {
-                //throw ex;
+              
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.ErrorData(ex, page);
             }
@@ -857,76 +851,12 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
             }
 
-           
-              
-
-
-
-
-
-
-
-
-
-
-
-                //dcon = new dbConnection();
-                //dcon.GetDBConnection();
-                //SqlCommand cmd = new SqlCommand();
-                //cmd.Connection = dcon.SQLCon;
-                //cmd.CommandType = CommandType.StoredProcedure;
-                //cmd.CommandText = "[CheckMedicineIDIsUsed]";
-
-                //cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = MedicineID;
-                //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
-                //object ID = cmd.ExecuteScalar();
-                //if (ID != null)
-                //{
-                // int c =    Convert.ToInt32(ID);
-
-                //    if(c >0)
-                //    {
-                //        isUsed = true;
-                //    }
-                //}
-
             return isUsed;
 
 
             }
 
-            //catch (Exception ex)
-            //{
-            //    var page = HttpContext.Current.CurrentHandler as Page;
-            //    //eObj.ErrorData(ex, page);
-
-            //}
-
-            //finally
-            //{
-            //    if (dcon.SQLCon != null)
-            //    {
-            //        dcon.DisconectDB();
-            //    }
-            //}
-
-            //return ds;
-
-            //return isUsed;
-
-
-     
-
-        //}
-
-
-
-
-
-
-
-
+        
         #endregion Medicines
 
         #endregion Methods
