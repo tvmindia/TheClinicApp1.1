@@ -141,10 +141,6 @@
 
             $('table').tablePagination({});
 
-            
-
-
-
             var rows = $('#<%=GridView1.ClientID%> tr').not('thead tr');
 
             $('#txtSearchPatient').keyup(function() {
@@ -161,6 +157,7 @@
                 }).show();
            
             });
+             
 
         }); 
         
