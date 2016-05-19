@@ -229,6 +229,15 @@ namespace TheClinicApp1._1.Pharmacy {
         protected global::System.Web.UI.WebControls.HiddenField hdnRemovedIDs;
         
         /// <summary>
+        /// hdnPrescID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnPrescID;
+        
+        /// <summary>
         /// Patientidtorefill control.
         /// </summary>
         /// <remarks>

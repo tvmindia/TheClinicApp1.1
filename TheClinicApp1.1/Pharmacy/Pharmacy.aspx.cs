@@ -211,6 +211,7 @@ namespace TheClinicApp1._1.Pharmacy
             lblAgeCount.Text = Age.ToString();
 
             DataSet MedicinList = pharmacypobj.PrescriptionDetails();
+            hdnPrescID.Value = MedicinList.Tables[0].Rows[0][0].ToString();
             var xml = MedicinList.GetXml();
             hdnXmlData.Value = xml;
             Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
@@ -242,7 +243,8 @@ namespace TheClinicApp1._1.Pharmacy
                     }
                     issuehdobj.ClinicID = UA.ClinicID.ToString();
                     issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
-
+                    
+                    issuehdobj.PrescID = hdnPrescID.Value;
                     issuehdobj.IssuedTo = lblPatientName.Text;
                     issuehdobj.Date = DateTime.Now;
                     issuehdobj.CreatedBy = UA.userName;
