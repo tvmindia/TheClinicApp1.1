@@ -271,7 +271,10 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.ExecuteNonQuery();
             TokenNo = Convert.ToInt32(OutparmItemId.Value);
             msgText = " Token No:" + TokenNo;
-            msgCaption = "Token Booked Sucessfully";  
+            msgCaption = "Token Booked Sucessfully";
+
+            var page = HttpContext.Current.CurrentHandler as Page;
+            eObj.InsertionSuccessMessage(page, msgCaption, msgText);
              }
 
             catch (Exception ex)
@@ -281,11 +284,7 @@ namespace TheClinicApp1._1.ClinicDAL
             }
 
             finally
-            {
-
-
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.InsertionSuccessMessage(page, msgCaption, msgText);
+            {        
 
 
                 if (con != null)
