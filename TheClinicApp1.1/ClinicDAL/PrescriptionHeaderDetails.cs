@@ -4,11 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Data;
+using System.Web.UI;
 
 namespace TheClinicApp1._1.ClinicDAL
 {
     public class PrescriptionHeaderDetails
     {
+
+        #region Global Variables
+        ErrorHandling eObj = new ErrorHandling();
+        #endregion Global Variables
+
         #region Property
 
         public string PrescID
@@ -102,8 +108,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                 
-                throw ex;
+
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
             }
 
             finally
@@ -152,7 +160,9 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
             }
 
             finally
@@ -187,10 +197,6 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[ViewPrescriptionHeaderDetails]";
 
-                //cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-                //cmd.Parameters.Add("@DateTime", SqlDbType.DateTime).Value = DateTime;
-                //cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
-               
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
@@ -198,14 +204,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.Fill(ds);
 
 
-                return ds;
-
             }
 
             catch (Exception ex)
             {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
 
-                throw ex;
             }
 
             finally
@@ -216,6 +221,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return ds;
+
 
         }
 
@@ -249,7 +257,8 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
 
-                throw ex;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
 
             finally
@@ -265,19 +274,20 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion DeletePrescriptionDetails
 
-
-
-
         #endregion Methods
-
 
     }
     public class PrescriptionDetails
     {
+        #region Global Variables
+        ErrorHandling eObj = new ErrorHandling();
+        #endregion Global Variables
+
         public PrescriptionDetails()
             {
                 UniqueID = Guid.NewGuid();
             }
+
         #region Property
 
         public Guid UniqueID
@@ -422,14 +432,15 @@ namespace TheClinicApp1._1.ClinicDAL
                  sda.SelectCommand = cmd;
                  ds = new DataSet();
                  sda.Fill(ds,"Medicines");
-                 return ds;
+              
 
              }
 
              catch (Exception ex)
              {
 
-                 throw ex;
+                 var page = HttpContext.Current.CurrentHandler as Page;
+                 eObj.ErrorData(ex, page);
              }
 
              finally
@@ -440,7 +451,7 @@ namespace TheClinicApp1._1.ClinicDAL
                  }
 
              }
-
+             return ds;
          }
                 
         #endregion ViewPrescriptionDetails
@@ -481,7 +492,8 @@ namespace TheClinicApp1._1.ClinicDAL
              catch (Exception ex)
              {
 
-                 throw ex;
+                 var page = HttpContext.Current.CurrentHandler as Page;
+                 eObj.ErrorData(ex, page);
              }
 
              finally
@@ -525,7 +537,8 @@ namespace TheClinicApp1._1.ClinicDAL
              catch (Exception ex)
              {
 
-                 throw ex;
+                 var page = HttpContext.Current.CurrentHandler as Page;
+                 eObj.ErrorData(ex, page);
              }
 
              finally
@@ -562,8 +575,6 @@ namespace TheClinicApp1._1.ClinicDAL
          #endregion SearchMedicinewithCategory
 
         #endregion Methods
-
-
 
     }
 }
