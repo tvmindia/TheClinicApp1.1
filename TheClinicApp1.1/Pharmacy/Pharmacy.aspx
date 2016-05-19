@@ -366,6 +366,7 @@
         <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
         <asp:HiddenField ID="hdnTextboxValues" runat="server" />
         <asp:HiddenField ID="hdnRemovedIDs" runat="server" />
+        <asp:HiddenField ID="hdnPrescID" runat="server" />
 
         <%--<asp:HiddenField ID="hdnsave" Value="" runat="server" />--%>
         <%--<asp:HiddenField ID="hdnconfirmsave" Value="" runat="server" />--%>

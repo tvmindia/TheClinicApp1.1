@@ -31,14 +31,15 @@
 
         $(function () {
             $("[id*=gvIssueHD] td:first").click(function () {
-
+                if ($(this).text() == "") {
                 var DeletionConfirmation = ConfirmDelete();
 
                 if (DeletionConfirmation == true) {
-                    issueID = $(this).closest('tr').find('td:eq(5)').text();
+                    issueID = $(this).closest('tr').find('td:eq(6)').text();
 
 
                     window.location = "StockOut.aspx?HdrID=" + issueID;
+                }
                 }
             });
         });
@@ -151,13 +152,27 @@
 
                     $("td", row).eq(2).html($(this).find("IssuedTo").text());
                     $("td", row).eq(3).html($(this).find("Date").text());
-                    $("td", row).eq(4).html('Details').click(function () {
+
+                   
+
+
+                    if ($(this).find("PrescID").text() == "") {
+                        $("td", row).eq(4).html("Direct");
+                    }
+                    else {
+                        $("td", row).eq(4).html("Prescription");
+                    }
+
+
+                  
+
+                    $("td", row).eq(5).html('Details').click(function () {
 
                         issueID = $(this).closest('tr').find('td:eq(5)').text();
                         window.location = "StockOutDetails.aspx?issueID=" + issueID;
                     }).addClass('CursorShow');
 
-                    $("td", row).eq(5).html($(this).find("IssueID").text());
+                    $("td", row).eq(6).html($(this).find("IssueID").text());
 
 
 
@@ -186,7 +201,7 @@
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                 $("td:first-child", empty_row).attr("align", "center");
-                $("td:first-child", empty_row).html("No records found for the search criteria.");
+                $("td:first-child", empty_row).html("No records found for the search criteria.").removeClass('CursorShow');;
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=gvIssueHD]").append(empty_row);
             }
@@ -321,6 +336,8 @@
                                         <asp:BoundField DataField="IssueNO" HeaderText="IssueNO" ItemStyle-CssClass="Match" />
                                         <asp:BoundField DataField="IssuedTo" HeaderText="IssuedTo" ItemStyle-CssClass="Match" />
                                         <asp:BoundField DataField="Date" HeaderText="Date" ItemStyle-CssClass="Match" />
+                                        <asp:BoundField  DataField="PrescID" HeaderText="IssueMode" ItemStyle-CssClass="Match" />
+                                        
                                         <asp:BoundField HeaderText="Details" ItemStyle-CssClass="Match" />
                                         <asp:BoundField DataField="IssueID" HeaderText="IssueID" ItemStyle-CssClass="Match" />
 
