@@ -105,7 +105,7 @@ function RemoveWarning(ControlNo) {
 
 function clickStockAdd(id) {
     iCnt = iCnt + 1;
-    debugger;
+    
      //ADD new row with fields needed.
    
     $(container).append('<div id="div' + iCnt + '"><table  style="width:100%;border:0;"><tr>'
@@ -138,7 +138,7 @@ function clickStockAdd(id) {
 }
 
 function clickAdd(id) {
-    debugger;
+    
     iCnt = iCnt + 1;
    
     // ADD new row with fields needed.
@@ -192,10 +192,10 @@ function clickdelete(id) {
     if (ExistingRowCount > 1)
     {
         var status=0;
-        debugger;
+        
         if (id == iCnt && id==ExistingRowCount)
         {
-          debugger;
+          
             $('#btAdd' + (iCnt - 1) + '').css('visibility', 'visible')
             last = id - 1;
             $('#btRemove' + id).closest("div").remove();
@@ -213,7 +213,7 @@ function clickdelete(id) {
 //***********************************************************************************
 
         if ( id == iCnt && status!=1 ) {
-            debugger;
+            
             var loc = id;
             //find the id before this control
             while (id > 0) {
@@ -245,7 +245,7 @@ function clickdelete(id) {
      
 
         else if (last == id) {
-          debugger;
+          
             var loc = id;
             //find the id before this control
             while (id > 0) {
@@ -257,7 +257,7 @@ function clickdelete(id) {
 
                 }
                 else {
-debugger;
+
                     id--
                 }
             }
@@ -273,7 +273,7 @@ debugger;
 
 
         else if ( status!=1) {
-          debugger;
+          
             $('#btRemove' + id).closest("div").remove();
             // iCnt = iCnt - 1;
             ExistingRowCount = ExistingRowCount - 1;
@@ -289,7 +289,7 @@ debugger;
 
     else
     {
-     debugger;
+     
         $('#btAdd').css('visibility', 'visible')
         $('#btRemove' + id).closest("div").remove();
         ExistingRowCount = ExistingRowCount - 1;
@@ -876,7 +876,7 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
         var y = parseInt(STOCKQTY);
         if (x > y || isNaN(x) || isNaN(y)) {
 
-            debugger;
+            
 
             //refering from messages.js
             var lblclass = Alertclasses.danger;
@@ -1000,7 +1000,7 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 
 function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox,lblclass,lblcaptn,lblmsg)
 {
-    debugger;
+  
 
    document.getElementById(Errorbox).style.display = "";
    document.getElementById(Errorbox).className = lblclass;   

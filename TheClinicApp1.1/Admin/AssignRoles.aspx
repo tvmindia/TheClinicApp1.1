@@ -154,7 +154,7 @@ table
        var test = jQuery.noConflict();
         test(document).ready(function () {
 
-            debugger;
+            
 
 <%--            if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
                 GetMedicines(1);
@@ -218,7 +218,7 @@ table
 
         //        if (DeletionConfirmation == true) {
 
-        //            debugger;
+        //            
 
         //            UniqueID = $(this).closest('tr').find('td:eq(3)').text();
 
@@ -286,7 +286,7 @@ table
         //    if (Medicines.length > 0) {
         //        $.each(Medicines, function () {
 
-        //            debugger;
+        //            
 
         //            //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
                    

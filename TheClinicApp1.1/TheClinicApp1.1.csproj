@@ -153,6 +153,7 @@
     <Content Include="Doctor\Doctors.aspx" />
     <Content Include="Doctor\test page.txt" />
     <CodeAnalysisDictionary Include="favicon.ico" />
+    <Content Include="Error Page\Oops.aspx" />
     <Content Include="Handler\ImageHandler.ashx" />
     <Content Include="images\403.png" />
     <Content Include="images\accordion_arrow.png" />
@@ -186,6 +187,7 @@
     <Content Include="images\Logout.png" />
     <Content Include="images\LogoutWhite.png" />
     <Content Include="images\master.png" />
+    <Content Include="images\maxresdefault.jpg" />
     <Content Include="images\medicinesview copy.png" />
     <Content Include="images\menu_separator.png" />
     <Content Include="images\multiuser.png" />
@@ -399,6 +401,13 @@
     </Compile>
     <Compile Include="Doctor\Doctors.aspx.designer.cs">
       <DependentUpon>Doctors.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error Page\Oops.aspx.cs">
+      <DependentUpon>Oops.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error Page\Oops.aspx.designer.cs">
+      <DependentUpon>Oops.aspx</DependentUpon>
     </Compile>
     <Compile Include="Handler\ImageHandler.ashx.cs">
       <DependentUpon>ImageHandler.ashx</DependentUpon>

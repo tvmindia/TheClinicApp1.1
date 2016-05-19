@@ -84,7 +84,7 @@
          //---------------* Function to check  Unit duplication *--------------//
 
 <%--         function CheckDoctorNameDuplication(txtCategoryName) {
-             debugger;
+             
              var name = document.getElementById('<%=txtName.ClientID %>').value;
              name = name.replace(/\s/g, '');
 

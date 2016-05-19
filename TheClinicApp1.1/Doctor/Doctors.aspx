@@ -129,7 +129,7 @@
 
             function CheckEmpty()
             {
-                debugger;
+                
                 if(($('#<%=txtHeightFeet.ClientID%>').val() != '')&&($('#<%=txtHeightInch.ClientID%>').val()!='')&&($('#<%=txtWeight.ClientID%>').val()!=''))
                 {
                     $('#<%=txtHeightFeet.ClientID%>').val('');
@@ -148,7 +148,7 @@
       <script> 
           function bindPatientDetails()
           {
-              debugger;
+              
                var PatientName = document.getElementById("project-description").innerText;
              
        

@@ -95,7 +95,7 @@
                       
                 var string1 = new Array();
                 string1 = response.split('|');
-                debugger;
+                
                 document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
                 document.getElementById('<%=lblFileNum.ClientID%>').innerText=string1[0];
                 document.getElementById('<%=lblPatientName.ClientID%>').innerText=string1[1];
@@ -118,7 +118,7 @@
     <script>
 
         function FillTextboxUsingXml(){
-            debugger;
+            
             GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
                 RefillPresMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
     }
@@ -126,7 +126,7 @@
 
     function BindMedunitbyMedicneName(ControlNo) 
     {
-        debugger;
+        
   
         if (ControlNo >= 0) {
             var MedicineName = document.getElementById('txtMedName' + ControlNo).value;

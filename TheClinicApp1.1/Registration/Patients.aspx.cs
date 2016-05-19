@@ -399,12 +399,12 @@ namespace TheClinicApp1._1.Registration
                             ImageByteArray = ConvertImageToByteArray(FileUpload1);
                             PatientObj.Picupload = ImageByteArray;
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
+                            Hdnimagetype.Value = PatientObj.ImageType;
                         }
                        
                         Guid g = Guid.NewGuid();
                         PatientObj.PatientID = g;
-                        HdnFirstInsertID.Value = PatientObj.PatientID.ToString();
-                        
+                        HdnFirstInsertID.Value = PatientObj.PatientID.ToString();                      
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
                         if (FileUpload1.HasFile)
@@ -425,6 +425,7 @@ namespace TheClinicApp1._1.Registration
                             PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
                             PatientObj.Picupload = ImageByteArray;
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
+                            Hdnimagetype.Value = PatientObj.ImageType;
                             PatientObj.UpdatePatientPicture();
 
                         }

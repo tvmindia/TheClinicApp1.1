@@ -92,7 +92,7 @@
  //---------------* Function to check category name duplication *--------------//
 
       function CheckCategoryNameDuplication(txtCategoryName) {
-          debugger;
+          
           var name = document.getElementById('<%=txtCategoryName.ClientID %>').value;
 
           name = name.trim();

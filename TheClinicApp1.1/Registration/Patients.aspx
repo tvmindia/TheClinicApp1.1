@@ -150,7 +150,7 @@
                     var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
                     var matchesSearch = true;
                     $(val).each(function(index, value) {
-                        debugger;
+                        
                         matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
                     });
                     return matchesSearch;
@@ -171,12 +171,12 @@
 
         function validation()
         {
-            debugger;
+            
           
            
             if( ($('#<%=txtName.ClientID%>').val()=="")||  ($('#<%=txtAge.ClientID%>').val()=="") )
             {
-                debugger;
+                
 
                 var lblclass = Alertclasses.danger;
                 var lblmsg = msg.Requiredfields;
@@ -235,7 +235,7 @@
          <input class="field" type="search" id="txtSearch" onblur="bindPatient();" name="txtSearch" placeholder="Search here..." />
          <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" />
          </div>
-         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClientClick="return validation();" OnClick="btnSave_Click" /></li><li><a class="new" href="#" runat="server" id="btnNew" onserverclick="btnNew_ServerClick"><span></span>New</a></li></ul>
+         <ul class="top_right_links"><li><asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="button1" OnClientClick="return validation();" OnClick="btnSave_Click" /></li><li><a class="new" href="Patients.aspx" runat="server" id="btnNew"  ><span></span>New</a></li></ul>
          </div>        
          <div class="right_form">  
                     

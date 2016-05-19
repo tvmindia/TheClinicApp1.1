@@ -83,7 +83,7 @@
          //---------------* Function to check  Unit duplication *--------------//
 
          function CheckUnitDuplication(txtCategoryName) {
-             debugger;
+             
              var name = document.getElementById('<%=txtDescription.ClientID %>').value;
 
              name = name.trim();
