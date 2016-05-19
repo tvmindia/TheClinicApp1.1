@@ -144,6 +144,7 @@
             var rows = $('#<%=GridView1.ClientID%> tr').not('thead tr');
 
             $('#txtSearchPatient').keyup(function() {
+             
                 var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
 
                 rows.hide().filter(function() {

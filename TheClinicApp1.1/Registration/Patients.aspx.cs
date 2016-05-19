@@ -265,6 +265,7 @@ namespace TheClinicApp1._1.Registration
                 ProfilePic.Visible = true;
                 //btnnew.Visible = true;
                 HiddenField1.Value = PatientID.ToString();
+                gridDataBind();
             }
             catch
             {
@@ -321,6 +322,7 @@ namespace TheClinicApp1._1.Registration
             lblTokencount.Text = ":" + tokenNo.ToString();
             //lblToken.Visible = true;
             divDisplayNumber.Visible = true;
+            gridDataBind();
         }
         #endregion BookingToken
 
@@ -536,6 +538,7 @@ namespace TheClinicApp1._1.Registration
                     Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "FUNNNN", "Alert.render('Invalid Suggesion');", true);
 
                 }
+                gridDataBind();
             }
             catch
             {
@@ -555,6 +558,7 @@ namespace TheClinicApp1._1.Registration
         {
             GridView1.UseAccessibleHeader = false;
             GridView1.HeaderRow.TableSection = TableRowSection.TableHeader;
+            
         }
         #endregion Paging
 
