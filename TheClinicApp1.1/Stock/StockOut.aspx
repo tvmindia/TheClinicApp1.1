@@ -31,7 +31,7 @@
 
         $(function () {
             $("[id*=gvIssueHD] td:first").click(function () {
-
+                if ($(this).text() == "") {
                 var DeletionConfirmation = ConfirmDelete();
 
                 if (DeletionConfirmation == true) {
@@ -39,6 +39,7 @@
 
 
                     window.location = "StockOut.aspx?HdrID=" + issueID;
+                }
                 }
             });
         });
@@ -186,7 +187,7 @@
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                 $("td:first-child", empty_row).attr("align", "center");
-                $("td:first-child", empty_row).html("No records found for the search criteria.");
+                $("td:first-child", empty_row).html("No records found for the search criteria.").removeClass('CursorShow');;
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=gvIssueHD]").append(empty_row);
             }
