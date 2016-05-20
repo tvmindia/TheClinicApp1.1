@@ -87,8 +87,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Methods
 
-
-
         #region Add New Category
         public void AddNewCategory()
         {
@@ -117,18 +115,17 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 if (Outputval == 1)
                 {
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;   //Success
                     eObj.SavedSuccessMessage(page);
-                    //Success
+                  
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
-                          var page = HttpContext.Current.CurrentHandler as Page;
+                        var page = HttpContext.Current.CurrentHandler as Page;  //Already exists!
                           eObj.AlreadyExistsMessage(page);
                         
-                        //Already exists!
                     }
                 }
             }
@@ -143,11 +140,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 eObj.InsertError();
 
-
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-
-                //throw ex;
             }
 
             finally
@@ -178,75 +170,43 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandText = "[UpdateCategories]";
 
                 cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
-
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = CategoryName; 
-
-                //cmd.ExecuteNonQuery();
-
-
 
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
                 int Outputval = (int)cmd.Parameters["@Status"].Value;
 
-                cmd.ExecuteNonQuery();
-
                 if (Outputval == 1)
                 {
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;  //Success
                     eObj.SavedSuccessMessage(page);
-                    //Success
+                   
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
-                        var page = HttpContext.Current.CurrentHandler as Page;
+                        var page = HttpContext.Current.CurrentHandler as Page;  //Already exists!
                         eObj.AlreadyExistsMessage(page);
 
-                        //Already exists!
                     }
                 }
-
-
-
-
-
-                //SqlParameter Output = new SqlParameter();
-                //Output.DbType = DbType.Int32;
-                //Output.ParameterName = "@Status";
-                //Output.Direction = ParameterDirection.Output;
-                //cmd.Parameters.Add(Output);
-                //cmd.ExecuteNonQuery();
-                //if (Output.Value.ToString() == "")
-                //{
-                //    //not successfull   
-
-                //    var page = HttpContext.Current.CurrentHandler as Page;
-                //    eObj.SavingFailureMessage(page);
-
-                //}
-                //else
-                //{
-                //    //successfull
-
-                //    var page = HttpContext.Current.CurrentHandler as Page;
-                //    eObj.SavedSuccessMessage(page);
-
-
-                //}
-
 
             }
 
             catch (Exception ex)
             {
+               
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
 
-                //throw ex;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.UserID = usrid;
+                eObj.Method = "UpdateCategory";
+
+                eObj.InsertError();
+
             }
 
             finally
@@ -263,7 +223,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Update Category
 
-
         #region Validate Category Name
         public bool ValidateCategoryName(string CheckCategory)
         {
@@ -279,7 +238,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@CategoryName", SqlDbType.VarChar, 255).Value = CheckCategory;
                 SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
                 outflag.Direction = ParameterDirection.Output;
+
                 cmd.ExecuteNonQuery();
+
                 flag = (bool)outflag.Value;
                 if (flag == true)
                 {
@@ -288,7 +249,15 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                ErrorHandling eObj = new ErrorHandling();
+        
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "ValidateCategoryName";
+
+                eObj.InsertError();
             }
             finally
             {
@@ -327,9 +296,14 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-               
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "ViewAllCategory";
+
+                eObj.InsertError();
+
             }
             finally
             {
@@ -345,6 +319,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion View All Category
 
+        #region Delete Category By CategoryID
         public void DeleteCategoryById()
         {
             SqlConnection con = null;
@@ -367,28 +342,27 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 if (Output.Value.ToString() == "")
                 {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;  //not successfull  
                     eObj.DeletionNotSuccessMessage(page);
 
                 }
                 else
                 {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page; //successfull
                     eObj.DeleteSuccessMessage(page);
 
-
                 }
-
 
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "DeleteCategoryById";
+
+                eObj.InsertError();
 
             }
 
@@ -402,10 +376,9 @@ namespace TheClinicApp1._1.ClinicDAL
             }
         }
 
+        #endregion  Delete Category By CategoryID
 
         #region View Category By CategoryID
-
-
 
         public DataTable ViewCategoryByCategoryID()
         {
@@ -429,9 +402,14 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                //throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "ViewCategoryByCategoryID";
+
+                eObj.InsertError();
+               
             }
             finally
             {
@@ -446,19 +424,10 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
 
-
-
-
-
-
         #endregion View Category By CategoryID
 
 
-
-
         #region View Medicines By CategoryID
-
-
 
         public DataTable ViewMedicinesByCategoryID()
         {
@@ -482,9 +451,14 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                //throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "ViewMedicinesByCategoryID";
+
+                eObj.InsertError();
+                
             }
             finally
             {
@@ -497,12 +471,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
             return dtRoles;
         }
-
-
-
-
-
-
 
         #endregion View Medicines By CategoryID
        

@@ -24,6 +24,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
         ErrorHandling eObj = new ErrorHandling();
 
+        string ModuleUnit = "Unit";
+        string ModuleDoctor = "Add Doctor";
+
         public string loginName
         {
             get;
@@ -48,6 +51,14 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
+        /// <summary>
+        /// User id of logined user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
 
         #region Connectionstring
         dbConnection dcon = new dbConnection();
@@ -157,6 +168,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Global variables
 
         #region Methods
+
         #region AddGroups
         public void InsertGroups()
         {
@@ -296,1151 +308,6 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion AddClinics
 
-
-        public bool CheckDoctorIdUsed()
-        {
-            bool isUsed = false;
-
-            //dbConnection dcon = null;
-
-
-
-            SqlConnection con = null;
-            try
-            {
-
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("CheckDoctorIdUsed", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-
-                SqlParameter outflag = cmd.Parameters.Add("@Cnt", SqlDbType.Bit);
-                outflag.Direction = ParameterDirection.Output;
-                cmd.ExecuteNonQuery();
-
-                object ID = outflag.Value;
-
-
-                isUsed = Convert.ToBoolean(ID);
-                //if (cnt > 0)
-                //{
-                //    isUsed = true;
-                //}
-            }
-            catch (Exception ex)
-            {
-                //throw ex;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Close();
-                }
-            }
-
-
-            return isUsed;
-
-        }
-
-
-        #region View Doctors
-
-        public DataTable ViewDoctors()
-        {
-            SqlConnection conn = null;
-            DataTable ds = null;
-            SqlCommand cmd = null;
-            SqlDataAdapter da = null;
-            dbConnection dcon = new dbConnection();
-            try
-            {
-                conn = dcon.GetDBConnection();
-                //conn.Open();
-
-                cmd = new SqlCommand("[ViewDoctors]", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                da = new SqlDataAdapter();
-                da.SelectCommand = cmd;
-                ds = new DataTable();
-                da.Fill(ds);
-
-                conn.Close();
-                return ds;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-
-            finally
-            {
-                if (conn != null)
-                {
-                    conn.Close();
-                }
-
-            }
-
-        }
-       
-        #endregion View Doctors
-
-        #region AddDoctors
-        public void InsertDoctors()
-        {
-            SqlConnection con = null;
-            try
-            {
-
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand pud = new SqlCommand();
-                pud.Connection = con;
-                pud.CommandType = System.Data.CommandType.StoredProcedure;
-                pud.CommandText = "[InsertDoctors]";
-                //pud.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-                //pud.Parameters.Add("@GroupID", SqlDbType.UniqueIdentifier).Value = GroupID;
-                //pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                //pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-
-                //pud.Parameters.Add("@LoginName", SqlDbType.NVarChar, 255).Value = loginName;
-                pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-                pud.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.NewGuid();
-                pud.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = DoctorName;
-                pud.Parameters.Add("@Phone", SqlDbType.NVarChar, 255).Value = DoctorPhone;
-                pud.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
-                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = createdBy;
-
-
-                if (UsrID != Guid.Empty)
-                {
-                    pud.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UsrID;
-                }
-
-                //pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = updatedBy;
-
-                SqlParameter Output = new SqlParameter();
-                Output.DbType = DbType.Int32;
-                Output.ParameterName = "@Status";
-                Output.Direction = ParameterDirection.Output;
-                pud.Parameters.Add(Output);
-                pud.ExecuteNonQuery();
-
-                if (Output.Value.ToString() == "")
-                {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavingFailureMessage(page);
-
-                }
-                else
-                {
-                    
-
-                    int rslt = Convert.ToInt32(Output.Value.ToString());
-
-                    if (rslt == 1)
-                    {
-                        //successfull
-
-                        var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.SavedSuccessMessage(page);
-                    }
-
-                    if (rslt == 0)
-                    {
-                        var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.AlreadyExistsMessage(page);
-                            
-                    }
-                   
-
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-
-
-        }
-        #endregion AddDoctors
-
-        #region Get Doctor Details
-        public DataTable GetDoctorDetails()
-        {
-            SqlConnection con = null;
-            DataTable dtUsers = null;
-            try
-            {
-                dtUsers = new DataTable();
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetDoctorDetails", con);
-               
-                cmd.CommandType = CommandType.StoredProcedure;
-
-             
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtUsers);
-                
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-               
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-            return dtUsers;
-        }
-
-        #endregion  Get Doctor Details
-
-
-        #region Get Doctor Details By ID
-        public DataTable GetDoctorDetailsByID()
-        {
-            SqlConnection con = null;
-            DataTable dtDoctorById = null;
-            try
-            {
-                dtDoctorById = new DataTable();
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetDoctorDetailsByID", con);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-
-                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtDoctorById);
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-            return dtDoctorById;
-        }
-
-        #endregion  Get Doctor Details By ID
-
-
-        #region GetDoctorDetailsByUserID
-        public DataTable GetDoctorDetailsByUserID()
-        {
-            SqlConnection con = null;
-            DataTable dtDoctorByUsrId = null;
-            try
-            {
-                dtDoctorByUsrId = new DataTable();
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetDoctorDetailsByUserID", con);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-
-                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UsrID;
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtDoctorByUsrId);
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-            return dtDoctorByUsrId;
-        }
-
-        #endregion GetDoctorDetailsByUserID
-
-        #region Delete Doctor By DoctorID
-
-        public void DeleteDoctorByID(bool rdoNotDoctor = false)
-        {
-
-
-            SqlConnection con = null;
-            try
-            {
-
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandText = "DeleteDoctors";
-
-                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-
-                SqlParameter Output = new SqlParameter();
-                Output.DbType = DbType.Int32;
-                Output.ParameterName = "@Status";
-                Output.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(Output);
-                cmd.ExecuteNonQuery();
-                if (Output.Value.ToString() == "")
-                {
-                    //not successfull   
-                    if (rdoNotDoctor == true)
-                    {
-                        var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.SavingFailureMessage(page);
-                    }
-                    else
-                    {
-                        var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.DeletionNotSuccessMessage(page);
-                    }
-                    
-
-                }
-                else
-                {
-                    //successfull
-
-                    if (rdoNotDoctor == true)
-                    {
-                        var page = HttpContext.Current.CurrentHandler as Page;
-                      eObj.SavedSuccessMessage(page);
-                    }
-
-                    else
-                    {
-                        var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.DeleteSuccessMessage(page);
-                    }
-
-                    
-
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-        }
-
-        #endregion Delete Doctor By DoctorID
-
-
-        
-
-
-        #region Validate Doctor Name
-        public bool CheckDoctorNameDuplication()
-        {
-            bool flag;
-            SqlConnection con = null;
-            try
-            {
-
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("CheckDoctorNameDuplication", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@DoctorName", SqlDbType.VarChar, 255).Value = DoctorName;
-                SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
-                outflag.Direction = ParameterDirection.Output;
-                cmd.ExecuteNonQuery();
-                flag = (bool)outflag.Value;
-                if (flag == true)
-                {
-                    return flag;
-                }
-            }
-            catch (Exception ex)
-            {
-                //throw ex;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Close();
-                }
-            }
-
-            return false;
-        }
-
-        #endregion Validate Doctor Name
-
-
-
-        #region Update Doctors
-        public void UpdateDoctors()
-        {
-            dbConnection dcon = null;
-
-            try
-            {
-                dcon = new dbConnection();
-                dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = dcon.SQLCon;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[UpdateDoctors]";
-
-                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-                //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = DoctorName;
-                cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 15).Value = DoctorPhone;
-                cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
-                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
-
-                //cmd.ExecuteNonQuery();
-
-
-                SqlParameter Output = new SqlParameter();
-                Output.DbType = DbType.Int32;
-                Output.ParameterName = "@Status";
-                Output.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(Output);
-                cmd.ExecuteNonQuery();
-                if (Output.Value.ToString() == "")
-                {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavingFailureMessage(page);
-
-                }
-                else
-                {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
-
-
-                }
-
-
-            }
-
-            catch (Exception ex)
-            {
-
-                //throw ex;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-            }
-
-            finally
-            {
-                if (dcon.SQLCon != null)
-                {
-                    dcon.DisconectDB();
-                }
-
-            }
-
-        }
-
-
-        #endregion Update Doctors
-
-
-
-            //SqlConnection con = null;
-            //DataTable dtUsers = null;
-            //try
-            //{
-            //    dtUsers = new DataTable();
-            //    dbConnection dcon = new dbConnection();
-            //    con = dcon.GetDBConnection();
-            //    SqlCommand cmd = new SqlCommand("GetDoctorIdByDoctorName", con);
-
-            //    cmd.CommandType = CommandType.StoredProcedure;
-
-
-            //    cmd.Parameters.Add("@DoctorName", SqlDbType.NVarChar,255).Value = DoctorName;
-
-            //    SqlDataAdapter adapter = new SqlDataAdapter();
-            //    adapter.SelectCommand = cmd;
-            //    adapter.Fill(dtUsers);
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    var page = HttpContext.Current.CurrentHandler as Page;
-            //    eObj.ErrorData(ex, page);
-
-            //}
-            //finally
-            //{
-            //    if (con != null)
-            //    {
-            //        con.Dispose();
-            //    }
-
-            //}
-            //return dtUsers;
-       
-
-
-        #region AddCategoryID
-        public void InsertCategories()
-        {
-            SqlConnection con = null;
-            try
-            {
-
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand pud = new SqlCommand();
-                pud.Connection = con;
-                pud.CommandType = System.Data.CommandType.StoredProcedure;
-                pud.CommandText = "[InsertCategories]";
-                pud.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
-                pud.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = CategoryName;
-                pud.Parameters.Add("@ClinicID", SqlDbType.VarBinary, 255).Value = ClinicID;
-                pud.Parameters.Add("@CreatedBY", SqlDbType.DateTime).Value = "Thomson";
-                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                SqlParameter Output = new SqlParameter();
-                Output.DbType = DbType.Int32;
-                Output.ParameterName = "@Status";
-                Output.Direction = ParameterDirection.Output;
-                pud.Parameters.Add(Output);
-                pud.ExecuteNonQuery();
-
-                if (Output.Value.ToString() == "")
-                {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionNotSuccessMessage(page);
-
-                }
-                else
-                {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionSuccessMessage(page);
-
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-
-        }
-
-        #endregion AddCategories
-
-
-        //--------------Unit
-
-
-        #region AddUnit
-        public void InsertUnits()
-        {
-            SqlConnection con = null;
-            try
-            {
-
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand pud = new SqlCommand();
-                pud.Connection = con;
-                pud.CommandType = System.Data.CommandType.StoredProcedure;
-                pud.CommandText = "[InsertUnits]";
-                //pud.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
-                pud.Parameters.Add("@Code", SqlDbType.NVarChar, 255).Value = Code;
-                pud.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
-                pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar,255).Value = createdBy;
-                //pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                //pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
-                //pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                SqlParameter Output = new SqlParameter();
-                Output.DbType = DbType.Int32;
-                Output.ParameterName = "@Status";
-                Output.Direction = ParameterDirection.Output;
-                pud.Parameters.Add(Output);
-                pud.ExecuteNonQuery();
-
-                if (Output.Value.ToString() == "")
-                {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavingFailureMessage(page);
-
-                }
-                else
-                {
-                    int rslt = Convert.ToInt32(Output.Value.ToString());
-
-                    if (rslt == 1)
-                    {
-                        //successfull
-
-                        var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.SavedSuccessMessage(page);
-                    }
-
-                    if (rslt == 2)
-                    {
-                        var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.AlreadyExistsMessage(page);
-
-                    }
-                   
-
-
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-
-        }
-
-        #endregion AddUnits
-
-
-
-        #region View All Units
-        public DataTable ViewAllUnits()
-        {
-            SqlConnection con = null;
-            DataTable dtUsers = null;
-            try
-            {
-                dtUsers = new DataTable();
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("ViewUnits", con);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtUsers);
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-            return dtUsers;
-        }
-
-        #endregion  View All Units
-
-
-        #region Get Unit By UnitID
-        public DataTable GetUnitByID()
-        {
-            SqlConnection con = null;
-            DataTable dtUsers = null;
-            try
-            {
-                dtUsers = new DataTable();
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetUnitByID", con);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtUsers);
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-            return dtUsers;
-        }
-
-        #endregion  Get Unit By UnitID
-
-
-        #region Delete unit By UnitId
-
-        public void  DeleteUnitByUnitId()
-        {
-
-
-            SqlConnection con = null;
-            try
-            {
-
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandText = "DeleteunitByID";
-            
-                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
-
-                SqlParameter Output = new SqlParameter();
-                Output.DbType = DbType.Int32;
-                Output.ParameterName = "@Status";
-                Output.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(Output);
-                cmd.ExecuteNonQuery();
-                if (Output.Value.ToString() == "")
-                {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeletionNotSuccessMessage(page);
-
-                }
-                else
-                {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeleteSuccessMessage(page);
-
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-        }
-
-        #endregion  Delete unit By UnitId
-
-
-        #region View PrescDT By Unit
-        public DataTable GetPrescDTByUnit()
-        {
-            SqlConnection con = null;
-            DataTable dtUnit = null;
-            try
-            {
-                dtUnit = new DataTable();
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetPrescDTByUnit", con);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-
-                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar,255).Value = Description;
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtUnit);
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-            return dtUnit;
-        }
-
-        #endregion View PrescDT By Unit
-
-        #region View ReceiptDT By Unit
-        public DataTable GetReceiptDTByUnit()
-        {
-            SqlConnection con = null;
-            DataTable dtUnit = null;
-            try
-            {
-                dtUnit = new DataTable();
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetReceiptDTByUnit", con);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-
-                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 255).Value = Description;
-
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtUnit);
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Dispose();
-                }
-
-            }
-            return dtUnit;
-        }
-
-        #endregion  View ReceiptDT By Unit
-
-        #region Validate Unit
-        public bool CheckUnitDuplication(string UnitDescription)
-        {
-            bool flag;
-            SqlConnection con = null;
-            try
-            {
-
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("CheckUnitDuplication", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@unit", SqlDbType.VarChar, 255).Value = UnitDescription;
-                SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
-                outflag.Direction = ParameterDirection.Output;
-                cmd.ExecuteNonQuery();
-                flag = (bool)outflag.Value;
-                if (flag == true)
-                {
-                    return flag;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Close();
-                }
-            }
-
-            return false;
-        }
-
-        #endregion Validate Unit
-
-
-        #region Update Unit
-
-        public void UpdateUnits()
-        {
-            dbConnection dcon = new dbConnection();
-
-            try
-            {
-
-                dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = dcon.SQLCon;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandText = "[UpdateUnits]";
-
-                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
-
-                cmd.Parameters.Add("@Code", SqlDbType.NVarChar, 255).Value = Code;
-                cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
-                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
-
-
-
-                cmd.Parameters.Add("@Status", SqlDbType.Int);
-                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
-                cmd.ExecuteNonQuery();
-                int Outputval = (int)cmd.Parameters["@Status"].Value;
-
-                cmd.ExecuteNonQuery();
-
-                if (Outputval == 1)
-                {
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.SavedSuccessMessage(page);
-                    //Success
-                }
-                else
-                {
-                    if (Outputval == 2)
-                    {
-                        var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.AlreadyExistsMessage(page);
-
-                        //Already exists!
-                    }
-                }
-
-
-
-                //SqlParameter Output = new SqlParameter();
-                //Output.DbType = DbType.Int32;
-                //Output.ParameterName = "@Status";
-                //Output.Direction = ParameterDirection.Output;
-                //cmd.Parameters.Add(Output);
-                //cmd.ExecuteNonQuery();
-
-                //if (Output.Value.ToString() == "")
-                //{
-                //    //not successfull   
-
-                //    var page = HttpContext.Current.CurrentHandler as Page;
-                //    eObj.SavingFailureMessage(page);
-                //    //eObj.UpdationNotSuccessMessage(page);
-
-                //}
-                //else
-                //{
-                //    //successfull
-
-                //    var page = HttpContext.Current.CurrentHandler as Page;
-                //    eObj.SavedSuccessMessage(page);
-                //    //eObj.UpdationSuccessMessage(page);
-
-                //}
-
-
-            }
-            catch (Exception ex)
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-            }
-
-            finally
-            {
-                if (dcon.SQLCon != null)
-                {
-                    dcon.DisconectDB();
-                }
-
-            }
-        }
-
-
-        #endregion Update Unit
-
-
-        public bool CheckUnitIsUsed()
-        {
-            bool isUsed = false;
-
-
-            SqlConnection con = null;
-            try
-            {
-
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("CheckUnitIsUsed", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar,255).Value = Description;
-
-                object ID = cmd.ExecuteScalar();
-
-                if (ID != null )
-                {
-                    //isUsed = Convert.ToBoolean(ID); 
-
-                    int c = Convert.ToInt32(ID);
-
-                    if (c > 0)
-                    {
-                        isUsed = true;
-                    }
-
-
-
-                }
-             
-
-               
-               
-            }
-            catch (Exception ex)
-            {
-                //throw ex;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Close();
-                }
-            }
-
-
-            return isUsed;
-
-
-        }
-
-        //------------------------------------*Unit *--------------------------------------------//
-
         #region BindGroupName
         public DataTable BindGroupName()
         {
@@ -1511,8 +378,6 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion BindClinicName
 
-
-
         #region View All Medicines
         public DataTable ViewAllMedicines()
         {
@@ -1551,12 +416,967 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion  View All Medicines
 
+        //------------------------------------* Doctor :Start *--------------------------------------------//
+
+        #region View Doctors
+
+        public DataTable ViewDoctors()
+        {
+            SqlConnection conn = null;
+            DataTable ds = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter da = null;
+            dbConnection dcon = new dbConnection();
+            try
+            {
+                conn = dcon.GetDBConnection();
+                //conn.Open();
+
+                cmd = new SqlCommand("[ViewDoctors]", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataTable();
+                da.Fill(ds);
+
+                conn.Close();
+
+            }
+            catch (Exception ex)
+            {
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleDoctor;
+
+                eObj.UserID = usrid;
+                eObj.Method = "ViewDoctors";
+
+                eObj.InsertError();
+            }
 
 
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+
+            }
+            return ds;
+        }
+
+        #endregion View Doctors
+
+        #region Validate Doctor Name
+        public bool CheckDoctorNameDuplication()
+        {
+            bool flag;
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckDoctorNameDuplication", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@DoctorName", SqlDbType.VarChar, 255).Value = DoctorName;
+                SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
+                outflag.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                flag = (bool)outflag.Value;
+                if (flag == true)
+                {
+                    return flag;
+                }
+            }
+            catch (Exception ex)
+            {
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleDoctor;
+
+                eObj.UserID = usrid;
+                eObj.Method = "CheckDoctorNameDuplication";
+
+                eObj.InsertError();
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+            return false;
+        }
+
+        #endregion Validate Doctor Name
+
+        #region AddDoctors
+        public void InsertDoctors()
+        {
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand pud = new SqlCommand();
+                pud.Connection = con;
+                pud.CommandType = System.Data.CommandType.StoredProcedure;
+                pud.CommandText = "[InsertDoctors]";
+
+                pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                pud.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.NewGuid();
+                pud.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = DoctorName;
+                pud.Parameters.Add("@Phone", SqlDbType.NVarChar, 255).Value = DoctorPhone;
+                pud.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
+                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = createdBy;
 
 
+                if (UsrID != Guid.Empty)
+                {
+                    pud.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UsrID;
+                }
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                pud.Parameters.Add(Output);
+                pud.ExecuteNonQuery();
+
+                if (Output.Value.ToString() == "")
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page; //not successfull   
+                    eObj.SavingFailureMessage(page);
+
+                }
+                else
+                {
+                    int rslt = Convert.ToInt32(Output.Value.ToString());
+
+                    if (rslt == 1)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;  //successfull
+                        eObj.SavedSuccessMessage(page);
+                    }
+
+                    if (rslt == 0)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
+
+                    }
+
+                }
 
 
+            }
+            catch (Exception ex)
+            {
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleDoctor;
+
+                eObj.UserID = usrid;
+                eObj.Method = "InsertDoctors";
+
+                eObj.InsertError();
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+
+        }
+        #endregion AddDoctors
+
+        #region Update Doctors
+        public void UpdateDoctors()
+        {
+            dbConnection dcon = null;
+
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[UpdateDoctors]";
+
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
+                //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = DoctorName;
+                cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 15).Value = DoctorPhone;
+                cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
+                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() == "")
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;  //not successfull   
+                    eObj.SavingFailureMessage(page);
+
+                }
+                else
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;   //successfull
+                    eObj.SavedSuccessMessage(page);
+
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleDoctor;
+
+                eObj.UserID = usrid;
+                eObj.Method = "UpdateDoctors";
+
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+        }
+
+
+        #endregion Update Doctors
+
+        #region Check DoctorId Used
+
+        public bool CheckDoctorIdUsed()
+        {
+            bool isUsed = false;
+
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckDoctorIdUsed", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlParameter outflag = cmd.Parameters.Add("@Cnt", SqlDbType.Bit);
+                outflag.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+
+                object ID = outflag.Value;
+
+                isUsed = Convert.ToBoolean(ID);
+
+            }
+            catch (Exception ex)
+            {
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleDoctor;
+
+                eObj.UserID = usrid;
+                eObj.Method = "CheckDoctorIdUsed";
+
+                eObj.InsertError();
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+
+            return isUsed;
+
+        }
+
+        #endregion Check DoctorId Used
+
+        #region Get RoleID Of Doctor
+
+        public string GetRoleIDOfDoctor()
+        {
+            string DoctorRoleID = string.Empty;
+
+            dbConnection dcon = null;
+
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetRoleIDOFDoctor]";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                object ID = cmd.ExecuteScalar();
+                if (ID != null)
+                {
+                    DoctorRoleID = ID.ToString();
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleDoctor;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetRoleIDOfDoctor";
+
+                eObj.InsertError();
+
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+
+            return DoctorRoleID;
+        }
+
+        #endregion Get RoleID Of Doctor
+
+        #region Delete Doctor By DoctorID
+
+        public void DeleteDoctorByID(bool rdoNotDoctor = false)
+        {
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteDoctors";
+
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() == "")
+                {
+                    //not successfull   
+                    if (rdoNotDoctor == true)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.SavingFailureMessage(page);
+                    }
+                    else
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.DeletionNotSuccessMessage(page);
+                    }
+
+                }
+                else
+                {
+                    //successfull
+
+                    if (rdoNotDoctor == true)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.SavedSuccessMessage(page);
+                    }
+
+                    else
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.DeleteSuccessMessage(page);
+                    }
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleDoctor;
+
+                eObj.UserID = usrid;
+                eObj.Method = "DeleteDoctorByID";
+
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+        #endregion Delete Doctor By DoctorID
+
+        #region Get Doctor Details By Doctor ID
+        public DataTable GetDoctorDetailsByID()
+        {
+            SqlConnection con = null;
+            DataTable dtDoctorById = null;
+            try
+            {
+                dtDoctorById = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetDoctorDetailsByID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtDoctorById);
+
+            }
+            catch (Exception ex)
+            {
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleDoctor;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetDoctorDetailsByID";
+
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtDoctorById;
+        }
+
+        #endregion  Get Doctor Details By Doctor ID
+
+        #region GetDoctorDetailsByUserID
+        public DataTable GetDoctorDetailsByUserID()
+        {
+            SqlConnection con = null;
+            DataTable dtDoctorByUsrId = null;
+            try
+            {
+                dtDoctorByUsrId = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetDoctorDetailsByUserID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UsrID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtDoctorByUsrId);
+
+            }
+            catch (Exception ex)
+            {
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleDoctor;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetDoctorDetailsByUserID";
+
+                eObj.InsertError();
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtDoctorByUsrId;
+        }
+
+        #endregion GetDoctorDetailsByUserID-
+
+        //----------------------------------------* Doctor : End *--------------------------------------------//
+
+
+        
+        //------------------------------------* Unit :Start *--------------------------------------------//
+
+        #region AddUnit
+        public void InsertUnits()
+        {
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand pud = new SqlCommand();
+                pud.Connection = con;
+                pud.CommandType = System.Data.CommandType.StoredProcedure;
+                pud.CommandText = "[InsertUnits]";
+               
+                pud.Parameters.Add("@Code", SqlDbType.NVarChar, 255).Value = Code;
+                pud.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
+                pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar,255).Value = createdBy;
+               
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                pud.Parameters.Add(Output);
+                pud.ExecuteNonQuery();
+
+                if (Output.Value.ToString() == "")
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;   //not successfull   
+                    eObj.SavingFailureMessage(page);
+
+                }
+                else
+                {
+                    int rslt = Convert.ToInt32(Output.Value.ToString());
+
+                    if (rslt == 1)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;  //successfull
+                        eObj.SavedSuccessMessage(page);
+                    }
+
+                    if (rslt == 2)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
+
+                    }
+                   
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = usrid;
+                eObj.Method = "InsertUnits";
+
+                eObj.InsertError();
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+        }
+
+        #endregion AddUnits
+
+        #region Update Unit
+
+        public void UpdateUnits()
+        {
+            dbConnection dcon = new dbConnection();
+
+            try
+            {
+
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "[UpdateUnits]";
+
+                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
+
+                cmd.Parameters.Add("@Code", SqlDbType.NVarChar, 255).Value = Code;
+                cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
+                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
+
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
+
+                if (Outputval == 1)
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;  //Success
+                    eObj.SavedSuccessMessage(page);
+
+                }
+                else
+                {
+                    if (Outputval == 2)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;   //Already exists!
+                        eObj.AlreadyExistsMessage(page);
+
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = usrid;
+                eObj.Method = "UpdateUnits";
+
+                eObj.InsertError();
+
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+        }
+
+
+        #endregion Update Unit
+
+        #region Check Unit Is Used
+
+        public bool CheckUnitIsUsed()
+        {
+            bool isUsed = false;
+
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckUnitIsUsed", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 255).Value = Description;
+
+                object ID = cmd.ExecuteScalar();
+
+                if (ID != null)
+                {
+                    //isUsed = Convert.ToBoolean(ID); 
+
+                    int c = Convert.ToInt32(ID);
+
+                    if (c > 0)
+                    {
+                        isUsed = true;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = usrid;
+                eObj.Method = "CheckUnitIsUsed";
+
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+
+            return isUsed;
+
+
+        }
+
+        #endregion  Check Unit Is Used
+
+        #region Get Unit By UnitID
+        public DataTable GetUnitByID()
+        {
+            SqlConnection con = null;
+            DataTable dtUsers = null;
+            try
+            {
+                dtUsers = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetUnitByID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUsers);
+
+            }
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetUnitByID";
+
+                eObj.InsertError();
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUsers;
+        }
+
+        #endregion  Get Unit By UnitID
+
+        #region Delete unit By UnitId
+
+        public void DeleteUnitByUnitId()
+        {
+
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteunitByID";
+
+                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() == "")
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;  //not successfull  
+                    eObj.DeletionNotSuccessMessage(page);
+
+                }
+                else
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page; //successfull
+                    eObj.DeleteSuccessMessage(page);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = usrid;
+                eObj.Method = "DeleteUnitByUnitId";
+
+                eObj.InsertError();
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+        }
+
+        #endregion  Delete unit By UnitId
+
+        #region Validate Unit
+        public bool CheckUnitDuplication(string UnitDescription)
+        {
+            bool flag;
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckUnitDuplication", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@unit", SqlDbType.VarChar, 255).Value = UnitDescription;
+                SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
+                outflag.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                flag = (bool)outflag.Value;
+                if (flag == true)
+                {
+                    return flag;
+                }
+            }
+            catch (Exception ex)
+            {
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = usrid;
+                eObj.Method = "CheckUnitDuplication";
+
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+            return false;
+        }
+
+        #endregion Validate Unit
+
+        #region View All Units
+        public DataTable ViewAllUnits()
+        {
+            SqlConnection con = null;
+            DataTable dtUsers = null;
+            try
+            {
+                dtUsers = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ViewUnits", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUsers);
+
+            }
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = usrid;
+                eObj.Method = "ViewAllUnits";
+
+                eObj.InsertError();
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUsers;
+        }
+
+        #endregion  View All Units
+
+        //----------------------------------------* Unit : End *--------------------------------------------//
 
         #endregion Methods
     }

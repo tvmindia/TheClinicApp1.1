@@ -1,4 +1,13 @@
-﻿using System;
+﻿
+#region CopyRight
+
+//Author      : SHAMILA T P
+
+#endregion CopyRight
+
+#region Included Namespaces
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,39 +18,53 @@ using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
 using Messages = TheClinicApp1._1.UIClasses.Messages;
 
+#endregion Included Namespaces
+
 namespace TheClinicApp1._1.MasterAdd
 {
     public partial class Units : System.Web.UI.Page
     {
+        #region Global Variables
 
         Master mstrObj = new Master();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         ErrorHandling eObj = new ErrorHandling();
 
+        #endregion Global Variables
+
+        #region Methods
+
         #region Bind Units Gridview
 
         public void BindGridview()
         {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            mstrObj.ClinicID = UA.ClinicID;
-      DataTable   dtUnits =     mstrObj.ViewAllUnits();
+           
+            DataTable dtUnits = mstrObj.ViewAllUnits();
 
-      dtgViewAllUnits.DataSource = dtUnits;
-      dtgViewAllUnits.DataBind();
+            if (dtUnits != null)
+            {
+                dtgViewAllUnits.DataSource = dtUnits;
+                dtgViewAllUnits.DataBind();
 
-      lblCaseCount.Text = dtgViewAllUnits.Rows.Count.ToString();
+                lblCaseCount.Text = dtgViewAllUnits.Rows.Count.ToString();
+            }
 
         }
 
         #endregion Bind Units Gridview
 
+        #endregion Methods
+
+        #region Events
+
+        #region Page Load
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            //lblClinicName.Text = UA.Clinic;
-            //lblUserName.Text = "👤 " + UA.userName + " "; 
-
+            mstrObj.ClinicID = UA.ClinicID;
+            mstrObj.usrid = UA.UserID;
+            
             if (!IsPostBack)
             {
                 BindGridview();
@@ -49,25 +72,25 @@ namespace TheClinicApp1._1.MasterAdd
 
         }
 
+        #endregion Page Load
+
+        #region Save Button Click
+
         protected void btSave_ServerClick(object sender, EventArgs e)
         {
+           
             var page = HttpContext.Current.CurrentHandler as Page;
 
             string msg = string.Empty;
 
             if (txtDescription.Value.TrimStart() != string.Empty)
             {
-                UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
                 //mstrObj.Code = txtCOde.Value;
                 mstrObj.Code = txtDescription.Value.TrimStart();
                 mstrObj.Description = txtDescription.Value.TrimStart();
-                mstrObj.ClinicID = UA.ClinicID;
                
-
                 if (hdnUnitID.Value == string.Empty)
                 {
-
                      mstrObj.createdBy = UA.userName;
                     mstrObj.InsertUnits();
                 }
@@ -77,10 +100,9 @@ namespace TheClinicApp1._1.MasterAdd
                     mstrObj.UnitID = Guid.Parse(hdnUnitID.Value);
                     mstrObj.updatedBy = UA.userName;
 
-                   
                     DataTable dt = mstrObj.GetUnitByID();
 
-                    if (dt.Rows.Count > 0)
+                    if (dt != null && dt.Rows.Count > 0)
                     {
                          mstrObj.Description =   dt.Rows[0]["Description"].ToString();
                     }
@@ -90,7 +112,6 @@ namespace TheClinicApp1._1.MasterAdd
 
                   if (isUsed == false)
                     {
-
                         mstrObj.Description = txtDescription.Value;
                         mstrObj.UpdateUnits();
                     }
@@ -106,10 +127,6 @@ namespace TheClinicApp1._1.MasterAdd
                     
                 }
 
-
-
-
-
                 BindGridview();
             }
 
@@ -123,6 +140,10 @@ namespace TheClinicApp1._1.MasterAdd
             
         }
 
+        #endregion Save Button Click
+
+        #region Delete Button Click
+
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
             Errorbox.Attributes.Add("style", "display:none");
@@ -132,14 +153,7 @@ namespace TheClinicApp1._1.MasterAdd
 
             string msg = string.Empty;
 
-
-
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            mstrObj.ClinicID = UA.ClinicID;
             DataTable dtUnits = mstrObj.ViewAllUnits();
-
-           
-
 
             ImageButton ib = sender as ImageButton;
             GridViewRow row = ib.NamingContainer as GridViewRow;
@@ -154,33 +168,7 @@ namespace TheClinicApp1._1.MasterAdd
                 mstrObj.Description = dt.Rows[0]["Description"].ToString();
             }
 
-
              isUsed = mstrObj.CheckUnitIsUsed();
-
-
-            //foreach (DataRow dr in dtUnits.Rows)
-            //{
-            //    if (dr["UnitID"].ToString() == UnitId.ToString())
-            //    {
-            //        mstrObj.Description = dr["Description"].ToString();
-
-            //        DataTable dt1 = mstrObj.GetPrescDTByUnit();
-            //        DataTable dt2 = mstrObj.GetReceiptDTByUnit();
-            //        DataTable dt3 = mstrObj.GetMedicineByUnit();
-
-
-            //        if ( (dt1.Rows.Count > 0) || (dt2.Rows.Count > 0) || (dt3.Rows.Count > 0))
-            //        {
-            //             msg = "Already used . Can't be deleted";
-            //              eObj.DeletionNotSuccessMessage(page, msg);
-            //              isUsed = true;
-            //              break;
-            //        }
-
-
-
-            //    }
-            //}
 
             if (isUsed == false)
             {
@@ -197,16 +185,23 @@ namespace TheClinicApp1._1.MasterAdd
                 eObj.DeletionNotSuccessMessage(page, msg);
             }
 
-
         }
 
+        #endregion Delete Button Click
 
-        #region Validate Unit 
+        #region Validate Unit
 
         [WebMethod]
         public static bool ValidateUnit(string Unit)
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
             Master mstrObj = new Master();
+
+            mstrObj.usrid = UA.UserID;
 
             if (mstrObj.CheckUnitDuplication(Unit))
             {
@@ -217,6 +212,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion  Validate Unit
 
+        #region LogOut
 
         protected void Logout_ServerClick(object sender, EventArgs e)
         {
@@ -230,12 +226,13 @@ namespace TheClinicApp1._1.MasterAdd
             Response.Redirect("../Default.aspx");
         }
 
+        #endregion LogOut
+
+        #region Update Button Click
+
         protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
         {
             Errorbox.Attributes.Add("style", "display:none");
-
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
 
             ImageButton ib = sender as ImageButton;
             GridViewRow row = ib.NamingContainer as GridViewRow;
@@ -245,16 +242,15 @@ namespace TheClinicApp1._1.MasterAdd
             mstrObj.UnitID = UnitID;
             DataTable dt = mstrObj.GetUnitByID();
 
-            if (dt.Rows.Count > 0)
+            if (dt != null && dt.Rows.Count > 0)
             {
                 txtDescription.Value = dt.Rows[0]["Description"].ToString();
             }
 
 
-
-
-
         }
+
+        #endregion Update Button Click
 
         #region Paging
         protected void dtgViewAllUnits_PreRender(object sender, EventArgs e)
@@ -263,5 +259,7 @@ namespace TheClinicApp1._1.MasterAdd
             dtgViewAllUnits.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
         #endregion Paging
+
+        #endregion Events
     }
 }

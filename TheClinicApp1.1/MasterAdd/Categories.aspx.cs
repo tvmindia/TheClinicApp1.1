@@ -1,4 +1,13 @@
-﻿using System;
+﻿
+#region CopyRight
+
+//Author      : SHAMILA T P
+
+#endregion CopyRight
+
+#region Included Namespaces
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,15 +18,16 @@ using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
 using Messages = TheClinicApp1._1.UIClasses.Messages;
 
+#endregion Included Namespaces
 
 namespace TheClinicApp1._1.MasterAdd
 {
     public partial class Categories : System.Web.UI.Page
     {
+
         #region Global Variables
 
-        Guid usrid = Guid.NewGuid();
-
+        public string RoleName = null;
 
         ErrorHandling eObj = new ErrorHandling();
         Category CategoryObj = new Category();
@@ -25,10 +35,9 @@ namespace TheClinicApp1._1.MasterAdd
         ClinicDAL.UserAuthendication UA;
         User usrObj = new User();
 
-        
-        public string RoleName = null;
-
         #endregion Global Variables
+
+        #region Methods
 
         #region Validate Category Name
 
@@ -36,7 +45,14 @@ namespace TheClinicApp1._1.MasterAdd
         public static bool ValidateCategoryName(string CategoryName)
         
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
             Category CategoryObj = new Category();
+            CategoryObj.usrid = UA.UserID; 
+
 
             if (CategoryObj.ValidateCategoryName(CategoryName))
             {
@@ -47,57 +63,48 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion  Validate Category Name
 
-
-     
-
-
-
         #region Add New Category
         public void AddNewCategory()
         {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
             CategoryObj.CategoryName = txtCategoryName.Value.TrimStart();
-            CategoryObj.ClinicID = UA.ClinicID;
+           
             CategoryObj.CreatedBy = UA.userName;
 
-            CategoryObj.usrid = UA.UserID;
-
             CategoryObj.AddNewCategory();
-
-
 
         }
 
         #endregion Add New Category
 
-
         #region Bind Category Gridview
 
         public void BindGridview()
         {
-           
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            CategoryObj.ClinicID = UA.ClinicID;
            DataTable dt = CategoryObj.ViewAllCategory();
 
-           dtgViewAllCategories.DataSource = dt;
-           dtgViewAllCategories.DataBind();
+           if (dt != null)
+           {
+               dtgViewAllCategories.DataSource = dt;
+               dtgViewAllCategories.DataBind();
 
-           lblCaseCount.Text = dtgViewAllCategories.Rows.Count.ToString();
+               lblCaseCount.Text = dtgViewAllCategories.Rows.Count.ToString();
+
+           }
 
         }
 
         #endregion Bind Category Gridview
 
+        #endregion Methods
 
+        #region Events
+
+        #region Page Load
         protected void Page_Load(object sender, EventArgs e)
         {
-
-          
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            //lblClinicName.Text = UA.Clinic;
-            //lblUserName.Text = "👤 " + UA.userName + " "; 
+           
+            CategoryObj.ClinicID = UA.ClinicID;
 
             if (!IsPostBack)
             {
@@ -106,44 +113,16 @@ namespace TheClinicApp1._1.MasterAdd
 
         }
 
-        protected void Save_ServerClick(object sender, EventArgs e)
-        {
-            //var page = HttpContext.Current.CurrentHandler as Page;
-            //UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            //string msg = string.Empty;
+        #endregion Page Load
 
-            //if (txtCategoryName.Value != string.Empty)
-            //{
-
-            //    if (hdnCategoryId.Value != string.Empty)
-            //    {
-            //        CategoryObj.UpdatedBy = UA.userName;
-            //        CategoryObj.CategoryID = Guid.Parse(hdnCategoryId.Value);
-            //        CategoryObj.CategoryName = txtCategoryName.Value;
-            //        CategoryObj.UpdateCategory();
-            //    }
-            //    else
-            //    {
-            //        AddNewCategory();
-            //    }
-                
-            //}
-
-            //else
-            //{
-            //    //msg = "Please fill out all the fields";
-            //    msg = Messages.MandatoryFields;
-            //    eObj.InsertionNotSuccessMessage(page, msg);
-            //}
-
-        }
+        #region Save Button Click
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
             //AddNewCategory();
 
             var page = HttpContext.Current.CurrentHandler as Page;
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+         
             string msg = string.Empty;
 
             if (txtCategoryName.Value.TrimStart() != string.Empty)
@@ -154,6 +133,9 @@ namespace TheClinicApp1._1.MasterAdd
                     CategoryObj.UpdatedBy = UA.userName;
                     CategoryObj.CategoryID = Guid.Parse(hdnCategoryId.Value);
                     CategoryObj.CategoryName = txtCategoryName.Value.TrimStart();
+
+                    CategoryObj.usrid = UA.UserID;
+
                     CategoryObj.UpdateCategory();
                 }
                 else
@@ -175,8 +157,12 @@ namespace TheClinicApp1._1.MasterAdd
             BindGridview();
         }
 
+        #endregion Save Button Click
+
+        #region Delete Image Button Click
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
+           
             Errorbox.Attributes.Add("style", "display:none");
             var page = HttpContext.Current.CurrentHandler as Page;
 
@@ -185,11 +171,13 @@ namespace TheClinicApp1._1.MasterAdd
             GridViewRow row = ib.NamingContainer as GridViewRow;
             Guid Ctgryid = Guid.Parse(dtgViewAllCategories.DataKeys[row.RowIndex].Value.ToString());
 
-            CategoryObj.CategoryID = Ctgryid;
+            
          DataTable dtCtgry =    CategoryObj.ViewMedicinesByCategoryID();
 
          if (dtCtgry.Rows.Count == 0)
          {
+             CategoryObj.usrid = UA.UserID;
+
              CategoryObj.CategoryID = Ctgryid;
              CategoryObj.DeleteCategoryById();
          } 
@@ -206,6 +194,10 @@ namespace TheClinicApp1._1.MasterAdd
 
         }
 
+        #endregion Delete Image Button Click
+
+        #region Logout Click
+
         protected void Logout_ServerClick(object sender, EventArgs e)
         {
             Session.Remove(Const.LoginSession);
@@ -219,6 +211,8 @@ namespace TheClinicApp1._1.MasterAdd
             Response.Redirect("../Default.aspx");
         }
 
+        #endregion Logout Click
+
         #region Paging
         protected void dtgViewAllCategories_PreRender(object sender, EventArgs e)
         {
@@ -228,8 +222,11 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion Paging
 
+        #region Update Image Button Click
+
         protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
         {
+          
             Errorbox.Attributes.Add("style", "display:none");
 
             var page = HttpContext.Current.CurrentHandler as Page;
@@ -242,7 +239,7 @@ namespace TheClinicApp1._1.MasterAdd
             CategoryObj.CategoryID = Ctgryid;
             hdnCategoryId.Value = Ctgryid.ToString();
 
-
+           
 
             DataTable dt = CategoryObj.ViewCategoryByCategoryID();
 
@@ -254,5 +251,13 @@ namespace TheClinicApp1._1.MasterAdd
         
             //cat
         }
+
+        #endregion Update Image Button Click
+
+        #endregion Events
+
+       
+
+
     }
 }

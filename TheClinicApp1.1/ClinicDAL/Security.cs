@@ -42,6 +42,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Global Variables
 
         CryptographyFunctions CryptObj = new CryptographyFunctions();
+      
 
         #endregion Global Variables
 
@@ -367,6 +368,23 @@ namespace TheClinicApp1._1.ClinicDAL
 
     public class CryptographyFunctions
     {
+
+        ErrorHandling eObj = new ErrorHandling();
+        public string Module = "Security";
+
+
+        /// <summary>
+        /// User id of logined user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
+
+
+
+
         //AES 128bit Cross Platform (Java and C#) Encryption Compatibility
         string key = System.Web.Configuration.WebConfigurationManager.AppSettings["cryptography"];
         /// <summary>
@@ -397,7 +415,17 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
                 //System.IO.File.WriteAllText(@Server.MapPath("~/Text.txt"), ex.Message);
-                throw ex;
+                //throw ex;
+
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "Encrypt";
+
+                eObj.InsertError();
+
+
             }
             return encryptedText;
         }

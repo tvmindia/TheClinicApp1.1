@@ -23,6 +23,8 @@ namespace TheClinicApp1._1.ClinicDAL
     {
         #region Global Variables
 
+        public string Module = "Assign Role";
+
         ErrorHandling eObj = new ErrorHandling();
        
         public Guid UniqueID
@@ -60,6 +62,15 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
+        /// <summary>
+        /// User id of logined user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
+
 
         #endregion Global Variables
 
@@ -81,13 +92,18 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
                 adapter.Fill(dtUsers);
-                return dtUsers;
+               
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetDetailsOfAllUsers";
+
+                eObj.InsertError();
+               
             }
             finally
             {
@@ -97,6 +113,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return dtUsers;
         }
         #endregion  View All users 
 
@@ -117,13 +135,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
                 adapter.Fill(dtRoles);
-                return dtRoles;
+              
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetDetailsOfAllRoles";
+
+                eObj.InsertError();
             }
             finally
             {
@@ -133,6 +155,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return dtRoles;
         }
 
         #endregion View All Roles
@@ -162,9 +186,14 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                //throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetAssignedRoleByUserID";
+
+                eObj.InsertError();
+               
             }
             finally
             {
@@ -203,9 +232,13 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-              
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetDetailsOfAllAssignedRoles";
+
+                eObj.InsertError();
             }
             finally
             {
@@ -249,19 +282,14 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 if (Output.Value.ToString() == "")
                 {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;  //not successfull   
                     eObj.SavingFailureMessage(page);
 
                 }
                 else
                 {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;   //successfull
                     eObj.SavedSuccessMessage(page);
-
 
                 }
 
@@ -269,9 +297,13 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
 
+                eObj.UserID = usrid;
+                eObj.Method = "AssignRole";
+
+                eObj.InsertError();
             }
 
             finally
@@ -284,9 +316,6 @@ namespace TheClinicApp1._1.ClinicDAL
             }
         }
         #endregion Assign Role
-
-        
-
 
         #region Delete Assigned Role By UserID
 
@@ -314,19 +343,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 if (Output.Value.ToString() == "")
                 {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;  //not successfull   
                     eObj.SavingFailureMessage(page);
-
                 }
                 else
                 {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;  //successfull
                     eObj.SavedSuccessMessage(page);
-
 
                 }
 
@@ -334,8 +357,13 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "DeleteAssignedRoleByUserID";
+
+                eObj.InsertError();
 
             }
 

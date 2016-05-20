@@ -231,8 +231,9 @@ namespace TheClinicApp1._1.Admin
               UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             userObj.ClinicID = UA.ClinicID;
 
-            DoctorRoleID = userObj.GetRoleIDOfDoctor();
+            //DoctorRoleID = userObj.GetRoleIDOfDoctor();
 
+            DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
             return DoctorRoleID;
         }
 
@@ -422,6 +423,14 @@ namespace TheClinicApp1._1.Admin
         ///Checking login name duplication
         public static bool ValidateLoginName(string LogName)
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            Master mstrObj = new Master();
+
+            mstrObj.usrid = UA.UserID;
+
             string loginName = LogName;
 
             ClinicDAL.User userObj = new ClinicDAL.User();
@@ -439,10 +448,17 @@ namespace TheClinicApp1._1.Admin
         public void BindGriewWithDetailsOfAllUsers()
         {
             DataTable dtUsers = userObj.GetDetailsOfAllUsers();
-            dtgViewAllUsers.DataSource = dtUsers;
-            dtgViewAllUsers.DataBind();
 
-            lblCaseCount.Text = dtgViewAllUsers.Rows.Count.ToString();
+            if (dtUsers != null)
+            {
+                dtgViewAllUsers.DataSource = dtUsers;
+                dtgViewAllUsers.DataBind();
+
+                lblCaseCount.Text = dtgViewAllUsers.Rows.Count.ToString();
+                
+            }
+
+           
         }
 
         #endregion Bind Gridview
@@ -452,10 +468,15 @@ namespace TheClinicApp1._1.Admin
          [WebMethod]
         public static bool DeleteUserByID(string UsrID)
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
 
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            Master mstrObj = new Master();
+
+            mstrObj.usrid = UA.UserID;
             bool UserDeleted = false;
             ClinicDAL.User userObj = new ClinicDAL.User();
-
 
             Guid UserID = Guid.Parse(UsrID);
             userObj.UserID = UserID;
@@ -475,16 +496,12 @@ namespace TheClinicApp1._1.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            //PropertyInfo isreadonly = typeof(System.Collections.Specialized.NameValueCollection).GetProperty("IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
-            //isreadonly.SetValue(this.Request.QueryString, false, null);
-
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            mstrObj.usrid = UA.UserID;
+
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
-
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             if (!IsPostBack)
             {
@@ -493,7 +510,7 @@ namespace TheClinicApp1._1.Admin
                 BindGriewWithDetailsOfAllUsers();
             }
            
-            //hdnUserCountChanged.Value = "True";
+           
         }
 
         #endregion Page Load

@@ -43,10 +43,15 @@ namespace TheClinicApp1._1.MasterAdd
         public void BindGridview()
         {
             DataTable dtDoctors = mstrObj.ViewDoctors();
-            dtgDoctors.DataSource = dtDoctors;
-            dtgDoctors.DataBind();
 
-            lblCaseCount.Text = dtgDoctors.Rows.Count.ToString();
+            if (dtDoctors != null)
+            {
+                dtgDoctors.DataSource = dtDoctors;
+                dtgDoctors.DataBind();
+
+                lblCaseCount.Text = dtgDoctors.Rows.Count.ToString();
+            }
+
         }
 
         #endregion Bind Gridview
@@ -111,9 +116,6 @@ namespace TheClinicApp1._1.MasterAdd
         #region Add User To User Table
         public void AddUserToUserTable()
         {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
-
             userObj.firstName = txtName.Value.TrimStart();
             userObj.loginName = txtName.Value.TrimStart();
             userObj.lastName = string.Empty;
@@ -170,9 +172,16 @@ namespace TheClinicApp1._1.MasterAdd
         [WebMethod]
         public static bool ValidateDoctorName(string DoctorName)
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
             Master mstrObj = new Master();
 
+            mstrObj.usrid = UA.UserID;
             mstrObj.DoctorName = DoctorName;
+
             if (mstrObj.CheckDoctorNameDuplication())
             {
                 return true;
@@ -191,8 +200,6 @@ namespace TheClinicApp1._1.MasterAdd
             mstrObj.DoctorEmail = txtEmail.Value;
             mstrObj.DoctorPhone = txtPhoneNumber.Value;
 
-
-
             if ( hdnDrID.Value == string.Empty)
             {
                 //INSERT Doctor
@@ -208,8 +215,6 @@ namespace TheClinicApp1._1.MasterAdd
 
             }
 
-
-
             else
             {
                 //UPDATE Doctor
@@ -218,7 +223,6 @@ namespace TheClinicApp1._1.MasterAdd
                 mstrObj.updatedBy = UA.userName;
                 mstrObj.UpdateDoctors();
                 //}
-
 
             }
         }
@@ -243,10 +247,9 @@ namespace TheClinicApp1._1.MasterAdd
         {
             string DoctorRoleID = string.Empty;
 
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             userObj.ClinicID = UA.ClinicID;
-
-            DoctorRoleID = userObj.GetRoleIDOfDoctor();
+            
+            DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
 
             return DoctorRoleID;
         }
@@ -260,8 +263,7 @@ namespace TheClinicApp1._1.MasterAdd
         /// </summary>
         public void AddUserRole()
         {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
+           
             roleObj.ClinicID = UA.ClinicID;
 
             string roleid = GetRoleIDOFDoctor();
@@ -303,6 +305,11 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            mstrObj.ClinicID = UA.ClinicID;
+            mstrObj.usrid = UA.UserID;
+
             if (!IsPostBack)
             {
                 BindGridview();
@@ -315,7 +322,6 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
@@ -346,7 +352,6 @@ namespace TheClinicApp1._1.MasterAdd
         {
             Errorbox.Attributes.Add("style", "display:none");
 
-             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
@@ -395,8 +400,6 @@ namespace TheClinicApp1._1.MasterAdd
         {
             Errorbox.Attributes.Add("style", "display:none");
 
-
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
             var page = HttpContext.Current.CurrentHandler as Page;
 
