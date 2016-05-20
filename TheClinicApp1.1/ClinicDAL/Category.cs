@@ -39,7 +39,8 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Public Properties
 
         ErrorHandling eObj = new ErrorHandling();
-
+        
+        public string Module = "Category";
 
         public Guid CategoryID
         {
@@ -71,9 +72,22 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
+        /// <summary>
+        /// User id of logined user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
+
+
+
         #endregion Public Properties
 
         #region Methods
+
+
 
         #region Add New Category
         public void AddNewCategory()
@@ -90,7 +104,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandText = "[InsertCategories]";
 
                 cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = Guid.NewGuid();
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID; 
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = CategoryName; 
 
@@ -121,8 +135,17 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "AddNewCategory";
+
+                eObj.InsertError();
+
+
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
 
                 //throw ex;
             }
@@ -300,13 +323,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
                 adapter.Fill(dtUsers);
-                return dtUsers;
+                
             }
             catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.ErrorData(ex, page);
-                throw ex;
+               
             }
             finally
             {
@@ -316,6 +339,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return dtUsers;
         }
 
         #endregion View All Category

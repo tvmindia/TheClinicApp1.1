@@ -25,7 +25,7 @@ namespace TheClinicApp1._1.UIClasses
 
         public static string ErrorNumber
         {
-            get { return "Error Numnber = "; }
+            get { return "Error Number = "; }
         }
 
        

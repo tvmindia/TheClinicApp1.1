@@ -16,10 +16,16 @@ namespace TheClinicApp1._1.MasterAdd
     {
         #region Global Variables
 
+        Guid usrid = Guid.NewGuid();
+
+
         ErrorHandling eObj = new ErrorHandling();
         Category CategoryObj = new Category();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
+        User usrObj = new User();
+
+        
         public string RoleName = null;
 
         #endregion Global Variables
@@ -42,6 +48,10 @@ namespace TheClinicApp1._1.MasterAdd
         #endregion  Validate Category Name
 
 
+     
+
+
+
         #region Add New Category
         public void AddNewCategory()
         {
@@ -50,6 +60,8 @@ namespace TheClinicApp1._1.MasterAdd
             CategoryObj.CategoryName = txtCategoryName.Value.TrimStart();
             CategoryObj.ClinicID = UA.ClinicID;
             CategoryObj.CreatedBy = UA.userName;
+
+            CategoryObj.usrid = UA.UserID;
 
             CategoryObj.AddNewCategory();
 
@@ -63,7 +75,8 @@ namespace TheClinicApp1._1.MasterAdd
         #region Bind Category Gridview
 
         public void BindGridview()
-        { 
+        {
+           
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             CategoryObj.ClinicID = UA.ClinicID;
            DataTable dt = CategoryObj.ViewAllCategory();
@@ -81,17 +94,7 @@ namespace TheClinicApp1._1.MasterAdd
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
-            //eObj.Description = "hello";
-            //eObj.Module = "mod";
-            //eObj.Method = "meth";
-            //eObj.UserID = Guid.Parse("9d2a967a-9111-4c3c-906c-1f88139be47c");
-
-
-            //eObj.InsertError();
-
-
-
+          
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             //lblClinicName.Text = UA.Clinic;
             //lblUserName.Text = "👤 " + UA.userName + " "; 

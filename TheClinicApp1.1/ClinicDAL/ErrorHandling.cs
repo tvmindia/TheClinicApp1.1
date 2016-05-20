@@ -32,11 +32,11 @@ namespace TheClinicApp1._1.ClinicDAL
         
 
 
-        public ErrorHandling()
-        {
+        //public ErrorHandling()
+        //{
 
-            ErrorID = Guid.NewGuid();
-        }
+        //    ErrorID = Guid.NewGuid();
+        //}
 
         public Guid ErrorID
         {
@@ -91,7 +91,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[InsertErrorLog]";
 
-                cmd.Parameters.Add("@ErrorID", SqlDbType.UniqueIdentifier).Value = ErrorID;
+                cmd.Parameters.Add("@ErrorID", SqlDbType.UniqueIdentifier).Value = Guid.NewGuid();
                 cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
                 cmd.Parameters.Add("@Module", SqlDbType.NVarChar, 15).Value = Module;
                 cmd.Parameters.Add("@Method", SqlDbType.NVarChar, 15).Value = Method;
@@ -144,7 +144,7 @@ namespace TheClinicApp1._1.ClinicDAL
             lblMsgges.Text = Messages.ErrorNumber + ErrorNumber;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
-            lblErrorCaption.Text = Messages.AlreadyExistsMsgCaption;
+            lblErrorCaption.Text = Messages.FailureMsgCaption;
             divMask1.Attributes["class"] = "alert alert-danger";
         }
 

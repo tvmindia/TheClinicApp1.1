@@ -54,7 +54,7 @@ namespace TheClinicApp1._1.ClinicDAL
         private Guid Clinic_ID;
         private Boolean isValidUser;
 
-
+        private Guid User_ID;
         public string userName
         {
 
@@ -108,6 +108,15 @@ namespace TheClinicApp1._1.ClinicDAL
             }
         }
 
+        public Guid UserID
+        {
+            get
+            {
+                return User_ID;
+            }
+        }
+
+
         #endregion Properties
 
         #region User Authentication
@@ -133,7 +142,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     GroupName = dt.Rows[0]["Group Name"].ToString();
                     Group_ID = new Guid(dt.Rows[0]["Group ID"].ToString());
 
-
+                    User_ID = new Guid(dt.Rows[0]["UserID"].ToString());
                 }
 
                 else
