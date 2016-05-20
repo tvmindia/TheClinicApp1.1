@@ -13,6 +13,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
+
+        string Module = "Prescription";
+
         #endregion Global Variables
 
         #region Property
@@ -64,7 +67,16 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-                
+
+        /// <summary>
+        /// User id of logined user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
+
                 
         #endregion Property
         
@@ -73,14 +85,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #region InsertPrescriptionHeaderDetails
         public void InsertPrescriptionHeaderDetails()
         {
-
           dbConnection dcon = null;
             
             try
             {
 
-            
-            
             DateTime now = DateTime.Now;
             dcon = new dbConnection();
             dcon.GetDBConnection();
@@ -100,17 +109,19 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value =UpdatedBy;
             cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = UpdatedDate;
 
-           
-
            cmd.ExecuteNonQuery();
            
              }
 
             catch (Exception ex)
             {
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
 
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.UserID = usrid;
+                eObj.Method = "InsertPrescriptionHeaderDetails";
+
+                eObj.InsertError();
 
             }
 
@@ -159,10 +170,13 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
 
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.UserID = usrid;
+                eObj.Method = "UpdatePrescriptionHeaderDetails";
 
+                eObj.InsertError();
             }
 
             finally
@@ -208,8 +222,13 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "UpdatePrescriptionHeaderDetails";
+
+                eObj.InsertError();
 
             }
 
@@ -256,9 +275,13 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
 
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.UserID = usrid;
+                eObj.Method = "DeletePrescriptionDetails";
+
+                eObj.InsertError();
             }
 
             finally
@@ -280,7 +303,10 @@ namespace TheClinicApp1._1.ClinicDAL
     public class PrescriptionDetails
     {
         #region Global Variables
+
+        string Module = "PrescriptionDetails";
         ErrorHandling eObj = new ErrorHandling();
+
         #endregion Global Variables
 
         public PrescriptionDetails()
@@ -355,7 +381,16 @@ namespace TheClinicApp1._1.ClinicDAL
              get;
              set;
          }
-                
+
+         /// <summary>
+         /// User id of logined user
+         /// </summary>
+         public Guid usrid
+         {
+             get;
+             set;
+         }
+
         #endregion Property     
         
         #region Methods
@@ -391,8 +426,13 @@ namespace TheClinicApp1._1.ClinicDAL
 
              catch (Exception ex)
              {
+                 eObj.Description = ex.Message;
+                 eObj.Module = Module;
 
-                 throw ex;
+                 eObj.UserID = usrid;
+                 eObj.Method = "InsertPrescriptionDetails";
+
+                 eObj.InsertError();
              }
 
              finally
@@ -438,9 +478,13 @@ namespace TheClinicApp1._1.ClinicDAL
 
              catch (Exception ex)
              {
+                 eObj.Description = ex.Message;
+                 eObj.Module = Module;
 
-                 var page = HttpContext.Current.CurrentHandler as Page;
-                 eObj.ErrorData(ex, page);
+                 eObj.UserID = usrid;
+                 eObj.Method = "ViewPrescriptionDetails";
+
+                 eObj.InsertError();
              }
 
              finally
@@ -460,13 +504,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
          public void UpdatePrescriptionDetails(string UniqueID)
          {
-
              dbConnection dcon = null;
 
              try
              {
-
-            
                  dcon = new dbConnection();
                  dcon.GetDBConnection();
                  SqlCommand cmd = new SqlCommand();
@@ -484,16 +525,19 @@ namespace TheClinicApp1._1.ClinicDAL
                  cmd.Parameters.Add("@Days", SqlDbType.NVarChar, 20).Value = Days;
                  cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
 
-
                  cmd.ExecuteNonQuery();
 
              }
 
              catch (Exception ex)
              {
+                 eObj.Description = ex.Message;
+                 eObj.Module = Module;
 
-                 var page = HttpContext.Current.CurrentHandler as Page;
-                 eObj.ErrorData(ex, page);
+                 eObj.UserID = usrid;
+                 eObj.Method = "UpdatePrescriptionDetails";
+
+                 eObj.InsertError();
              }
 
              finally
@@ -514,13 +558,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
          public void DeletePrescriptionDetails( string UniqueID)
          {
-
              dbConnection dcon = null;
 
              try
              {
-
-
                  dcon = new dbConnection();
                  dcon.GetDBConnection();
                  SqlCommand cmd = new SqlCommand();
@@ -536,9 +577,13 @@ namespace TheClinicApp1._1.ClinicDAL
 
              catch (Exception ex)
              {
+                 eObj.Description = ex.Message;
+                 eObj.Module = Module;
 
-                 var page = HttpContext.Current.CurrentHandler as Page;
-                 eObj.ErrorData(ex, page);
+                 eObj.UserID = usrid;
+                 eObj.Method = "DeletePrescriptionDetails";
+
+                 eObj.InsertError();
              }
 
              finally
@@ -561,14 +606,30 @@ namespace TheClinicApp1._1.ClinicDAL
              DataTable dt = null;
              SqlConnection con = null;
              dbConnection dcon = new dbConnection();
-             con = dcon.GetDBConnection();
-             SqlCommand cmd = new SqlCommand("SearchMedicinewithCategory", con);
-             cmd.CommandType = CommandType.StoredProcedure;
-             SqlDataAdapter adapter = new SqlDataAdapter();
-             adapter.SelectCommand = cmd;
-             dt = new DataTable();
-             adapter.Fill(dt);
-             con.Close();
+
+             try
+             {
+                 con = dcon.GetDBConnection();
+                 SqlCommand cmd = new SqlCommand("SearchMedicinewithCategory", con);
+                 cmd.CommandType = CommandType.StoredProcedure;
+                 SqlDataAdapter adapter = new SqlDataAdapter();
+                 adapter.SelectCommand = cmd;
+                 dt = new DataTable();
+                 adapter.Fill(dt);
+                 con.Close();
+             }
+             catch (Exception ex)
+             {
+                 eObj.Description = ex.Message;
+                 eObj.Module = Module;
+
+                 eObj.UserID = usrid;
+                 eObj.Method = "SearchMedicinewithCategory"; 
+
+                 eObj.InsertError();
+             }
+
+            
              return dt;
 
          }

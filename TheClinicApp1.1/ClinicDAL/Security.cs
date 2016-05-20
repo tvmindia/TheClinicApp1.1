@@ -11,7 +11,7 @@
 
 #region Included Namespaces
 
- using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -20,6 +20,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.UI;
 using TheClinicApp1._1.ClinicDAL;
 
 #endregion Included Namespaces
@@ -188,13 +189,16 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                eObj.Description = ex.Message;
-                eObj.Module = Module;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
 
-                eObj.UserID = usrid;
-                eObj.Method = "GetLoginDetails";
+                //eObj.Description = ex.Message;
+                //eObj.Module = Module;
 
-                eObj.InsertError();
+                //eObj.UserID = usrid;
+                //eObj.Method = "GetLoginDetails";
+
+                //eObj.InsertError();
             }
             finally
             {
@@ -231,13 +235,16 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                eObj.Description = ex.Message;
-                eObj.Module = Module;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
 
-                eObj.UserID = usrid;
-                eObj.Method = "GetDoctorAndDoctorID";
+                //eObj.Description = ex.Message;
+                //eObj.Module = Module;
 
-                eObj.InsertError();
+                //eObj.UserID = usrid;
+                //eObj.Method = "GetDoctorAndDoctorID";
+
+                //eObj.InsertError();
             }
             finally
             {
@@ -280,13 +287,16 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                eObj.Description = ex.Message;
-                eObj.Module = Module;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
 
-                eObj.UserID = usrid;
-                eObj.Method = "GetRoleName";
+                //eObj.Description = ex.Message;
+                //eObj.Module = Module;
 
-                eObj.InsertError();
+                //eObj.UserID = usrid;
+                //eObj.Method = "GetRoleName";
+
+                //eObj.InsertError();
             }
             finally
             {
@@ -332,13 +342,16 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                eObj.Description = ex.Message;
-                eObj.Module = Module;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
 
-                eObj.UserID = usrid;
-                eObj.Method = "GetRoleName1";
+                //eObj.Description = ex.Message;
+                //eObj.Module = Module;
 
-                eObj.InsertError();
+                //eObj.UserID = usrid;
+                //eObj.Method = "GetRoleName1";
+
+                //eObj.InsertError();
             }
             finally
             {
