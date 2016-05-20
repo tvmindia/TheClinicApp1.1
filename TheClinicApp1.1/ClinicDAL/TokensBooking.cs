@@ -19,7 +19,18 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Global Variables
 
         //Property
-        #region TokenProperty        
+        #region TokenProperty  
+      
+
+        public string Module = "TokensBooking";
+        /// <summary>
+        /// user id of login user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
         
         public int TokenNo
         {
@@ -108,16 +119,16 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.SelectCommand = cmd;
                
                 ds = new DataSet();
-                sda.Fill(ds);
-
-                return ds;
-
+                sda.Fill(ds);              
             }
 
             catch (Exception ex)
             {
-
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetPatientDetails";
+                eObj.InsertError();
             }
 
             finally
@@ -128,6 +139,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+            return ds;
         }
 
         #endregion GetPatientDetails
@@ -164,8 +176,11 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
 
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetPatientTokenDetailsByID";
+                eObj.InsertError();
             }
 
             finally
@@ -204,18 +219,16 @@ namespace TheClinicApp1._1.ClinicDAL
 
                  sda= new SqlDataAdapter(cmd) ;
                  ds = new DataSet();
-                 sda.Fill(ds);
-
-                
-                
-
+                 sda.Fill(ds);    
             }
 
             catch (Exception ex)
             {
-
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "DropBindDoctorsName";
+                eObj.InsertError();
             }
 
             finally
@@ -226,8 +239,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-            return ds;
-        
+            return ds;        
     
         }
 
@@ -279,8 +291,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "InsertToken";
+                eObj.InsertError();
             }
 
             finally
@@ -336,8 +351,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "ViewToken";
+                eObj.InsertError();
             }
 
             finally
@@ -386,9 +404,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "DoctorViewToken";
+                eObj.InsertError();
             }
 
             finally
@@ -432,8 +452,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "DeleteToken";
+                eObj.InsertError();
             }
 
             finally

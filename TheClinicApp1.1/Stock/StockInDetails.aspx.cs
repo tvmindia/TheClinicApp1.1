@@ -204,6 +204,7 @@ namespace TheClinicApp1._1.Stock
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();            
             string Login = UA.userName;
+            stok.usrid = UA.UserID;
             RoleName = UA.GetRoleName1(Login);
             //foreach (DataRow dr in dtRols.Rows)
             //{
