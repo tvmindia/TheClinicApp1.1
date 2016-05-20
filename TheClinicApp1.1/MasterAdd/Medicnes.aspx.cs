@@ -1,4 +1,13 @@
-﻿using System;
+﻿
+#region CopyRight
+
+//Author      : SHAMILA T P
+
+#endregion CopyRight
+
+#region Included Namespaces
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,6 +18,8 @@ using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
 
 using Messages = TheClinicApp1._1.UIClasses.Messages;
+
+#endregion Included Namespaces
 
 namespace TheClinicApp1._1.MasterAdd
 {
@@ -26,24 +37,26 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion Global Variables
 
+        #region Methods
 
         #region  Bind Medicine Gridview
 
         public void BindGridview()
         {
            DataTable dt = mstrObj.ViewAllMedicines();
-           gvMedicines.DataSource = dt;
-           gvMedicines.DataBind();
 
-           lblCaseCount.Text = gvMedicines.Rows.Count.ToString();
+           if (dt != null)
+           {
+               gvMedicines.DataSource = dt;
+               gvMedicines.DataBind();
+
+               lblCaseCount.Text = gvMedicines.Rows.Count.ToString();  
+           }
 
         }
 
 
         #endregion Bind Medicine Gridview
-
-
-
 
         #region Add New Medicine
         public void AddMedicine()
@@ -58,45 +71,36 @@ namespace TheClinicApp1._1.MasterAdd
 
                 if (ddlCategory.SelectedItem.Text == "--Select--")
                 {
-                    //msg = "Please select a category ! ";
-
                     msg = Messages.SelectCatergory;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
                 else if (ddlUnits.SelectedItem.Text == "--Select--")
                 {
-                    //msg = "Please select a unit ! ";
                     msg = Messages.Selectunit;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
-
-
                 else if ((txtmedicineName.Value.Contains("$")) || (txtmedicineName.Value.Contains("|")))
                 {
-                    //msg = "Please enter a valid medicine name";
+                   
                     msg = Messages.ValidMedicineName;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
                 else if (txtOrderQuantity.Value == string.Empty)
                 {
-                    //msg = "Please enter reorder quantity";
+                    
                     msg = Messages.ReorderQtyMandatory;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
-
                 else if (Convert.ToInt32(txtOrderQuantity.Value) <= 0)
                 {
-                    //msg = "Please enter a quantity greater than 0";
+                   
                     msg = Messages.validReorderQty;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
-
-
-
 
                 else
                 {
@@ -127,23 +131,19 @@ namespace TheClinicApp1._1.MasterAdd
                     }
 
 
-
-                    //hdnManageGridBind.Value = "True";
                 }
 
             }
 
             else
             {
-                //msg = "Please fill out all the fields";
-
+               
                 msg = Messages.MandatoryFields;
                 eObj.InsertionNotSuccessMessage(page, msg);
             }
         }
 
         #endregion Add New Medicine
-
 
         #region Clear Controls
 
@@ -197,12 +197,18 @@ namespace TheClinicApp1._1.MasterAdd
         }
         #endregion Bind Category DropDown
 
-
-
         #region Validate Medicine Name
         [WebMethod]
         public static bool ValidateMedicineName(string MedicineName)
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            Master mstrobj = new Master();
+
+            mstrobj.usrid = UA.UserID;
             Stocks StockObj = new Stocks();
 
             if (StockObj.ValidateMedicineName(MedicineName))
@@ -218,6 +224,17 @@ namespace TheClinicApp1._1.MasterAdd
         [WebMethod]
         public static bool ValidateMedicineCode(string MedicineCode)
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            Master mstrobj = new Master();
+
+            mstrobj.usrid = UA.UserID;
+
+
+
             Stocks StockObj = new Stocks();
 
             if (StockObj.ValidateMedicineCode(MedicineCode))
@@ -229,11 +246,41 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion  Validate Medicine Code
 
+        #region Paging
+        protected void gvMedicines_PreRender(object sender, EventArgs e)
+        {
+            gvMedicines.UseAccessibleHeader = false;
+            gvMedicines.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+        }
+        #endregion Paging
+
+        #region Logout
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        #endregion Logout
+
+        #endregion Methods
+
+
+        #region Events
+
+        #region Page Load
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            lblClinicName.Text = UA.Clinic;
-            lblUserName.Text = "👤 " + UA.userName + " "; 
+            mstrObj.usrid = UA.UserID;
 
             if (!IsPostBack)
             {
@@ -243,16 +290,17 @@ namespace TheClinicApp1._1.MasterAdd
             }
         }
 
-        protected void Logout_ServerClick(object sender, EventArgs e)
-        {
-            Session.Remove(Const.LoginSession);
-            Response.Redirect("../Default.aspx");
-        }
+        #endregion Page Load
 
+        #region Save Button Click
         protected void btnSave_Click(object sender, EventArgs e)
         {
             AddMedicine();
         }
+
+        #endregion Save Button Click
+
+        #region Delete Image Button Click
 
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
@@ -276,13 +324,6 @@ namespace TheClinicApp1._1.MasterAdd
 
             isUsed = StockObj.CheckMedicineIDIsUsed();
 
-    //        if (ds.Tables[0].Rows.Count > 0)
-    //{
-    //     isUsed = true;
-    //}
-
-
-           
             if (isUsed == false)
             {
                 StockObj.DeleteMedicines(MedId);
@@ -290,12 +331,16 @@ namespace TheClinicApp1._1.MasterAdd
 
             else
             {
-                //msg = "Already used . Can't be deleted";
+                
                 msg = Messages.AlreadyUsedForDeletion;
                 eObj.DeletionNotSuccessMessage(page, msg);
             }
             BindGridview();
         }
+
+        #endregion  Delete Image Button Click
+
+        #region Update Image Button Click
 
         protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
         {
@@ -321,53 +366,16 @@ namespace TheClinicApp1._1.MasterAdd
               txtCode.Value = dt.Rows[0]["MedCode"].ToString();
               txtOrderQuantity.Value = dt.Rows[0]["ReOrderQty"].ToString();
 
-              //ddlCategory.Items.FindByText(dt.Rows[0]["CategoryName"].ToString()).Selected = true;
-
-              //ddlCategory.SelectedItem.Text = dt.Rows[0]["CategoryName"].ToString();
-              //ddlUnits.SelectedItem.Text = dt.Rows[0]["Unit"].ToString();
-
               ddlCategory.SelectedIndex = ddlCategory.Items.IndexOf(ddlCategory.Items.FindByText(dt.Rows[0]["CategoryName"].ToString()));
               ddlUnits.SelectedIndex = ddlUnits.Items.IndexOf(ddlUnits.Items.FindByText(dt.Rows[0]["Unit"].ToString()));
             
-
-
             }
-
-
-
-
-            //StockObj.ClinicID = UA.ClinicID.ToString();
-
-            //StockObj.Name = txtmedicineName.Value;
-            //StockObj.MedCode = txtCode.Value;
-            //StockObj.CategoryID = ddlCategory.SelectedValue;
-            //StockObj.ReOrderQty = Convert.ToInt32(txtOrderQuantity.Value);
-            //StockObj.ClinicID = UA.ClinicID.ToString();
-            //StockObj.UpdatedBy = UA.userName;
-            ////StockObj.Unit = txtUnit.Text;
-            //StockObj.Unit = ddlUnits.SelectedItem.Text;
-
-
-
-            //StockObj.UpdateMedicines(MedId);
 
             BindGridview();
         }
 
-        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
-        {
-            Session.Remove(Const.LoginSession);
-            Response.Redirect("../Default.aspx");
-        }
+        #endregion Update Image Button Click
 
-        #region Paging
-        protected void gvMedicines_PreRender(object sender, EventArgs e)
-        {
-            gvMedicines.UseAccessibleHeader = false;
-            gvMedicines.HeaderRow.TableSection = TableRowSection.TableHeader;
-
-        }
-        #endregion Paging
-
+        #endregion Events
     }
 }

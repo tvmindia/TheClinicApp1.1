@@ -41,8 +41,9 @@ namespace TheClinicApp1._1.ClinicDAL
         
         #region Global Variables
 
+        ErrorHandling eObj = new ErrorHandling();
         CryptographyFunctions CryptObj = new CryptographyFunctions();
-      
+        public string Module = "Security";
 
         #endregion Global Variables
 
@@ -117,6 +118,15 @@ namespace TheClinicApp1._1.ClinicDAL
             }
         }
 
+        /// <summary>
+        /// User id of logined user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
+
 
         #endregion Properties
 
@@ -151,26 +161,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     isValidUser = false;
                 }
             }
-            //------------------* This case is temporaray * ---------------//
-            //else
-            //{
-                
-            //    if (userName == password)
-            //    {
-            //        isValidUser = true;
-            //        userN = userName;
-            //        ClinicName = " Clinic 1";
-            //        GroupName = "Thrithvam Ayurveda";
-            //        Clinic_ID = new Guid("C0946CD5-EBB4-44CE-9DFC-349BB4D32761");
-            //        Group_ID = new Guid("ED6A102A-E904-4471-BF9A-F6BEDB2F36FB");
-
-            //    }
-            //    else
-            //    {
-
-            //        isValidUser = false;
-            //    }
-            //}
+           
         }
 
         #endregion  User Authentication
@@ -179,10 +170,10 @@ namespace TheClinicApp1._1.ClinicDAL
         public DataTable GetLoginDetails(string LoginName)
         {
             SqlConnection con = null;
-
+            DataTable dt = new DataTable();
             try
             {
-                DataTable dt = new DataTable();
+               
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("GetLoginDetails", con);
@@ -193,13 +184,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 dt = new DataTable();
                 adapter.Fill(dt);
                 con.Close();
-                return dt;
+                
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetLoginDetails";
+
+                eObj.InsertError();
             }
             finally
             {
@@ -209,7 +204,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return dt;
 
         }
        
@@ -217,10 +212,11 @@ namespace TheClinicApp1._1.ClinicDAL
         public DataTable GetDoctorAndDoctorID(string LoginName)
         {
             SqlConnection con = null;
+            DataTable dt = new DataTable();
 
             try
             {
-                DataTable dt = new DataTable();
+              
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("[GetDoctorandDoctorID]", con);
@@ -231,13 +227,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 dt = new DataTable();
                 adapter.Fill(dt);
                 con.Close();
-                return dt;
+                
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetDoctorAndDoctorID";
+
+                eObj.InsertError();
             }
             finally
             {
@@ -248,8 +248,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
             }
 
-
+            return dt;
         }
+
         #region Get RoleID
         public string GetRoleName(string LoginName)
         {
@@ -279,9 +280,13 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-                //throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetRoleName";
+
+                eObj.InsertError();
             }
             finally
             {
@@ -301,10 +306,11 @@ namespace TheClinicApp1._1.ClinicDAL
         {
 
             SqlConnection con = null;
+            List<string> RoleName = new List<string>();
 
             try
             {
-                List<string> RoleName = new List<string>();
+               
                 DataTable dt = new DataTable();
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
@@ -322,13 +328,17 @@ namespace TheClinicApp1._1.ClinicDAL
                     RoleName.Add(dr["RoleName"].ToString());
                 }
                 con.Close();
-                return RoleName;
+                
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetRoleName1";
+
+                eObj.InsertError();
             }
             finally
             {
@@ -338,6 +348,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return RoleName;
         }
         //#region Encrypt Password
         //private string Encrypt(string clearText)
@@ -381,9 +393,6 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-
-
-
 
         //AES 128bit Cross Platform (Java and C#) Encryption Compatibility
         string key = System.Web.Configuration.WebConfigurationManager.AppSettings["cryptography"];
@@ -457,7 +466,15 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
                 //System.IO.File.WriteAllText(@Server.MapPath("~/Text.txt"), ex.Message);
-                throw ex;
+
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "Decrypt";
+
+                eObj.InsertError();
+
             }
             return plainText;
         }
