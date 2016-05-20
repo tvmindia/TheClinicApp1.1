@@ -32,10 +32,14 @@ namespace TheClinicApp1._1.MasterAdd
         public void BindGridview()
         {
            DataTable dt = mstrObj.ViewAllMedicines();
-           gvMedicines.DataSource = dt;
-           gvMedicines.DataBind();
 
-           lblCaseCount.Text = gvMedicines.Rows.Count.ToString();
+           if (dt != null)
+           {
+               gvMedicines.DataSource = dt;
+               gvMedicines.DataBind();
+
+               lblCaseCount.Text = gvMedicines.Rows.Count.ToString();  
+           }
 
         }
 
@@ -58,45 +62,36 @@ namespace TheClinicApp1._1.MasterAdd
 
                 if (ddlCategory.SelectedItem.Text == "--Select--")
                 {
-                    //msg = "Please select a category ! ";
-
                     msg = Messages.SelectCatergory;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
                 else if (ddlUnits.SelectedItem.Text == "--Select--")
                 {
-                    //msg = "Please select a unit ! ";
                     msg = Messages.Selectunit;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
-
-
                 else if ((txtmedicineName.Value.Contains("$")) || (txtmedicineName.Value.Contains("|")))
                 {
-                    //msg = "Please enter a valid medicine name";
+                   
                     msg = Messages.ValidMedicineName;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
                 else if (txtOrderQuantity.Value == string.Empty)
                 {
-                    //msg = "Please enter reorder quantity";
+                    
                     msg = Messages.ReorderQtyMandatory;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
 
-
                 else if (Convert.ToInt32(txtOrderQuantity.Value) <= 0)
                 {
-                    //msg = "Please enter a quantity greater than 0";
+                   
                     msg = Messages.validReorderQty;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
-
-
-
 
                 else
                 {
@@ -127,16 +122,13 @@ namespace TheClinicApp1._1.MasterAdd
                     }
 
 
-
-                    //hdnManageGridBind.Value = "True";
                 }
 
             }
 
             else
             {
-                //msg = "Please fill out all the fields";
-
+               
                 msg = Messages.MandatoryFields;
                 eObj.InsertionNotSuccessMessage(page, msg);
             }
@@ -197,8 +189,6 @@ namespace TheClinicApp1._1.MasterAdd
         }
         #endregion Bind Category DropDown
 
-
-
         #region Validate Medicine Name
         [WebMethod]
         public static bool ValidateMedicineName(string MedicineName)
@@ -232,8 +222,7 @@ namespace TheClinicApp1._1.MasterAdd
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            lblClinicName.Text = UA.Clinic;
-            lblUserName.Text = "👤 " + UA.userName + " "; 
+            mstrObj.usrid = UA.UserID;
 
             if (!IsPostBack)
             {

@@ -399,8 +399,13 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = usrid;
+                eObj.Method = "InsertUnits";
+
+                eObj.InsertError();
 
             }
             finally
