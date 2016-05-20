@@ -343,19 +343,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 if (Output.Value.ToString() == "")
                 {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;  //not successfull   
                     eObj.SavingFailureMessage(page);
-
                 }
                 else
                 {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;  //successfull
                     eObj.SavedSuccessMessage(page);
-
 
                 }
 

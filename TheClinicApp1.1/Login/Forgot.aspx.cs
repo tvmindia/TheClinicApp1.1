@@ -1,4 +1,13 @@
-﻿using System;
+﻿
+#region CopyRight
+
+//Author      : SHAMILA T P
+
+#endregion CopyRight
+
+#region Included Namespaces
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -6,6 +15,9 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TheClinicApp1._1.ClinicDAL;
+
+#endregion Included Namespaces
 
 namespace TheClinicApp1._1.Login
 {
@@ -13,16 +25,26 @@ namespace TheClinicApp1._1.Login
     {
         #region GlobalVariables
         ClinicDAL.User userObj = new ClinicDAL.User();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;
+        Master mstrobj = new Master();
+
         #endregion GlobalVariables
+
+        #region Events
 
         #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            mstrobj.usrid = UA.UserID;
         }
         #endregion PageLoad
 
+        #endregion Events
+
         #region Methods
+
         #region Verify Code
         protected void btnVerify_ServerClick(object sender, EventArgs e)
         {
@@ -116,6 +138,7 @@ namespace TheClinicApp1._1.Login
             }
         }
         #endregion Send Verification Code
+
         #endregion Methods
     }
 }

@@ -1,4 +1,13 @@
-﻿using System;
+﻿
+#region CopyRight
+
+//Author      : SHAMILA T P
+
+#endregion CopyRight
+
+#region Included Namespaces
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,15 +15,23 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
 
+#endregion Included Namespaces
+
 namespace TheClinicApp1._1.Login
 {
     public partial class Reset : System.Web.UI.Page
     {
         #region Global Variables
+
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;
+        Master mstrobj = new Master();
+
+
         ClinicDAL.CryptographyFunctions CrypObj = new CryptographyFunctions();
         Guid UserID;
         ClinicDAL.User userObj = new ClinicDAL.User();
-        UIClasses.Const Const = new UIClasses.Const();
+        
 
 
         #endregion Global Variables
@@ -69,14 +86,23 @@ namespace TheClinicApp1._1.Login
 
         #endregion Methods
 
+        #region Events
+
         #region Page Load
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            mstrobj.usrid = UA.UserID;
+
+
             if (Request.QueryString["UserID"] != null)
             {
                 UserID = Guid.Parse(Request.QueryString["UserID"]);
             }
         }
         #endregion Page Load
+
+        #endregion Events
+
     }
 }

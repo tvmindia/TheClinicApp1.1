@@ -31,6 +31,10 @@ namespace TheClinicApp1._1.ClinicDAL
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
 
+        #endregion Global Variables
+
+        #region Public Properties
+
         private Guid Clinic_ID;
 
         public Guid ClinicID
@@ -126,7 +130,7 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
-        #endregion Global Variables
+        #endregion Public Properties
 
         #region Methods
 
@@ -150,8 +154,13 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetDetailsOfAllUsers";
+
+                eObj.InsertError();
                
             }
             finally
@@ -189,8 +198,13 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetUserDetailsByLoginName";
+
+                eObj.InsertError();
 
             }
             finally
@@ -323,8 +337,13 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetUserDetailsByUserID";
+
+                eObj.InsertError();
                
             }
             finally
@@ -501,8 +520,13 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "ValidateUsername";
+
+                eObj.InsertError();
             }
             finally
             {
@@ -543,30 +567,18 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add(Output);
                 cmd.ExecuteNonQuery();
 
-                //if (Output.Value.ToString() == "")
-                //{
-                //    //not successfull   
-
-                //    var page = HttpContext.Current.CurrentHandler as Page;
-                //    eObj.InsertionNotSuccessMessage(page);
-
-                //}
-                //else
-                //{
-                //    //successfull
-
-                //    var page = HttpContext.Current.CurrentHandler as Page;
-                //    eObj.InsertionSuccessMessage(page);
-
-
-                //}
-
+               
 
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "AddVerificationCode";
+
+                eObj.InsertError();
 
             }
 
@@ -600,13 +612,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
                 adapter.Fill(dtVerificationCode);
-                return dtVerificationCode;
+              
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "GetUserVerificationCodeByEmailID";
+
+                eObj.InsertError();
             }
             finally
             {
@@ -616,6 +632,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return dtVerificationCode;
         }
 
         #endregion  Get User Verification Code By EmailID
@@ -663,8 +681,13 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = usrid;
+                eObj.Method = "ResetPassword";
+
+                eObj.InsertError();
 
             }
 
