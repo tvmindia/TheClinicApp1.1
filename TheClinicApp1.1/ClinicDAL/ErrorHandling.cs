@@ -29,14 +29,14 @@ namespace TheClinicApp1._1.ClinicDAL
     public class ErrorHandling
     {
 
-        
-
-
         //public ErrorHandling()
         //{
 
         //    ErrorID = Guid.NewGuid();
         //}
+
+
+        #region Global Variables
 
         public Guid ErrorID
         {
@@ -67,16 +67,20 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
-
         public Guid UserID
         {
             get;
             set;
         }
 
-
+        #endregion Global Variables
 
         #region Insert Error
+
+        /// <summary>
+        /// To add the the exception details to errorlog
+        /// </summary>
+
         public void InsertError()
         {
             dbConnection dcon = null;
@@ -117,7 +121,6 @@ namespace TheClinicApp1._1.ClinicDAL
                 var page = HttpContext.Current.CurrentHandler as Page;
                 ErrorData(ex, page);
 
-                //throw ex;
             }
 
             finally
