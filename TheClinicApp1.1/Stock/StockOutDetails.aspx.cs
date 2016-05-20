@@ -35,7 +35,7 @@ namespace TheClinicApp1._1.Stock
 
         Stocks stok = new Stocks();
 
-        //IssueDetails IssuedtlObj = new IssueDetails();
+        IssueDetails IssuedtlObj = new IssueDetails();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
@@ -276,6 +276,9 @@ namespace TheClinicApp1._1.Stock
             
             string Login = UA.userName;
             stok.usrid = UA.UserID;
+            IssuedtlObj.usrid = UA.UserID;
+            IssuehdrObj.usrid = UA.UserID;
+
 
             RoleName = UA.GetRoleName1(Login);
             //foreach (DataRow dr in dtRols.Rows)
