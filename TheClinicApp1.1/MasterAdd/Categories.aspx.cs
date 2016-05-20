@@ -67,7 +67,7 @@ namespace TheClinicApp1._1.MasterAdd
         public void AddNewCategory()
         {
             CategoryObj.CategoryName = txtCategoryName.Value.TrimStart();
-            CategoryObj.ClinicID = UA.ClinicID;
+           
             CategoryObj.CreatedBy = UA.userName;
 
             CategoryObj.AddNewCategory();
@@ -82,10 +82,14 @@ namespace TheClinicApp1._1.MasterAdd
         {
            DataTable dt = CategoryObj.ViewAllCategory();
 
-           dtgViewAllCategories.DataSource = dt;
-           dtgViewAllCategories.DataBind();
+           if (dt != null)
+           {
+               dtgViewAllCategories.DataSource = dt;
+               dtgViewAllCategories.DataBind();
 
-           lblCaseCount.Text = dtgViewAllCategories.Rows.Count.ToString();
+               lblCaseCount.Text = dtgViewAllCategories.Rows.Count.ToString();
+
+           }
 
         }
 
@@ -118,7 +122,7 @@ namespace TheClinicApp1._1.MasterAdd
             //AddNewCategory();
 
             var page = HttpContext.Current.CurrentHandler as Page;
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+         
             string msg = string.Empty;
 
             if (txtCategoryName.Value.TrimStart() != string.Empty)
@@ -252,37 +256,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion Events
 
-        protected void Save_ServerClick(object sender, EventArgs e)
-        {
-            //var page = HttpContext.Current.CurrentHandler as Page;
-            //UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            //string msg = string.Empty;
-
-            //if (txtCategoryName.Value != string.Empty)
-            //{
-
-            //    if (hdnCategoryId.Value != string.Empty)
-            //    {
-            //        CategoryObj.UpdatedBy = UA.userName;
-            //        CategoryObj.CategoryID = Guid.Parse(hdnCategoryId.Value);
-            //        CategoryObj.CategoryName = txtCategoryName.Value;
-            //        CategoryObj.UpdateCategory();
-            //    }
-            //    else
-            //    {
-            //        AddNewCategory();
-            //    }
-
-            //}
-
-            //else
-            //{
-            //    //msg = "Please fill out all the fields";
-            //    msg = Messages.MandatoryFields;
-            //    eObj.InsertionNotSuccessMessage(page, msg);
-            //}
-
-        }
+       
 
 
     }

@@ -115,18 +115,17 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 if (Outputval == 1)
                 {
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;   //Success
                     eObj.SavedSuccessMessage(page);
-                    //Success
+                  
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
-                          var page = HttpContext.Current.CurrentHandler as Page;
+                        var page = HttpContext.Current.CurrentHandler as Page;  //Already exists!
                           eObj.AlreadyExistsMessage(page);
                         
-                        //Already exists!
                     }
                 }
             }
@@ -141,11 +140,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 eObj.InsertError();
 
-
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-
-                //throw ex;
             }
 
             finally
@@ -186,18 +180,17 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 if (Outputval == 1)
                 {
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;  //Success
                     eObj.SavedSuccessMessage(page);
-                    //Success
+                   
                 }
                 else
                 {
                     if (Outputval == 0)
                     {
-                        var page = HttpContext.Current.CurrentHandler as Page;
+                        var page = HttpContext.Current.CurrentHandler as Page;  //Already exists!
                         eObj.AlreadyExistsMessage(page);
 
-                        //Already exists!
                     }
                 }
 
@@ -205,9 +198,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-
+               
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
@@ -305,9 +296,6 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
@@ -354,29 +342,20 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 if (Output.Value.ToString() == "")
                 {
-                    //not successfull   
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page;  //not successfull  
                     eObj.DeletionNotSuccessMessage(page);
 
                 }
                 else
                 {
-                    //successfull
-
-                    var page = HttpContext.Current.CurrentHandler as Page;
+                    var page = HttpContext.Current.CurrentHandler as Page; //successfull
                     eObj.DeleteSuccessMessage(page);
 
-
                 }
-
 
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
@@ -423,9 +402,6 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
@@ -475,14 +451,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
                 eObj.UserID = usrid;
-                eObj.Method = "ViewCategoryByCategoryID";
+                eObj.Method = "ViewMedicinesByCategoryID";
 
                 eObj.InsertError();
                 

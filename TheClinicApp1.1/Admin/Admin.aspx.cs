@@ -231,8 +231,9 @@ namespace TheClinicApp1._1.Admin
               UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             userObj.ClinicID = UA.ClinicID;
 
-            DoctorRoleID = userObj.GetRoleIDOfDoctor();
+            //DoctorRoleID = userObj.GetRoleIDOfDoctor();
 
+            DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
             return DoctorRoleID;
         }
 
@@ -475,10 +476,6 @@ namespace TheClinicApp1._1.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            //PropertyInfo isreadonly = typeof(System.Collections.Specialized.NameValueCollection).GetProperty("IsReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
-            //isreadonly.SetValue(this.Request.QueryString, false, null);
-
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
 
@@ -493,7 +490,7 @@ namespace TheClinicApp1._1.Admin
                 BindGriewWithDetailsOfAllUsers();
             }
            
-            //hdnUserCountChanged.Value = "True";
+           
         }
 
         #endregion Page Load
