@@ -33,6 +33,8 @@ namespace TheClinicApp1._1.Stock
       
         #region Global Variables
 
+        Stocks stok = new Stocks();
+
         //IssueDetails IssuedtlObj = new IssueDetails();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
@@ -273,6 +275,7 @@ namespace TheClinicApp1._1.Stock
             DataTable dtRols = new DataTable();
             
             string Login = UA.userName;
+            stok.usrid = UA.UserID;
 
             RoleName = UA.GetRoleName1(Login);
             //foreach (DataRow dr in dtRols.Rows)

@@ -28,6 +28,7 @@ namespace TheClinicApp1._1.Stock
         #region Global variables
 
         IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
+        Stocks stok = new Stocks();
 
         private static int PageSize = 8;
         ClinicDAL.UserAuthendication UA;
@@ -146,14 +147,10 @@ namespace TheClinicApp1._1.Stock
             string issueID = string.Empty;
             
             string Login = UA.userName;
+            stok.usrid = UA.UserID;
 
             RoleName = UA.GetRoleName1(Login);
-            //foreach (DataRow dr in dtRols.Rows)
-            //{
-
-            //    RoleName.Add(dr["RoleName"].ToString());
-
-            //}
+         
             
             if (!IsPostBack)
             {

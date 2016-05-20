@@ -56,9 +56,11 @@ namespace TheClinicApp1._1.Stock
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
             string receiptID = string.Empty;
+
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();
-           
+            stok.usrid = UA.UserID;
+
             string Login = UA.userName;
 
             RoleName = UA.GetRoleName1(Login);
