@@ -14,36 +14,33 @@ namespace TheClinicApp1._1.ClinicDAL
     {
 
         #region Global Variables
-        ErrorHandling eObj = new ErrorHandling();
-       
-
+        ErrorHandling eObj = new ErrorHandling();   
 
         #endregion Global Variables
 
         #region constructor
         public Receipt()
-        {
-
-            // Guid ex = Guid.NewGuid();
-
+        {         
             ReceiptID = Guid.NewGuid();
-
-
         }
         public Receipt(Guid receipiID)
         {
-
-            // Guid ex = Guid.NewGuid();
-
-            ReceiptID = receipiID;
-
-
+            ReceiptID = receipiID;            
         }
 
         #endregion constructor
 
         #region Property
 
+        public string Module = "Receipt";
+        /// <summary>
+        /// user id of login user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
         public Guid ReceiptID
         {
             get;
@@ -141,8 +138,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "InsertReceiptHeader";
+                eObj.InsertError();
             }
 
             finally
@@ -203,10 +203,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-                //throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "UpdateReceiptHeader";
+                eObj.InsertError();
             }
 
             finally
@@ -266,9 +267,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "ViewReceiptHeader";
+                eObj.InsertError();
             }
 
             finally
@@ -312,8 +315,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 if (Outputval == 1)
                 {
                     //Success
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    //eObj.SavedSuccessMessage(page);
+                    var page = HttpContext.Current.CurrentHandler as Page;                 
                     eObj.DeleteSuccessMessage(page);
                 }
 
@@ -321,8 +323,6 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     var page = HttpContext.Current.CurrentHandler as Page;
                     eObj.DeletionNotSuccessMessage(page);
-
-                    //eObj.SavingFailureMessage(page);
                 }
 
 
@@ -330,9 +330,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "DeleteReceiptHeader";
+                eObj.InsertError();
             }
 
             finally
@@ -352,7 +354,6 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion InsertReceiptHeader
-
 
         // Reload the inserted datats into controls
 
@@ -389,9 +390,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "InsertReloaded";
+                eObj.InsertError();
             }
 
             finally
@@ -407,7 +410,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         #endregion ReloadInsertData
-
 
         #region Get Medicine Details By MedicineName
 
@@ -443,9 +445,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetMedicineDetailsByMedicineName";
+                eObj.InsertError();
             }
 
             finally
@@ -460,7 +464,6 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion Get Medicine Details By MedicineName
-
 
         //Get Recipt Details by Passing Reference Number
         #region GetReceiptDetailsByReceiptID
@@ -499,8 +502,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetReceiptDetailsByReceiptID";
+                eObj.InsertError();
             }
 
             finally
@@ -516,8 +522,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         #endregion GetReceiptDetailsByReceiptID
-
-
 
         #region Get Receipt Header By ReceiptID
 
@@ -555,8 +559,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetReceiptHeaderByReceiptID";
+                eObj.InsertError();
             }
 
             finally
@@ -574,16 +581,8 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Get Receipt Header ByReceiptID
 
-
-
-
         #endregion Methods
-
-
-        //internal DataSet GetReceiptDetailsByReceiptID(string receiptid)
-        //{
-        //    throw new NotImplementedException();
-        //}
+  
     }
 
 
@@ -618,6 +617,15 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Property
 
+        public string Module = "ReceiptDetails";
+        /// <summary>
+        /// user id of login user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
         public Guid UniqueID
         {
             get;
@@ -706,17 +714,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
-                sda.Fill(ds);
-
-
-                
+                sda.Fill(ds);               
 
             }
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetMedCodeUnitCategory";
+                eObj.InsertError();
             }
 
             finally
@@ -732,8 +740,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         #endregion autofill        
-
-
 
         #region Get Receipt Details By UniqueID
 
@@ -769,8 +775,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetReceiptDetailsByUniqueID";
+                eObj.InsertError();
             }
 
             finally
@@ -785,7 +794,6 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion Get Receipt Details By UniqueID
-
 
         #region InsertReceiptDetails
         public void InsertReceiptDetails()
@@ -838,10 +846,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-               
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "InsertReceiptDetails";
+                eObj.InsertError();
             }
 
             finally
@@ -907,10 +916,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-                //throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "UpdateReceiptDetails";
+                eObj.InsertError();
             }
 
 
@@ -961,8 +971,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "ViewReceiptDetails";
+                eObj.InsertError();
             }
 
             finally
@@ -1026,9 +1039,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "DeleteReceiptDetails";
+                eObj.InsertError();
             }
 
             finally
@@ -1040,13 +1055,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
             }
 
-
         }
 
-        #endregion DeleteReceiptDetails
-
-
-        
+        #endregion DeleteReceiptDetails        
 
         #endregion Methods
 
