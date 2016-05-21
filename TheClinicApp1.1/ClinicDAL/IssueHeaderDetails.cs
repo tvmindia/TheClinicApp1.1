@@ -749,7 +749,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Property
 
-        public string Module = "TokensBooking";
+        public string Module = "IssueDetails";
         /// <summary>
         /// user id of login user
         /// </summary>

@@ -45,6 +45,7 @@ namespace TheClinicApp1._1.Pharmacy
             string Login = UA.userName;
             tokobj.usrid = UA.UserID;
             issuehdobj.usrid = UA.UserID;
+            pharmacypobj.usrid = UA.UserID;
 
             RoleName= UA.GetRoleName1(Login);  
             pharmacypobj.ClinicID = UA.ClinicID;
