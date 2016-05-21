@@ -165,7 +165,10 @@ namespace TheClinicApp1._1.Registration
         #endregion Methods
 
         #region Events
-
+        protected void btngrid_Click(object sender, EventArgs e)
+        {
+            gridDataBind();
+        }
         #region GridDelete
         /// <summary>
         /// Delete Patient Details and File If Exist Token and more Cant delete Msg

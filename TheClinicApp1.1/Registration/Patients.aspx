@@ -156,7 +156,7 @@
                     });
                     return matchesSearch;
                 }).show();
-           
+                $('#tablePagination').hide();
             });
              
 
@@ -164,12 +164,13 @@
         
         function getPatientId(Patient)
         {
-            var PatientDetails=Patient;           
+            var PatientDetails=Patient;      
+            
         }     
 
         </script> 
     <script>
-
+       
         function validation()
         {
             
@@ -227,6 +228,7 @@
          </div>
              <div class="icon_box">
          <%--<a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>--%>
+    
          <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registered" data-toggle="tooltip" data-placement="left"><img src="../images/registerd9724185.png" /></span></a>
          <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
