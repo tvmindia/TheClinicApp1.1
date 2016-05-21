@@ -34,6 +34,16 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion constructor
 
         #region Property
+
+        public string Module = "Stocks";
+        /// <summary>
+        /// user id of login user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
         public Guid MedicineID
         {
             get;
@@ -133,15 +143,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 ds = new DataSet();
                 sda.Fill(ds);
 
-
-                return ds;
-
             }
 
             catch (Exception ex)
             {
-
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetMedicineDetailsByMedicineID";
+                eObj.InsertError();
             }
 
             finally
@@ -152,7 +162,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return ds;
         }
 
         #endregion Get Medicine Details By MedicineID
@@ -186,9 +196,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetQtyByMedicineName";
+                eObj.InsertError();
             }
 
             finally
@@ -231,9 +243,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //throw ex;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "ValidateMedicineName";
+                eObj.InsertError();
             }
             finally
             {
@@ -273,9 +287,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //throw ex;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "ValidateMedicineCode";
+                eObj.InsertError();
             }
             finally
             {
@@ -314,16 +330,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 dsCategories = new DataSet();
-                sda.Fill(dsCategories);
-
-                return dsCategories;
+                sda.Fill(dsCategories);              
 
             }
 
             catch (Exception ex)
             {
-
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "ViewCategories";
+                eObj.InsertError();
             }
 
             finally
@@ -334,6 +351,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+            return dsCategories;
 
         }
 
@@ -363,18 +381,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 dsunits = new DataSet();
-                sda.Fill(dsunits);
-
-               
+                sda.Fill(dsunits);               
 
             }
 
             catch (Exception ex)
             {
-
-                //throw ex;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "ViewUnits";
+                eObj.InsertError();
             }
 
             finally
@@ -467,8 +484,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 if (Outputval == 1)
                {
-                   //Success
-                   
+                   //Success                   
                    var page = HttpContext.Current.CurrentHandler as Page;
                    eObj.SavedSuccessMessage(page);
                }
@@ -493,10 +509,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
-                //throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "InsertMedicines";
+                eObj.InsertError();
             }
 
             finally
@@ -561,46 +578,19 @@ namespace TheClinicApp1._1.ClinicDAL
                     {
                         var page = HttpContext.Current.CurrentHandler as Page;
                         eObj.AlreadyExistsMessage(page);
-
                         //Already exists!
                     }
                 }
-
-
-
-                //SqlParameter Output = new SqlParameter();
-                //Output.DbType = DbType.Int32;
-                //Output.ParameterName = "@Status";
-                //Output.Direction = ParameterDirection.Output;
-                //cmd.Parameters.Add(Output);
-                //cmd.ExecuteNonQuery();
-                //if (Output.Value.ToString() == "")
-                //{
-                //    //not successfull   
-
-                //    var page = HttpContext.Current.CurrentHandler as Page;
-                //    eObj.SavingFailureMessage(page);
-
-                //}
-                //else
-                //{
-                //    //successfull
-
-                //    var page = HttpContext.Current.CurrentHandler as Page;
-                //    eObj.SavedSuccessMessage(page);
-
-
-                //}
-
-
+ 
             }
 
             catch (Exception ex)
             {
-
-                //throw ex;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "UpdateMedicines";
+                eObj.InsertError();
             }
 
             finally
@@ -646,32 +636,24 @@ namespace TheClinicApp1._1.ClinicDAL
                 if (Output.Value.ToString() == "")
                 {
                     //not successfull   
-
                     var page = HttpContext.Current.CurrentHandler as Page;
                     eObj.DeletionNotSuccessMessage(page);
-
                 }
                 else
                 {
                     //successfull
-
                     var page = HttpContext.Current.CurrentHandler as Page;
                     eObj.DeleteSuccessMessage(page);
-
-
                 }
-
-
-
-
             }
 
             catch (Exception ex)
             {
-
-                //throw ex;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "DeleteMedicines";
+                eObj.InsertError();
             }
 
             finally
@@ -705,24 +687,21 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandText = "[ViewOutofStockMedicines]";
 
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
-                
+                                
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
-                sda.Fill(ds);
-
-
-               
-
+                sda.Fill(ds);    
             }
 
             catch (Exception ex)
             {
-
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "ViewOutofStockMedicines";
+                eObj.InsertError();
             }
 
             finally
@@ -778,16 +757,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds);
-
-
-                return ds;
-
             }
 
             catch (Exception ex)
             {
-
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "SearchMedicineStock";
+                eObj.InsertError();
             }
 
             finally
@@ -798,15 +776,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return ds;
         }
 
 
         #endregion Search And View MedicineStock
 
-
-
-
+        #region CheckMedicineIDIsUsed
 
         public bool CheckMedicineIDIsUsed()
         {
@@ -839,9 +815,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-              
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "CheckMedicineIDIsUsed";
+                eObj.InsertError();
             }
             finally
             {
@@ -854,9 +832,9 @@ namespace TheClinicApp1._1.ClinicDAL
             return isUsed;
 
 
-            }
+        }
+        #endregion CheckMedicineIDIsUsed
 
-        
         #endregion Medicines
 
         #endregion Methods

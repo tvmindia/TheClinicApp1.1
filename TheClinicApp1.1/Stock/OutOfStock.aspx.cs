@@ -42,6 +42,11 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+           
+            stockObj.ClinicID = UA.ClinicID.ToString();
+            stockObj.usrid = UA.UserID; 
+
             if (!IsPostBack)
             {
                 BindDummyRow();
@@ -51,27 +56,29 @@ namespace TheClinicApp1._1.Stock
         }
 
         #region Bind Out Of Stock Gridview
-        public void BindOutOfStockGridview()
-        {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            stockObj.ClinicID = UA.ClinicID.ToString();
-            //gridview binding for listing the Out of Stock Medicines 
-            DataSet gds = stockObj.ViewOutofStockMedicines();
-            gvOutOfStock1.EmptyDataText = "No Records Found";
-            gvOutOfStock1.DataSource = gds;
-            gvOutOfStock1.DataBind();
-        }
+        //public void BindOutOfStockGridview()
+        //{
+        //    //gridview binding for listing the Out of Stock Medicines 
+        //    DataSet gds = stockObj.ViewOutofStockMedicines();
+        //    gvOutOfStock1.EmptyDataText = "No Records Found";
+        //    gvOutOfStock1.DataSource = gds;
+        //    gvOutOfStock1.DataBind();
+        //}
 
         #endregion Bind Out Of Stock Gridview
 
+        #region webmethod
 
         [WebMethod]
         public static string GetMedicines(string searchTerm, int pageIndex)
         {
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
-
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            Stocks StockObj = new Stocks();
+
+            StockObj.ClinicID = UA.ClinicID.ToString();
+            StockObj.usrid = UA.UserID; 
 
             string query = "ViewOutofStockMedicines";
             SqlCommand cmd = new SqlCommand(query);
@@ -88,6 +95,8 @@ namespace TheClinicApp1._1.Stock
             var xml = GetData(cmd, pageIndex).GetXml();
             return xml;
         }
+
+        #endregion webmethod
 
         private static DataSet GetData(SqlCommand cmd, int pageIndex)
         {

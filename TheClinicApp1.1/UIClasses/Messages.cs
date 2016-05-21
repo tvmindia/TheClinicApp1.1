@@ -23,6 +23,12 @@ namespace TheClinicApp1._1.UIClasses
     public class Messages
     {
 
+        public static string ErrorNumber
+        {
+            get { return "Error Number = "; }
+        }
+
+       
 
  //----------------* Messages Captions *--------------//
         public static string ExceptionMsgCaption

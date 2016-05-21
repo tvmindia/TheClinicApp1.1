@@ -33,23 +33,8 @@ namespace TheClinicApp1._1.Stock
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         public string RoleName = null;
-        #endregion Global Variables
 
-
-        //#region Bind Out Of Stock Gridview
-        //public void BindOutOfStockGridview()
-        //{
-        //    UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-        //    stockObj.ClinicID = UA.ClinicID.ToString();
-        //    //gridview binding for listing the Out of Stock Medicines 
-        //    DataSet gds = stockObj.ViewOutofStockMedicines();
-        //    gvOutOfStock1.EmptyDataText = "No Records Found";
-        //    gvOutOfStock1.DataSource = gds;
-        //    gvOutOfStock1.DataBind();
-        //}
-
-        //#endregion Bind Out Of Stock Gridview
-
+        #endregion Global Variables    
 
         #region Bind Dummy Row
 
@@ -74,17 +59,17 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            stockObj.ClinicID = UA.ClinicID.ToString();
+            stockObj.usrid = UA.UserID; 
+
             List<string> RoleName = new List<string>();
             //DataTable dtRols = new DataTable();
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];          
+                   
             string Login = UA.userName;
-            RoleName = UA.GetRoleName1(Login);
-            //foreach (DataRow dr in dtRols.Rows)
-            //{
-
-            //    RoleName.Add(dr["RoleName"].ToString());
-
-            //}
+            RoleName = UA.GetRoleName1(Login);        
            
             if (!IsPostBack)
             {
@@ -93,21 +78,39 @@ namespace TheClinicApp1._1.Stock
             }
         }
 
+        //#region Bind Out Of Stock Gridview
+        //public void BindOutOfStockGridview()
+        //{
+        //    UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+        //    stockObj.ClinicID = UA.ClinicID.ToString();
+        //    //gridview binding for listing the Out of Stock Medicines 
+        //    DataSet gds = stockObj.ViewOutofStockMedicines();
+        //    gvOutOfStock1.EmptyDataText = "No Records Found";
+        //    gvOutOfStock1.DataSource = gds;
+        //    gvOutOfStock1.DataBind();
+        //}
 
+        //#endregion Bind Out Of Stock Gridview
+
+
+        #region webmethod
         [WebMethod]
         public static string GetMedicines(string searchTerm, int pageIndex)
         {
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
-
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            Stocks StockObj = new Stocks();
+
+            StockObj.ClinicID = UA.ClinicID.ToString();
+            StockObj.usrid = UA.UserID; 
 
             string query = "ViewAndFilterMedicine";
             SqlCommand cmd = new SqlCommand(query);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
-            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
+           
 
             cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
             cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
@@ -117,6 +120,8 @@ namespace TheClinicApp1._1.Stock
             var xml = GetData(cmd, pageIndex).GetXml();
             return xml;
         }
+
+        #endregion webmethod
 
         private static DataSet GetData(SqlCommand cmd, int pageIndex)
         {

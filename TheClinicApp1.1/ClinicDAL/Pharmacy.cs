@@ -20,6 +20,16 @@ namespace TheClinicApp1._1.ClinicDAL
 
         /* PATIENT DETAILS SP NAME: VIEWPATIENTDETAILS,VIEWPATIENTBOOKING */
         #region DoctorPrescriptionproperty
+
+        public string Module = "Pharmacy";
+        /// <summary>
+        /// user id of login user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
     
         public Guid PrescriptionID
         {
@@ -76,9 +86,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-               
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetPatientPharmacyDetails";
+                eObj.InsertError();
             }
             finally
             {              
@@ -125,8 +137,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "PrescriptionDetails";
+                eObj.InsertError();
                
             }
             finally

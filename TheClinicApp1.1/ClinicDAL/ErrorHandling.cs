@@ -13,6 +13,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -26,11 +28,131 @@ namespace TheClinicApp1._1.ClinicDAL
 {
     public class ErrorHandling
     {
+
+        //public ErrorHandling()
+        //{
+
+        //    ErrorID = Guid.NewGuid();
+        //}
+
+
+        #region Global Variables
+
+        public Guid ErrorID
+        {
+            get;
+            set;
+        }
         public int ErrorNumber
         {
             get;
             set;
         }
+
+        public string Description
+        {
+            get;
+            set;
+        }
+
+        public string Module
+        {
+            get;
+            set;
+        }
+
+        public string Method
+        {
+            get;
+            set;
+        }
+
+        public Guid UserID
+        {
+            get;
+            set;
+        }
+
+        #endregion Global Variables
+
+        #region Insert Error
+
+        /// <summary>
+        /// To add the the exception details to errorlog
+        /// </summary>
+
+        public void InsertError()
+        {
+            dbConnection dcon = null;
+
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[InsertErrorLog]";
+
+                cmd.Parameters.Add("@ErrorID", SqlDbType.UniqueIdentifier).Value = Guid.NewGuid();
+                cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
+                cmd.Parameters.Add("@Module", SqlDbType.NVarChar, 15).Value = Module;
+                cmd.Parameters.Add("@Method", SqlDbType.NVarChar, 15).Value = Method;
+
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+
+
+
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
+
+                ErrorNumber = Outputval;
+
+                var page = HttpContext.Current.CurrentHandler as Page;
+                DisplayErrorNo(page);
+              
+            }
+
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                ErrorData(ex, page);
+
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+        }
+
+        #endregion Insert Error
+
+
+        public void DisplayErrorNo(Page pg)
+        {
+            var master1 = pg.Master;
+            ContentPlaceHolder mpContentPlaceHolder1;
+            mpContentPlaceHolder1 = (ContentPlaceHolder)master1.FindControl("ContentPlaceHolder1");
+            HtmlControl divMask1 = (HtmlControl)mpContentPlaceHolder1.FindControl("Errorbox") as HtmlControl;
+            Label lblMsgges = mpContentPlaceHolder1.FindControl("lblMsgges") as Label;
+            lblMsgges.Text = Messages.ErrorNumber + ErrorNumber;
+            divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
+            Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
+            lblErrorCaption.Text = Messages.FailureMsgCaption;
+            divMask1.Attributes["class"] = "alert alert-danger";
+        }
+
+
+
 
 
         public void InsertionSuccessMessage(Page pg)

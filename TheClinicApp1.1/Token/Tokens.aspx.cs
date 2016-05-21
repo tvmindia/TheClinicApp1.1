@@ -37,7 +37,7 @@ namespace TheClinicApp1._1.Token
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];           
             string Login = UA.userName;
             RoleName = UA.GetRoleName1(Login);
-                        
+            tokenObj.usrid = UA.UserID;                        
             tokenObj.ClinicID = UA.ClinicID.ToString();
             DataSet gds = tokenObj.ViewToken();
             lblCaseCount.Text = gds.Tables[0].Rows.Count.ToString();
@@ -147,6 +147,7 @@ namespace TheClinicApp1._1.Token
                 tokenObj.PatientID = HiddenPatientID.Value;
                 tokenObj.ClinicID = HiddenClinicID.Value;
                 tokenObj.CreatedBy = UA.userName;
+             
                 tokenObj.DateTime = DateTime.Now;
 
                 int tokenNo = tokenObj.InsertToken();
@@ -158,27 +159,29 @@ namespace TheClinicApp1._1.Token
                 lblCaseCount.Text = gds.Tables[0].Rows.Count.ToString();
 
                 // reloading values in to repective fields
-                DataSet dst = tokenObj.GetPatientTokenDetailsbyID(HiddenPatientID.Value);              
+                DataSet dst = tokenObj.GetPatientTokenDetailsbyID(HiddenPatientID.Value);
+                if (dst != null && dst.Tables[0].Rows.Count > 0)
+                {
+                    lblFileNo.Text = Convert.ToString(dst.Tables[0].Rows[0]["FileNumber"]);
+                    lblPatientName.Text = Convert.ToString(dst.Tables[0].Rows[0]["Name"]);
+                    lblGender.Text = Convert.ToString(dst.Tables[0].Rows[0]["Gender"]);
+                    lblAddress.Text = Convert.ToString(dst.Tables[0].Rows[0]["Address"]);
+                    lblMobile.Text = Convert.ToString(dst.Tables[0].Rows[0]["Phone"]);
+                    lblEmail.Text = Convert.ToString(dst.Tables[0].Rows[0]["Email"]);
+                    lblLastVisit.Text = Convert.ToString(dst.Tables[0].Rows[0]["LastVisitDate"]);
 
-                lblFileNo.Text = Convert.ToString(dst.Tables[0].Rows[0]["FileNumber"]);
-                lblPatientName.Text = Convert.ToString(dst.Tables[0].Rows[0]["Name"]);
-                lblGender.Text = Convert.ToString(dst.Tables[0].Rows[0]["Gender"]);
-                lblAddress.Text = Convert.ToString(dst.Tables[0].Rows[0]["Address"]);
-                lblMobile.Text = Convert.ToString(dst.Tables[0].Rows[0]["Phone"]);
-                lblEmail.Text = Convert.ToString(dst.Tables[0].Rows[0]["Email"]);
-                lblLastVisit.Text = Convert.ToString(dst.Tables[0].Rows[0]["LastVisitDate"]);
+                    DateTime date = DateTime.Now;
+                    int year = date.Year;
+                    DateTime DT = Convert.ToDateTime(dst.Tables[0].Rows[0]["DOB"].ToString());
+                    int Age = year - DT.Year;
+                    lblAge.Text = Age.ToString();
 
-                DateTime date = DateTime.Now;
-                int year = date.Year;
-                DateTime DT = Convert.ToDateTime(dst.Tables[0].Rows[0]["DOB"].ToString());
-                int Age = year - DT.Year;
-                lblAge.Text = Age.ToString();
+                    BookedDoctorName.Visible = true;
+                    lblDoctor.Visible = true;
+                    lblDoctor.Text = Convert.ToString(dst.Tables[0].Rows[0]["DoctorName"]);
 
-                BookedDoctorName.Visible = true;
-                lblDoctor.Visible = true;
-                lblDoctor.Text = Convert.ToString(dst.Tables[0].Rows[0]["DoctorName"]);
-                
-                info.Visible = false;
+                    info.Visible = false;
+                }
             }
             else 
             {

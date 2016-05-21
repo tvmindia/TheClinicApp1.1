@@ -31,6 +31,8 @@ namespace TheClinicApp1._1.Token
         protected void Page_Load(object sender, EventArgs e)
         {
             gridviewbind();
+            tokenObj.usrid = UA.UserID;
+
         }
 
 

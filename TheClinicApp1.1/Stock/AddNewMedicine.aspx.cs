@@ -52,39 +52,24 @@ namespace TheClinicApp1._1.Stock
         #endregion Clear Controls
 
         #region Bind Units DropDown
-
         public void BindUnits()
         {
-
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            StockObj.ClinicID = UA.ClinicID.ToString();
-
-
             ddlUnits.DataSource = StockObj.ViewUnits();
             ddlUnits.DataTextField = "Description";
             ddlUnits.DataValueField = "Code";
             ddlUnits.DataBind();
-
-            ddlUnits.Items.Insert(0, "--Select--");
-            
+            ddlUnits.Items.Insert(0, "--Select--");            
         }
-
         #endregion Bind Units DropDown
 
         #region Bind Category DropDown
         public void BindCategory()
-        {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
-            StockObj.ClinicID = UA.ClinicID.ToString();
-
+        {          
             ddlCategory.DataSource = StockObj.ViewCategories();
             ddlCategory.DataTextField = "Name";
             ddlCategory.DataValueField = "CategoryID";
             ddlCategory.DataBind();
-
             ddlCategory.Items.Insert(0, "--Select--");
-
         }
         #endregion Bind Category DropDown
 
@@ -93,9 +78,7 @@ namespace TheClinicApp1._1.Stock
         {
             string msg = string.Empty;
 
-              var page = HttpContext.Current.CurrentHandler as Page;
-
-            
+              var page = HttpContext.Current.CurrentHandler as Page;            
 
 
               if (ddlCategory.SelectedItem.Text == "--Select--")
@@ -104,22 +87,6 @@ namespace TheClinicApp1._1.Stock
 
                 eObj.InsertionNotSuccessMessage(page, msg);
               }
-
-            //  else  if (txtmedicineName.Text.Contains("$") )
-            //{
-            //    msg = "Medicine Name is not valid as it contains $";
-
-            //    eObj.InsertionNotSuccessMessage(page, msg);
-            //    //Medicine Name is not valid as it contains $ ,|
-            //}
-
-            //  else if (txtmedicineName.Text.Contains("|"))
-            //{
-            //    msg = "Medicine Name is not valid as it contains |";
-
-            //    eObj.InsertionNotSuccessMessage(page, msg);
-            //}
-
               else if ( (txtmedicineName.Text.Contains("$")) || (txtmedicineName.Text.Contains("|")) )
               {
                   msg = "Please enter a valid medicine name";
@@ -132,28 +99,19 @@ namespace TheClinicApp1._1.Stock
                   eObj.InsertionNotSuccessMessage(page, msg);
               }
 
-
               else if(Convert.ToInt32(txtOrderQuantity.Text) <= 0)
-            {
+              {
                 msg = "Please enter a quantity greater than 0";
 
                 eObj.InsertionNotSuccessMessage(page, msg);
-            }
-
-           
-
-
+              }          
             else
             {
-                UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
                 StockObj.Name = txtmedicineName.Text;
                 StockObj.MedCode = txtCode.Text;
                 StockObj.CategoryID = ddlCategory.SelectedValue;
-                StockObj.ReOrderQty = Convert.ToInt32(txtOrderQuantity.Text);
-                StockObj.ClinicID = UA.ClinicID.ToString();
-                StockObj.CreatedBy = UA.userName;
-                //StockObj.Unit = txtUnit.Text;
+                StockObj.ReOrderQty = Convert.ToInt32(txtOrderQuantity.Text);              
+                StockObj.CreatedBy = UA.userName;             
                 StockObj.Unit = ddlUnits.SelectedItem.Text;
 
                 StockObj.InsertMedicines();
@@ -169,7 +127,13 @@ namespace TheClinicApp1._1.Stock
         [WebMethod]
         public static bool ValidateMedicineName(string MedicineName)
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];    
             Stocks StockObj = new Stocks();
+         
+            StockObj.ClinicID = UA.ClinicID.ToString();
+            StockObj.usrid = UA.UserID;  
 
             if (StockObj.ValidateMedicineName(MedicineName))
             {
@@ -184,7 +148,14 @@ namespace TheClinicApp1._1.Stock
         [WebMethod]
         public static bool ValidateMedicineCode(string MedicineCode)
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             Stocks StockObj = new Stocks();
+
+            StockObj.ClinicID = UA.ClinicID.ToString();
+            StockObj.usrid = UA.UserID;  
+           
 
             if (StockObj.ValidateMedicineCode(MedicineCode))
             {
@@ -202,6 +173,10 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            StockObj.ClinicID = UA.ClinicID.ToString();
+            StockObj.usrid = UA.UserID;   
+   
             if (!IsPostBack)
             {
                 BindCategory();
@@ -223,19 +198,5 @@ namespace TheClinicApp1._1.Stock
             Errorbox.Attributes.Add("style", "display:none");
             ClearControls();
         }
-
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            //AddMedicine();
-        }
-
-        protected void btnNew_Click(object sender, EventArgs e)
-        {
-            //Errorbox.Attributes.Add("style", "display:none");
-            //ClearControls();
-        }
-
-     
-       
     }
 }

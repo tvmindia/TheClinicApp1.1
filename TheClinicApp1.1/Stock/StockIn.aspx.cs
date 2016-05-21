@@ -56,36 +56,31 @@ namespace TheClinicApp1._1.Stock
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
             string receiptID = string.Empty;
+
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();
-           
+            stok.usrid = UA.UserID;
+            rpt.usrid = UA.UserID;
             string Login = UA.userName;
 
             RoleName = UA.GetRoleName1(Login);
             //foreach (DataRow dr in dtRols.Rows)
             //{
-
             //    RoleName.Add(dr["RoleName"].ToString());
-
-            //}
-           
+            //}           
             //GridViewStockIN();
 
             if (!IsPostBack)
             {
                 BindDummyRow();
-
             }
 
             if (Request.QueryString["HdrID"] != null)
             {
-
                 receiptID = Request.QueryString["HdrID"].ToString();
-
-                rpt.ClinicID = UA.ClinicID.ToString();
+                rpt.ClinicID = UA.ClinicID.ToString();              
 
               DataSet  dsReceipthdr = rpt.GetReceiptDetailsByReceiptID(receiptID);
-
               ihd.ClinicID = UA.ClinicID.ToString();
 
               for (int i = 0; i < dsReceipthdr.Tables[0].Rows.Count; i++)
@@ -101,31 +96,20 @@ namespace TheClinicApp1._1.Stock
                   {
 
                       int TotalIssuedQty = Convert.ToInt32(totalIssue);
-
-
                       int TotalStock = TotalIssuedQty + qtyInStock;
-
                       int difference = TotalStock - Outqty;
-
                       if ((difference == 0) || (difference < TotalIssuedQty))
                       {
                           CanDelete = false;
                           break;
                       }
                   }
-
-
-
-
               }
-
 
               if (CanDelete == false)
               {
                   var page = HttpContext.Current.CurrentHandler as Page;
-
                   msg = "Already issued.Can't be deleted";
-
                   eObj.DeletionNotSuccessMessage(page, msg);
               }
 
@@ -134,8 +118,6 @@ namespace TheClinicApp1._1.Stock
                   rpt.DeleteReceiptHeader(receiptID);
               }
             }
-
-
         }
 
         #endregion page Load
@@ -176,6 +158,8 @@ namespace TheClinicApp1._1.Stock
             UIClasses.Const Const = new UIClasses.Const();
 
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            
 
             string query = "ViewAndFilterReceiptHD";
             SqlCommand cmd = new SqlCommand(query);
