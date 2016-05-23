@@ -23,6 +23,7 @@ using System.Text;
 using System.Web.Services;
 using System.Globalization;
 using System.Threading;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 
 #endregion Namespaces
 
@@ -271,6 +272,13 @@ namespace TheClinicApp1._1.Stock
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            IssuedtlObj.ClinicID = UA.ClinicID.ToString();
+            IssuedtlObj.CreatedBy = UA.userName;
+
+            IssuehdrObj.ClinicID = UA.ClinicID.ToString();
+            IssuehdrObj.CreatedBy = UA.userName;
+
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
             
@@ -374,7 +382,7 @@ namespace TheClinicApp1._1.Stock
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
             string msg = string.Empty;
-            if ( (txtIssuedTo.Text != "") && (txtDate1.Text != "") && (txtIssueNO.Text != "") )
+            if ((txtIssuedTo.Text.Trim() != string.Empty) && (txtDate1.Text != string.Empty) && (txtIssueNO.Text.Trim() != string.Empty) && (hdnTextboxValues.Value.Trim() != string.Empty))
              {
 
 
@@ -501,6 +509,11 @@ namespace TheClinicApp1._1.Stock
                                  for (int i = 0; i < Rows.Length - 1; i++)
                                  {
                                      IssueDetails IssuedtlObj = new IssueDetails(); //Object is created in loop as each entry should have different uniqueID
+
+                                     IssuedtlObj.ClinicID = UA.ClinicID.ToString();
+                                     IssuedtlObj.CreatedBy = UA.userName;
+
+
                                      string[] tempRow = Rows;
 
                                      last = tempRow[i].Split('|').Last();
@@ -591,7 +604,7 @@ else
 {
     var page = HttpContext.Current.CurrentHandler as Page;
 
-    msg = "Please fill all the fields";
+    msg = Messages.ConfirmInput;
 
     eObj.InsertionNotSuccessMessage(page, msg);
 }

@@ -19,6 +19,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 
 #endregion  Included Namespaces
 
@@ -309,7 +310,7 @@ namespace TheClinicApp1._1.Stock
             string msg = string.Empty;
 
 
-            if ((txtBillNo.Text != string.Empty)  && (txtDate1.Value != string.Empty))
+            if ((txtBillNo.Text.Trim() != string.Empty) && (txtDate1.Value.Trim() != string.Empty) && (hdnTextboxValues.Value.Trim() != string.Empty))
             {
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
@@ -597,7 +598,7 @@ namespace TheClinicApp1._1.Stock
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
 
-                msg = "Please fill all the fields";
+                msg = Messages.ConfirmInput;
 
                 eObj.InsertionNotSuccessMessage(page, msg);
             }

@@ -169,7 +169,7 @@ namespace TheClinicApp1._1.MasterAdd
             GridViewRow row = ib.NamingContainer as GridViewRow;
             Guid Ctgryid = Guid.Parse(dtgViewAllCategories.DataKeys[row.RowIndex].Value.ToString());
 
-            
+            CategoryObj.CategoryID = Ctgryid;
          DataTable dtCtgry =    CategoryObj.ViewMedicinesByCategoryID();
 
          if (dtCtgry.Rows.Count == 0)

@@ -81,9 +81,14 @@ namespace TheClinicApp1._1.MasterAdd
         #region Paging
         protected void dtgDoctors_PreRender(object sender, EventArgs e)
         {
-
             dtgDoctors.UseAccessibleHeader = false;
-            dtgDoctors.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            if (dtgDoctors.Rows.Count > 0)
+            {
+                dtgDoctors.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
+          
         }
 
         #endregion Paging

@@ -74,6 +74,11 @@ namespace TheClinicApp1._1.UIClasses
             get { return "The Image Is not Supporting Save a new one"; }
         }
        
+        public static string Confirm
+        {
+            get { return "Please Confirm!"; }
+        }
+
 //----------------* Success Messages *--------------//
         public static string LoginSuccess
         {
@@ -197,6 +202,10 @@ namespace TheClinicApp1._1.UIClasses
          public static string PassowrdMismatch
          {
              get { return "Passwords do not match ! "; }
+         }
+        public static string ConfirmInput
+         {
+             get { return "Fields may be empty or invaild"; }
          }
     }
 }

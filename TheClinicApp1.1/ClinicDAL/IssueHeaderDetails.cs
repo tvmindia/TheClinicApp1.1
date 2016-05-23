@@ -276,7 +276,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@IssuedTo", SqlDbType.NVarChar, 255).Value = IssuedTo;
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
                 cmd.Parameters.Add("@IssueNO", SqlDbType.NVarChar, 50).Value = IssueNO;
-                cmd.Parameters.Add("@PrescID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
+
+                if (PrescID != null)
+                {
+                    cmd.Parameters.Add("@PrescID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
+                }
+
+               
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
 
                 cmd.Parameters.Add("@Status", SqlDbType.Int);

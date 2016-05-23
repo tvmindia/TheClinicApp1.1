@@ -5,7 +5,7 @@
 }
 
 var Caption = {
-    Confirm: "Confirm Please !"
+    Confirm: "Please Confirm!"
 
 }
 
