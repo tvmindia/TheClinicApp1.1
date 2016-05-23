@@ -126,6 +126,7 @@ namespace TheClinicApp1._1.Admin
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             userObj.ClinicID = UA.ClinicID;
 
+            mstrObj.ClinicID = UA.ClinicID;
             //DoctorRoleID = userObj.GetRoleIDOfDoctor();
             DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
 
