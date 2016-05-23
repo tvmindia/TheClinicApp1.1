@@ -28,13 +28,14 @@ namespace TheClinicApp1._1.ClinicDAL
 
                     SQLCon.Open();
                 }
-                return 1;
+              
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.ErrorData(ex, page);
             }
+            return 1;
         }
 
         public SqlConnection GetDBConnection()
