@@ -42,14 +42,27 @@ namespace TheClinicApp1._1.Admin
 
         public void BindUsersDropdown()
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            string loginedUserID = UA.UserID.ToString();
+
             dtUsers = roleObj.GetDetailsOfAllUsers();
             ViewState["dtUsers"] = dtUsers;
-
 
             ddlUsers.DataTextField = "FirstName";
             ddlUsers.DataValueField = "UserID";
             ddlUsers.DataSource = dtUsers;
             ddlUsers.DataBind();
+
+            foreach (ListItem itm in ddlUsers.Items)
+            {
+                if (itm.Value == loginedUserID)
+                {
+                    itm.Attributes.Add("disabled", "disabled");
+                    itm.Attributes.Add("title", "Can't assign role for logined user");
+                }
+            }
+            //ddlUsers.Items.FindByValue(loginedUserID).Enabled = false;
+
 
             ddlUsers.Items.Insert(0, "--Select--");
         }
