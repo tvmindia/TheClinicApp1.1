@@ -14,7 +14,9 @@ namespace TheClinicApp1._1.ClinicDAL
     {
 
         #region Global Variables
-        ErrorHandling eObj = new ErrorHandling();   
+        ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;     
 
         #endregion Global Variables
 
@@ -33,14 +35,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Property
 
         public string Module = "Receipt";
-        /// <summary>
-        /// user id of login user
-        /// </summary>
-        public Guid usrid
-        {
-            get;
-            set;
-        }
+       
         public Guid ReceiptID
         {
             get;
@@ -138,9 +133,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "InsertReceiptHeader";
                 eObj.InsertError();
             }
@@ -203,9 +199,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "UpdateReceiptHeader";
                 eObj.InsertError();
             }
@@ -267,9 +264,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewReceiptHeader";
                 eObj.InsertError();
             }
@@ -330,9 +328,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DeleteReceiptHeader";
                 eObj.InsertError();
             }
@@ -390,9 +389,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "InsertReloaded";
                 eObj.InsertError();
             }
@@ -445,9 +445,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetMedicineDetailsByMedicineName";
                 eObj.InsertError();
             }
@@ -502,9 +503,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetReceiptDetailsByReceiptID";
                 eObj.InsertError();
             }
@@ -559,9 +561,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetReceiptHeaderByReceiptID";
                 eObj.InsertError();
             }
@@ -592,6 +595,8 @@ namespace TheClinicApp1._1.ClinicDAL
     {
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;  
         #endregion Global Variables
 
         #region constructor
@@ -618,14 +623,8 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Property
 
         public string Module = "ReceiptDetails";
-        /// <summary>
-        /// user id of login user
-        /// </summary>
-        public Guid usrid
-        {
-            get;
-            set;
-        }
+      
+      
         public Guid UniqueID
         {
             get;
@@ -720,9 +719,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetMedCodeUnitCategory";
                 eObj.InsertError();
             }
@@ -775,9 +775,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetReceiptDetailsByUniqueID";
                 eObj.InsertError();
             }
@@ -846,9 +847,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "InsertReceiptDetails";
                 eObj.InsertError();
             }
@@ -916,9 +918,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "UpdateReceiptDetails";
                 eObj.InsertError();
             }
@@ -971,9 +974,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewReceiptDetails";
                 eObj.InsertError();
             }
@@ -1039,9 +1043,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DeleteReceiptDetails";
                 eObj.InsertError();
             }

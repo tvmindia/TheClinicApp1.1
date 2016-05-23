@@ -42,11 +42,7 @@ namespace TheClinicApp1._1.Pharmacy
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            string Login = UA.userName;
-            tokobj.usrid = UA.UserID;
-            issuehdobj.usrid = UA.UserID;
-            pharmacypobj.usrid = UA.UserID;
-
+            string Login = UA.userName;  
             RoleName= UA.GetRoleName1(Login);  
             pharmacypobj.ClinicID = UA.ClinicID;
             listFilter = null;
@@ -79,7 +75,7 @@ namespace TheClinicApp1._1.Pharmacy
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             obj.ClinicID = UA.ClinicID.ToString();
-            obj.usrid = UA.UserID;
+           
             DataSet ds = obj.GetpatientDetails(file);
 
             string FileNumber = Convert.ToString(ds.Tables[0].Rows[0]["FileNumber"]);
@@ -169,8 +165,7 @@ namespace TheClinicApp1._1.Pharmacy
 
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
-            IssuedtlsObj.ClinicID = UA.ClinicID.ToString();
-            IssuedtlsObj.usrid = UA.UserID;
+            IssuedtlsObj.ClinicID = UA.ClinicID.ToString();           
 
             DataSet ds = IssuedtlsObj.GetMedicineDetailsByMedicineName(MedName);
             string Unit = "";

@@ -11,7 +11,11 @@ namespace TheClinicApp1._1.ClinicDAL
     public class IssueHeaderDetails
     {
         #region Global Variables
+
         ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA; 
+
         #endregion Global Variables
 
         #region constructor
@@ -31,14 +35,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         public string Module = "IssueHeaderDetails";
-        /// <summary>
-        /// user id of login user
-        /// </summary>
-        public Guid usrid
-        {
-            get;
-            set;
-        }
+      
         public Guid IssueID
         {
             get;
@@ -122,9 +119,10 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "CheckIssueNoDuplication";
                 eObj.InsertError();
 
@@ -171,9 +169,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetMedicineDetailsByMedicineName";
                 eObj.InsertError();
 
@@ -238,9 +237,10 @@ namespace TheClinicApp1._1.ClinicDAL
              }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GenerateIssueNumber";
                 eObj.InsertError();
             }
@@ -304,9 +304,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "InsertIssueHeader";
                 eObj.InsertError();
             }
@@ -361,9 +362,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "UpdateIssueHeader";
                 eObj.InsertError();
             }
@@ -423,10 +425,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
-                eObj.Method = " ";
+                eObj.UserID = UA.UserID;
+                eObj.Method = "View Issue Header";
                 eObj.InsertError();
             }
 
@@ -491,9 +494,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DeleteIssueHeader";
                 eObj.InsertError();
             }
@@ -546,9 +550,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetIssueDetailsByIssueID";
                 eObj.InsertError();
             }
@@ -596,9 +601,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetIssueHeaderByIssueID";
                 eObj.InsertError();
             }
@@ -643,9 +649,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetIssueDetailsByIssueNO";
                 eObj.InsertError();
             }
@@ -693,9 +700,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetTotalQtyOfAMedicine";
                 eObj.InsertError();
             }
@@ -724,6 +732,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA; 
+
         #endregion Global Variables
 
         #region constructor
@@ -750,14 +761,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Property
 
         public string Module = "IssueDetails";
-        /// <summary>
-        /// user id of login user
-        /// </summary>
-        public Guid usrid
-        {
-            get;
-            set;
-        }
+    
 
         public Guid UniqueID
         {
@@ -854,9 +858,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetMedcineIDByMedicineName";
                 eObj.InsertError();
             }
@@ -923,9 +928,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "InsertIssueDetails";
                 eObj.InsertError();
 
@@ -980,9 +986,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "UpdateIssueDetails";
                 eObj.InsertError();
 
@@ -1028,9 +1035,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewIssueDetails";
                 eObj.InsertError();                
             }
@@ -1084,9 +1092,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DeleteIssueDetails";
                 eObj.InsertError();
 
@@ -1135,9 +1144,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetMedicineIDByUniqueID";
                 eObj.InsertError();
 
@@ -1186,9 +1196,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetQtyInStock";
                 eObj.InsertError();
 
@@ -1241,9 +1252,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetIssueDetailsByUniqueID";
                 eObj.InsertError();
 
