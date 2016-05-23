@@ -288,7 +288,7 @@ namespace TheClinicApp1._1.Stock
             
             txtDate1.Attributes.Add("readonly", "readonly");
 
-            btnSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','"+hdnRemovedIDs.ClientID+"')");
+            //btnSave.Attributes.Add("onclick", "GetTextBoxValues('" + hdnTextboxValues.ClientID + "','"+hdnRemovedIDs.ClientID+"')");
            
 
             BindListFilter();
