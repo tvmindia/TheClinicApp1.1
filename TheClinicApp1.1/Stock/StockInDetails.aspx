@@ -322,15 +322,15 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <input id="txtMedicine0" type="text"  placeholder="Medicine0" class="input" onblur="BindControlsByMedicneName(0)" onfocus="autocompleteonfocus(0)"/></td>
+                                                    <input id="txtMedicine0" type="text"   class="input" onblur="BindControlsByMedicneName(0)" onfocus="autocompleteonfocus(0)"/></td>
                                                 <td>
-                                                    <input id="txtUnit0" class="input" type="text" placeholder="Unit0" /></td>
+                                                    <input id="txtUnit0" class="input" type="text"  /></td>
                                                 <td>
-                                                    <input id="txtCode0" type="text" placeholder="Code0" class="input" /></td>
+                                                    <input id="txtCode0" type="text" class="input" /></td>
                                                 <td>
-                                                    <input id="txtCategory0" type="text" placeholder="Category0" class="input" /></td>
+                                                    <input id="txtCategory0" type="text"  class="input" /></td>
                                                 <td>
-                                                    <input id="txtQuantity0" type="text" placeholder="Quantity0" class="input" onblur="CheckMedicineIsOutOfStock('0')" onfocus="RemoveWarning('0')"/></td>
+                                                    <input id="txtQuantity0" type="text" class="input" onblur="CheckMedicineIsOutOfStock('0')" onfocus="RemoveWarning('0')"/></td>
                                                 <td style="background-color: transparent">
                                                     <input type="button" value="-" class="bt1" style="width: 20px;" onclick="ClearAndRemove()" /></td>
                                                 <td style="background-color: transparent">

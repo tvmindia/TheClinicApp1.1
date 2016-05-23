@@ -109,11 +109,11 @@ function clickStockAdd(id) {
      //ADD new row with fields needed.
    
     $(container).append('<div id="div' + iCnt + '"><table  style="width:100%;border:0;"><tr>'
-       + '<td><input id="txtMedicine' + iCnt + '" class="input" type="text" placeholder="Medicine' + iCnt + '" onblur="BindControlsByMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
-       + '<td><input id="txtUnit' + iCnt + '" readonly="true" class="input "  type="text" placeholder="Unit' + iCnt + '" /></td>'
-       + '<td><input id="txtCode' + iCnt + '" readonly="true" class="input "  type="text" placeholder="Med Code' + iCnt + '"/></td>'
-       + '<td><input id="txtCategory' + iCnt + '" readonly="true" class="input "  type="text" placeholder="Category' + iCnt + '"/></td>'
-       + '<td><input id="txtQuantity' + iCnt + '" class="input" min="1" type="number" placeholder="Quantity' + iCnt + '" onblur="CheckMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" autocomplete="off" /></td>'
+       + '<td><input id="txtMedicine' + iCnt + '" class="input" type="text"  onblur="BindControlsByMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
+       + '<td><input id="txtUnit' + iCnt + '" readonly="true" class="input "  type="text"  /></td>'
+       + '<td><input id="txtCode' + iCnt + '" readonly="true" class="input "  type="text" /></td>'
+       + '<td><input id="txtCategory' + iCnt + '" readonly="true" class="input "  type="text" /></td>'
+       + '<td><input id="txtQuantity' + iCnt + '" class="input" min="1" type="number"  onblur="CheckMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" autocomplete="off" /></td>'
        + '<td style="background:#E6E5E5">'
        + '<input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" /></td>'
        + '<td style="background:#E6E5E5">'
