@@ -67,10 +67,8 @@
 
         
         function Validation() {
-
-            alert(1);
             debugger;
-            if (($('#<%=txtBillNo.ClientID%>').val().trim() == "") || ($('#<%=txtDate1.ClientID%>').val().trim() == "") || ($('#<%=hdnTextboxValues.ClientID%>').val().trim() == "")) {
+            if (($('#<%=txtBillNo.ClientID%>').val().trim() == "") || ($('#<%=txtDate1.ClientID%>').val().trim() == "") ) {
 
                 var lblclass = Alertclasses.danger;
                 var lblmsg = msg.Requiredfields;
@@ -81,7 +79,23 @@
                 return false;
             }
             else {
-                return true;
+               
+                GetTextBoxValues('<%=hdnTextboxValues.ClientID %>','<%=hdnRemovedIDs.ClientID %>');
+
+                if($('#<%=hdnTextboxValues.ClientID%>').val().trim() != "")
+                {
+                    return true;
+                }
+                else{
+                    var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.Requiredfields;
+                    var lblcaptn = Caption.Confirm;
+
+                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                    return false;
+                }
+              
             }
 
         }
@@ -238,8 +252,8 @@
                                 </div>--%>
                                 <ul class="top_right_links">
                                     <li><a class="back" href="StockIn.aspx"><span></span>Back</a></li>
-                                    <li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" onclick="return Validation();"><span></span>Save</a></li>
-                                    <%--<li> <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btSave_ServerClick"/></li>--%>
+                                    <%--<li><a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" onclick="return Validation();"><span></span>Save</a></li>--%>
+                                    <li> <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btSave_ServerClick" OnClientClick="return Validation();"/></li>
                                     <li><a class="new" href="StockInDetails.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>

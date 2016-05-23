@@ -254,7 +254,13 @@ namespace TheClinicApp1._1.MasterAdd
         protected void dtgViewAllUnits_PreRender(object sender, EventArgs e)
         {
             dtgViewAllUnits.UseAccessibleHeader = false;
-            dtgViewAllUnits.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            if (dtgViewAllUnits.Rows.Count > 0)
+            {
+                dtgViewAllUnits.HeaderRow.TableSection = TableRowSection.TableHeader;  
+            }
+
+           
         }
         #endregion Paging
 
