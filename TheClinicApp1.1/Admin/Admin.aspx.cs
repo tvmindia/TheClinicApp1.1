@@ -429,8 +429,7 @@ namespace TheClinicApp1._1.Admin
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             Master mstrObj = new Master();
 
-            mstrObj.usrid = UA.UserID;
-
+            
             string loginName = LogName;
 
             ClinicDAL.User userObj = new ClinicDAL.User();
@@ -474,7 +473,7 @@ namespace TheClinicApp1._1.Admin
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             Master mstrObj = new Master();
 
-            mstrObj.usrid = UA.UserID;
+          
             bool UserDeleted = false;
             ClinicDAL.User userObj = new ClinicDAL.User();
 
@@ -497,7 +496,7 @@ namespace TheClinicApp1._1.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            mstrObj.usrid = UA.UserID;
+         
 
             string msg = string.Empty;
 

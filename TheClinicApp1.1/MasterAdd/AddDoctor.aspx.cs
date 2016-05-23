@@ -185,7 +185,7 @@ namespace TheClinicApp1._1.MasterAdd
 
             Master mstrObj = new Master();
 
-            mstrObj.usrid = UA.UserID;
+           
             mstrObj.DoctorName = DoctorName;
 
             if (mstrObj.CheckDoctorNameDuplication())
@@ -314,8 +314,7 @@ namespace TheClinicApp1._1.MasterAdd
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             mstrObj.ClinicID = UA.ClinicID;
-            mstrObj.usrid = UA.UserID;
-
+          
             if (!IsPostBack)
             {
                 BindGridview();

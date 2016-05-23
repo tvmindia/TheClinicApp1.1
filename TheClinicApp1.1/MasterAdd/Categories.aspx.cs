@@ -51,7 +51,7 @@ namespace TheClinicApp1._1.MasterAdd
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
             Category CategoryObj = new Category();
-            CategoryObj.usrid = UA.UserID; 
+          
 
 
             if (CategoryObj.ValidateCategoryName(CategoryName))
@@ -134,8 +134,6 @@ namespace TheClinicApp1._1.MasterAdd
                     CategoryObj.CategoryID = Guid.Parse(hdnCategoryId.Value);
                     CategoryObj.CategoryName = txtCategoryName.Value.TrimStart();
 
-                    CategoryObj.usrid = UA.UserID;
-
                     CategoryObj.UpdateCategory();
                 }
                 else
@@ -176,8 +174,6 @@ namespace TheClinicApp1._1.MasterAdd
 
          if (dtCtgry.Rows.Count == 0)
          {
-             CategoryObj.usrid = UA.UserID;
-
              CategoryObj.CategoryID = Ctgryid;
              CategoryObj.DeleteCategoryById();
          } 

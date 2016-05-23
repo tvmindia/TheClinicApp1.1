@@ -36,11 +36,17 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion constructor
 
-        #region Public Properties
+        #region Global Variables
 
         ErrorHandling eObj = new ErrorHandling();
-        
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;
+
         public string Module = "Category";
+
+        #endregion Global Variables
+
+        #region Public Properties
 
         public Guid CategoryID
         {
@@ -72,14 +78,7 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
-        /// <summary>
-        /// User id of logined user
-        /// </summary>
-        public Guid usrid
-        {
-            get;
-            set;
-        }
+     
 
 
 
@@ -132,10 +131,12 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "AddNewCategory";
 
                 eObj.InsertError();
@@ -198,11 +199,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-               
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "UpdateCategory";
 
                 eObj.InsertError();
@@ -249,12 +250,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                ErrorHandling eObj = new ErrorHandling();
-        
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ValidateCategoryName";
 
                 eObj.InsertError();
@@ -296,10 +296,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewAllCategory";
 
                 eObj.InsertError();
@@ -356,10 +357,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DeleteCategoryById";
 
                 eObj.InsertError();
@@ -402,10 +404,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewCategoryByCategoryID";
 
                 eObj.InsertError();
@@ -451,10 +454,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewMedicinesByCategoryID";
 
                 eObj.InsertError();
