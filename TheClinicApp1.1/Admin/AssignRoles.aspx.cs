@@ -190,9 +190,34 @@ namespace TheClinicApp1._1.Admin
                     msg = Messages.AlreadyUsedForDeletion;
                     eObj.DeletionNotSuccessMessage(page, msg);
 
-                    ListItem listItem = chklstRoles.Items.FindByValue(GetRoleIDOFDoctor());
 
-                    if (listItem != null) listItem.Selected = true;
+                    roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+                    DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+
+                    if (dtAssignedRoles.Rows.Count > 0)
+                    {
+                        foreach (ListItem item in chklstRoles.Items)
+                        {
+                            DataRow[] RoleAssigned = dtAssignedRoles.Select("RoleID = '" + item.Value + "'");
+
+                            if (RoleAssigned.Length == 0)
+                            {
+                                item.Selected = false;
+                            }
+
+                            else
+                            {
+                                item.Selected = true;
+                            }
+                        }
+
+                    }
+
+
+
+                    //ListItem listItem = chklstRoles.Items.FindByValue(GetRoleIDOFDoctor());
+
+                    //if (listItem != null) listItem.Selected = true;
 
                 }
 
