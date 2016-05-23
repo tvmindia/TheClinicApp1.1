@@ -132,8 +132,29 @@ table
     <script src="../js/DeletionConfirmation.js"></script>
 
     <script src="../js/jquery.tablePagination.0.1.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
+    <script src="../js/Messages.js"></script>
     
-    
+    <script>
+        function Validation() {
+            debugger;
+            if (($('#<%=ddlUsers.ClientID%>').val().trim() == "--Select--")) {
+
+
+                var lblclass = Alertclasses.danger;
+                var lblmsg = msg.CompulsorySelect;
+                var lblcaptn = Caption.Confirm;
+
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        }
+    </script>
 
 
     
@@ -420,7 +441,7 @@ table
                                     <li>
                                         <%--<a  id="btSave" runat="server" CssClass="button1" onserverclick="btSave_ServerClick"><span></span>Save</a>--%>
 
-                                          <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btSave_ServerClick" />
+                                          <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btSave_ServerClick" OnClientClick="return Validation();" />
 
                                     </li>
                                     <li><a class="new"  href="AssignRoles.aspx"><span></span>New</a></li>
@@ -465,16 +486,7 @@ table
           <asp:DropDownList ID="ddlUsers" runat="server" Width="100%" Height="40px" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">
              
           </asp:DropDownList>
-           <asp:RequiredFieldValidator
-             ID="RequiredFieldValidator2"
-             runat="server"
-             ControlToValidate="ddlUsers"
-             InitialValue="--Select--"
-             ErrorMessage="* Please select an item."
-             ForeColor="Red"
-            
-             >
-        </asp:RequiredFieldValidator>
+           
 
 
 

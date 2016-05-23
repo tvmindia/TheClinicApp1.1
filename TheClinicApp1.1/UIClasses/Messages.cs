@@ -28,7 +28,10 @@ namespace TheClinicApp1._1.UIClasses
             get { return "Error Number = "; }
         }
 
-       
+       public static string DisableAssignRole
+        {
+            get { return "Can't assign role for logined user"; }
+        }
 
  //----------------* Messages Captions *--------------//
         public static string ExceptionMsgCaption

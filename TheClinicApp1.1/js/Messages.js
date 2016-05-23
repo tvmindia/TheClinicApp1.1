@@ -1,6 +1,7 @@
 ﻿var msg= {
    
-    Requiredfields : "Fields may be empty or invaild"
+    Requiredfields: "Fields may be empty or invaild",
+    CompulsorySelect: "Please select an item"
     
 }
 
@@ -16,5 +17,6 @@ var Alertclasses = {
     info: "alert alert-info",
     sucess: "alert alert-success",
     danger: "alert alert-danger"
+    
 
 }

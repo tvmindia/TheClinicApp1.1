@@ -58,7 +58,7 @@ namespace TheClinicApp1._1.Admin
                 if (itm.Value == loginedUserID)
                 {
                     itm.Attributes.Add("disabled", "disabled");
-                    itm.Attributes.Add("title", "Can't assign role for logined user");
+                    itm.Attributes.Add("title",Messages.DisableAssignRole);
                 }
             }
             //ddlUsers.Items.FindByValue(loginedUserID).Enabled = false;
