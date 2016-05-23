@@ -247,7 +247,11 @@ namespace TheClinicApp1._1.MasterAdd
         protected void gvMedicines_PreRender(object sender, EventArgs e)
         {
             gvMedicines.UseAccessibleHeader = false;
-            gvMedicines.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            if (gvMedicines.Rows.Count >0)
+            {
+                gvMedicines.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
 
         }
         #endregion Paging

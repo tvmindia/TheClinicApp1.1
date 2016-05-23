@@ -424,7 +424,13 @@ namespace TheClinicApp1._1.Admin
         protected void dtgViewAllUserInRoles_PreRender(object sender, EventArgs e)
         {
             dtgViewAllUserInRoles.UseAccessibleHeader = false;
-            dtgViewAllUserInRoles.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            if (dtgViewAllUserInRoles.Rows.Count > 0)
+            {
+                dtgViewAllUserInRoles.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
+            
         }
 
         #endregion Paging
