@@ -20,10 +20,25 @@ namespace TheClinicApp1._1.ClinicDAL
 {
     public class Doctor
     {
+        #region Connectionstring
+        dbConnection dcon = new dbConnection();
+        #endregion Connectionstring
+
+        #region global
+ 
         ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;            
+        public string Module = "Doctor";
+
+        #endregion global
 
         #region GrabFileID
+        
         #region Property
+
+
+
         public Guid PatientIdForFile
         {
             get;
@@ -31,15 +46,19 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion Property
+
         #region Methods
+
+        #region GetFileIDUSingPatientID
         public DataTable GetFileIDUSingPatientID()
         {
             SqlConnection con = null;
+            DataTable DtFileID = new DataTable();
 
             try
             {
                 DateTime now = DateTime.Now;
-                DataTable DtFileID = new DataTable();
+               
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("GetFileID", con);
@@ -49,13 +68,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 adapter.SelectCommand = cmd;
                 DtFileID = new DataTable();
                 adapter.Fill(DtFileID);
-                return DtFileID;
+              
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-                throw ex;
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];   
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetFileIDUSingPatientID";
+                eObj.InsertError();
+
             }
             finally
             {
@@ -65,15 +88,11 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return DtFileID;
 
         }
-        #endregion Methods
-        #endregion GrabFileID
-
-        #region Connectionstring
-        dbConnection dcon = new dbConnection();
-        #endregion Connectionstring
+     
+        #endregion GetFileIDUSingPatientID      
 
         #region ViewAllRegistration
         /// <summary>
@@ -83,10 +102,9 @@ namespace TheClinicApp1._1.ClinicDAL
         public DataTable GetAllRegistration()
         {
             SqlConnection con = null;
-
+            DataTable dt = new DataTable();
             try
-            {
-                DataTable dt = new DataTable();
+            {              
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("ViewAllRegistration", con);
@@ -95,14 +113,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 adapter.SelectCommand = cmd;
                 dt = new DataTable();
                 adapter.Fill(dt);
-                con.Close();
-                return dt;
+                con.Close();             
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-                throw ex;
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];   
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "ViewAllRegistration";
+                eObj.InsertError();
+
             }
             finally
             {
@@ -110,10 +131,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     con.Dispose();
                 }
-
             }
-
-
+            return dt;
         }
         #endregion ViewAllRegistration
 
@@ -121,10 +140,10 @@ namespace TheClinicApp1._1.ClinicDAL
         public DataTable GetDateRegistration()
         {
             SqlConnection con = null;
+            DataTable dt1 = new DataTable();
             try
             {
-                DateTime now = DateTime.Now;
-                DataTable dt1 = new DataTable();
+                DateTime now = DateTime.Now;               
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("ViewDateRegistration", con);
@@ -133,14 +152,16 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
                 dt1 = new DataTable();
-                adapter.Fill(dt1);
-                return dt1;
+                adapter.Fill(dt1);               
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                throw ex;
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];   
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetDateRegistration";
+                eObj.InsertError();
             }
             finally
             {
@@ -148,21 +169,31 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     con.Dispose();
                 }
-
             }
+            return dt1;
         }
         #endregion ViewDateRegistration
 
-       
+        #endregion Methods
+
+        #endregion GrabFileID
 
     }
     public class CaseFile
-    {   
-        ErrorHandling eObj = new ErrorHandling();
+    {
+        #region global
 
-            private DateTime CreatedDateLocal;
-            private DateTime UpdatedDateLocal;
-            #region Constructors
+        ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;
+        public string Module = "Doctor/CaseFile";
+
+        private DateTime CreatedDateLocal;
+        private DateTime UpdatedDateLocal;
+
+        #endregion global
+         
+        #region Constructors
             public CaseFile()
             {
                 FileID = Guid.NewGuid();
@@ -196,7 +227,9 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             #endregion Constructors
 
-            #region Fileproperty
+        #region Fileproperty
+ 
+
         public Guid FileID
         {
             get;
@@ -242,7 +275,8 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion Fileproperty
 
-            #region File Methods
+        #region File Methods
+
         #region AddFile
         public void AddFile()
         {
@@ -250,8 +284,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
             try
             {
-
-
                 dcon.GetDBConnection();
                 SqlCommand pud = new SqlCommand();
                 pud.Connection = dcon.SQLCon;
@@ -276,29 +308,25 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 if (Output.Value.ToString() == "")
                 {
-                    //not successfull   
-
+                    //not successfull  
                     var page = HttpContext.Current.CurrentHandler as Page;
                     eObj.InsertionNotSuccessMessage(page);
-
                 }
                 else
                 {
                     //successfull
-
                     var page = HttpContext.Current.CurrentHandler as Page;
                     eObj.InsertionSuccessMessage(page);
-
-
                 }
-
-
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "AddFile";
+                eObj.InsertError();
             }
 
             finally
@@ -310,6 +338,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
             }
         }
+
         #endregion AddFile
 
         #region UpdateFile
@@ -318,7 +347,6 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlConnection con = null;
             try
             {
-
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand pud = new SqlCommand();
@@ -355,9 +383,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                throw ex;
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "UpdateFile";
+                eObj.InsertError();
             }
             finally
             {
@@ -369,14 +400,23 @@ namespace TheClinicApp1._1.ClinicDAL
             }
         }
         #endregion UpdateFile
+
         #endregion File Methods
 
-            #region Visit Class
+        #region Visit Class
         public class Visit
         {
+            #region global
+
             ErrorHandling eObj = new ErrorHandling();
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+            public string Module = "Doctor/CaseFile/Visit";
+
             private DateTime CreatedDateLocal;
             private DateTime UpdatedDateLocal;
+
+            #endregion global          
 
             #region Constructors
             public Visit(CaseFile caseFile) 
@@ -725,9 +765,12 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 catch (Exception ex)
                 {
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.ErrorData(ex, page);
-
+                    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                    eObj.Description = ex.Message;
+                    eObj.Module = Module;
+                    eObj.UserID = UA.UserID;
+                    eObj.Method = "AddVisits";
+                    eObj.InsertError();
                 }
 
                 finally
@@ -800,9 +843,12 @@ namespace TheClinicApp1._1.ClinicDAL
                    }
                 catch (Exception ex)
                 {
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.ErrorData(ex, page);
-                    throw ex;
+                    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                    eObj.Description = ex.Message;
+                    eObj.Module = Module;
+                    eObj.UserID = UA.UserID;
+                    eObj.Method = "GetVisits";
+                    eObj.InsertError();
                 }
                 finally
                 {
@@ -813,6 +859,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 }
             }
+
             public DataTable GetGridVisits(Guid FileID)
             {
                
@@ -821,11 +868,12 @@ namespace TheClinicApp1._1.ClinicDAL
                     throw new Exception("FileID Is Empty!!");
                 }
                 SqlConnection con = null;
+                DataTable GridBindVisits = new DataTable();
+
                 try
                 {
-                   
                     DateTime now = DateTime.Now;
-                    DataTable GridBindVisits = new DataTable();
+                 
                     dbConnection dcon = new dbConnection();
                     con = dcon.GetDBConnection();
                     SqlCommand cmd = new SqlCommand("ViewVisitListUsingFileID", con);
@@ -836,13 +884,16 @@ namespace TheClinicApp1._1.ClinicDAL
                     GridBindVisits = new DataTable();
                     adapter.Fill(GridBindVisits);
                     con.Close();
-                    return GridBindVisits;
+                  
                 }
                 catch (Exception ex)
                 {
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.ErrorData(ex, page);
-                    throw ex;
+                    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                    eObj.Description = ex.Message;
+                    eObj.Module = Module;
+                    eObj.UserID = UA.UserID;
+                    eObj.Method = "GetVisitsGrid";
+                    eObj.InsertError();
                 }
                 finally
                 {
@@ -852,80 +903,10 @@ namespace TheClinicApp1._1.ClinicDAL
                     }
 
                 }
+                return GridBindVisits;
             }
-            #endregion GetVisitsGrid
 
-            //#region AddPrescriptionDT
-            //public void AddPrescriptionDT()
-            //{
-            //    SqlConnection con = null;
-            //    try
-            //    {
-
-            //        dbConnection dcon = new dbConnection();
-            //        con = dcon.GetDBConnection();
-            //        SqlCommand pud = new SqlCommand();
-            //        pud.Connection = con;
-            //        pud.CommandType = System.Data.CommandType.StoredProcedure;
-            //        pud.CommandText = "[InsertPrescriptionDT]";
-            //        pud.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = UniqueID;
-            //        pud.Parameters.Add("@PrescriptionID", SqlDbType.UniqueIdentifier).Value = PrescriptionID;
-            //        pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-            //        pud.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = MedicineID;
-            //        pud.Parameters.Add("@Qty", SqlDbType.Real).Value = double.Parse(Qty);
-            //        pud.Parameters.Add("@Unit", SqlDbType.Real).Value = double.Parse(Unit);
-            //        pud.Parameters.Add("@Dosage", SqlDbType.Real).Value = double.Parse(Dosage);
-            //        pud.Parameters.Add("@Timing", SqlDbType.NVarChar, 10).Value = Timing;
-            //        pud.Parameters.Add("@Days", SqlDbType.Int).Value = Days;
-            //        pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
-            //        pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-            //        pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
-            //        pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-            //        //pud.Parameters.Add("@image", SqlDbType.VarBinary).Value = image; 
-            //        SqlParameter Output = new SqlParameter();
-            //        Output.DbType = DbType.Int32;
-            //        Output.ParameterName = "@Status";
-            //        Output.Direction = ParameterDirection.Output;
-            //        pud.Parameters.Add(Output);
-            //        pud.ExecuteNonQuery();
-
-            //        if (Output.Value.ToString() == "")
-            //        {
-            //            //not successfull   
-
-            //            var page = HttpContext.Current.CurrentHandler as Page;
-            //            eObj.InsertionNotSuccessMessage(page);
-
-            //        }
-            //        else
-            //        {
-            //            //successfull
-
-            //            var page = HttpContext.Current.CurrentHandler as Page;
-            //            eObj.InsertionSuccessMessage(page);
-
-
-            //        }
-
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        var page = HttpContext.Current.CurrentHandler as Page;
-            //        eObj.ErrorData(ex, page);
-
-            //    }
-
-            //    finally
-            //    {
-            //        if (con != null)
-            //        {
-            //            con.Dispose();
-            //        }
-
-            //    }
-            //}
-            //#endregion AddPrescriptionDT
+            #endregion GetVisitsGrid        
 
             #region UpdateVisits
             /// <summary>
@@ -936,7 +917,6 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlConnection con = null;
                 try
                 {
-
                     dbConnection dcon = new dbConnection();
                     con = dcon.GetDBConnection();
                     SqlCommand pud = new SqlCommand();
@@ -997,9 +977,12 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 catch (Exception ex)
                 {
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.ErrorData(ex, page);
-                    throw ex;
+                    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                    eObj.Description = ex.Message;
+                    eObj.Module = Module;
+                    eObj.UserID = UA.UserID;
+                    eObj.Method = "UpdateVisits";
+                    eObj.InsertError();
                 }
                 finally
                 {
@@ -1059,7 +1042,12 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 catch (SqlException ex)
                 {
-                    throw ex;
+                    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                    eObj.Description = ex.Message;
+                    eObj.Module = Module;
+                    eObj.UserID = UA.UserID;
+                    eObj.Method = "GetVisitListforMobile";
+                    eObj.InsertError();
                 }
                 finally
                 {
@@ -1075,8 +1063,16 @@ namespace TheClinicApp1._1.ClinicDAL
             #region Visit Attachment Class
             public class VisitAttachment
                 {
+                    #region global
+
                     ErrorHandling eObj = new ErrorHandling();
+                    UIClasses.Const Const = new UIClasses.Const();
+                    ClinicDAL.UserAuthendication UA;
+                    public string Module = "Doctor/CaseFile/Visit/VisitAttachment";
+
                     private DateTime CreatedDateLocal;
+
+                    #endregion global                  
 
                     #region Constructors
                     public VisitAttachment(Visit visit){
@@ -1170,6 +1166,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     #endregion VisitAttachmentsProperty
             
                     #region VisitAttachment methods
+
                     #region FileAttachment
                     public int InsertFileAttachment(Boolean isFromMobile = false, string userName = "")
                     {
@@ -1225,8 +1222,12 @@ namespace TheClinicApp1._1.ClinicDAL
                         {
                             if (!isFromMobile)
                             {
-                                var page = HttpContext.Current.CurrentHandler as Page;
-                                eObj.ErrorData(ex, page);
+                                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                                eObj.Description = ex.Message;
+                                eObj.Module = Module;
+                                eObj.UserID = UA.UserID;
+                                eObj.Method = "InsertFileAttachment";
+                                eObj.InsertError();
                             }
                             throw ex;
                         }
@@ -1238,7 +1239,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
                     }
                     #endregion FileAttachment
-                    #endregion
+
+
+                    #endregion VisitAttachment methods
                 }
             #endregion Visit Attachment Class
         }
