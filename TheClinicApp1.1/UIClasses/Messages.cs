@@ -28,7 +28,10 @@ namespace TheClinicApp1._1.UIClasses
             get { return "Error Number = "; }
         }
 
-       
+       public static string DisableAssignRole
+        {
+            get { return "Can't assign role for logined user"; }
+        }
 
  //----------------* Messages Captions *--------------//
         public static string ExceptionMsgCaption
@@ -74,6 +77,11 @@ namespace TheClinicApp1._1.UIClasses
             get { return "The Image Is not Supporting Save a new one"; }
         }
        
+        public static string Confirm
+        {
+            get { return "Please Confirm!"; }
+        }
+
 //----------------* Success Messages *--------------//
         public static string LoginSuccess
         {
@@ -197,6 +205,10 @@ namespace TheClinicApp1._1.UIClasses
          public static string PassowrdMismatch
          {
              get { return "Passwords do not match ! "; }
+         }
+        public static string ConfirmInput
+         {
+             get { return "Fields may be empty or invaild"; }
          }
     }
 }

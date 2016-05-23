@@ -169,7 +169,7 @@ namespace TheClinicApp1._1.MasterAdd
             GridViewRow row = ib.NamingContainer as GridViewRow;
             Guid Ctgryid = Guid.Parse(dtgViewAllCategories.DataKeys[row.RowIndex].Value.ToString());
 
-            
+            CategoryObj.CategoryID = Ctgryid;
          DataTable dtCtgry =    CategoryObj.ViewMedicinesByCategoryID();
 
          if (dtCtgry.Rows.Count == 0)
@@ -213,7 +213,13 @@ namespace TheClinicApp1._1.MasterAdd
         protected void dtgViewAllCategories_PreRender(object sender, EventArgs e)
         {
             dtgViewAllCategories.UseAccessibleHeader = false;
-            dtgViewAllCategories.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            if (dtgViewAllCategories.Rows.Count > 0)
+            {
+                dtgViewAllCategories.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
+
         }
 
         #endregion Paging

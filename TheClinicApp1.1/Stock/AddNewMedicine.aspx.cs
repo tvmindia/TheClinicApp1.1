@@ -175,7 +175,7 @@ namespace TheClinicApp1._1.Stock
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             StockObj.ClinicID = UA.ClinicID.ToString();
-        
+            StockObj.CreatedBy = UA.userName;
    
             if (!IsPostBack)
             {

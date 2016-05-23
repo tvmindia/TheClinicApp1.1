@@ -42,14 +42,27 @@ namespace TheClinicApp1._1.Admin
 
         public void BindUsersDropdown()
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            string loginedUserID = UA.UserID.ToString();
+
             dtUsers = roleObj.GetDetailsOfAllUsers();
             ViewState["dtUsers"] = dtUsers;
-
 
             ddlUsers.DataTextField = "FirstName";
             ddlUsers.DataValueField = "UserID";
             ddlUsers.DataSource = dtUsers;
             ddlUsers.DataBind();
+
+            foreach (ListItem itm in ddlUsers.Items)
+            {
+                if (itm.Value == loginedUserID)
+                {
+                    itm.Attributes.Add("disabled", "disabled");
+                    itm.Attributes.Add("title",Messages.DisableAssignRole);
+                }
+            }
+            //ddlUsers.Items.FindByValue(loginedUserID).Enabled = false;
+
 
             ddlUsers.Items.Insert(0, "--Select--");
         }
@@ -113,6 +126,7 @@ namespace TheClinicApp1._1.Admin
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             userObj.ClinicID = UA.ClinicID;
 
+            mstrObj.ClinicID = UA.ClinicID;
             //DoctorRoleID = userObj.GetRoleIDOfDoctor();
             DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
 
@@ -176,9 +190,34 @@ namespace TheClinicApp1._1.Admin
                     msg = Messages.AlreadyUsedForDeletion;
                     eObj.DeletionNotSuccessMessage(page, msg);
 
-                    ListItem listItem = chklstRoles.Items.FindByValue(GetRoleIDOFDoctor());
 
-                    if (listItem != null) listItem.Selected = true;
+                    roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+                    DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+
+                    if (dtAssignedRoles.Rows.Count > 0)
+                    {
+                        foreach (ListItem item in chklstRoles.Items)
+                        {
+                            DataRow[] RoleAssigned = dtAssignedRoles.Select("RoleID = '" + item.Value + "'");
+
+                            if (RoleAssigned.Length == 0)
+                            {
+                                item.Selected = false;
+                            }
+
+                            else
+                            {
+                                item.Selected = true;
+                            }
+                        }
+
+                    }
+
+
+
+                    //ListItem listItem = chklstRoles.Items.FindByValue(GetRoleIDOFDoctor());
+
+                    //if (listItem != null) listItem.Selected = true;
 
                 }
 
@@ -424,7 +463,13 @@ namespace TheClinicApp1._1.Admin
         protected void dtgViewAllUserInRoles_PreRender(object sender, EventArgs e)
         {
             dtgViewAllUserInRoles.UseAccessibleHeader = false;
-            dtgViewAllUserInRoles.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            if (dtgViewAllUserInRoles.Rows.Count > 0)
+            {
+                dtgViewAllUserInRoles.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
+            
         }
 
         #endregion Paging

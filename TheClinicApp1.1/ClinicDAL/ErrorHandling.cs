@@ -421,7 +421,7 @@ namespace TheClinicApp1._1.ClinicDAL
             lblMsgges.Text = msg;
             divMask1.Style["display"] = "";// divMask1.Style["display"] = "";   
             Label lblErrorCaption = mpContentPlaceHolder1.FindControl("lblErrorCaption") as Label;
-            lblErrorCaption.Text = Messages.FailureMsgCaption;
+            lblErrorCaption.Text = Messages.Confirm;
             divMask1.Attributes["class"] = "alert alert-danger";
 
         }

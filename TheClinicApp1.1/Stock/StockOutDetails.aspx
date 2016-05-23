@@ -2,13 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-
-
-
-
-    
-
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
@@ -24,6 +17,7 @@
 
     <script src="../js/jquery-1.9.1.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
+    <script src="../js/Messages.js"></script>
   
 
     <script>
@@ -159,7 +153,9 @@
 
     }
 }
-        
+       
+      
+
     </script>
 
     <script src="../js/jquery-1.12.0.min.js"></script>
@@ -169,7 +165,47 @@
 
 
     <script>
-           
+         
+        
+        function Validation() {
+
+            debugger;
+            if (($('#<%=txtIssueNO.ClientID%>').val().trim() == "")  || ($('#<%=txtIssuedTo.ClientID%>').val().trim() == "")|| ($('#<%=txtDate1.ClientID%>').val().trim() == "") ) {
+
+                var lblclass = Alertclasses.danger;
+                var lblmsg = msg.Requiredfields;
+                var lblcaptn = Caption.Confirm;
+
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+
+                return false;
+            }
+            else {
+
+               
+
+                GetTextBoxValues('<%=hdnTextboxValues.ClientID %>','<%=hdnRemovedIDs.ClientID %>');
+
+                if($('#<%=hdnTextboxValues.ClientID%>').val().trim() != "")
+                {
+                    return true;
+                }
+                else{
+                    var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.Requiredfields;
+                    var lblcaptn = Caption.Confirm;
+
+                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                    return false;
+                }
+              
+            }
+
+        }
+
+
 
             
         function autocompleteonfocus(controlID)
@@ -234,6 +270,35 @@
 
     </script>
 
+       <style>
+        
+.button1{
+        background: url("../images/save.png") no-repeat 0 center;
+        height: 33px;
+        width: 60px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px 10px 7px;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        font-family:'raleway-semibold';
+        min-width: 83px;
+        background-color:#abd357 ;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        text-indent: 20px;
+        background-position-x:5px;
+
+        color: inherit;
+
+    }
+
+    </style>
+
+
 
     <div class="main_body">
 
@@ -293,7 +358,10 @@
 
                                 <ul class="top_right_links">
                                     <li><a class="back" href="StockOut.aspx"><span></span>Back</a></li>
-                                    <li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick"><span></span>Save</a></li>
+                                    <li>
+                                        <%--<a class="save" id="btnSave" runat="server" href="#" onserverclick="btnSave_ServerClick" onclick="return Validation();"><span></span>Save</a>--%>
+                                          <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_ServerClick" OnClientClick="return Validation();"/>
+                                    </li>
                                     <li><a class="new" href="StockOutDetails.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
@@ -336,7 +404,7 @@
                                     <tr>
                                         <td>Issue No</td>
                                         <td>
-                                            <asp:TextBox ID="txtIssueNO" Width="80%" runat="server" required onchange="CheckIssueNoDuplication(this)"></asp:TextBox></td>
+                                            <asp:TextBox ID="txtIssueNO" Width="80%" runat="server"  onchange="CheckIssueNoDuplication(this)"></asp:TextBox></td>
 
                                         <td >
                                             <asp:Image ID="imgWebLnames" runat="server" ToolTip="Issue No is Available" ImageUrl="~/Images/newfff.png"  />
@@ -345,12 +413,12 @@
 
                                         <td>Date</td>
                                         <td>
-                                            <asp:TextBox ID="txtDate1" CssClass="txtDate1Class" Width="80%" runat="server" required></asp:TextBox></td>
+                                            <asp:TextBox ID="txtDate1" CssClass="txtDate1Class" Width="80%" runat="server" ></asp:TextBox></td>
                                     </tr>
                                     <tr>
                                         <td>Issued To</td>
                                         <td>
-                                            <asp:TextBox ID="txtIssuedTo" Width="80%" runat="server" EnableViewState="false" required></asp:TextBox>
+                                            <asp:TextBox ID="txtIssuedTo" Width="80%" runat="server" EnableViewState="false" ></asp:TextBox>
 
                                         </td>
                                         <td></td>
@@ -370,15 +438,15 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <input id="txtMedicine0" type="text" placeholder="Medicine0" class="input" onblur="BindControlsByMedicneName('0')" onfocus="autocompleteonfocus('0')" /></td>
+                                                    <input id="txtMedicine0" type="text"  class="input" onblur="BindControlsByMedicneName('0')" onfocus="autocompleteonfocus('0')" /></td>
                                                 <td>
-                                                    <input id="txtUnit0" class="input" type="text" placeholder="Unit0" /></td>
+                                                    <input id="txtUnit0" class="input" type="text"  /></td>
                                                 <td>
-                                                    <input id="txtCode0" type="text" placeholder="Code0" class="input" /></td>
+                                                    <input id="txtCode0" type="text"  class="input" /></td>
                                                 <td>
-                                                    <input id="txtCategory0" type="text" placeholder="Category0" class="input" /></td>
+                                                    <input id="txtCategory0" type="text"  class="input" /></td>
                                                 <td>
-                                                    <input id="txtQuantity0" type="text" placeholder="Quantity0" class="input" onblur="CheckMedicineIsOutOfStock('0')" onfocus="RemoveWarning('0')" /></td>
+                                                    <input id="txtQuantity0" type="text"  class="input" onblur="CheckMedicineIsOutOfStock('0')" onfocus="RemoveWarning('0')" /></td>
                                                 <td style="background-color: transparent">
                                                     <input type="button" value="-" class="bt1" style="width: 20px;" onclick="ClearAndRemove()" /></td>
                                                 <td style="background-color: transparent">

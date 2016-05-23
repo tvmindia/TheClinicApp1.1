@@ -111,7 +111,7 @@
 
             function OnSuccess(response, userContext, methodName) 
             {   
-                      
+                debugger;      
                 var string1 = new Array();
                 string1 = response.split('|');
                
@@ -125,6 +125,7 @@
                 document.getElementById('<%=lblEmail.ClientID%>').innerHTML=string1[6];
                 document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
                 document.getElementById('<%=HiddenClinicID.ClientID%>').value=string1[8];
+                document.getElementById('<%=lblLastVisit.ClientID%>').innerHTML=string1[9];
                 if(document.getElementById('<%=BookedDoctorName.ClientID%>') != null)
                 {
                     document.getElementById('<%=BookedDoctorName.ClientID%>').style.visibility= 'hidden';
