@@ -1,7 +1,7 @@
 ﻿var msg= {
    
     Requiredfields: "Fields may be empty or invaild",
-    CompulsorySelect: "Please select an item"
+    CompulsorySelect: "Select an item"
     
 }
 
