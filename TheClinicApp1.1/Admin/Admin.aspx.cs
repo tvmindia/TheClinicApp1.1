@@ -610,7 +610,13 @@ namespace TheClinicApp1._1.Admin
         protected void dtgViewAllUsers_PreRender(object sender, EventArgs e)
         {
             dtgViewAllUsers.UseAccessibleHeader = false;
-            dtgViewAllUsers.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            if (dtgViewAllUsers.Rows.Count > 0)
+            {
+                dtgViewAllUsers.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }   
+
+           
         }
 
         #endregion Paging
