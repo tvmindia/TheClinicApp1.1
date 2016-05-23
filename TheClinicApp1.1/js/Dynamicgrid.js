@@ -142,18 +142,18 @@ function clickAdd(id) {
     iCnt = iCnt + 1;
    
     // ADD new row with fields needed.
-    $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;border:0;">'
+    $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;">'
              + ' <td ><input id="txtMedName' + iCnt + '" type="text" class="input"  onblur="BindMedunitbyMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
                 + '<td ><input id="txtMedQty' + iCnt + '" type="text" class="input" onfocus="focuscontrol(' + iCnt + ')" onblur="CheckPharmacyMedicineIsOutOfStock(' + iCnt + ')" onchange="RemoveWarningPharm(' + iCnt + ')" autocomplete="off"/></td>'
                 + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true"  class="input" type="text" /></td>'
                 + '<td ><input id="txtMedDos' + iCnt + '" type="text" class="input"/></td>'
                 + '<td><input id="txtMedTime' + iCnt + '" type="text" class="input"/></td>'
                  + '<td><input id="txtMedDay' + iCnt + '" type="text" class="input"/></td>'
-                 + '<td style="background:#E6E5E5">'
+                 + '<td style="background:#E6E5E5" class="add">'
                  + '<input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" /></td>'
-                 + '<td style="background:#E6E5E5">'
+                 + '<td style="background:#E6E5E5" class="add">'
                  + '<input type="button" id="btAdd' + iCnt + '" value="+" onclick="clickAdd(' + iCnt + ')" class="bt" style="width:20px" /></td>'
-                 + '<td style="background:#E6E5E5"><input id="hdnDetailID' + iCnt + '" type="hidden" /> <input id="hdnQty' + iCnt + '" type="hidden" /></td>'
+                 + '<td style="background:#E6E5E5" class="add"><input id="hdnDetailID' + iCnt + '" type="hidden" /> <input id="hdnQty' + iCnt + '" type="hidden" /></td>'
                  + '</tr></table><div>');
     $('#maindiv').after(container);
     $('#btAdd' + id).css("visibility", "hidden");
