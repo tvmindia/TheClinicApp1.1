@@ -23,6 +23,8 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Global variables
 
         ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;
 
         string ModuleUnit = "Unit";
         string ModuleDoctor = "Add Doctor";
@@ -54,11 +56,7 @@ namespace TheClinicApp1._1.ClinicDAL
         /// <summary>
         /// User id of logined user
         /// </summary>
-        public Guid usrid
-        {
-            get;
-            set;
-        }
+     
 
         #region Connectionstring
         dbConnection dcon = new dbConnection();
@@ -399,10 +397,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleUnit;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "InsertUnits";
 
                 eObj.InsertError();
@@ -450,10 +449,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleDoctor;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewDoctors";
 
                 eObj.InsertError();
@@ -497,10 +497,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleDoctor;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "CheckDoctorNameDuplication";
 
                 eObj.InsertError();
@@ -582,10 +584,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleDoctor;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "InsertDoctors";
 
                 eObj.InsertError();
@@ -649,11 +653,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
-                
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleDoctor;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "UpdateDoctors";
 
                 eObj.InsertError();
@@ -702,10 +706,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleDoctor;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "CheckDoctorIdUsed";
 
                 eObj.InsertError();
@@ -755,11 +760,12 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleDoctor;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetRoleIDOfDoctor";
 
                 eObj.InsertError();
@@ -839,10 +845,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleDoctor;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DeleteDoctorByID";
 
                 eObj.InsertError();
@@ -885,10 +893,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleDoctor;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetDoctorDetailsByID";
 
                 eObj.InsertError();
@@ -931,10 +941,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleDoctor;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetDoctorDetailsByUserID";
 
                 eObj.InsertError();
@@ -1014,13 +1026,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleUnit;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "InsertUnits";
 
                 eObj.InsertError();
@@ -1086,13 +1097,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleUnit;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "UpdateUnits";
 
                 eObj.InsertError();
@@ -1147,13 +1157,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleUnit;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "CheckUnitIsUsed";
 
                 eObj.InsertError();
@@ -1197,13 +1206,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleUnit;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetUnitByID";
 
                 eObj.InsertError();
@@ -1262,13 +1270,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleUnit;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DeleteUnitByUnitId";
 
                 eObj.InsertError();
@@ -1311,10 +1318,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleUnit;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "CheckUnitDuplication";
 
                 eObj.InsertError();
@@ -1356,13 +1365,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
                 eObj.Description = ex.Message;
                 eObj.Module = ModuleUnit;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewAllUnits";
 
                 eObj.InsertError();

@@ -208,7 +208,7 @@ namespace TheClinicApp1._1.MasterAdd
 
             Master mstrobj = new Master();
 
-            mstrobj.usrid = UA.UserID;
+           
             Stocks StockObj = new Stocks();
 
             if (StockObj.ValidateMedicineName(MedicineName))
@@ -231,10 +231,7 @@ namespace TheClinicApp1._1.MasterAdd
 
             Master mstrobj = new Master();
 
-            mstrobj.usrid = UA.UserID;
-
-
-
+           
             Stocks StockObj = new Stocks();
 
             if (StockObj.ValidateMedicineCode(MedicineCode))
@@ -280,8 +277,7 @@ namespace TheClinicApp1._1.MasterAdd
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            mstrObj.usrid = UA.UserID;
-
+           
             if (!IsPostBack)
             {
                 BindCategory();

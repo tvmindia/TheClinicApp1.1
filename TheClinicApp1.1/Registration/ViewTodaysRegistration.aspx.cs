@@ -4,14 +4,26 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TheClinicApp1._1.ClinicDAL;
 
 namespace TheClinicApp1._1.Registration
 {
     public partial class ViewTodaysRegistration : System.Web.UI.Page
     {
+        #region GlobalVariables
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;
         ClinicDAL.Patient PatientObj = new ClinicDAL.Patient();
+
+        ErrorHandling eObj = new ErrorHandling();
+
+        #endregion GlobalVariables
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
+            PatientObj.usrid = UA.UserID;
+
             #region GridDateRegistration
             dtgViewTodaysRegistration.EmptyDataText = "....Till Now No Registration....";
             dtgViewTodaysRegistration.DataSource = PatientObj.GetDateRegistration();

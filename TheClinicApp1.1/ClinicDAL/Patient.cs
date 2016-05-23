@@ -39,6 +39,17 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Properties
         #region Patientproperty
+
+        public string Module = "Patient";
+        /// <summary>
+        /// user id of login user
+        /// </summary>
+        public Guid usrid
+        {
+            get;
+            set;
+        }
+
         public Guid PatientID
         {
             get;
@@ -156,8 +167,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                
-            
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "UpdatePatientPicture";
+                eObj.InsertError();            
             }
 
             finally
@@ -166,7 +180,6 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     con.Dispose();
                 }
-
             }
             
         }
@@ -235,9 +248,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-            
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "AddPatientDetails";
+                eObj.InsertError();
+
             }
 
             finally
@@ -302,9 +318,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "UpdatePatientDetails";
+                eObj.InsertError();
+
             }
             finally
             {
@@ -351,15 +370,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     PatID=Guid.Parse(OutparamId.Value.ToString());
                     return PatID;
-                }
-                return PatID;
+                }             
                 
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetPatientDetails";
+                eObj.InsertError();
+
             }
             finally
             {
@@ -369,6 +390,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+            return PatID;
         }
         
         #endregion GetPatientDetails
@@ -396,26 +418,16 @@ namespace TheClinicApp1._1.ClinicDAL
                 OutparamId.Direction = ParameterDirection.Output;
                 string strreturn;
                 strreturn=pud.ExecuteScalar().ToString();
-                //if (int.Parse(OutparamId.Value.ToString()) != 0)
-                //{
-                //    //not successfull
-                //    var page = HttpContext.Current.CurrentHandler as Page;
-                //    eObj.UpdationSuccessData(page, "Not Updated");
-                //}
-                //else
-                //{
-                //    //successfull
-                //    var page = HttpContext.Current.CurrentHandler as Page;
-                //    eObj.UpdationSuccessData(page);
-                //}
-
-
+              
             }
             catch (Exception ex)
             {
-                //var page = HttpContext.Current.CurrentHandler as Page;
-                //eObj.ErrorData(ex, page);
-                throw ex;
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "SearchPatientDetails";
+                eObj.InsertError();
+
             }
             finally
             {
@@ -464,18 +476,15 @@ namespace TheClinicApp1._1.ClinicDAL
                     string msg = Messages.PatientDeletionSuccessFull;
                     var page = HttpContext.Current.CurrentHandler as Page;
                     eObj.DeleteSuccessMessage(page,msg);
-
-
                 }
-
-
             }
             catch (Exception ex)
             {
-                string Msg = Messages.TokenExist;
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.DeletePatientErrorData(Msg,page);
-
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "DeletePatientDetails";
+                eObj.InsertError();
             }
 
             finally
@@ -522,9 +531,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 if (OutputFileNumber.Value.ToString() != "")
                 {
                     //not successfull   
-
                     FileNumber = OutputFileNumber.Value.ToString();
-
                 }
                 else
                 {
@@ -532,16 +539,15 @@ namespace TheClinicApp1._1.ClinicDAL
                     string msg = Messages.PatInsertionSuccessFull;
                     var page = HttpContext.Current.CurrentHandler as Page;
                     eObj.InsertionSuccessMessage1(page, msg);
-
                 }
-
-
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "AddFile";
+                eObj.InsertError();
             }
 
             finally
@@ -550,9 +556,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     con.Dispose();
                 }
-
             }
-
         }
         #endregion AddFile
 
@@ -580,9 +584,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "CheckPatientTokenExist";
+                eObj.InsertError();
             }
             finally
             {
@@ -627,24 +633,20 @@ namespace TheClinicApp1._1.ClinicDAL
                     x = x + 1;
                     x.ToString();
                     FileNO = "FF-" + x;
-
                 }
-
                 else
                 {
-
                     int x = 1000;
                      FileNO = "FF-" + x;
-
                 }
-
-
              }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "Generate_File_Number";
+                eObj.InsertError();
             }
             finally
             {
@@ -664,6 +666,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         //***Grid Bind For All regisration && Todays Registration
         #region GridBind
+
         #region ViewAllRegistration
      
         public DataTable GetAllRegistration()
@@ -687,9 +690,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-              
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetAllRegistration";
+                eObj.InsertError();              
             }
             finally
             {
@@ -726,9 +731,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                eObj.ErrorData(ex, page);
-                 
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "GetDateRegistration";
+                eObj.InsertError();
             }
             finally
             {
@@ -742,6 +749,7 @@ namespace TheClinicApp1._1.ClinicDAL
             return dt1;
         }
         #endregion ViewDateRegistration
+
         #endregion GridBind      
 
         #region GetSearchBoxData

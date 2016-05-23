@@ -5,13 +5,19 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
 
 namespace TheClinicApp1._1.ClinicDAL
 {
     public class dbConnection
     {
+        #region Global variables
+
         public SqlConnection SQLCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ClinicAppConnectionString"].ConnectionString);
         public SqlTransaction DBTrans;
+        ErrorHandling eObj = new ErrorHandling();
+
+        #endregion Global variables
 
         public int ConnectDB()
         {
@@ -22,12 +28,14 @@ namespace TheClinicApp1._1.ClinicDAL
 
                     SQLCon.Open();
                 }
-                return 1;
+              
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
             }
+            return 1;
         }
 
         public SqlConnection GetDBConnection()
@@ -41,7 +49,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 return SQLCon;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 try
                 {
@@ -49,7 +57,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 catch (Exception)
                 {
-                    throw;
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.ErrorData(ex, page);
                 }
 
                 return null;
@@ -65,13 +74,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     SQLCon.Close();
                 }
-                return 1;
+               
 
             }
             catch (Exception)
             {
                 throw;
             }
+
+            return 1;
         }
     }
 }

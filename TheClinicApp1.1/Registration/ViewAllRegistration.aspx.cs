@@ -10,9 +10,21 @@ namespace TheClinicApp1._1.Registration
 {
     public partial class ViewAllRegistration : System.Web.UI.Page
     {
-        ClinicDAL.Patient PatientObj=new ClinicDAL.Patient();
+        #region GlobalVariables
+        UIClasses.Const Const = new UIClasses.Const();    
+        ClinicDAL.UserAuthendication UA;
+        ClinicDAL.Patient PatientObj = new ClinicDAL.Patient();
+       
+        ErrorHandling eObj = new ErrorHandling();
+        
+        #endregion GlobalVariables
+      
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
+            PatientObj.usrid = UA.UserID;
+
             #region GridAllRegistration
             dtgViewAllRegistration.EmptyDataText = "No Records Found";
             dtgViewAllRegistration.DataSource = PatientObj.GetAllRegistration();
@@ -53,6 +65,7 @@ namespace TheClinicApp1._1.Registration
 
 
         #endregion GridDelete
+
         #region Paging
         protected void dtgViewAllRegistration_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {

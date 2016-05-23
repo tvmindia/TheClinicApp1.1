@@ -26,7 +26,13 @@ namespace TheClinicApp1._1.ClinicDAL
         public string Module = "Assign Role";
 
         ErrorHandling eObj = new ErrorHandling();
-       
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;
+
+        #endregion Global Variables
+
+        #region Public Properties
+
         public Guid UniqueID
         {
             get;
@@ -62,17 +68,7 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
-        /// <summary>
-        /// User id of logined user
-        /// </summary>
-        public Guid usrid
-        {
-            get;
-            set;
-        }
-
-
-        #endregion Global Variables
+        #endregion Public Properties
 
         #region Methods
 
@@ -96,10 +92,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetDetailsOfAllUsers";
 
                 eObj.InsertError();
@@ -139,10 +137,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetDetailsOfAllRoles";
 
                 eObj.InsertError();
@@ -186,10 +186,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetAssignedRoleByUserID";
 
                 eObj.InsertError();
@@ -232,10 +233,11 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetDetailsOfAllAssignedRoles";
 
                 eObj.InsertError();
@@ -297,10 +299,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "AssignRole";
 
                 eObj.InsertError();
@@ -357,10 +361,12 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
 
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DeleteAssignedRoleByUserID";
 
                 eObj.InsertError();

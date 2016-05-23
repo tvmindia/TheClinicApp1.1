@@ -133,7 +133,7 @@ namespace TheClinicApp1._1.Stock
             Stocks StockObj = new Stocks();
          
             StockObj.ClinicID = UA.ClinicID.ToString();
-            StockObj.usrid = UA.UserID;  
+          
 
             if (StockObj.ValidateMedicineName(MedicineName))
             {
@@ -154,7 +154,7 @@ namespace TheClinicApp1._1.Stock
             Stocks StockObj = new Stocks();
 
             StockObj.ClinicID = UA.ClinicID.ToString();
-            StockObj.usrid = UA.UserID;  
+         
            
 
             if (StockObj.ValidateMedicineCode(MedicineCode))
@@ -175,7 +175,7 @@ namespace TheClinicApp1._1.Stock
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             StockObj.ClinicID = UA.ClinicID.ToString();
-            StockObj.usrid = UA.UserID;   
+        
    
             if (!IsPostBack)
             {

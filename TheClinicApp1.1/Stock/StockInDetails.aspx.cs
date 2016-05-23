@@ -203,9 +203,7 @@ namespace TheClinicApp1._1.Stock
             DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();            
-            string Login = UA.userName;
-            stok.usrid = UA.UserID;
-            rpt.usrid = UA.UserID;
+            string Login = UA.userName;            
 
             RoleName = UA.GetRoleName1(Login);
             //foreach (DataRow dr in dtRols.Rows)

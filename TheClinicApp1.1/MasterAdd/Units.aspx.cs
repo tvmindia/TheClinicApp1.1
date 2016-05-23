@@ -63,7 +63,7 @@ namespace TheClinicApp1._1.MasterAdd
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             mstrObj.ClinicID = UA.ClinicID;
-            mstrObj.usrid = UA.UserID;
+           
             
             if (!IsPostBack)
             {
@@ -200,8 +200,6 @@ namespace TheClinicApp1._1.MasterAdd
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
             Master mstrObj = new Master();
-
-            mstrObj.usrid = UA.UserID;
 
             if (mstrObj.CheckUnitDuplication(Unit))
             {

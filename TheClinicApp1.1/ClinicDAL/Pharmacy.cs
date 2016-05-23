@@ -15,21 +15,15 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Global Variables
 
         ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA; 
 
         #endregion Global Variables
 
         /* PATIENT DETAILS SP NAME: VIEWPATIENTDETAILS,VIEWPATIENTBOOKING */
         #region DoctorPrescriptionproperty
 
-        public string Module = "Pharmacy";
-        /// <summary>
-        /// user id of login user
-        /// </summary>
-        public Guid usrid
-        {
-            get;
-            set;
-        }
+        public string Module = "Pharmacy";       
     
         public Guid PrescriptionID
         {
@@ -86,9 +80,10 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetPatientPharmacyDetails";
                 eObj.InsertError();
             }
@@ -137,9 +132,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "PrescriptionDetails";
                 eObj.InsertError();
                
