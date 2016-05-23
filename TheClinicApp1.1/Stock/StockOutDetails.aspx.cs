@@ -275,8 +275,7 @@ namespace TheClinicApp1._1.Stock
             DataTable dtRols = new DataTable();
             
             string Login = UA.userName;
-            stok.usrid = UA.UserID;  
-
+            
             RoleName = UA.GetRoleName1(Login);         
             
             txtDate1.Attributes.Add("readonly", "readonly");

@@ -14,6 +14,8 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;  
         string msgText;
         string msgCaption;
         #endregion Global Variables
@@ -23,15 +25,7 @@ namespace TheClinicApp1._1.ClinicDAL
       
 
         public string Module = "TokensBooking";
-        /// <summary>
-        /// user id of login user
-        /// </summary>
-        public Guid usrid
-        {
-            get;
-            set;
-        }
-        
+       
         public int TokenNo
         {
             get;
@@ -124,9 +118,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetPatientDetails";
                 eObj.InsertError();
             }
@@ -176,9 +171,10 @@ namespace TheClinicApp1._1.ClinicDAL
             catch (Exception ex)
             {
 
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetPatientTokenDetailsByID";
                 eObj.InsertError();
             }
@@ -224,9 +220,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DropBindDoctorsName";
                 eObj.InsertError();
             }
@@ -291,9 +288,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "InsertToken";
                 eObj.InsertError();
             }
@@ -351,9 +349,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewToken";
                 eObj.InsertError();
             }
@@ -404,9 +403,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DoctorViewToken";
                 eObj.InsertError();
             }
@@ -452,9 +452,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DeleteToken";
                 eObj.InsertError();
             }

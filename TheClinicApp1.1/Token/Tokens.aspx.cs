@@ -36,8 +36,7 @@ namespace TheClinicApp1._1.Token
            
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];           
             string Login = UA.userName;
-            RoleName = UA.GetRoleName1(Login);
-            tokenObj.usrid = UA.UserID;                        
+            RoleName = UA.GetRoleName1(Login);                           
             tokenObj.ClinicID = UA.ClinicID.ToString();
             DataSet gds = tokenObj.ViewToken();
             lblCaseCount.Text = gds.Tables[0].Rows.Count.ToString();
