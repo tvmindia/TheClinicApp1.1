@@ -211,7 +211,14 @@ namespace TheClinicApp1._1.Pharmacy
             lblAgeCount.Text = Age.ToString();
 
             DataSet MedicinList = pharmacypobj.PrescriptionDetails();
-            hdnPrescID.Value = MedicinList.Tables[0].Rows[0][0].ToString();
+            if (MedicinList.Tables[0].Rows.Count > 0)
+            {
+                hdnPrescID.Value = MedicinList.Tables[0].Rows[0][0].ToString();
+            }
+            else
+            {
+                hdnPrescID.Value = "";
+            }
             var xml = MedicinList.GetXml();
             hdnXmlData.Value = xml;
             Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
