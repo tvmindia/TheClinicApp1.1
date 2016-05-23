@@ -31,7 +31,7 @@
     }
   .modal table{
     border-collapse: collapse;    
-    width: 100%;
+    width: 525px;
    
     }
    .modal table td {
@@ -138,7 +138,7 @@
             $('.nav_menu').click(function () {
             $(".main_body").toggleClass("active_close");
                });
-
+            
             $('table').tablePagination({});
 
             var rows = $('#<%=GridView1.ClientID%> tr').not('thead tr');
@@ -157,6 +157,7 @@
                     return matchesSearch;
                 }).show();
                 $('#tablePagination').hide();
+               
             });
              
 
@@ -173,9 +174,7 @@
        
         function validation()
         {
-            
-          
-           
+                     
             if( ($('#<%=txtName.ClientID%>').val()=="")||  ($('#<%=txtAge.ClientID%>').val()=="") )
             {
                 
@@ -320,7 +319,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="border-color:#3661C7;">  
-      <button type="button" class="close" data-dismiss="modal">&times;</button>            
+      <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload()">&times;</button>            
       <h3 class="modal-title">All Registration</h3>       
       </div>
         <%--<div class="search_div">
@@ -526,7 +525,14 @@
     .search_div input.button3 {
         left: 348px;
     }
+    .modal table{   
+    width: 448px;
+   
+    }
 }
+
+
+
 </style>
    <!----------------------------------------------------------------------------------------> 
    <!------------------------------------->

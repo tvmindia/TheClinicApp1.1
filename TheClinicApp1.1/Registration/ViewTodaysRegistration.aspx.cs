@@ -21,8 +21,7 @@ namespace TheClinicApp1._1.Registration
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
-            PatientObj.usrid = UA.UserID;
+            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());           
 
             #region GridDateRegistration
             dtgViewTodaysRegistration.EmptyDataText = "....Till Now No Registration....";
