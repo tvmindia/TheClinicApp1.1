@@ -161,7 +161,7 @@ namespace TheClinicApp1._1.Registration
         }
         #endregion convertImage
 
-        
+    
         #endregion Methods
 
         #region Events
