@@ -45,7 +45,7 @@ namespace TheClinicApp1._1.Stock
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
            
             stockObj.ClinicID = UA.ClinicID.ToString();
-            stockObj.usrid = UA.UserID; 
+          
 
             if (!IsPostBack)
             {
@@ -78,7 +78,7 @@ namespace TheClinicApp1._1.Stock
             Stocks StockObj = new Stocks();
 
             StockObj.ClinicID = UA.ClinicID.ToString();
-            StockObj.usrid = UA.UserID; 
+       
 
             string query = "ViewOutofStockMedicines";
             SqlCommand cmd = new SqlCommand(query);

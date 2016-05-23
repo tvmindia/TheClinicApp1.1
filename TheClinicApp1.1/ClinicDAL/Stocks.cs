@@ -12,6 +12,9 @@ namespace TheClinicApp1._1.ClinicDAL
     {
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;  
+
         #endregion Global Variables
 
         #region constructor
@@ -36,14 +39,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Property
 
         public string Module = "Stocks";
-        /// <summary>
-        /// user id of login user
-        /// </summary>
-        public Guid usrid
-        {
-            get;
-            set;
-        }
+     
         public Guid MedicineID
         {
             get;
@@ -111,10 +107,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Property
 
-        #region Methods
-
-
-        #region Medicines
+        #region Methods    
 
         #region Get Medicine Details By MedicineID
 
@@ -147,9 +140,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetMedicineDetailsByMedicineID";
                 eObj.InsertError();
             }
@@ -196,9 +190,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "GetQtyByMedicineName";
                 eObj.InsertError();
             }
@@ -217,7 +212,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         #endregion Get Quantity By Medicine Name
-
 
         #region Validate Medicine Name
         public bool ValidateMedicineName(string CheckMedicine)
@@ -243,9 +237,10 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ValidateMedicineName";
                 eObj.InsertError();
             }
@@ -261,7 +256,6 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion Validate Medicine Name
-
 
         #region Validate Medicine Code
         public bool ValidateMedicineCode(string InputMedicineCode)
@@ -287,9 +281,10 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ValidateMedicineCode";
                 eObj.InsertError();
             }
@@ -336,9 +331,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewCategories";
                 eObj.InsertError();
             }
@@ -387,9 +383,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewUnits";
                 eObj.InsertError();
             }
@@ -406,7 +403,6 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion View Units
-
 
         #region SearchBoxMedicine
         public DataTable SearchBoxMedicine()
@@ -509,9 +505,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "InsertMedicines";
                 eObj.InsertError();
             }
@@ -586,9 +583,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "UpdateMedicines";
                 eObj.InsertError();
             }
@@ -649,9 +647,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "DeleteMedicines";
                 eObj.InsertError();
             }
@@ -697,9 +696,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "ViewOutofStockMedicines";
                 eObj.InsertError();
             }
@@ -761,9 +761,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "SearchMedicineStock";
                 eObj.InsertError();
             }
@@ -815,9 +816,10 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception ex)
             {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
-                eObj.UserID = usrid;
+                eObj.UserID = UA.UserID;
                 eObj.Method = "CheckMedicineIDIsUsed";
                 eObj.InsertError();
             }
@@ -833,9 +835,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         }
-        #endregion CheckMedicineIDIsUsed
-
-        #endregion Medicines
+        #endregion CheckMedicineIDIsUsed  
 
         #endregion Methods
     }

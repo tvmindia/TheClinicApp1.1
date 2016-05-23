@@ -147,7 +147,7 @@ namespace TheClinicApp1._1.Stock
             string issueID = string.Empty;
             
             string Login = UA.userName;
-            stok.usrid = UA.UserID;
+         
 
             RoleName = UA.GetRoleName1(Login);
          
