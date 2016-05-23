@@ -41,8 +41,7 @@ namespace TheClinicApp1._1.Registration
         {            
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];           
             tok.ClinicID = UA.ClinicID.ToString();
-            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
-            PatientObj.usrid = UA.UserID;
+            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());            
             gridDataBind();
             listFilter = null;
             listFilter = BindName();           
