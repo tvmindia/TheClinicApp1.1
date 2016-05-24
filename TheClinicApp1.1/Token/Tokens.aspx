@@ -95,7 +95,6 @@
         function bindPatientDetails()
         {
            
-
             $(".alert").hide(); 
  
             var PatientName = document.getElementById("project-description").innerText;
@@ -110,7 +109,6 @@
             }
             function OnSuccess(response, userContext, methodName) 
             {   
-                debugger;      
                 var string1 = new Array();
                 string1 = response.split('|');               
                 document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
@@ -132,8 +130,9 @@
                 document.getElementById('DropDownDoctor').style.visibility= 'visible';
             }          
             function onError(response, userContext, methodName)
-            {                   
-            }         
+            {     
+            }  
+            document.getElementById('txtSearch').value="";
         }
     </script>
 

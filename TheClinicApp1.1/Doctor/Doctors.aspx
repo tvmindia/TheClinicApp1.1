@@ -45,6 +45,7 @@
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/fileinput.js"></script>
+         <script src="../js/Messages.js"></script>
     <script>
         function BindMedunitbyMedicneName(ControlNo) 
         {
@@ -120,7 +121,35 @@
 
             function GetTextBoxValuesPresLocal(){    
        
+             debugger;
+
+            if(($('#<%=txtHeightFeet.ClientID%>').val() != '')&&($('#<%=txtHeightInch.ClientID%>').val()!='')&&($('#<%=txtWeight.ClientID%>').val()!=''))
+            {
+                $('#<%=txtHeightFeet.ClientID%>').val('');
+                $('#<%=txtHeightInch.ClientID%>').val('');
+                $('#<%=txtWeight.ClientID%>').val('');
+            }    
+ 
+
+            if(($('input[type=text]').val()=='')&&($('textarea').val()==''))
+            {
+
+
+            var lblclass = Alertclasses.danger;
+            var lblmsg = msg.Requiredfields;
+            var lblcaptn = Caption.Confirm;
+
+             ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+
+                   
+                return false;
+                    
+            }
+            else
+            {       
                 GetTextBoxValuesPresDoc('<%=hdnTextboxValues.ClientID%>');
+            }
+
             }
                     
             function FillTextboxUsingXml(){
@@ -144,10 +173,14 @@
                     $('#<%=txtHeightFeet.ClientID%>').val('');
                     $('#<%=txtHeightInch.ClientID%>').val('');
                     $('#<%=txtWeight.ClientID%>').val('');
-                }        
+                }    
+
                 if(($('input[type=text]').val()=='')&&($('textarea').val()==''))
                 {
-                    Alert.render("Sorry...");
+                   
+
+
+// Alert.render("Sorry...");
                     return false;
                     
                 }
@@ -246,7 +279,7 @@
 
                 <ul class="top_right_links">
                     <li>
-                        <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li>
+                        <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="return GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li>
                     <li><a class="new" href="#" id="btnNew" runat="server" onclick="reset();" onserverclick="btnNew_ServerClick"><span></span>New</a></li>
                 </ul>
             </div>
@@ -577,7 +610,7 @@
     <script src="../js/jquery.spinner.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
-
+      
     <script>
         
 
