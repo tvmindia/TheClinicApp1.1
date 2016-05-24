@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:Panel DefaultButton="btnBookToken" runat="server">
     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
     <style>
         .hello {
@@ -58,12 +59,14 @@
                 },
                 focus: function( event, ui ) {
                     $( "#txtSearch" ).val( ui.item.label );
+                 
                     return false;
                 },
                 select: function( event, ui ) {
                     $( "#project" ).val( ui.item.label );
       
-                    $( "#project-description" ).html( ui.item.desc );        
+                    $( "#project-description" ).html( ui.item.desc );                  
+                    
  
                     return false;
                 }
@@ -182,10 +185,12 @@
                     <input type="hidden" id="project-id" />
                     <p id="project-description" style="display: none"></p>
                     <%--  <input class="button" onserverclick="btnSearch_ServerClick" runat="server"  value="Search" />--%>
-                    <input class="button" type="button" value="Search" />
+                    <input id="btnSearch" class="button" type="button" value="Search" />
                 </div>
                 <ul class="top_right_links">
-                    <li><a class="book_token" runat="server" id="btnBookToken" onserverclick="btnBookToken_ServerClick"><span></span>Book Token</a></li>
+                    <li>  
+                        <asp:Button ID="btnBookToken" CssClass="button1" runat="server" Text="Book" OnClick="btnBookToken_ServerClick" />
+                    </li>
                     <li><a class="new" href="Tokens.aspx"><span></span>New</a></li>
                 </ul>
             </div>
@@ -297,4 +302,5 @@
 
         </div>
     </div>
+        </asp:Panel>
 </asp:Content>
