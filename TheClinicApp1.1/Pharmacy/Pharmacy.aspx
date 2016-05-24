@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:Panel DefaultButton="btnSave" runat="server">
     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
 
    <%-- <link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
@@ -427,5 +428,5 @@
             background-color:#F2F2F2!important;
         }
     </style>
-
+</asp:Panel>
 </asp:Content>
