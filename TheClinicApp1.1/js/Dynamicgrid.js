@@ -150,7 +150,7 @@ function clickAdd(id) {
     $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;">'
              + ' <td ><input id="txtMedName' + iCnt + '" type="text" class="input"  onblur="BindMedunitbyMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
                 + '<td ><input id="txtMedQty' + iCnt + '" type="text" class="input" onfocus="focuscontrol(' + iCnt + ')" onblur="CheckPharmacyMedicineIsOutOfStock(' + iCnt + ')" onchange="RemoveWarningPharm(' + iCnt + ')" autocomplete="off"/></td>'
-                + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true"  class="input" type="text" /></td>'
+                + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true"  class="input" type="text" onfocus="focusplz(' + iCnt + ')" /></td>'
                 + '<td ><input id="txtMedDos' + iCnt + '" type="text" class="input"/></td>'
                 + '<td><input id="txtMedTime' + iCnt + '" type="text" class="input"/></td>'
                  + '<td><input id="txtMedDay' + iCnt + '" type="text" class="input"/></td>'
