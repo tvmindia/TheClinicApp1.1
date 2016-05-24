@@ -310,8 +310,11 @@ namespace TheClinicApp1._1.Stock
             string msg = string.Empty;
 
 
-            if ((txtBillNo.Text.Trim() != string.Empty) && (txtDate1.Value.Trim() != string.Empty) && (hdnTextboxValues.Value.Trim() != string.Empty))
+            if ((txtBillNo.Text.Trim() != string.Empty) && (txtDate1.Value.Trim() != string.Empty) )
             {
+
+                //&& (hdnTextboxValues.Value.Trim() != string.Empty)
+
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
 

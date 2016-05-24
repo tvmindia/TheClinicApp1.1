@@ -187,7 +187,7 @@
 
                 GetTextBoxValues('<%=hdnTextboxValues.ClientID %>','<%=hdnRemovedIDs.ClientID %>');
 
-                if($('#<%=hdnTextboxValues.ClientID%>').val().trim() != "")
+                if($('#<%=hdnTextboxValues.ClientID%>').val().trim() != "" || $('#<%=hdnRemovedIDs.ClientID%>').val().trim() != ""  )
                 {
                     return true;
                 }
