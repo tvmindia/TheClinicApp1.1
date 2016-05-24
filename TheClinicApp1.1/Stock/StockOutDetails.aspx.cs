@@ -382,9 +382,9 @@ namespace TheClinicApp1._1.Stock
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
             string msg = string.Empty;
-            if ((txtIssuedTo.Text.Trim() != string.Empty) && (txtDate1.Text != string.Empty) && (txtIssueNO.Text.Trim() != string.Empty) && (hdnTextboxValues.Value.Trim() != string.Empty))
+            if ((txtIssuedTo.Text.Trim() != string.Empty) && (txtDate1.Text != string.Empty) && (txtIssueNO.Text.Trim() != string.Empty))
              {
-
+                 //&& (hdnTextboxValues.Value.Trim() != string.Empty)
 
                  if (txtIssueNO.Text != "")
                  {

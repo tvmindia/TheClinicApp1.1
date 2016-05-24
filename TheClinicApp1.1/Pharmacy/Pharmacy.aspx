@@ -90,28 +90,21 @@
     <script> 
         function bindPatientDetails()
         {
-            
                 $(".alert").hide();
           
-              
             var PatientName = document.getElementById("project-description").innerText;
                     
             var file=PatientName.split('|')      
             var file1=file[0].split('📰 ')
             var fileNO=file1[1]
             if (PatientName!="")
-
             { 
-                                  
                 PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
             }
-
             function OnSuccess(response, userContext, methodName) 
             {   
-                      
                 var string1 = new Array();
                 string1 = response.split('|');
-                
                 document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
                 document.getElementById('<%=lblFileNum.ClientID%>').innerText=string1[0];
                 document.getElementById('<%=lblPatientName.ClientID%>').innerText=string1[1];
@@ -126,7 +119,6 @@
             {                   
             }         
         }
-
 
     </script>
 
@@ -143,7 +135,6 @@
     function BindMedunitbyMedicneName(ControlNo) 
     {
         
-  
         if (ControlNo >= 0) {
             var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
         }
@@ -249,7 +240,7 @@
                 Pharmacy
                 <ul class="top_right_links">
                     <li>
-                        <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"  ></asp:Label></li>
+                        <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"></asp:Label></li>
                     <li>
                         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png" BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li>
                 </ul>
@@ -303,11 +294,6 @@
                 </div>
 
 
-
-
-
-
-
                 <div class="token_id_card">
                     <div class="name_field">
                         <img src="../images/UploadPic1.png" id="ProfilePic" runat="server" width="80" height="80" /><asp:Label ID="lblPatientName" runat="server" Text="Patient_Name"></asp:Label>
@@ -346,13 +332,13 @@
                                 <td>
                                     <input id="txtMedName0" type="text" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
                                 <td>
-                                    <input id="txtMedQty0" type="text"  class="input" onfocus="focuscontrol(0)" onblur="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
+                                    <input id="txtMedQty0" type="text" class="input" onfocus="focuscontrol(0)" onblur="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
                                 <td>
                                     <input id="txtMedUnit0" class="input" readonly="true" type="text" onfocus="focusplz(0)"/></td>
                                 <td>
                                     <input id="txtMedDos0" type="text" class="input" /></td>
                                 <td>
-                                    <input id="txtMedTime0" type="text"  class="input" /></td>
+                                    <input id="txtMedTime0" type="text" class="input" /></td>
                                 <td>
                                     <input id="txtMedDay0" type="text" class="input" /></td>
                                 <td style="background: #F2F2F2">
@@ -384,14 +370,8 @@
         <asp:HiddenField ID="hdnRemovedIDs" runat="server" />
         <asp:HiddenField ID="hdnPrescID" runat="server" />
 
-        <%--<asp:HiddenField ID="hdnsave" Value="" runat="server" />--%>
-        <%--<asp:HiddenField ID="hdnconfirmsave" Value="" runat="server" />--%>
         <asp:HiddenField ID="Patientidtorefill" runat="server" />
     </div>
-
-
-
-
 
 
     <!-- Modal -->
