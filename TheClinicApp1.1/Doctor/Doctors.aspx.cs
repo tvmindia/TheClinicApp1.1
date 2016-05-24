@@ -141,10 +141,19 @@ namespace TheClinicApp1._1.Doctor
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
                 VisitsObj.ClinicID = UA.ClinicID;
                 VisitsObj.FileID = Guid.Parse(HiddenField2.Value);
-                int feet = Convert.ToInt32(txtHeightFeet.Value);
-                int inch = Convert.ToInt32(txtHeightInch.Value);
-                VisitsObj.Height = float.Parse(feet.ToString() + "." + inch.ToString());
-                VisitsObj.Weight = float.Parse(txtWeight.Value);
+                int parsedValuefeet;
+                int parsedValueinch;
+                if ((int.TryParse(txtHeightFeet.Value.ToString().Trim(), out parsedValuefeet))&&(int.TryParse(txtHeightInch.Value.ToString().Trim(), out parsedValueinch)))
+                {
+                    if (parsedValuefeet >= 0)
+                    {
+                        int feet = Convert.ToInt32(parsedValuefeet);
+                        int inch = Convert.ToInt32(parsedValueinch);
+                        VisitsObj.Height = float.Parse(feet+ "." + inch);
+                        VisitsObj.Weight = float.Parse(txtWeight.Value);
+                        
+                    }
+                }                         
                 VisitsObj.Symptoms = (symptoms.Value != "") ? symptoms.Value.ToString() : null;
                 VisitsObj.Cardiovascular = (cardiovascular.Value != "") ? cardiovascular.Value.ToString() : null;
                 VisitsObj.Nervoussystem = (nervoussystem.Value != "") ? nervoussystem.Value.ToString() : null;
