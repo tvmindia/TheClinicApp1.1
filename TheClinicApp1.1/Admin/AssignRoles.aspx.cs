@@ -181,18 +181,72 @@ namespace TheClinicApp1._1.Admin
                 //---user is DOCTOR
 
                 mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
+                string DrID = GetRoleIDOFDoctor();
+
 
                 bool IDUsedOrNot = mstrObj.CheckDoctorIdUsed();
 
                 if (IDUsedOrNot) //checking whether doctorid is already used ,if not used doctor is get deleted
                 {
-                    //msg = "Already used . Can't be deleted";
-                    msg = Messages.AlreadyUsedForDeletion;
-                    eObj.DeletionNotSuccessMessage(page, msg);
+                       //------* Deletes all roles except doctor role , as it has been used
+                  
+                    roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+                    DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
-                    ListItem listItem = chklstRoles.Items.FindByValue(GetRoleIDOFDoctor());
+                    if (dtAssignedRoles.Rows.Count > 0)
+                    {
+                        foreach (ListItem item in chklstRoles.Items)
+                        {
+                            if (item.Selected == false) //Checkbox ticked
+                            {
+                            DataRow[] RoleAssigned = dtAssignedRoles.Select("RoleID = '" + item.Value + "'");
 
-                    if (listItem != null) listItem.Selected = true;
+
+                            foreach (DataRow row in RoleAssigned)
+                            {
+                                if (row["RoleID"].ToString() != DrID)
+                                {
+                                    DeleteAssignedRoleByUserIDAndRoleID(Guid.Parse(ddlUsers.SelectedValue), Guid.Parse(item.Value));
+                                }
+
+                                else
+                                {
+                                    //msg = "Already used . Can't be deleted";
+                                    msg = Messages.AlreadyUsedForDeletion;
+                                    eObj.DeletionNotSuccessMessage(page, msg);
+
+                                }
+                            }
+                          
+
+                        }
+                       
+                        }
+
+                        roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+                        dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+
+                        
+
+                        foreach (ListItem item in chklstRoles.Items)
+                        {
+                            DataRow[] CurrentRoleAssigned = dtAssignedRoles.Select("RoleID = '" + item.Value + "'");
+
+                            if (CurrentRoleAssigned.Length == 0)
+                            {
+                                item.Selected = false;
+                            }
+
+                            else
+                            {
+                                item.Selected = true;
+                            }
+                        }
+
+                    }
+
+                   
+                   
 
                 }
 
@@ -267,6 +321,19 @@ namespace TheClinicApp1._1.Admin
         }
 
         #endregion Delete Assigned role By UserID
+
+
+        #region Delete Assigned role By UserID And RoleID
+
+        public void DeleteAssignedRoleByUserIDAndRoleID(Guid UserID,Guid RoleID)
+        {
+
+            roleObj.UserID = UserID;
+            roleObj.RoleID = RoleID;
+            roleObj.DeleteAssignedRoleByUserID();
+        }
+
+        #endregion Delete Assigned role By UserID And RoleID
 
         #endregion USER IN ROLE
 

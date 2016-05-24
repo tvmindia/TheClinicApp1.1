@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
 
-    <%-- <link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
+   <%-- <link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -73,28 +73,28 @@
 
     <script> 
         function bindPatientDetails()
-        {            
-            $(".alert").hide();         
-              
+        {
+                $(".alert").hide();
+          
             var PatientName = document.getElementById("project-description").innerText;
                     
             var file=PatientName.split('|')      
             var file1=file[0].split('📰 ')
             var fileNO=file1[1]
             if (PatientName!="")
-            {                                   
+            { 
                 PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
             }
             function OnSuccess(response, userContext, methodName) 
-            {         
+            {   
                 var string1 = new Array();
-                string1 = response.split('|');                
+                string1 = response.split('|');
                 document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
                 document.getElementById('<%=lblFileNum.ClientID%>').innerText=string1[0];
                 document.getElementById('<%=lblPatientName.ClientID%>').innerText=string1[1];
                 document.getElementById('<%=lblAgeCount.ClientID%>').innerText=string1[2];
                 document.getElementById('<%=lblGenderDis.ClientID%>').innerText=string1[3];            
-                document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];              
+                document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];               
             
                 document.getElementById('txtSearch').value="";//clearin the Search box
                 
@@ -112,58 +112,58 @@
         function FillTextboxUsingXml(){
             
             GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
-            RefillPresMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+                RefillPresMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+    }
+
+
+    function BindMedunitbyMedicneName(ControlNo) 
+    {
+        
+        if (ControlNo >= 0) {
+            var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
         }
-
-
-        function BindMedunitbyMedicneName(ControlNo) 
-        {       
-  
-            if (ControlNo >= 0) {
-                var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
-            }
-            if (MedicineName != "") 
-            {
-                PageMethods.MedDetails(MedicineName, OnSuccess, onError);       
-            }    
-            function OnSuccess(response, userContext, methodName) 
-            {        
-                if (ControlNo >= 0) 
-                {                  
-                    var MedicineDetails = new Array();
-                    MedicineDetails = response.split('|');
-                    document.getElementById('txtMedUnit' + ControlNo).value = MedicineDetails[0];  
-                    document.getElementById('hdnQty' + ControlNo).value=MedicineDetails[1];  
-                }   
-            }  
-            function onError(response, userContext, methodName) {       
-            }
-        }
-
-        function focuscontrol(ControlNo)
+        if (MedicineName != "") 
         {
-            document.getElementById('txtMedQty' + ControlNo).value="";
-        }                 
+            PageMethods.MedDetails(MedicineName, OnSuccess, onError);       
+        }    
+        function OnSuccess(response, userContext, methodName) 
+        {        
+            if (ControlNo >= 0) 
+            {                  
+                var MedicineDetails = new Array();
+                MedicineDetails = response.split('|');
+                document.getElementById('txtMedUnit' + ControlNo).value = MedicineDetails[0];  
+                document.getElementById('hdnQty' + ControlNo).value=MedicineDetails[1];  
+            }   
+        }  
+        function onError(response, userContext, methodName) {       
+        }
+    }
+
+    function focuscontrol(ControlNo)
+    {
+        document.getElementById('txtMedQty' + ControlNo).value="";
+    }                 
            
 
-        function autocompleteonfocus(controlID)
-        {
-            //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
+    function autocompleteonfocus(controlID)
+    {
+        //---------* Medicine auto fill, it also filters the medicine that has been already saved  *----------//
                 
-            var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
+        var topcount =Number(document.getElementById('<%=hdnRowCount.ClientID%>').value)+Number(1);
  
-        if (topcount==0)
-        {
-            var ac=null; 
-            ac = <%=listFilter %>;
-                    $( "#txtMedName0").autocomplete({
-                        source: ac
-                    });
-                }
-                else
+                if (topcount==0)
                 {
-                    var ac=null;
+                    var ac=null; 
                     ac = <%=listFilter %>;
+                $( "#txtMedName0").autocomplete({
+                    source: ac
+                });
+            }
+            else
+            {
+                var ac=null;
+                ac = <%=listFilter %>;
                 var i=0;
                 while(i<=topcount)
                 {
@@ -302,7 +302,7 @@
 
 
                 <div class="prescription_grid">
-                    <table class="table" style="width: 100%; border: 0;">
+                    <table class="table" style="width: 100%;">
                         <tbody>
                             <tr>
                                 <th>Medicine</th>
@@ -325,12 +325,12 @@
                                     <input id="txtMedTime0" type="text" class="input" /></td>
                                 <td>
                                     <input id="txtMedDay0" type="text" class="input" /></td>
-                                <td style="background: #E6E5E5">
+                                <td style="background: #F2F2F2">
                                     <input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" /></td>
-                                <td style="background: #E6E5E5">
+                                <td style="background: #F2F2F2">
                                     <input type="button" id="btAdd" onclick="clickAdd(0); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
                                 </td>
-                                <td style="background-color: transparent">
+                                <td style="background-color: #F2F2F2">
                                     <input id="hdnDetailID0" type="hidden" />
                                     <input id="hdnQty0" type="hidden" /></td>
                             </tr>
@@ -393,5 +393,23 @@
 
         </div>
     </div>
+
+    <style>
+        .table{
+        margin-bottom: 3px!important;
+        background-color:#F2F2F2!important;
+        border:0!important;
+        
+    }
+        table td {
+            border: 0;
+            border-top: 1px solid #F2F2F2 !important;
+            border-left: 1px solid #F2F2F2 !important;
+            background-color:white;
+        }
+        .table td.add{
+            background-color:#F2F2F2!important;
+        }
+    </style>
 
 </asp:Content>

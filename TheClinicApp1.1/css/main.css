@@ -817,7 +817,7 @@ border-radius: 50%;
 
 .token_id_card .fields .field_div label {width: 24%;}
 
-.prescription_grid {max-width: 800px; margin: 0 auto;background-color:#E6E5E5;}
+.prescription_grid {max-width: 900px; margin: 0 auto;background-color:#F2F2F2;padding-left:100px;}
 
 
 .page_tab ul.nav-tabs {margin: 0; overflow: hidden; border: 0; position: relative; top: 1px; text-align: center;}
