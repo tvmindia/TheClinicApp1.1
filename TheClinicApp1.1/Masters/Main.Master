@@ -210,6 +210,10 @@
             
             window.location.href = "../Default.aspx?sessionclear=logout";
         }
+        function focusplz(id) {
+            debugger;
+            $('#txtMedDos' + id).focus();
+        }
 </script>
 </head>
 <body>

@@ -67,7 +67,23 @@
                  .appendTo( ul );
              }; 
 
-
+            test('body').on('keydown', 'input[type=text], select, textarea', function(e) {
+                var self = $(this)
+                  , form = self.parents('form:eq(0)')
+                  , focusable
+                  , next
+                ;
+                if (e.keyCode == 13) {
+                    focusable = form.find('input,a,select,button,textarea').filter(':visible');
+                    next = focusable.eq(focusable.index(this)+1);
+                    if (next.length) {
+                        next.focus();
+                    } else {
+                        form.submit();
+                    }
+                    return false;
+                }
+            });	
         });
     </script>
 
@@ -332,7 +348,7 @@
                                 <td>
                                     <input id="txtMedQty0" type="text"  class="input" onfocus="focuscontrol(0)" onblur="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
                                 <td>
-                                    <input id="txtMedUnit0" class="input" readonly="true" type="text"  /></td>
+                                    <input id="txtMedUnit0" class="input" readonly="true" type="text" onfocus="focusplz(0)"/></td>
                                 <td>
                                     <input id="txtMedDos0" type="text" class="input" /></td>
                                 <td>

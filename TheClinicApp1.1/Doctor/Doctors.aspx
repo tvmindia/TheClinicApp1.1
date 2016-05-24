@@ -449,9 +449,9 @@
                                     <td>
                                         <input id="txtMedName0" type="text" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
                                     <td>
-                                        <input id="txtMedQty0" type="text" class="input"  /></td>
+                                        <input id="txtMedQty0" type="text" class="input" /></td>
                                     <td>
-                                        <input id="txtMedUnit0" class="input" readonly="true" type="text" /></td>
+                                        <input id="txtMedUnit0" class="input" readonly="true" type="text" onfocus="focusplz(0)" /></td>
                                     <td>
                                         <input id="txtMedDos0" type="text" class="input" /></td>
                                     <td>
@@ -579,6 +579,8 @@
     <script src="../js/Dynamicgrid.js"></script>
 
     <script>
+        
+
         var test=jQuery.noConflict();
         test(function(){
             test('#customize-spinner').spinner('changed',function(e, newVal, oldVal){
