@@ -132,6 +132,7 @@
     <Content Include="css\bootstrap-spinner.css" />
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\ClinicappMaster.css" />
     <Content Include="css\fileinput.css" />
     <Content Include="css\fonts\caviardreams_gdi.svg" />
     <Content Include="css\fonts\centurygothic-bold_gdi.svg" />
@@ -159,6 +160,7 @@
     <Content Include="images\accordion_arrow.png" />
     <Content Include="images\add_medicine.png" />
     <Content Include="images\add_medicinedemo.png" />
+    <Content Include="images\admin-hover.png" />
     <Content Include="images\admin.png" />
     <Content Include="images\Alert.png" />
     <Content Include="images\AssignUser.png" />
@@ -186,6 +188,7 @@
     <Content Include="images\logo.png" />
     <Content Include="images\Logout.png" />
     <Content Include="images\LogoutWhite.png" />
+    <Content Include="images\master-hover.png" />
     <Content Include="images\master.png" />
     <Content Include="images\maxresdefault.jpg" />
     <Content Include="images\medicinesview copy.png" />
