@@ -31,6 +31,15 @@
     font-size:16px;
     
      }
+    .table{
+        margin-bottom: 7px!important;
+        
+    }
+        #accordion table td {
+            border: 0;
+            border-top: 1px solid #E6E5E5 !important;
+            border-left: 1px solid #E6E5E5 !important;
+        }
     </style>
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -426,7 +435,7 @@
 
                     <h3>Prescription Section</h3>
                     <div>
-                        <table class="table" style="width: 100%; border: 0;">
+                        <table class="table" style="width: 100%; border: 0!important;">
                             <tbody>
                                 <tr>
                                     <th>Medicine</th>

@@ -316,7 +316,7 @@
 
 
                 <div class="prescription_grid">
-                    <table class="table" style="width: 100%; border: 0;">
+                    <table class="table" style="width: 100%;">
                         <tbody>
                             <tr>
                                 <th>Medicine</th>
@@ -339,12 +339,12 @@
                                     <input id="txtMedTime0" type="text"  class="input" /></td>
                                 <td>
                                     <input id="txtMedDay0" type="text" class="input" /></td>
-                                <td style="background: #E6E5E5">
+                                <td style="background: #F2F2F2">
                                     <input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" /></td>
-                                <td style="background: #E6E5E5">
+                                <td style="background: #F2F2F2">
                                     <input type="button" id="btAdd" onclick="clickAdd(0); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
                                 </td>
-                                <td style="background-color: transparent">
+                                <td style="background-color: #F2F2F2">
                                     <input id="hdnDetailID0" type="hidden" />
                                     <input id="hdnQty0" type="hidden" /></td>
                             </tr>
@@ -414,6 +414,22 @@
         </div>
     </div>
 
-
+    <style>
+        .table{
+        margin-bottom: 3px!important;
+        background-color:#F2F2F2!important;
+        border:0!important;
+        
+    }
+        table td {
+            border: 0;
+            border-top: 1px solid #F2F2F2 !important;
+            border-left: 1px solid #F2F2F2 !important;
+            background-color:white;
+        }
+        .table td.add{
+            background-color:#F2F2F2!important;
+        }
+    </style>
 
 </asp:Content>
