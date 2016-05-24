@@ -74,6 +74,7 @@ namespace TheClinicApp1._1.Registration
             listFilter = BindName();
             if (!IsPostBack)
             {
+                //*Bind Patients in to the dropdown for token registration
                 DropdownDoctors();
             }        
         }
@@ -96,7 +97,7 @@ namespace TheClinicApp1._1.Registration
 
         #region BindDataAutocomplete
         /// <summary>
-        /// Binding Data From DataBase For the Search Field
+        /// Binding Data From DataBase For the Search Field provided for Patient Search
         /// </summary>
         /// <returns></returns>
         private string BindName()
@@ -211,7 +212,7 @@ namespace TheClinicApp1._1.Registration
 
         #endregion GridDelete
 
-        #region EditPatients
+        #region FillPatientsDetails In to Registration Sheet
         /// <summary>
         /// Fill the Patient Details For Update
         /// </summary>
@@ -277,7 +278,7 @@ namespace TheClinicApp1._1.Registration
             
 
         }
-        #endregion EditPatients       
+        #endregion FillPatientsDetails In to Registration Sheet
 
         #region ClearScreen
         /// <summary>
@@ -331,7 +332,7 @@ namespace TheClinicApp1._1.Registration
 
         #region MainButton
         /// <summary>
-        /// Save and Update Checking The Hiddenfield Value
+        /// Save and Update by Checking The Hiddenfield1 Value
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -357,15 +358,7 @@ namespace TheClinicApp1._1.Registration
                         PatientObj.DOB = DateTime.Parse(DOB + "-01-01");
                     }
                 }
-                
-                //if (txtAge.Value != "")
-                //{
-
-                //    int age = Convert.ToInt32(txtAge.Value);
-                //    int year = _date.Year;
-                //    int DOB = year - age;
-                //    PatientObj.DOB = DateTime.Parse(DOB + "-01-01");
-                //}
+                             
                 string clinID = UA.ClinicID.ToString();
                 PatientObj.Name = (txtName.Value != "") ? txtName.Value.ToString() : null;
                 PatientObj.Address = (txtAddress.Value != "") ? txtAddress.Value.ToString() : null;
@@ -409,7 +402,10 @@ namespace TheClinicApp1._1.Registration
                        
                         Guid g = Guid.NewGuid();
                         PatientObj.PatientID = g;
-                        HdnFirstInsertID.Value = PatientObj.PatientID.ToString();                      
+                        HdnFirstInsertID.Value = PatientObj.PatientID.ToString(); 
+ 
+                        //*Insert New Patient and Case File 
+
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
                         if (FileUpload1.HasFile)
@@ -431,10 +427,12 @@ namespace TheClinicApp1._1.Registration
                             PatientObj.Picupload = ImageByteArray;
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
                             Hdnimagetype.Value = PatientObj.ImageType;
+                            //*Upadate Patient Picture
                             PatientObj.UpdatePatientPicture();
 
                         }
                         PatientObj.PatientID = Guid.Parse(HiddenField1.Value);
+                        //*update Patient Details
                         PatientObj.UpdatePatientDetails();
                         if (Hdnimagetype.Value != "")
                         {
@@ -566,6 +564,7 @@ namespace TheClinicApp1._1.Registration
         #endregion Paging
 
         #region Logout
+        //*Event For SideBar Logout Button
         protected void Logout_ServerClick(object sender, EventArgs e)
         {
             Session.Remove(Const.LoginSession);
@@ -573,7 +572,7 @@ namespace TheClinicApp1._1.Registration
             Response.Redirect("../Default.aspx");
         }
 
-
+        //*Event For Logout Button placed on the right top of the page
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
             Session.Remove(Const.LoginSession);
