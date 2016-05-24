@@ -16,24 +16,22 @@ namespace TheClinicApp1._1.Token
 {
     public partial class Tokens : System.Web.UI.Page
     {
-
-
         #region Global Variables
 
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         public string listFilter = null;
         public string RoleName = null;
-
         TokensBooking tokenObj = new TokensBooking();
         ErrorHandling eObj = new ErrorHandling();
 
         #endregion Global Variables
 
+        #region PageLoad
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<string> RoleName = new List<string>();
-           
+            List<string> RoleName = new List<string>();           
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];           
             string Login = UA.userName;
             RoleName = UA.GetRoleName1(Login);                           
@@ -49,17 +47,17 @@ namespace TheClinicApp1._1.Token
                 ddlDoctor.DataValueField = "DoctorID";
                 ddlDoctor.DataTextField = "Name";
                 ddlDoctor.DataBind();
-            }
-
-            
+            }            
             if (Request.QueryString["id"]!=null)
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.DeleteSuccessMessage(page);
                 info.Visible = false;
-
             }
-        }   
+        }
+
+        #endregion PageLoad
+
         #region listerfilterbind
         public void listerfilterbind()
         { 
@@ -71,7 +69,7 @@ namespace TheClinicApp1._1.Token
         #region BindDataAutocomplete
         private string BindName()
         {
-            DataTable dt = tokenObj.GetSearchBoxData();
+            DataTable dt = tokenObj.GetSearchBoxData(); //Function call to get  Search BoxData
             StringBuilder output = new StringBuilder();
             output.Append("[");
             for (int i = 0; i < dt.Rows.Count; ++i)
@@ -97,7 +95,7 @@ namespace TheClinicApp1._1.Token
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             obj.ClinicID = UA.ClinicID.ToString();
-            DataSet ds = obj.GetpatientDetails(file);
+            DataSet ds = obj.GetpatientDetails(file);  //Function Call to Get Patient Details
             string FileNumber = Convert.ToString(ds.Tables[0].Rows[0]["FileNumber"]);
             string Name = Convert.ToString(ds.Tables[0].Rows[0]["Name"]);
             string Gender = Convert.ToString(ds.Tables[0].Rows[0]["Gender"]);
@@ -119,10 +117,11 @@ namespace TheClinicApp1._1.Token
                        
         }        
         #endregion WebMethod
- 
+
+        #region ButtonClicks
+
         public void ClearFields()
-        {
-            
+        {            
                 lblFileNo.Text = "";
                 lblPatientName.Text = "name";
                 lblAge.Text = "";
@@ -134,7 +133,6 @@ namespace TheClinicApp1._1.Token
                 lblToken.Text = "_";
                 BookedDoctorName.Visible = false;
                 lblDoctor.Visible = false;
-
         }
      
         protected void btnBookToken_ServerClick(object sender, EventArgs e)
@@ -145,20 +143,18 @@ namespace TheClinicApp1._1.Token
                 tokenObj.DoctorID = ddlDoctor.SelectedValue;
                 tokenObj.PatientID = HiddenPatientID.Value;
                 tokenObj.ClinicID = HiddenClinicID.Value;
-                tokenObj.CreatedBy = UA.userName;
-             
+                tokenObj.CreatedBy = UA.userName;             
                 tokenObj.DateTime = DateTime.Now;
-
-                int tokenNo = tokenObj.InsertToken();
+                int tokenNo = tokenObj.InsertToken(); //Function Call Inserting Token
                 lblToken.Text = tokenNo.ToString();
                 lblToken.Visible = true;
                 hdnfileID.Value = "";
                 //diplaying number of bookings
-                DataSet gds = tokenObj.ViewToken();
+                DataSet gds = tokenObj.ViewToken();  //Fuction Call to Get number of Tokens 
                 lblCaseCount.Text = gds.Tables[0].Rows.Count.ToString();
 
                 // reloading values in to repective fields
-                DataSet dst = tokenObj.GetPatientTokenDetailsbyID(HiddenPatientID.Value);
+                DataSet dst = tokenObj.GetPatientTokenDetailsbyID(HiddenPatientID.Value); //Function Call to Get Patient Token Details
                 if (dst != null && dst.Tables[0].Rows.Count > 0)
                 {
                     lblFileNo.Text = Convert.ToString(dst.Tables[0].Rows[0]["FileNumber"]);
@@ -185,18 +181,11 @@ namespace TheClinicApp1._1.Token
             else 
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
-
                 msg = "Please select Patient Details in Search";
-
                 eObj.InsertionNotSuccessMessage(page, msg);
-
                 info.Visible = true;
-
-                ClearFields();
-            
-            }
-            
-
+                ClearFields();            
+            }          
         }
 
         protected void Logout_ServerClick(object sender, EventArgs e)
@@ -209,6 +198,9 @@ namespace TheClinicApp1._1.Token
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
-        }    
+        }
+
+        #endregion ButtonClicks
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,9 +10,9 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Drawing;
 using System.Web.UI.WebControls;
-#endregion Namespaces
-
 using TheClinicApp1._1.ClinicDAL; 
+
+#endregion Namespaces
 
 namespace TheClinicApp1._1.Pharmacy
 {
@@ -57,7 +58,7 @@ namespace TheClinicApp1._1.Pharmacy
         #region Gridviewbind
         public void gridviewbind()
         {
-            DataSet gds = pharmacypobj.GetPatientPharmacyDetails();
+            DataSet gds = pharmacypobj.GetPatientPharmacyDetails(); //Function Call to Get Patient Pharamacy Details
             GridViewPharmacylist.EmptyDataText = "No Records Found";
             GridViewPharmacylist.DataSource = gds;
             GridViewPharmacylist.DataBind();
@@ -76,7 +77,7 @@ namespace TheClinicApp1._1.Pharmacy
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             obj.ClinicID = UA.ClinicID.ToString();
            
-            DataSet ds = obj.GetpatientDetails(file);
+            DataSet ds = obj.GetpatientDetails(file); //Function Call to Get Patient Details
 
             string FileNumber = Convert.ToString(ds.Tables[0].Rows[0]["FileNumber"]);
             string Name = Convert.ToString(ds.Tables[0].Rows[0]["Name"]);
@@ -84,11 +85,9 @@ namespace TheClinicApp1._1.Pharmacy
             string Address = Convert.ToString(ds.Tables[0].Rows[0]["Address"]);
             string Phone = Convert.ToString(ds.Tables[0].Rows[0]["Phone"]);
             string Email = Convert.ToString(ds.Tables[0].Rows[0]["Email"]);
-
             string PatientID = Convert.ToString(ds.Tables[0].Rows[0]["PatientID"]);
             string ClinicID = Convert.ToString(ds.Tables[0].Rows[0]["ClinicID"]);
-            string lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
-         
+            string lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);        
 
             DateTime date = DateTime.Now;
             int year = date.Year;
@@ -109,18 +108,14 @@ namespace TheClinicApp1._1.Pharmacy
         /// </summary>
         /// <returns></returns>
         private string GetMedicineNames()
-        {
-            // Patient PatientObj = new Patient();
-
-
-            DataTable dt = PrescriptionObj.SearchMedicinewithCategory();
+        {          
+            DataTable dt = PrescriptionObj.SearchMedicinewithCategory(); //Function Call
 
             StringBuilder output = new StringBuilder();
             output.Append("[");
             for (int i = 0; i < dt.Rows.Count; ++i)
             {
                 output.Append("\"" + dt.Rows[i]["Name"].ToString() + "\"");
-
                 if (i != (dt.Rows.Count - 1))
                 {
                     output.Append(",");
@@ -135,8 +130,7 @@ namespace TheClinicApp1._1.Pharmacy
         #region BindSearch
         private string BindName()
         {
-
-            DataTable dt = tokobj.GetSearchBoxData();
+            DataTable dt = tokobj.GetSearchBoxData(); //Function call for Get Search Box Data
             StringBuilder output = new StringBuilder();
             output.Append("[");
             for (int i = 0; i < dt.Rows.Count; ++i)
@@ -153,21 +147,17 @@ namespace TheClinicApp1._1.Pharmacy
         #endregion BindSearch
 
         #region Get MedicineDetails By Medicine Name
-
      
         [WebMethod]
         public static string MedDetails(string MedName)
             {
             IssueHeaderDetails IssuedtlsObj = new IssueHeaderDetails();
-
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
-
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            IssuedtlsObj.ClinicID = UA.ClinicID.ToString();
 
-            IssuedtlsObj.ClinicID = UA.ClinicID.ToString();           
-
-            DataSet ds = IssuedtlsObj.GetMedicineDetailsByMedicineName(MedName);
+            DataSet ds = IssuedtlsObj.GetMedicineDetailsByMedicineName(MedName); //Get Medicine Details By Medicine Name
             string Unit = "";
             string Quantity="";
 
@@ -175,31 +165,23 @@ namespace TheClinicApp1._1.Pharmacy
             {
                 Unit = Convert.ToString(ds.Tables[0].Rows[0]["Unit"]);
                 Quantity = Convert.ToString(ds.Tables[0].Rows[0]["Qty"]);
-
             }
-
             return String.Format("{0}"+"|"+"{1}", Unit,Quantity);
-
-
         }
-
 
         #endregion Get MedicineDetails By Medicine Name
 
         #region ClickEvents
+
         protected void ImgBtn_Command(object sender, CommandEventArgs e)
         {
-
             string[] Visits = e.CommandArgument.ToString().Split(new char[] { '|' });
             string PatientId = Visits[0];
             string DoctorID = Visits[1];
             pharmacypobj.DoctorID = Guid.Parse(DoctorID);
-            pharmacypobj.PatientID = Guid.Parse(PatientId);
-            
+            pharmacypobj.PatientID = Guid.Parse(PatientId);            
             Patientidtorefill.Value = PatientId;//saving in a hidden field to reill
-
-            DataSet ds = tokobj.GetPatientTokenDetailsbyID(PatientId);
-
+            DataSet ds = tokobj.GetPatientTokenDetailsbyID(PatientId); //Get Patient Token Details by ID Function Call
             lblPatientName.Text = ds.Tables[0].Rows[0][2].ToString();
             lblDoctor.Text = ds.Tables[0].Rows[0][1].ToString();
             lblFileNum.Text = ds.Tables[0].Rows[0][7].ToString();
@@ -209,8 +191,7 @@ namespace TheClinicApp1._1.Pharmacy
             DateTime DT = Convert.ToDateTime(ds.Tables[0].Rows[0][8].ToString());
             int Age = year - DT.Year;
             lblAgeCount.Text = Age.ToString();
-
-            DataSet MedicinList = pharmacypobj.PrescriptionDetails();
+            DataSet MedicinList = pharmacypobj.PrescriptionDetails();  //Prescription Details Function Call
             if (MedicinList.Tables[0].Rows.Count > 0)
             {
                 hdnPrescID.Value = MedicinList.Tables[0].Rows[0][0].ToString();
@@ -222,35 +203,27 @@ namespace TheClinicApp1._1.Pharmacy
             var xml = MedicinList.GetXml();
             hdnXmlData.Value = xml;
             Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
-
-
             ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientId.ToString();
-
-
         }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             string msg = string.Empty;
             DataRow dr = null;
-
           
             if (HiddenPatientID.Value != "" || Patientidtorefill.Value!="")
             {
                 if (hdnTextboxValues.Value != "")
                 {
-
                     if (HiddenPatientID.Value != "")
                     {
                         patobj.PatientID = Guid.Parse(HiddenPatientID.Value);
-                        DataTable dt = patobj.SelectPatient();
+                        DataTable dt = patobj.SelectPatient();              // Select Patient function call                    
                         dr = dt.NewRow();
                         dr = dt.Rows[0];
                         lblPatientName.Text = dr["Name"].ToString();
                     }
                     issuehdobj.ClinicID = UA.ClinicID.ToString();
-                    issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number();
-                    
+                    issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number(); // Generate Issue Number function call                    
                     issuehdobj.PrescID = hdnPrescID.Value;
                     issuehdobj.IssuedTo = lblPatientName.Text;
                     issuehdobj.Date = DateTime.Now;
@@ -258,38 +231,26 @@ namespace TheClinicApp1._1.Pharmacy
                     issuehdobj.ClinicID = UA.ClinicID.ToString();
                     ViewState["IssueHdrID"] = issuehdobj.IssueID;
 
-
-                    issuehdobj.InsertIssueHeader();
-
-
+                    issuehdobj.InsertIssueHeader();                           // insert issue header function call  
 
                     string last = string.Empty;
-
                     string values = hdnTextboxValues.Value;
-
                     string[] Rows = values.Split('$');
-
-
 
                     for (int i = 0; i < Rows.Length - 1; i++)
                     {
-                        IssueDetails IssuedtlObj = new IssueDetails(); //Object is created in loop as each entry should have different uniqueID
+                        IssueDetails IssuedtlObj = new IssueDetails();       //Object is created in loop as each entry should have different uniqueID
                         string[] tempRow = Rows;
-
                         string[] columns = tempRow[i].Split('|');
                         IssuedtlObj.MedicineName = columns[0];
-
                         IssuedtlObj.Qty = Convert.ToInt32(columns[1]);
-
                         IssuedtlObj.CreatedBy = UA.userName;
-
                         IssuedtlObj.ClinicID = UA.ClinicID.ToString();
-
                         if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
                         {
                             IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
                         }
-                        IssuedtlObj.InsertIssueDetails();
+                        IssuedtlObj.InsertIssueDetails();                       // insert issue Details function call  
                     }
                     // hdnsave.Value = "saved";
                     lblPatientName.Text = "PATIENT_NAME";
@@ -303,43 +264,31 @@ namespace TheClinicApp1._1.Pharmacy
                 else
                 {
                     var page = HttpContext.Current.CurrentHandler as Page;
-
                     msg = "Please fill all the fields ";
-
                     eObj.InsertionNotSuccessMessage(page, msg);
-
                 }
-
             }
               else 
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
-
                 msg = "Patient Details not found ";
-
                 eObj.InsertionNotSuccessMessage(page, msg);
-
 
                 if (Patientidtorefill.Value != "")
                 {
                     pharmacypobj.PatientID = Guid.Parse(Patientidtorefill.Value);
-
                     DataSet MedicinList = pharmacypobj.PrescriptionDetails();
                     var xml = MedicinList.GetXml();
                     hdnXmlData.Value = xml;
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
-                }           
-            
+                }                       
             }
-
         }
-
         protected void Logout_ServerClick(object sender, EventArgs e)
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
         }
-
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
             Session.Remove(Const.LoginSession);
@@ -347,5 +296,6 @@ namespace TheClinicApp1._1.Pharmacy
         }
 
         #endregion ClickEvents
+
     }
 }
