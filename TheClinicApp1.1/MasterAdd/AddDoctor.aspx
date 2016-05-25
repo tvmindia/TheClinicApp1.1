@@ -80,6 +80,30 @@
 
           $('[data-toggle="tooltip"]').tooltip();
 
+
+          var rows = $('#<%=dtgDoctors.ClientID%> tr').not('thead tr');
+
+
+          $('#txtSearchDoctor').keyup(function () {
+              debugger;
+              var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
+
+              rows.hide().filter(function () {
+                  var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                  var matchesSearch = true;
+                  $(val).each(function (index, value) {
+
+                      matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
+                  });
+                  return matchesSearch;
+              }).show();
+              $('#tablePagination').hide();
+
+          });
+
+          
+
+
       });
 
 
@@ -310,9 +334,17 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
         <h3 class="modal-title">View All Doctors</h3>
       </div>
-      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
+      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:480px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          <div class="col-lg-12" style="height:500px">
+
+              <div class="col-lg-12" style="height:40px">
+              <div class="search_div">
+              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchDoctor" />
+                  <input class="button3" type="button" value="Search" />
+                  </div>
+          </div>
+
 
              <asp:GridView ID="dtgDoctors" runat="server" AutoGenerateColumns="False" CssClass="table" DataKeyNames="DoctorID,UserID" OnPreRender="dtgDoctors_PreRender"   >
                         
