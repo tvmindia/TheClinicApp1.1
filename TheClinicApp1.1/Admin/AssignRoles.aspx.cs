@@ -364,6 +364,17 @@ namespace TheClinicApp1._1.Admin
 
             }
 
+            string loginedUserID = UA.UserID.ToString();
+
+            foreach (ListItem itm in ddlUsers.Items)
+            {
+                if (itm.Value == loginedUserID)
+                {
+                    itm.Attributes.Add("disabled", "disabled");
+                    itm.Attributes.Add("title", Messages.DisableAssignRole);
+                }
+            }
+
         }
 
         #endregion Page Load
