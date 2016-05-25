@@ -6,13 +6,10 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web.UI;
 
-
-
 namespace TheClinicApp1._1.ClinicDAL
 {
     public class Receipt
     {
-
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
         UIClasses.Const Const = new UIClasses.Const();
@@ -86,9 +83,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Property
 
         #region Methods
-
         
         #region InsertReceiptHeader
+        /// <summary>
+        /// inserting receipt Header
+        /// </summary>
         public void InsertReceiptHeader()
         {
             dbConnection dcon = null;
@@ -155,6 +154,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion InsertReceiptHeader
 
         #region UpdateReceiptHeader
+        /// <summary>
+        /// upadting receipt header 
+        /// </summary>
+        /// <param name="ReceiptID"></param>
         public void UpdateReceiptHeader(string ReceiptID)
         {
             dbConnection dcon = null;
@@ -221,7 +224,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion UpdateReceiptHeader
 
         #region View And Search ReceipteHeader
-
+        /// <summary>
+        /// searching in receipt header with the input string
+        /// </summary>
+        /// <param name="String"></param>
+        /// <returns></returns>
         public DataSet ViewReceiptHeader(string String)
         {
 
@@ -230,7 +237,6 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlDataAdapter sda = null;
             try
             {
-
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
@@ -246,19 +252,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     cmd.Parameters.Add("@String", SqlDbType.NVarChar, 255).Value = String;
                 }
-
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
-
 
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
-                sda.Fill(ds);
-
-
-                
+                sda.Fill(ds);               
 
             }
 
@@ -287,6 +287,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion ViewAndSearchReceipteHeader
 
         #region DeleteReceiptHeader
+        /// <summary>
+        /// Deleting Receipt Details with ReceiptID and ClinicID
+        /// </summary>
+        /// <param name="ReceiptID"></param>
         public void DeleteReceiptHeader(string ReceiptID)
         {
             dbConnection dcon = null;
@@ -352,12 +356,13 @@ namespace TheClinicApp1._1.ClinicDAL
           
         }
 
-        #endregion InsertReceiptHeader
-
-        // Reload the inserted datats into controls
+        #endregion InsertReceiptHeader               
 
         #region ReloadInsertData
-
+        /// <summary>
+        /// Reload the inserted datats into controls
+        /// </summary>
+        /// <returns></returns>
         public DataSet InsertReloaded()
         {
             dbConnection dcon = null;
@@ -365,25 +370,19 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlDataAdapter sda = null;
             try
             {
-
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetReceiptInsertReload]";
-
-
                 cmd.Parameters.Add("@ReceiptID", SqlDbType.UniqueIdentifier).Value = ReceiptID;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
-                sda.Fill(ds, "Medicines");
-
-              
+                sda.Fill(ds, "Medicines");             
 
             }
 
@@ -412,7 +411,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion ReloadInsertData
 
         #region Get Medicine Details By MedicineName
-
+        /// <summary>
+        /// Get Medicine Detials by Pasing Medicine name
+        /// </summary>
+        /// <param name="MedicineName"></param>
+        /// <returns>Medicine category,unit medcode and quantity</returns>
         public DataSet GetMedicineDetailsByMedicineName(string MedicineName)
         {
             dbConnection dcon = null;
@@ -466,9 +469,13 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Get Medicine Details By MedicineName
 
-        //Get Recipt Details by Passing Reference Number
+        
         #region GetReceiptDetailsByReceiptID
-
+        /// <summary>
+        /// Get Recipt Details by Passing Receipt ID
+        /// </summary>
+        /// <param name="ReceiptID"></param>
+        /// <returns></returns>
         public DataSet GetReceiptDetailsByReceiptID(string ReceiptID)
         {
 
@@ -526,7 +533,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion GetReceiptDetailsByReceiptID
 
         #region Get Receipt Header By ReceiptID
-
+        /// <summary>
+        /// Get Receipt HEader Details  by passing REceipt ID
+        /// </summary>
+        /// <param name="ReceiptID"></param>
+        /// <returns></returns>
         public DataSet GetReceiptHeaderByReceiptID(string ReceiptID)
         {
 
@@ -535,28 +546,20 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlDataAdapter sda = null;
             try
             {
-
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetReceiptHeaderByReceiptID]";
-
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
                 cmd.Parameters.Add("@ReceiptID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ReceiptID);
-
 
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds, "Medicines");
-
-
-
-
             }
 
             catch (Exception ex)
@@ -575,21 +578,15 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     dcon.DisconectDB();
                 }
-
             }
             return ds;
         }
-
-
 
         #endregion Get Receipt Header ByReceiptID
 
         #endregion Methods
   
     }
-
-
-
 
     public class ReceiptDetails
     {
@@ -689,7 +686,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Methods
 
         #region autofill
-
+        /// <summary>
+        /// used to bind medicine details,by passing medicine name 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public DataSet GetMedCodeUnitCategory(string name)
         {
             dbConnection dcon = null;
@@ -742,7 +743,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion autofill        
 
         #region Get Receipt Details By UniqueID
-
+        /// <summary>
+        /// to get the receipt Details by passing UniqueID from ReceiptDT table 
+        /// </summary>
+        /// <param name="UniqueID"></param>
+        /// <returns></returns>
         public DataSet GetReceiptDetailsByUniqueID(string UniqueID)
         {
 
@@ -751,26 +756,20 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlDataAdapter sda = null;
             try
             {
-
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetReceiptDetailsByUniqueID]";
-
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
                 cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UniqueID);
-
 
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds, "Medicines");
-
-
             }
 
             catch (Exception ex)
@@ -789,7 +788,6 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     dcon.DisconectDB();
                 }
-
             }
             return ds;
         }
@@ -797,11 +795,12 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Get Receipt Details By UniqueID
 
         #region InsertReceiptDetails
+        /// <summary>
+        /// Inserting into Receipt Details
+        /// </summary>
         public void InsertReceiptDetails()
         {
-
             dbConnection dcon = null;
-
             try
             {
 
@@ -838,11 +837,9 @@ namespace TheClinicApp1._1.ClinicDAL
                     if (Outputval == 0)
                     {
                         var page = HttpContext.Current.CurrentHandler as Page;
-                        eObj.SavingFailureMessage(page);
-                        
+                        eObj.SavingFailureMessage(page);                        
                     }
                 }
-
             }
 
             catch (Exception ex)
@@ -861,14 +858,16 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     dcon.DisconectDB();
                 }
-
             }
-
         }
 
         #endregion InsertReceiptDetails
 
         #region UpdateReceiptDetails
+        /// <summary>
+        /// Updating Receipt DEtails with respect to the passed UniqueID
+        /// </summary>
+        /// <param name="UniqueID"></param>
         public void UpdateReceiptDetails(string UniqueID)
         {
 
@@ -876,7 +875,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
             try
             {
-
                 DateTime now = DateTime.Now;
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
@@ -884,12 +882,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[UpdateReceiptDetails]";
-
-
                 cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UniqueID);
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                 
-                //cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);                 
+           
                 cmd.Parameters.Add("@Updatedby", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@QTY", SqlDbType.Real).Value = QTY;
 
@@ -913,7 +908,6 @@ namespace TheClinicApp1._1.ClinicDAL
                         eObj.SavingFailureMessage(page);
                     }
                 }
-
             }
 
             catch (Exception ex)
@@ -942,34 +936,30 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion UpdateReceiptDetails
 
         #region ViewReceipteDetails
-
+        /// <summary>
+        /// To Get the Receipt Details with Clinic ID
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public DataSet ViewReceiptDetails()
         {
-
             dbConnection dcon = null;
             DataSet ds = null;
             SqlDataAdapter sda = null;
             try
             {
-
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[ViewReceiptDetails]";
-
-
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
-
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds);
-
-
             }
 
             catch (Exception ex)
@@ -988,7 +978,6 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     dcon.DisconectDB();
                 }
-
             }
             return ds;
         }
@@ -996,7 +985,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion ViewReceiptDetails
 
-        #region DeleteReceiptrDetails
+        #region DeleteReceiptDetails
+        /// <summary>
+        ///  Deleting Receipt Details with UniqueID and ClinicID
+        /// </summary>
+        /// <param name="UniqueID"></param>
         public void DeleteReceiptDetails(string UniqueID )
         {
 
@@ -1004,24 +997,19 @@ namespace TheClinicApp1._1.ClinicDAL
 
             try
             {
-
-
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[DeleteReceiptDetails]";
-
                 cmd.Parameters.Add("@UniqueID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UniqueID);
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
 
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
                 int Outputval = (int)cmd.Parameters["@Status"].Value;
-
                
                 if (Outputval == 1)
                 {
@@ -1034,11 +1022,9 @@ namespace TheClinicApp1._1.ClinicDAL
                     if (Outputval == 0)
                     {
                         var page = HttpContext.Current.CurrentHandler as Page;
-
                         eObj.SavingFailureMessage(page);
                     }
                 }
-
             }
 
             catch (Exception ex)
@@ -1057,16 +1043,11 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     dcon.DisconectDB();
                 }
-
             }
-
         }
 
         #endregion DeleteReceiptDetails        
 
         #endregion Methods
-
-
     }
-
 }
