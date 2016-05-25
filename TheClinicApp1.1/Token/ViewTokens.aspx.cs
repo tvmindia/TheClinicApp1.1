@@ -30,8 +30,10 @@ namespace TheClinicApp1._1.Token
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            gridviewbind();         
-
+          
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            tokenObj.ClinicID = UA.ClinicID.ToString();
+            gridviewbind();
         }
 
 
