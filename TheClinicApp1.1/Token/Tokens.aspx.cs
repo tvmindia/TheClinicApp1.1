@@ -43,10 +43,13 @@ namespace TheClinicApp1._1.Token
             {       
                 //binding the values of doctor dropdownlist
                 DataSet ds = tokenObj.DropBindDoctorsName();
-                ddlDoctor.DataSource = ds.Tables[0];
-                ddlDoctor.DataValueField = "DoctorID";
-                ddlDoctor.DataTextField = "Name";
-                ddlDoctor.DataBind();
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    ddlDoctor.DataSource = ds.Tables[0];
+                    ddlDoctor.DataValueField = "DoctorID";
+                    ddlDoctor.DataTextField = "Name";
+                    ddlDoctor.DataBind();
+                }
             }            
             if (Request.QueryString["id"]!=null)
             {
@@ -97,31 +100,44 @@ namespace TheClinicApp1._1.Token
        
         public static string PatientDetails(string file)
         {
+            string FileNumber = string.Empty;
+            string Name = string.Empty;
+            string Gender = string.Empty;
+            string Address = string.Empty;
+            string Phone = string.Empty;
+            string Email = string.Empty;
+            string PatientID = string.Empty;
+            string ClinicID = string.Empty;
+            string lastvisit = string.Empty;
+            string DOB = string.Empty;
+
             ClinicDAL.TokensBooking obj = new ClinicDAL.TokensBooking();
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             obj.ClinicID = UA.ClinicID.ToString();
             DataSet ds = obj.GetpatientDetails(file);  //Function Call to Get Patient Details
-            string FileNumber = Convert.ToString(ds.Tables[0].Rows[0]["FileNumber"]);
-            string Name = Convert.ToString(ds.Tables[0].Rows[0]["Name"]);
-            string Gender = Convert.ToString(ds.Tables[0].Rows[0]["Gender"]);
-            string Address = Convert.ToString(ds.Tables[0].Rows[0]["Address"]);
-            string Phone = Convert.ToString(ds.Tables[0].Rows[0]["Phone"]);
-            string Email = Convert.ToString(ds.Tables[0].Rows[0]["Email"]);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                 FileNumber = Convert.ToString(ds.Tables[0].Rows[0]["FileNumber"]);
+                  Name = Convert.ToString(ds.Tables[0].Rows[0]["Name"]);
+                  Gender = Convert.ToString(ds.Tables[0].Rows[0]["Gender"]);
+                  Address = Convert.ToString(ds.Tables[0].Rows[0]["Address"]);
+                  Phone = Convert.ToString(ds.Tables[0].Rows[0]["Phone"]);
+                  Email = Convert.ToString(ds.Tables[0].Rows[0]["Email"]);
 
-            string PatientID = Convert.ToString(ds.Tables[0].Rows[0]["PatientID"]);
-            string ClinicID = Convert.ToString(ds.Tables[0].Rows[0]["ClinicID"]);
-            string lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
+                  PatientID = Convert.ToString(ds.Tables[0].Rows[0]["PatientID"]);
+                  ClinicID = Convert.ToString(ds.Tables[0].Rows[0]["ClinicID"]);
+                  lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
 
-            DateTime date = DateTime.Now;
-            int year = date.Year;
-            DateTime DT = Convert.ToDateTime(ds.Tables[0].Rows[0]["DOB"].ToString());
-            int Age = year - DT.Year;
-            string DOB = Age.ToString();
-
-            return String.Format("{0}" + "|" + "{1}" + " | " + "{2}" + "|" + "{3}" + " | " + "{4}" + "|" + "{5}" + " | " + "{6}" + "|" + "{7}" + " | " + "{8}" + " | " + "{9}", FileNumber, Name, DOB, Gender, Address, Phone, Email, PatientID, ClinicID,lastvisit);
-                       
+                DateTime date = DateTime.Now;
+                int year = date.Year;
+                DateTime DT = Convert.ToDateTime(ds.Tables[0].Rows[0]["DOB"].ToString());
+                int Age = year - DT.Year;
+                DOB = Age.ToString();
+            }
+                return String.Format("{0}" + "|" + "{1}" + " | " + "{2}" + "|" + "{3}" + " | " + "{4}" + "|" + "{5}" + " | " + "{6}" + "|" + "{7}" + " | " + "{8}" + " | " + "{9}", FileNumber, Name, DOB, Gender, Address, Phone, Email, PatientID, ClinicID, lastvisit);
+                 
         }        
         #endregion WebMethod
 
