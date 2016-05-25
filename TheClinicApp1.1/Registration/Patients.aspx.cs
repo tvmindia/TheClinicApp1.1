@@ -44,7 +44,7 @@ namespace TheClinicApp1._1.Registration
             PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());            
             gridDataBind();
             listFilter = null;
-            listFilter = BindName();           
+            listFilter = BindName();
         }
         #endregion PageLoad
 
@@ -462,6 +462,7 @@ namespace TheClinicApp1._1.Registration
                     if ((PatientObj.Name != null) && (parsedValue != 0))
                     {
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
+
                     }
                 }
             }
@@ -548,7 +549,7 @@ namespace TheClinicApp1._1.Registration
             }
         }
         #endregion SearchButtonClick
-
+        
         #region Paging
         /// <summary>
         /// Paging for Grid

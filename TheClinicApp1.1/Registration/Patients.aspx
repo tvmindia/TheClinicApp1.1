@@ -154,9 +154,42 @@
                     return matchesSearch;
                 }).show();
                 $('#tablePagination').hide();
+                if (val == "") {
+                    debugger;
+                    $('table').tablePagination({});
+                    $('#tablePagination').show();
+                }
                
             });
-             
+            var rowss = $('#<%=dtgViewTodaysRegistration.ClientID%>').not('thead tr');
+
+            $('#txtSearchPatient1').keyup(function() {
+                debugger;
+                var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
+
+                rowss.hide().filter(function() {
+                    var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                    var matchesSearch = true;
+                    $(val).each(function(index, value) {
+                        
+                        matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
+                    });
+                    return matchesSearch;
+                }).show();
+                $('#tablePagination').hide();
+                if (val == "") {
+                    debugger;
+                    $('table').tablePagination({});
+                    $('#tablePagination').show();
+                }
+               
+            });
+            //$('#tablePagination_nextPage').bind('click', function (e) {
+            //    debugger;
+            //    $('#tablePagination').remove();
+            //    resetCurrentPage(currPageNumber += 1)
+            //    $('#'+table.id).after(createPaginationElements());
+            //}); 
 
         }); 
         
@@ -166,7 +199,7 @@
             
         }     
 
-        </script> 
+    </script> 
     <script>
        
         function validation()
@@ -188,7 +221,24 @@
 
 
         }
+        function OpenModal(id){
          
+            $('table').tablePagination({});
+            $('#tablePagination').show();
+            
+            if(id=='1')
+            {
+                $('#txtSearchPatient').val('');
+                $('#myModal').modal('show');
+            }
+            else if(id==2)
+            {              
+                $('#txtSearchPatient1').val('');
+                $('#TodaysRegistration').modal('show');
+            }
+        }
+
+       
     </script>  
     <!------------------------------------------------------------------------------>  
     <!---------------------------------------------------------------------->
@@ -223,8 +273,8 @@
              <div class="icon_box">
          <%--<a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>--%>
     
-         <a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registered" data-toggle="tooltip" data-placement="left"><img src="../images/registerd9724185.png" /></span></a>
-         <a class="Todays_registration_link" data-toggle="modal" data-target="#TodaysRegistration" ><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
+         <a class="all_registration_link" onclick="OpenModal('1');"><span title="All Registered" data-toggle="tooltip" data-placement="left"><img src="../images/registerd9724185.png" /></span></a>
+         <a class="Todays_registration_link" onclick="OpenModal('2');"><span title="Todays Register" data-toggle="tooltip" data-placement="left"><img src="../images/registerd.png" /></span></a>
          </div>
          <div class="grey_sec">
          <div class="search_div">
@@ -314,13 +364,9 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="border-color:#3661C7;">  
-      <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload()">&times;</button>            
+      <button type="button" class="close" data-dismiss="modal" >&times;</button>            
       <h3 class="modal-title">All Registration</h3>       
       </div>
-        <%--<div class="search_div">
-         <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchPatient" />
-         <input class="button" type="button" value="Search" />           
-       </div> --%>   
        <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
            <div class="col-lg-12" style="height:480px;"> 
@@ -403,7 +449,14 @@
 
                     </div>
                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
-                     <div class="col-sm-12" style="height:500px;">
+                       <div class="col-lg-12" style="height:480px;"> 
+                       <div class="col-lg-12" style="height:40px">
+                      <div class="search_div">
+                       <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchPatient1" />
+                  <input class="button3" type="button" value="Search" />
+                  </div>
+                     </div>
+                     <div class="col-sm-12" style="height:400px;">
                         <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal">
                             
                             <Columns>
@@ -411,7 +464,7 @@
                                     <ItemTemplate>
                                         <asp:ImageButton style="border:none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon1.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
 
-                                    </ItemTemplate>
+                                 </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
@@ -431,7 +484,7 @@
                 <asp:HiddenField ID="HiddenField1" runat="server" />
             </div>
         </div>
-
+</div>
         <!-- Alert Container -->
         <div id="dialogoverlay"></div>
         <div id="dialogbox">
@@ -461,7 +514,9 @@
            
     }
     function openmyModal() {
+      
         $('#myModal').modal('show');
+        
     }
         </script>
    
