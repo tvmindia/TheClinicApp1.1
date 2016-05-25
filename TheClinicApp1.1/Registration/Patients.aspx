@@ -58,11 +58,8 @@
     color: white;
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size:16px;    
-    }
-     
+    }     
    </style>
- 
- 
     <!-- Script Files -->  
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/jquery-1.3.2.min.js"></script>
@@ -144,7 +141,7 @@
             var rows = $('#<%=GridView1.ClientID%> tr').not('thead tr');
 
             $('#txtSearchPatient').keyup(function() {
-             
+                debugger;
                 var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
 
                 rows.hide().filter(function() {
@@ -469,65 +466,6 @@
         </script>
    
 <style>
-.search_div input.field1 {
-    width: 100%;
-    /* padding: 2px 77px 2px 20px; */
-    box-sizing: border-box;
-    padding-right:2px;
-}
-
-.search_div input.field1 {
-    padding: 2px 2px 2px 20px;
-    height: 34px;
-    line-height: 34px;
-    background: #D7E2EA;
-    border: burlywood;
-    display: block;
-    color: #000;
-    font-size: 14px;
-    font-family: 'caviardreams-regular';
-    width: 525px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-}
-.search_div input.button3 {
-    position: absolute;
-    top: 0;
-    left: 425px;
-    bottom: 0;
-    margin: auto;
-    background: #1d49b2;
-    color: #fff;
-    font-family: 'caviardreams-regular';
-    height: 34px;
-    padding: 0;
-    text-align: center;
-    line-height: 34px;
-    font-size: 14px;
-    border: 0;
-    width: 98px;
-    -webkit-border-top-right-radius: 20px;
-    -webkit-border-bottom-right-radius: 20px;
-    -moz-border-radius-topright: 20px;
-    -moz-border-radius-bottomright: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-@media (max-width:1168px)
-{
-    .search_div input.field1 {
-    width: 448px;
-    }
-    .search_div input.button3 {
-        left: 348px;
-    }
-    .modal table{   
-    width: 448px;
-   
-    }
-}
 
 
 

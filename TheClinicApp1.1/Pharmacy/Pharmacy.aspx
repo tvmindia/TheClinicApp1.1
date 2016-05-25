@@ -160,6 +160,8 @@
     function focuscontrol(ControlNo)
     {
         document.getElementById('txtMedQty' + ControlNo).value="";
+        $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
+
     }                 
            
 
