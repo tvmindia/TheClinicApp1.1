@@ -124,9 +124,7 @@ namespace TheClinicApp1._1.Stock
         /// <returns></returns>
         private string GetMedicineNames()
         {
-            // Patient PatientObj = new Patient();
-            Stocks stok = new Stocks();
-
+          
             DataTable dt = stok.SearchBoxMedicine();
 
             StringBuilder output = new StringBuilder();
@@ -204,7 +202,10 @@ namespace TheClinicApp1._1.Stock
             DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();            
-            string Login = UA.userName;            
+            string Login = UA.userName;
+
+            stok.ClinicID = UA.ClinicID.ToString();
+            stok.CreatedBy = UA.userName;
 
             RoleName = UA.GetRoleName1(Login);
             //foreach (DataRow dr in dtRols.Rows)

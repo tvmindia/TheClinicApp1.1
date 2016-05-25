@@ -110,7 +110,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Methods    
 
         #region Get Medicine Details By MedicineID
-
+        /// <summary>
+        /// To get the medicine details by  passing Medicine ID
+        /// </summary>
+        /// <param name="medid"></param>
+        /// <returns></returns>
         public DataSet GetMedicineDetailsByMedicineID(Guid medid)
         {
             dbConnection dcon = null;
@@ -162,7 +166,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Get Medicine Details By MedicineID
 
         #region Get Quantity By Medicine Name
-
+        /// <summary>
+        /// To get the existing stock quantiy of the particular medicines by medicine name 
+        /// </summary>
+        /// <param name="MedicineName"></param>
+        /// <returns></returns>
         public string GetQtyByMedicineName(string MedicineName)
         {
             string QtyInStock = string.Empty;
@@ -214,6 +222,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Get Quantity By Medicine Name
 
         #region Validate Medicine Name
+        /// <summary>
+        /// To check MEdicine name duplication by passing input medicine name
+        /// </summary>
+        /// <param name="CheckMedicine"></param>
+        /// <returns></returns>
         public bool ValidateMedicineName(string CheckMedicine)
         {
             bool flag;
@@ -226,6 +239,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand("CheckMedicineNameDuplication", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@MedicineName", SqlDbType.VarChar,255).Value = CheckMedicine;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
                 outflag.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
@@ -258,6 +272,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Validate Medicine Name
 
         #region Validate Medicine Code
+        /// <summary>
+        /// To check MEdicine code duplication by passing input medicine code
+        /// </summary>
+        /// <param name="InputMedicineCode"></param>
+        /// <returns></returns>
         public bool ValidateMedicineCode(string InputMedicineCode)
         {
             bool flag;
@@ -270,6 +289,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand("CheckMedicineCodeDuplication", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@MedicineCode", SqlDbType.VarChar, 20).Value = InputMedicineCode;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
                 outflag.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
@@ -302,7 +322,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Validate Medicine Code
 
         #region View Categories
-
+        /// <summary>
+        /// Category details from caregories table
+        /// </summary>
+        /// <returns></returns>
         public DataSet ViewCategories()
         {
 
@@ -354,7 +377,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion View Categories
 
         #region View Units
-
+        /// <summary>
+        /// unit details from unit table
+        /// </summary>
+        /// <returns></returns>
         public DataSet ViewUnits()
         {
 
@@ -405,6 +431,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion View Units
 
         #region SearchBoxMedicine
+        /// <summary>
+        /// To Get the medicine name 
+        /// stockinDetails and stockoutDetails for  Pages
+        /// </summary>
+        /// <returns></returns>
         public DataTable SearchBoxMedicine()
         {
 
@@ -414,6 +445,7 @@ namespace TheClinicApp1._1.ClinicDAL
             con = dcon.GetDBConnection();
             SqlCommand cmd = new SqlCommand("SearchBoxMedicine", con);
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = cmd;
             dt = new DataTable();
@@ -425,9 +457,13 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion SearchBoxMedicine
 
         #region SearchWithName
+        /// <summary>
+        /// Searching Medicine details by passing Medicine Name 
+        /// </summary>
+        /// <param name="SearchName"></param>
+        /// <returns></returns>
         public DataTable GetMedcineDetails(string SearchName)
         {
-
             DataTable dt = null;
             SqlConnection con = null;
             dbConnection dcon = new dbConnection();
@@ -435,6 +471,7 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlCommand cmd = new SqlCommand("SearchMedicineWithName", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = SearchName;
+            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = cmd;
             dt = new DataTable();
@@ -446,13 +483,15 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion SearchWithName
         
         #region InsertMedicines
+        /// <summary>
+        /// Inserting Medicines , initially quantity of medicine will be ZERO (assining in SQL)
+        /// In SQL, Duplication of medicines will be checked and corresponding messages will be given.
+        /// </summary>
         public void InsertMedicines()
         {
             dbConnection dcon = null;
-
             try
             {
-
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
@@ -464,9 +503,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(CategoryID);
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = Name;
-                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;
-                
-               // cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;                INITIAL QUANTITY WILL BE ZERO
+                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;     
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;              
                 cmd.Parameters.Add("@ReOrderQty", SqlDbType.Real).Value = Convert.ToInt32( ReOrderQty);
                 cmd.Parameters.Add("@MedCode", SqlDbType.NVarChar, 20).Value = MedCode;
@@ -474,9 +511,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
-                int Outputval = (int)cmd.Parameters["@Status"].Value;
-
-               
+                int Outputval = (int)cmd.Parameters["@Status"].Value;               
 
                 if (Outputval == 1)
                {
@@ -484,14 +519,12 @@ namespace TheClinicApp1._1.ClinicDAL
                    var page = HttpContext.Current.CurrentHandler as Page;
                    eObj.SavedSuccessMessage(page);
                }
-
                 else if (Outputval == 2)
                 {
                     //Already exists! Medicine Code
                     var page = HttpContext.Current.CurrentHandler as Page;
                     eObj.AlreadyExistsMessage(page);
                 }
-
                 else
                 {
                     if(Outputval == 0) 
@@ -519,18 +552,20 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     dcon.DisconectDB();
                 }
-
             }
-
         }
 
         #endregion InsertMedicines
 
         #region UpdateMedicines
+        /// <summary>
+        /// updating Medicines with respect to the Medicine ID and Clinic ID
+        /// In SQL, Duplication is checked while updating and returns coresponding messages 
+        /// </summary>
+        /// <param name="MedicineID"></param>
         public void UpdateMedicines(string MedicineID )
         {
             dbConnection dcon = null;
-
             try
             {
                 dcon = new dbConnection();
@@ -539,30 +574,20 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[UpdateMedicines]";
-
                 cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(MedicineID);
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
                 cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(CategoryID);
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = Name;
-                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit; 
-                //cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
-
+                cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;            
                 cmd.Parameters.Add("@Updatedby", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@ReOrderQty", SqlDbType.Real).Value = ReOrderQty;
                 cmd.Parameters.Add("@MedCode", SqlDbType.NVarChar, 20).Value = MedCode;
-
-                //cmd.ExecuteNonQuery();
-
-
-
+           
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
                 int Outputval = (int)cmd.Parameters["@Status"].Value;
-
                 cmd.ExecuteNonQuery();
-
                 if (Outputval == 1)
                 {
                     var page = HttpContext.Current.CurrentHandler as Page;
@@ -577,10 +602,8 @@ namespace TheClinicApp1._1.ClinicDAL
                         eObj.AlreadyExistsMessage(page);
                         //Already exists!
                     }
-                }
- 
+                } 
             }
-
             catch (Exception ex)
             {
                 UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -590,27 +613,25 @@ namespace TheClinicApp1._1.ClinicDAL
                 eObj.Method = "UpdateMedicines";
                 eObj.InsertError();
             }
-
             finally
             {
                 if (dcon.SQLCon != null)
                 {
                     dcon.DisconectDB();
                 }
-
             }
-
         }
-
 
         #endregion UpdateMedicines 
 
         #region DeleteMedicines
+        /// <summary>
+        /// Deleting Medicines with respect to Medicine ID and Clinic ID 
+        /// </summary>
+        /// <param name="MedicineID"></param>
         public void DeleteMedicines(Guid MedicineID)
         {
-
             dbConnection dcon = null;
-
             try
             {
                 dcon = new dbConnection();
@@ -622,8 +643,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = MedicineID;
-
-                //cmd.ExecuteNonQuery();
 
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
@@ -644,7 +663,6 @@ namespace TheClinicApp1._1.ClinicDAL
                     eObj.DeleteSuccessMessage(page);
                 }
             }
-
             catch (Exception ex)
             {
                 UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -669,15 +687,17 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion InsertMedicines
 
         #region View_Out_of_Stock_MedicineList
+        /// <summary>
+        /// TO find the Out of Stock Medicine List with Respect to clinics
+        /// </summary>
+        /// <returns></returns>
         public DataSet ViewOutofStockMedicines()
         {
-
             dbConnection dcon = null;
             DataSet ds = null;
             SqlDataAdapter sda = null;
             try
             {
-
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
@@ -784,7 +804,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Search And View MedicineStock
 
         #region CheckMedicineIDIsUsed
-
+        /// <summary>
+        /// Before Deleting to ensure that the MedicineID is used anywhere.
+        /// Checking Prescription Details,Receipt Details and Issue Detials
+        /// </summary>
+        /// <returns>Retruns a boolean value</returns>
         public bool CheckMedicineIDIsUsed()
         {
             bool isUsed = false;
@@ -792,7 +816,6 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlConnection con = null;
             try
             {
-
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("CheckMedicineIDIsUsed", con);
@@ -801,15 +824,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@MedicineID", SqlDbType.UniqueIdentifier).Value = MedicineID;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
 
-
-
-
                 SqlParameter outflag = cmd.Parameters.Add("@Cnt", SqlDbType.Bit);
                 outflag.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
-
                 object ID = outflag.Value;
-
 
               isUsed =  Convert.ToBoolean(ID);
                
@@ -830,10 +848,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     con.Close();
                 }
             }
-
             return isUsed;
-
-
         }
         #endregion CheckMedicineIDIsUsed  
 

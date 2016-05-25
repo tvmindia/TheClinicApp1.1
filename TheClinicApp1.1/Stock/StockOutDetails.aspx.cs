@@ -126,9 +126,7 @@ namespace TheClinicApp1._1.Stock
         /// </summary>
         /// <returns></returns>
         private string GetMedicineNames()
-        {
-            // Patient PatientObj = new Patient();
-            Stocks stok = new Stocks();
+        {         
 
             DataTable dt = stok.SearchBoxMedicine();
 
@@ -278,6 +276,9 @@ namespace TheClinicApp1._1.Stock
 
             IssuehdrObj.ClinicID = UA.ClinicID.ToString();
             IssuehdrObj.CreatedBy = UA.userName;
+
+            stok.ClinicID = UA.ClinicID.ToString();
+            stok.CreatedBy = UA.userName;
 
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
