@@ -138,6 +138,12 @@
             }).show();
             $('#tablePagination').hide();
 
+            if (val == "") {
+                debugger;
+                $('table').tablePagination({});
+                $('#tablePagination').show();
+            }
+
         });
           
        

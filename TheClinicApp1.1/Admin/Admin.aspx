@@ -98,19 +98,45 @@
 
 
           $('#txtSearchUser').keyup(function () {
-                  debugger;
+             
                   var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
 
-                  rows.hide().filter(function () {
+              rows.hide().filter(function () {
+
+                
                       var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
                       var matchesSearch = true;
                       $(val).each(function (index, value) {
-
+                          
                           matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
+                         
                       });
+                      
                       return matchesSearch;
                   }).show();
-                  $('#tablePagination').hide();
+                 
+              $('#tablePagination').hide();
+
+
+      var matchedRowCount =     $("table tr:visible").length-1;
+
+   
+
+      //if (matchedRowCount == 0)
+      //{
+      //    debugger;
+
+      //    //$('table tr').eq(1).html("No records found for the search criteria.");
+      //    $('table').find("tr:first").html("No records found for the search criteria.");
+          
+      //}
+
+      if (val == "")
+      {
+                 
+     $('table').tablePagination({});
+     $('#tablePagination').show();
+       }
 
               });
 
@@ -219,6 +245,15 @@ else
         $(function () {
 
             $('[data-toggle="tooltip"]').tooltip();
+
+           <%-- var gridViewRowCount = document.getElementById("<%= dtgViewAllUsers.ClientID %>").rows.length;
+
+
+            if (gridViewRowCount >0) {
+                $('table').tablePagination({});
+            }--%>
+
+
         });
 
 
