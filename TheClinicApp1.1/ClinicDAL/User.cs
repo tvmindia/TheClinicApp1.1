@@ -140,6 +140,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand("ViewAllUsers", con);
                
                 cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
                 adapter.Fill(dtUsers);

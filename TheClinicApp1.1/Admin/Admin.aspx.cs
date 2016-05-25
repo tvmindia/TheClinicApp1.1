@@ -446,6 +446,7 @@ namespace TheClinicApp1._1.Admin
         #region Bind Gridview
         public void BindGriewWithDetailsOfAllUsers()
         {
+            userObj.ClinicID = UA.ClinicID;
             DataTable dtUsers = userObj.GetDetailsOfAllUsers();
 
             if (dtUsers != null)

@@ -99,6 +99,7 @@ namespace TheClinicApp1._1.Admin
         #region Bind Gridview
         public void BindGriewWithDetailsOfAssignedRoles()
         {
+            roleObj.ClinicID = UA.ClinicID;
             DataTable dtAssignedRoles = roleObj.GetDetailsOfAllAssignedRoles();
             dtgViewAllUserInRoles.DataSource = dtAssignedRoles;
             dtgViewAllUserInRoles.DataBind();
