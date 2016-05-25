@@ -559,7 +559,13 @@ namespace TheClinicApp1._1.Registration
         protected void GridView1_PreRender(object sender, EventArgs e)
         {
             GridView1.UseAccessibleHeader = false;
-            GridView1.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            if (GridView1.Rows.Count > 0)
+            {
+                GridView1.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
+           
             
         }
         #endregion Paging

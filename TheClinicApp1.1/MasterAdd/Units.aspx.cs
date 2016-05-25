@@ -200,7 +200,7 @@ namespace TheClinicApp1._1.MasterAdd
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
             Master mstrObj = new Master();
-
+            mstrObj.ClinicID = UA.ClinicID;
             if (mstrObj.CheckUnitDuplication(Unit))
             {
                 return true;

@@ -96,6 +96,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Methods
 
         #region Validate IssueNo
+        /// <summary>
+        /// To check the issue number is duplicated or not by passing input issue number
+        /// </summary>
+        /// <param name="IssueNo"></param>
+        /// <returns>a boolean value</returns>
         public bool CheckIssueNoDuplication(string IssueNo)
         {
             bool flag;
@@ -141,7 +146,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Validate IssueNo
 
         #region Get Medicine Details By MedicineName
-
+        /// <summary>
+        /// To medicine details by pasing medicine name
+        /// </summary>
+        /// <param name="MedicineName"></param>
+        /// <returns></returns>
         public DataSet GetMedicineDetailsByMedicineName(string MedicineName)
         {
             dbConnection dcon = null;
@@ -192,6 +201,15 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Get Medicine Details By MedicineName
 
         #region Generate_Issue_Number
+        /// <summary>
+        /// Issue number is genereated by checking the TOP issue number from Database 
+        /// format of issue number is day-month-year/issueno
+        /// issueno is incrementing 1 to the top issue number
+        ///  TOPISSUENO is trimed for get the last issue number (after /)
+        /// x is Issue number
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string Generate_Issue_Number()
         {
 
@@ -200,10 +218,9 @@ namespace TheClinicApp1._1.ClinicDAL
             string mn = datevalue.ToString("MMM");
             string yy = datevalue.Year.ToString();
             string dd = datevalue.Day.ToString();
-            string NUM;
+            string TOPISSUENO;
             string IssueNO=string.Empty;
-            dbConnection dcon = null;
-          
+            dbConnection dcon = null;          
             try
             {
                  DateTime now = DateTime.Now;
@@ -218,12 +235,12 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlParameter OutparmItemId = cmd.Parameters.Add("@String", SqlDbType.NVarChar,50);
                 OutparmItemId.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
-                NUM = OutparmItemId.Value.ToString();
+                TOPISSUENO = OutparmItemId.Value.ToString();
 
-                if (NUM != "")
+                if (TOPISSUENO != "")
                 {
                     //trim here
-                    int x = Convert.ToInt32(NUM.Substring(NUM.IndexOf('/') + 1));
+                    int x = Convert.ToInt32(TOPISSUENO.Substring(TOPISSUENO.IndexOf('/') + 1));
                     x = x + 1;
                     x.ToString();         
                       IssueNO = dd + '-' + mn + '-' + yy + '/' + x;                  
@@ -258,6 +275,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Generate_Issue_Number
   
         #region InsertIssueHeader
+        /// <summary>
+        /// inserting issue header 
+        /// </summary>
+        /// <returns></returns>
         public int InsertIssueHeader()
         {
             int result = 0;
@@ -277,7 +298,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
                 cmd.Parameters.Add("@IssueNO", SqlDbType.NVarChar, 50).Value = IssueNO;
 
-                if (PrescID != null)
+                if ((PrescID != null) && (PrescID!=string.Empty))
                 {
                     cmd.Parameters.Add("@PrescID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
                 }
@@ -332,6 +353,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion InsertIssueHeader
 
         #region UpdateIssueHeader
+        /// <summary>
+        /// updating issue header with Issue ID
+        /// </summary>
+        /// <param name="IssueID"></param>
         public void UpdateIssueHeader(string IssueID)
         {
 

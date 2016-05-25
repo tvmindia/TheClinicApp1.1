@@ -301,9 +301,39 @@ namespace TheClinicApp1._1.Admin
 
             roleObj.AssignRole();
 
-            ListItem listItem = chklstRoles.Items.FindByValue(roleid);
+            roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+            DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
-            if (listItem != null) listItem.Selected = true;
+            if (dtAssignedRoles.Rows.Count > 0)
+            {
+                foreach (ListItem item in chklstRoles.Items)
+                {
+                    DataRow[] RoleAssigned = dtAssignedRoles.Select("RoleID = '" + item.Value + "'");
+
+                    if (RoleAssigned.Length == 0)
+                    {
+                        item.Selected = false;
+                    }
+
+                    else
+                    {
+                        item.Selected = true;
+                    }
+                }
+
+            }
+            else
+            {
+                foreach (ListItem item in chklstRoles.Items)
+                {
+                    item.Selected = false;
+                }
+            }
+          
+
+            //ListItem listItem = chklstRoles.Items.FindByValue(roleid);
+
+            //if (listItem != null) listItem.Selected = true;
 
         }
 
@@ -362,6 +392,17 @@ namespace TheClinicApp1._1.Admin
                 BindUsersDropdown();
                 BindRolesDropdown();
 
+            }
+
+            string loginedUserID = UA.UserID.ToString();
+
+            foreach (ListItem itm in ddlUsers.Items)
+            {
+                if (itm.Value == loginedUserID)
+                {
+                    itm.Attributes.Add("disabled", "disabled");
+                    itm.Attributes.Add("title", Messages.DisableAssignRole);
+                }
             }
 
         }
