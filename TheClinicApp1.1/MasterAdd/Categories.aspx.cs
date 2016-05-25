@@ -51,8 +51,8 @@ namespace TheClinicApp1._1.MasterAdd
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
             Category CategoryObj = new Category();
-          
 
+            CategoryObj.ClinicID = UA.ClinicID;
 
             if (CategoryObj.ValidateCategoryName(CategoryName))
             {

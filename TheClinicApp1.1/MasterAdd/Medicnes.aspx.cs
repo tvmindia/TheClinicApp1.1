@@ -43,6 +43,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         public void BindGridview()
         {
+            mstrObj.ClinicID = UA.ClinicID;
            DataTable dt = mstrObj.ViewAllMedicines();
 
            if (dt != null)
@@ -233,6 +234,8 @@ namespace TheClinicApp1._1.MasterAdd
 
            
             Stocks StockObj = new Stocks();
+
+            StockObj.ClinicID = UA.ClinicID.ToString();
 
             if (StockObj.ValidateMedicineCode(MedicineCode))
             {

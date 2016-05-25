@@ -1311,6 +1311,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand("CheckUnitDuplication", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@unit", SqlDbType.VarChar, 255).Value = UnitDescription;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
                 outflag.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();

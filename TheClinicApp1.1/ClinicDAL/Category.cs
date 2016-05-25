@@ -237,6 +237,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand("CheckCategoryNameDuplication", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@CategoryName", SqlDbType.VarChar, 255).Value = CheckCategory;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
                 outflag.Direction = ParameterDirection.Output;
 
