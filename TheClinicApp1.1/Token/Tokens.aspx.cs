@@ -67,6 +67,7 @@ namespace TheClinicApp1._1.Token
         #endregion listerfilterbind
 
         #region BindDataAutocomplete
+    
         private string BindName()
         {
             DataTable dt = tokenObj.GetSearchBoxData(); //Function call to get  Search BoxData
@@ -86,8 +87,14 @@ namespace TheClinicApp1._1.Token
         #endregion BindDataAutocomplete
 
         #region WebMethod
-
+        /// <summary>
+        /// WEB METHOD called from javascript from aspx page
+        /// To Get Patient Details  
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [WebMethod(EnableSession = true)]
+       
         public static string PatientDetails(string file)
         {
             ClinicDAL.TokensBooking obj = new ClinicDAL.TokensBooking();

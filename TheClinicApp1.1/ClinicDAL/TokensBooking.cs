@@ -65,9 +65,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Token_Property
 
         //Methods
-
         #region Token_Methods
-
 
         #region GetSearchBoxData
         public DataTable GetSearchBoxData()
@@ -89,10 +87,13 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion GetSearchBoxData
 
-
-
         #region GetPatientDetails
-
+        /// <summary>
+        /// Get Patient Details By Passing File Number
+        /// 
+        /// </summary>
+        /// <param name="str1"></param>
+        /// <returns>patient details by joining file,patient and visit tables</returns>
         public DataSet GetpatientDetails(string str1)
         {
             SqlConnection con = null;
@@ -106,7 +107,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetPatientDetailsForToken]";
-                cmd.Parameters.Add("@filenumber", SqlDbType.NVarChar).Value = str1;        
+                cmd.Parameters.Add("@filenumber", SqlDbType.NVarChar).Value = str1;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                  
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
@@ -139,10 +141,12 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion GetPatientDetails
 
-
-
         #region GetPatientTokenDetailsbyID
-
+        /// <summary>
+        /// Get Patient Token Detail by passing Patient ID
+        /// </summary>
+        /// <param name="str1"></param>
+        /// <returns>patient details by joining Token,Doctor,file,patient and visit tables</returns>
         public DataSet GetPatientTokenDetailsbyID(string str1)
         {
             SqlConnection con = null;
@@ -157,20 +161,16 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetPatientTokenDetailsbyID]";
                 cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(str1);
-
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
-
                 ds = new DataSet();
-                sda.Fill(ds);
-           
-
+                sda.Fill(ds);   
             }
 
             catch (Exception ex)
             {
-
                 UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
@@ -185,13 +185,11 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     con.Dispose();
                 }
-
             }
             return ds;
         }
 
         #endregion GetPatientDetails
-
 
         #region Doctorbind
         /// <summary>
@@ -234,9 +232,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     con.Dispose();
                 }
-
             }
-            return ds;        
+            return ds;      
     
         }
 
@@ -262,20 +259,14 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "[InsertTokens]";
-
           
             cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
-            cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PatientID);
-        
-            //cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+            cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PatientID);        
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-            cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-          
+            cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;        
 
             SqlParameter OutparmItemId = cmd.Parameters.Add("@TokenNo", SqlDbType.Int);
-            OutparmItemId.Direction = ParameterDirection.Output;
-
-            
+            OutparmItemId.Direction = ParameterDirection.Output;            
 
             cmd.ExecuteNonQuery();
             TokenNo = Convert.ToInt32(OutparmItemId.Value);
@@ -298,24 +289,21 @@ namespace TheClinicApp1._1.ClinicDAL
 
             finally
             {        
-
-
                 if (con != null)
                 {
                     con.Dispose();
                 }
-
             }
             return TokenNo;
-         
-
-
-
-
         }
+
         #endregion InsertToken
 
         #region ViewToken
+        /// <summary>
+        /// TO get PAtient Booking Details by passing Today's date
+        /// </summary>
+        /// <returns> Patient booking details by joining tokens,doctor and patient tables</returns>
         public DataSet ViewToken()
         {
 
@@ -332,19 +320,15 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Connection = con;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "[ViewPatientsBooking]";
-
-            //cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-            //cmd.Parameters.Add("@DateTime", SqlDbType.DateTime).Value = DateTime;
+                         
             cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
             sda = new SqlDataAdapter();
             cmd.ExecuteNonQuery();
             sda.SelectCommand = cmd;
             ds = new DataSet();
             sda.Fill(ds);
-          
-
-          
-
             }
 
             catch (Exception ex)
@@ -363,16 +347,19 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     con.Dispose();
                 }
-
             }
             return ds;
 
         }
 
         #endregion ViewToken
-
-
+      
         #region DoctorViewToken
+        /// <summary>
+        /// TO view token list by doctor's ID
+        /// Doctors can view only their Patient's 
+        /// </summary>
+        /// <returns> Patient list by doctors</returns>
         public DataSet DoctorViewToken()
         {
 
@@ -381,7 +368,6 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlDataAdapter sda = null;
             try
             {
-
                 DateTime now = DateTime.Now;
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
@@ -396,9 +382,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
-                sda.Fill(ds);
-               
-
+                sda.Fill(ds);     
             }
 
             catch (Exception ex)
@@ -424,8 +408,6 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion DoctorViewToken
-
-
 
         #region DeleteToken
 
@@ -474,9 +456,7 @@ namespace TheClinicApp1._1.ClinicDAL
             
         }
 
-        #endregion DeleteToken
-
-     
+        #endregion DeleteToken     
         
         #endregion Token_Methods
 

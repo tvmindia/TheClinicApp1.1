@@ -378,7 +378,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
                 eObj.UserID = usrid;
-                eObj.Method = "GetPatientDetails";
+                eObj.Method = "GetPatientID";
                 eObj.InsertError();
 
             }
