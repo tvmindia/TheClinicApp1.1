@@ -89,7 +89,7 @@ namespace TheClinicApp1._1.Stock
                   int qtyInStock = Convert.ToInt32(dsReceipthdr.Tables[0].Rows[i]["QtyInStock"]);
 
                   string MedicineName = dsReceipthdr.Tables[0].Rows[i]["MedicineName"].ToString();
-                  string totalIssue = ihd.GetTotalQtyOfAMedicine(MedicineName);
+                  string totalIssue = ihd.GetTotalIssuedQtyOfAMedicine(MedicineName);
 
                   if (totalIssue != string.Empty)
                   {

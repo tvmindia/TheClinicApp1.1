@@ -482,58 +482,55 @@ namespace TheClinicApp1._1.Stock
 
                                         DataSet dsRptDetails = UpREceiptDtlObj.GetReceiptDetailsByUniqueID(uniqueID);
 
-                                        //for (int k = 0; i < dsRptDetails.Tables[0].Rows.Count; k++)
-                                        //{
+                                      
+                                        int OldQty = Convert.ToInt32(dsRptDetails.Tables[0].Rows[0]["Qty"]);
 
-                                        int ChangingQty = Convert.ToInt32(dsRptDetails.Tables[0].Rows[0]["Qty"]);
-
-                                        int qtyInStock = Convert.ToInt32(dsRptDetails.Tables[0].Rows[0]["QtyInStock"]);
+                                        int CurrentStock = Convert.ToInt32(dsRptDetails.Tables[0].Rows[0]["QtyInStock"]);
 
 
-                                        if (ChangingQty != Convert.ToInt32(columns[4]))
-	{
+                                        if (OldQty != Convert.ToInt32(columns[4]))
+	                                        {
 		 
-	
-
                                             UpREceiptDtlObj.QTY = Convert.ToInt32(columns[4]);
                                             UpREceiptDtlObj.UpdatedBy = UA.userName;
 
-                                            //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
-
-
-                                            //stok.ClinicID = UA.ClinicID.ToString();
-                                  
-                                            // int qtyInStock = Convert.ToInt32(stok.GetQtyByMedicineName(columns[0]));
-
-                                          int inputQty = Convert.ToInt32(columns[4]);
+                                          int NewQty = Convert.ToInt32(columns[4]);
 
                                           IssueHdrObj.ClinicID = UA.ClinicID.ToString();
 
-                                          int TotalIssuedQty = Convert.ToInt32(IssueHdrObj.GetTotalQtyOfAMedicine(columns[0]));
+                                          int TotalIssuedQty = Convert.ToInt32(IssueHdrObj.GetTotalIssuedQtyOfAMedicine(columns[0]));
 
-                                          int TotalStock = TotalIssuedQty + qtyInStock;
-                                        int x = TotalStock - ChangingQty;
-                                        int qtyNeeded = TotalIssuedQty - x;
-
-
-                                        //if (x==0)
-                                        //{
-                                        //    qtyNeeded = TotalIssuedQty; 
-                                        //}
-
-                                        //else
-                                        //{
-                                        //    qtyNeeded = ChangingQty - TotalIssuedQty;
-                                        //}
+                                          int StockWithoutAnyIssue = TotalIssuedQty + CurrentStock;   //'Stockbefore issue'- is the qty of particular medicine before any issue
+                                        int difference = StockWithoutAnyIssue - OldQty;
+                                        int qtyNeeded = TotalIssuedQty - difference;
 
 
+  /*For example : Suppose We have Medicine X ,70 in stock ,
+                                            
+                                        if We IssueD this Medicine in different times , 30,20,10 .
+                                        So total IssueD = 60
 
-                                        int difference = TotalStock - ChangingQty;
+                                       Suppose if We are tring to edit 30 StockWithoutAnyIssue new qty as 40 , it can Be only edited upto 20 
+
+                                        STEPS: We have OldQty=30 ,NewQty = 40 , 
+                                                     Issue1 = 30, issue2=20 ,issue3 = 10 ,So TotalIssued = 60, 
+                                                     StockWithoutAnyIssue = TotalIssuedQty + CurrentStock =60+10=70
+
+                                                     difference = StockWithoutAnyIssue - OldQty = 70-30=40
+
+                                                     qtyNeeded = TotalIssuedQty - difference = 60-40=20
+   
+   
+   
+   Some times differnce wil be 0 , for eg: if we have 60 in stock and we issued 60 , that case quantity needed will be issued itself
+   
+   
+   */
 
 
                                         if (difference == 0)
                                         {
-                                            qtyNeeded = TotalStock - qtyInStock;
+                                            qtyNeeded = StockWithoutAnyIssue - CurrentStock;
                                         }
 
                                         else
@@ -545,23 +542,7 @@ namespace TheClinicApp1._1.Stock
 	                                            }
                                         }
 
-
-                                        //if (TotalIssuedQty >= ChangingQty)
-                                        //{
-                                        //    //qtyNeeded = TotalStock - TotalIssuedQty;
-
-                                        //    qtyNeeded = TotalIssuedQty - x;
-                                        //}
-
-                                        //else
-                                        //{
-                                        //    qtyNeeded = TotalIssuedQty;
-                                        //}
-
-                                       
-
-
-                                        if (inputQty < qtyNeeded)
+                                        if (NewQty < qtyNeeded)
                                             {
                                                 var page = HttpContext.Current.CurrentHandler as Page;
 

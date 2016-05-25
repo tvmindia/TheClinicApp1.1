@@ -679,7 +679,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Get Total Qty Of A Medicine
 
-        public string GetTotalQtyOfAMedicine(string MedicineName)
+        public string GetTotalIssuedQtyOfAMedicine(string MedicineName)
         {
             string TotlQty = string.Empty;
             dbConnection dcon = null;
@@ -691,7 +691,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[GetTotalQtyOfAMedicine]";
+                cmd.CommandText = "[GetTotalIssuedQtyOfAMedicine]";
 
                 cmd.Parameters.Add("@MedicineName", SqlDbType.NVarChar, 255).Value = MedicineName;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
