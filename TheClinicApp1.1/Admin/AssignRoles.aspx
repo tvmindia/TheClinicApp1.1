@@ -203,7 +203,7 @@ table
 
 
             $('#txtSearchAssignedRole').keyup(function () {
-                debugger;
+             
                 var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
 
                 rows.hide().filter(function () {
@@ -216,6 +216,12 @@ table
                     return matchesSearch;
                 }).show();
                 $('#tablePagination').hide();
+
+                if (val == "") {
+                   
+                    $('.table').tablePagination({});
+                    $('#tablePagination').show();
+                }
 
             });
 
