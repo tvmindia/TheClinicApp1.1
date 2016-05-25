@@ -48,6 +48,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         public void BindGridview()
         {
+            
             DataTable dtDoctors = mstrObj.ViewDoctors();
 
             if (dtDoctors != null)

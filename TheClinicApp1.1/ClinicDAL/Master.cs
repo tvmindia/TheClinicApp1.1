@@ -389,6 +389,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand("ViewMedicines", con);
 
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
 
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
@@ -438,6 +440,8 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd = new SqlCommand("[ViewDoctors]", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
 
                 da = new SqlDataAdapter();
                 da.SelectCommand = cmd;
