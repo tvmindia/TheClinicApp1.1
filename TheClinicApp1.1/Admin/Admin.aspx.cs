@@ -433,6 +433,8 @@ namespace TheClinicApp1._1.Admin
             string loginName = LogName;
 
             ClinicDAL.User userObj = new ClinicDAL.User();
+            userObj.ClinicID = UA.ClinicID;
+
             if (userObj.ValidateUsername(loginName))
             {
                 return true;

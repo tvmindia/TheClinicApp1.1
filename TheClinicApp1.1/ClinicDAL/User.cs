@@ -516,8 +516,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand("CheckLoginName", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@loginName", SqlDbType.VarChar, 50).Value = CheckUser;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
                 SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
-                outflag.Direction = ParameterDirection.Output;
+                 outflag.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
                 flag = (bool)outflag.Value;
                 if (flag == true)
