@@ -179,7 +179,8 @@ namespace TheClinicApp1._1.Pharmacy
             string PatientId = Visits[0];
             string DoctorID = Visits[1];
             pharmacypobj.DoctorID = Guid.Parse(DoctorID);
-            pharmacypobj.PatientID = Guid.Parse(PatientId);            
+            pharmacypobj.PatientID = Guid.Parse(PatientId);
+            tokobj.ClinicID = UA.ClinicID.ToString();
             Patientidtorefill.Value = PatientId;//saving in a hidden field to reill
             DataSet ds = tokobj.GetPatientTokenDetailsbyID(PatientId); //Get Patient Token Details by ID Function Call
             lblPatientName.Text = ds.Tables[0].Rows[0][2].ToString();
