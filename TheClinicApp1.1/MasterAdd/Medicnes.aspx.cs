@@ -212,6 +212,7 @@ namespace TheClinicApp1._1.MasterAdd
            
             Stocks StockObj = new Stocks();
 
+            StockObj.ClinicID = UA.ClinicID.ToString();
             if (StockObj.ValidateMedicineName(MedicineName))
             {
                 return true;
