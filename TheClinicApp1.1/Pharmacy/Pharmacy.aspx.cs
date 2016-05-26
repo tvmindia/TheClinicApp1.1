@@ -43,7 +43,8 @@ namespace TheClinicApp1._1.Pharmacy
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            string Login = UA.userName;  
+            string Login = UA.userName;
+            tokobj.ClinicID = UA.ClinicID.ToString();
             RoleName= UA.GetRoleName1(Login);  
             pharmacypobj.ClinicID = UA.ClinicID;
             PrescriptionObj.ClinicID = UA.ClinicID.ToString();

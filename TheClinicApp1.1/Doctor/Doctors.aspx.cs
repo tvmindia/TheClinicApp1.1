@@ -48,6 +48,7 @@ namespace TheClinicApp1._1.Doctor
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string Login = UA.userName;
             PrescriptionObj.ClinicID = UA.ClinicID.ToString();
+            tok.ClinicID = UA.ClinicID.ToString();
 
             listFilter = null;
             listFilter = GetMedicineNames();

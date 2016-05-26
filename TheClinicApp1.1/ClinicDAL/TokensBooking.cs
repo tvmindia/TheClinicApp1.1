@@ -77,6 +77,7 @@ namespace TheClinicApp1._1.ClinicDAL
             con = dcon.GetDBConnection();
             SqlCommand cmd = new SqlCommand("GetSearchBoxData", con);
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = cmd;
             dt = new DataTable();
