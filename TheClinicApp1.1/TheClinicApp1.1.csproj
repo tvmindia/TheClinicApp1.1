@@ -182,6 +182,8 @@
     <Content Include="images\First.png" />
     <Content Include="images\HerbeInWhite.jpg" />
     <Content Include="images\HerbNew.jpg" />
+    <Content Include="images\ic_security_black_24dp_1x.png" />
+    <Content Include="images\ic_security_white_24dp_1x.png" />
     <Content Include="images\last.gif" />
     <Content Include="images\Last.png" />
     <Content Include="images\logo-small.png" />
