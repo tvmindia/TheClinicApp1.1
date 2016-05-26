@@ -46,6 +46,7 @@ namespace TheClinicApp1._1.Pharmacy
             string Login = UA.userName;  
             RoleName= UA.GetRoleName1(Login);  
             pharmacypobj.ClinicID = UA.ClinicID;
+            PrescriptionObj.ClinicID = UA.ClinicID.ToString();
             listFilter = null;
             listFilter = GetMedicineNames();
             NameBind = null;
@@ -108,20 +109,26 @@ namespace TheClinicApp1._1.Pharmacy
         /// </summary>
         /// <returns></returns>
         private string GetMedicineNames()
-        {          
-            DataTable dt = PrescriptionObj.SearchMedicinewithCategory(); //Function Call
-
+        {
             StringBuilder output = new StringBuilder();
-            output.Append("[");
-            for (int i = 0; i < dt.Rows.Count; ++i)
+
+            DataTable dt = PrescriptionObj.SearchMedicinewithCategory();
+            if (dt.Rows.Count > 0)
             {
-                output.Append("\"" + dt.Rows[i]["Name"].ToString() + "\"");
-                if (i != (dt.Rows.Count - 1))
+
+                output.Append("[");
+                for (int i = 0; i < dt.Rows.Count; ++i)
                 {
-                    output.Append(",");
+                    output.Append("\"" + dt.Rows[i]["Name"].ToString() + "\"");
+
+                    if (i != (dt.Rows.Count - 1))
+                    {
+                        output.Append(",");
+                    }
                 }
+                output.Append("]");
+
             }
-            output.Append("]");
             return output.ToString();
         }
 

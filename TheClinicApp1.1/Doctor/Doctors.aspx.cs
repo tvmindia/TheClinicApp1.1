@@ -44,20 +44,20 @@ namespace TheClinicApp1._1.Doctor
 
         #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
-        {            
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            string Login = UA.userName;
+            PrescriptionObj.ClinicID = UA.ClinicID.ToString();
+
             listFilter = null;
             listFilter = GetMedicineNames();
             NameBind = null;
-            NameBind = BindName();            
+            NameBind = BindName();    
+        
             List<string> RoleName = new List<string>();
-            DataTable dtRols = new DataTable();
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];                     
-            string Login = UA.userName;
+            DataTable dtRols = new DataTable();  
             RoleName = UA.GetRoleName1(Login);
-            //foreach (DataRow dr in dtRols.Rows)
-            //{
-            //    RoleName.Add(dr["RoleName"].ToString());
-            //}           
+       
             if (RoleName.Contains(Const.RoleDoctor))
             {
                 DataTable dt = new DataTable();
@@ -85,23 +85,25 @@ namespace TheClinicApp1._1.Doctor
         /// <returns></returns>
         private string GetMedicineNames()
         {
-            // Patient PatientObj = new Patient();
-            
-
-            DataTable dt = PrescriptionObj.SearchMedicinewithCategory();
-
             StringBuilder output = new StringBuilder();
-            output.Append("[");
-            for (int i = 0; i < dt.Rows.Count; ++i)
+          
+            DataTable dt = PrescriptionObj.SearchMedicinewithCategory();
+            if (dt.Rows.Count > 0)
             {
-                output.Append("\"" + dt.Rows[i]["Name"].ToString() + "\"");
-
-                if (i != (dt.Rows.Count - 1))
+               
+                output.Append("[");
+                for (int i = 0; i < dt.Rows.Count; ++i)
                 {
-                    output.Append(",");
+                    output.Append("\"" + dt.Rows[i]["Name"].ToString() + "\"");
+
+                    if (i != (dt.Rows.Count - 1))
+                    {
+                        output.Append(",");
+                    }
                 }
+                output.Append("]");
+               
             }
-            output.Append("]");
             return output.ToString();
         }
 
