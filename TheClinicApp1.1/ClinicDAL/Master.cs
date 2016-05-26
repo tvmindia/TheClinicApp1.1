@@ -1142,6 +1142,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 255).Value = Description;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
 
                 object ID = cmd.ExecuteScalar();
 

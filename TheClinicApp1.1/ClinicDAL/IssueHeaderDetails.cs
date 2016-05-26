@@ -863,55 +863,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Methods
 
-        #region Get MedcineID By MedicineName
-
-        public string GetMedcineIDByMedicineName(string MedicineName)
-        {
-            string MedicineID = string.Empty;
-            dbConnection dcon = null;
-
-            try
-            {
-                dcon = new dbConnection();
-                dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = dcon.SQLCon;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[GetMedcineIDByMedicineName]";
-
-                cmd.Parameters.Add("@MedicineName", SqlDbType.NVarChar, 255).Value = MedicineName;
-
-               object  ID = cmd.ExecuteScalar();
-               if (ID != null)
-                {
-                     MedicineID = ID.ToString();
-                }
-              
-            }
-
-            catch (Exception ex)
-            {
-                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-                eObj.Description = ex.Message;
-                eObj.Module = Module;
-                eObj.UserID = UA.UserID;
-                eObj.Method = "GetMedcineIDByMedicineName";
-                eObj.InsertError();
-            }
-
-            finally
-            {
-                if (dcon.SQLCon != null)
-                {
-                    dcon.DisconectDB();
-                }
-            }
-
-            return MedicineID;
-        }
-
-        #endregion Get MedcineID By MedicineName
-
         #region InsertIssueDetails
         public void InsertIssueDetails()
         {
@@ -1203,7 +1154,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Get Quantity In Stock
 
-        public string GetQtyInStock(string MedName)
+        public string GetQtyByMedicineName(string MedName)
         {
             string Qty = string.Empty;
             dbConnection dcon = null;

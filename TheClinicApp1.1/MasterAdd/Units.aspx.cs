@@ -107,7 +107,7 @@ namespace TheClinicApp1._1.MasterAdd
                          mstrObj.Description =   dt.Rows[0]["Description"].ToString();
                     }
 
-
+                    mstrObj.ClinicID = UA.ClinicID;
                   bool isUsed = mstrObj.CheckUnitIsUsed();
 
                   if (isUsed == false)
@@ -168,6 +168,7 @@ namespace TheClinicApp1._1.MasterAdd
                 mstrObj.Description = dt.Rows[0]["Description"].ToString();
             }
 
+            mstrObj.ClinicID = UA.ClinicID;
              isUsed = mstrObj.CheckUnitIsUsed();
 
             if (isUsed == false)

@@ -60,7 +60,8 @@ namespace TheClinicApp1._1.Stock
             IssueDetails dtlsObj = new IssueDetails();
             dtlsObj.ClinicID = UA.ClinicID.ToString();
 
-            string qty = dtlsObj.GetQtyInStock(MedName);
+            
+            string qty = dtlsObj.GetQtyByMedicineName(MedName);
             return qty;
         }
 
