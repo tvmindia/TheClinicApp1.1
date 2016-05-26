@@ -442,7 +442,7 @@ ul.menu li a span.icon.token {background: url(../images/token.png) no-repeat cen
 ul.menu li a span.icon.doctor {background: url(../images/doctor.png) no-repeat center center #fff;}
 ul.menu li a span.icon.pharmacy {background: url(../images/pharmacy.png) no-repeat center center #fff;}
 ul.menu li a span.icon.stock {background: url(../images/stock.png) no-repeat center center #fff;}
-ul.menu li a span.icon.admin {background: url(../images/admin.png) no-repeat center center #fff;}
+ul.menu li a span.icon.admin {background: url(../images/ic_security_black_24dp_1x.png) no-repeat center center #fff;}
 ul.menu li a span.icon.master {background: url(../images/master.png) no-repeat center center #fff;}
 ul.menu li a span.icon.logout {background: url(../images/Logout.png) no-repeat center center #fff;}
 
@@ -486,7 +486,7 @@ ul.menu li.active a span.icon.token {background: url(../images/token-hover.png) 
 ul.menu li.active a span.icon.doctor {background: url(../images/doctor-hover.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.pharmacy {background: url(../images/pharmacy-hover.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.stock {background: url(../images/stock-hover.png) no-repeat center center #3661c7;}
-ul.menu li.active a span.icon.admin {background: url(../images/admin-hover.png) no-repeat center center #3661c7;}
+ul.menu li.active a span.icon.admin {background: url(../images/ic_security_white_24dp_1x.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.master {background: url(../images/master-hover.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.logout {background: url(../images/Logout.png) no-repeat center center #3661c7;}
 

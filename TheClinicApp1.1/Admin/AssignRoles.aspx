@@ -8,6 +8,7 @@ table
 {
     width:150px!important;
     border-color:rgb(169, 169, 169);
+   
 }
 
 
@@ -85,6 +86,7 @@ table
 .modal table
 {
     width:550px!important;
+   
 }
 
 
@@ -502,23 +504,24 @@ table
                             </div>
 
 
-                            <div class="tab_table">
+                            
 
-                                <div class="row field_row">  
-      <div class="col-lg-4">
+                               
+      <%--<div class="col-lg-4">
       <label for="marital">User</label>
-          <asp:DropDownList ID="ddlUsers" runat="server" Width="100%" Height="40px" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">
+      <asp:DropDownList ID="ddlUsers" runat="server" Width="100%" Height="40px" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">
              
           </asp:DropDownList>
            
 
 
 
-      </div>
-      <div class="col-lg-4">
+      </div>--%>
+      <%--<div class="col-lg-4">
        <label for="marital">Role</label> <asp:CheckBoxList ID="chklstRoles" runat="server" CssClass="mui-checkbox--inline checkboxlist_nowrap"  ></asp:CheckBoxList>
 
-           
+            </div>--%>
+
         <%--  <asp:DropDownList ID="ddlRoles" runat="server" Width="100%"  multiple="multiple">
              
           </asp:DropDownList>--%>
@@ -534,17 +537,54 @@ table
              >
         </asp:RequiredFieldValidator>--%>
 
-      </div>
+     
+
+
+<div class="form-horizontal">
+
+
+     
+
+<div class="row field_row">  
+      <div class="col-lg-4">
+         <label for="name">User</label>	
+          
+			 <asp:DropDownList ID="ddlUsers" runat="server" Width="100%" Height="40px" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">
+             
+          </asp:DropDownList>
+		</div>
+
+   
+    <div class="col-lg-4" >  <label for="name">Role</label>	<div class="checkbox checkboxlist col-sm-4" >
+			 <asp:CheckBoxList ID="chklstRoles" runat="server"  ></asp:CheckBoxList>
+		</div>
+        </div>
+    </div>
+
+	
+	
+
+        	
 
 
 
 
 
+    
+	
+	
+	
+	
 
-      </div>
+   
+</div>
+
+
+
+     
 
                                
-                                </div>
+                               
 
                             </div>
 
