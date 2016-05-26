@@ -752,7 +752,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetRoleIDOFDoctor]";
 
-                //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
 
                 object ID = cmd.ExecuteScalar();
                 if (ID != null)
