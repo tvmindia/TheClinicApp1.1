@@ -257,10 +257,17 @@ namespace TheClinicApp1._1.MasterAdd
         /// <returns></returns>
         public string GetRoleIDOFDoctor()
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+
             string DoctorRoleID = string.Empty;
 
             userObj.ClinicID = UA.ClinicID;
-            
+
+            mstrObj.ClinicID = UA.ClinicID;
             DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
 
             return DoctorRoleID;
