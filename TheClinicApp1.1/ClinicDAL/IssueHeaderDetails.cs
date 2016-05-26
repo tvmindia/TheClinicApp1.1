@@ -1166,7 +1166,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[GetQtyInStock]";
+                cmd.CommandText = "[GetQtyByMedicineName]";
 
                 cmd.Parameters.Add("@MedName", SqlDbType.NVarChar, 255).Value = MedName;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
@@ -1185,7 +1185,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
                 eObj.UserID = UA.UserID;
-                eObj.Method = "GetQtyInStock";
+                eObj.Method = "GetQtyByMedicineName";
                 eObj.InsertError();
 
 
