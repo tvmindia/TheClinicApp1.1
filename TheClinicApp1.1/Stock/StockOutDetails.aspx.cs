@@ -56,8 +56,14 @@ namespace TheClinicApp1._1.Stock
 
         public static string GetQtyInStock(string MedName)
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
             IssueDetails dtlsObj = new IssueDetails();
-            string qty = dtlsObj.GetQtyInStock(MedName);
+            dtlsObj.ClinicID = UA.ClinicID.ToString();
+
+            string qty = dtlsObj.GetQtyByMedicineName(MedName);
             return qty;
         }
 
@@ -250,7 +256,15 @@ namespace TheClinicApp1._1.Stock
         [WebMethod]
         public static bool CheckIssueNoDuplication(string IssueNo)
         {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
             IssueHeaderDetails IssuedtlObj = new IssueHeaderDetails();
+
+            IssuedtlObj.ClinicID = UA.ClinicID.ToString();
 
             if (IssuedtlObj.CheckIssueNoDuplication(IssueNo))
             {

@@ -118,7 +118,8 @@
             }          
             function onError(response, userContext, methodName)
             {                   
-            }         
+            } 
+            document.getElementById('txtSearch').value="";//clearin the Search box
         }
 
     </script>

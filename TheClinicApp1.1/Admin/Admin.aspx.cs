@@ -232,7 +232,7 @@ namespace TheClinicApp1._1.Admin
             userObj.ClinicID = UA.ClinicID;
 
             //DoctorRoleID = userObj.GetRoleIDOfDoctor();
-
+            mstrObj.ClinicID = UA.ClinicID;
             DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
             return DoctorRoleID;
         }

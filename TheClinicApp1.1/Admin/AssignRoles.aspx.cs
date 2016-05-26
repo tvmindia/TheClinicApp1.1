@@ -73,6 +73,7 @@ namespace TheClinicApp1._1.Admin
 
         public void BindRolesDropdown()
         {
+            roleObj.ClinicID = UA.ClinicID;
             DataTable dtRoles = roleObj.GetDetailsOfAllRoles();
 
 

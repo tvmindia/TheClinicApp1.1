@@ -165,62 +165,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Get Medicine Details By MedicineID
 
-        #region Get Quantity By Medicine Name
-        /// <summary>
-        /// To get the existing stock quantiy of the particular medicines by medicine name 
-        /// </summary>
-        /// <param name="MedicineName"></param>
-        /// <returns></returns>
-        public string GetQtyByMedicineName(string MedicineName)
-        {
-            string QtyInStock = string.Empty;
-            dbConnection dcon = null;
-
-            try
-            {
-                dcon = new dbConnection();
-                dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = dcon.SQLCon;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[GetQtyByMedicineName]";
-
-                cmd.Parameters.Add("@MedicineName", SqlDbType.NVarChar, 255).Value = MedicineName;
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-
-                object ID = cmd.ExecuteScalar();
-                if (ID != null)
-                {
-                    QtyInStock = ID.ToString();
-                }
-
-            }
-
-            catch (Exception ex)
-            {
-                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-                eObj.Description = ex.Message;
-                eObj.Module = Module;
-                eObj.UserID = UA.UserID;
-                eObj.Method = "GetQtyByMedicineName";
-                eObj.InsertError();
-            }
-
-            finally
-            {
-                if (dcon.SQLCon != null)
-                {
-                    dcon.DisconectDB();
-                }
-            }
-
-            return QtyInStock;
-        }
-
-
-
-        #endregion Get Quantity By Medicine Name
-
+        
         #region Validate Medicine Name
         /// <summary>
         /// To check MEdicine name duplication by passing input medicine name
