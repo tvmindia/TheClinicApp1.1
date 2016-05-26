@@ -191,7 +191,7 @@ namespace TheClinicApp1._1.MasterAdd
 
             Master mstrObj = new Master();
 
-           
+            mstrObj.ClinicID = UA.ClinicID;
             mstrObj.DoctorName = DoctorName;
 
             if (mstrObj.CheckDoctorNameDuplication())

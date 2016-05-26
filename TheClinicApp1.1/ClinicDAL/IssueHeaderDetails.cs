@@ -113,6 +113,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand("CheckIssueNoDuplication", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@IssueNo", SqlDbType.VarChar,20).Value = IssueNo;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
                 SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
                 outflag.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();

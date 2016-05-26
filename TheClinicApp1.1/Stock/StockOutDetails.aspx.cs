@@ -256,7 +256,15 @@ namespace TheClinicApp1._1.Stock
         [WebMethod]
         public static bool CheckIssueNoDuplication(string IssueNo)
         {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
             IssueHeaderDetails IssuedtlObj = new IssueHeaderDetails();
+
+            IssuedtlObj.ClinicID = UA.ClinicID.ToString();
 
             if (IssuedtlObj.CheckIssueNoDuplication(IssueNo))
             {
