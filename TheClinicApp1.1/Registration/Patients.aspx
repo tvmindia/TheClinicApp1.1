@@ -111,7 +111,6 @@
     <!--------------------------------------------------------------------->
     <!---   Script Nav button to srink and reform, AutoComplete Textbox, Table Pagination in document Ready --->
     <script src="../js/jquery.tablePagination.0.1.js"></script>
-    <script src="../js/jquery.dataTables.js"></script>
     <script type ="text/javascript" >
         $(document).ready( function (){
             var ac=null;
@@ -136,7 +135,7 @@
             $(".main_body").toggleClass("active_close");
                });
             
-            $('table').tablePagination({});
+         
 
             var rows = $('#<%=GridView1.ClientID%> tr').not('thead tr');
 
@@ -153,11 +152,13 @@
                     });
                     return matchesSearch;
                 }).show();
-                $('#tablePagination').hide();
+                $('#tablePagination').remove();
                 if (val == "") {
                     debugger;
-                    $('table').tablePagination({});
-                    $('#tablePagination').show();
+                    $('table').tablePagination({
+                    rowCountstart:1,
+                    rowCountend :7
+                     });
                 }
                
             });
@@ -176,20 +177,18 @@
                     });
                     return matchesSearch;
                 }).show();
-                $('#tablePagination').hide();
+                $('#tablePagination').remove();
                 if (val == "") {
                     debugger;
-                    $('table').tablePagination({});
+                    $('table').tablePagination({
+                    rowCountstart:1,
+                    rowCountend :7
+                    });
                     $('#tablePagination').show();
                 }
                
             });
-            //$('#tablePagination_nextPage').bind('click', function (e) {
-            //    debugger;
-            //    $('#tablePagination').remove();
-            //    resetCurrentPage(currPageNumber += 1)
-            //    $('#'+table.id).after(createPaginationElements());
-            //}); 
+            
 
         }); 
         
@@ -222,17 +221,25 @@
 
         }
         function OpenModal(id){
-         
-            $('table').tablePagination({});
-            $('#tablePagination').show();
+         debugger;
+            
             
             if(id=='1')
             {
+            $('table').tablePagination({
+            rowCountstart:1,
+            rowCountend :7
+            });
+            $('#tablePagination').show();
                 $('#txtSearchPatient').val('');
                 $('#myModal').modal('show');
             }
             else if(id==2)
-            {              
+            {
+            $('table').tablePagination({
+            rowCountstart:1,
+            rowCountend :7
+            });              
                 $('#txtSearchPatient1').val('');
                 $('#TodaysRegistration').modal('show');
             }

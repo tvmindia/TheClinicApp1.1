@@ -27,7 +27,8 @@
 
  (function($){
 
-	$.fn.tablePagination = function(settings) {
+     $.fn.tablePagination = function (settings) {
+         debugger;
 		var defaults = {  
 		    firstArrow: (new Image()).src = "../images/First.png",
 		    prevArrow: (new Image()).src = "../images/Previous.png",
@@ -36,11 +37,15 @@
 			rowsPerPage : 7,
 			currPage : 1,
 			optionsForRows : [7,14,21,50],
-			ignoreRows : []
+			ignoreRows: [],
+			table: '',
+			rowCountstart: 1,
+			rowCountend:7
 		};  
 		settings = $.extend(defaults, settings);
 		
-		return this.each(function() {
+		return this.each(function () {
+		    debugger;
       var table = $(this)[0];
       var totalPagesId = '#'+table.id+'+#tablePagination #tablePagination_totalPages';
       var currPageId = '#'+table.id+'+#tablePagination #tablePagination_currPage';
@@ -63,6 +68,7 @@
       
       
       function hideOtherPages(pageNum) {
+          debugger;
         if (pageNum==0 || pageNum > totalPages)
           return;
         var startIndex = (pageNum - 1) * defaults.rowsPerPage;
@@ -76,7 +82,7 @@
       }
       
       function resetTotalPages() {
-          
+          debugger;
         var preTotalPages = Math.round(numRows / defaults.rowsPerPage);
         var totalPages = (preTotalPages * defaults.rowsPerPage < numRows) ? preTotalPages + 1 : preTotalPages;
         if ($(totalPagesId).length > 0)
@@ -85,6 +91,7 @@
       }
       
       function resetCurrentPage(currPageNum) {
+          
         if (currPageNum < 1 || currPageNum > totalPages)
           return;
         currPageNumber = currPageNum;
@@ -93,6 +100,7 @@
       }
       
       function resetPerPageValues() {
+         
         var isRowsPerPageMatched = false;
         var optsPerPage = defaults.optionsForRows;
         optsPerPage.sort();
@@ -113,7 +121,8 @@
       }
       
       function createPaginationElements() {
-        var htmlBuffer = [];
+          debugger;
+          var htmlBuffer = [];         
         htmlBuffer.push("<div id='tablePagination'>");
         htmlBuffer.push("<span id='tablePagination_perPage'>");
         htmlBuffer.push("<select id='tablePagination_rowsPerPage'><option value='7'>7</option></select>");
@@ -121,7 +130,8 @@
         htmlBuffer.push("</span>");
         htmlBuffer.push("<span id='tablePagination_paginater'>");
         htmlBuffer.push("Records of");
-        htmlBuffer.push(" "+ currPageNumber + " - <span id='tablePagination_totalPages'>" + totalPages + "</span>");
+        htmlBuffer.push(" " + defaults.rowCountstart + " - <span id='tablePagination_totalPages'>" + defaults.rowCountend + "</span>");
+        htmlBuffer.push("<span id='tablePagination_totalRows'> of " + numRows + "</span>")
         htmlBuffer.push("<img id='tablePagination_firstPage' src='"+defaults.firstArrow+"'>");
         htmlBuffer.push("<img id='tablePagination_prevPage' src='"+defaults.prevArrow+"'>");
         
@@ -131,46 +141,101 @@
         htmlBuffer.push("<img id='tablePagination_lastPage' src='"+defaults.lastArrow+"'>");
         htmlBuffer.push("</span>");
         htmlBuffer.push("</div>");
-        htmlBuffer.push("<div class='col-lg-12' style='height:8px;'>");
-        htmlBuffer.push("</div>");
+        
         return htmlBuffer.join("").toString();
+        
+        
       }
       
+      
       if ($(totalPagesId).length == 0) {
-        $(this).after(createPaginationElements());
+          $(this).after(createPaginationElements());
+
       }
       else {
         $('#tablePagination_currPage').val(currPageNumber);
       }
       resetPerPageValues();
       hideOtherPages(currPageNumber);
-      
-      $(firstPageId).bind('click', function (e) {
-        resetCurrentPage(1)
-      });
-      
-      $(prevPageId).bind('click', function (e) {
-        resetCurrentPage(currPageNumber - 1)
-      });
-      
-      $(nextPageId).bind('click', function (e) {
-        resetCurrentPage(currPageNumber + 1)
-      });
-      
-      $(lastPageId).bind('click', function (e) {
-        resetCurrentPage(totalPages)
-      });
-      
-      $(currPageId).bind('change', function (e) {
-        resetCurrentPage(this.value)
-      });
-      
-      $(rowsPerPageId).bind('change', function (e) {
-        defaults.rowsPerPage = parseInt(this.value, 10);
-        totalPages = resetTotalPages();
-        resetCurrentPage(1)
-      });
-      
+      bindoncemore();
+      function bindoncemore() {
+          $(firstPageId).bind('click', function (e) {
+              $('#tablePagination').remove();
+              defaults.rowCountstart =1;
+              defaults.rowCountend =7;
+              resetCurrentPage(1)
+              $('#' + table.id).after(createPaginationElements());
+              bindoncemore();
+          });
+
+          $(prevPageId).bind('click', function (e) {
+              debugger;
+              if ((defaults.rowCountstart != '1') && (defaults.rowCountend != defaults.rowsPerPage)) {
+                  $('#tablePagination').remove();
+                  resetCurrentPage(currPageNumber -= 1)
+                  defaults.rowCountstart -= defaults.rowsPerPage;
+                  defaults.rowCountend -= defaults.rowsPerPage;
+                  if (defaults.rowCountend <= 7) {
+
+                      resetCurrentPage(1)
+                      defaults.rowCountstart = 1;
+                      defaults.rowCountend = 7;
+                  }
+                  debugger;
+                  $('#' + table.id).after(createPaginationElements());
+              }
+                  bindoncemore();
+                  bindoncemore();
+              
+              
+          });
+
+          $(nextPageId).bind('click', function (e) {
+              $('#tablePagination').remove();
+              resetCurrentPage(currPageNumber += 1)
+              defaults.rowCountstart += defaults.rowsPerPage;
+              defaults.rowCountend += defaults.rowsPerPage;
+              
+              if (defaults.rowCountend < numRows)
+              {
+                  defaults.rowCountend = defaults.rowCountend;
+              }
+              else
+              {
+                  defaults.rowCountend = numRows;
+              }                               
+              $('#' + table.id).after(createPaginationElements());                                                                         
+                  bindoncemore();              
+              if(defaults.rowCountend==numRows)
+              {
+                  $('#tablePagination_nextPage').remove();
+                  defaults.rowCountend = numRows;
+                  
+              }
+
+          });
+
+          $(lastPageId).bind('click', function (e) {
+              $('#tablePagination').remove();
+              defaults.rowCountstart = 1;
+              defaults.rowCountend = numRows;
+              resetCurrentPage(totalPages)
+              $('#' + table.id).after(createPaginationElements());
+              bindoncemore();
+          });
+
+          $(currPageId).bind('change', function (e) {
+              resetCurrentPage(this.value)
+              bindoncemore();
+          });
+
+          $(rowsPerPageId).bind('change', function (e) {
+              defaults.rowsPerPage = parseInt(this.value, 10);
+              totalPages = resetTotalPages();
+              resetCurrentPage(1)
+              bindoncemore();
+          });
+      }
 		})
 	};		
 })(jQuery);
