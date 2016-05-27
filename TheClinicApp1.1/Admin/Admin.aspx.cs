@@ -460,7 +460,23 @@ namespace TheClinicApp1._1.Admin
                 
             }
 
-           
+            foreach (GridViewRow myRow in dtgViewAllUsers.Rows)
+            {
+                ImageButton EditButton = myRow.Cells[0].Controls[1] as ImageButton;
+                ImageButton DeleteButton = myRow.Cells[1].Controls[1] as ImageButton;
+
+                string name = myRow.Cells[2].Text;
+
+                if (EditButton != null && DeleteButton != null && name == UA.userName)
+                {
+                    EditButton.Enabled = false;
+                    DeleteButton.Enabled = false;
+
+                    EditButton.ToolTip = Messages.EditImageButtonDisabled;
+                    DeleteButton.ToolTip = Messages.DeleteImageButtonDisabled;
+                }
+            }
+
         }
 
         #endregion Bind Gridview

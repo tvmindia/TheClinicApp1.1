@@ -66,7 +66,10 @@
 
       $(document).ready(function () 
 {
-          
+       
+
+
+
 
  <%-- if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
              GetMedicines(1);

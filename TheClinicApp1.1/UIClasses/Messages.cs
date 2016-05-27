@@ -23,6 +23,16 @@ namespace TheClinicApp1._1.UIClasses
     public class Messages
     {
 
+        public static string EditImageButtonDisabled
+        {
+            get { return " Logined user can't be edited"; }
+        }
+
+        public static string DeleteImageButtonDisabled
+        {
+            get { return " Logined user can't be deleted"; }
+        }
+
         public static string ErrorNumber
         {
             get { return "Error Number = "; }
