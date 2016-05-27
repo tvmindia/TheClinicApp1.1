@@ -482,8 +482,8 @@ namespace TheClinicApp1._1.Admin
                 }
                 else
                 {
-                    EditButton.Enabled = false;
-                    DeleteButton.Enabled = false;
+                    EditButton.Enabled = true;
+                    DeleteButton.Enabled = true;
 
                     EditButton.ImageUrl = "~/images/Editicon1.png";
                     DeleteButton.ImageUrl = "~/images/Deleteicon1.png";
