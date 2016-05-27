@@ -513,10 +513,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("CheckLoginName", con);
+                SqlCommand cmd = new SqlCommand("CheckLoginNameDuplication", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@loginName", SqlDbType.VarChar, 50).Value = CheckUser;
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
 
                 SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
                  outflag.Direction = ParameterDirection.Output;
