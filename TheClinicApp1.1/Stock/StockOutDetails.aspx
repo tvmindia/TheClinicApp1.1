@@ -426,7 +426,7 @@
                                         <td></td>
                                     </tr>
                                 </table>
-                                <div class="prescription_grid">
+                                <div class="">
                                     <table  style="width: 100%; border: 0;">
                                         <tbody>
                                             <tr>
@@ -450,7 +450,7 @@
                                                 <td style="background-color: transparent">
                                                     <input type="button" value="-" class="bt1" style="width: 20px;" onclick="ClearAndRemove()" /></td>
                                                 <td style="background-color: transparent">
-                                                    <input type="button" id="btAdd" onclick="clickStockAdd(); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
+                                                    <input type="button" id="btAdd" onclick="clickStockAdd(); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" accesskey="+" />
                                                 </td>
                                                 <td style="background-color: transparent">
                                                     <%--<input id="hdnDetailID' + iCnt + '" type="hidden" />

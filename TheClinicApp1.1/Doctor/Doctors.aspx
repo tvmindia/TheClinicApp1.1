@@ -492,9 +492,9 @@
                                     <td>
                                         <input id="txtMedDay0" type="text" class="input" /></td>
                                     <td style="background: #E6E5E5">
-                                        <input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" /></td>
+                                        <input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" accesskey="-" /></td>
                                     <td style="background: #E6E5E5">
-                                        <input type="button" id="btAdd" onclick="clickAdd(0);this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
+                                        <input type="button" id="btAdd" onclick="clickAdd(0);this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" accesskey="+" />
                                     </td>
                                     <td style="background-color: transparent">
                                         <input id="hdnDetailID0" type="hidden" />

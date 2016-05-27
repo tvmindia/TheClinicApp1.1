@@ -310,7 +310,7 @@
                                         <td></td>
                                     </tr>
                                 </table>
-                                <div class="prescription_grid">
+                                <div class="">
                                     <table  style="width: 100%; border: 0;">
                                         <tbody>
                                             <tr>

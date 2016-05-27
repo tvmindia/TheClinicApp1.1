@@ -400,7 +400,7 @@
            <label for="name">Category</label>
   <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server">
                             <ContentTemplate>--%>
-                                <asp:DropDownList ID="ddlCategory"  runat="server" AutoPostBack="true"  Width="100%" Height="40px">
+                                <asp:DropDownList ID="ddlCategory" CssClass="drop"  runat="server" AutoPostBack="true"  Width="100%" Height="31px">
                                 </asp:DropDownList>
                                   
                               <%-- <asp:RequiredFieldValidator
@@ -423,7 +423,7 @@
          <label for="name">Unit</label>
    <%--  <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                             <ContentTemplate>--%>
-                                <asp:DropDownList ID="ddlUnits"  runat="server" AutoPostBack="true"  Width="100%" Height="40px">
+                                <asp:DropDownList ID="ddlUnits"  runat="server" AutoPostBack="true" CssClass="drop"  Width="100%" Height="31px">
                                 </asp:DropDownList>
                            <%-- <asp:RequiredFieldValidator
              ID="RequiredFieldValidator2"

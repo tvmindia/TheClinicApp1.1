@@ -155,9 +155,9 @@ function clickAdd(id) {
                 + '<td><input id="txtMedTime' + iCnt + '" type="text" class="input"/></td>'
                  + '<td><input id="txtMedDay' + iCnt + '" type="text" class="input"/></td>'
                  + '<td style="background:#E6E5E5" class="add">'
-                 + '<input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" /></td>'
+                 + '<input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" accesskey="-" /></td>'
                  + '<td style="background:#E6E5E5" class="add">'
-                 + '<input type="button" id="btAdd' + iCnt + '" value="+" onclick="clickAdd(' + iCnt + ')" class="bt" style="width:20px" /></td>'
+                 + '<input type="button" id="btAdd' + iCnt + '" value="+" onclick="clickAdd(' + iCnt + ')" class="bt" style="width:20px" accesskey="+" /></td>'
                  + '<td style="background:#E6E5E5" class="add"><input id="hdnDetailID' + iCnt + '" type="hidden" /> <input id="hdnQty' + iCnt + '" type="hidden" /></td>'
                  + '</tr></table><div>');
     $('#maindiv').after(container);
