@@ -472,9 +472,25 @@ namespace TheClinicApp1._1.Admin
                     EditButton.Enabled = false;
                     DeleteButton.Enabled = false;
 
-                    EditButton.ToolTip = Messages.EditImageButtonDisabled;
-                    DeleteButton.ToolTip = Messages.DeleteImageButtonDisabled;
+                    //EditButton.ToolTip = Messages.EditImageButtonDisabled;
+                    //DeleteButton.ToolTip = Messages.DeleteImageButtonDisabled;
+
+                    EditButton.ImageUrl = "~/images/Editicon2 (2).png";
+                    DeleteButton.ImageUrl = "~/images/Deleteicon2 (3).png";
+
+                   
                 }
+                else
+                {
+                    EditButton.Enabled = false;
+                    DeleteButton.Enabled = false;
+
+                    EditButton.ImageUrl = "~/images/Editicon1.png";
+                    DeleteButton.ImageUrl = "~/images/Deleteicon1.png";
+
+                  
+                }
+             
             }
 
         }
