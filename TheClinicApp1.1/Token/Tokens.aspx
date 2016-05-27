@@ -12,19 +12,15 @@
             font-weight: bold;
         }
     </style>
-    <script src="../Scripts/DeletionConfirmation.js"></script>
+   
+    <script src="../js/jquery-1.9.1.min.js"></script>
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/Dynamicgrid.js"></script>
-    <link href="../css/TheClinicApp.css" rel="stylesheet" />
-
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
-    <link href="../css/main.css" rel="stylesheet" />
-    <script src="../js/jquery-1.9.1.min.js"></script>
+     <script src="../Scripts/DeletionConfirmation.js"></script>
     <script src="../js/jquery-ui.js"></script>
-
+    <script src="../js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function () {
             
@@ -33,6 +29,8 @@
             
                 $(this).parent(".alert").hide();            
             });      
+
+            $('[data-toggle="tooltip"]').tooltip();
         
             $('.nav_menu').click(function () {
                 
@@ -71,7 +69,7 @@
                     return false;
                 }
             })
-    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+        .autocomplete( "instance" )._renderItem = function( ul, item ) {
         return $( "<li>" )
           .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
           .appendTo( ul );
@@ -170,13 +168,7 @@
                 </ul>
             </div>
             <div class="icon_box">
-                <a class="all_token_link" data-toggle="modal" data-target="#all_token" onclick="SetIframeSrc('AllTokenIframe')">
-                    <span class="count">
-                        <asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
-                    <span title="All Tokens" data-toggle="tooltip" data-placement="left">
-                        <img src="../images/tokens.png" />
-                    </span>
-                </a>
+                <a class="all_token_link" data-toggle="modal" data-target="#all_token" onclick="SetIframeSrc('AllTokenIframe')"><span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span><span title="All Tokens" data-toggle="tooltip" data-placement="left"><img src="../images/tokens.png" /></span></a>
             </div>
             <div class="grey_sec">
                 <div class="search_div">
@@ -207,18 +199,7 @@
 
                 </div>
 
-                <div class="alert alert-success" style="display: none">
-                    <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-                </div>
-                <div class="alert alert-info" style="display: none">
-                    <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
-                </div>
-                <div class="alert alert-warning" style="display: none">
-                    <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
-                </div>
-                <div class="alert alert-danger" style="display: none">
-                    <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-                </div>
+              
 
                 <div class="alert alert-info" id="info" runat="server">
 
@@ -293,7 +274,7 @@
                     <h3 class="modal-title">Today's Patient Bookings</h3>
                 </div>
                 <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
-                    <div class="col-lg-12" style="height: 500px;">
+                    <div class="col-lg-12" style="height: 480px;">
                         <iframe id="AllTokenIframe" style="width: 100%; height: 100%;" frameborder="0"></iframe>
                     </div>
                 </div>

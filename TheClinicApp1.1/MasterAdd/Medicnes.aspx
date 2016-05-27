@@ -40,7 +40,7 @@
         color: inherit;
 
     }
-
+   
 
     </style>
 
@@ -124,7 +124,7 @@
 
 
         $('#txtSearchMedicine').keyup(function () {
-            debugger;
+     
             var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
 
             rows.hide().filter(function () {
@@ -136,11 +136,14 @@
                 });
                 return matchesSearch;
             }).show();
-            $('#tablePagination').hide();
+            $('#tablePagination').remove();
 
             if (val == "") {
-                debugger;
-                $('table').tablePagination({});
+                
+                $('table').tablePagination({
+                    rowCountstart: 1,
+                    rowCountend: 7
+                });
                 $('#tablePagination').show();
             }
 
@@ -354,20 +357,7 @@
 
                             </div>
 
-                            <div class="alert alert-success" style="display: none">
-                                <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-                            </div>
-                            <div class="alert alert-info" style="display: none">
-                                <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
-                            </div>
-
-                            <div class="alert alert-warning" style="display: none">
-                                <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
-                            </div>
-
-                            <div class="alert alert-danger" style="display: none">
-                                <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-                            </div>
+                            
 
 
                             <div class="tab_table">
@@ -498,9 +488,9 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
         <h3 class="modal-title">View All Medicines</h3>
       </div>
-      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:480px;">
+      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         <div class="col-lg-12" style="height:500px">
+         <div class="col-lg-12" style="height:480px">
 
               <div class="col-lg-12" style="height:40px">
               <div class="search_div">
@@ -510,8 +500,8 @@
           </div>
 
 
-
-             <asp:GridView ID="gvMedicines" runat="server" Style="width: 100%" AutoGenerateColumns="False"  class="table" DataKeyNames="MedicineID" OnPreRender="gvMedicines_PreRender" >
+             <div class="col-lg-12" style="height:400px">
+             <asp:GridView ID="gvMedicines" runat="server" AutoGenerateColumns="False" DataKeyNames="MedicineID" OnPreRender="gvMedicines_PreRender" >
            
             <Columns>
             
@@ -546,7 +536,7 @@
         </asp:GridView>
 
 
-           
+           </div>
     </div>
     </div>
          

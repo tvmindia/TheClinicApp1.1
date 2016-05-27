@@ -16,7 +16,7 @@
             padding: 5px;
             width: 100%;
             border: 1px solid #dbdbdb;
-            height: 41px;
+            height: 31px;
             font-family: 'roboto-light';
             font-weight: bold;
             font-size: 14px;
@@ -260,27 +260,13 @@
 
                             </div>                     
 
-         <div class="alert alert-success" style="display:none">
-          <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-        </div>        
-        <div class="alert alert-info" style="display:none">
-          <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
-        </div>
         
-        <div class="alert alert-warning" style="display:none">
-          <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
-        </div>
-        
-        <div class="alert alert-danger" style="display:none">
-          <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-        </div>
 
        <%-- <div class="prescription_grid" >--%>
         
      
 
-        <table  style="width: 100%;border-collapse:separate; 
-border-spacing:0.5em;"> 
+        <table  style="width: 100%;border-collapse:separate;border-spacing:0.5em;"> 
         
 
                 <tr>
@@ -419,7 +405,7 @@ border-spacing:0.5em;">
            
         </table>
 
-    <div class="grey_sec">
+    <div class="grey_sec" style="bottom:0!important;left:0!important;right:0!important;position:absolute!important;">
       <ul class="top_right_links">
                                    
                                     <li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" onclick="SetValidatorColor();"  ><span></span>Save</a></li>

@@ -80,7 +80,7 @@
                 var errLname = document.getElementById('<%=errorLnames.ClientID %>');
                 errLname.style.display = "none";--%>
 
-  $('.alert_close').click(function () {
+                $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
               });
 
@@ -564,20 +564,7 @@ var   UserID = '';
 
                             </div>
 
-                            <div class="alert alert-success" style="display: none">
-                                <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-                            </div>
-                            <div class="alert alert-info" style="display: none">
-                                <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
-                            </div>
-
-                            <div class="alert alert-warning" style="display: none">
-                                <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
-                            </div>
-
-                            <div class="alert alert-danger" style="display: none">
-                                <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-                            </div>
+                            
 
                           <div class="tab_table">
 
@@ -753,9 +740,9 @@ var   UserID = '';
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
         <h3 class="modal-title">View All Users</h3>
       </div>
-      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:480px;">
+      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         <div class="col-lg-12" style="height:500px">
+         <div class="col-lg-12" style="height:480px">
 
                <div class="col-lg-12" style="height:40px">
               <div class="search_div">
@@ -764,8 +751,8 @@ var   UserID = '';
                   </div>
           </div>
 
-
-             <asp:GridView ID="dtgViewAllUsers" runat="server" AutoGenerateColumns="False" class="table" OnPreRender="dtgViewAllUsers_PreRender" DataKeyNames="UserID" >
+             <div class="col-lg-12" style="height:400px">
+             <asp:GridView ID="dtgViewAllUsers" runat="server" AutoGenerateColumns="False" OnPreRender="dtgViewAllUsers_PreRender" DataKeyNames="UserID" >
                         
                         <Columns>
                            <%-- <asp:TemplateField>
@@ -853,7 +840,7 @@ var   UserID = '';
             <div class="Pager"></div>
 
 
-           
+          </div>       
     </div>
     </div>
          

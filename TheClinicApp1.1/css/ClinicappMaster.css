@@ -209,8 +209,35 @@
         left: 348px;
     }
     .modal table{   
-    width: 448px;
+    width: 448px!important;
    
     }
 }
+
+ .modal thead{
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+    font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:16px;
+    }
+  .modal table{
+    border-collapse: collapse;    
+    width: 525px;
+   
+    }
+   .modal table td {
+    text-align: left;
+    height:auto;
+    padding: 8px;
+    }
+  
+ /*.modal table tr:nth-child(even){background-color: #f2f2f2}*/
+   .modal table th {
+    background-color: #5681e6;
+    text-align: center;
+    color: white;
+    font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:16px;    
+    }
 

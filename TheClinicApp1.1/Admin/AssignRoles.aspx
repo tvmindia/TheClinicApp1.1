@@ -85,10 +85,22 @@ table
 
 .modal table
 {
-    width:550px!important;
+    width:525px!important;
    
 }
-
+@media (max-width:1168px)
+{
+    .search_div input.field1 {
+    width: 448px;
+    }
+    .search_div input.button3 {
+        left: 348px;
+    }
+    .modal table{   
+    width: 448px!important;
+   
+    }
+}
 
 .button1{
         background: url("../images/save.png") no-repeat 0 center;
@@ -488,21 +500,7 @@ table
 
                             </div>
 
-                            <div class="alert alert-success" style="display: none">
-                                <strong>Success!</strong> Indicates a successful or positive action.<a class="alert_close">X</a>
-                            </div>
-                            <div class="alert alert-info" style="display: none">
-                                <strong>Info!</strong> Indicates a neutral informative change or action.<a class="alert_close">X</a>
-                            </div>
-
-                            <div class="alert alert-warning" style="display: none">
-                                <strong>Warning!</strong> Indicates a warning that might need attention.<a class="alert_close">X</a>
-                            </div>
-
-                            <div class="alert alert-danger" style="display: none">
-                                <strong>Danger!</strong> Indicates a dangerous or potentially negative action.<a class="alert_close">X</a>
-                            </div>
-
+                            
 
                             
 
@@ -612,9 +610,9 @@ table
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
         <h3 class="modal-title">View All AssignedRoles</h3>
       </div>
-      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:480px;">
+      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         <div class="col-lg-12" style="height:500px">
+         <div class="col-lg-12" style="height:480px">
 
                 <div class="col-lg-12" style="height:40px">
               <div class="search_div">
@@ -623,9 +621,9 @@ table
                   </div>
           </div>
 
+              <div class="col-lg-12" style="height:400px">
 
-
-             <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" class="table" OnPreRender="dtgViewAllUserInRoles_PreRender" DataKeyNames="UserId"   >
+             <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" OnPreRender="dtgViewAllUserInRoles_PreRender" DataKeyNames="UserId" GridLines="Horizontal">
              
                             <Columns>
 
@@ -663,7 +661,7 @@ table
 
             <div class="Pager"></div>
 
-           
+           </div>
     </div>
     </div>
          

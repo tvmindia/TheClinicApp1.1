@@ -124,7 +124,10 @@
             
             });
             
-            $('[data-toggle="tooltip"]').tooltip();
+            $(function () {
+               
+                $('[data-toggle="tooltip"]').tooltip()
+            })
 
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
@@ -220,10 +223,8 @@
 
 
         }
-        function OpenModal(id){
-         debugger;
-            
-            
+        
+        function OpenModal(id){      
             if(id=='1')
             {
             $('table').tablePagination({
@@ -504,6 +505,7 @@
         <!---------------------> 
         <!------------------------------------------------------------------------------------------>   
    <!-- Script Files -->
+    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
    <script src="../js/jquery-1.3.2.min.js"></script>
    <script src="../js/jquery-1.12.0.min.js"></script>
    <script src="../js/jquery-ui.js"></script>
@@ -525,6 +527,8 @@
         $('#myModal').modal('show');
         
     }
+
+    
         </script>
    
 <style>
