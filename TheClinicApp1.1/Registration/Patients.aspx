@@ -345,7 +345,7 @@
       <div class="row field_row">  
       <div class="col-lg-4">
       <label for="marital">Marital</label>
-          <asp:DropDownList ID="ddlMarital" runat="server" Width="100%" Height="31px" border-radius="5px">
+          <asp:DropDownList ID="ddlMarital" CssClass="drop" runat="server" Width="100%" Height="31px">
               <asp:ListItem Value="Single" Text="Single"></asp:ListItem>
               <asp:ListItem Value="Married" Text="Married"></asp:ListItem>
               <asp:ListItem Value="Divorced" Text="Divorced"></asp:ListItem>

@@ -8,6 +8,7 @@ table
 {
     width:150px!important;
     border-color:rgb(169, 169, 169);
+    border:none!important;
    
 }
 
@@ -15,6 +16,7 @@ table
  table td
 {
      border-top:none!important;
+     height:31px!important;
 }
 
  label {
@@ -53,7 +55,8 @@ table
 .modal table td {
     text-align: left;
     height:auto;
-    
+    border-top:1px solid lightgrey!important;
+    border:1px solid lightgrey!important;
     }
 
 .modal table td{
@@ -64,6 +67,7 @@ table
     font-size:14px;
     font-weight:200;
     padding-left:4px;
+   
 }
 
 .modal table td+td{
@@ -73,6 +77,7 @@ table
     font-size:14px;
     font-weight:200;
     padding-left:4px;
+    
 }
 
 .modal table th {
@@ -182,6 +187,7 @@ table
     color: white;
      
     }
+    
     </style>
 
     <script>
@@ -457,7 +463,7 @@ table
 
             </div>
 
-<div class="right_form tab_right_form">
+               <div class="right_form tab_right_form">
 
                 <div class="page_tab">
                     <!-- Nav tabs -->
@@ -538,22 +544,25 @@ table
      
 
 
-<div class="form-horizontal">
+<div class="">
 
 
      
 
 <div class="row field_row">  
-      <div class="col-lg-4">
+    <div style="height:40px;"></div>
+      <div class="col-lg-5">
          <label for="name">User</label>	
           
-			 <asp:DropDownList ID="ddlUsers" runat="server" Width="100%" Height="40px" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">
+			 <asp:DropDownList ID="ddlUsers" runat="server" Width="250px" Height="31px" CssClass="drop" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">
              
           </asp:DropDownList>
 		</div>
 
-   
-    <div class="col-lg-4" >  <label for="name">Role</label>	<div class="checkbox checkboxlist col-sm-4" >
+  
+    <div class="col-lg-4" >  
+        <label for="name">Role</label>	
+        <div class="checkbox checkboxlist col-sm-4"" >
 			 <asp:CheckBoxList ID="chklstRoles" runat="server"  ></asp:CheckBoxList>
 		</div>
         </div>

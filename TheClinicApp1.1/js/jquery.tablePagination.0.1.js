@@ -163,7 +163,7 @@
               $('#tablePagination').remove();
               defaults.rowCountstart =1;
               defaults.rowCountend =7;
-              resetCurrentPage(1)
+              resetCurrentPage(1) 
               $('#' + table.id).after(createPaginationElements());
               bindoncemore();
           });
