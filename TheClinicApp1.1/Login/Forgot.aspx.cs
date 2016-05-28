@@ -85,24 +85,53 @@ namespace TheClinicApp1._1.Login
         #region Send Verification Code
         protected void btnVerificationCode_ServerClick1(object sender, EventArgs e)
         {
+            string username = string.Empty;
+            string ClinicName = string.Empty;
+            string msg = string.Empty;
+
             try
             {
-                 //----------*Add verification code*------------//
-            Random random = new Random();
-            int verificationCode = random.Next(1000, 10000);
 
-            userObj.verificationCode = verificationCode.ToString();
-            userObj.Email = txtEmail.Value;
-            if(txtEmail.Value!="")
-            { 
-            userObj.AddVerificationCode();
+                 //----------*Add verification code*------------//
+                if (txtEmail.Value != "")
+                { 
+                Random random = new Random();
+                int verificationCode = 0;
+
+
+                userObj.Email = txtEmail.Value;
+                 DataTable      dtUsr =   userObj.GetUserDetailsByEmailID();
+
+                 foreach (DataRow dr in dtUsr.Rows)
+                 {
+                     Guid clinicid = Guid.Parse(dr["ClinicID"].ToString());
+                     userObj.ClinicID = clinicid;
+
+                     verificationCode = random.Next(1000, 10000);
+                     userObj.verificationCode = verificationCode.ToString();
+                     userObj.AddVerificationCode(); 
+                 }
+
+
+           
+           
+           
 
             //----------*Get verification code*------------//
             userObj.Email = txtEmail.Value;
             DataTable dtCode = userObj.GetUserVerificationCodeByEmailID();
-            verificationCode = Convert.ToInt32(dtCode.Rows[0]["VerificationCode"]);
+
+            foreach (DataRow dr in dtCode.Rows)
+            {
+                verificationCode = Convert.ToInt32(dr["VerificationCode"]);
+                username = (dr["LoginName"]).ToString();
+                ClinicName = (dr["ClinicName"]).ToString();
+
+                msg = "<body><p>Your Verification Code of " + ClinicName + " with Login name " + username + " is <font color='red'>" + verificationCode + "</font></p><p>" + msg + "</p></body>";
+                    //" Your Verification Code of " + ClinicName + " with Login name " + username + " is " + verificationCode+msg;
+            }
+
             DateTime vcCreatedTime = Convert.ToDateTime(dtCode.Rows[0]["VerificatinCreatedTime"]);
-            string username = (dtCode.Rows[0]["LoginName"]).ToString();
             DateTime CurrentTime = DateTime.Now;
             MailMessage Msg = new MailMessage();
 
@@ -113,7 +142,7 @@ namespace TheClinicApp1._1.Login
             Msg.To.Add(txtEmail.Value);
 
             string body = verificationCode.ToString();
-            string message = "<body><p><p>&nbsp;&nbsp;<h3>Hello&nbsp;<font color='blue'>" + username + "</font>,</h3><p>&nbsp; Here is your 4 digit verification Code for Security purposes<p>&nbsp;Enter Your Code in given field and change your Password<p><h1> Verification Code is&nbsp;&nbsp;<font color='red'>" + body + "</font></h1><p><p><p>&nbsp;&nbsp;&nbsp;&nbsp; ClinicApp&nbsp; Admin<p><p><p><p><p>Please do not reply to this email with your password. We will never ask for your password, and we strongly discourage you from sharing it with anyone.<p><p></body>";
+            string message = "<body><p><p>&nbsp;&nbsp;<h3>Hello ,</h3>"+msg+"<p>Enter Your Code in given field and change your Password<p><p><p><p>&nbsp;&nbsp;&nbsp;&nbsp; ClinicApp&nbsp; Admin<p><p><p><p><p>Please do not reply to this email with your password. We will never ask for your password, and we strongly discourage you from sharing it with anyone.<p><p></body>";
             Msg.Subject = "Verification Code";
             Msg.Body = message;
             Msg.IsBodyHtml = true;

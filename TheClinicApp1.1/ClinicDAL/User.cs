@@ -366,9 +366,54 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Get User Details By UserID
 
 
-           #region Update User By UserID
+        #region Get User Details By EmailID
 
-           public void UpdateuserByUserID()
+
+        public DataTable GetUserDetailsByEmailID()
+        {
+            SqlConnection con = null;
+            DataTable dtUsers = null;
+            try
+            {
+                dtUsers = new DataTable();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetUserDetailsByEmailID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = Email;
+               
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUsers);
+
+            }
+            catch (Exception ex)
+            {
+                var page = HttpContext.Current.CurrentHandler as Page;
+                eObj.ErrorData(ex, page);
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUsers;
+        }
+
+
+
+        #endregion Get User Details By EmailID
+
+
+        #region Update User By UserID
+
+        public void UpdateuserByUserID()
         {
             dbConnection dcon = new dbConnection();
 
@@ -569,7 +614,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd.Parameters.Add("@VerificationCode", SqlDbType.NVarChar, 20).Value = verificationCode;
                 cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = Email;
-                
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
