@@ -31,6 +31,7 @@ namespace TheClinicApp1._1.Login
 
         #endregion GlobalVariables
 
+        
         #region Events
 
         #region PageLoad
@@ -112,11 +113,6 @@ namespace TheClinicApp1._1.Login
                      userObj.AddVerificationCode(); 
                  }
 
-
-           
-           
-           
-
             //----------*Get verification code*------------//
             userObj.Email = txtEmail.Value;
             DataTable dtCode = userObj.GetUserVerificationCodeByEmailID();
@@ -131,27 +127,26 @@ namespace TheClinicApp1._1.Login
                     //" Your Verification Code of " + ClinicName + " with Login name " + username + " is " + verificationCode+msg;
             }
 
-            DateTime vcCreatedTime = Convert.ToDateTime(dtCode.Rows[0]["VerificatinCreatedTime"]);
+            //DateTime vcCreatedTime = Convert.ToDateTime(dtCode.Rows[0]["VerificatinCreatedTime"]);
             DateTime CurrentTime = DateTime.Now;
             MailMessage Msg = new MailMessage();
 
             // Sender e-mail address.
-            Msg.From = new MailAddress("info.thrithvam@gmail.com");
+            Msg.From = new MailAddress(EmailFromAddress);
 
             // Recipient e-mail address.
             Msg.To.Add(txtEmail.Value);
 
-            string body = verificationCode.ToString();
             string message = "<body><p><p>&nbsp;&nbsp;<h3>Hello ,</h3>"+msg+"<p>Enter Your Code in given field and change your Password<p><p><p><p>&nbsp;&nbsp;&nbsp;&nbsp; ClinicApp&nbsp; Admin<p><p><p><p><p>Please do not reply to this email with your password. We will never ask for your password, and we strongly discourage you from sharing it with anyone.<p><p></body>";
-            Msg.Subject = "Verification Code";
+            Msg.Subject = VerificationCode;
             Msg.Body = message;
             Msg.IsBodyHtml = true;
 
             // your remote SMTP server IP.
             SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
+            smtp.Host = host;
             smtp.Port = 587;
-            smtp.Credentials = new System.Net.NetworkCredential("info.thrithvam", "thrithvam@2015");
+            smtp.Credentials = new System.Net.NetworkCredential(smtpUserName, smtpPassword);
             smtp.EnableSsl = true;
             smtp.Send(Msg);
             Msg = null;
