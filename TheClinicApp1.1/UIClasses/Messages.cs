@@ -23,6 +23,22 @@ namespace TheClinicApp1._1.UIClasses
     public class Messages
     {
 
+        public static string InvalidEmailID
+        {
+            get { return "Enter A valid Email-ID"; }
+        }
+
+        public static string TimeExpired
+        {
+            get { return "Time expired"; }
+        }
+
+        public static string IncorrectVerificationCode
+        {
+            get { return "Verification Code is invalid"; }
+        }
+
+
         public static string EditImageButtonDisabled
         {
             get { return " Logined user can't be edited"; }
@@ -220,5 +236,7 @@ namespace TheClinicApp1._1.UIClasses
          {
              get { return "Fields may be empty or invaild"; }
          }
+
+       
     }
 }

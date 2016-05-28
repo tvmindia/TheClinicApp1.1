@@ -17,6 +17,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
 
+using Messages = TheClinicApp1._1.UIClasses.Messages;
+
 #endregion Included Namespaces
 
 namespace TheClinicApp1._1.Login
@@ -28,6 +30,7 @@ namespace TheClinicApp1._1.Login
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         Master mstrobj = new Master();
+        MailSending mailObj = new MailSending();
 
         #endregion GlobalVariables
 
@@ -49,35 +52,73 @@ namespace TheClinicApp1._1.Login
         #region Verify Code
         protected void btnVerify_ServerClick(object sender, EventArgs e)
         {
+            int verificationCode = 0;
+            string UserID = string.Empty;
+            DateTime vcCreatedTime;
+
+            bool Verified = false;
+            bool TimeExpired = false;
+
+
             try
             {
                 userObj.Email = txtEmail.Value;
                 DataTable dtCode = userObj.GetUserVerificationCodeByEmailID();
-                int verificationCode = Convert.ToInt32(dtCode.Rows[0]["VerificationCode"]);
-                DateTime vcCreatedTime = Convert.ToDateTime(dtCode.Rows[0]["VerificatinCreatedTime"]);
-                string UserID = dtCode.Rows[0]["UserID"].ToString();
-                ;
-                DateTime CurrentTime = DateTime.Now;
-                if ((CurrentTime - vcCreatedTime) < TimeSpan.FromDays(1))
+
+                foreach (DataRow dr in dtCode.Rows)
                 {
-                    if (verificationCode.ToString() == txtVerificationCode.Value)
+
+                    verificationCode = Convert.ToInt32(dr["VerificationCode"]);
+                    vcCreatedTime = Convert.ToDateTime(dr["VerificatinCreatedTime"]);
+                    UserID = dr["UserID"].ToString();
+
+
+                    DateTime CurrentTime = DateTime.Now;
+                    if ((CurrentTime - vcCreatedTime) < TimeSpan.FromDays(1))
                     {
-                        Response.Redirect("Reset.aspx?UserID=" + UserID);
+                        TimeExpired = TimeExpired | true;
+
+                        if (verificationCode.ToString() == txtVerificationCode.Value)
+                        {
+                            Verified = Verified | true;
+
+                            //Response.Redirect("Reset.aspx?UserID=" + UserID);
+                        }
+                        //else
+                        //{
+                        //    lblError.Text = "Verification Code is not correct";
+                        //}
+
+                    }
+                    //else
+                    //{
+                    //    lblError.Text = "Time expired";
+                    //}
+
+                }
+
+
+                if (Verified)
+                {
+                    if (TimeExpired == false)
+                    {
+                        Response.Redirect("Reset.aspx?UserID=" + UserID); 
                     }
                     else
                     {
-                        lblError.Text = "Verification Code is not correct";
+                        lblError.Text = Messages.TimeExpired;
                     }
+                }
 
-                }
                 else
-                {
-                    lblError.Text = "Time expired";
+                 {
+                     lblError.Text = Messages.IncorrectVerificationCode;
                 }
+              
             }
             catch
             {
-                lblError.Text = "Failure! Enter A valid Code";
+                lblError.Text = Messages.IncorrectVerificationCode;
             }
             
         }
@@ -125,35 +166,20 @@ namespace TheClinicApp1._1.Login
 
                 msg = "<body><p>Your Verification Code of " + ClinicName + " with Login name " + username + " is <font color='red'>" + verificationCode + "</font></p><p>" + msg + "</p></body>";
                     //" Your Verification Code of " + ClinicName + " with Login name " + username + " is " + verificationCode+msg;
+                mailObj.Email = txtEmail.Value;
+                mailObj.msg = msg;
+                mailObj.SendEmail();
+
+
             }
 
             //DateTime vcCreatedTime = Convert.ToDateTime(dtCode.Rows[0]["VerificatinCreatedTime"]);
             DateTime CurrentTime = DateTime.Now;
-            MailMessage Msg = new MailMessage();
-
-            // Sender e-mail address.
-            Msg.From = new MailAddress(EmailFromAddress);
-
-            // Recipient e-mail address.
-            Msg.To.Add(txtEmail.Value);
-
-            string message = "<body><p><p>&nbsp;&nbsp;<h3>Hello ,</h3>"+msg+"<p>Enter Your Code in given field and change your Password<p><p><p><p>&nbsp;&nbsp;&nbsp;&nbsp; ClinicApp&nbsp; Admin<p><p><p><p><p>Please do not reply to this email with your password. We will never ask for your password, and we strongly discourage you from sharing it with anyone.<p><p></body>";
-            Msg.Subject = VerificationCode;
-            Msg.Body = message;
-            Msg.IsBodyHtml = true;
-
-            // your remote SMTP server IP.
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = host;
-            smtp.Port = 587;
-            smtp.Credentials = new System.Net.NetworkCredential(smtpUserName, smtpPassword);
-            smtp.EnableSsl = true;
-            smtp.Send(Msg);
-            Msg = null;
+           
             }
             else
             {
-                lblError.Text = "Enter A valid Email";
+                lblError.Text = Messages.InvalidEmailID;
             }
             }
             catch
