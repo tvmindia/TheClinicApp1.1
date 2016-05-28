@@ -116,9 +116,9 @@ namespace TheClinicApp1._1.Login
                 }
               
             }
-            catch
+            catch(Exception ex)
             {
-                lblError.Text = Messages.IncorrectVerificationCode;
+                lblError.Text = ex.Message;
             }
             
         }
@@ -182,9 +182,9 @@ namespace TheClinicApp1._1.Login
                 lblError.Text = Messages.InvalidEmailID;
             }
             }
-            catch
+            catch(Exception ex)
             {
-                
+                lblError.Text = ex.Message;
             }
         }
         #endregion Send Verification Code
