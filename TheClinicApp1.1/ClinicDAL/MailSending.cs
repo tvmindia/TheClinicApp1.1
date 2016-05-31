@@ -41,6 +41,7 @@ namespace TheClinicApp1._1.ClinicDAL
         string smtpUserName = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-UserName"];
         string smtpPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-Password"];
         string VerificationCode = System.Web.Configuration.WebConfigurationManager.AppSettings["VerificationCode"];
+        string port = System.Web.Configuration.WebConfigurationManager.AppSettings["Port"];
 
         #endregion   Public Variables
 

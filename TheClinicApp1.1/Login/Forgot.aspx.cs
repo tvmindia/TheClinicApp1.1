@@ -75,13 +75,12 @@ namespace TheClinicApp1._1.Login
 
                     DateTime CurrentTime = DateTime.Now;
                     if ((CurrentTime - vcCreatedTime) < TimeSpan.FromDays(1))
-                    {
-                        TimeExpired = TimeExpired | true;
-
+                        {
+                       
                         if (verificationCode.ToString() == txtVerificationCode.Value)
                         {
                             Verified = Verified | true;
-
+                            break;
                             //Response.Redirect("Reset.aspx?UserID=" + UserID);
                         }
                         //else
@@ -90,6 +89,13 @@ namespace TheClinicApp1._1.Login
                         //}
 
                     }
+
+                    else
+                    {
+                        TimeExpired = TimeExpired | true;
+                    }
+
+
                     //else
                     //{
                     //    lblError.Text = "Time expired";
@@ -102,7 +108,7 @@ namespace TheClinicApp1._1.Login
                 {
                     if (TimeExpired == false)
                     {
-                        Response.Redirect("Reset.aspx?UserID=" + UserID); 
+                        Response.Redirect("../Login/Reset.aspx?UserID=" + UserID,false); 
                     }
                     else
                     {
@@ -166,12 +172,18 @@ namespace TheClinicApp1._1.Login
 
                 msg = "<body><p>Your Verification Code of " + ClinicName + " with Login name " + username + " is <font color='red'>" + verificationCode + "</font></p><p>" + msg + "</p></body>";
                     //" Your Verification Code of " + ClinicName + " with Login name " + username + " is " + verificationCode+msg;
-                mailObj.Email = txtEmail.Value;
+
+            }
+
+
+            if (msg != string.Empty)
+            {
+                   mailObj.Email = txtEmail.Value;
                 mailObj.msg = msg;
                 mailObj.SendEmail();
 
-
             }
+
 
             //DateTime vcCreatedTime = Convert.ToDateTime(dtCode.Rows[0]["VerificatinCreatedTime"]);
             DateTime CurrentTime = DateTime.Now;
