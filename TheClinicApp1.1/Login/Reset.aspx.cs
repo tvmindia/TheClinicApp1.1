@@ -14,6 +14,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
+
 
 #endregion Included Namespaces
 
@@ -66,8 +68,6 @@ namespace TheClinicApp1._1.Login
         #region Reset Button Click
         protected void btnReset_ServerClick(object sender, EventArgs e)
         {
-
-
             userObj.passWord = CrypObj.Encrypt(txtConfirmPassword.Value);
 
 
@@ -78,7 +78,7 @@ namespace TheClinicApp1._1.Login
 
             else
             {
-                lblError.Text = " Password does not match the confirm password";
+                lblError.Text = Messages.VerificationCodeMismatch;
             }
         }
 

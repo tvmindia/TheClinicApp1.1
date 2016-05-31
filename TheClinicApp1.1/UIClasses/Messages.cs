@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 
 #endregion Included Namespaces
 
@@ -22,6 +23,11 @@ namespace TheClinicApp1._1.UIClasses
 {
     public class Messages
     {
+
+        public static string VerificationCodeMismatch
+        {
+            get { return "Password does not match the confirm password"; }
+        }
 
         public static string InvalidEmailID
         {
