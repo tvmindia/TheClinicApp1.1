@@ -114,6 +114,7 @@ namespace TheClinicApp1._1.Admin
             var page = HttpContext.Current.CurrentHandler as Page;
 
             roleObj.UserID = UserID;
+            roleObj.ClinicID = UA.ClinicID;
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
             //RoleID
@@ -390,6 +391,8 @@ namespace TheClinicApp1._1.Admin
             roleObj.RoleID = Guid.Parse(roleid);
             roleObj.CreatedBy = UA.userName;
             roleObj.UserID = Guid.Parse(hdnUserID.Value);
+
+            roleObj.ClinicID = UA.ClinicID;
 
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
