@@ -267,12 +267,16 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     int rslt = Convert.ToInt32(Output.Value.ToString());
 
-                    if (rslt == 2)
+                    if (rslt == 2 || rslt == 3)
                     {
+                        //rslt=2 -Login name already exists , rslt=3 - Email id already exists
+
                         var page = HttpContext.Current.CurrentHandler as Page;
                         eObj.AlreadyExistsMessage(page);
 
                     }
+
+
 
                     else
                     {
@@ -441,8 +445,29 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
-                    var page = HttpContext.Current.CurrentHandler as Page; //successfull
-                    eObj.SavedSuccessMessage(page);
+                    //var page = HttpContext.Current.CurrentHandler as Page; //successfull
+                    //eObj.SavedSuccessMessage(page);
+
+                    int rslt = Convert.ToInt32(Output.Value.ToString());
+
+
+                    if (rslt == 1)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;  //successfull
+                        eObj.SavedSuccessMessage(page);
+
+                    }
+
+
+                    if (rslt == 2 )
+                    {
+                        // rslt=2- Email id already exists
+
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
+
+                    }
+
                   
                 }
 
@@ -582,6 +607,54 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion ValidateUsername
+
+        #region Validate EmailID
+        public bool ValidateEmailID()
+        {
+            bool flag;
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("CheckEmailIDDuplication", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@Email", SqlDbType.VarChar, 255).Value = Email;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlParameter outflag = cmd.Parameters.Add("@flag", SqlDbType.Bit);
+                outflag.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                flag = (bool)outflag.Value;
+                if (flag == true)
+                {
+                    return flag;
+                }
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "ValidateEmailID";
+
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+            return false;
+        }
+
+        #endregion Validate EmailID
 
         //------------*Methods Used For Forgot Password Implementation *------------//
 

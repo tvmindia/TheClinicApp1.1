@@ -448,6 +448,31 @@ namespace TheClinicApp1._1.Admin
 
         #endregion ValidateLoginName
 
+        #region ValidateEmailID
+        [WebMethod]
+        ///Checking login name duplication
+        public static bool ValidateEmailID(string Email)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            User usrObj = new User();
+
+            usrObj.Email = Email;
+
+            usrObj.ClinicID = UA.ClinicID;
+
+            if (usrObj.ValidateEmailID())
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+           #endregion ValidateEmailID
+
         #region Bind Gridview
         public void BindGriewWithDetailsOfAllUsers()
         {

@@ -256,6 +256,24 @@ namespace TheClinicApp1._1.Admin {
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtEmail;
         
         /// <summary>
+        /// imgEmailAvailable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgEmailAvailable;
+        
+        /// <summary>
+        /// imgEmailUnAvailable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgEmailUnAvailable;
+        
+        /// <summary>
         /// rdoActiveYes control.
         /// </summary>
         /// <remarks>

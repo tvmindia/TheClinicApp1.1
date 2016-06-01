@@ -163,6 +163,59 @@
         }
 
 
+
+//EmailID duplication check
+
+        function EmailIDDuplicationCheck(txtEmail) {
+
+
+            var name = document.getElementById('<%=txtEmail.ClientID %>').value;
+            name = name.trim();
+            if (name != "") {
+
+                //name = name.replace(/\s/g, '');
+
+                PageMethods.ValidateEmailID(name, OnSuccess, onError);
+
+                function OnSuccess(response, userContext, methodName) {
+
+                    var LnameImage = document.getElementById('<%=imgEmailAvailable.ClientID %>');
+                    var errLname = document.getElementById('<%=imgEmailUnAvailable.ClientID %>');
+                    if (response == false) {
+
+                        LnameImage.style.display = "block";
+                        errLname.style.display = "none";
+
+                    }
+                    if (response == true) {
+                        errLname.style.display = "block";
+                        errLname.style.color = "Red";
+                        errLname.innerHTML = "EmailID Alreay Exists"
+                        LnameImage.style.display = "none";
+
+                    }
+                }
+                function onError(response, userContext, methodName) {
+
+
+                }
+            }
+
+            else {
+                if (name == "") {
+                    var LnameImage = document.getElementById('<%=imgEmailAvailable.ClientID %>');
+                    LnameImage.style.display = "none";
+                    var errLname = document.getElementById('<%=imgEmailUnAvailable.ClientID %>');
+                    errLname.style.display = "none";
+                }
+            }
+
+
+        }
+
+
+//Login name duplication check
+
         function LoginNameCheck(txtLoginName) {
            
 
@@ -272,16 +325,6 @@ function SetRequired()
 
 
         }
-
-
-
-
-
-
-
-
-
-
 
 </script>
 
@@ -681,7 +724,13 @@ var   UserID = '';
 
 
                                 <div class="col-lg-4 ">
-                                    <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name"  pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"   />
+                                    <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name"  pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" onchange="EmailIDDuplicationCheck(this)"   />
+
+                                     <asp:Image ID="imgEmailAvailable" runat="server" ToolTip="EmailID is Available" ImageUrl="~/Images/newfff.png" style="display:none"/>
+
+
+                                    <asp:Image ID="imgEmailUnAvailable" runat="server" ToolTip="EmailID is Unavailable" ImageUrl="~/Images/newClose.png" style="display:none"/>
+
 
                                   <%--  <label for="Email">Email</label>
                                     <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
