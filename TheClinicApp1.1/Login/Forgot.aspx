@@ -15,24 +15,26 @@
   <h1 style="text-align:center;">Forgot Password</h1>
 </header>--------%>
 
-<div class="w3-container w3-half w3-margin-top">
+<div class="w3-container w3-half w3-margin-top" >
 
-<form id="form1" class="w3-container w3-card-4" runat="server">
-
-<p>    
+<form id="form1" class="w3-container w3-card-4" runat="server" >
+    <p runat="server" id="instruction" visible="false">Please check your email for a message with yor verification code</p>
+<p id="email" runat="server" >    
 <label class="w3-label w3-validate">Email</label>
-<input class="w3-input" type="text" runat="server" id="txtEmail" style="width:90%" required="required" readonly onfocus="this.removeAttribute('readonly');"/></p>
+<input class="w3-input" type="text" runat="server" id="txtEmail" style="width:90%" required="required" readonly onfocus="this.removeAttribute('readonly');"/>
 
-<p>
+
 <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnVerificationCode" onserverclick="btnVerificationCode_ServerClick1"> Send me verification code </button></p>
 
 
-<p>
+<p runat="server" id="Code" style="display:none">
 <label class="w3-label w3-validate">Verification Code</label>
-<input class="w3-input" type="password" runat="server" id="txtVerificationCode" style="width:90%" /></p>
+<input class="w3-input" type="password" runat="server" id="txtVerificationCode" style="width:90%" />
 
-<p>
-<button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnVerify" onserverclick="btnVerify_ServerClick" formnovalidate>Verify</button></p>
+
+    <button class="w3-btn w3-section w3-teal w3-ripple" runat="server" id="btnVerify" onserverclick="btnVerify_ServerClick" formnovalidate>Verify</button></p>
+
+
  <p>
     <asp:Label ID="lblError" runat="server" Text="" ForeColor="Red" Font-Bold="true"></asp:Label>
 </p>

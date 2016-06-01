@@ -24,6 +24,11 @@ namespace TheClinicApp1._1.UIClasses
     public class Messages
     {
 
+        public static string EmailInstruction
+        {
+            get { return "Please check your email for a message with verification code.Your code is 4 digit long . We sent code to "; }
+        }
+
         public static string VerificationCodeMismatch
         {
             get { return "Password does not match the confirm password"; }

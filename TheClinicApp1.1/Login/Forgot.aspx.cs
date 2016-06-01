@@ -63,6 +63,8 @@ namespace TheClinicApp1._1.Login
             try
             {
                 userObj.Email = txtEmail.Value;
+
+
                 DataTable dtCode = userObj.GetUserVerificationCodeByEmailID();
 
                 foreach (DataRow dr in dtCode.Rows)
@@ -133,6 +135,7 @@ namespace TheClinicApp1._1.Login
         #region Send Verification Code
         protected void btnVerificationCode_ServerClick1(object sender, EventArgs e)
         {
+           
             string username = string.Empty;
             string ClinicName = string.Empty;
             string msg = string.Empty;
@@ -142,7 +145,9 @@ namespace TheClinicApp1._1.Login
 
                  //----------*Add verification code*------------//
                 if (txtEmail.Value != "")
-                { 
+                {
+                    
+
                 Random random = new Random();
                 int verificationCode = 0;
 
@@ -170,7 +175,7 @@ namespace TheClinicApp1._1.Login
                 username = (dr["LoginName"]).ToString();
                 ClinicName = (dr["ClinicName"]).ToString();
 
-                msg = "<body><p>Your Verification Code of " + ClinicName + " with Login name " + username + " is <font color='red'>" + verificationCode + "</font></p><p>" + msg + "</p></body>";
+                msg = "<body><p>Your verification code of " + ClinicName + " with login name " + username + " is <font color='red'>" + verificationCode + "</font></p><p>" + msg + "</p></body>";
                     //" Your Verification Code of " + ClinicName + " with Login name " + username + " is " + verificationCode+msg;
 
             }
@@ -178,10 +183,21 @@ namespace TheClinicApp1._1.Login
 
             if (msg != string.Empty)
             {
+
+                Code.Style.Add("display", "block");
+                email.Style.Add("display", "none");
+
+
+                instruction.Visible = true;
+
+                instruction.InnerText = Messages.EmailInstruction + txtEmail.Value;
+
                    mailObj.Email = txtEmail.Value;
                 mailObj.msg = msg;
-                mailObj.SendEmail();
 
+              
+                    mailObj.SendEmail();
+               
             }
 
 

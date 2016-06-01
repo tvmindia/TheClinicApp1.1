@@ -74,6 +74,7 @@ namespace TheClinicApp1._1.Login
             if (txtNewPassword.Value == txtConfirmPassword.Value)
             {
                 userObj.ResetPassword(UserID);
+                //Response.Redirect("../Login/Login.aspx", false);
             }
 
             else
