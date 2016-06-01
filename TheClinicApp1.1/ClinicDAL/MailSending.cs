@@ -36,6 +36,8 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Public Variables
 
+        //---* Keys assosiated with mail sending.its values are set in web.config ,app settings section -- *//
+
         string EmailFromAddress = System.Web.Configuration.WebConfigurationManager.AppSettings["EmailFromAddress"];
         string host = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-host"];
         string smtpUserName = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-UserName"];

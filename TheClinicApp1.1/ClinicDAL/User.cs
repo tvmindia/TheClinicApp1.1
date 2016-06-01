@@ -365,7 +365,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Get User Details By UserID
 
-
         #region Get User Details By EmailID
 
 
@@ -373,8 +372,7 @@ namespace TheClinicApp1._1.ClinicDAL
         {
             SqlConnection con = null;
             DataTable dtUsers = null;
-            //try
-            //{
+           
                 dtUsers = new DataTable();
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
@@ -388,28 +386,17 @@ namespace TheClinicApp1._1.ClinicDAL
                 adapter.SelectCommand = cmd;
                 adapter.Fill(dtUsers);
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    var page = HttpContext.Current.CurrentHandler as Page;
-            //    eObj.ErrorData(ex, page);
-
-            //}
-            //finally
-            //{
                 if (con != null)
                 {
                     con.Dispose();
                 }
 
-            //}
             return dtUsers;
         }
 
 
 
         #endregion Get User Details By EmailID
-
 
         #region Update User By UserID
 
@@ -604,8 +591,6 @@ namespace TheClinicApp1._1.ClinicDAL
         {
             dbConnection dcon = new dbConnection();
 
-            //try
-            //{
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
@@ -624,31 +609,11 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add(Output);
                 cmd.ExecuteNonQuery();
 
-               
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-
-            //    eObj.Description = ex.Message;
-            //    eObj.Module = Module;
-
-            //    eObj.UserID = UA.UserID;
-            //    eObj.Method = "AddVerificationCode";
-
-            //    eObj.InsertError();
-
-            //}
-
-            //finally
-            //{
                 if (dcon.SQLCon != null)
                 {
                     dcon.DisconectDB();
                 }
 
-            //}
         }
 
         #endregion Add verificationcode (Generated random number)
@@ -659,8 +624,7 @@ namespace TheClinicApp1._1.ClinicDAL
         {
             SqlConnection con = null;
             DataTable dtVerificationCode = null;
-            //try
-            //{
+           
                 dtVerificationCode = new DataTable();
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
@@ -671,28 +635,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
                 adapter.Fill(dtVerificationCode);
-              
-            //}
-            //catch (Exception ex)
-            //{
-            //    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-
-            //    eObj.Description = ex.Message;
-            //    eObj.Module = Module;
-
-            //    eObj.UserID = UA.UserID ;
-            //    eObj.Method = "GetUserVerificationCodeByEmailID";
-
-            //    eObj.InsertError();
-            //}
-            //finally
-            //{
+          
                 if (con != null)
                 {
                     con.Dispose();
                 }
 
-            //}
+            
 
             return dtVerificationCode;
         }
@@ -721,22 +670,22 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add(Output);
                 cmd.ExecuteNonQuery();
 
-                if (Output.Value.ToString() == "")
-                {
-                    //not successfull   
+                //if (Output.Value.ToString() == "")
+                //{
+                //    //not successfull   
 
-                    //var page = HttpContext.Current.CurrentHandler as Page;
-                    //eObj.UpdationNotSuccessMessage(page);
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    eObj.UpdationNotSuccessMessage(page);
 
-                }
-                else
-                {
-                    //successfull
+                //}
+                //else
+                //{
+                //    //successfull
 
-                    //var page = HttpContext.Current.CurrentHandler as Page;
-                   // eObj.UpdationSuccessMessage(page);
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    eObj.UpdationSuccessMessage(page);
 
-                }
+                //}
 
 
             }
@@ -745,27 +694,14 @@ namespace TheClinicApp1._1.ClinicDAL
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.ErrorData(ex, page);
 
-
-
-                //UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-                //eObj.Description = ex.Message;
-                //eObj.Module = Module;
-
-                //eObj.UserID = UA.UserID;
-                //eObj.Method = "ResetPassword";
-
-                //eObj.InsertError();
-
             }
 
-            //finally
-            //{
                 if (dcon.SQLCon != null)
                 {
                     dcon.DisconectDB();
                 }
 
-            //}
+          
         }
 
         #endregion  Reset Password

@@ -94,7 +94,7 @@ namespace TheClinicApp1._1.Login
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
            
-            if (Request.QueryString["UserID"] != null)
+            if (Request.QueryString["UserID"] != null) //redirected from forgot password page
             {
                 UserID = Guid.Parse(Request.QueryString["UserID"]);
             }
