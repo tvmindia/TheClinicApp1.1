@@ -271,6 +271,7 @@
     <Content Include="Registration\test page.txt" />
     <Content Include="Registration\ViewAllRegistration.aspx" />
     <Content Include="Registration\ViewTodaysRegistration.aspx" />
+    <Content Include="ReportsList.aspx" />
     <Content Include="Scripts\ASPSnippets_Pager.min.js" />
     <Content Include="Scripts\bootcards.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -523,6 +524,13 @@
     </Compile>
     <Compile Include="Registration\ViewTodaysRegistration.aspx.designer.cs">
       <DependentUpon>ViewTodaysRegistration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsList.aspx.cs">
+      <DependentUpon>ReportsList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportsList.aspx.designer.cs">
+      <DependentUpon>ReportsList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stock\AddNewMedicine.aspx.cs">
       <DependentUpon>AddNewMedicine.aspx</DependentUpon>

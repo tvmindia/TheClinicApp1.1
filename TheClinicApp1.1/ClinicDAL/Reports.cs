@@ -55,6 +55,8 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
+        
+
         #endregion Public Properties
 
         #region Methods
