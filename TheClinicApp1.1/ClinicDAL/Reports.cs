@@ -55,7 +55,17 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
-        
+        public string AddColumn
+        {
+            get;
+            set;
+        }
+
+        public string RemoveColumn
+        {
+            get;
+            set;
+        }
 
         #endregion Public Properties
 
@@ -146,6 +156,53 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion Set SP Based On Report Name
+
+
+        #region Get Report List
+
+        public DataTable GetReportList()
+        {
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            SqlConnection con = null;
+            SqlCommand cmd    = null;
+            DataTable dtReportList      = new DataTable();
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+
+                cmd = new SqlCommand("GetReportList", con);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                dtReportList = new DataTable();
+                adapter.Fill(dtReportList);
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetReportList";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtReportList;
+        }
+
+        #endregion Get Report List
 
 
         #endregion Methods
