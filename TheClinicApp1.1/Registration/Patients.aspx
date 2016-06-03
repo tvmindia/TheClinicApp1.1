@@ -195,11 +195,7 @@
 
         }); 
         
-        function getPatientId(Patient)
-        {
-            var PatientDetails=Patient;      
-            
-        }     
+           
 
     </script> 
     <script>
@@ -224,12 +220,16 @@
 
         }
         
-        function OpenModal(id){      
+        function OpenModal(id){    
+            debugger;
             if(id=='1')
+            
             {
+            $('#tablePagination').remove();
             $('table').tablePagination({
             rowCountstart:1,
-            rowCountend :7
+            rowCountend :7,
+            currPage:1
             });
             $('#tablePagination').show();
                 $('#txtSearchPatient').val('');
@@ -237,7 +237,9 @@
             }
             else if(id==2)
             {
+            $('#tablePagination').remove();
             $('table').tablePagination({
+            
             rowCountstart:1,
             rowCountend :7
             });              

@@ -332,9 +332,9 @@
                                                 <td>
                                                     <input id="txtQuantity0" type="text" class="input" onblur="CheckMedicineIsOutOfStock('0')" onfocus="RemoveWarning('0')"/></td>
                                                 <td style="background-color: transparent">
-                                                    <input type="button" value="-" class="bt1" style="width: 20px;" onclick="ClearAndRemove()" /></td>
+                                                    <input type="button" value="-" class="bt1" style="width: 20px;" onclick="ClearAndRemove()" accesskey="-" /></td>
                                                 <td style="background-color: transparent">
-                                                    <input type="button" id="btAdd" onclick="clickStockAdd(); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" />
+                                                    <input type="button" id="btAdd" onclick="clickStockAdd(); this.style.visibility = 'hidden';" value="+" class="bt1" style="width: 20px" accesskey="+" />
                                                 </td>
                                                 <td style="background-color: transparent">
                                                     <input id="hdnDetailID0" type="hidden" />
