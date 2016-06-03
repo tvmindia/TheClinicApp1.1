@@ -114,6 +114,7 @@ namespace TheClinicApp1._1.Admin
             var page = HttpContext.Current.CurrentHandler as Page;
 
             roleObj.UserID = UserID;
+            roleObj.ClinicID = UA.ClinicID;
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
             //RoleID
@@ -391,6 +392,8 @@ namespace TheClinicApp1._1.Admin
             roleObj.CreatedBy = UA.userName;
             roleObj.UserID = Guid.Parse(hdnUserID.Value);
 
+            roleObj.ClinicID = UA.ClinicID;
+
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
             DataRow[] DoctorRoleAssigned = dtAssignedRoles.Select("RoleID = '" + roleid + "'"); //CHecking whether user has already doctor role, if not , assigns doctor role for the user
@@ -444,6 +447,31 @@ namespace TheClinicApp1._1.Admin
         }
 
         #endregion ValidateLoginName
+
+        #region ValidateEmailID
+        [WebMethod]
+        ///Checking login name duplication
+        public static bool ValidateEmailID(string Email)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            User usrObj = new User();
+
+            usrObj.Email = Email;
+
+            usrObj.ClinicID = UA.ClinicID;
+
+            if (usrObj.ValidateEmailID())
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+           #endregion ValidateEmailID
 
         #region Bind Gridview
         public void BindGriewWithDetailsOfAllUsers()

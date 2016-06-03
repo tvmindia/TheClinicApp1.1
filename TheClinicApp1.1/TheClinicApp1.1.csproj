@@ -210,6 +210,7 @@
     <Content Include="images\next.gif" />
     <Content Include="images\Next.png" />
     <Content Include="images\OutOfStock%281%29.png" />
+    <Content Include="images\package_icon13.png" />
     <Content Include="images\paper.png" />
     <Content Include="images\patient_list.png" />
     <Content Include="images\pharmacy-hover.png" />
@@ -271,6 +272,7 @@
     <Content Include="Registration\test page.txt" />
     <Content Include="Registration\ViewAllRegistration.aspx" />
     <Content Include="Registration\ViewTodaysRegistration.aspx" />
+    <Content Include="ReportsList.aspx" />
     <Content Include="Scripts\ASPSnippets_Pager.min.js" />
     <Content Include="Scripts\bootcards.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -381,6 +383,10 @@
     </Compile>
     <Compile Include="ClinicDAL\CaseSheet.cs" />
     <Compile Include="ClinicDAL\Category.cs" />
+    <Compile Include="ClinicDAL\HTMLReports.cs" />
+    <Compile Include="ClinicDAL\MailSending.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ClinicDAL\Clinic.cs" />
     <Compile Include="ClinicDAL\common.cs" />
     <Compile Include="ClinicDAL\dbConnection.cs" />
@@ -393,6 +399,7 @@
     <Compile Include="ClinicDAL\pharmacy.cs" />
     <Compile Include="ClinicDAL\PrescriptionHeaderDetails.cs" />
     <Compile Include="ClinicDAL\Receipt.cs" />
+    <Compile Include="ClinicDAL\Reports.cs" />
     <Compile Include="ClinicDAL\RoleAssign.cs" />
     <Compile Include="ClinicDAL\Security.cs" />
     <Compile Include="ClinicDAL\Stocks.cs" />
@@ -519,6 +526,13 @@
     </Compile>
     <Compile Include="Registration\ViewTodaysRegistration.aspx.designer.cs">
       <DependentUpon>ViewTodaysRegistration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsList.aspx.cs">
+      <DependentUpon>ReportsList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportsList.aspx.designer.cs">
+      <DependentUpon>ReportsList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Stock\AddNewMedicine.aspx.cs">
       <DependentUpon>AddNewMedicine.aspx</DependentUpon>

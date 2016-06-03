@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Messages = TheClinicApp1._1.UIClasses.Messages;
 
 #endregion Included Namespaces
 
@@ -22,6 +23,32 @@ namespace TheClinicApp1._1.UIClasses
 {
     public class Messages
     {
+
+        public static string EmailInstruction
+        {
+            get { return "Please check your email for a message with verification code.Your code is 4 digit long . We sent code to "; }
+        }
+
+        public static string VerificationCodeMismatch
+        {
+            get { return "Password does not match the confirm password"; }
+        }
+
+        public static string InvalidEmailID
+        {
+            get { return "Enter A valid Email-ID"; }
+        }
+
+        public static string TimeExpired
+        {
+            get { return "Time expired"; }
+        }
+
+        public static string IncorrectVerificationCode
+        {
+            get { return "Verification Code is invalid"; }
+        }
+
 
         public static string EditImageButtonDisabled
         {
@@ -220,5 +247,7 @@ namespace TheClinicApp1._1.UIClasses
          {
              get { return "Fields may be empty or invaild"; }
          }
+
+       
     }
 }

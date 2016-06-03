@@ -193,6 +193,8 @@ namespace TheClinicApp1._1.Admin
                        //------* Deletes all roles except doctor role , as it has been used
                   
                     roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+
+                    roleObj.ClinicID = UA.ClinicID;
                     DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
                     if (dtAssignedRoles.Rows.Count > 0)
@@ -226,6 +228,8 @@ namespace TheClinicApp1._1.Admin
                         }
 
                         roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+
+                        roleObj.ClinicID = UA.ClinicID;
                         dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
                         
@@ -303,6 +307,8 @@ namespace TheClinicApp1._1.Admin
             roleObj.AssignRole();
 
             roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+
+            roleObj.ClinicID = UA.ClinicID;
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
             if (dtAssignedRoles.Rows.Count > 0)
@@ -439,6 +445,7 @@ namespace TheClinicApp1._1.Admin
 
             roleObj.UserID = UserID;
 
+            roleObj.ClinicID = UA.ClinicID;
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
 
@@ -493,6 +500,8 @@ namespace TheClinicApp1._1.Admin
             Errorbox.Attributes.Add("style", "display:none");
 
             roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+
+            roleObj.ClinicID = UA.ClinicID;
       DataTable dtAssignedRoles =      roleObj.GetAssignedRoleByUserID();
 
       if (dtAssignedRoles.Rows.Count > 0)

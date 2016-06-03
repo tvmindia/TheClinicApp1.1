@@ -291,6 +291,8 @@ namespace TheClinicApp1._1.MasterAdd
             roleObj.CreatedBy = UA.userName;
             roleObj.UserID = Guid.Parse(hdnUserID.Value);
 
+            roleObj.ClinicID = UA.ClinicID;
+
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
             DataRow[] DoctorRoleAssigned = dtAssignedRoles.Select("RoleID = '" + roleid + "'"); //CHecking whether user has already doctor role, if not , assigns doctor role for the user
