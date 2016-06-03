@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="ReportsList.aspx.cs" Inherits="TheClinicApp1._1.ReportsList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script src="Scripts/jquery-1.12.0.min.js"></script>
 
 
     <style>
@@ -41,7 +42,23 @@ tr.odd td {
 
     </style>
 
+    <script>
+        function test()
+        {
+            debugger;
+            var $row = $(this).find('td:first');
 
+
+                var clickeedID = $row.eq(1).text();
+                alert(clickeedID);
+
+            //editedrow = $(this).closest('tr');
+            //var id = $(this).attr('idval')
+            //var manu = $(editedrow).find("td:eq(1)").text();
+
+            
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

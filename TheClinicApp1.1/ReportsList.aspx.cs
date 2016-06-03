@@ -42,7 +42,7 @@ namespace TheClinicApp1._1
 
              DataTable dt = ReprtObj.GetReportList();
 
-             string ColumnsToHide = "ReportID" + "|" + "IsActive"  + "|"+"ClinicID";
+             string ColumnsToHide =  "IsActive"  + "|"+"ClinicID";
 
              string[] colmnToHide = ColumnsToHide.Split('|');
 
@@ -67,12 +67,18 @@ namespace TheClinicApp1._1
 
                 foreach (DataColumn column in temp.Columns)
                 {
-                        //if (column.ColumnName != "ReportID" && column.ColumnName != "IsActive" && column.ColumnName != "ClinicID")
-                        //{
-                            html.Append("<th>");
-                            html.Append(column.ColumnName);
-                            html.Append("</th>");
-                        //}
+                    if (column.ColumnName != "ReportID")
+                    {
+                        html.Append("<th>");
+                        html.Append(column.ColumnName);
+                        html.Append("</th>");
+                    }
+                    else
+                    {
+                        html.Append("<th style='display:none;'>");
+                        html.Append(column.ColumnName);
+                        html.Append("</th>");
+                    }
                  }
 
                 //Creating last header ' view' 
@@ -102,23 +108,30 @@ namespace TheClinicApp1._1
 
                     foreach (DataColumn column in temp.Columns)
                     {
-                        //if (column.ColumnName != "ReportID" && column.ColumnName != "IsActive" && column.ColumnName != "ClinicID")
-                        //{
+                        if (column.ColumnName != "ReportID" )
+                        {
                             html.Append("<td>");
                             html.Append(row[column.ColumnName]);
                             html.Append("</td>");
-                        //}
+                        }
+
+                        else
+                        {
+                            html.Append("<td style='display:none;'>");
+                            html.Append(row[column.ColumnName]);
+                            html.Append("</td>");
+                        }
                     }
 
 
                     //Create clickable image to view report
-
                     html.Append("<td>");
 
-                    html.Append(" <a href='../Admin/Admin.aspx'><img src='../images/package_icon13.png' title='View report' /></a>");
-                       
-                   
+                    html.Append(" <a onclick='test();'><img src='../images/package_icon13.png' title='View report' /></a>");
+
+
                     html.Append("</td>");
+                  
                     html.Append("</tr>");
 
                 }
