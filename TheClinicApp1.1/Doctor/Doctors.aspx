@@ -119,37 +119,9 @@
             } 
 
 
-            function GetTextBoxValuesPresLocal(){    
-       
-             debugger;
-
-            if(($('#<%=txtHeightFeet.ClientID%>').val() != '')&&($('#<%=txtHeightInch.ClientID%>').val()!='')&&($('#<%=txtWeight.ClientID%>').val()!=''))
-            {
-                $('#<%=txtHeightFeet.ClientID%>').val('');
-                $('#<%=txtHeightInch.ClientID%>').val('');
-                $('#<%=txtWeight.ClientID%>').val('');
-            }    
- 
-
-            if(($('input[type=text]').val()=='')&&($('textarea').val()==''))
-            {
-
-
-            var lblclass = Alertclasses.danger;
-            var lblmsg = msg.Requiredfields;
-            var lblcaptn = Caption.Confirm;
-
-             ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
-
-                   
-                return false;
-                    
-            }
-            else
-            {       
+        function GetTextBoxValuesPresLocal()
+            {   
                 GetTextBoxValuesPresDoc('<%=hdnTextboxValues.ClientID%>');
-            }
-
             }
                     
             function FillTextboxUsingXml(){
@@ -157,6 +129,8 @@
                 GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
                 RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
             }
+
+
             function reset(){
                 $('input[type=text]').val('');  
                 $('textarea').val(''); 
@@ -164,6 +138,8 @@
                 $('input[type=radio]').val('');
                 $('input[type=checkbox]').val('');  
             }
+
+
 
             function CheckEmpty()
             {
@@ -180,7 +156,7 @@
                    
 
 
-// Alert.render("Sorry...");
+                     // Alert.render("Sorry...");
                     return false;
                     
                 }
@@ -279,7 +255,7 @@
 
                 <ul class="top_right_links">
                     <li>
-                        <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="return GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li>
+                        <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li>
                     <li><a class="new" href="#" id="btnNew" runat="server" onclick="reset();" onserverclick="btnNew_ServerClick"><span></span>New</a></li>
                 </ul>
             </div>
@@ -370,7 +346,7 @@
 
                         <div class="row">
                             <div class="col-lg-12">
-                                <label for="symptoms">Symptoms</label><textarea id="symptoms" runat="server"></textarea>
+                                <label for="symptoms">Symptoms</label><textarea id="sympto ms" runat="server"></textarea>
                             </div>
                         </div>
 

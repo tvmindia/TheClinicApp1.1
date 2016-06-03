@@ -120,9 +120,9 @@ function clickStockAdd(id) {
        + '<td><input id="txtCategory' + iCnt + '" readonly="true" class="input "  type="text" /></td>'
        + '<td><input id="txtQuantity' + iCnt + '" class="input" min="1" type="number"  onblur="CheckMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" autocomplete="off" /></td>'
        + '<td style="background:#E6E5E5">'
-       + '<input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" /></td>'
+       + '<input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" accesskey="-" /></td>'
        + '<td style="background:#E6E5E5">'
-       + '<input type="button" id="btAdd' + iCnt + '" value="+" onclick="clickStockAdd(' + iCnt + ')" class="bt" style="width:20px" /></td>'
+       + '<input type="button" id="btAdd' + iCnt + '" value="+" onclick="clickStockAdd(' + iCnt + ')" class="bt" style="width:20px" accesskey="+" /></td>'
        + '<td style="background:#E6E5E5"><input id="hdnDetailID' + iCnt + '" type="hidden" /> <input id="hdnQty' + iCnt + '" type="hidden" /></td>'
                               + '</tr> </table> </div>');
 

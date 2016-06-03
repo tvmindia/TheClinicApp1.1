@@ -395,7 +395,7 @@ namespace TheClinicApp1._1.Doctor
         #region Update Visits
         protected void ImgBtnUpdateVisits_Command(object sender, CommandEventArgs e)
         {
-
+            
             lblErrorCaption.Text = string.Empty;
             lblMsgges.Text = string.Empty;
             Errorbox.Style["display"] = "none";

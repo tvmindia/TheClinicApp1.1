@@ -87,7 +87,7 @@ namespace TheClinicApp1._1.Masters
                     if (currPage == Const.PharmacyPage) { }
                     if (currPage == Const.StockPage) { }
                     if (currPage == Const.AdminPage) {
-                        if (!(currRole.Contains( Const.RoleDoctor) | currRole.Contains(Const.RoleAdministrator)))
+                        if (!currRole.Contains(Const.RoleAdministrator))
                         {
                             From = From + Const.Admin;
                             redirectURL = Const.AccessDeniedURL + From;
