@@ -53,7 +53,6 @@ namespace TheClinicApp1._1
                  temp.Columns.Remove(colmnToHide[i]);
              }
             
-
                 //Building an HTML string.
                 StringBuilder html = new StringBuilder();
 
