@@ -163,10 +163,10 @@ namespace TheClinicApp1._1.ClinicDAL
                     cmd = new SqlCommand("ReportOutOfStockMedicine", con);
 
                     HtmlReprtObj.Columns.Add("Name");
-                    HtmlReprtObj.Columns.Add("MedCode");
+                    HtmlReprtObj.Columns.Add("Medicine Code");
                     HtmlReprtObj.Columns.Add("Unit");
                     HtmlReprtObj.Columns.Add("Qty");
-                    HtmlReprtObj.Columns.Add("CategoryName");
+                    HtmlReprtObj.Columns.Add("Category Name");
                     HtmlReprtObj.Columns.Add("ReOrderQty");
                     
                 }
@@ -176,10 +176,10 @@ namespace TheClinicApp1._1.ClinicDAL
                     cmd = new SqlCommand("ReportMedicines", con);
 
                     HtmlReprtObj.Columns.Add("Name");
-                    HtmlReprtObj.Columns.Add("MedCode");
+                    HtmlReprtObj.Columns.Add("Medicine Code");
                     HtmlReprtObj.Columns.Add("Unit");
                     HtmlReprtObj.Columns.Add("Qty");
-                    HtmlReprtObj.Columns.Add("CategoryName");
+                    HtmlReprtObj.Columns.Add("Category Name");
                     HtmlReprtObj.Columns.Add("ReOrderQty");
                 }
 

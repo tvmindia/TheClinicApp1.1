@@ -44,27 +44,22 @@ namespace TheClinicApp1._1.Report
                 ID = Request.QueryString["ID"].ToString();
             }
 
-           
-
              UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             if (!IsPostBack)
             {
                 if (ID != string.Empty)
-	{
-		 
-	
-
+	            {
                 clinicReprtObj.ReportID = Guid.Parse(ID);
 
-                string html = clinicReprtObj.GetReport();
+                string html = clinicReprtObj.GetReport();                               //body
 
 
                 if (html != string.Empty)
                 {
                     PlaceHolder1.Controls.Add(new Literal { Text = html });
 
-                    htmlRprtObj.LogoURL = "../images/logo-small.png";
+                    htmlRprtObj.LogoURL = "../images/logo-small.png";                   //header
                     htmlRprtObj.Name = UA.Clinic;
 
                     htmlRprtObj.ReportName = clinicReprtObj.ReportName;
@@ -76,7 +71,7 @@ namespace TheClinicApp1._1.Report
                         PlaceHolder3.Controls.Add(new Literal { Text = header });
                     }
 
-                    htmlRprtObj.CreatedBy = UA.userName;
+                    htmlRprtObj.CreatedBy = UA.userName;                                //footer
 
                     if (htmlRprtObj.CreatedBy != null)
                     {

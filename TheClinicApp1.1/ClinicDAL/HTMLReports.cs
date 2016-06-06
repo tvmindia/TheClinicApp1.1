@@ -96,8 +96,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
                     html.Append("<tr>");                           //Building the Header row.
 
-                    //string[] Temp = ColumnsToHide.Split('|');
-
                     foreach (DataColumn column in dt.Columns)
                     {
                         if (Columns.Count > 0)            
