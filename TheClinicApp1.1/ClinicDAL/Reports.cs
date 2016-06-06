@@ -191,14 +191,23 @@ namespace TheClinicApp1._1.ClinicDAL
                 //cmd.Parameters.Add("@FromDate", SqlDbType.Date).Value = FromDate;
                 //cmd.Parameters.Add("@ToDate", SqlDbType.Date).Value = ToDate;
 
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
 
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = cmd;
-                dt = new DataTable();
-                adapter.Fill(dt);
-                con.Close();
+                if (cmd != null)
+                {
+                    cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter adapter = new SqlDataAdapter();
+                    adapter.SelectCommand = cmd;
+                    dt = new DataTable();
+                    adapter.Fill(dt);
+                    con.Close();
+                }
+
+                else
+                {
+                    dt = null;
+                }
 
             }
             catch (Exception ex)

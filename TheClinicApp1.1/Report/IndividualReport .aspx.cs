@@ -50,23 +50,46 @@ namespace TheClinicApp1._1.Report
 
             if (!IsPostBack)
             {
+                if (ID != string.Empty)
+	{
+		 
+	
+
                 clinicReprtObj.ReportID = Guid.Parse(ID);
 
                 string html = clinicReprtObj.GetReport();
 
-                PlaceHolder1.Controls.Add(new Literal { Text = html });
 
-                htmlRprtObj.LogoURL = "../images/logo-small.png";
-                htmlRprtObj.Name = UA.Clinic;
-                htmlRprtObj.ReportName = clinicReprtObj.ReportName;
-                 string header =   htmlRprtObj.GenerateHeader();
-                 PlaceHolder3.Controls.Add(new Literal { Text = header });
+                if (html != string.Empty)
+                {
+                    PlaceHolder1.Controls.Add(new Literal { Text = html });
 
+                    htmlRprtObj.LogoURL = "../images/logo-small.png";
+                    htmlRprtObj.Name = UA.Clinic;
 
-                htmlRprtObj.CreatedBy = UA.userName;
-                string footer =   htmlRprtObj.GenerateFooter();
-                PlaceHolder2.Controls.Add(new Literal { Text = footer });
+                    htmlRprtObj.ReportName = clinicReprtObj.ReportName;
 
+                    if (htmlRprtObj.LogoURL != null && htmlRprtObj.Name != null && htmlRprtObj.ReportName != null)
+                    {
+
+                        string header = htmlRprtObj.GenerateHeader();
+                        PlaceHolder3.Controls.Add(new Literal { Text = header });
+                    }
+
+                    htmlRprtObj.CreatedBy = UA.userName;
+
+                    if (htmlRprtObj.CreatedBy != null)
+                    {
+                        string footer = htmlRprtObj.GenerateFooter();
+                        PlaceHolder2.Controls.Add(new Literal { Text = footer });
+                    }
+
+                   
+                    
+                }
+
+               
+            }
 
             }
 

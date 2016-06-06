@@ -48,7 +48,7 @@ table td{
 .tab th{
      border: none;
     border-collapse:collapse;
-   font-size:25px!important;
+   font-size:22px!important;
     text-align:left;
    background-color:white;
    color:black;

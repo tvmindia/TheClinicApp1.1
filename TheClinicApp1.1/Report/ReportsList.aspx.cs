@@ -30,66 +30,65 @@ namespace TheClinicApp1._1
 
         #endregion Global Varibales
 
+        #region Public Properties
+
+        public List<string> Columns = new List<string>();
+
+        #endregion Public Properties
+
 
         protected void Page_Load(object sender, EventArgs e)
          {
+
+             Columns.Add("ReportID");
+             Columns.Add("Report");                              //Speicfy columns to be displayed
+             Columns.Add("Description");
+
            if (!this.IsPostBack)
              {
-           
-                //Populating a DataTable from database.
+                 DataTable dt = ReprtObj.GetReportList();       //Populating a DataTable from database.
 
-             DataTable dt = ReprtObj.GetReportList();
+                 StringBuilder html = new StringBuilder();      //Building an HTML string.
 
-             string ColumnsToHide =  "IsActive"  + "|"+"ClinicID";
+                 html.Append("<table class='tab'  >");          //Table start.
 
-             string[] colmnToHide = ColumnsToHide.Split('|');
+                 html.Append("<tr>");                          //Building the Header row.  
 
-             DataTable temp = dt;
-
-             for (int i = 0; i < colmnToHide.Length ; i++)
-             {
-                 temp.Columns.Remove(colmnToHide[i]);
-             }
-            
-                //Building an HTML string.
-                StringBuilder html = new StringBuilder();
-
-                //Table start.
-                html.Append("<table class='tab'  >");
-
-                //Building the Header row.
-                html.Append("<tr>");
-
-                //string[] Temp = ColumnsToHide.Split('|');
-
-                foreach (DataColumn column in temp.Columns)
+                foreach (DataColumn column in dt.Columns)
                 {
-                    if (column.ColumnName != "ReportID")
+
+                    if (Columns.Count > 0)
+                    {
+                        if (Columns.Contains(column.ColumnName))  //Adding the specified columns
+                        {
+                            if (column.ColumnName != "ReportID") 
+                            {
+                                html.Append("<th>");
+                                html.Append(column.ColumnName);
+                                html.Append("</th>");
+                            }
+                           
+                        }
+                    }
+                    else                                          //USE DEFAULT COLUMNS
                     {
                         html.Append("<th>");
                         html.Append(column.ColumnName);
                         html.Append("</th>");
                     }
-                    else
-                    {
-                        html.Append("<th style='display:none;'>");
-                        html.Append(column.ColumnName);
-                        html.Append("</th>");
-                    }
+
                  }
 
-                //Creating last header ' view' 
-                html.Append("<th>");
+
+                html.Append("<th>");                              //Creating last header ' view' 
                 html.Append(" ");
 
                 html.Append("</th>");
                 html.Append("</tr>");
 
-                //Building the Data rows.
-
                 int rowIndex = 0;
 
-                foreach (DataRow row in temp.Rows)
+                foreach (DataRow row in dt.Rows)                  //Building the Data rows.
                 {
                     rowIndex = rowIndex + 1;
 
@@ -106,32 +105,48 @@ namespace TheClinicApp1._1
                     string ReportID = string.Empty;
 
 
-                    foreach (DataColumn column in temp.Columns)
+                    foreach (DataColumn column in dt.Columns)
                     {
-                        if (column.ColumnName != "ReportID" )
+                        if (Columns.Count > 0)
+                        {
+                            if (Columns.Contains(column.ColumnName))  //Adding the specified columns except reportid
+                            {
+
+                                if (column.ColumnName != "ReportID")
+                                {
+                                    html.Append("<td>");
+                                    html.Append(row[column.ColumnName]);
+                                    html.Append("</td>");
+                                }
+
+                                else
+                                {
+                                    ReportID = row[column.ColumnName].ToString();  //Get the report id to pass
+
+                                }
+                            }
+
+                        }
+
+
+                        else
                         {
                             html.Append("<td>");
                             html.Append(row[column.ColumnName]);
                             html.Append("</td>");
+
+                            if (column.ColumnName == "ReportID")
+                            {
+                                ReportID = row[column.ColumnName].ToString();
+                            }
                         }
-
-                        else
-                        {
-                            html.Append("<td style='display:none;'>");
-                            html.Append(row[column.ColumnName]);
-                            html.Append("</td>");
-
-                            ReportID = row[column.ColumnName].ToString();
-
-                        }
+                       
                     }
 
 
-                    //Create clickable image to view report
-                    html.Append("<td>");
+                    html.Append("<td>");                                          //Create clickable image to view report
 
                     html.Append(" <a href='IndividualReport .aspx?ID=" + ReportID + "'><img src='../images/package_icon13.png' title='View report' /></a>");
-
 
                     html.Append("</td>");
                   
@@ -139,13 +154,11 @@ namespace TheClinicApp1._1
 
                 }
 
-                //Table end.
-                html.Append("</table>");
+                html.Append("</table>");                                          //Table end.
 
-                //Append the HTML string to Placeholder.
-                PlaceHolder1.Controls.Add(new Literal { Text = html.ToString() });
-
+                PlaceHolder1.Controls.Add(new Literal { Text = html.ToString() });    //Append the HTML string to Placeholder.
+               }
             }
         }
-    }
+    
 }
