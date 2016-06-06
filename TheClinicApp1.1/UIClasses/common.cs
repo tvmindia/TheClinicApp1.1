@@ -201,7 +201,7 @@ namespace TheClinicApp1._1.UIClasses
         {
             get
             {
-                return "pharmacist";
+                return "Pharmacist";
             }
         }
 
