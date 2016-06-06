@@ -11,6 +11,9 @@ namespace TheClinicApp1._1.UIClasses
     public class Const
     {
         //   public string LoginSession = "LoginDetails";
+
+
+
         public string LoginSession
         {
             get
@@ -62,6 +65,14 @@ namespace TheClinicApp1._1.UIClasses
         }
 
       
+         public string ReportPageURL
+        {
+            get
+            {
+                return "ReportsList.aspx";
+            }
+        }
+
 
 
         public string PatientPage
@@ -177,9 +188,7 @@ namespace TheClinicApp1._1.UIClasses
             }
         }
 
-
-
-
+       
 
         public string RoleDoctor
         {
