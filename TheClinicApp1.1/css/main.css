@@ -445,6 +445,7 @@ ul.menu li a span.icon.stock {background: url(../images/stock.png) no-repeat cen
 ul.menu li a span.icon.admin {background: url(../images/admin.png) no-repeat center center #fff;}
 ul.menu li a span.icon.master {background: url(../images/Masters.png) no-repeat center center #fff;}
 ul.menu li a span.icon.logout {background: url(../images/Logout.png) no-repeat center center #fff;}
+ul.menu li a span.icon.report {background: url(../images/ReportBlack.png) no-repeat center center #fff;}
 
 ul.menu li a span.text {display: inline-block; vertical-align: top; width: 75%; line-height: 58px; position: absolute;} 
 
@@ -489,7 +490,7 @@ ul.menu li.active a span.icon.stock {background: url(../images/stock-hover.png) 
 ul.menu li.active a span.icon.admin {background: url(../images/Admin-white.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.master {background: url(../images/Masters-white.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.logout {background: url(../images/Logout.png) no-repeat center center #3661c7;}
-
+ul.menu li.active a span.icon.report {background: url(../images/ReportWhite.png) no-repeat center center #3661c7;}
 
 
 p.copy {padding: 16px 0; display: block; text-align: center; color: #000; font-size: 14px; line-height: 20px; text-transform: uppercase; font-family:'caviardreams-regular'; margin: 0; position: absolute; bottom: 0; left: 0; right: 0;}

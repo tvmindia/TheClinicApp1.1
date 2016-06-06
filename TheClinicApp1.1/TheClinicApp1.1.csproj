@@ -174,8 +174,6 @@
     <Content Include="images\case-history.png" />
     <Content Include="images\categories-512 copy.png" />
     <Content Include="images\Check.png" />
-    <Content Include="images\computer-monitor-with-bar-graph %281%29.png" />
-    <Content Include="images\computer-monitor-with-bar-graph.png" />
     <Content Include="images\Deleteicon1.png" />
     <Content Include="images\Deleteicon2 %283%29.png" />
     <Content Include="images\doctor-hover.png" />
@@ -228,6 +226,8 @@
     <Content Include="images\registration.png" />
     <Content Include="images\Report-Next.png" />
     <Content Include="images\save.png" />
+    <Content Include="images\ReportBlack.png" />
+    <Content Include="images\ReportWhite.png" />
     <Content Include="images\spindown - Copy.png" />
     <Content Include="images\spindown.png" />
     <Content Include="images\spinup - Copy.png" />
