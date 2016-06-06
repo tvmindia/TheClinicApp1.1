@@ -1,7 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="ReportsList.aspx.cs" Inherits="TheClinicApp1._1.ReportsList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="Scripts/jquery-1.12.0.min.js"></script>
 
+    <link href="../css/main.css" rel="stylesheet" />
+
+    <script src="Scripts/jquery-1.12.0.min.js"></script>
+    <script src="../js/JavaScript_selectnav.js"></script>
 
     <style>
      tr.even td {
@@ -21,6 +24,18 @@ tr.odd td {
 }
 
 
+table td{
+    width:19%!important;
+    height:30%!important;
+    padding-left:5px;
+    padding-bottom:5px;
+    margin:5px 5px 5px 5px 5px;
+    font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:20px!important;
+
+}
+
+
 .tab, tr, td,th {
  
     border: none;
@@ -33,7 +48,7 @@ tr.odd td {
 .tab th{
      border: none;
     border-collapse:collapse;
-  
+   font-size:25px!important;
     text-align:left;
    background-color:white;
    color:black;
@@ -68,7 +83,21 @@ tr.odd td {
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
          <ul class="menu">
-         <li  id="patients"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+
+               <li id="patients"><a name="hello" onclick="selectTile('patients','')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+                <li id="token"><a name="hello" onclick="selectTile('token','')"><span class="icon token"></span><span class="text">Token</span></a></li>
+                <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+                <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
+                <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
+                 <li id="admin"  runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+                 <li id="Repots"><a name="hello" class="active" href="../Report/ReportsList.aspx"><span class="icon admin"></span><span class="text">Reports</span></a></li>
+                <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+              
+
+
+
+
+<%--         <li  id="patients"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
          <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
          <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
          <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
@@ -77,7 +106,7 @@ tr.odd td {
                <li id="Repots"  class="active"><a name="hello" href="ReportsList.aspx" ><span class="icon admin"></span><span class="text">Reports</span></a></li>
          <li id="master" runat="server" visible="false"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
          <li id="log" runat="server"><a class="logout" name="hello" id="Logout" runat="server" ><span class="icon logout"></span><span class="text">Logout</span></a></li>
-         
+         --%>
          </ul><p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p></div>
          
          <!-- Right Main Section -->
@@ -122,5 +151,7 @@ tr.odd td {
 
      </div>
     </div>
-                
+               
+             
+                 
 </asp:Content>

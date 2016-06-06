@@ -33,8 +33,6 @@ namespace TheClinicApp1._1
 
         protected void Page_Load(object sender, EventArgs e)
          {
-            bool UsedefaultColumn = true;
-
            if (!this.IsPostBack)
              {
            
@@ -105,6 +103,9 @@ namespace TheClinicApp1._1
                         html.Append("<tr class='odd'>");
                     }
 
+                    string ReportID = string.Empty;
+
+
                     foreach (DataColumn column in temp.Columns)
                     {
                         if (column.ColumnName != "ReportID" )
@@ -119,6 +120,9 @@ namespace TheClinicApp1._1
                             html.Append("<td style='display:none;'>");
                             html.Append(row[column.ColumnName]);
                             html.Append("</td>");
+
+                            ReportID = row[column.ColumnName].ToString();
+
                         }
                     }
 
@@ -126,7 +130,7 @@ namespace TheClinicApp1._1
                     //Create clickable image to view report
                     html.Append("<td>");
 
-                    html.Append(" <a onclick='test();'><img src='../images/package_icon13.png' title='View report' /></a>");
+                    html.Append(" <a href='IndividualReport .aspx?ID=" + ReportID + "'><img src='../images/package_icon13.png' title='View report' /></a>");
 
 
                     html.Append("</td>");
