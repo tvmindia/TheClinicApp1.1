@@ -52,11 +52,11 @@ namespace TheClinicApp1._1.Masters
             lblUser.Text = "👤 " + Login + " ";
             RoleName= UA.GetRoleName1(Login);           
             //*Check Roles Assigned and Giving Visibility For Admin Tab
-            if (RoleName.Contains(Const.RoleAdministrator))
-            {
-                admin.Visible = true;
-                master.Visible = true;               
-            }
+            //if (RoleName.Contains(Const.RoleAdministrator))
+            //{
+            //    admin.Visible = true;
+            //    master.Visible = true;               
+            //}
         }
 
 
@@ -86,6 +86,7 @@ namespace TheClinicApp1._1.Masters
                     }
                     if (currPage == Const.PharmacyPage) { }
                     if (currPage == Const.StockPage) { }
+
                     if (currPage == Const.AdminPage) {
                         if (!currRole.Contains(Const.RoleAdministrator))
                         {
@@ -93,6 +94,30 @@ namespace TheClinicApp1._1.Masters
                             redirectURL = Const.AccessDeniedURL + From;
                         } 
                     }
+
+//-----------Checking access of report tab ,user with only pharmacist role is not allowed to get report ------------
+                    if (currPage == Const.ReportPageURL)
+                    {
+                        if (currRole.Count == 1 && currRole.Contains(Const.RolePharmacist))
+                        {
+                            From = From + Const.RolePharmacist;
+                            redirectURL = Const.AccessDeniedURL + From;
+                        }
+
+
+
+                        //if (currRole.Contains(Const.Patient) || currRole.Contains(Const.Token) || currRole.Contains(Const.Token) || currRole.Contains(Const.Doctor) || currRole.Contains(Const.Stock) || currRole.Contains(Const.Admin) || currRole.Contains(Const.RoleAdministrator)) 
+                        //{
+                           
+                        //}
+                        //else
+                        //{
+                        //    From = From + Const.RolePharmacist;
+                        //    redirectURL = Const.AccessDeniedURL + From;
+                        //}
+                    }
+
+
                     if (currPage == Const.MasterPage)
                     {
                         if (!(currRole.Contains(Const.RoleAdministrator)))
