@@ -100,7 +100,7 @@
         <div id="id01" class="w3-modal" runat="server">
   <span onclick="document.getElementById('id01').style.display='none'" 
   class="w3-closebtn w3-hover-red w3-container w3-padding-16 w3-display-topright w3-xxlarge" style="color:white">×</span>
-  <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:600px;height:372px;">  
+  <div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width:450px;height:245px;">  
               <iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>
   </div>
         <asp:Label ID="lblError" runat="server" Text=""></asp:Label>

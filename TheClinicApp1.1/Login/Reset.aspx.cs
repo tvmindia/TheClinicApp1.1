@@ -65,25 +65,25 @@ namespace TheClinicApp1._1.Login
 
         //#endregion Encrypt Password
 
-        #region Reset Button Click
-        protected void btnReset_ServerClick(object sender, EventArgs e)
-        {
-            userObj.passWord = CrypObj.Encrypt(txtConfirmPassword.Value);
+        //#region Reset Button Click
+        //protected void btnReset_ServerClick(object sender, EventArgs e)
+        //{
+        //    userObj.passWord = CrypObj.Encrypt(txtConfirmPassword.Value);
 
 
-            if (txtNewPassword.Value == txtConfirmPassword.Value)
-            {
-                userObj.ResetPassword(UserID);
-                //Response.Redirect("../Login/Login.aspx", false);
-            }
+        //    if (txtNewPassword.Value == txtConfirmPassword.Value)
+        //    {
+        //        userObj.ResetPassword(UserID);               
+        //        Response.Redirect("../Login/Sucess.aspx");
+        //    }
 
-            else
-            {
-                lblError.Text = Messages.VerificationCodeMismatch;
-            }
-        }
+        //    else
+        //    {
+        //        lblError.Text = Messages.VerificationCodeMismatch;
+        //    }
+        //}
 
-        #endregion Reset Button Click
+        //#endregion Reset Button Click
 
         #endregion Methods
 
@@ -100,6 +100,24 @@ namespace TheClinicApp1._1.Login
             }
         }
         #endregion Page Load
+
+        protected void btnReset_Click(object sender, EventArgs e)
+        {
+            userObj.passWord = CrypObj.Encrypt(txtConfirmPassword.Value);
+
+
+            if (txtNewPassword.Value == txtConfirmPassword.Value)
+            {
+                userObj.ResetPassword(UserID);               
+                Response.Redirect("../Login/Sucess.aspx");
+            }
+
+            else
+            {
+                lblError.Text = Messages.VerificationCodeMismatch;
+            }
+        }
+        
 
         #endregion Events
 
