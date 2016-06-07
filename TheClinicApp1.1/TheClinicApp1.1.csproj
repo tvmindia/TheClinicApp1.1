@@ -225,9 +225,9 @@
     <Content Include="images\registration-hover.png" />
     <Content Include="images\registration.png" />
     <Content Include="images\Report-Next.png" />
-    <Content Include="images\save.png" />
     <Content Include="images\ReportBlack.png" />
     <Content Include="images\ReportWhite.png" />
+    <Content Include="images\save.png" />
     <Content Include="images\spindown - Copy.png" />
     <Content Include="images\spindown.png" />
     <Content Include="images\spinup - Copy.png" />
