@@ -37,6 +37,13 @@ namespace TheClinicApp1._1.Report
         #region Page Load
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Request.QueryString["ReportName"] != null)
+            {
+                Page.Title = Request.QueryString["ReportName"].ToString();
+            }
+
+           
             string ID = string.Empty;
 
             if (Request.QueryString["ID"] != null)

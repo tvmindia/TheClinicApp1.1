@@ -147,7 +147,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
                 }
-                else if (ReportCode == 1234)                                    //Individual Patient
+                else if (ReportCode == 1003)                                    //Individual Patient //NOT using now
                 {
                     cmd = new SqlCommand("ReportPatientByID", con);
                     cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
@@ -188,7 +188,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     HtmlReprtObj.Columns.Add("ReOrderQty");
                 }
 
-                else if (ReportCode == 1111)       //Transaction
+                else if (ReportCode == 1004)       //Transaction  //NOT using now
                 {
                     cmd = new SqlCommand("ViewMedicines", con); 
                 }

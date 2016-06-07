@@ -42,7 +42,7 @@ namespace TheClinicApp1._1
              ReprtObj.DisplaySerailNo = true ;
              int rowIndex = 0;
              string ReportID = string.Empty;
-
+             string ReportName = string.Empty;
 
              Columns.Add("ReportID");
              Columns.Add("Report");                              //Speicfy columns to be displayed
@@ -61,7 +61,7 @@ namespace TheClinicApp1._1
                  if ( ReprtObj.DisplaySerailNo == true)
                  {
                      html.Append("<th>");
-                     html.Append("slNo");
+                     html.Append("Sl.No.");
                      html.Append("</th>");
                  }
                      
@@ -143,6 +143,13 @@ namespace TheClinicApp1._1
                                     ReportID = row[column.ColumnName].ToString();  //Get the report id to pass
 
                                 }
+
+                                if (column.ColumnName == "Report")
+                                {
+                                   ReportName =  row[column.ColumnName].ToString(); 
+                                }
+
+
                             }
 
                         }
@@ -165,7 +172,7 @@ namespace TheClinicApp1._1
 
                     html.Append("<td>");                                          //Create clickable image to view report
 
-                    html.Append(" <a href='IndividualReport .aspx?ID=" + ReportID + "'><img src='../images/package_icon13.png' title='View report' /></a>");
+                    html.Append(" <a href='IndividualReport .aspx?ID=" + ReportID + "&ReportName=" + ReportName + "'><img src='../images/package_icon13.png' title='View report' /></a>");
 
                     html.Append("</td>");
                   
