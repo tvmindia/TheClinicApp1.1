@@ -73,6 +73,11 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
+        public bool DisplaySerailNo
+        {
+            get;
+            set;
+        }
       
         #endregion Public Properties
 
@@ -125,9 +130,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 SetReportNameBasedOnReportID();
 
-                if (ReportCode == 4321)
+                if (ReportCode == 1001)
                 {
-                    cmd = new SqlCommand("ReportRegisteredPatients", con);
+                    cmd = new SqlCommand("ReportRegisteredPatients", con);       //All patients
 
                     //-------* Specify columns to be added -------*/
 
@@ -142,7 +147,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
                 }
-                else if (ReportCode == 1234)
+                else if (ReportCode == 1234)                                    //Individual Patient
                 {
                     cmd = new SqlCommand("ReportPatientByID", con);
                     cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
@@ -158,7 +163,7 @@ namespace TheClinicApp1._1.ClinicDAL
                      
                 }
 
-                else if (ReportCode == 1111)
+                else if (ReportCode == 1002)                           //Out of stock
                 {
                     cmd = new SqlCommand("ReportOutOfStockMedicine", con);
 
@@ -171,7 +176,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     
                 }
 
-                else if (ReportCode == 8765)
+                else if (ReportCode == 1000)                //stock
                 {
                     cmd = new SqlCommand("ReportMedicines", con);
 
@@ -183,7 +188,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     HtmlReprtObj.Columns.Add("ReOrderQty");
                 }
 
-                else if (ReportCode == 5678)
+                else if (ReportCode == 1111)       //Transaction
                 {
                     cmd = new SqlCommand("ViewMedicines", con); 
                 }

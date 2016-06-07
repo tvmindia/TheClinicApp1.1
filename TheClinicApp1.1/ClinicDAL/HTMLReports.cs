@@ -67,6 +67,7 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
+       
         #endregion Public Properties
 
         #region Methods
@@ -78,10 +79,10 @@ namespace TheClinicApp1._1.ClinicDAL
         /// Inorder to apply alternative color for the rows ,different classes are added for even and odd rows
         /// </summary>
         /// <returns></returns>
-        public  string GenerateReport()
+        public  string GenerateReport( bool DisplaySerailNo = true)
         {
             string HtmlOfTable = string.Empty;
-
+           
             try
             {
 
@@ -96,18 +97,30 @@ namespace TheClinicApp1._1.ClinicDAL
 
                     html.Append("<tr>");                           //Building the Header row.
 
+
+                    if (DisplaySerailNo == true)
+                    {
+                        html.Append("<th>");
+                        html.Append("slNo");
+                        html.Append("</th>");
+                    }
+
+
                     foreach (DataColumn column in dt.Columns)
                     {
-                        if (Columns.Count > 0)            
-                        {
+                        if (Columns != null)
+	                            {
+		 
+                             if (Columns.Count > 0)            
+                                {
                             if (Columns.Contains(column.ColumnName))  //Adding the specified columns
-                            {
+                                {
                                 html.Append("<th>");
                                 html.Append(column.ColumnName);
                                 html.Append("</th>");
-                            }
-                        }
-
+                                }
+                                }
+                         }
                         else
                         {
                             html.Append("<th>");                    //Use default columns
@@ -136,15 +149,26 @@ namespace TheClinicApp1._1.ClinicDAL
                             html.Append("<tr class='odd'>");
                         }
 
+                        if (DisplaySerailNo == true)
+                        {
+                            html.Append("<td >");
+                            html.Append(rowIndex);
+                            html.Append("</td>");
+
+                        }
+
                         foreach (DataColumn column in dt.Columns)
                         {
-                            if (Columns.Count > 0)
+                            if (Columns != null)
                             {
-                                if (Columns.Contains(column.ColumnName))  //Adding the specified columns
+                                if (Columns.Count > 0)
                                 {
-                                    html.Append("<td >");
-                                    html.Append(row[column.ColumnName]);
-                                    html.Append("</td>");
+                                    if (Columns.Contains(column.ColumnName))  //Adding the specified columns
+                                    {
+                                        html.Append("<td >");
+                                        html.Append(row[column.ColumnName]);
+                                        html.Append("</td>");
+                                    }
                                 }
                             }
                             else
