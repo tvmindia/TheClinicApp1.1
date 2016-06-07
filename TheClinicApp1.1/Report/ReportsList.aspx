@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="ReportsList.aspx.cs" Inherits="TheClinicApp1._1.ReportsList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <link href="../css/main.css" rel="stylesheet" />
+    
 
     <script src="Scripts/jquery-1.12.0.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
@@ -107,7 +107,7 @@ table td{
                 <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
                  <li id="admin"  runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
-                 <li id="Repots"><a name="hello" class="active" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
+                 <li id="Repots" class="active"><a name="hello"  href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
                 <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
               
 
