@@ -61,7 +61,7 @@ namespace TheClinicApp1._1
                  if ( ReprtObj.DisplaySerailNo == true)
                  {
                      html.Append("<th>");
-                     html.Append("slNo");
+                     html.Append("Sl.No.");
                      html.Append("</th>");
                  }
                      
