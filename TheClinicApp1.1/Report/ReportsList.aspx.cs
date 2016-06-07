@@ -26,19 +26,23 @@ namespace TheClinicApp1._1
         #region Global Varibales
 
         Reports ReprtObj = new Reports();
-
+        UIClasses.Const Const = new UIClasses.Const();
 
         #endregion Global Varibales
 
         #region Public Properties
 
         public List<string> Columns = new List<string>();
-
+          
         #endregion Public Properties
 
 
         protected void Page_Load(object sender, EventArgs e)
          {
+             ReprtObj.DisplaySerailNo = true ;
+             int rowIndex = 0;
+             string ReportID = string.Empty;
+
 
              Columns.Add("ReportID");
              Columns.Add("Report");                              //Speicfy columns to be displayed
@@ -53,6 +57,14 @@ namespace TheClinicApp1._1
                  html.Append("<table class='tab'  >");          //Table start.
 
                  html.Append("<tr>");                          //Building the Header row.  
+
+                 if ( ReprtObj.DisplaySerailNo == true)
+                 {
+                     html.Append("<th>");
+                     html.Append("slNo");
+                     html.Append("</th>");
+                 }
+                     
 
                 foreach (DataColumn column in dt.Columns)
                 {
@@ -86,7 +98,6 @@ namespace TheClinicApp1._1
                 html.Append("</th>");
                 html.Append("</tr>");
 
-                int rowIndex = 0;
 
                 foreach (DataRow row in dt.Rows)                  //Building the Data rows.
                 {
@@ -102,7 +113,15 @@ namespace TheClinicApp1._1
                         html.Append("<tr class='odd'>");
                     }
 
-                    string ReportID = string.Empty;
+                  
+
+                    if (ReprtObj.DisplaySerailNo == true)
+                    {
+                        html.Append("<td >");
+                        html.Append(rowIndex);
+                        html.Append("</td>");
+
+                    }
 
 
                     foreach (DataColumn column in dt.Columns)
@@ -159,6 +178,13 @@ namespace TheClinicApp1._1
                 PlaceHolder1.Controls.Add(new Literal { Text = html.ToString() });    //Append the HTML string to Placeholder.
                }
             }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
         }
     
 }

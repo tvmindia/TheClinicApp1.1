@@ -31,28 +31,45 @@ table td{
     padding-bottom:5px;
     margin:5px 5px 5px 5px 5px;
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
-    font-size:20px!important;
+    font-size:16px!important;
 
 }
+
+
+/*.tab th{
+
+     
+     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:16px;
+    font-weight:100;
+}*/
 
 
 .tab, tr, td,th {
  
     border: none;
-    
+   
      /*border-collapse:separate;
     border-spacing:0 20px;*/
     
 }
 
 .tab th{
+
+     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size:18px;
+    font-weight:100;
      border: none;
     border-collapse:collapse;
-   font-size:22px!important;
+ 
     text-align:left;
    background-color:white;
    color:black;
     text-decoration: underline;
+
+    /*font-weight:100;
+      font-size:20px!important;*/
+
 }
 
     </style>
@@ -94,19 +111,6 @@ table td{
                 <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
               
 
-
-
-
-<%--         <li  id="patients"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
-         <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
-         <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
-         <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
-         <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-         <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
-               <li id="Repots"  class="active"><a name="hello" href="ReportsList.aspx" ><span class="icon admin"></span><span class="text">Reports</span></a></li>
-         <li id="master" runat="server" visible="false"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
-         <li id="log" runat="server"><a class="logout" name="hello" id="Logout" runat="server" ><span class="icon logout"></span><span class="text">Logout</span></a></li>
-         --%>
          </ul><p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p></div>
          
          <!-- Right Main Section -->
@@ -115,7 +119,7 @@ table td{
          <a class="nav_menu">Menu</a>
          Reports <ul class="top_right_links"><li>
          <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"></asp:Label></li><li>         
-         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClientClick="redirect();"  ToolTip="Logout" formnovalidate /></li></ul>
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click"  ToolTip="Logout" formnovalidate /></li></ul>
          </div>
              
             
