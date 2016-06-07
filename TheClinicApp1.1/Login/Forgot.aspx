@@ -19,7 +19,11 @@
 
 <form id="form1" class="w3-container w3-card-4" runat="server" >
     <p runat="server" id="instruction" visible="false">Please check your email for a message with yor verification code</p>
-<p id="email" runat="server" >    
+    <div style="height:10px;">
+
+    </div>
+<p id="email" runat="server" >  
+ 
 <label class="w3-label w3-validate">Email</label>
 <input class="w3-input" type="text" runat="server" id="txtEmail" style="width:90%" required="required" readonly onfocus="this.removeAttribute('readonly');"/>
 

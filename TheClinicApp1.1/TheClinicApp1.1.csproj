@@ -234,6 +234,7 @@
     <Content Include="images\spinup.png" />
     <Content Include="images\stock-hover.png" />
     <Content Include="images\stock.png" />
+    <Content Include="images\Successs.jpg" />
     <Content Include="images\today-registration.png" />
     <Content Include="images\token-hover.png" />
     <Content Include="images\token.png" />
@@ -262,6 +263,7 @@
     <Content Include="Login\Forgot.aspx" />
     <Content Include="Login\Login.aspx" />
     <Content Include="Login\Reset.aspx" />
+    <Content Include="Login\Sucess.aspx" />
     <Content Include="MasterAdd\AddDoctor.aspx" />
     <Content Include="MasterAdd\Categories.aspx" />
     <Content Include="MasterAdd\Medicnes.aspx" />
@@ -462,6 +464,13 @@
     </Compile>
     <Compile Include="Login\Reset.aspx.designer.cs">
       <DependentUpon>Reset.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login\Sucess.aspx.cs">
+      <DependentUpon>Sucess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login\Sucess.aspx.designer.cs">
+      <DependentUpon>Sucess.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterAdd\AddDoctor.aspx.cs">
       <DependentUpon>AddDoctor.aspx</DependentUpon>
