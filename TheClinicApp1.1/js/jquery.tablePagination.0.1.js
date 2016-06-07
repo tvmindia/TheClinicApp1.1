@@ -150,7 +150,10 @@
       
       if ($(totalPagesId).length == 0) {
           $(this).after(createPaginationElements());
-
+          if(numRows<=defaults.rowCountend)
+          {
+              $('#tablePagination').hide();
+          }
       }
       else {
         $('#tablePagination_currPage').val(currPageNumber);
