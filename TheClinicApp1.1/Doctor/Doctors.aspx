@@ -346,7 +346,7 @@
 
                         <div class="row">
                             <div class="col-lg-12">
-                                <label for="symptoms">Symptoms</label><textarea id="sympto ms" runat="server"></textarea>
+                                <label for="symptoms">Symptoms</label><textarea id="symptoms" runat="server"></textarea>
                             </div>
                         </div>
 
