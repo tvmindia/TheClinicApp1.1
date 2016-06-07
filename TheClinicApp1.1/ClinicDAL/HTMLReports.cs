@@ -31,7 +31,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Public Properties
 
-    public    List<string> Columns = new List<string>();
+        /// <summary>
+        ///To specify the column names to be added ,  it accepts column name and column width ,(if column width don't want to specify set it to 0)
+        /// </summary>
+        public  Dictionary<string, int> Columns = new Dictionary<string, int>();
 
 
         /// <summary>
@@ -67,7 +70,6 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
-       
         #endregion Public Properties
 
         #region Methods
@@ -85,7 +87,6 @@ namespace TheClinicApp1._1.ClinicDAL
            
             try
             {
-
                 DataTable dt = Datasource;                    //Populating a DataTable from database.
 
                 if (dt != null)
@@ -97,27 +98,36 @@ namespace TheClinicApp1._1.ClinicDAL
 
                     html.Append("<tr>");                           //Building the Header row.
 
-
                     if (DisplaySerailNo == true)
                     {
-                        html.Append("<th>");
-                        html.Append("slNo");
+                        html.Append("<th style='width:1%'>");
+                        html.Append("Sl.No.");
                         html.Append("</th>");
                     }
 
-
                     foreach (DataColumn column in dt.Columns)
                     {
-                        if (Columns != null)
+                        if (Columns!= null)
 	                            {
-		 
                              if (Columns.Count > 0)            
                                 {
-                            if (Columns.Contains(column.ColumnName))  //Adding the specified columns
+                                    if (Columns.ContainsKey(column.ColumnName))  //Adding the specified columns
                                 {
-                                html.Append("<th>");
-                                html.Append(column.ColumnName);
-                                html.Append("</th>");
+                                    int ColumnWidth = Columns[column.ColumnName];
+
+                                    if (ColumnWidth == 0)
+                                    {
+                                        html.Append("<th>");
+                                        html.Append(column.ColumnName);
+                                        html.Append("</th>");
+                                    }
+
+                                    else
+                                    {
+                                        html.Append("<th style='width:" + ColumnWidth + "%!important'>");
+                                        html.Append(column.ColumnName);
+                                        html.Append("</th>");
+                                    }
                                 }
                                 }
                          }
@@ -129,8 +139,6 @@ namespace TheClinicApp1._1.ClinicDAL
                         }
                     }
 
-
-                   
                     html.Append("</tr>");
 
                     int rowIndex = 0;
@@ -151,7 +159,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                         if (DisplaySerailNo == true)
                         {
-                            html.Append("<td >");
+                            html.Append("<td style='width:1%' >");
                             html.Append(rowIndex);
                             html.Append("</td>");
 
@@ -163,11 +171,23 @@ namespace TheClinicApp1._1.ClinicDAL
                             {
                                 if (Columns.Count > 0)
                                 {
-                                    if (Columns.Contains(column.ColumnName))  //Adding the specified columns
+                                    if (Columns.ContainsKey(column.ColumnName))  //Adding the specified columns
                                     {
-                                        html.Append("<td >");
-                                        html.Append(row[column.ColumnName]);
-                                        html.Append("</td>");
+                                        int ColumnWidth = Columns[column.ColumnName];
+
+                                        if (ColumnWidth == 0)
+                                        {
+                                            html.Append("<td >");
+                                            html.Append(row[column.ColumnName]);
+                                            html.Append("</td>");
+                                        }
+
+                                        else
+                                        {
+                                            html.Append("<td style='width:" + ColumnWidth + "%!important'>");
+                                            html.Append(row[column.ColumnName]);
+                                            html.Append("</td>");
+                                        }
                                     }
                                 }
                             }
@@ -180,9 +200,7 @@ namespace TheClinicApp1._1.ClinicDAL
                         }
 
                         html.Append("</tr>");
-
                     }
-
 
                     html.Append("</table>");                       //Table end.
 
@@ -193,12 +211,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     throw new ArgumentException("DataSource is empty");
                 }
-
             }
             catch (Exception ex)
             {
                 throw;
-
             }
 
             return HtmlOfTable;
@@ -230,7 +246,6 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             catch (Exception)
             {
-                
                 throw;
             }
            
@@ -264,19 +279,16 @@ namespace TheClinicApp1._1.ClinicDAL
                     throw new ArgumentException("Pass parameters properly");
                 }
 
-                
             }
             catch (Exception)
             {
                 throw;
             }
 
-           
             return html.ToString();
         }
 
         #endregion Generate Header
-
 
         #endregion Methods
     }

@@ -25,7 +25,7 @@ table th{
     font-weight:100;
 }
 table td{
-    width:19%!important;
+    width:19%;
     height:auto!important;
     padding-left:5px;
     margin:5px 5px 5px 5px 5px;
