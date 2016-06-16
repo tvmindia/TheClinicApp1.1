@@ -35,6 +35,12 @@ namespace TheClinicApp.Handler
                         Image imgFromGB = Image.FromStream(memoryStream);
                         imgFromGB.Save(context.Response.OutputStream, ImageFormat.Jpeg);
                     }
+                    else
+                    {
+                        context.Response.ContentType = "image/png";
+                        context.Response.WriteFile("~/images/UploadPic1.jpg"); 
+
+                    }
 
                 }
             }
