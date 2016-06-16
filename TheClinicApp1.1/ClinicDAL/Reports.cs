@@ -136,14 +136,14 @@ namespace TheClinicApp1._1.ClinicDAL
 
                     //-------* Specify columns to be added -------*/
 
-                    HtmlReprtObj.Columns.Add("Name");                  
-                    HtmlReprtObj.Columns.Add("Address");
-                    HtmlReprtObj.Columns.Add("Phone");
-                    HtmlReprtObj.Columns.Add("DOB");
-                    HtmlReprtObj.Columns.Add("Email");
-                    HtmlReprtObj.Columns.Add("Gender");
-                    HtmlReprtObj.Columns.Add("Marital Status");
-                    HtmlReprtObj.Columns.Add("Occupation");
+                    HtmlReprtObj.Columns.Add("Name", 0);
+                    HtmlReprtObj.Columns.Add("Address", 0);
+                    HtmlReprtObj.Columns.Add("Phone", 0);
+                    HtmlReprtObj.Columns.Add("DOB", 0);
+                    HtmlReprtObj.Columns.Add("Email", 0);
+                    HtmlReprtObj.Columns.Add("Gender", 0);
+                    HtmlReprtObj.Columns.Add("Marital Status", 0);
+                    HtmlReprtObj.Columns.Add("Occupation", 0);
 
 
                 }
@@ -152,14 +152,14 @@ namespace TheClinicApp1._1.ClinicDAL
                     cmd = new SqlCommand("ReportPatientByID", con);
                     cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
 
-                    HtmlReprtObj.Columns.Add("Name");
-                    HtmlReprtObj.Columns.Add("Address");
-                    HtmlReprtObj.Columns.Add("Phone");
+                    HtmlReprtObj.Columns.Add("Name",0);
+                    HtmlReprtObj.Columns.Add("Address",0);
+                    HtmlReprtObj.Columns.Add("Phone",0);
                     //HtmlReprtObj.Columns.Add("DOB");
-                    HtmlReprtObj.Columns.Add("Email");
-                    HtmlReprtObj.Columns.Add("Gender");
-                    HtmlReprtObj.Columns.Add("MaritalStatus");
-                    HtmlReprtObj.Columns.Add("Occupation");
+                    HtmlReprtObj.Columns.Add("Email",0);
+                    HtmlReprtObj.Columns.Add("Gender",0);
+                    HtmlReprtObj.Columns.Add("MaritalStatus",0);
+                    HtmlReprtObj.Columns.Add("Occupation",0);
                      
                 }
 
@@ -167,25 +167,25 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     cmd = new SqlCommand("ReportOutOfStockMedicine", con);
 
-                    HtmlReprtObj.Columns.Add("Name");
-                    HtmlReprtObj.Columns.Add("Medicine Code");
-                    HtmlReprtObj.Columns.Add("Unit");
-                    HtmlReprtObj.Columns.Add("Qty");
-                    HtmlReprtObj.Columns.Add("Category Name");
-                    HtmlReprtObj.Columns.Add("ReOrderQty");
-                    
+                    HtmlReprtObj.Columns.Add("Name", 0);
+                    HtmlReprtObj.Columns.Add("Medicine Code", 0);
+                    HtmlReprtObj.Columns.Add("Unit", 0);
+                    HtmlReprtObj.Columns.Add("Qty", 0);
+                    HtmlReprtObj.Columns.Add("Category Name", 0);
+                    HtmlReprtObj.Columns.Add("ReOrder Qty", 0);
+
                 }
 
                 else if (ReportCode == 1000)                //stock
                 {
                     cmd = new SqlCommand("ReportMedicines", con);
 
-                    HtmlReprtObj.Columns.Add("Name");
-                    HtmlReprtObj.Columns.Add("Medicine Code");
-                    HtmlReprtObj.Columns.Add("Unit");
-                    HtmlReprtObj.Columns.Add("Qty");
-                    HtmlReprtObj.Columns.Add("Category Name");
-                    HtmlReprtObj.Columns.Add("ReOrderQty");
+                    HtmlReprtObj.Columns.Add("Name", 0);
+                    HtmlReprtObj.Columns.Add("Medicine Code", 0);
+                    HtmlReprtObj.Columns.Add("Unit", 0);
+                    HtmlReprtObj.Columns.Add("Qty", 0);
+                    HtmlReprtObj.Columns.Add("Category Name", 0);
+                    HtmlReprtObj.Columns.Add("ReOrder Qty", 0);
                 }
 
                 else if (ReportCode == 1004)       //Transaction  //NOT using now
