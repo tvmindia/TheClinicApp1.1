@@ -19,7 +19,8 @@ using System.Web.UI.WebControls;
 #endregion Namespaces
 
 
-using TheClinicApp1._1.ClinicDAL; 
+using TheClinicApp1._1.ClinicDAL;
+using System.Web.UI.HtmlControls; 
 
 namespace TheClinicApp1._1.Doctor
 {
@@ -37,6 +38,7 @@ namespace TheClinicApp1._1.Doctor
         ClinicDAL.PrescriptionDetails PrescriptionObj= new ClinicDAL.PrescriptionDetails();
         ClinicDAL.PrescriptionHeaderDetails PrescriptionHeadObj = new ClinicDAL.PrescriptionHeaderDetails();
         ClinicDAL.CaseFile.Visit VisitsObj = new ClinicDAL.CaseFile.Visit();
+        ClinicDAL.CaseFile.Visit.VisitAttachment AttachObj=new ClinicDAL.CaseFile.Visit.VisitAttachment();
         public string listFilter=null;
         public string RoleName = null;
         public string NameBind = null;
@@ -391,7 +393,25 @@ namespace TheClinicApp1._1.Doctor
 
         }
         #endregion FillPatientDetails
+        #region BindVisitAttachment
+        public void BindAttachment(Guid VisitID)
+        {
+            DataTable dt = new DataTable();
+            AttachObj.VisitID = VisitID;
+            dt=AttachObj.GetAttachment();
+            foreach (DataRow dr in dt.Rows)
+            {
+                HtmlGenericControl img1 = new HtmlGenericControl("img");
+                img1.Attributes.Add("id", ""+dr["AttachID"].ToString());
+                img1.Attributes.Add("src","../Handler/ImageHandler.ashx?AttachID="+dr["AttachID"].ToString());
+                //img1.Attributes.Add("width", "120");
+                img1.Attributes.Add("height", "120");
+                img1.Attributes.Add("class", "imagpreview");
+                VistImagePreview.Controls.Add(img1);               
 
+            }
+        }
+        #endregion BindVisitAttachment
         #region Update Visits
         protected void ImgBtnUpdateVisits_Command(object sender, CommandEventArgs e)
         {
@@ -401,6 +421,9 @@ namespace TheClinicApp1._1.Doctor
             Errorbox.Style["display"] = "none";
             string[] Visits = e.CommandArgument.ToString().Split(new char[] { '|' });
             CaseFileObj.VisitID = Guid.Parse(Visits[0]);
+            BindAttachment(Guid.Parse(Visits[0]));
+            
+
             CaseFileObj.GetVisits();
             txtHeightFeet.Value = CaseFileObj.Height.ToString();
             txtWeight.Value = CaseFileObj.Weight.ToString();

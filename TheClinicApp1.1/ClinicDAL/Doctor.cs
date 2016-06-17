@@ -1240,6 +1240,96 @@ namespace TheClinicApp1._1.ClinicDAL
                     }
                     #endregion FileAttachment
 
+                    #region GetAttachID using VisitID
+                    public DataTable GetAttachment()
+                    {
+
+                        if (VisitID == Guid.Empty)
+                        {
+                            throw new Exception("VisitID Is Empty!!");
+                        }
+                        SqlConnection con = null;
+                        DataTable dt = new DataTable();
+
+                        try
+                        {
+                            DateTime now = DateTime.Now;
+
+                            dbConnection dcon = new dbConnection();
+                            con = dcon.GetDBConnection();
+                            SqlCommand cmd = new SqlCommand("GetAttachmentUsingVisitID", con);
+                            cmd.Parameters.Add("@VisitID", SqlDbType.UniqueIdentifier).Value = VisitID;
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            SqlDataAdapter adapter = new SqlDataAdapter();
+                            adapter.SelectCommand = cmd;
+                            dt = new DataTable();
+                            adapter.Fill(dt);
+                            con.Close();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                            eObj.Description = ex.Message;
+                            eObj.Module = Module;
+                            eObj.UserID = UA.UserID;
+                            eObj.Method = "GetAttachment";
+                            eObj.InsertError();
+                        }
+                        finally
+                        {
+                            if (con != null)
+                            {
+                                con.Dispose();
+                            }
+
+                        }
+                        return dt;
+                    }
+                    #endregion GetAttachID using VisitID
+                    
+                    #region GetAttachmentImages
+
+                    public byte[] GetAttachmentImages()
+                    {
+
+
+                        dbConnection dcon = null;
+                        SqlCommand cmd = null;
+                        SqlDataReader rd = null;
+                        byte[] imageproduct = null;
+                        try
+                        {
+                            dcon = new dbConnection();
+                            dcon.GetDBConnection();
+                            cmd = new SqlCommand();
+                            cmd.Connection = dcon.SQLCon;
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.CommandText = "[GetAttachmentImages]";
+                            cmd.Parameters.Add("@AttachID", SqlDbType.UniqueIdentifier).Value = AttachID;
+                            rd = cmd.ExecuteReader();
+                            if ((rd.Read()) && (rd.HasRows) && (rd["Attachment"] != DBNull.Value))
+                            {
+                                imageproduct = (byte[])rd["Attachment"];
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+
+                        finally
+                        {
+                            if (dcon.SQLCon != null)
+                            {
+                                rd.Close();
+                                dcon.DisconectDB();
+                            }
+                        }
+                        return imageproduct;
+
+                    }
+                    #endregion GetBoutiqueLogo
 
                     #endregion VisitAttachment methods
                 }

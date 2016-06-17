@@ -7,6 +7,10 @@
     <asp:Panel DefaultButton="btnSave" runat="server">
     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
     <style>
+        img .imagpreview{
+            display:inline-flex;
+           
+        }
     .modal table td {
     text-align: left;
     height:auto;    
@@ -442,7 +446,13 @@
                             </div>
                         </div>
                     </div>
+                    <h3>Case Images</h3>
+                    <div>
+                     <div id="VistImagePreview" runat="server">
+                         
 
+                     </div>
+                    </div>
                     <h3>Prescription Section</h3>
                     <div>
                         <table class="table" style="width: 100%; border: 0!important;">

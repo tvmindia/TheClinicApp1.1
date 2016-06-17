@@ -43,6 +43,24 @@ namespace TheClinicApp.Handler
                     }
 
                 }
+                if ((context.Request.QueryString["AttachID"] != null) && (context.Request.QueryString["AttachID"] != ""))
+                {
+                    TheClinicApp1._1.ClinicDAL.CaseFile.Visit.VisitAttachment AttachObj = new TheClinicApp1._1.ClinicDAL.CaseFile.Visit.VisitAttachment();
+                    AttachObj.AttachID = Guid.Parse(context.Request.QueryString["AttachID"]);
+                    byte[] productimg = AttachObj.GetAttachmentImages();
+                    if (productimg != null)
+                    {
+                        MemoryStream memoryStream = new MemoryStream(productimg, false);
+                        Image proimg = Image.FromStream(memoryStream);
+                        proimg.Save(context.Response.OutputStream, ImageFormat.Jpeg);
+                    }
+                    else
+                    {
+                        //context.Response.ContentType = "image/png";
+                        //context.Response.WriteFile("~/img/Default/nologo1.png");
+                    }
+
+                }
             }
             catch
             {
