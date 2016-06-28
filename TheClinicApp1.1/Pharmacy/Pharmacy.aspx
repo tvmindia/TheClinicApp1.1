@@ -160,7 +160,7 @@
 
     function focuscontrol(ControlNo)
     {
-        document.getElementById('txtMedQty' + ControlNo).value="";
+       // document.getElementById('txtMedQty' + ControlNo).value="";
         $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
 
     }                 
@@ -385,9 +385,9 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="border-color:royalblue;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Patient List</h4>
+                    <h3 class="modal-title">Patient List</h3>
                 </div>
                 <div class="modal-body" style="height: 500px; overflow-y: scroll; overflow-x: hidden;">
 

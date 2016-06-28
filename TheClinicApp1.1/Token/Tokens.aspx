@@ -93,7 +93,7 @@
         function bindPatientDetails()
         {
            
-            $(".alert").hide(); 
+           // $(".alert").hide(); 
  
             var PatientName = document.getElementById("project-description").innerText;
             document.getElementById('<%=lblToken.ClientID%>').innerHTML="_";       
@@ -188,6 +188,13 @@
             </div>
             <div>
 
+                 <div class="alert " id="info" runat="server">
+
+                    <label>  Search & Select a Patient, then Book Token </label>
+                  
+                </div>
+
+
                 <div id="Errorbox" style="display: none;" runat="server">
                     <a class="alert_close">X</a>
                     <div>
@@ -202,12 +209,7 @@
 
               
 
-                <div class="alert alert-info" id="info" runat="server">
-
-                    <label>Search & Select a Patient, then Book Token  </label>
-
-                    <a class="alert_close">X</a>
-                </div>
+               
 
             </div>
 

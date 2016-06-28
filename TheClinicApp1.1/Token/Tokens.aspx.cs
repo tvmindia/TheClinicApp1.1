@@ -55,7 +55,7 @@ namespace TheClinicApp1._1.Token
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.DeleteSuccessMessage(page);
-                info.Visible = false;
+              //  info.Visible = false;
             }
         }
 
@@ -198,7 +198,7 @@ namespace TheClinicApp1._1.Token
                     lblDoctor.Visible = true;
                     lblDoctor.Text = Convert.ToString(dst.Tables[0].Rows[0]["DoctorName"]);
 
-                    info.Visible = false;
+                   // info.Visible = false;
                 }
             }
             else 
@@ -206,7 +206,7 @@ namespace TheClinicApp1._1.Token
                 var page = HttpContext.Current.CurrentHandler as Page;
                 msg = "Please select Patient Details in Search";
                 eObj.InsertionNotSuccessMessage(page, msg);
-                info.Visible = true;
+                //info.Visible = true;
                 ClearFields();            
             }          
         }

@@ -336,13 +336,13 @@
                                 <label for="bowel">Bowel</label><input id="bowel" type="text" name="bowel" runat="server" />
                             </div>
                             <div class="col-lg-4">
-                                <label for="appettie">Appettie</label><input id="appettie" type="text" name="appettie" runat="server" />
+                                <label for="appettie">Appetite</label><input id="appettie" type="text" name="appettie" runat="server" />
                             </div>
                         </div>
 
                         <div class="row field_row">
                             <div class="col-lg-4">
-                                <label for="micturation">Micturation</label><input id="micturation" type="text" name="micturation" runat="server" />
+                                <label for="micturation">Micturition</label><input id="micturation" type="text" name="micturation" runat="server" />
                             </div>
                             <div class="col-lg-4">
                                 <label for="sleep">Sleep</label><input id="sleep" type="text" name="sleep" runat="server" />
@@ -364,7 +364,7 @@
                                 <label for="cardiovascular">Cardiovascular</label><input id="cardiovascular" type="text" name="cardiovascular" runat="server" />
                             </div>
                             <div class="col-lg-4">
-                                <label for="nervoussystem">Nervoussystem</label><input id="nervoussystem" type="text" name="nervoussystem" runat="server" />
+                                <label for="nervoussystem">Nervous System</label><input id="nervoussystem" type="text" name="nervoussystem" runat="server" />
                             </div>
                             <div class="col-lg-4">
                                 <label for="musculoskeletal">Musculoskeletal</label><input id="musculoskeletal" type="text" name="musculoskeletal" runat="server" />
@@ -376,7 +376,7 @@
                     <div>
                         <div class="row field_row">
                             <div class="col-lg-4">
-                                <label for="palloe">Palloe</label><input id="palloe" type="text" name="palloe" runat="server" />
+                                <label for="palloe">Pallor</label><input id="palloe" type="text" name="palloe" runat="server" />
                             </div>
                             <div class="col-lg-4">
                                 <label for="icterus">Icterus</label><input id="icterus" type="text" name="icterus" runat="server" />
@@ -387,10 +387,10 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label for="cyanasis">Cyanasis</label><input id="cyanasis" type="text" name="cyanasis" runat="server" />
+                                <label for="cyanasis">Cyanosis</label><input id="cyanasis" type="text" name="cyanasis" runat="server" />
                             </div>
                             <div class="col-lg-4">
-                                <label for="lymphnodes">Lymphnodes</label><input id="lymphGen" type="text" name="lymphGen" runat="server" />
+                                <label for="lymphnodes">Lymph Nodes</label><input id="lymphGen" type="text" name="lymphGen" runat="server" />
                             </div>
                             <div class="col-lg-4">
                                 <label for="edima">Edima</label><input id="edima" type="text" name="edima" runat="server" />
@@ -398,11 +398,11 @@
                         </div>
                     </div>
 
-                    <h3>Diagnosys</h3>
+                    <h3>Diagnosis</h3>
                     <div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <label for="diagnosys">Diagnosys</label><textarea id="diagnosys" runat="server"></textarea>
+                                <label for="diagnosys">Diagnosis</label><textarea id="diagnosys" runat="server"></textarea>
                             </div>
                         </div>
                     </div>
@@ -434,7 +434,7 @@
                                 <label for="heart">Heart</label><input id="heart" type="text" name="heart" runat="server" />
                             </div>
                             <div class="col-lg-4">
-                                <label for="lymphnodes">Lymphnodes</label><input id="lymphnodes" type="text" name="lymphnodes" runat="server" />
+                                <label for="lymphnodes">Lymph Nodes</label><input id="lymphnodes" type="text" name="lymphnodes" runat="server" />
                             </div>
                             <div class="col-lg-4">
                                 <label for="resp_rate">Resp rate</label><input id="resp_rate" type="text" name="resp_rate" runat="server" />
@@ -623,7 +623,7 @@
                 test('[data-toggle="tooltip"]').tooltip()
             })	
 			
-            test('#accordion').accordion({
+            test('#accordion').accordion({               
                 collapsible:true,
                 heightStyle: "content",
                 beforeActivate: function(event, ui) {

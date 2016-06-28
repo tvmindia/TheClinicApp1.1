@@ -456,7 +456,7 @@
                 <div class="modal-content">
                     <div class="modal-header" style="border-color:#3661C7;" >
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">Todays Registrations</h3>
+                        <h3 class="modal-title">Today's Registrations</h3>
 
                     </div>
                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
