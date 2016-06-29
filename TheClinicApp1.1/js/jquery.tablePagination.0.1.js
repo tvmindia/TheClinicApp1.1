@@ -28,7 +28,7 @@
  (function($){
 
      $.fn.tablePagination = function (settings) {
-         debugger;
+      
 		var defaults = {  
 		    firstArrow: (new Image()).src = "../images/First.png",
 		    prevArrow: (new Image()).src = "../images/Previous.png",
@@ -45,7 +45,7 @@
 		settings = $.extend(defaults, settings);
 		
 		return this.each(function () {
-		    debugger;
+		 
       var table = $(this)[0];
       var totalPagesId = '#'+table.id+'+#tablePagination #tablePagination_totalPages';
       var currPageId = '#'+table.id+'+#tablePagination #tablePagination_currPage';
@@ -68,7 +68,7 @@
       
       
       function hideOtherPages(pageNum) {
-          debugger;
+        
         if (pageNum==0 || pageNum > totalPages)
           return;
         var startIndex = (pageNum - 1) * defaults.rowsPerPage;
@@ -82,7 +82,7 @@
       }
       
       function resetTotalPages() {
-          debugger;
+        
         var preTotalPages = Math.round(numRows / defaults.rowsPerPage);
         var totalPages = (preTotalPages * defaults.rowsPerPage < numRows) ? preTotalPages + 1 : preTotalPages;
         if ($(totalPagesId).length > 0)
@@ -121,7 +121,7 @@
       }
       
       function createPaginationElements() {
-          debugger;
+      
           var htmlBuffer = [];         
         htmlBuffer.push("<div id='tablePagination'>");
         htmlBuffer.push("<span id='tablePagination_perPage'>");
@@ -172,7 +172,7 @@
           });
 
           $(prevPageId).bind('click', function (e) {
-              debugger;
+            
               if ((defaults.rowCountstart != '1') && (defaults.rowCountend != defaults.rowsPerPage)) {
                   $('#tablePagination').remove();
                   resetCurrentPage(currPageNumber -= 1)
@@ -184,7 +184,7 @@
                       defaults.rowCountstart = 1;
                       defaults.rowCountend = 7;
                   }
-                  debugger;
+               
                   $('#' + table.id).after(createPaginationElements());
               }
                   bindoncemore();

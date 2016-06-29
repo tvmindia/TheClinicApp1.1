@@ -146,9 +146,7 @@
 
                 var rows = $('#<%=GridView1.ClientID%> tr').not('thead tr');
 
-            $('#txtSearchPatient').keyup(function() {
-                var count;
-                debugger;
+            $('#txtSearchPatient').keyup(function() {                  
                 var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
 
                 rows.hide().filter(function() {                  
@@ -160,18 +158,22 @@
                     return matchesSearch;                    
                 }).show();
 
+                debugger;
                 //finding the row of html table displaying while searching 
                 var numOfVisibleRows = $('tr').filter(function() {
                     return $(this).css('display') !== 'none';
                 }).length;
 
-                //number of rows while no records found is 3
-                if (numOfVisibleRows==3)
+ 
+
+                //number of rows while no records found is 2
+                if (numOfVisibleRows==2)
                 {
+                    debugger;
                     $('#norows').remove();
                     var bodyId="tbdy";              
                     $('table').attr('id', bodyId);
-                    var text="No records found for the search criteria.";
+                    var text="No records found.";
                     var html = '<div id="norows" style="width:100%; padding-left: 200px;">'+text+'</div>';                  
                     $('#tbdy').after(html);                
                 }
@@ -188,7 +190,7 @@
                     });
                 }               
             });
-            debugger;
+          
 
          
             var rowss = $('#<%=dtgViewTodaysRegistration.ClientID%> tr').not('thead tr');           
@@ -232,8 +234,7 @@
         <script>
        
             function validation()
-            {
-                     
+            {                     
                 if( ($('#<%=txtName.ClientID%>').val()=="")||  ($('#<%=txtAge.ClientID%>').val()=="") )
                 {
                     var lblclass = Alertclasses.danger;
@@ -251,10 +252,8 @@
 
         }
         
-        function OpenModal(id){    
-            debugger;
-            if(id=='1')
-            
+        function OpenModal(id){
+            if(id=='1')            
             {
                 $('#tablePagination').remove();
                 $('table').tablePagination({
@@ -324,9 +323,9 @@
                 <div class="icon_box">
                     <%--<a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>--%>
 
-                    <a class="all_registration_link" onclick="OpenModal('1');"><span title="All Registered" data-toggle="tooltip" data-placement="left">
+                    <a class="all_registration_link" onclick="OpenModal('1');"><span class="count"><asp:Label ID="lblRegCount" runat="server" Text="0"></asp:Label></span><span title="All Registered" data-toggle="tooltip" data-placement="left">
                         <img src="../images/registerd9724185.png" /></span></a>
-                    <a class="Todays_registration_link" onclick="OpenModal('2');"><span title="Todays Register" data-toggle="tooltip" data-placement="left">
+                    <a class="Todays_registration_link" onclick="OpenModal('2');"><span class="count"><asp:Label ID="lblTodayRegCount" runat="server" Text="0"></asp:Label></span><span title="Todays Register" data-toggle="tooltip" data-placement="left">
                         <img src="../images/registerd.png" /></span></a>
                 </div>
                 <div class="grey_sec">
