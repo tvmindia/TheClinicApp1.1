@@ -60,6 +60,9 @@ namespace TheClinicApp1._1.Registration
             GridView1.EmptyDataText = "No Records Found";
             GridView1.DataSource = PatientObj.GetAllRegistration();
             GridView1.DataBind();
+            lblRegCount.Text = GridView1.Rows.Count.ToString();
+            if (Convert.ToInt32(lblRegCount.Text) > 99)
+                lblRegCount.Text = "99+";
             #endregion GridAllRegistration
 
             #region GridTodaysRegistration
@@ -67,7 +70,10 @@ namespace TheClinicApp1._1.Registration
 
             dtgViewTodaysRegistration.EmptyDataText = "....Till Now No Registration....";
             dtgViewTodaysRegistration.DataSource = PatientObj.GetDateRegistration();
+         
             dtgViewTodaysRegistration.DataBind();
+
+            lblTodayRegCount.Text = dtgViewTodaysRegistration.Rows.Count.ToString();
             #endregion GridTodaysRegistration
 
             listFilter = null;
@@ -565,6 +571,17 @@ namespace TheClinicApp1._1.Registration
                 GridView1.HeaderRow.TableSection = TableRowSection.TableHeader;
             }           
             
+        }
+
+
+        protected void dtgViewTodaysRegistration_PreRender(object sender, EventArgs e)
+        {
+            dtgViewTodaysRegistration.UseAccessibleHeader = false;
+            if (dtgViewTodaysRegistration.Rows.Count > 0)
+            {
+                dtgViewTodaysRegistration.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
         }
         #endregion Paging
 

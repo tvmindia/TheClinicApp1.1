@@ -117,6 +117,7 @@
         <script src="../js/jquery.tablePagination.0.1.js"></script>
         <script type="text/javascript">
             $(document).ready( function (){
+                debugger;
                 var ac=null;
                 ac = <%=listFilter %>;
                 $( "#txtSearch" ).autocomplete({
@@ -124,9 +125,15 @@
                     select: function(event, ui){
                         $( "#txtSearch" ).val( ui.item.label );
                         $('#<%=btnSearch.ClientID%>').click();
-                }
+                    }
+
+
+
+                  
             
-            });
+                });
+
+
             
                 $(function () {
                
@@ -160,21 +167,21 @@
 
                 debugger;
                 //finding the row of html table displaying while searching 
-                var numOfVisibleRows = $('tr').filter(function() {
+                var numOfVisibleRows = $('tbody tr').filter(function() {
                     return $(this).css('display') !== 'none';
                 }).length;
 
  
 
-                //number of rows while no records found is 2
-                if (numOfVisibleRows==2)
+                //number of rows while no records found is 1
+                if (numOfVisibleRows==1)
                 {
                     debugger;
                     $('#norows').remove();
                     var bodyId="tbdy";              
                     $('table').attr('id', bodyId);
-                    var text="No records found.";
-                    var html = '<div id="norows" style="width:100%; padding-left: 200px;">'+text+'</div>';                  
+                    var textdis="No records found.";
+                    var html = '<div id="norows" style="width:100%; padding-left: 200px;">'+textdis+'</div>';                  
                     $('#tbdy').after(html);                
                 }
                 else
@@ -198,23 +205,46 @@
 
             $('#txtSearchPatient1').keyup(function() {
                 debugger;
-                var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
+                var val1 = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
 
                 rowss.hide().filter(function() {
                     var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
                     var matchesSearch = true;
-                    $(val).each(function(index, value) {
+                    $(val1).each(function(index, value) {
                         
                         matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
                     });
                     return matchesSearch;
                 }).show();
                 
-             
+              debugger;
+                //finding the row of html table displaying while searching 
+                var numOfVisibleRows1 = $('tbody tr').filter(function() {
+                    return $(this).css('display') !== 'none';
+                }).length;
+
+ 
+
+                //number of rows while no records found is 2
+                if (numOfVisibleRows1==7)
+                {
+                    debugger;
+                    $('#norows1').remove();
+                    //var bodyId1="tbdy1";              
+                   // $('thead').attr('id', bodyId1);
+                    var text1="No records found.";
+                    var html1 = '<div id="norows1" style="width:100%; padding-left: 200px;">'+text1+'</div>';     
+                   // $('#ContentPlaceHolder1_dtgViewTodaysRegistration').append(html1);
+                    $('#ContentPlaceHolder1_dtgViewTodaysRegistration').after(html1);                
+                }
+                else
+                {
+                    $('#norows1').remove();
+                } 
 
 
                 $('#tablePagination').remove();
-                if (val == "") {
+                if (val1 == "") {
                     debugger;
                     $('table').tablePagination({
                         rowCountstart:1,
@@ -519,7 +549,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12" style="height: 400px;">
-                                <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal">
+                                <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" EnableModelValidation="true" OnPreRender="dtgViewTodaysRegistration_PreRender" GridLines="Horizontal">
 
                                     <Columns>
                                         <asp:TemplateField>
