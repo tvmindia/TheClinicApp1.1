@@ -40,16 +40,8 @@ namespace TheClinicApp1._1.Token
             lblCaseCount.Text = gds.Tables[0].Rows.Count.ToString();
             listerfilterbind();
             if (!IsPostBack)
-            {       
-                //binding the values of doctor dropdownlist
-                DataSet ds = tokenObj.DropBindDoctorsName();
-                if (ds.Tables[0].Rows.Count > 0)
-                {
-                    ddlDoctor.DataSource = ds.Tables[0];
-                    ddlDoctor.DataValueField = "DoctorID";
-                    ddlDoctor.DataTextField = "Name";
-                    ddlDoctor.DataBind();
-                }
+            {
+                dropdowndoctor();
             }            
             if (Request.QueryString["id"]!=null)
             {
@@ -60,6 +52,30 @@ namespace TheClinicApp1._1.Token
         }
 
         #endregion PageLoad
+
+        #region Dropdown
+        public void dropdowndoctor()
+        {
+            //binding the values of doctor dropdownlist
+            DataSet ds = tokenObj.DropBindDoctorsName();
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                ddlDoctor.Items.Clear();
+                ddlDoctor.DataSource = ds.Tables[0];
+                ddlDoctor.DataValueField = "DoctorID";
+                ddlDoctor.DataTextField = "Name";
+                ddlDoctor.DataBind();
+                if (ddlDoctor.Items.Count != 1)//checking number of doctors.if there is only one doctor, no need of select 
+                {
+                    ddlDoctor.Items.Insert(0, "--Select--");
+                }
+            }
+
+
+        }
+
+        #endregion Dropdown
+        
 
         #region listerfilterbind
         public void listerfilterbind()
@@ -129,6 +145,7 @@ namespace TheClinicApp1._1.Token
                   PatientID = Convert.ToString(ds.Tables[0].Rows[0]["PatientID"]);
                   ClinicID = Convert.ToString(ds.Tables[0].Rows[0]["ClinicID"]);
                   lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
+                 
 
                 DateTime date = DateTime.Now;
                 int year = date.Year;
@@ -141,7 +158,7 @@ namespace TheClinicApp1._1.Token
         }        
         #endregion WebMethod
 
-        #region ButtonClicks
+        #region ButtonClicks    
 
         public void ClearFields()
         {            
@@ -156,51 +173,55 @@ namespace TheClinicApp1._1.Token
                 lblToken.Text = "_";
                 BookedDoctorName.Visible = false;
                 lblDoctor.Visible = false;
+                ddlDoctor.SelectedIndex = 0;
+                dropdowndoctor();
+                
         }
      
         protected void btnBookToken_ServerClick(object sender, EventArgs e)
         {
             string msg = string.Empty;
             if (hdnfileID.Value!="")
-            {
-                tokenObj.DoctorID = ddlDoctor.SelectedValue;
-                tokenObj.PatientID = HiddenPatientID.Value;
-                tokenObj.ClinicID = HiddenClinicID.Value;
-                tokenObj.CreatedBy = UA.userName;             
-                tokenObj.DateTime = DateTime.Now;
-                int tokenNo = tokenObj.InsertToken(); //Function Call Inserting Token
-                lblToken.Text = tokenNo.ToString();
-                lblToken.Visible = true;
-                hdnfileID.Value = "";
-                //diplaying number of bookings
-                DataSet gds = tokenObj.ViewToken();  //Fuction Call to Get number of Tokens 
-                lblCaseCount.Text = gds.Tables[0].Rows.Count.ToString();
+            {              
+                    tokenObj.DoctorID = ddlDoctor.SelectedValue;
+                    tokenObj.PatientID = HiddenPatientID.Value;
+                    tokenObj.ClinicID = HiddenClinicID.Value;
+                    tokenObj.CreatedBy = UA.userName;
+                    tokenObj.DateTime = DateTime.Now;
+                    int tokenNo = tokenObj.InsertToken(); //Function Call Inserting Token
+                    lblToken.Text = tokenNo.ToString();
+                    lblToken.Visible = true;
+                    hdnfileID.Value = "";
+                    //diplaying number of bookings
+                    DataSet gds = tokenObj.ViewToken();  //Fuction Call to Get number of Tokens 
+                    lblCaseCount.Text = gds.Tables[0].Rows.Count.ToString();
 
-                // reloading values in to repective fields
-                DataSet dst = tokenObj.GetPatientTokenDetailsbyID(HiddenPatientID.Value); //Function Call to Get Patient Token Details
-                if (dst != null && dst.Tables[0].Rows.Count > 0)
-                {
-                    lblFileNo.Text = Convert.ToString(dst.Tables[0].Rows[0]["FileNumber"]);
-                    lblPatientName.Text = Convert.ToString(dst.Tables[0].Rows[0]["Name"]);
-                    lblGender.Text = Convert.ToString(dst.Tables[0].Rows[0]["Gender"]);
-                    lblAddress.Text = Convert.ToString(dst.Tables[0].Rows[0]["Address"]);
-                    lblMobile.Text = Convert.ToString(dst.Tables[0].Rows[0]["Phone"]);
-                    lblEmail.Text = Convert.ToString(dst.Tables[0].Rows[0]["Email"]);
-                    lblLastVisit.Text = Convert.ToString(dst.Tables[0].Rows[0]["LastVisitDate"]);
+                    // reloading values in to repective fields
+                    DataSet dst = tokenObj.GetPatientTokenDetailsbyID(HiddenPatientID.Value); //Function Call to Get Patient Token Details
+                    if (dst != null && dst.Tables[0].Rows.Count > 0)
+                    {
+                        lblFileNo.Text = Convert.ToString(dst.Tables[0].Rows[0]["FileNumber"]);
+                        lblPatientName.Text = Convert.ToString(dst.Tables[0].Rows[0]["Name"]);
+                        lblGender.Text = Convert.ToString(dst.Tables[0].Rows[0]["Gender"]);
+                        lblAddress.Text = Convert.ToString(dst.Tables[0].Rows[0]["Address"]);
+                        lblMobile.Text = Convert.ToString(dst.Tables[0].Rows[0]["Phone"]);
+                        lblEmail.Text = Convert.ToString(dst.Tables[0].Rows[0]["Email"]);
+                        lblLastVisit.Text = Convert.ToString(dst.Tables[0].Rows[0]["LastVisitDate"]);
 
-                    DateTime date = DateTime.Now;
-                    int year = date.Year;
-                    DateTime DT = Convert.ToDateTime(dst.Tables[0].Rows[0]["DOB"].ToString());
-                    int Age = year - DT.Year;
-                    lblAge.Text = Age.ToString();
+                        DateTime date = DateTime.Now;
+                        int year = date.Year;
+                        DateTime DT = Convert.ToDateTime(dst.Tables[0].Rows[0]["DOB"].ToString());
+                        int Age = year - DT.Year;
+                        lblAge.Text = Age.ToString();
 
-                    BookedDoctorName.Visible = true;
-                    lblDoctor.Visible = true;
-                    lblDoctor.Text = Convert.ToString(dst.Tables[0].Rows[0]["DoctorName"]);
+                        BookedDoctorName.Visible = true;
+                        lblDoctor.Visible = true;
+                        lblDoctor.Text = Convert.ToString(dst.Tables[0].Rows[0]["DoctorName"]);
 
-                   // info.Visible = false;
+                        dropdowndoctor();
+                        // info.Visible = false;
+                    }
                 }
-            }
             else 
             {
                 var page = HttpContext.Current.CurrentHandler as Page;

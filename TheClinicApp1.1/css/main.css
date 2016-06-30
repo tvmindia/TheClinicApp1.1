@@ -229,7 +229,7 @@ table td a, table td a:hover {color: #3661c7;}
 .main_body {display: block; overflow: hidden; position: absolute; top:0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%;}
 
 a.records {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
-a.records span.count {position: absolute; top: -15px; right: 5px; background: rgba(255,0,0,1); color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
+a.records span.count {position: absolute; top: -15px; right: 5px; background:#f25c06; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
 -webkit-border-radius: 50%;
 -moz-border-radius: 50%;
 border-radius: 50%;
