@@ -467,10 +467,14 @@ namespace TheClinicApp1._1.Doctor
             //Gridview Binding to Diplay DoctorName,Token No,Patient Name,TIME
             tok.DateTime = DateTime.Now;
             DataSet gds = tok.DoctorViewToken();
+
+            DataRow[] dr = gds.Tables[0].Select("IsProcessed=False");
+            lblTokenCount.Text = dr.Length.ToString();
+
             GridViewTokenlist.EmptyDataText = "No Records Found";
             GridViewTokenlist.DataSource = gds;
             GridViewTokenlist.DataBind();
-            lblTokenCount.Text=GridViewTokenlist.Rows.Count.ToString();
+           
 
         }
         #endregion GridBindTokens
@@ -600,17 +604,25 @@ namespace TheClinicApp1._1.Doctor
         }
 
         protected void GridViewTokenlist_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
+        {          
              if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-        int index = GetColumnIndexByName(e.Row,"IsProcessed");
-        string columnValue = e.Row.Cells[index].Text;
-          foreach (TableCell cell in e.Row.Cells)
-            {
-               if (columnValue == "True")
-               e.Row.BackColor = Color.LightGray;
-             }
-             }
+             {    
+                 int index = GetColumnIndexByName(e.Row,"IsProcessed");
+                 string columnValue = e.Row.Cells[index].Text;
+
+                 //foreach (TableCell cell in e.Row.Cells)
+                 //{
+                     if (columnValue == "True")
+                     {
+                         e.Row.Cells[index].Text = "Yes";
+                         e.Row.BackColor = Color.LightGray;    
+                     }
+                     else
+                     {   e.Row.Cells[index].Text = "No";                          
+                     }
+                 //}               
+             }          
+
         }
         #endregion Row Coloring for Tokens View
 

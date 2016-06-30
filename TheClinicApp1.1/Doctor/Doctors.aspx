@@ -545,7 +545,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>                             
                                 <asp:BoundField HeaderText="Remarks" DataField="Remarks" />
-                                <asp:BoundField DataField="CreatedDate" HeaderText="Date" DataFormatString="{0:D}"></asp:BoundField>
+                                <asp:BoundField DataField="CreatedDate" HeaderText="Date" DataFormatString="{0:F}"></asp:BoundField>
                             </Columns>
 
 
@@ -580,7 +580,8 @@
 
                                 <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
                                 <asp:BoundField HeaderText="Patient Name" DataField="Name" />
-                                <asp:BoundField HeaderText="Processed" DataField="IsProcessed" />
+                                 <asp:BoundField HeaderText="Time" DataField="DateTime" />
+                                <asp:BoundField HeaderText="Consulted" DataField="IsProcessed" />
                             </Columns>
                         </asp:GridView>
                     </div>
