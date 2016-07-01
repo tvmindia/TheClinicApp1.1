@@ -164,9 +164,9 @@ namespace TheClinicApp1._1.Admin
             txtLoginName.Value = dtuser.Rows[0]["LoginName"].ToString();
             txtFirstName.Value = dtuser.Rows[0]["FirstName"].ToString();
             txtLastName.Value = dtuser.Rows[0]["LastName"].ToString();
-            //txtPassword.Value = CryptObj.Decrypt(dtuser.Rows[0]["Password"].ToString());
+           // txtPassword.Value = CryptObj.Decrypt(dtuser.Rows[0]["Password"].ToString());
+           // txtConfirmPassword.Value = CryptObj.Decrypt(dtuser.Rows[0]["Password"].ToString());
             txtPassword.Value = string.Empty;
-
 
             txtPhoneNumber.Value = dtuser.Rows[0]["PhoneNo"].ToString();
 

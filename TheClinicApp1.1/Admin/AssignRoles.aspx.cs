@@ -48,7 +48,7 @@ namespace TheClinicApp1._1.Admin
             dtUsers = roleObj.GetDetailsOfAllUsers();
             ViewState["dtUsers"] = dtUsers;
 
-            ddlUsers.DataTextField = "FirstName";
+            ddlUsers.DataTextField = "LoginName";
             ddlUsers.DataValueField = "UserID";
             ddlUsers.DataSource = dtUsers;
             ddlUsers.DataBind();

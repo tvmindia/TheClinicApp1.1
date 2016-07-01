@@ -117,7 +117,28 @@
                       
                       return matchesSearch;
                   }).show();
-                 
+              //-------------------------------No records found.-----------------------------------------// 
+              debugger;
+              //finding the row of html table displaying while searching 
+              var numOfVisibleRows = $('tbody tr').filter(function () {
+                  return $(this).css('display') !== 'none';
+              }).length;
+
+              //number of rows while no records found is 1
+              if (numOfVisibleRows == 0) {
+                  debugger;
+                  $('#norows').remove();
+                  var bodyId = "tbdy";
+                  $('table').attr('id', bodyId);
+                  var textdis = "No records found.";
+                  var html = '<div id="norows" style="width:100%; padding-left: 200px;">' + textdis + '</div>';
+                  $('#tbdy').after(html);
+              }
+              else {
+                  $('#norows').remove();
+              }
+              //----------------------------------No records found.--------------------------------------//
+
               $('#tablePagination').hide();
 
 
