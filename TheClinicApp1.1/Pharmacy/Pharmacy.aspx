@@ -252,7 +252,7 @@
 
             </div>
             <div class="icon_box">
-                <a class="patient_list" data-toggle="modal" data-target="#patient_list"><span title="Patient List" data-toggle="tooltip" data-placement="left">
+                <a class="patient_list" data-toggle="modal" data-target="#patient_list"><span class="count"><asp:Label ID="lblPharmacyCount" runat="server" Text="0"></asp:Label></span><span title="Patient List" data-toggle="tooltip" data-placement="left">
                     <img src="../images/patient_list.png" /></span></a>
             </div>
             <div class="grey_sec">

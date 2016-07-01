@@ -228,6 +228,18 @@ table td a, table td a:hover {color: #3661c7;}
 
 .main_body {display: block; overflow: hidden; position: absolute; top:0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%;}
 
+
+a.OutOfStock_link {position: fixed; top: 414px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
+a.OutOfStock_link span.count {position: absolute; top: -15px; right: 5px; background:#f25c06; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
+-webkit-border-radius: 50%;
+-moz-border-radius: 50%;
+border-radius: 50%;
+
+    -moz-box-shadow:0 0 1px #000;
+    -webkit-box-shadow:0 0 1px #000;
+    box-shadow:0 0 1px #000;
+}
+
 a.records {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 a.records span.count {position: absolute; top: -15px; right: 5px; background:#f25c06; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
 -webkit-border-radius: 50%;
@@ -324,6 +336,15 @@ border-radius: 50%;
 
 
 a.patient_list {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
+a.patient_list span.count {position: absolute; top: -15px; right: 5px; background: #079ad3; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
+-webkit-border-radius: 50%;
+-moz-border-radius: 50%;
+border-radius: 50%;
+
+    -moz-box-shadow:0 0 1px #000;
+    -webkit-box-shadow:0 0 1px #000;
+    box-shadow:0 0 1px #000;
+}
 
 a.add_medicine {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 
@@ -922,10 +943,16 @@ span[data-toggle="tooltip"] + .tooltip {display: none !important;}
 .icon_box a {margin-left: 10px;}
 .icon_box a:first-child {margin: 0;}
 
+
+a.OutOfStock_link { position: relative; right: 0; top: auto; width: 50px; height: 50px;}	
+a.OutOfStock_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
+
 a.records { position: relative; right: 0; top: auto; width: 50px; height: 50px;}	
 a.records span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
+
 a.casehistory_link { position: relative;right: 0; top: auto; width: 50px; height: 50px;}	
 a.casehistory_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
+
 a.tokens_link { position: relative;right: 0; top: auto; width: 50px; height: 50px;}	
 
 a.all_registration_link { position: relative; right: 0; top: auto; width: 50px; height: 50px;}	
@@ -953,6 +980,7 @@ a.all_medicine_link { position: relative; right: 0; top: auto; width: 50px; heig
 a.all_medicine_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 
 a.patient_list { position: relative; right: 0; top: auto; width: 50px; height: 50px;}
+a.patient_list span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 
 a.add_medicine { position: relative; right: 0; top: auto; width: 50px; height: 50px;}
 
@@ -1069,8 +1097,14 @@ span[data-toggle="tooltip"] + .tooltip {display: none !important;}
 
 a.records {right: 0; top: 300px; width: 60px; height: 60px;}	
 a.records span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
+
+a.OutOfStock_link {right: 0; top: 361px; width: 60px; height: 60px;}	
+a.OutOfStock_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
+
+
 a.casehistory_link {right: 0; top: 361px; width: 60px; height: 60px;}	
 a.casehistory_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
+
 a.tokens_link {right: 0; top: 422px; width: 60px; height: 60px;}
 
 
@@ -1094,6 +1128,7 @@ a.all_medicine_link {right: 0; top: 300px; width: 60px; height: 60px;}
 a.all_medicine_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 
 a.patient_list {right: 0; top: 300px; width: 60px; height: 60px;}	
+a.patient_list span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 
 a.add_medicine {right: 0; top: 300px; width: 60px; height: 60px;}	
 

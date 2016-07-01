@@ -65,6 +65,9 @@ namespace TheClinicApp1._1.Pharmacy
             GridViewPharmacylist.DataSource = gds;
             GridViewPharmacylist.DataBind();
 
+            lblPharmacyCount.Text = gds.Tables[0].Rows.Count.ToString();
+
+
         }
         #endregion Gridviewbind
 
