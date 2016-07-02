@@ -91,10 +91,11 @@ var container = $(document.createElement('div')).css({
 });
 
 function RemoveWarning(ControlNo) {
- 
+    debugger;
     
     //--------------* To remove warning msg from textbox if the medicine is not out of stock , and is called onfocus event of quantity textbox *-------------------//
-    if ((document.getElementById('txtQuantity' + ControlNo).value) != 'Sorry! Out Of stock')
+    var isnotnumber = document.getElementById('txtQuantity' + ControlNo).value;
+    if (isNaN(isnotnumber))
     {
 
 
@@ -399,7 +400,7 @@ function BindControlsByMedicneName(ControlNo) {
             document.getElementById('txtCategory' + ControlNo).value = MedicineDetails[2];
             document.getElementById('txtCategory' + ControlNo).readOnly = true;
 
-            document.getElementById('txtQuantity' + ControlNo).focus();
+           // document.getElementById('txtQuantity' + ControlNo).focus();
 
             if (PageCalledFrom != 'StockIn') {
                
@@ -411,7 +412,7 @@ function BindControlsByMedicneName(ControlNo) {
                     $("#txtQuantity" + ControlNo).attr('type', 'text');
                     $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
 
-                    $("#txtQuantity" + ControlNo).val('Sorry! Out Of stock');
+                    $("#txtQuantity" + ControlNo).val('No Stock');
                    
                     
                 }
@@ -469,7 +470,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
                         $("#txtQuantity" + ControlNo).attr('type', 'text');
                         $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
 
-                        $("#txtQuantity" + ControlNo).val('Out Of Stock');
+                        $("#txtQuantity" + ControlNo).val('No Stock');
 
                     }
 
@@ -511,7 +512,7 @@ function CheckMedicineIsOutOfStock(ControlNo) {
                         $("#txtQuantity" + ControlNo).attr('type', 'text');
                         $("#txtQuantity" + ControlNo).css({ 'color': ' #ffad99' });
 
-                        $("#txtQuantity" + ControlNo).val('Out Of Stock');
+                        $("#txtQuantity" + ControlNo).val('No Stock');
 
                     }
 
@@ -915,9 +916,9 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
 
 function RemoveWarningPharm(ControlNo) {
  
-
+    debugger;
     //--------------* To remove warning msg from textbox if the medicine is not out of stock , and is called onfocus event of quantity textbox *-------------------//
-    if ((document.getElementById('txtMedQty' + ControlNo).value) != 'Sorry! Out Of stock') {
+    if ((document.getElementById('txtMedQty' + ControlNo).value) != 'No Stock') {
 
 
         $("#txtMedQty" + ControlNo).removeClass("warning");
