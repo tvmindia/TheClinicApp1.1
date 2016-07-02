@@ -361,7 +361,7 @@
                 <div class="grey_sec">
                     <div class="search_div">
 
-                        <input class="field" type="search" id="txtSearch" onblur="bindPatient();" name="txtSearch" placeholder="Search here..." />
+                        <input class="field" type="search" id="txtSearch" onblur="bindPatient();" name="txtSearch" placeholder="Search patient..." />
                         <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" />
                     </div>
                     <ul class="top_right_links">
