@@ -6,12 +6,12 @@
     <asp:Panel DefaultButton="btnBookToken" runat="server">
         <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
         <style>
-        .hello {
-            font-size: 30px;
-            font-family: 'Footlight MT';
-            font-weight: bold;
-        }
-    </style>
+            .hello {
+                font-size: 30px;
+                font-family: 'Footlight MT';
+                font-weight: bold;
+            }
+        </style>
 
         <script src="../js/jquery-1.9.1.min.js"></script>
         <script src="../js/vendor/jquery-1.11.1.min.js"></script>
@@ -23,137 +23,137 @@
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/Messages.js"></script>
         <script>
-        $(document).ready(function () {
+            $(document).ready(function () {
             
             
-            $('.alert_close').click(function () {                
+                $('.alert_close').click(function () {                
             
-                $(this).parent(".alert").hide();            
-            });      
+                    $(this).parent(".alert").hide();            
+                });      
 
-            $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="tooltip"]').tooltip();
         
-            $('.nav_menu').click(function () {
+                $('.nav_menu').click(function () {
                 
-                $(".main_body").toggleClass("active_close");
-            });  
+                    $(".main_body").toggleClass("active_close");
+                });  
         
-            var ac=null;
+                var ac=null;
            
 
-            ac = <%=listFilter %>;
-            var length= ac.length;
-            var projects = new Array();
-            for (i=0;i<length;i++)
-            {  
-                var name= ac[i].split('🏠');
-                projects.push({  value : name[0], label: name[0], desc: name[1]})   
-            }
+                ac = <%=listFilter %>;
+                var length= ac.length;
+                var projects = new Array();
+                for (i=0;i<length;i++)
+                {  
+                    var name= ac[i].split('🏠');
+                    projects.push({  value : name[0], label: name[0], desc: name[1]})   
+                }
 
-            $( "#txtSearch" ).autocomplete({
-                maxResults: 10,
-                source: function(request, response) {
-                    var results = $.ui.autocomplete.filter(projects, request.term);
-                    response(results.slice(0, this.options.maxResults));
-                },
-                focus: function( event, ui ) {
-                    $( "#txtSearch" ).val( ui.item.label );
+                $( "#txtSearch" ).autocomplete({
+                    maxResults: 10,
+                    source: function(request, response) {
+                        var results = $.ui.autocomplete.filter(projects, request.term);
+                        response(results.slice(0, this.options.maxResults));
+                    },
+                    focus: function( event, ui ) {
+                        $( "#txtSearch" ).val( ui.item.label );
                  
-                    return false;
-                },
-                select: function( event, ui ) {
-                    $( "#project" ).val( ui.item.label );
+                        return false;
+                    },
+                    select: function( event, ui ) {
+                        $( "#project" ).val( ui.item.label );
       
-                    $( "#project-description" ).html( ui.item.desc );                  
+                        $( "#project-description" ).html( ui.item.desc );                  
                     
  
-                    return false;
-                }
-            })
-        .autocomplete( "instance" )._renderItem = function( ul, item ) {
-        return $( "<li>" )
-          .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
-          .appendTo( ul );
-    };             
-        });   
+                        return false;
+                    }
+                })
+            .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                  .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+                  .appendTo( ul );
+            };             
+            });   
         </script>
 
         <script>
-        function SetIframeSrc(HyperlinkID) {          
-            if (HyperlinkID == "AllTokenIframe") {
-                var AllTokenIframe = document.getElementById('AllTokenIframe');
-                AllTokenIframe.src = "ViewTokens.aspx";
-                //$('#OutOfStock').modal('show');
+            function SetIframeSrc(HyperlinkID) {          
+                if (HyperlinkID == "AllTokenIframe") {
+                    var AllTokenIframe = document.getElementById('AllTokenIframe');
+                    AllTokenIframe.src = "ViewTokens.aspx";
+                    //$('#OutOfStock').modal('show');
+                }
             }
-        }
-function CheckddlDoctor()
-{ 
-debugger;
-if ( $('#<%=hdnfileID.ClientID%>').val()!="" && $('#<%=ddlDoctor.ClientID%>').val()=="--Select--")
-{
-debugger;
-    var lblclass = Alertclasses.danger;
-                var lblmsg = msg.SelectDoctor;
-                var lblcaptn = Caption.Confirm;
-
-                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
-
-                return false;
-}
-else
-{
-debugger;
-return true;
-} 
-
-}
-        
-        function bindPatientDetails()
-        {
-           
-           // $(".alert").hide(); 
- 
-            var PatientName = document.getElementById("project-description").innerText;
-            document.getElementById('<%=lblToken.ClientID%>').innerHTML="_";       
-                     
-            var file=PatientName.split('|')      
-            var file1=file[0].split('📰 ')
-            var fileNO=file1[1]
-            if (PatientName!="")
-            {                                   
-                PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
-            }
-            function OnSuccess(response, userContext, methodName) 
-            {   
-                var string1 = new Array();
-                string1 = response.split('|');               
-                document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
-                document.getElementById('<%=lblFileNo.ClientID%>').innerHTML=string1[0];
-                document.getElementById('<%=lblPatientName.ClientID%>').innerHTML=string1[1];
-                document.getElementById('<%=lblAge.ClientID%>').innerHTML=string1[2];
-                document.getElementById('<%=lblGender.ClientID%>').innerHTML=string1[3];
-                document.getElementById('<%=lblAddress.ClientID%>').innerHTML=string1[4];
-                document.getElementById('<%=lblMobile.ClientID%>').innerHTML=string1[5];
-                document.getElementById('<%=lblEmail.ClientID%>').innerHTML=string1[6];
-                document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
-                document.getElementById('<%=HiddenClinicID.ClientID%>').value=string1[8];
-                document.getElementById('<%=lblLastVisit.ClientID%>').innerHTML=string1[9];
-                if(document.getElementById('<%=BookedDoctorName.ClientID%>') != null)
-                {
-                    document.getElementById('<%=BookedDoctorName.ClientID%>').style.visibility= 'hidden';
-                }              
-                document.getElementById('txtSearch').value="";//clearin the earch box  
-                document.getElementById('DropDownDoctor').style.visibility= 'visible';
+            function CheckddlDoctor()
+            { 
                 debugger;
+                if ( $('#<%=hdnfileID.ClientID%>').val()!="" && $('#<%=ddlDoctor.ClientID%>').val()=="--Select--")
+                {
+                    debugger;
+                    var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.SelectDoctor;
+                    var lblcaptn = Caption.Confirm;
 
-               document.getElementById('#<%=ddlDoctor.ClientID%>').selectedIndex = 0;
+                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
 
-            }          
-            function onError(response, userContext, methodName)
-            {     
-            }  
-            document.getElementById('txtSearch').value="";
-        }
+                    return false;
+                }
+                else
+                {
+                    debugger;
+                    return true;
+                } 
+
+            }
+        
+            function bindPatientDetails()
+            {
+           
+                // $(".alert").hide(); 
+ 
+                var PatientName = document.getElementById("project-description").innerText;
+                document.getElementById('<%=lblToken.ClientID%>').innerHTML="_";       
+                     
+                var file=PatientName.split('|')      
+                var file1=file[0].split('📰 ')
+                var fileNO=file1[1]
+                if (PatientName!="")
+                {                                   
+                    PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
+                }
+                function OnSuccess(response, userContext, methodName) 
+                {   
+                    var string1 = new Array();
+                    string1 = response.split('|');               
+                    document.getElementById('<%=hdnfileID.ClientID%>').value=string1[0];
+                    document.getElementById('<%=lblFileNo.ClientID%>').innerHTML=string1[0];
+                    document.getElementById('<%=lblPatientName.ClientID%>').innerHTML=string1[1];
+                    document.getElementById('<%=lblAge.ClientID%>').innerHTML=string1[2];
+                    document.getElementById('<%=lblGender.ClientID%>').innerHTML=string1[3];
+                    document.getElementById('<%=lblAddress.ClientID%>').innerHTML=string1[4];
+                    document.getElementById('<%=lblMobile.ClientID%>').innerHTML=string1[5];
+                    document.getElementById('<%=lblEmail.ClientID%>').innerHTML=string1[6];
+                    document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
+                    document.getElementById('<%=HiddenClinicID.ClientID%>').value=string1[8];
+                    document.getElementById('<%=lblLastVisit.ClientID%>').innerHTML=string1[9];
+                    if(document.getElementById('<%=BookedDoctorName.ClientID%>') != null)
+                    {
+                        document.getElementById('<%=BookedDoctorName.ClientID%>').style.visibility= 'hidden';
+                    }              
+                    document.getElementById('txtSearch').value="";//clearin the earch box  
+                    document.getElementById('DropDownDoctor').style.visibility= 'visible';
+                    debugger;
+
+                    document.getElementById('#<%=ddlDoctor.ClientID%>').selectedIndex = 0;
+
+    }          
+    function onError(response, userContext, methodName)
+    {     
+    }  
+    document.getElementById('txtSearch').value="";
+}
         </script>
 
         <!-- #main-container -->
@@ -204,79 +204,70 @@ return true;
                     </div>
                     <ul class="top_right_links">
                         <li>
-                            <asp:Button ID="btnBookToken" CssClass="button1" style=" width: 125px !important;" runat="server" Text="Book Token" OnClientClick="return CheckddlDoctor();" OnClick="btnBookToken_ServerClick" />
+                            <asp:Button ID="btnBookToken" CssClass="button1" Style="width: 125px !important;" runat="server" Text="Book Token" OnClientClick="return CheckddlDoctor();" OnClick="btnBookToken_ServerClick" />
                         </li>
-                        <li style="display:none"><a class="new" href="Tokens.aspx"><span></span>New</a></li>
+                        <li style="display: none"><a class="new" href="Tokens.aspx"><span></span>New</a></li>
                     </ul>
                 </div>
-                <div>
+                  <div class="" style="padding-top:20px;padding-left:50px;" id="Div1" runat="server">
+                            <label>Search & Select a Patient, then Book Token </label>
+                        </div>
 
+                <div class="right_form">                    
+                 
+                      
+                        <div id="Errorbox" style="display: none;" runat="server">
+                            <a class="alert_close">X</a>
+                            <div>
+                                <strong>
+                                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                                </strong>
+                                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+                            </div>
+                        </div>                        
                   
 
+                    <div style="height: 40px"></div>
+                    <div>
 
-                    <div id="Errorbox" style="display: none;" runat="server">
-                        <a class="alert_close">X</a>
-                        <div>
-                            <strong>
-                                <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
-                            </strong>
-                            <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+                        <div class="token_id_card">
+                            <div class="name_field">
+                                <asp:Label ID="lblPatientName" runat="server" Text="Name"></asp:Label><span class="generate_token"><asp:Label ID="lblToken" runat="server" Text="_"></asp:Label></span>
+                            </div>
+                            <div class="light_grey">
+                                <div class="col3_div">Age<span><asp:Label ID="lblAge" runat="server" Font-Size="Large"></asp:Label></span></div>
+                                <div class="col3_div">Gender<span><asp:Label ID="lblGender" runat="server" Font-Size="Large"></asp:Label></span></div>
+                                <div class="col3_div">File No<span><asp:Label ID="lblFileNo" runat="server" Font-Size="Large"></asp:Label></span></div>
+                            </div>
+                            <div class="card_white">
+                                <div class="field_label">
+                                    <label>Address</label><asp:Label ID="lblAddress" runat="server"></asp:Label>
+                                </div>
+                                <div class="field_label">
+                                    <label>Mobile</label><asp:Label ID="lblMobile" runat="server"></asp:Label>
+                                </div>
+                                <div class="field_label">
+                                    <label>Email</label>
+                                    <a href="mailto: demo@test.com">
+                                        <asp:Label ID="lblEmail" runat="server"></asp:Label></a>
+                                </div>
+                                <div class="field_label">
+                                    <label>Last visit</label><asp:Label ID="lblLastVisit" runat="server"></asp:Label>
+                                </div>
 
+                                <div class="field_label" id="BookedDoctorName" visible="false" runat="server">
+                                    <label id="labelbookeddoctor">Doctor</label>
+                                    <asp:Label ID="lblDoctor" runat="server"></asp:Label>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="field_label" id="DropDownDoctor" style="visibility: hidden">
+                                    <label>Doctor</label><asp:DropDownList ID="ddlDoctor" Width="60%" runat="server"></asp:DropDownList>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
-                      <div class="alert " id="info" runat="server">
-
-                        <label>Search & Select a Patient, then Book Token </label>
-
-                    </div>
-
-
-
-
-                </div>
-
-
-                <div style="height: 40px"></div>
-                <div>
-
-                    <div class="token_id_card">
-                        <div class="name_field">
-                            <asp:Label ID="lblPatientName" runat="server" Text="Name"></asp:Label><span class="generate_token"><asp:Label ID="lblToken" runat="server" Text="_"></asp:Label></span>
-                        </div>
-                        <div class="light_grey">
-                            <div class="col3_div">Age<span><asp:Label ID="lblAge" runat="server" Font-Size="Large"></asp:Label></span></div>
-                            <div class="col3_div">Gender<span><asp:Label ID="lblGender" runat="server" Font-Size="Large"></asp:Label></span></div>
-                            <div class="col3_div">File No<span><asp:Label ID="lblFileNo" runat="server" Font-Size="Large"></asp:Label></span></div>
-                        </div>
-                        <div class="card_white">
-                            <div class="field_label">
-                                <label>Address</label><asp:Label ID="lblAddress" runat="server"></asp:Label>
-                            </div>
-                            <div class="field_label">
-                                <label>Mobile</label><asp:Label ID="lblMobile" runat="server"></asp:Label>
-                            </div>
-                            <div class="field_label">
-                                <label>Email</label>
-                                <a href="mailto: demo@test.com">
-                                    <asp:Label ID="lblEmail" runat="server"></asp:Label></a>
-                            </div>
-                            <div class="field_label">
-                                <label>Last visit</label><asp:Label ID="lblLastVisit" runat="server"></asp:Label>
-                            </div>
-
-                            <div class="field_label" id="BookedDoctorName" visible="false" runat="server">
-                                <label id="labelbookeddoctor">Doctor</label>
-                                <asp:Label ID="lblDoctor" runat="server"></asp:Label>
-                            </div>
-                            <br />
-                            <br />
-                            <div class="field_label" id="DropDownDoctor" style="visibility: hidden">
-                                <label>Doctor</label><asp:DropDownList ID="ddlDoctor" Width="60%"  runat="server"></asp:DropDownList>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
             </div>

@@ -160,7 +160,13 @@
 
     function focuscontrol(ControlNo)
     {
-       // document.getElementById('txtMedQty' + ControlNo).value="";
+        
+        var valcheck=document.getElementById('txtMedQty' + ControlNo).value;
+        if ( isNaN(valcheck)) //checking the txt box value is number or not
+        {
+            document.getElementById('txtMedQty' + ControlNo).value="";
+        }
+        
         $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
 
     }                 
