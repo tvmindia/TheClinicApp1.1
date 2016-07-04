@@ -1,15 +1,19 @@
-﻿using System;
+﻿
+#region Namespaces
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.Services;
+using System.Web.UI;
+using System.Drawing;
+using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Configuration;
 using TheClinicApp1._1.ClinicDAL;
-using System.Text;
-using System.Web.Services;
+#endregion Namespaces
 
 namespace TheClinicApp1._1.Token
 {
@@ -49,6 +53,26 @@ namespace TheClinicApp1._1.Token
             GridViewTokenlist.EmptyDataText = "No Records Found";
             GridViewTokenlist.DataSource = gds;
             GridViewTokenlist.DataBind();
+
+
+            foreach (GridViewRow myRow in GridViewTokenlist.Rows)
+            {           
+                ImageButton DeleteButton = myRow.Cells[0].Controls[1] as ImageButton;
+                string isProcessed = myRow.Cells[5].Text;             
+
+                if (DeleteButton != null && isProcessed == "True")
+                {                  
+                    DeleteButton.Enabled = false;             
+                    DeleteButton.ImageUrl = "~/images/Deleteicon2 (3).png";
+                    myRow.BackColor = Color.LightGray;
+                }
+                else
+                {           
+                    DeleteButton.Enabled = true;              
+                    DeleteButton.ImageUrl = "~/images/Deleteicon1.png";
+                }
+            }
+            GridViewTokenlist.Columns[5].Visible=false;
         }
 
         #endregion gridviewbind

@@ -59,6 +59,7 @@ table th {
                   <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
                   <asp:BoundField HeaderText="Patient Name" DataField="Name" />
                    <asp:BoundField HeaderText="Time" DataField="Date" />
+           <asp:BoundField HeaderText="Consulted"  DataField="IsProcessed" />
                  </Columns>
 
        </asp:GridView>
