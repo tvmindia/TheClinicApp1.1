@@ -2,43 +2,28 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
-
-
-
-
-
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
-
     <script src="../js/DeletionConfirmation.js"></script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <script>
-
         var receiptID = '';
-
         var test = jQuery.noConflict();
         test(document).ready(function () {
-
             test('.nav_menu').click(function () {
                 test(".main_body").toggleClass("active_close");
             });
-
-
-
+            
             $('.alert_close').click(function () {
-
-
                 $(this).parent(".alert").hide();
 
             });
-
 
         });
 
@@ -48,23 +33,14 @@
 
                 //var rowCount = $("[id*=GridViewStockin] td").closest("tr").length;
                 if ($(this).text() == "") {
-
-
-
                     var DeletionConfirmation = ConfirmDelete();
-
                     if (DeletionConfirmation == true) {
                         receiptID = $(this).closest('tr').find('td:eq(5)').text();
-
-
                         window.location = "StockIn.aspx?HdrID=" + receiptID;
                     }
                 }
             });
         });
-
-
-
 
         function SetIframeSrc(HyperlinkID) {
 
@@ -73,15 +49,7 @@
                 NewMedicineIframe.src = "AddNewMedicine.aspx";
                 //$('#OutOfStock').modal('show');
             }
-
         }
-
-
-
-
-
-
-
 
 
     </script>
@@ -131,7 +99,7 @@
         var row;
 
         function OnSuccess(response) {
-         
+            $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
             var Medicines = xml.find("Medicines");
@@ -150,11 +118,6 @@
 
                         $("td", row).eq(0).html($('<img />')
                            .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
-
-
-
-
-
 
                         $("td", row).eq(1).html($(this).find("RefNo1").text());
                         $("td", row).eq(2).html($(this).find("RefNo2").text());
@@ -195,9 +158,10 @@
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                 $("td:first-child", empty_row).attr("align", "center");
-                $("td:first-child", empty_row).html("No records found for the search criteria.").removeClass('CursorShow');
+                $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=GridViewStockin]").append(empty_row);
+                $(".Pager").hide();
             }
 
             var th = $("[id*=GridViewStockin] th:contains('ReceiptID')");
@@ -307,18 +271,15 @@
 
 
                             <div class="tab_table">
-
-                                <table class="table" style="width: 100%; border: 0;">
-
-                                    <tr>
+                                <div id="StockInTableDiv" style="height:370px">
+                               
                                         <asp:GridView ID="GridViewStockin" runat="server" Width="100%" AutoGenerateColumns="False" class="table">
                                             <Columns>
                                                 <%--<asp:BoundField HeaderText="Receipt ID" DataField="ReceiptID" />--%>
 
                                                 <asp:TemplateField HeaderText=" ">
                                                     <ItemTemplate>
-                                                        <asp:Image ID="img1" runat="server" 
-                                                            />
+                                                        <asp:Image ID="img1" runat="server"/>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
@@ -331,8 +292,8 @@
                                                 <%--<asp:HyperLinkField  Text="Details" HeaderText="Click Here" DataNavigateUrlFields="ReceiptID" DataNavigateUrlFormatString="~/Stock/StockInDetails.aspx?ReceiptID={0}" />--%>
                                             </Columns>
                                         </asp:GridView>
-                                    </tr>
-                                </table>
+                              
+                                    </div>
                                 <div class="Pager">
                                 </div>
 

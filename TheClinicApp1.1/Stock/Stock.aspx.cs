@@ -40,7 +40,7 @@ namespace TheClinicApp1._1.Stock
 
         private void BindDummyRow()
         {
-            DataTable dummy = new DataTable();
+            DataTable dummy = new DataTable();         
             dummy.Columns.Add("MedicineName");
             dummy.Columns.Add("CategoryName");
             dummy.Columns.Add("MedicineCode");
@@ -51,11 +51,10 @@ namespace TheClinicApp1._1.Stock
 
             dummy.Rows.Add();
             gvMedicines.DataSource = dummy;
-            gvMedicines.DataBind();
+            gvMedicines.DataBind();           
         }
 
         #endregion Bind Dummy Row
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -69,30 +68,28 @@ namespace TheClinicApp1._1.Stock
             //DataTable dtRols = new DataTable();
                    
             string Login = UA.userName;
-            RoleName = UA.GetRoleName1(Login);        
-           
+            RoleName = UA.GetRoleName1(Login);
+            BindOutOfStock();
             if (!IsPostBack)
             {
-                BindDummyRow();
-                //BindOutOfStockGridview();
-            }
+                BindDummyRow();              
+              
+            }           
         }
 
-        //#region Bind Out Of Stock Gridview
-        //public void BindOutOfStockGridview()
-        //{
-        //    UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-        //    stockObj.ClinicID = UA.ClinicID.ToString();
-        //    //gridview binding for listing the Out of Stock Medicines 
-        //    DataSet gds = stockObj.ViewOutofStockMedicines();
-        //    gvOutOfStock1.EmptyDataText = "No Records Found";
-        //    gvOutOfStock1.DataSource = gds;
-        //    gvOutOfStock1.DataBind();
-        //}
+        #region Bind Out Of Stock
+        public void BindOutOfStock()
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            stockObj.ClinicID = UA.ClinicID.ToString();
+            //To Get the Count of Out of Stock Medicines 
+            DataSet gds = stockObj.ViewOutofStockMedicines();
+            lblReOrderCount.Text = gds.Tables[0].Rows.Count.ToString();
 
-        //#endregion Bind Out Of Stock Gridview
+        }
 
-
+        #endregion Bind Out Of Stock 
+        
         #region webmethod
         [WebMethod]
         public static string GetMedicines(string searchTerm, int pageIndex)

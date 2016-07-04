@@ -76,6 +76,15 @@ namespace TheClinicApp1._1.Stock {
         protected global::System.Web.UI.WebControls.ImageButton LogoutButton;
         
         /// <summary>
+        /// lblReOrderCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblReOrderCount;
+        
+        /// <summary>
         /// gvMedicines control.
         /// </summary>
         /// <remarks>

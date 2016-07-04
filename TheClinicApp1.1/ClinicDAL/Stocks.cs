@@ -648,7 +648,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[ViewOutofStockMedicines]";
+              //  cmd.CommandText = "[ViewOutofStockMedicines]";
+                cmd.CommandText = "[ReportOutOfStockMedicine]";
 
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                                 

@@ -120,6 +120,8 @@ namespace TheClinicApp1._1.Stock
                         dt.Rows[0]["PageSize"] = PageSize;
                         dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
                         ds.Tables.Add(dt);
+                        int RowCount = Convert.ToInt32(dt.Rows[0]["RecordCount"]);
+                        //RowCount  give the total count of out of stock items
                         return ds;
                     }
                 }

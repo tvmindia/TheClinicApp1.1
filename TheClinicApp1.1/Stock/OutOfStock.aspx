@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="OutOfStock.aspx.cs" Inherits="TheClinicApp1._1.Stock.OutOfStock" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
@@ -11,13 +12,12 @@
 
     <script type="text/javascript">
 
-
         $(function () {
-           
+
             GetMedicines(1);
         });
         $("[id*=txtSearch]").live("keyup", function () {
-           
+
             GetMedicines(parseInt(1));
         });
         $(".Pager .page").live("click", function () {
@@ -27,7 +27,7 @@
             return jQuery.trim($("[id*=txtSearch]").val());
         };
         function GetMedicines(pageIndex) {
-           
+
             $.ajax({
 
                 type: "POST",
@@ -37,18 +37,18 @@
                 dataType: "json",
                 success: OnSuccess,
                 failure: function (response) {
-                   
+
                     alert(response.d);
                 },
                 error: function (response) {
-                   
+
                     alert(response.d);
                 }
             });
         }
         var row;
         function OnSuccess(response) {
-            
+
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
             var Medicines = xml.find("Medicines");
@@ -68,7 +68,7 @@
                     $("td", row).eq(2).html($(this).find("Unit").text());
                     $("td", row).eq(3).html($(this).find("Qty").text());
                     $("td", row).eq(4).html($(this).find("ReOrderQty").text());
-                   
+
 
                     $("[id*=gvOutOfStock1]").append(row);
                     row = $("[id*=gvOutOfStock1] tr:last-child").clone(true);
@@ -95,26 +95,27 @@
                 $("[id*=gvOutOfStock1]").append(empty_row);
             }
         };
+        
+    </script>
 
+    <div id="StockOutMainDiv">
+        <div id="StockOutTableDiv" style="height:300px">
+    <asp:GridView ID="gvOutOfStock1" runat="server" AutoGenerateColumns="False" Style="width: 100%; border-color: #dbdbdb" class="table">
+        <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+        <Columns>
+            <%--  <asp:BoundField DataField="MedicineID" HeaderText="MedicineID" />--%>
+            <asp:BoundField DataField="MedicineName" HeaderText="Medicine Name" />
 
- 
-        </script>
+            <asp:BoundField DataField="CategoryName" HeaderText="Category Name" />
+            <asp:BoundField DataField="Unit" HeaderText="Unit" />
+            <asp:BoundField DataField="Qty" HeaderText="Existing Quantity" ItemStyle-HorizontalAlign="Right" />
+            <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" />
 
+        </Columns>
 
-     <asp:GridView ID="gvOutOfStock1" runat="server"  AutoGenerateColumns="False" Style="width: 100%;border-color:#dbdbdb" class="table"  >
-                                    <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
-                                    <Columns>
-                                        <%--  <asp:BoundField DataField="MedicineID" HeaderText="MedicineID" />--%>
-                                        <asp:BoundField DataField="MedicineName" HeaderText="Medicine Name" />
-                                       
-                                          <asp:BoundField DataField="CategoryName" HeaderText="Category Name"/>
-                                         <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                        <asp:BoundField DataField="Qty" HeaderText="Existing Quantity" ItemStyle-HorizontalAlign="Right"/>
-                                        <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" />
-                                      
-                                    </Columns>
-                                    
-                                </asp:GridView>
-      <div class="Pager"></div>
+    </asp:GridView>
+            </div>
+    <div class="Pager"></div>
+      </div>
 
 </asp:Content>

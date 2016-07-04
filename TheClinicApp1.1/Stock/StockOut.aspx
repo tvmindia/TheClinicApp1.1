@@ -112,7 +112,7 @@
 
         function OnSuccess(response) {
 
-
+            $(".Pager").show();
 
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
@@ -143,47 +143,28 @@
                     $("td", row).eq(0).html($('<img />')
                         .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
-
-
-
-
-
                     $("td", row).eq(1).html($(this).find("IssueNO").text());
-
                     $("td", row).eq(2).html($(this).find("IssuedTo").text());
-                    $("td", row).eq(3).html($(this).find("Date").text());
-
-                   
-
-
+                    $("td", row).eq(3).html($(this).find("Date").text());                 
+                    
                     if ($(this).find("PrescID").text() == "") {
                         $("td", row).eq(4).html("Direct");
                     }
-                    else {
+                    else{
                         $("td", row).eq(4).html("Prescription");
-                    }
-
-
-                  
+                    }                  
 
                     $("td", row).eq(5).html('Details').click(function () {
-
                         issueID = $(this).closest('tr').find('td:eq(6)').text();
                         window.location = "StockOutDetails.aspx?issueID=" + issueID;
                     }).addClass('CursorShow');
 
                     $("td", row).eq(6).html($(this).find("IssueID").text());
-
-
-
                     //$("td", row).eq(2).html($(this).find("Date").text());
                     $("[id*=gvIssueHD]").append(row);
                     row = $("[id*=gvIssueHD] tr:last-child").clone(true);
-
-
-
-
                 });
+
                 var pager = xml.find("Pager");
                 $(".Pager").ASPSnippets_Pager({
                     ActiveCssClass: "current",
@@ -201,9 +182,10 @@
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                 $("td:first-child", empty_row).attr("align", "center");
-                $("td:first-child", empty_row).html("No records found for the search criteria.").removeClass('CursorShow');;
+                $("td:first-child", empty_row).html("No records Found.").removeClass('CursorShow');;
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=gvIssueHD]").append(empty_row);
+                $(".Pager").hide();
             }
 
 
@@ -317,15 +299,11 @@
 
 
                             <div class="tab_table">
-
+                                <div id="StockOut" style="height:370px">
                                 <asp:GridView ID="gvIssueHD" runat="server" Style="width: 100%" AutoGenerateColumns="False" class="table">
                                     <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                                     <Columns>
-
-
                                         <%--<asp:BoundField DataField="IssueNO" HeaderText="IssueNO"  ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow" />--%>
-
-
                                         <%--<asp:BoundField  HeaderText="Delete"  ItemStyle-CssClass="Match"  />--%>
                                         <asp:TemplateField HeaderText=" ">
                                             <ItemTemplate>
@@ -333,18 +311,15 @@
                                                     OnClientClick="ConfirmDelete()" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-
                                         <asp:BoundField DataField="IssueNO" HeaderText="IssueNO" ItemStyle-CssClass="Match" />
                                         <asp:BoundField DataField="IssuedTo" HeaderText="IssuedTo" ItemStyle-CssClass="Match" />
                                         <asp:BoundField DataField="Date" HeaderText="Date" ItemStyle-CssClass="Match" />
-                                        <asp:BoundField  DataField="PrescID" HeaderText="IssueMode" ItemStyle-CssClass="Match" />
-                                        
+                                        <asp:BoundField  DataField="PrescID" HeaderText="IssueMode" ItemStyle-CssClass="Match" />                                        
                                         <asp:BoundField HeaderText="Details" ItemStyle-CssClass="Match" />
                                         <asp:BoundField DataField="IssueID" HeaderText="IssueID" ItemStyle-CssClass="Match" />
-
                                     </Columns>
-
                                 </asp:GridView>
+                                </div>
                                 <div class="Pager">
  
                                 </div>
