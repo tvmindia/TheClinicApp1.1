@@ -272,6 +272,7 @@ namespace TheClinicApp1._1.Pharmacy
                     lblDoctor.Text = "";
                     HiddenPatientID.Value = "";
                     Patientidtorefill.Value = "";
+                    ProfilePic.Src = "../images/UploadPic1.png";
                 }
                 else
                 {

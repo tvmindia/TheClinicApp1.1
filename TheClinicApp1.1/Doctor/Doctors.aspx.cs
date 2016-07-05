@@ -185,7 +185,7 @@ namespace TheClinicApp1._1.Doctor
                 VisitsObj.RespRate = (resp_rate.Value != "") ? resp_rate.Value.ToString() : null;
                 VisitsObj.Others = (others.Value != "") ? others.Value.ToString() : null;
                 if (HdnForVisitID.Value == "")
-                {
+                {                   
                     if (hdnRemovedIDs.Value.Trim() == string.Empty)
                     {
                         VisitsObj.AddVisits();
@@ -201,7 +201,7 @@ namespace TheClinicApp1._1.Doctor
                     }
                 }
                 else
-                {
+                {                   
                     VisitsObj.VisitID = Guid.Parse(HdnForVisitID.Value.ToString());
                     VisitsObj.UpdateVisits();
                 }
@@ -358,13 +358,15 @@ namespace TheClinicApp1._1.Doctor
             Guid FileIDForGrid = Guid.Parse(dr["FileID"].ToString());
 
             DataTable GridBindVisits = new DataTable();
-            GridBindVisits = CaseFileObj.GetGridVisits(FileIDForGrid);
+            GridBindVisits = CaseFileObj.GetGridVisits(FileIDForGrid); //binding history Cases
             GridViewVisitsHistory.EmptyDataText = "No Records Found";
             GridViewVisitsHistory.DataSource = GridBindVisits;
             GridViewVisitsHistory.DataBind();
-            lblCaseCount.Text = GridViewVisitsHistory.Rows.Count.ToString();
 
-            DataTable dt = PatientObj.SelectPatient();
+            lblCaseCount.Text = GridViewVisitsHistory.Rows.Count.ToString();
+         
+
+            DataTable dt = PatientObj.SelectPatient(); //binding patient Details in header
             dr = dt.NewRow();
             dr = dt.Rows[0];
             DateTime date = DateTime.Now;
@@ -458,6 +460,9 @@ namespace TheClinicApp1._1.Doctor
             var xml = MedicinList.GetXml();
             hdnXmlData.Value = xml;
             Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
+            
+            lblNew_history.Text = "History";
+         
         }
         #endregion Update Visits
 
@@ -525,6 +530,8 @@ namespace TheClinicApp1._1.Doctor
         protected void btnNew_ServerClick(object sender, EventArgs e)
         {
             ClearButton();
+            lblNew_history.Text = "New Case";
+
         }
         #endregion NewButtonClickEvent
 
@@ -549,7 +556,7 @@ namespace TheClinicApp1._1.Doctor
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-            
+                                           
             obj.ClinicID = UA.ClinicID.ToString();
 
             DataSet ds = obj.GetpatientDetails(file);
@@ -649,8 +656,8 @@ namespace TheClinicApp1._1.Doctor
                 DataTable GridBindVisits = new DataTable();
                 GridBindVisits = CaseFileObj.GetGridVisits(FileIDForGrid);
                 GridViewVisitsHistory.EmptyDataText = "No Records Found";
-                GridViewVisitsHistory.DataSource = GridBindVisits;
-                GridViewVisitsHistory.DataBind();
+                GridViewVisitsHistory.DataSource = GridBindVisits;                             
+                GridViewVisitsHistory.DataBind(); 
                 lblCaseCount.Text = GridViewVisitsHistory.Rows.Count.ToString();
 
                 DataTable dt = PatientObj.SelectPatient();

@@ -7,7 +7,7 @@
     <asp:Panel DefaultButton="btnSave" runat="server">
     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
     <style>
-        img .imagpreview{
+     img .imagpreview{
             display:inline-flex;
            
         }
@@ -39,7 +39,7 @@
         margin-bottom: 7px!important;
         
     }
-        #accordion table td {
+     #accordion table td {
             border: 0;
             border-top: 1px solid #E6E5E5 !important;
             border-left: 1px solid #E6E5E5 !important;
@@ -52,9 +52,7 @@
          <script src="../js/Messages.js"></script>
     <script>
         function BindMedunitbyMedicneName(ControlNo) 
-        {
-           
-  
+        {   
             if (ControlNo >= 0) {
                 var MedicineName = document.getElementById('txtMedName' + ControlNo).value;
             }
@@ -72,8 +70,6 @@
             function onError(response, userContext, methodName) {       
             }
         }
-
-       
 
         function autocompleteonfocus(controlID)
         {
@@ -128,8 +124,7 @@
                 GetTextBoxValuesPresDoc('<%=hdnTextboxValues.ClientID%>');
             }
                     
-            function FillTextboxUsingXml(){
-                
+            function FillTextboxUsingXml(){                
                 GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
                 RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
             }
@@ -143,11 +138,8 @@
                 $('input[type=checkbox]').val('');  
             }
 
-
-
             function CheckEmpty()
-            {
-                
+            {                
                 if(($('#<%=txtHeightFeet.ClientID%>').val() != '')&&($('#<%=txtHeightInch.ClientID%>').val()!='')&&($('#<%=txtWeight.ClientID%>').val()!=''))
                 {
                     $('#<%=txtHeightFeet.ClientID%>').val('');
@@ -156,38 +148,40 @@
                 }    
 
                 if(($('input[type=text]').val()=='')&&($('textarea').val()==''))
-                {
-                   
-
-
+                {                 
                      // Alert.render("Sorry...");
-                    return false;
-                    
-                }
-                
+                    return false;                    
+                }                
             }
+
+        //------------------------Blink Div---------------------------//
+        function blink(selector){
+            $(selector).fadeOut('slow', function(){
+                $(this).fadeIn('slow', function(){
+                    blink(this);
+                });
+            });
+        }   
+       
+        //---------------------------------------------------------//
+
     </script>
       <script> 
           function bindPatientDetails()
-          {
-              
-               var PatientName = document.getElementById("project-description").innerText;
-             
-       
-                     
+          {              
+               var PatientName = document.getElementById("project-description").innerText;            
+                            
             var file=PatientName.split('|')      
             var file1=file[0].split('📰 ')
             var fileNO=file1[1]
             if (PatientName!="")
 
-            { 
-                                  
+            {                                   
                 PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
             }
 
             function OnSuccess(response, userContext, methodName) 
-            {   
-                      
+            {                         
                 var string1 = new Array();
                 string1 = response.split('|');
                
@@ -197,12 +191,11 @@
                 document.getElementById('<%=lblAgeCount.ClientID%>').innerHTML=string1[2];
                 document.getElementById('<%=lblGenderDis.ClientID%>').innerHTML=string1[3];            
                 document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
+           
                 var BtID=document.getElementById('<%=btnSearch.ClientID%>')
                 
                 $('#<%=btnSearch.ClientID%>').click();
-                document.getElementById('txtSearch').value="";//clear search box
-
-                
+                document.getElementById('txtSearch').value="";//clear search box                
             }          
             function onError(response, userContext, methodName)
             {                   
@@ -294,36 +287,45 @@
                             <label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
-                </div>
-                <asp:HiddenField ID="HiddenField2" runat="server" />
 
+                </div>
+                
+                  
+                    <div>
+                         <asp:Label ID="lblNew_history"  CssClass="blink" runat="server"   Text="New Case" ForeColor="#FF9933" Font-Bold="True" Font-Size="X-Large"></asp:Label>
+                    </div>
+              
+                  
+                <asp:HiddenField ID="HiddenField2" runat="server" />
+            
                 <div id="accordion">
+                    
                     <h3>Personal</h3>
                     <div>
                         <div class="row field_row">
                             <div class="col-lg-4">
                                 <div class="row">
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-7">
                                         <label for="height">Height</label>
                                         <div class="input-group spinner height" data-trigger="spinner" id="customize-spinner">
-                                            <input type="text" class="form-control text-center" id="txtHeightFeet" runat="server" data-max="200" data-step="1" />
+                                            <input type="text" class="form-control text-center" id="txtHeightFeet" runat="server" data-min="0" data-max="100" data-step="1" />
                                             <div class="input-group-addon">
                                                 <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                 <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
                                             </div>
                                         </div>
                                         <div class="input-group spinner height" data-trigger="spinner" id="customize-spinner">
-                                            <input type="text" class="form-control text-center" id="txtHeightInch" runat="server" data-max="200" data-step="1" />
+                                            <input type="text" class="form-control text-center" id="txtHeightInch" runat="server" data-min="0" data-max="100" data-step="1" />
                                             <div class="input-group-addon">
                                                 <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                 <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-5">
                                         <label for="weight">Weight</label>
                                         <div class="input-group spinner weight" data-trigger="spinner" id="customize-spinner">
-                                            <input type="text" class="form-control text-center" id="txtWeight" runat="server" data-max="200" data-step="1" />
+                                            <input type="text" class="form-control text-center" id="txtWeight" runat="server" data-min="0" data-max="200" data-step="1" />
                                             <div class="input-group-addon">
                                                 <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                 <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
@@ -614,6 +616,7 @@
     <script>
         var test=jQuery.noConflict();
         test(document).ready(function () {
+            blink('.blink');//div blinking function
 			   
             test('.alert_close').click(function () {
                 test(this).parent(".alert").hide();
@@ -683,7 +686,9 @@
     <script>
         var test=jQuery.noConflict();
         test(document).on('ready',function(){
-            
+           
+            $( "#ui-id-3,#ui-id-5,#ui-id-7,#ui-id-9,#ui-id-11,#ui-id-13,#ui-id-15" ).click();//accordian keep open
+
             var ac=null;
             ac = <%=NameBind %>;
             var length= ac.length;
