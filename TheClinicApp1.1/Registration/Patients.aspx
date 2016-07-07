@@ -107,8 +107,9 @@
             }
             return true;
         }
-        function bindPatient(){
-            $('#<%=btnSearch.ClientID%>').click();
+            function bindPatient(){                
+                if (document.getElementById("txtSearch").innerText !="")
+                $('#<%=btnSearch.ClientID%>').click();
         }
          
         </script>
