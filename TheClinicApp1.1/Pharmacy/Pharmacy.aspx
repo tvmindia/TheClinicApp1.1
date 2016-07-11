@@ -30,6 +30,8 @@
                 test(".main_body").toggleClass("active_close");
             });
 
+         
+
             SetPageIDCalled('Pharmacy');
 
             var ac=null;
@@ -167,7 +169,8 @@
             document.getElementById('txtMedQty' + ControlNo).value="";
         }
         
-        $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
+        // $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
+     
 
     }                 
            
@@ -326,8 +329,10 @@
                         </div>
                     </div>
                 </div>
-
-
+                <%-- ALert MEssae for Out Of Stock REd Color Diplay --%>
+                    <div id="OutOfStockMessage" style="display: none; color:red; padding-left:150px;padding-bottom:10Px"> 
+                        <strong>**</strong>Red Quantity indicates Out of Stock. 
+                    </div>
                 <div class="prescription_grid">
                     <table class="table" style="width: 100%;">
                         <tbody>
@@ -343,7 +348,7 @@
                                 <td>
                                     <input id="txtMedName0" type="text" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
                                 <td>
-                                    <input id="txtMedQty0" type="text" class="input" onfocus="focuscontrol(0)" onblur="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
+                                    <input id="txtMedQty0" type="text" class="input" onfocus="focuscontrol(0)" title="Red Color Indicates No Stock" onkeyup="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
                                 <td>
                                     <input id="txtMedUnit0" class="input" readonly="true" type="text" onfocus="focusplz(0)"/></td>
                                 <td>
@@ -365,6 +370,7 @@
                     </table>
                     <div id="maindiv">
                     </div>
+                
                 </div>
 
             </div>

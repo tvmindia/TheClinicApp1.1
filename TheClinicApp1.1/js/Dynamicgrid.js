@@ -150,7 +150,7 @@ function clickAdd(id) {
     // ADD new row with fields needed.
     $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;">'
              + ' <td ><input id="txtMedName' + iCnt + '" type="text" class="input"  onblur="BindMedunitbyMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
-                + '<td ><input id="txtMedQty' + iCnt + '" type="text" class="input" onfocus="focuscontrol(' + iCnt + ')" onblur="CheckPharmacyMedicineIsOutOfStock(' + iCnt + ')" onchange="RemoveWarningPharm(' + iCnt + ')" autocomplete="off"/></td>'
+                + '<td ><input id="txtMedQty' + iCnt + '" type="text" class="input" onfocus="focuscontrol(' + iCnt + ')" title="Red Color Indicates No Stock" onkeyup="CheckPharmacyMedicineIsOutOfStock(' + iCnt + ')" onchange="RemoveWarningPharm(' + iCnt + ')" autocomplete="off"/></td>'
                 + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true"  class="input" type="text" onfocus="focusplz(' + iCnt + ')" /></td>'
                 + '<td ><input id="txtMedDos' + iCnt + '" type="text" class="input"/></td>'
                 + '<td><input id="txtMedTime' + iCnt + '" type="text" class="input"/></td>'
@@ -749,8 +749,8 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
             var  stockQty=parseInt(QtyInStock);
 
             if (stockQty < PresQty)
-            {
-                document.getElementById('txtMedQty' + i).style.color = "red";
+            {               
+                document.getElementById('txtMedQty' + i).style.color = "red";                          
             }
 
             document.getElementById('txtMedName' + i).value = MedicineName;
@@ -796,7 +796,7 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
 function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
 
- 
+    debugger;
 
     var XmlDataFromHF = document.getElementById(hdnXmlData).value;
     var xmlDoc = $.parseXML(XmlDataFromHF);
@@ -805,11 +805,11 @@ function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
     var i = 0;
 
     if (Medicines.length > 0) {
-      
+        debugger;
 
         $.each(Medicines, function () {
        
-
+            debugger;
             if (i > 0) {
                 clickAdd(i);
             }
@@ -829,6 +829,7 @@ function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
 
             if (stockQty < PresQty) {
                 document.getElementById('txtMedQty' + i).style.color = "red";
+                document.getElementById('OutOfStockMessage').style.display = "";
             }
 
             document.getElementById('txtMedName' + i).value = MedicineName;
@@ -854,7 +855,6 @@ var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
 function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsgges) {
 
-
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -865,8 +865,7 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
     var topId = iCnt;
 
     for (var k = 0; k <= topId; k++)
-    {
-      
+    {      
         if (document.getElementById('txtMedName' + k) == null)
         {
             continue;
@@ -880,9 +879,7 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
         var STOCKQTY = document.getElementById('hdnQty' + k).value;
         var x = parseInt(MEDQTY);
         var y = parseInt(STOCKQTY);
-        if (x > y || isNaN(x) || isNaN(y)) {
-
-            
+        if (x > y || isNaN(x) || isNaN(y)) {           
 
             //refering from messages.js
             var lblclass = Alertclasses.danger;
@@ -891,12 +888,8 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
 
             ErrorMessagesDisplay(lblErrorCaption, lblMsgges, Errorbox, lblclass, lblcaptn, lblmsg);
 
-                   
-
             return false;
             continue;
-
-
         }
 
         var CurrentMedName = document.getElementById('txtMedName' + k).value;
@@ -922,7 +915,7 @@ function RemoveWarningPharm(ControlNo) {
 
 
         $("#txtMedQty" + ControlNo).removeClass("warning");
-        $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
+       // $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
         $("#txtMedQty" + ControlNo).attr('type', 'number');
     }
 
@@ -930,6 +923,7 @@ function RemoveWarningPharm(ControlNo) {
 
 function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 {
+    debugger;
  
     var Qty1
     if (PageCalledFrom != 'doctor page')
@@ -946,48 +940,65 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
               
                 function OnSuccess(response, userContext, methodName)
                 {
+                    debugger;
                    
                     if (ControlNo >= 0)
                     {
+                        debugger;
                         var MedicineDetails = new Array();
                         MedicineDetails = response.split('|');
                       
                         Qty1 = MedicineDetails[1]; //  setting existing stock quantity using page method
 
                         if (isNaN(Qty1) == false) {
-                           
+                            debugger;
                             var Qty = Number(Qty1);
                             var InputQty = Number(document.getElementById('txtMedQty' + ControlNo).value);
 
 
                             if ((MedicineName != ""))
-                            {   
-                                    if (Qty <= 0) {
+                            {
+                                debugger;
+                                if (Qty <= 0) {
+                                    debugger;
                                         $("#txtMedQty" + ControlNo).addClass("warning");
                                         $("#txtMedQty" + ControlNo).attr('type', 'text');
                                         $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
+                                        
+                                        $("#txtMedQty" + ControlNo).prop('title','No Stock');
+                                       // $("#txtMedQty" + ControlNo).val('0');
+                                    // $("#txtMedQty" + ControlNo).val('No Stock');
+                                      //  document.getElementById('OutOfStockMessage').style.display = "";
 
-                                        $("#txtMedQty" + ControlNo).val('No Stock');
                                     }
 
                                     else if (InputQty > Qty || InputQty <= 0) {
+                                        debugger;
                                         $("#txtMedQty" + ControlNo).addClass("warning");
                                         $("#txtMedQty" + ControlNo).attr('type', 'text');
-                                        $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
+                                       // $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
 
                                         if (InputQty > Qty) {
-                                            $("#txtMedQty" + ControlNo).val('Qty<=' + Qty);
+                                            debugger;
+                                            $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
+                                          //  $("#txtMedQty" + ControlNo).val('Qty<=' + Qty);
+                                            $("#txtMedQty" + ControlNo).prop('title', 'Quantity must be ≤' + Qty);
+                                           // document.getElementById('OutOfStockMessage').style.display = "";
                                         }
 
                                         if (InputQty <= 0) {
-                                            $("#txtMedQty" + ControlNo).val('Qty > 0');
+                                            debugger;
+                                            //$("#txtMedQty" + ControlNo).val('Qty > 0');
+                                            $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
                                         }
 
                                     }
                                     else {
+                                        debugger;
                                         $("#txtMedQty" + ControlNo).removeClass("warning");
                                         $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
                                         $("#txtMedQty" + ControlNo).attr('type', 'number');
+                                       // document.getElementById('OutOfStockMessage').style.display = "none";
                                     }  
                             }
                         }
@@ -1006,6 +1017,7 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
 
 function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox,lblclass,lblcaptn,lblmsg)
 {
+    debugger;
   
 
    document.getElementById(Errorbox).style.display = "";
