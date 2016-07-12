@@ -397,7 +397,7 @@
                                     <label for="lymphnodes">Lymph Nodes</label><input id="lymphGen" type="text" name="lymphGen" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="edima">Edima</label><input id="edima" type="text" name="edima" runat="server" />
+                                    <label for="edima">Edema</label><input id="edima" type="text" name="edima" runat="server" />
                                 </div>
                             </div>
                         </div>
@@ -427,7 +427,7 @@
                                     <label for="pulse">Pulse</label><input id="pulse" type="text" name="pulse" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="bp">Bp</label><input id="bp" type="text" name="bp" runat="server" />
+                                    <label for="bp">Blood Pressure</label><input id="bp" type="text" name="bp" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="tounge">Tounge</label><input id="tounge" type="text" name="tounge" runat="server" />
@@ -441,7 +441,7 @@
                                     <label for="lymphnodes">Lymph Nodes</label><input id="lymphnodes" type="text" name="lymphnodes" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="resp_rate">Resp rate</label><input id="resp_rate" type="text" name="resp_rate" runat="server" />
+                                    <label for="resp_rate">Respiratory Rate</label><input id="resp_rate" type="text" name="resp_rate" runat="server" />
                                 </div>
                             </div>
                             <div class="row">
