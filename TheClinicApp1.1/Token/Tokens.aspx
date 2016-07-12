@@ -53,7 +53,19 @@
                 $( "#txtSearch" ).autocomplete({
                     maxResults: 10,
                     source: function(request, response) {
-                        var results = $.ui.autocomplete.filter(projects, request.term);
+
+//--- Search by name or description(file no , mobile no, address) , by accessing matched results with search term and setting this result to the source for autocomplete
+            var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+            var matching = $.grep(projects, function (value) {
+
+                var name = value.value;
+                var  label= value.label;
+                var desc= value.desc;
+
+                return matcher.test(name) || matcher.test(desc);
+            });
+                        var results = matching; // Matched set of result is set to variable 'result'
+
                         response(results.slice(0, this.options.maxResults));
                     },
                     focus: function( event, ui ) {
@@ -62,6 +74,8 @@
                         return false;
                     },
                     select: function( event, ui ) {
+
+
                         $( "#project" ).val( ui.item.label );
       
                         $( "#project-description" ).html( ui.item.desc );                  
@@ -110,7 +124,7 @@
         
             function bindPatientDetails()
             {
-           
+           debugger;
                 // $(".alert").hide(); 
  
                 var PatientName = document.getElementById("project-description").innerText;
