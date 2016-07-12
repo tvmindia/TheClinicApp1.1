@@ -47,7 +47,7 @@
             }
 
             $( "#txtSearch" ).autocomplete({
-                //maxResults: 10,
+                maxResults: 10,
                 source: function(request, response) {
 
                     //--- Search by name or description(file no , mobile no, address) , by accessing matched results with search term and setting this result to the source for autocomplete
