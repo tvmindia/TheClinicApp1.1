@@ -8,10 +8,12 @@
 #region Namespaces
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.IO;
 using System.Web.Services;
 using System.Web.UI;
 using System.Drawing;  
@@ -184,6 +186,14 @@ namespace TheClinicApp1._1.Doctor
                 VisitsObj.LymphClinic = (lymphnodes.Value != "") ? lymphnodes.Value.ToString() : null;
                 VisitsObj.RespRate = (resp_rate.Value != "") ? resp_rate.Value.ToString() : null;
                 VisitsObj.Others = (others.Value != "") ? others.Value.ToString() : null;
+
+
+              
+               
+
+
+
+
                 if (HdnForVisitID.Value == "")
                 {                   
                     if (hdnRemovedIDs.Value.Trim() == string.Empty)
@@ -205,6 +215,49 @@ namespace TheClinicApp1._1.Doctor
                     VisitsObj.VisitID = Guid.Parse(HdnForVisitID.Value.ToString());
                     VisitsObj.UpdateVisits();
                 }
+
+
+                if (FileUpload1.HasFile)
+                {
+                    byte[] ImageByteArray = null;
+                    ImageByteArray = ConvertImageToByteArray(FileUpload1);
+                    AttachObj.Attachment = ImageByteArray;
+                    AttachObj.Type = Path.GetExtension(FileUpload1.PostedFile.FileName);
+
+
+                    int l = (FileUpload1.PostedFile.FileName).IndexOf(".");
+                    if (l > 0)
+                    {
+                        AttachObj.Name = (FileUpload1.PostedFile.FileName).Substring(0, l);
+                    }
+                    AttachObj.Description = (Imgdesc.Value != "") ? Imgdesc.Value.ToString() : null;
+
+                    AttachObj.VisitID = VisitsObj.VisitID;
+
+
+                    float Size = FileUpload1.PostedFile.ContentLength / 1024;
+                    float sizeinMB = Size / 1024;
+                    string fileSize;
+                    if ((int)sizeinMB == 0)
+                    {
+                        fileSize = Size + "KB";
+                    }
+                    else
+                    {
+                        fileSize = sizeinMB.ToString("0.00") + "MB";
+                    }
+                    AttachObj.Size = fileSize;
+
+                    AttachObj.InsertFileAttachment();
+
+
+
+
+
+                }
+
+
+
                 if (HdnPrescID.Value != string.Empty)
                 {
                     PrescriptionObj.PrescID = HdnPrescID.Value.ToString();
@@ -287,10 +340,7 @@ namespace TheClinicApp1._1.Doctor
 
                         if ((RemovedIDs[i] != "") || (RemovedIDs[i] != string.Empty))
                         {
-
-
                             string UniqueId = RemovedIDs[i].ToString();
-
                             //string medId =   DetailObj.GetMedicineIDByUniqueID(Guid.Parse(UniqueId));
                             PrescriptionObj.ClinicID = UA.ClinicID.ToString();
                             PrescriptionObj.DeletePrescriptionDetails(UniqueId);
@@ -395,6 +445,7 @@ namespace TheClinicApp1._1.Doctor
 
         }
         #endregion FillPatientDetails
+
         #region BindVisitAttachment
         public void BindAttachment(Guid VisitID)
         {
@@ -414,6 +465,7 @@ namespace TheClinicApp1._1.Doctor
             }
         }
         #endregion BindVisitAttachment
+
         #region Update Visits
         protected void ImgBtnUpdateVisits_Command(object sender, CommandEventArgs e)
         {
@@ -461,7 +513,7 @@ namespace TheClinicApp1._1.Doctor
             hdnXmlData.Value = xml;
             Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
             
-            lblNew_history.Text = "History";
+            lblNew_history.Text = "History: "+CaseFileObj.Date.ToShortDateString();
          
         }
         #endregion Update Visits
@@ -704,6 +756,28 @@ namespace TheClinicApp1._1.Doctor
             Response.Redirect("../Default.aspx");
         }
         #endregion Logout
+
+        #region convertImage
+        /// <summary>
+        /// Conveting Image into Bytes Array
+        /// </summary>
+        /// <param name="fuImage"></param>
+        /// <returns></returns>
+        private byte[] ConvertImageToByteArray(FileUpload fuImage)
+        {
+            byte[] ImageByteArray;
+            try
+            {
+                MemoryStream ms = new MemoryStream(fuImage.FileBytes);
+                ImageByteArray = ms.ToArray();
+                return ImageByteArray;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        #endregion convertImage
     }
         #endregion Methods
 }

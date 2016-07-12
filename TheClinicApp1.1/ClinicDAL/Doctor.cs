@@ -837,6 +837,8 @@ namespace TheClinicApp1._1.ClinicDAL
                         LymphClinic = dr["LymphClinic"].ToString();
                         RespRate = dr["RespRate"].ToString();
                         Others = dr["Others"].ToString();
+                        Date = Convert.ToDateTime((dr["Date"]));
+
 
                     }
                     
