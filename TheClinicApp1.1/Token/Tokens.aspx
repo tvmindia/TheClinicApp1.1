@@ -80,7 +80,7 @@
       
                         $( "#project-description" ).html( ui.item.desc );                  
                     
- 
+ bindPatientDetails();
                         return false;
                     }
                 })

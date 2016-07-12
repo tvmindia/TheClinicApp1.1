@@ -108,16 +108,12 @@ namespace TheClinicApp1._1.Registration
         /// <returns></returns>
         private string BindName()
         {
-          
-
-            DataTable dt = PatientObj.GetSearchBoxData();
-
+            DataTable dt = PatientObj.GetSearchBoxData(); //Function call to get  Search BoxData
             StringBuilder output = new StringBuilder();
             output.Append("[");
             for (int i = 0; i < dt.Rows.Count; ++i)
             {
-                output.Append("\"" + dt.Rows[i]["Name"].ToString() + "\"");
-
+                output.Append("\"" + dt.Rows[i]["Name"].ToString() + "🏠📰 " + dt.Rows[i]["FileNumber"].ToString() + "|" + dt.Rows[i]["Address"].ToString() + "|" + dt.Rows[i]["Phone"].ToString() + "\"");
                 if (i != (dt.Rows.Count - 1))
                 {
                     output.Append(",");
@@ -125,6 +121,7 @@ namespace TheClinicApp1._1.Registration
             }
             output.Append("]");
             return output.ToString();
+
         }
         #endregion BindDataAutocomplete     
        
