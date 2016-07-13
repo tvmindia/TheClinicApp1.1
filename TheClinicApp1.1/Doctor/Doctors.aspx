@@ -560,7 +560,7 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:BoundField HeaderText="Remarks" DataField="Remarks" />
-                                    <asp:BoundField DataField="CreatedDate" HeaderText="Date" DataFormatString="{0:F}"></asp:BoundField>
+                                    <asp:BoundField DataField="CreatedDate" HeaderText="Date" ></asp:BoundField>
                                 </Columns>
 
 
