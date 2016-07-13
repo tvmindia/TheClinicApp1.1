@@ -61,11 +61,15 @@ namespace TheClinicApp1._1.Pharmacy
         public void gridviewbind()
         {
             DataSet gds = pharmacypobj.GetPatientPharmacyDetails(); //Function Call to Get Patient Pharamacy Details
+
+            DataRow[] dr = gds.Tables[0].Select("IsProcessed=False");
+            lblPharmacyCount.Text = dr.Length.ToString();
+
             GridViewPharmacylist.EmptyDataText = "No Records Found";
             GridViewPharmacylist.DataSource = gds;
             GridViewPharmacylist.DataBind();
 
-            lblPharmacyCount.Text = gds.Tables[0].Rows.Count.ToString();
+           // lblPharmacyCount.Text = gds.Tables[0].Rows.Count.ToString();
 
 
         }

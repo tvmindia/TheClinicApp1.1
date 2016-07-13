@@ -653,8 +653,8 @@
        
             //------------------------Animate Div---------------------------//
             function blink(selector){ 
-                    $(selector).animate({fontSize: "2.5em"},2000,function(){
-                    $(selector).animate({fontSize: "2em"},2000 )
+                    $(selector).animate({fontSize: "2.2em"},2000,function(){
+                  //  $(selector).animate({fontSize: "2em"},2000 )
                        // blink(this);                    
                 });
             }          

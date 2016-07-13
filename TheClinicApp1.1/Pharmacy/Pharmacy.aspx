@@ -426,7 +426,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField HeaderText="Doctor" DataField="DOCNAME" />
-                          <%--  <asp:BoundField HeaderText="Token No" DataField="TokenNo" />--%>
+                          <%--<asp:BoundField HeaderText="Token No" DataField="TokenNo" />--%>
                             <asp:BoundField HeaderText="Patient Name" DataField="Name" />
                             <asp:BoundField HeaderText="DateTime" DataField="CreatedDate" />
                             <asp:BoundField HeaderText="Issued" DataField="IsProcessed" />
