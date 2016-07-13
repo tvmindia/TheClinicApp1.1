@@ -30,6 +30,7 @@ namespace TheClinicApp1._1.Stock
 
         #region Global Variables
         private static int PageSize = 8;
+        public static int DateTimeFormatCode = 106;
 
         public string listFilter = null;
         public string RoleName = null;
@@ -170,6 +171,7 @@ namespace TheClinicApp1._1.Stock
             cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
             cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
             cmd.Parameters.AddWithValue("@PageSize", PageSize);
+            cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = DateTimeFormatCode;
             cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
 
             var xml = GetData(cmd, pageIndex).GetXml();
