@@ -23,6 +23,7 @@ namespace TheClinicApp1._1.ClinicDAL
         //Property
         #region TokenProperty  
       
+        public int DateTimeFormatCode = 113;
 
         public string Module = "TokensBooking";
        
@@ -61,7 +62,9 @@ namespace TheClinicApp1._1.ClinicDAL
         {
             get;
             set;
-        }     
+        }  
+   
+
         #endregion Token_Property
 
         //Methods
@@ -325,6 +328,8 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
 
+            cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = DateTimeFormatCode;
+
             sda = new SqlDataAdapter();
             cmd.ExecuteNonQuery();
             sda.SelectCommand = cmd;
@@ -379,6 +384,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value =Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
                 cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+
+                cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = DateTimeFormatCode;
+
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
