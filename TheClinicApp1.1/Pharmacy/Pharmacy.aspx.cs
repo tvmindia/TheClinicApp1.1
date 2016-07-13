@@ -310,5 +310,48 @@ namespace TheClinicApp1._1.Pharmacy
 
         #endregion ClickEvents
 
+        #region Row Coloring for Pharmacy View
+        /// <summary>
+        /// color the Isprocessed rows in the Token View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
+
+        int GetColumnIndexByName(GridViewRow row, string columnName)
+        {
+            int columnIndex = 0;
+            foreach (DataControlFieldCell cell in row.Cells)
+            {
+                if (cell.ContainingField is BoundField)
+                    if (((BoundField)cell.ContainingField).DataField.Equals(columnName))
+                        break;
+                columnIndex++; // keep adding 1 while we don't have the correct name
+            }
+            return columnIndex;
+        }
+        protected void GridViewPharmacylist_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+               if (e.Row.RowType == DataControlRowType.DataRow)
+             {    
+                 int index = GetColumnIndexByName(e.Row,"IsProcessed");
+                 string columnValue = e.Row.Cells[index].Text;
+
+                 //foreach (TableCell cell in e.Row.Cells)
+                 //{
+                     if (columnValue == "True")
+                     {
+                         e.Row.Cells[index].Text = "Yes";
+                         e.Row.BackColor = Color.LightGray;    
+                     }
+                     else
+                     {   e.Row.Cells[index].Text = "No";                          
+                     }
+                 //}               
+             }
+
+        }
+        #endregion Row Coloring for Pharmacy View
+
     }
 }

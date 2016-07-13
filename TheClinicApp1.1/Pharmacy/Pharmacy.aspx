@@ -417,7 +417,7 @@
                 </div>
                 <div class="modal-body" style="height: 500px; overflow-y: scroll; overflow-x: hidden;">
 
-                    <asp:GridView ID="GridViewPharmacylist" runat="server" AutoGenerateColumns="False" DataKeyNames="PatientID">
+                    <asp:GridView ID="GridViewPharmacylist" OnRowDataBound="GridViewPharmacylist_RowDataBound" runat="server" AutoGenerateColumns="False" DataKeyNames="PatientID">
 
                         <Columns>
                             <asp:TemplateField ItemStyle-Width="35px">
@@ -426,10 +426,13 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:BoundField HeaderText="Doctor" DataField="DOCNAME" />
-                            <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
+                          <%--  <asp:BoundField HeaderText="Token No" DataField="TokenNo" />--%>
                             <asp:BoundField HeaderText="Patient Name" DataField="Name" />
+                            <asp:BoundField HeaderText="DateTime" DataField="CreatedDate" />
+                            <asp:BoundField HeaderText="Issued" DataField="IsProcessed" />
                             <asp:BoundField HeaderText="DoctorID" Visible="false" DataField="DoctorID" />
                             <asp:BoundField HeaderText="PatientID" Visible="false" DataField="PatientID" />
+                          
 
                         </Columns>
                     </asp:GridView>
