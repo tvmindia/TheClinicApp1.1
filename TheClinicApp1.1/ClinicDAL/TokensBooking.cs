@@ -13,7 +13,9 @@ namespace TheClinicApp1._1.ClinicDAL
     {
 
         #region Global Variables
-        ErrorHandling eObj = new ErrorHandling();
+
+        common cmn = new common();
+         ErrorHandling eObj = new ErrorHandling();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;  
         string msgText;
@@ -328,7 +330,7 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
 
-            cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = DateTimeFormatCode;
+            cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode; 
 
             sda = new SqlDataAdapter();
             cmd.ExecuteNonQuery();
@@ -385,7 +387,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
                 cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
 
-                cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = DateTimeFormatCode;
+                cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode;
 
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();

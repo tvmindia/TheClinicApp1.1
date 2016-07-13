@@ -29,14 +29,11 @@ namespace TheClinicApp1._1.Stock
 
         IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
         Stocks stok = new Stocks();
-
         private static int PageSize = 8;
-        public static int DateFormatCode = 106;
-
         ClinicDAL.UserAuthendication UA;
         UIClasses.Const Const = new UIClasses.Const();
-        
         public string RoleName = null;
+
         #endregion Global variables
 
         #region Methods
@@ -51,19 +48,11 @@ namespace TheClinicApp1._1.Stock
             dummy.Columns.Add("IssueNO");
             dummy.Columns.Add("IssuedTo");
             //dummy.Columns.Add("IssueID");
-
             dummy.Columns.Add("Date");
-
             dummy.Columns.Add("PrescID");
-
             dummy.Columns.Add("Details");
-
-           
-
             dummy.Columns.Add("IssueID");
-
             dummy.Rows.Add();
-
             gvIssueHD.DataSource = dummy;
             //gvIssueHD.Columns[2].Visible = false;
             gvIssueHD.DataBind();
@@ -81,6 +70,7 @@ namespace TheClinicApp1._1.Stock
         {
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
+            common cmn = new common();
 
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
@@ -93,7 +83,7 @@ namespace TheClinicApp1._1.Stock
             cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
             cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
             cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = DateFormatCode;
+            cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateFormatCode; 
             cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
 
             var xml = GetData(cmd, pageIndex).GetXml();

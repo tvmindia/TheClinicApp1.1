@@ -11,6 +11,10 @@ namespace TheClinicApp1._1.ClinicDAL
     {
         #region Property
 
+        public int DateFormatCode = 106;
+        public int DateTimeFormatCode = 113;
+
+
         public string ErrorID
         {
             get;

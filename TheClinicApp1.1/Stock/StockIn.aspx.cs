@@ -30,8 +30,6 @@ namespace TheClinicApp1._1.Stock
 
         #region Global Variables
         private static int PageSize = 8;
-        public static int DateTimeFormatCode = 106;
-
         public string listFilter = null;
         public string RoleName = null;
         UIClasses.Const Const = new UIClasses.Const();
@@ -156,10 +154,9 @@ namespace TheClinicApp1._1.Stock
         {
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
+            common cmn = new common();
 
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-
-            
 
             string query = "ViewAndFilterReceiptHD";
             SqlCommand cmd = new SqlCommand(query);
@@ -171,7 +168,7 @@ namespace TheClinicApp1._1.Stock
             cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
             cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
             cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = DateTimeFormatCode;
+            cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateFormatCode; 
             cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
 
             var xml = GetData(cmd, pageIndex).GetXml();
