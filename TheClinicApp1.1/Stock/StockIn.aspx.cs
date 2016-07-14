@@ -196,6 +196,69 @@ namespace TheClinicApp1._1.Stock
 
         #endregion StockIN View Search Paging
 
+        #region Delete Receipt Header
+
+         [WebMethod]
+        public static bool DeleteReceiptHeader(string receiptID)
+        {
+            Receipt rpt = new Receipt();
+            IssueHeaderDetails ihd = new IssueHeaderDetails();
+            ErrorHandling eObj = new ErrorHandling();
+
+            string msg = string.Empty;
+            bool CanDelete = true;
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];    
+
+            rpt.ClinicID = UA.ClinicID.ToString();
+
+            DataSet dsReceipthdr = rpt.GetReceiptDetailsByReceiptID(receiptID);
+            ihd.ClinicID = UA.ClinicID.ToString();
+
+            for (int i = 0; i < dsReceipthdr.Tables[0].Rows.Count; i++)
+            {
+
+                int Outqty = Convert.ToInt32(dsReceipthdr.Tables[0].Rows[i]["QTY"]);
+                int qtyInStock = Convert.ToInt32(dsReceipthdr.Tables[0].Rows[i]["QtyInStock"]);
+
+                string MedicineName = dsReceipthdr.Tables[0].Rows[i]["MedicineName"].ToString();
+                string totalIssue = ihd.GetTotalIssuedQtyOfAMedicine(MedicineName);
+
+                if (totalIssue != string.Empty)
+                {
+
+                    int TotalIssuedQty = Convert.ToInt32(totalIssue);
+                    int TotalStock = TotalIssuedQty + qtyInStock;
+                    int difference = TotalStock - Outqty;
+                    if ((difference == 0) || (difference < TotalIssuedQty))
+                    {
+                        CanDelete = false;
+                        break;
+                    }
+                }
+            }
+
+            //if (CanDelete == false)
+            //{
+            //    var page = HttpContext.Current.CurrentHandler as Page;
+            //    msg = "Already issued.Can't be deleted";
+            //    eObj.DeletionNotSuccessMessage(page, msg);
+            //}
+
+            if (CanDelete == true)
+            {
+        int Outputval =        rpt.DeleteReceiptHeader(receiptID);
+
+                return true;
+            }
+
+           
+            return CanDelete;
+        }
+        #endregion Delete Receipt Header
+
         #endregion Methods
 
     }

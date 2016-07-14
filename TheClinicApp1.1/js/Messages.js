@@ -2,13 +2,15 @@
    
     Requiredfields: "Fields may be empty or invaild",
     CompulsorySelect: "Select an item",
-    SelectDoctor:"Please Select Doctor"
+    SelectDoctor: "Please Select Doctor",
+    AlreadyIssued: "Already issued.Can't be deleted",
+    DeletionSuccessFull : "Deleted Successfully"
     
 }
 
 var Caption = {
-    Confirm: "Please Confirm!"
-
+    Confirm: "Please Confirm!",
+    SuccessMsgCaption : "Success!"
 }
 
 
