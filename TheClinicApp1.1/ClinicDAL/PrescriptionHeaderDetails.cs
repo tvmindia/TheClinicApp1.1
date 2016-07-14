@@ -74,8 +74,8 @@ namespace TheClinicApp1._1.ClinicDAL
         
         #region Methods
 
-        #region InsertPrescriptionHeaderDetails
-        public void InsertPrescriptionHeaderDetails()
+        #region InsertPrescriptionHeader 
+        public void InsertPrescriptionHeader()
         {
           dbConnection dcon = null;
             
@@ -88,7 +88,7 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = dcon.SQLCon;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "[InsertPrescriptionHeaderDetails]";
+            cmd.CommandText = "[InsertPrescriptionHeader]";
 
             cmd.Parameters.Add("@PrescID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
             cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
@@ -111,7 +111,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
                 eObj.UserID = UA.UserID;
-                eObj.Method = "InsertPrescriptionHeaderDetails";
+                eObj.Method = "InsertPrescriptionHeader";
 
                 eObj.InsertError();
 
@@ -128,25 +128,21 @@ namespace TheClinicApp1._1.ClinicDAL
 
         }      
                 
-        #endregion InsertPrescriptionHeaderDetails
+        #endregion InsertPrescriptionHeader 
 
-        #region UpdatePrescriptionHeaderDetails
-        public void UpdatePrescriptionHeaderDetails(string PrescID)
+        #region UpdatePrescriptionHeader 
+        public void UpdatePrescriptionHeader(string PrescID)
         {
-
             dbConnection dcon = null;
-
             try
             {
-
                 DateTime now = DateTime.Now;
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[UpdatePrescriptionHeaderDetails]";
-
+                cmd.CommandText = "[UpdatePrescriptionHeader]";
                 cmd.Parameters.Add("@PrescID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
@@ -154,10 +150,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = CreatedDate;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = UpdatedDate;
-
-
                 cmd.ExecuteNonQuery();
-
             }
 
             catch (Exception ex)
@@ -166,8 +159,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
                 eObj.UserID = UA.UserID;
-                eObj.Method = "UpdatePrescriptionHeaderDetails";
-
+                eObj.Method = "UpdatePrescriptionHeader";
                 eObj.InsertError();
             }
 
@@ -177,39 +169,31 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     dcon.DisconectDB();
                 }
-
             }
-
         }
 
+        #endregion UpdatePrescriptionHeader 
 
-        #endregion UpdatePrescriptionHeaderDetails
+        #region ViewPrescriptionHeader
 
-        #region ViewPrescriptionHeaderDetails
-
-        public DataSet  ViewPrescriptionHeaderDetails()
+        public DataSet  ViewPrescriptionHeader()
         {
-
             dbConnection dcon = null;
             DataSet ds = null;
             SqlDataAdapter sda = null;
             try
-            {
- 
+            { 
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[ViewPrescriptionHeaderDetails]";
-
+                cmd.CommandText = "[ViewPrescriptionHeader]";
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds);
-
-
             }
 
             catch (Exception ex)
@@ -218,51 +202,36 @@ namespace TheClinicApp1._1.ClinicDAL
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
                 eObj.UserID = UA.UserID;
-                eObj.Method = "UpdatePrescriptionHeaderDetails";
-
+                eObj.Method = "ViewPrescriptionHeader";
                 eObj.InsertError();
 
             }
-
             finally
             {
                 if (dcon.SQLCon != null)
                 {
                     dcon.DisconectDB();
                 }
-
             }
-
             return ds;
-
-
         }
 
+        #endregion ViewPrescriptionHeader
 
-        #endregion ViewPrescriptionHeaderDetails
-
-        #region DeletePrescriptionDetails
-
-        public void DeletePrescriptionDetails( string PrescID)
+        #region DeletePrescriptionHeader
+        public void DeletePrescriptionHeader(string PrescID)
         {
-
             dbConnection dcon = null;
-
             try
             {
-
-
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[DeletePrescriptionHeaderDetails]";
-
+                cmd.CommandText = "[DeletePrescriptionHeader]";
                 cmd.Parameters.Add("@PrescID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
-
                 cmd.ExecuteNonQuery();
-
             }
 
             catch (Exception ex)
@@ -271,8 +240,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
                 eObj.UserID = UA.UserID;
-                eObj.Method = "DeletePrescriptionDetails";
-
+                eObj.Method = "DeletePrescriptionHeader";
                 eObj.InsertError();
             }
 
@@ -282,12 +250,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 {
                     dcon.DisconectDB();
                 }
-
             }
-
         }
 
-        #endregion DeletePrescriptionDetails
+        #endregion DeletePrescriptionHeader
 
         #endregion Methods
 
