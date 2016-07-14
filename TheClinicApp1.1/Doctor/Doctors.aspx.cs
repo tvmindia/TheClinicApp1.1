@@ -207,7 +207,7 @@ namespace TheClinicApp1._1.Doctor
                         PrescriptionHeadObj.UpdatedBy = UA.userName;
                         PrescriptionHeadObj.CreatedDate = DateTime.Now;
                         PrescriptionHeadObj.UpdatedDate = DateTime.Now;
-                        PrescriptionHeadObj.InsertPrescriptionHeaderDetails();
+                        PrescriptionHeadObj.InsertPrescriptionHeader();
                     }
                 }
                 else
