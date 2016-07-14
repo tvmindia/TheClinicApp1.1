@@ -50,72 +50,20 @@ namespace TheClinicApp1._1.Stock
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            bool CanDelete = true;
-            string msg = string.Empty;
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
-            string receiptID = string.Empty;
-
+           
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             rpt.ClinicID = UA.ClinicID.ToString();
-        
-            string Login = UA.userName;
+           string Login = UA.userName;
 
             RoleName = UA.GetRoleName1(Login);
-            //foreach (DataRow dr in dtRols.Rows)
-            //{
-            //    RoleName.Add(dr["RoleName"].ToString());
-            //}           
-            //GridViewStockIN();
-
+            
             if (!IsPostBack)
             {
                 BindDummyRow();
             }
 
-            if (Request.QueryString["HdrID"] != null)
-            {
-                receiptID = Request.QueryString["HdrID"].ToString();
-                rpt.ClinicID = UA.ClinicID.ToString();              
-
-              DataSet  dsReceipthdr = rpt.GetReceiptDetailsByReceiptID(receiptID);
-              ihd.ClinicID = UA.ClinicID.ToString();
-
-              for (int i = 0; i < dsReceipthdr.Tables[0].Rows.Count; i++)
-              {
-
-                  int Outqty = Convert.ToInt32(dsReceipthdr.Tables[0].Rows[i]["QTY"]);
-                  int qtyInStock = Convert.ToInt32(dsReceipthdr.Tables[0].Rows[i]["QtyInStock"]);
-
-                  string MedicineName = dsReceipthdr.Tables[0].Rows[i]["MedicineName"].ToString();
-                  string totalIssue = ihd.GetTotalIssuedQtyOfAMedicine(MedicineName);
-
-                  if (totalIssue != string.Empty)
-                  {
-
-                      int TotalIssuedQty = Convert.ToInt32(totalIssue);
-                      int TotalStock = TotalIssuedQty + qtyInStock;
-                      int difference = TotalStock - Outqty;
-                      if ((difference == 0) || (difference < TotalIssuedQty))
-                      {
-                          CanDelete = false;
-                          break;
-                      }
-                  }
-              }
-
-              if (CanDelete == false)
-              {
-                  var page = HttpContext.Current.CurrentHandler as Page;
-                  msg = "Already issued.Can't be deleted";
-                  eObj.DeletionNotSuccessMessage(page, msg);
-              }
-
-              else
-              {
-                  rpt.DeleteReceiptHeader(receiptID);
-              }
-            }
         }
 
         #endregion page Load
@@ -197,7 +145,11 @@ namespace TheClinicApp1._1.Stock
         #endregion StockIN View Search Paging
 
         #region Delete Receipt Header
-
+        /// <summary>
+        /// To delete Receipt heade by receiptID
+        /// </summary>
+        /// <param name="receiptID"></param>
+        /// <returns></returns>
          [WebMethod]
         public static bool DeleteReceiptHeader(string receiptID)
         {
@@ -249,12 +201,11 @@ namespace TheClinicApp1._1.Stock
 
             if (CanDelete == true)
             {
-        int Outputval =        rpt.DeleteReceiptHeader(receiptID);
+             int Outputval = rpt.DeleteReceiptHeader(receiptID);
 
                 return true;
             }
 
-           
             return CanDelete;
         }
         #endregion Delete Receipt Header

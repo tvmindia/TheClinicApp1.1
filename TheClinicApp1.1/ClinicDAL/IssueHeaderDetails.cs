@@ -486,8 +486,9 @@ namespace TheClinicApp1._1.ClinicDAL
         /// 
         /// </summary>
         /// <param name="IssueID"></param>
-        public void DeleteIssueHeader(string IssueID)
+        public int DeleteIssueHeader(string IssueID)
         {
+            int Outputval = 0;
             dbConnection dcon = null;
 
             try
@@ -506,22 +507,22 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
-                int Outputval = (int)cmd.Parameters["@Status"].Value;
+                 Outputval = (int)cmd.Parameters["@Status"].Value;
 
-                if (Outputval == 1)
-                {
-                    //Success
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    //eObj.SavedSuccessMessage(page);
-                    eObj.DeleteSuccessMessage(page);
-                }
+                //if (Outputval == 1)
+                //{
+                //    //Success
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    //eObj.SavedSuccessMessage(page);
+                //    eObj.DeleteSuccessMessage(page);
+                //}
 
-                if (Outputval == 0)
-                {
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeletionNotSuccessMessage(page);
-                    //eObj.SavingFailureMessage(page);
-                }
+                //if (Outputval == 0)
+                //{
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    eObj.DeletionNotSuccessMessage(page);
+                //    //eObj.SavingFailureMessage(page);
+                //}
 
             }
 
@@ -543,7 +544,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return Outputval;
         }
 
         #endregion DeleteIssueHeaderDetails
