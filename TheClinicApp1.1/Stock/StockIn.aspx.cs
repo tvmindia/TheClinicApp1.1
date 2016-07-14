@@ -149,6 +149,10 @@ namespace TheClinicApp1._1.Stock
 
         #region Bind Dummy Row
 
+        /// <summary>
+        /// To implement search in gridview(on keypress) :Gridview is converted to table and
+        /// Its first row (of table header) is created using this function
+        /// </summary>
         private void BindDummyRow()
         {
             DataTable dummy = new DataTable();
@@ -173,6 +177,9 @@ namespace TheClinicApp1._1.Stock
         #region StockIN View Search Paging
 
         [WebMethod]
+        ///This method is called using AJAX For gridview bind , search , paging
+        ///It expects page index and search term which is passed from client side
+        ///Page size is declared and initialized in global variable section
         public static string ViewAndFilterReceiptHD(string searchTerm, int pageIndex)
         {
             ClinicDAL.UserAuthendication UA;
