@@ -3,6 +3,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
+    <style>
+        .logo {
+    display: block;
+    padding: 19px 0;
+    text-align: center;
+    background: #fff;
+    height: 26px;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+    </style>
+
+
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
 

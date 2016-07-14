@@ -8,7 +8,17 @@
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
-
+    <style>
+        .logo {
+    display: block;
+    padding: 19px 0;
+    text-align: center;
+    background: #fff;
+    height: 26px;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
