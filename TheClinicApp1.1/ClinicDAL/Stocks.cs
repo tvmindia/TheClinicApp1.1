@@ -150,6 +150,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 ds = new DataSet();
                 sda.Fill(ds, "Medicines");
 
+ //-----------Paging Section 
+
                 DataTable dt = new DataTable("Pager");
                 dt.Columns.Add("PageIndex");
                 dt.Columns.Add("PageSize");
@@ -222,6 +224,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 ds = new DataSet();
                 sda.Fill(ds, "ReceiptHD");
 
+//-----------Paging Section 
+
                 DataTable dt = new DataTable("Pager");
                 dt.Columns.Add("PageIndex");
                 dt.Columns.Add("PageSize");
@@ -292,6 +296,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds, "IssueHD");
+
+
+ //-----------Paging Section 
 
                 DataTable dt = new DataTable("Pager");
                 dt.Columns.Add("PageIndex");
