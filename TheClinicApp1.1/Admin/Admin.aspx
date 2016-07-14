@@ -14,17 +14,14 @@
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
-    <script src="../js/jquery.tablePagination.0.1.js"></script>
+    <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
     <script src="../js/Dynamicgrid.js"></script>
 
     <script src="../js/Messages.js"></script>
-
-
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-
 
       <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
     <!-- Script Files -->
@@ -38,8 +35,6 @@
     }
     </style>
 
-
-    
     <script>
        
 
@@ -66,11 +61,7 @@
 
       $(document).ready(function () 
 {
-       
-
-
-
-
+     
  <%-- if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
              GetMedicines(1);
                 $('#<%=hdnUserCountChanged.ClientID %>').val('False');
@@ -94,10 +85,10 @@
                });
 
 
-              $('table').tablePagination({});
+              //$('table').tablePagination({});
 
              
-              var rows = $('#<%=dtgViewAllUsers.ClientID%> tr').not('thead tr');
+             <%-- var rows = $('#<%=dtgViewAllUsers.ClientID%> tr').not('thead tr');
 
 
           $('#txtSearchUser').keyup(function () {
@@ -162,16 +153,10 @@
      $('#tablePagination').show();
        }
 
-              });
+              });--%>
 
 
 });
-
-
-
-       
-
-
 
         function SetIframeSrc(HyperlinkID) {
             
@@ -182,8 +167,6 @@
             }
 
         }
-
-
 
 //EmailID duplication check
 
@@ -218,7 +201,6 @@
                 }
                 function onError(response, userContext, methodName) {
 
-
                 }
             }
 
@@ -239,14 +221,10 @@
 
         function LoginNameCheck(txtLoginName) {
            
-
-
-
             var name = document.getElementById('<%=txtLoginName.ClientID %>').value;
 name=name.trim();
 if(name != "")
 {
-
             //name = name.replace(/\s/g, '');
 
             PageMethods.ValidateLoginName(name, OnSuccess, onError);
@@ -289,7 +267,6 @@ else
 
         }
 
-
         function PassowrdEqualityCheck()
         {
             if(  document.getElementById('<%=txtConfirmPassword.ClientID %>').value != document.getElementById('<%=txtPassword.ClientID %>').value)
@@ -304,21 +281,17 @@ else
 
         }
 
-
     </script>
-
 
      <script src="../js/jquery-1.3.2.min.js"></script>
    <script src="../js/jquery-1.12.0.min.js"></script>
    <script src="../js/jquery-ui.js"></script>
 
-
         <script src="../js/bootstrap.min.js"></script>
-      <script src="../js/jquery.tablePagination.0.1.js"></script>
+      <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
 
     <script type="text/javascript">
 
-       
         $(function () {
 
             $('[data-toggle="tooltip"]').tooltip();
@@ -333,8 +306,6 @@ else
 
         });
 
-
-
 function SetRequired()
         {
      document.getElementById('<%=txtLoginName.ClientID %>').required = true;
@@ -344,28 +315,22 @@ function SetRequired()
     document.getElementById('<%=txtLoginName.ClientID %>').required = true;
  document.getElementById('<%=txtEmail.ClientID %>').required = true;
 
-
         }
 
 </script>
 
 
       <%--  //------------- AUTOFILL SCRIPT ---------%>
-   <%-- <script src="../js/jquery-1.8.3.min.js"></script>
+    <script src="../js/jquery-1.8.3.min.js"></script>
     
-    <script src="../js/ASPSnippets_Pager.min.js"></script>--%>
+    <script src="../js/ASPSnippets_Pager.min.js"></script>
 
-
-    <%--<script type="text/javascript">
+    <script type="text/javascript">
 
 var   UserID = '';
 
-
-
    $(function () {
        $("[id*=dtgViewAllUsers] td:eq(1)").click(function () {
-
-
 
                 var DeletionConfirmation = ConfirmDelete();
 
@@ -392,35 +357,27 @@ var   UserID = '';
 
             }
 */
-
-                 
                 }
             });
 
 
         });
 
-
-   
    $(function () {
        $("[id*=dtgViewAllUsers] td:eq(0)").click(function () {
 
-           
            UserID = $(this).closest('tr').find('td:eq(6)').text();
            window.location = "Admin.aspx?UsrIDtoEdit=" + UserID;
        });
 
-
    });
-
-
 
         $(function () {
            
             GetMedicines(1);
         });
         $("[id*=txtSearch]").live("keyup", function () {
-           
+            debugger;
             GetMedicines(parseInt(1));
         });
         $(".Pager .page").live("click", function () {
@@ -434,7 +391,7 @@ var   UserID = '';
             $.ajax({
 
                 type: "POST",
-                url: "../Admin/Admin.aspx/GetMedicines",
+                url: "../Admin/Admin.aspx/ViewAndFilterUser",
                 data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -451,28 +408,28 @@ var   UserID = '';
         }
         var row;
         function OnSuccess(response) {
-            
+            debugger;
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
-            var Medicines = xml.find("Medicines");
+            var Medicines = xml.find("Users");
             if (row == null) {
                 row = $("[id*=dtgViewAllUsers] tr:last-child").clone(true);
             }
             $("[id*=dtgViewAllUsers] tr").not($("[id*=dtgViewAllUsers] tr:first-child")).remove();
             if (Medicines.length > 0) {
                 $.each(Medicines, function () {
-
+                    debugger;
 
 
                     var medicine = $(this);
- $("th", row).eq(0).text(" ");
+                 $("th", row).eq(0).text(" ");
 
                     //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
- $("td", row).eq(0).html($('<img />')
+                    $("td", row).eq(0).html($('<img />')
                        .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
 
 
- $("td", row).eq(1).html($('<img />')
+                    $("td", row).eq(1).html($('<img />')
                        .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
                     $("td", row).eq(2).html($(this).find("LoginName").text());
@@ -509,19 +466,15 @@ var   UserID = '';
 
 
 
- var th = $("[id*=dtgViewAllUsers] th:contains('UserID')");
-            th.css("display", "none");
-            $("[id*=dtgViewAllUsers] tr").each(function () {
-                $(this).find("td").eq(th.index()).css("display", "none");
-            });
+ //var th = $("[id*=dtgViewAllUsers] th:contains('UserID')");
+ //           th.css("display", "none");
+ //           $("[id*=dtgViewAllUsers] tr").each(function () {
+ //               $(this).find("td").eq(th.index()).css("display", "none");
+ //           });
 
         };
 
-
- 
-        </script>--%>
-
-
+        </script>
 
     <div class="main_body">
 
@@ -804,7 +757,6 @@ var   UserID = '';
         </div>
     </div>
 
-
     <div id="AllUsers" class="modal fade" role="dialog">
           <div class="modal-dialog" style="min-width:550px;">
 
@@ -818,21 +770,32 @@ var   UserID = '';
        <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
          <div class="col-lg-12" style="height:480px">
 
-               <div class="col-lg-12" style="height:40px">
-              <div class="search_div">
-              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchUser" />
-                  <input class="button3" type="button" value="Search" />
-                  </div>
-          </div>
+             <%--style="height:40px"--%>
+
+               <div class="col-lg-12" > 
+
+                    <div class="grey_sec">
+
+                   <div class="search_div">
+                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
+                                    <input class="button" type="submit" value="Search" disabled/>
+                                </div>
+
+                        </div>
+            
+         </div>
 
              <div class="col-lg-12" style="height:400px">
-             <asp:GridView ID="dtgViewAllUsers" runat="server" AutoGenerateColumns="False" OnPreRender="dtgViewAllUsers_PreRender" DataKeyNames="UserID" >
+
+                 <%--OnPreRender="dtgViewAllUsers_PreRender"--%>
+
+
+             <asp:GridView ID="dtgViewAllUsers" runat="server" AutoGenerateColumns="False"  DataKeyNames="UserID" Style="width: 100%"  class="table"  >
                         
                         <Columns>
                            <%-- <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("UserID")+"|"+Eval("LoginName")+"|"+Eval("FirstName")+"|"+Eval("LastName")+"|"+Eval("Active")+"|"+Eval("Password")+"|"+Eval("Email")+"|"+Eval("PhoneNo")%>'  formnovalidate />
-
 
                                 </ItemTemplate>
 
@@ -861,11 +824,6 @@ var   UserID = '';
                </ItemTemplate>
                 </asp:TemplateField>
 
-
-
-
-
-
                           <%--  <asp:TemplateField HeaderText="Edit">
                                                     <ItemTemplate>
 
@@ -883,18 +841,16 @@ var   UserID = '';
                                                     </ItemTemplate>
                                                 </asp:TemplateField>--%>
 
-
-
-                            <asp:BoundField DataField="LoginName" HeaderText="Login Name">
+                            <asp:BoundField DataField="LoginName" HeaderText="Login Name" ItemStyle-CssClass="Match">
                                
                             </asp:BoundField>
-                            <asp:BoundField DataField="FirstName" HeaderText="First Name">
+                            <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-CssClass="Match">
                               
                             </asp:BoundField>
-                            <asp:BoundField DataField="LastName" HeaderText="Last Name">
+                            <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-CssClass="Match">
                               
                             </asp:BoundField>
-                            <asp:BoundField DataField="Active" HeaderText="Active">
+                            <asp:BoundField DataField="Active" HeaderText="Active" ItemStyle-CssClass="Match">
                               
                             </asp:BoundField>
 
@@ -902,8 +858,6 @@ var   UserID = '';
                               
                             </asp:BoundField>--%>
                             
-
-
                            <%--  <asp:BoundField DataField="Password" HeaderText="Password">
                                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"></ItemStyle>
                             </asp:BoundField>--%>
