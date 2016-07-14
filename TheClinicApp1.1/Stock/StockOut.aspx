@@ -306,8 +306,8 @@
                         <div role="tabpanel" class="tab-pane active" id="stock_out">
                             <div class="grey_sec">
                                 <div class="search_div">
-                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch">
-                                    <input class="button" type="submit" value="Search">
+                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch" >
+                                    <input class="button" type="submit" value="Search" disabled>
                                 </div>
                                 <ul class="top_right_links">
                                     <li><a visible="false" class="save" id="btSave" runat="server"  href="#"><span></span>Save</a></li>

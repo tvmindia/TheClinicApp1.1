@@ -101,7 +101,7 @@
     <div class="grey_sec">
                                 <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
-                                    <input class="button" type="submit" value="Search" />
+                                    <input class="button" type="submit" value="Search" disabled />
                                 </div>
                                
                             </div>
