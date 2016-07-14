@@ -42,21 +42,27 @@
 
         });
 
+ //-------------------------------- * Delete Button Click * ------------------------- //
 
         $(function () {
             $("[id*=gvIssueHD] td:first").click(function () {
+
+                debugger;
+
                 if ($(this).text() == "") {
                 var DeletionConfirmation = ConfirmDelete();
 
                 if (DeletionConfirmation == true) {
                     issueID = $(this).closest('tr').find('td:eq(6)').text();
-
+                    debugger;
                     DeleteIssueheader(issueID);
                     //window.location = "StockOut.aspx?HdrID=" + issueID;
                 }
                 }
             });
         });
+
+//-------------------------------- * END : Delete Button Click * ------------------------- //
 
         function SetIframeSrc(HyperlinkID) {
 
@@ -75,7 +81,7 @@
      <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
 
     <script>
-        function DeleteIssueheader(issueID) {
+        function DeleteIssueheader(issueID) { //------* Delete Issue Header by IssueID (using webmethod)
 
             if (issueID != "") {
 

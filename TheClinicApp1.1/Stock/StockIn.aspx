@@ -28,6 +28,8 @@
 
 
     <script>
+
+        
         var receiptID = '';
         var test = jQuery.noConflict();
         test(document).ready(function () {
@@ -42,9 +44,10 @@
 
         });
 
-
-        function DeletereceiptHeader(receiptID) {
-
+      
+        
+        function DeleteReceiptHeader(receiptID) { //------* Delete Receipt Header by receiptID (using webmethod)
+    
             if (receiptID != "") {
 
                 PageMethods.DeleteReceiptHeader(receiptID, OnSuccess, onError);
@@ -79,6 +82,9 @@
             }
         }
 
+
+//-------------------------------- * Delete Button Click * ------------------------- //
+
         $(function () {
             $("[id*=GridViewStockin] td:first").click(function () {
                 debugger;
@@ -89,12 +95,14 @@
                     var DeletionConfirmation = ConfirmDelete();
                     if (DeletionConfirmation == true) {
                         receiptID = $(this).closest('tr').find('td:eq(5)').text();
-                        DeletereceiptHeader(receiptID);
+                        DeleteReceiptHeader(receiptID);
                         //window.location = "StockIn.aspx?HdrID=" + receiptID;
                     }
                 }
             });
         });
+
+//-------------------------------- * END : Delete Button Click * ------------------------- //
 
         function SetIframeSrc(HyperlinkID) {
 
