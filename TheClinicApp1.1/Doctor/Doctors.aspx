@@ -293,7 +293,7 @@
 
                     </div>
 
-                    <div>
+                    <div class="prescription_grid" style="padding-left:0px !important; max-width: 1000px !important;">
                         <asp:Label ID="lblNew_history" CssClass="blink" runat="server" Text="New Case" ForeColor="#FF9933" Font-Bold="True" Font-Size="X-Large"></asp:Label>
                     </div>
 
