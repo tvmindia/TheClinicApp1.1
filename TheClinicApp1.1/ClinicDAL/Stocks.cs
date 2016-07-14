@@ -1,10 +1,15 @@
-﻿using System;
+﻿
+#region Included Namespaces
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
+
+#endregion Included Namespaces
 
 namespace TheClinicApp1._1.ClinicDAL
 {
@@ -13,7 +18,8 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
         UIClasses.Const Const = new UIClasses.Const();
-        ClinicDAL.UserAuthendication UA;  
+        ClinicDAL.UserAuthendication UA;
+        common cmn = new common();
 
         #endregion Global Variables
 
@@ -109,6 +115,230 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Methods    
 
+        /*--------- View Search Paging Of Stock ,StockIN ,StockOUT ------------*/
+
+        #region Medicine View Search Paging
+
+        public string ViewAndFilterMedicine(string searchTerm, int pageIndex, int PageSize)
+        {
+            dbConnection dcon = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+
+            var xml = string.Empty;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ViewAndFilterMedicine";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
+
+                cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds, "Medicines");
+
+ //-----------Paging Section 
+
+                DataTable dt = new DataTable("Pager");
+                dt.Columns.Add("PageIndex");
+                dt.Columns.Add("PageSize");
+                dt.Columns.Add("RecordCount");
+                dt.Rows.Add();
+                dt.Rows[0]["PageIndex"] = pageIndex;
+                dt.Rows[0]["PageSize"] = PageSize;
+                dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                ds.Tables.Add(dt);
+
+                 xml = ds.GetXml();
+
+               
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "ViewAndFilterMedicine";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+            return xml;
+        }
+
+        #endregion Medicine View Search Paging
+
+        #region StockIN View Search Paging
+
+        public string ViewAndFilterReceiptHD(string searchTerm, int pageIndex, int PageSize)
+        {
+            dbConnection dcon = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+
+            var xml = string.Empty;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ViewAndFilterReceiptHD";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
+
+                cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateFormatCode;
+                cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds, "ReceiptHD");
+
+//-----------Paging Section 
+
+                DataTable dt = new DataTable("Pager");
+                dt.Columns.Add("PageIndex");
+                dt.Columns.Add("PageSize");
+                dt.Columns.Add("RecordCount");
+                dt.Rows.Add();
+                dt.Rows[0]["PageIndex"] = pageIndex;
+                dt.Rows[0]["PageSize"] = PageSize;
+                dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                ds.Tables.Add(dt);
+
+                xml = ds.GetXml();
+
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "ViewAndFilterReceiptHD";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+            return xml;
+        }
+
+        #endregion StockIN View Search Paging
+
+        #region StockOUT View Search Paging
+        public string ViewAndFilterIssueHD(string searchTerm, int pageIndex, int PageSize)
+        {
+            dbConnection dcon = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+
+            var xml = string.Empty;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ViewAndFilterIssueHD";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+
+
+                cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateFormatCode;
+                cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds, "IssueHD");
+
+
+ //-----------Paging Section 
+
+                DataTable dt = new DataTable("Pager");
+                dt.Columns.Add("PageIndex");
+                dt.Columns.Add("PageSize");
+                dt.Columns.Add("RecordCount");
+                dt.Rows.Add();
+                dt.Rows[0]["PageIndex"] = pageIndex;
+                dt.Rows[0]["PageSize"] = PageSize;
+                dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                ds.Tables.Add(dt);
+
+                xml = ds.GetXml();
+
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "ViewAndFilterIssueHD";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+            return xml;
+        }
+        #endregion StockOUT View Search Paging
+
+       //END
+
         #region Get Medicine Details By MedicineID
         /// <summary>
         /// To get the medicine details by  passing Medicine ID
@@ -165,7 +395,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Get Medicine Details By MedicineID
 
-        
         #region Validate Medicine Name
         /// <summary>
         /// To check MEdicine name duplication by passing input medicine name

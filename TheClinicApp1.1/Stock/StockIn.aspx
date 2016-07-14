@@ -8,9 +8,24 @@
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
+    <script src="../js/Messages.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
 
+    <style>
+        .logo {
+    display: block;
+    padding: 19px 0;
+    text-align: center;
+    background: #fff;
+    height: 26px;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
+
 
     <script>
         var receiptID = '';
@@ -28,15 +43,54 @@
         });
 
 
+        function DeletereceiptHeader(receiptID) {
+
+            if (receiptID != "") {
+
+                PageMethods.DeleteReceiptHeader(receiptID, OnSuccess, onError);
+
+                function OnSuccess(response, userContext, methodName) {
+                 
+                    debugger;
+
+                    if (response == false)
+                    {
+                        var lblclass = Alertclasses.danger;
+                        var lblmsg = msg.AlreadyIssued;
+                        var lblcaptn = Caption.Confirm;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                    }
+
+                    else
+                    {
+                        var lblclass = Alertclasses.sucess;
+                        var lblmsg = msg.DeletionSuccessFull;
+                        var lblcaptn = Caption.SuccessMsgCaption;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                    }
+
+                }
+                function onError(response, userContext, methodName) {
+                   
+                }
+
+            }
+        }
+
         $(function () {
             $("[id*=GridViewStockin] td:first").click(function () {
+                debugger;
+
 
                 //var rowCount = $("[id*=GridViewStockin] td").closest("tr").length;
                 if ($(this).text() == "") {
                     var DeletionConfirmation = ConfirmDelete();
                     if (DeletionConfirmation == true) {
                         receiptID = $(this).closest('tr').find('td:eq(5)').text();
-                        window.location = "StockIn.aspx?HdrID=" + receiptID;
+                        DeletereceiptHeader(receiptID);
+                        //window.location = "StockIn.aspx?HdrID=" + receiptID;
                     }
                 }
             });
@@ -81,7 +135,7 @@
             $.ajax({
 
                 type: "POST",
-                url: "../Stock/StockIn.aspx/GetMedicines",
+                url: "../Stock/StockIn.aspx/ViewAndFilterReceiptHD",
                 data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -102,7 +156,7 @@
             $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
-            var Medicines = xml.find("Medicines");
+            var Medicines = xml.find("ReceiptHD");
             if (row == null) {
                 row = $("[id*=GridViewStockin] tr:last-child").clone(true);
             }
@@ -235,7 +289,7 @@
                                     <input class="button" type="submit" value="Search" />
                                 </div>
                                 <ul class="top_right_links">
-                                    <li><a class="save" id="btSave" runat="server" style="visibility: hidden" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li>
+                                    <li><a class="save" id="btSave" runat="server" style="visibility: hidden"  href="#"><span></span>Save</a></li>
                                     <li><a class="new" onserverclick="btNew_ServerClick" href="StockInDetails.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>

@@ -171,6 +171,7 @@ namespace TheClinicApp1._1.Stock
 
         #region Events
 
+        #region Page Load
         protected void Page_Load(object sender, EventArgs e)
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -184,19 +185,25 @@ namespace TheClinicApp1._1.Stock
             }
 
         }
+        #endregion Page Load
 
-        #endregion Events
-
+        #region Save Button Click
         protected void btnSave_ServerClick(object sender, EventArgs e)
         {
             AddMedicine();
-
         }
+        #endregion Save Button Click
 
+        #region New Button Click
         protected void btnNew_ServerClick(object sender, EventArgs e)
         {
             Errorbox.Attributes.Add("style", "display:none");
             ClearControls();
         }
+
+        #endregion New Button Click
+
+        #endregion Events
+
     }
 }

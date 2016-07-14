@@ -291,10 +291,10 @@ namespace TheClinicApp1._1.ClinicDAL
         /// Deleting Receipt Details with ReceiptID and ClinicID
         /// </summary>
         /// <param name="ReceiptID"></param>
-        public void DeleteReceiptHeader(string ReceiptID)
+        public int DeleteReceiptHeader(string ReceiptID)
         {
             dbConnection dcon = null;
-
+             int Outputval = 0;
             try
             {
                 dcon = new dbConnection();
@@ -312,20 +312,20 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd.ExecuteNonQuery();
 
-                int Outputval = (int)cmd.Parameters["@Status"].Value;
+                 Outputval = (int)cmd.Parameters["@Status"].Value;
 
-                if (Outputval == 1)
-                {
-                    //Success
-                    var page = HttpContext.Current.CurrentHandler as Page;                 
-                    eObj.DeleteSuccessMessage(page);
-                }
+                //if (Outputval == 1)
+                //{
+                //    //Success
+                //    var page = HttpContext.Current.CurrentHandler as Page;                 
+                //    eObj.DeleteSuccessMessage(page);
+                //}
 
-                if (Outputval == 0)
-                {
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.DeletionNotSuccessMessage(page);
-                }
+                //if (Outputval == 0)
+                //{
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    eObj.DeletionNotSuccessMessage(page);
+                //}
 
 
             }
@@ -349,9 +349,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
             }
 
-            
 
-           
+
+            return Outputval;
 
           
         }

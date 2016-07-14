@@ -66,7 +66,7 @@
         function GetMedicines(pageIndex) {
             $.ajax({
                 type: "POST",
-                url: "../Stock/Stock.aspx/GetMedicines",
+                url: "../Stock/Stock.aspx/ViewAndFilterMedicine",
                 data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
