@@ -81,7 +81,7 @@
             $.ajax({
 
                 type: "POST",
-                url: "../Stock/StockIn.aspx/GetMedicines",
+                url: "../Stock/StockIn.aspx/ViewAndFilterReceiptHD",
                 data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -102,7 +102,7 @@
             $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
-            var Medicines = xml.find("Medicines");
+            var Medicines = xml.find("ReceiptHD");
             if (row == null) {
                 row = $("[id*=GridViewStockin] tr:last-child").clone(true);
             }
@@ -235,7 +235,7 @@
                                     <input class="button" type="submit" value="Search" />
                                 </div>
                                 <ul class="top_right_links">
-                                    <li><a class="save" id="btSave" runat="server" style="visibility: hidden" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li>
+                                    <li><a class="save" id="btSave" runat="server" style="visibility: hidden"  href="#"><span></span>Save</a></li>
                                     <li><a class="new" onserverclick="btNew_ServerClick" href="StockInDetails.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>

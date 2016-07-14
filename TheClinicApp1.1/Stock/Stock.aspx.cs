@@ -7,6 +7,8 @@
 
 #endregion CopyRight
 
+#region Included Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,7 @@ using System.Configuration;
 
 using TheClinicApp1._1.ClinicDAL;
 
+#endregion Included Namespaces
 
 namespace TheClinicApp1._1.Stock
 {
@@ -36,116 +39,33 @@ namespace TheClinicApp1._1.Stock
 
         #endregion Global Variables    
 
-        #region Bind Dummy Row
+        #region Events
 
-        private void BindDummyRow()
-        {
-            DataTable dummy = new DataTable();         
-            dummy.Columns.Add("MedicineName");
-            dummy.Columns.Add("CategoryName");
-            dummy.Columns.Add("MedicineCode");
-            dummy.Columns.Add("Unit");
-            dummy.Columns.Add("Qty");
-            dummy.Columns.Add("ReOrderQty");
-
-
-            dummy.Rows.Add();
-            gvMedicines.DataSource = dummy;
-            gvMedicines.DataBind();           
-        }
-
-        #endregion Bind Dummy Row
-
+        #region Page Load
         protected void Page_Load(object sender, EventArgs e)
         {
 
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             stockObj.ClinicID = UA.ClinicID.ToString();
-        
+
 
             List<string> RoleName = new List<string>();
             //DataTable dtRols = new DataTable();
-                   
+
             string Login = UA.userName;
             RoleName = UA.GetRoleName1(Login);
             BindOutOfStock();
             if (!IsPostBack)
             {
-                BindDummyRow();              
-              
-            }           
-        }
+                BindDummyRow();
 
-        #region Bind Out Of Stock
-        public void BindOutOfStock()
-        {
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            stockObj.ClinicID = UA.ClinicID.ToString();
-            //To Get the Count of Out of Stock Medicines 
-            DataSet gds = stockObj.ViewOutofStockMedicines();
-            lblReOrderCount.Text = gds.Tables[0].Rows.Count.ToString();
-
-        }
-
-        #endregion Bind Out Of Stock 
-        
-        #region webmethod
-        [WebMethod]
-        public static string GetMedicines(string searchTerm, int pageIndex)
-        {
-            ClinicDAL.UserAuthendication UA;
-            UIClasses.Const Const = new UIClasses.Const();
-            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-            Stocks StockObj = new Stocks();
-
-            StockObj.ClinicID = UA.ClinicID.ToString();
-            
-            string query = "ViewAndFilterMedicine";
-            SqlCommand cmd = new SqlCommand(query);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
-           
-
-            cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
-            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-            cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-            var xml = GetData(cmd, pageIndex).GetXml();
-            return xml;
-        }
-
-        #endregion webmethod
-
-        private static DataSet GetData(SqlCommand cmd, int pageIndex)
-        {
-
-            string strConnString = ConfigurationManager.ConnectionStrings["ClinicAppConnectionString"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(strConnString))
-            {
-                using (SqlDataAdapter sda = new SqlDataAdapter())
-                {
-                    cmd.Connection = con;
-                    sda.SelectCommand = cmd;
-                    using (DataSet ds = new DataSet())
-                    {
-                        sda.Fill(ds, "Medicines");
-                        DataTable dt = new DataTable("Pager");
-                        dt.Columns.Add("PageIndex");
-                        dt.Columns.Add("PageSize");
-                        dt.Columns.Add("RecordCount");
-                        dt.Rows.Add();
-                        dt.Rows[0]["PageIndex"] = pageIndex;
-                        dt.Rows[0]["PageSize"] = PageSize;
-                        dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
-                        ds.Tables.Add(dt);
-                        return ds;
-                    }
-                }
             }
         }
+
+        #endregion Page Load
+
+        #region Logout
 
         protected void Logout_ServerClick(object sender, EventArgs e)
         {
@@ -158,6 +78,64 @@ namespace TheClinicApp1._1.Stock
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
         }
+
+        #endregion Logout
+        #endregion Events
+
+        #region Methods
+
+        #region Bind Dummy Row
+
+        private void BindDummyRow()
+        {
+            DataTable dummy = new DataTable();
+            dummy.Columns.Add("MedicineName");
+            dummy.Columns.Add("CategoryName");
+            dummy.Columns.Add("MedicineCode");
+            dummy.Columns.Add("Unit");
+            dummy.Columns.Add("Qty");
+            dummy.Columns.Add("ReOrderQty");
+
+
+            dummy.Rows.Add();
+            gvMedicines.DataSource = dummy;
+            gvMedicines.DataBind();
+        }
+
+        #endregion Bind Dummy Row
+
+        #region Bind Out Of Stock
+        public void BindOutOfStock()
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            stockObj.ClinicID = UA.ClinicID.ToString();
+            //To Get the Count of Out of Stock Medicines 
+            DataSet gds = stockObj.ViewOutofStockMedicines();
+            lblReOrderCount.Text = gds.Tables[0].Rows.Count.ToString();
+
+        }
+
+        #endregion Bind Out Of Stock
+
+        #region Medicine View Search Paging
+        [WebMethod]
+        public static string ViewAndFilterMedicine(string searchTerm, int pageIndex)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            Stocks StockObj = new Stocks();
+
+            StockObj.ClinicID = UA.ClinicID.ToString();
+
+            var xml = StockObj.ViewAndFilterMedicine(searchTerm, pageIndex, PageSize);
+
+            return xml;
+        }
+
+        #endregion Medicine View Search Paging
+
+        #endregion  Methods
 
     }
 }

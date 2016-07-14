@@ -120,6 +120,29 @@ namespace TheClinicApp1._1.Stock
 
         #endregion page Load
 
+        #region New button Click
+        protected void btNew_ServerClick(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Stock/StockInDetails.aspx");
+        }
+
+        #endregion New button Click
+
+        #region Logout
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        #endregion Logout
+
         #endregion Events
 
         #region Methods
@@ -147,100 +170,26 @@ namespace TheClinicApp1._1.Stock
 
         #endregion Bind Dummy Row
 
-        #region Get Medicines
+        #region StockIN View Search Paging
 
         [WebMethod]
-        public static string GetMedicines(string searchTerm, int pageIndex)
+        public static string ViewAndFilterReceiptHD(string searchTerm, int pageIndex)
         {
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
-            common cmn = new common();
+            Stocks StockObj = new Stocks();
 
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            StockObj.ClinicID = UA.ClinicID.ToString();
 
-            string query = "ViewAndFilterReceiptHD";
-            SqlCommand cmd = new SqlCommand(query);
-            cmd.CommandType = CommandType.StoredProcedure;
+            var xml = StockObj.ViewAndFilterReceiptHD(searchTerm, pageIndex, PageSize);
 
-            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
-            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
-
-            cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
-            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-            cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateFormatCode; 
-            cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-            var xml = GetData(cmd, pageIndex).GetXml();
             return xml;
         }
 
-        private static DataSet GetData(SqlCommand cmd, int pageIndex)
-        {
-
-            string strConnString = ConfigurationManager.ConnectionStrings["ClinicAppConnectionString"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(strConnString))
-            {
-                using (SqlDataAdapter sda = new SqlDataAdapter())
-                {
-                    cmd.Connection = con;
-                    sda.SelectCommand = cmd;
-                    using (DataSet ds = new DataSet())
-                    {
-                        sda.Fill(ds, "Medicines");
-                        DataTable dt = new DataTable("Pager");
-                        dt.Columns.Add("PageIndex");
-                        dt.Columns.Add("PageSize");
-                        dt.Columns.Add("RecordCount");
-                        dt.Rows.Add();
-                        dt.Rows[0]["PageIndex"] = pageIndex;
-                        dt.Rows[0]["PageSize"] = PageSize;
-                        dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
-                        ds.Tables.Add(dt);
-                        return ds;
-                    }
-                }
-            }
-        }
-
-        #endregion Get Medicines
+        #endregion StockIN View Search Paging
 
         #endregion Methods
 
-        public void GridViewStockIN()
-        {
-
-            //gridview binding for listing the Out of Stock Medicines
-            string str = "";
-            DataSet gds = rpt.ViewReceiptHeader(str);
-            GridViewStockin.EmptyDataText = "No Records Found";
-            GridViewStockin.DataSource = gds;
-            GridViewStockin.DataBind();
-            GridViewStockin.Columns[0].Visible = false;
-
-
-        }
-
-        protected void btSave_ServerClick(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btNew_ServerClick(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Stock/StockInDetails.aspx");
-        }
-
-        protected void Logout_ServerClick(object sender, EventArgs e)
-        {
-            Session.Remove(Const.LoginSession);
-            Response.Redirect("../Default.aspx");
-        }
-
-        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
-        {
-            Session.Remove(Const.LoginSession);
-            Response.Redirect("../Default.aspx");
-        }
     }
 }

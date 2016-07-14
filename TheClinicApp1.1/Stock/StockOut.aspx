@@ -94,7 +94,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "../Stock/StockOut.aspx/GetIssueHD",
+                url: "../Stock/StockOut.aspx/ViewAndFilterIssueHD",
                 data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -111,7 +111,7 @@
         var issueID = '';
 
         function OnSuccess(response) {
-
+            debugger;
             $(".Pager").show();
 
             var xmlDoc = $.parseXML(response.d);
@@ -123,7 +123,7 @@
             $("[id*=gvIssueHD] tr").not($("[id*=gvIssueHD] tr:first-child")).remove();
             if (IssueHD.length > 0) {
                 $.each(IssueHD, function () {
-
+                    debugger;
                     //$("td", row).eq(0).html('<a href="NewIssue.aspx">' + $(this).find("RefNo1").text() + '</a>');
 
                     //issueID = $(this).find("IssueID").text();
@@ -262,7 +262,7 @@
                                     <input class="button" type="submit" value="Search">
                                 </div>
                                 <ul class="top_right_links">
-                                    <li><a visible="false" class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick" href="#"><span></span>Save</a></li>
+                                    <li><a visible="false" class="save" id="btSave" runat="server"  href="#"><span></span>Save</a></li>
                                     <li><a class="new" href="StockOutDetails.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
