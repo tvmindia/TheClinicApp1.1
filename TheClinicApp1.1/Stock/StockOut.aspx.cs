@@ -58,16 +58,7 @@ namespace TheClinicApp1._1.Stock
                 BindDummyRow();
 
             }
-
-            if (Request.QueryString["HdrID"] != null)
-            {
-
-                issueID = Request.QueryString["HdrID"].ToString();
-
-                IssuehdrObj.ClinicID = UA.ClinicID.ToString();
-                IssuehdrObj.DeleteIssueHeader(issueID);
-            }
-        }
+         }
 
         #endregion Page Load
 
@@ -144,6 +135,36 @@ namespace TheClinicApp1._1.Stock
         }
 
         #endregion StockOUT View Search Paging
+
+        #region Delete Issue Header
+
+        /// <summary>
+        /// To delete issue header by IssueID
+        /// </summary>
+
+        [WebMethod]
+        public static bool DeleteIssueheader(string issueID)
+        {
+            IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
+            bool IsDeleted = false;
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];    
+
+            IssuehdrObj.ClinicID = UA.ClinicID.ToString();
+            int OutputVal = IssuehdrObj.DeleteIssueHeader(issueID);
+
+            if (OutputVal ==1)
+            {
+                IsDeleted = true; 
+            }
+
+
+            return IsDeleted;
+        }
+
+        #endregion Delete Issue Header
 
         #endregion Methods
 

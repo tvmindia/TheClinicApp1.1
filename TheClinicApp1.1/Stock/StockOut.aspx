@@ -15,7 +15,6 @@
 }
     </style>
 
-
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
 
@@ -23,6 +22,8 @@
 
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
+    <script src="../js/Messages.js"></script>
+    <script src="../js/Dynamicgrid.js"></script>
 
     <script>
         var test = jQuery.noConflict();
@@ -41,25 +42,27 @@
 
         });
 
+ //-------------------------------- * Delete Button Click * ------------------------- //
 
         $(function () {
             $("[id*=gvIssueHD] td:first").click(function () {
+
+                debugger;
+
                 if ($(this).text() == "") {
                 var DeletionConfirmation = ConfirmDelete();
 
                 if (DeletionConfirmation == true) {
                     issueID = $(this).closest('tr').find('td:eq(6)').text();
-
-
-                    window.location = "StockOut.aspx?HdrID=" + issueID;
+                    debugger;
+                    DeleteIssueheader(issueID);
+                    //window.location = "StockOut.aspx?HdrID=" + issueID;
                 }
                 }
             });
         });
 
-
-
-
+//-------------------------------- * END : Delete Button Click * ------------------------- //
 
         function SetIframeSrc(HyperlinkID) {
 
@@ -71,13 +74,48 @@
 
         }
 
-
-
-
     </script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
+
+    <script>
+        function DeleteIssueheader(issueID) { //------* Delete Issue Header by IssueID (using webmethod)
+
+            if (issueID != "") {
+
+                PageMethods.DeleteIssueheader(issueID, OnSuccess, onError);
+
+                function OnSuccess(response, userContext, methodName) {
+                 
+                    if (response == false)
+                    {
+                        var lblclass = Alertclasses.danger;
+                        var lblmsg = msg.AlreadyIssued;
+                        var lblcaptn = Caption.Confirm;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                    }
+
+                    else
+                    {
+                        var lblclass = Alertclasses.sucess;
+                        var lblmsg = msg.DeletionSuccessFull;
+                        var lblcaptn = Caption.SuccessMsgCaption;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                    }
+
+                }
+                function onError(response, userContext, methodName) {
+                   
+                }
+
+            }
+        }
+
+    </script>
 
     <%--  //------------- AUTOFILL SCRIPT ---------%>
     <script src="../js/jquery-1.8.3.min.js"></script>
@@ -124,7 +162,7 @@
         var issueID = '';
 
         function OnSuccess(response) {
-            debugger;
+           
             $(".Pager").show();
 
             var xmlDoc = $.parseXML(response.d);
@@ -136,7 +174,7 @@
             $("[id*=gvIssueHD] tr").not($("[id*=gvIssueHD] tr:first-child")).remove();
             if (IssueHD.length > 0) {
                 $.each(IssueHD, function () {
-                    debugger;
+                    
                     //$("td", row).eq(0).html('<a href="NewIssue.aspx">' + $(this).find("RefNo1").text() + '</a>');
 
                     //issueID = $(this).find("IssueID").text();
@@ -212,9 +250,6 @@
         };
 
 
-
-
-
     </script>
 
 
@@ -271,8 +306,8 @@
                         <div role="tabpanel" class="tab-pane active" id="stock_out">
                             <div class="grey_sec">
                                 <div class="search_div">
-                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch">
-                                    <input class="button" type="submit" value="Search">
+                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch" >
+                                    <input class="button" type="submit" value="Search" disabled>
                                 </div>
                                 <ul class="top_right_links">
                                     <li><a visible="false" class="save" id="btSave" runat="server"  href="#"><span></span>Save</a></li>
