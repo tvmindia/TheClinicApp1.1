@@ -97,8 +97,6 @@ namespace TheClinicApp1._1.Admin
         #endregion Bind Dummy Row
 
 
-
-
         //---* To USER *--//
 
         #region User
