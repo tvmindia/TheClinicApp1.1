@@ -220,7 +220,16 @@ namespace TheClinicApp1._1.Pharmacy
             var xml = MedicinList.GetXml();
             hdnXmlData.Value = xml;
             Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
-            ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientId.ToString();
+
+            string imagetype = gds.Tables[0].Rows[0][13].ToString();
+            if (imagetype.Trim() != string.Empty)
+            {
+                ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientId.ToString();
+            }
+            else
+            {
+                ProfilePic.Src = "../images/UploadPic1.png";
+            }
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {

@@ -324,11 +324,11 @@
                                                 <td>
                                                     <input id="txtMedicine0" type="text"   class="input" onblur="BindControlsByMedicneName(0)" onfocus="autocompleteonfocus(0)"/></td>
                                                 <td>
-                                                    <input id="txtUnit0" class="input" type="text"  /></td>
+                                                    <input id="txtUnit0" readonly="true" class="input" type="text"  /></td>
                                                 <td>
-                                                    <input id="txtCode0" type="text" class="input" /></td>
+                                                    <input id="txtCode0" readonly="true" type="text" class="input" /></td>
                                                 <td>
-                                                    <input id="txtCategory0" type="text"  class="input" /></td>
+                                                    <input id="txtCategory0" readonly="true" type="text"  class="input" /></td>
                                                 <td>
                                                     <input id="txtQuantity0" class="input" min="1" type="number" onblur="CheckMedicineIsOutOfStock('0')" onfocus="RemoveWarning('0')"/></td>
                                                 <td style="background-color: transparent">
