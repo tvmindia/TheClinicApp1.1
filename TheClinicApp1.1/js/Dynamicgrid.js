@@ -120,11 +120,9 @@ function clickStockAdd(id) {
        + '<td><input id="txtCode' + iCnt + '" readonly="true" class="input "  type="text" /></td>'
        + '<td><input id="txtCategory' + iCnt + '" readonly="true" class="input "  type="text" /></td>'
        + '<td><input id="txtQuantity' + iCnt + '" class="input" min="1" type="number"  onblur="CheckMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" autocomplete="off" /></td>'
-       + '<td style="background:#E6E5E5">'
-       + '<input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" accesskey="-" /></td>'
-       + '<td style="background:#E6E5E5">'
-       + '<input type="button" id="btAdd' + iCnt + '" value="+" onclick="clickStockAdd(' + iCnt + ')" class="bt" style="width:20px" accesskey="+" /></td>'
-       + '<td style="background:#E6E5E5"><input id="hdnDetailID' + iCnt + '" type="hidden" /> <input id="hdnQty' + iCnt + '" type="hidden" /></td>'
+       + '<td><input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" accesskey="-" /></td>'
+       + '<td><input type="button" id="btAdd' + iCnt + '" value="+" onclick="clickStockAdd(' + iCnt + ')" class="bt" style="width:20px" accesskey="+" /></td>'
+       + '<td><input id="hdnDetailID' + iCnt + '" type="hidden" /> <input id="hdnQty' + iCnt + '" type="hidden" /></td>'
                               + '</tr> </table> </div>');
 
     $('#maindiv').after(container);
@@ -144,9 +142,9 @@ function clickStockAdd(id) {
 }
 
 function clickAdd(id) {
-    
+
+    debugger;
     iCnt = iCnt + 1;
-   
     // ADD new row with fields needed.
     $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;">'
              + ' <td ><input id="txtMedName' + iCnt + '" type="text" class="input"  onblur="BindMedunitbyMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
@@ -811,7 +809,14 @@ function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
        
             debugger;
             if (i > 0) {
+
                 clickAdd(i);
+            }
+            if (Medicines.length > 1) {
+                debugger;
+
+                $('#btAdd').css('visibility', 'hidden');
+                $('#btAdd' + (Medicines.length - 1)).css('visibility', 'visible');
             }
 
             var MedicineName = $(this).find("MedicineName").text();

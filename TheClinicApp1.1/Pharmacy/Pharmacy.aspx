@@ -344,7 +344,7 @@
                     </div>
                 </div>
                 <%-- ALert MEssae for Out Of Stock REd Color Diplay --%>
-                    <div id="OutOfStockMessage" class="prescription_grid" style="display: none; color:red; padding-left:150px;padding-bottom:10Px"> 
+                    <div id="OutOfStockMessage" class="prescription_grid" style="display: none; color:red; padding-bottom:10Px"> 
                         <strong>**</strong>Red Quantity indicates Out of Stock. 
                     </div>
                 <div class="prescription_grid">

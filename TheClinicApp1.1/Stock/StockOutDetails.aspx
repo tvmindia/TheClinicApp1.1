@@ -440,13 +440,13 @@
                                                 <td>
                                                     <input id="txtMedicine0" type="text"  class="input" onblur="BindControlsByMedicneName('0')" onfocus="autocompleteonfocus('0')" /></td>
                                                 <td>
-                                                    <input id="txtUnit0" class="input" type="text"  /></td>
+                                                    <input id="txtUnit0" class="input" readonly="true" type="text"  /></td>
                                                 <td>
-                                                    <input id="txtCode0" type="text"  class="input" /></td>
+                                                    <input id="txtCode0" type="text" readonly="true" class="input" /></td>
                                                 <td>
-                                                    <input id="txtCategory0" type="text"  class="input" /></td>
+                                                    <input id="txtCategory0" type="text" readonly="true"  class="input" /></td>
                                                 <td>
-                                                    <input id="txtQuantity0" type="text"  class="input" onblur="CheckMedicineIsOutOfStock('0')" onfocus="RemoveWarning('0')" /></td>
+                                                    <input id="txtQuantity0" class="input" min="1" type="number" onblur="CheckMedicineIsOutOfStock('0')" onfocus="RemoveWarning('0')" /></td>
                                                 <td style="background-color: transparent">
                                                     <input type="button" value="-" class="bt1" style="width: 20px;" onclick="ClearAndRemove()" accesskey="-" /></td>
                                                 <td style="background-color: transparent">
