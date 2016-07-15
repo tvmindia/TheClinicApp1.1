@@ -847,7 +847,9 @@ function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
             document.getElementById('hdnDetailID' + i).value = UniqueID; //PrescDT uniqueid
 
             document.getElementById('txtMedName' + i).readOnly = true; // --------* medicine name set to non-editable after saving *--------//
-
+            document.getElementById('txtMedUnit' + i).readOnly = true;
+            document.getElementById('txtMedDos' + i).readOnly = true;
+            document.getElementById('txtMedTime' + i).readOnly = true;
             i = i + 1;
         });
 
