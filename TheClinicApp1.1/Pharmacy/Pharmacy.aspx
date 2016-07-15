@@ -362,7 +362,7 @@
                                 <td>
                                     <input id="txtMedName0" type="text" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
                                 <td>
-                                    <input id="txtMedQty0" type="text" class="input" onfocus="focuscontrol(0)" title="Red Color Indicates No Stock" onkeyup="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
+                                    <input id="txtMedQty0" type="text" onkeypress="return isNumber(event)" class="input" onfocus="focuscontrol(0)" title="Red Color Indicates No Stock" onkeyup="CheckPharmacyMedicineIsOutOfStock('0')" onchange="RemoveWarningPharm('0')" autocomplete="off" /></td>
                                 <td>
                                     <input id="txtMedUnit0" class="input" readonly="true" type="text" onfocus="focusplz(0)"/></td>
                                 <td>

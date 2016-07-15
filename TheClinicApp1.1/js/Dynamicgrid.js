@@ -119,7 +119,7 @@ function clickStockAdd(id) {
        + '<td><input id="txtUnit' + iCnt + '" readonly="true" class="input "  type="text"  /></td>'
        + '<td><input id="txtCode' + iCnt + '" readonly="true" class="input "  type="text" /></td>'
        + '<td><input id="txtCategory' + iCnt + '" readonly="true" class="input "  type="text" /></td>'
-       + '<td><input id="txtQuantity' + iCnt + '" class="input" min="1" type="number"  onblur="CheckMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" autocomplete="off" /></td>'
+       + '<td><input id="txtQuantity' + iCnt + '" onkeypress="return isNumber(event)" class="input" min="1" type="number"  onblur="CheckMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" autocomplete="off" /></td>'
        + '<td><input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" accesskey="-" /></td>'
        + '<td><input type="button" id="btAdd' + iCnt + '" value="+" onclick="clickStockAdd(' + iCnt + ')" class="bt" style="width:20px" accesskey="+" /></td>'
        + '<td><input id="hdnDetailID' + iCnt + '" type="hidden" /> <input id="hdnQty' + iCnt + '" type="hidden" /></td>'
@@ -148,7 +148,7 @@ function clickAdd(id) {
     // ADD new row with fields needed.
     $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;">'
              + ' <td ><input id="txtMedName' + iCnt + '" type="text" class="input"  onblur="BindMedunitbyMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
-                + '<td ><input id="txtMedQty' + iCnt + '" type="text" class="input" onfocus="focuscontrol(' + iCnt + ')" title="Red Color Indicates No Stock" onkeyup="CheckPharmacyMedicineIsOutOfStock(' + iCnt + ')" onchange="RemoveWarningPharm(' + iCnt + ')" autocomplete="off"/></td>'
+                + '<td ><input id="txtMedQty' + iCnt + '" type="text" onkeypress="return isNumber(event)" class="input" onfocus="focuscontrol(' + iCnt + ')" title="Red Color Indicates No Stock" onkeyup="CheckPharmacyMedicineIsOutOfStock(' + iCnt + ')" onchange="RemoveWarningPharm(' + iCnt + ')" autocomplete="off"/></td>'
                 + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true"  class="input" type="text" onfocus="focusplz(' + iCnt + ')" /></td>'
                 + '<td ><input id="txtMedDos' + iCnt + '" type="text" class="input"/></td>'
                 + '<td><input id="txtMedTime' + iCnt + '" type="text" class="input"/></td>'
@@ -1037,3 +1037,14 @@ function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox,lblclass,lblcapt
 
 }
  
+
+
+
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}

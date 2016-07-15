@@ -358,9 +358,11 @@ namespace TheClinicApp1._1.MasterAdd
                 //msg = "Please fill out all the fields";
                 msg = Messages.MandatoryFields;
                 eObj.InsertionNotSuccessMessage(page, msg);
+               
             }
 
             BindGridview();
+            hdnUserID.Value = string.Empty; //clear the hidden field after save click
 
         }
 

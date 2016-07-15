@@ -461,7 +461,7 @@
                                         <label for="sex">Sex<asp:RadioButton ID="rdoMale" runat="server" GroupName="Active" Text="Male" CssClass="checkbox-inline" Width="9%" /><asp:RadioButton ID="rdoFemale" runat="server" GroupName="Active" Text="Female" CssClass="checkbox-inline" Width="9%" /></label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <label for="age">Age</label><input id="txtAge" runat="server" type="number" name="age" min="1" pattern="\d*" title="⚠ The Age is required and entry should be Numbers no Negative Values Expected." />
+                                        <label for="age">Age</label><input id="txtAge" runat="server" type="number" onkeypress="return isNumber(event)" name="age" min="1" pattern="\d*" title="⚠ The Age is required and entry should be Numbers no Negative Values Expected." />
                                     </div>
                                 </div>
                             </div>
@@ -474,7 +474,7 @@
 
                         <div class="row field_row">
                             <div class="col-lg-4">
-                                <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" name="mobile" minlength="5" pattern="\d*" title="⚠ This entry can only contain Numbers." />
+                                <label for="mobile">Mobile</label><input id="txtMobile" runat="server" type="text" onkeypress="return isNumber(event)" name="mobile" minlength="5" pattern="\d*" title="⚠ This entry can only contain Numbers." />
                             </div>
                             <div class="col-lg-4">
                                 <label for="email">Email</label><input id="txtEmail" runat="server" type="email" name="email" title="⚠ Invalid Email Check format expects testname@test.te" />

@@ -281,7 +281,7 @@
 
                      <div class="row field_row">  
                       <div class="col-lg-8">
-                      <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" name="name"  pattern="^[0-9+-]*$"   />
+                      <label for="name">Phone</label><input id="txtPhoneNumber" onkeypress="return isNumber(event)" runat="server" type="text" name="name"  pattern="^[0-9+-]*$"   />
 
                       </div>
 

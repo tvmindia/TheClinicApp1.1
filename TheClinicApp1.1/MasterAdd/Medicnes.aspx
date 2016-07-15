@@ -474,7 +474,7 @@
      <div class="col-lg-8">
 
          <label for="name"> Reorder Quantity</label>
-         <input id="txtOrderQuantity" runat="server" value="1" type="number" name="age" min="1" pattern="\d*"  title="⚠ Should be greater than 0" />
+         <input id="txtOrderQuantity" runat="server" onkeypress="return isNumber(event)" value="1" type="number" name="age" min="1" pattern="\d*"  title="⚠ Should be greater than 0" />
         
          </div>
 

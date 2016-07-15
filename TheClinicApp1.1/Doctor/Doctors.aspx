@@ -484,7 +484,7 @@
                                         <td>
                                             <input id="txtMedName0" type="text" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
                                         <td>
-                                            <input id="txtMedQty0" type="text" class="input" /></td>
+                                            <input id="txtMedQty0" onkeypress="return isNumber(event)" type="text" class="input" /></td>
                                         <td>
                                             <input id="txtMedUnit0" class="input" readonly="true" type="text" onfocus="focusplz(0)" /></td>
                                         <td>
