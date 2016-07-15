@@ -49,6 +49,54 @@ namespace TheClinicApp1._1.Admin
 
         #region Methods
 
+        #region User View Search Paging
+      
+        [WebMethod]
+        ///This method is called using AJAX For gridview bind , search , paging
+        ///It expects page index and search term which is passed from client side
+        ///Page size is declared and initialized in global variable section
+        public static string ViewAndFilterUser(string searchTerm, int pageIndex)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            User usrObj = new User();
+            usrObj.ClinicID = UA.ClinicID;
+            var xml = usrObj.ViewAndFilterUsers(searchTerm, pageIndex, PageSize);
+            return xml;
+
+        }
+
+        #endregion Bind Gridview
+
+        #region Bind Dummy Row
+
+        /// <summary>
+        /// To implement search in gridview(on keypress) :Gridview is converted to table and
+        /// Its first row (of table header) is created using this function
+        /// </summary>
+        private void BindDummyRow()
+        {
+            DataTable dummy = new DataTable();
+
+            dummy.Columns.Add("Edit");
+            dummy.Columns.Add(" ");
+            dummy.Columns.Add("LoginName");
+            dummy.Columns.Add("FirstName");
+            dummy.Columns.Add("LastName");
+            dummy.Columns.Add("Active");
+            dummy.Columns.Add("UserID");
+
+            dummy.Rows.Add();
+            dtgViewAllUsers.DataSource = dummy;
+            dtgViewAllUsers.DataBind();
+        }
+
+        #endregion Bind Dummy Row
+
+
         //---* To USER *--//
 
         #region User
@@ -567,7 +615,7 @@ namespace TheClinicApp1._1.Admin
 
             if (!IsPostBack)
             {
-                //BindDummyRow();
+                BindDummyRow();
 
                 BindGriewWithDetailsOfAllUsers();
             }
@@ -669,20 +717,20 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Logout
 
-        #region Paging
-        protected void dtgViewAllUsers_PreRender(object sender, EventArgs e)
-        {
-            dtgViewAllUsers.UseAccessibleHeader = false;
+        //#region Paging
+        //protected void dtgViewAllUsers_PreRender(object sender, EventArgs e)
+        //{
+        //    dtgViewAllUsers.UseAccessibleHeader = false;
 
-            if (dtgViewAllUsers.Rows.Count > 0)
-            {
-                dtgViewAllUsers.HeaderRow.TableSection = TableRowSection.TableHeader;
-            }   
+        //    if (dtgViewAllUsers.Rows.Count > 0)
+        //    {
+        //        dtgViewAllUsers.HeaderRow.TableSection = TableRowSection.TableHeader;
+        //    }   
 
            
-        }
+        //}
 
-        #endregion Paging
+        //#endregion Paging
 
         #region Update Image Button Click
         protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
@@ -740,121 +788,9 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Events
 
- //------------------------Filter (*Not using now) -----------------------//
+ 
+       
 
-        #region Filter Gridview
-
-        //---------------- * FILTER GRIDVIEW *-----------------//
-
-
-        #region Bind Gridview
-
-        [WebMethod]
-        public static string GetMedicines(string searchTerm, int pageIndex)
-        {
-            ClinicDAL.UserAuthendication UA;
-            UIClasses.Const Const = new UIClasses.Const();
-
-            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-
-            string query = "ViewAndFilterUsers";
-            SqlCommand cmd = new SqlCommand(query);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
-            //cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = new Guid("2c7a7172-6ea9-4640-b7d2-0c329336f289");
-
-            cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
-            cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-            cmd.Parameters.AddWithValue("@PageSize", PageSize);
-            cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-            var xml = GetData(cmd, pageIndex).GetXml();
-            return xml;
-        }
-
-        private static DataSet GetData(SqlCommand cmd, int pageIndex)
-        {
-
-            string strConnString = ConfigurationManager.ConnectionStrings["ClinicAppConnectionString"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(strConnString))
-            {
-                using (SqlDataAdapter sda = new SqlDataAdapter())
-                {
-                    cmd.Connection = con;
-                    sda.SelectCommand = cmd;
-                    using (DataSet ds = new DataSet())
-                    {
-                        sda.Fill(ds, "Medicines");
-                        DataTable dt = new DataTable("Pager");
-                        dt.Columns.Add("PageIndex");
-                        dt.Columns.Add("PageSize");
-                        dt.Columns.Add("RecordCount");
-                        dt.Rows.Add();
-                        dt.Rows[0]["PageIndex"] = pageIndex;
-                        dt.Rows[0]["PageSize"] = PageSize;
-                        dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
-                        ds.Tables.Add(dt);
-                        return ds;
-                    }
-                }
-            }
-
-//EDIT DELETE
-            //if (Request.QueryString["UsrID"] != null)  //DELETE Button Click
-            //{
-            //    Guid UserID = Guid.Parse(Request.QueryString["UsrID"].ToString());
-            //     DeleteDoctorByUserID(UserID);
-            //     DeleteUserByUserID(UserID);
-
-            //     this.Request.QueryString.Remove("UsrID");
-            // }
-
-
-
-
-            //if (Request.QueryString["UsrIDtoEdit"] != null)  //EDIT Button Click
-            //  {
-
-            //    if (txtLoginName.Value == string.Empty)
-            //    {
-            //        Guid UserID = Guid.Parse(Request.QueryString["UsrIDtoEdit"].ToString());
-            //        RefillUserDetailsOnEditClick(UserID);
-            //         hdnUserID.Value = UserID.ToString();
-
-            //         this.Request.QueryString.Remove("UsrIDtoEdit");
-            //    }
-
-            //  }
-
-            //Removing query string
-
-
-        }
-
-        #endregion Bind Gridview
-
-        #region Bind Dummy Row
-
-        private void BindDummyRow()
-        {
-            DataTable dummy = new DataTable();
-
-            dummy.Columns.Add("Edit");
-            dummy.Columns.Add(" ");
-            dummy.Columns.Add("LoginName");
-            dummy.Columns.Add("FirstName");
-            dummy.Columns.Add("LastName");
-            dummy.Columns.Add("Active");
-            dummy.Columns.Add("UserID");
-
-            dummy.Rows.Add();
-            dtgViewAllUsers.DataSource = dummy;
-            dtgViewAllUsers.DataBind();
-        }
-
-        #endregion Bind Dummy Row
-
-        #endregion Filter Gridview
+        
     }
 }
