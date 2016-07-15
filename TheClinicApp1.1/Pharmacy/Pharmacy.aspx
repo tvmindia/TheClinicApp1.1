@@ -328,13 +328,13 @@
                     </div>
                     <div class="light_grey">
                         <div class="col3_div">
-                            <asp:Label ID="lblAgeCount" runat="server" Text="Age"></asp:Label>
+                            <asp:Label ID="lblAgeCount" runat="server" Text=""></asp:Label><span>Age</span>
                         </div>
                         <div class="col3_div">
-                            <asp:Label ID="lblGenderDis" runat="server" Text="Gender"></asp:Label>
+                            <asp:Label ID="lblGenderDis" runat="server" Text=""></asp:Label><span>Gender</span>
                         </div>
                         <div class="col3_div">
-                            <asp:Label ID="lblFileNum" runat="server" Text="File No"></asp:Label>
+                            <asp:Label ID="lblFileNum" runat="server" Text=""></asp:Label><span>File No</span>
                         </div>
                     </div>
                     <div class="card_white">
@@ -344,7 +344,7 @@
                     </div>
                 </div>
                 <%-- ALert MEssae for Out Of Stock REd Color Diplay --%>
-                    <div id="OutOfStockMessage" style="display: none; color:red; padding-left:150px;padding-bottom:10Px"> 
+                    <div id="OutOfStockMessage" class="prescription_grid" style="display: none; color:red; padding-left:150px;padding-bottom:10Px"> 
                         <strong>**</strong>Red Quantity indicates Out of Stock. 
                     </div>
                 <div class="prescription_grid">
