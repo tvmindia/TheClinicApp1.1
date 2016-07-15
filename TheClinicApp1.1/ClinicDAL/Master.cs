@@ -791,6 +791,66 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Delete Doctor By DoctorID
 
+        public string DeleteDoctorByIDForWM(bool rdoNotDoctor = false)
+        {
+            string result = string.Empty;
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteDoctors";
+
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+
+
+                if (rdoNotDoctor == true)
+                {
+
+                 result =     Output.Value.ToString();
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleDoctor;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "DeleteDoctorByID";
+
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+
+            return result;
+        }
+
         public void DeleteDoctorByID(bool rdoNotDoctor = false)
         {
             SqlConnection con = null;

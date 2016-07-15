@@ -24,6 +24,7 @@ using System.Web.Services;
 using System.Configuration;
 using System.Reflection;
 using Messages = TheClinicApp1._1.UIClasses.Messages;
+using System.Web.Script.Serialization;
 
 
 #endregion Included Namespaces
@@ -81,8 +82,8 @@ namespace TheClinicApp1._1.Admin
         {
             DataTable dummy = new DataTable();
 
-            dummy.Columns.Add("Edit");
-            dummy.Columns.Add(" ");
+            //dummy.Columns.Add("Edit");
+            //dummy.Columns.Add(" ");
             dummy.Columns.Add("LoginName");
             dummy.Columns.Add("FirstName");
             dummy.Columns.Add("LastName");
@@ -96,7 +97,18 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Bind Dummy Row
 
+        #region Set User Count 
 
+        public void SetUserCount()
+        {
+            userObj.ClinicID = UA.ClinicID;
+            DataTable dtUsers = userObj.GetDetailsOfAllUsers();
+            lblCaseCount.Text = dtUsers.Rows.Count.ToString();
+        }
+
+        #endregion Set User Count
+
+//-------------------------------------- * Save *--------------------------------------//
         //---* To USER *--//
 
         #region User
@@ -467,7 +479,34 @@ namespace TheClinicApp1._1.Admin
 
         #endregion USER-In-ROLES
 
-        //----------------------//
+        //END----------------------//
+
+        #region CheckUserIsDoctor
+
+        [WebMethod]
+        public static bool CheckUserIsDoctor(string UsrID)
+        {
+            bool IsDoctor = false;
+
+            ClinicDAL.Master mstrObj = new ClinicDAL.Master();
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            mstrObj.UsrID = Guid.Parse(UsrID);
+                    mstrObj.ClinicID = UA.ClinicID;
+                    DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
+
+                    if (dtDoctor.Rows.Count > 0) //Checking whether user is doctor , then activate Isdoctor YES radio button
+                    {
+                        IsDoctor = true;
+                    }
+
+                    return IsDoctor;
+        }
+
+        #endregion CheckUserIsDoctor
 
         #region ValidateLoginName
         [WebMethod]
@@ -521,106 +560,171 @@ namespace TheClinicApp1._1.Admin
 
            #endregion ValidateEmailID
 
-        #region Bind Gridview
-        public void BindGriewWithDetailsOfAllUsers()
-        {
-            userObj.ClinicID = UA.ClinicID;
-            DataTable dtUsers = userObj.GetDetailsOfAllUsers();
 
-            if (dtUsers != null)
-            {
-                dtgViewAllUsers.DataSource = dtUsers;
-                dtgViewAllUsers.DataBind();
-
-                lblCaseCount.Text = dtgViewAllUsers.Rows.Count.ToString();
-                
-            }
-
-            foreach (GridViewRow myRow in dtgViewAllUsers.Rows)
-            {
-                ImageButton EditButton = myRow.Cells[0].Controls[1] as ImageButton;
-                ImageButton DeleteButton = myRow.Cells[1].Controls[1] as ImageButton;
-
-                string name = myRow.Cells[2].Text;
-
-                if (EditButton != null && DeleteButton != null && name == UA.userName)
-                {
-                    EditButton.Enabled = false;
-                    DeleteButton.Enabled = false;
-
-                    //EditButton.ToolTip = Messages.EditImageButtonDisabled;
-                    //DeleteButton.ToolTip = Messages.DeleteImageButtonDisabled;
-
-                    EditButton.ImageUrl = "~/images/Editicon2 (2).png";
-                    DeleteButton.ImageUrl = "~/images/Deleteicon2 (3).png";
-
-                   
-                }
-                else
-                {
-                    EditButton.Enabled = true;
-                    DeleteButton.Enabled = true;
-
-                    EditButton.ImageUrl = "~/images/Editicon1.png";
-                    DeleteButton.ImageUrl = "~/images/Deleteicon1.png";
-
-                  
-                }
-             
-            }
-
-        }
-
-        #endregion Bind Gridview
+        //LOGIN NAME
 
         #region Delete User By UserID
 
          [WebMethod]
         public static bool DeleteUserByID(string UsrID)
         {
+            bool UserDeleted = false;
+
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
 
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             Master mstrObj = new Master();
-
-          
-            bool UserDeleted = false;
+            ClinicDAL.RoleAssign roleObj = new RoleAssign();
             ClinicDAL.User userObj = new ClinicDAL.User();
 
-            Guid UserID = Guid.Parse(UsrID);
-            userObj.UserID = UserID;
-            userObj.DeleteUserByUserID();
-            UserDeleted = true;
-            //hdnUserCountChanged.Value = "True";
+            mstrObj.ClinicID = UA.ClinicID;
+            mstrObj.UsrID = Guid.Parse(UsrID);
+            DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
+
+            if (dtDoctor.Rows.Count > 0) //Checking whether user is doctor or not
+            {
+                //---user is DOCTOR
+
+                mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
+
+                bool IDUsedOrNot = mstrObj.CheckDoctorIdUsed();
+
+                 if (IDUsedOrNot == false)
+                {
+                 
+                    string DoctorRoleID = string.Empty;
+                    userObj.ClinicID = UA.ClinicID;
+
+                    //DoctorRoleID = userObj.GetRoleIDOfDoctor();
+                    mstrObj.ClinicID = UA.ClinicID;
+                    DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
+
+                    roleObj.RoleID = Guid.Parse(DoctorRoleID);
+
+                    roleObj.UserID = Guid.Parse(UsrID);
+                    roleObj.DeleteAssignedRoleByUserIDForWM();
+
+                    mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
+                    mstrObj.DeleteDoctorByIDForWM(true);
+
+                  
+                        //DeleteUserByUserID(UserID);
+
+
+                    roleObj.UserID = Guid.Parse(UsrID);
+                    roleObj.ClinicID = UA.ClinicID;
+                    DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+
+                    //RoleID
+
+                    foreach (DataRow dr in dtAssignedRoles.Rows)
+                    {
+                        roleObj.RoleID = Guid.Parse(dr["RoleID"].ToString());
+                        //DeleteAssignedRoleByUserID(UsrID);
+
+                        roleObj.UserID = Guid.Parse(UsrID);
+                        roleObj.DeleteAssignedRoleByUserIDForWM();
+
+                    }
+
+                    userObj.UserID = Guid.Parse(UsrID);
+                   
+                    string result = userObj.DeleteUserByUserIDForWM();
+
+                    if (result != string.Empty)
+                    {
+                        UserDeleted = true;
+                    }
+
+                }
+
+            }
+
+            else
+            {
+                //DeleteAssignedRoleByUserID(UserID);
+                userObj.UserID = Guid.Parse(UsrID);
+
+                string result = userObj.DeleteUserByUserIDForWM();
+
+                if (result != string.Empty)
+                {
+                    UserDeleted = true;
+                }
+
+            }
+
             return UserDeleted;
+
         }
 
         #endregion Delete User By UserID
 
+        //EDIT
+
+        #region BindUserDetailsOnEditClick
+         /// <summary>
+         /// To get specific order details by orderid for the editing purpose
+         /// </summary>
+         /// <param name=""></param>
+         /// <returns></returns>
+         [System.Web.Services.WebMethod]
+         public static string BindUserDetailsOnEditClick(User userObj)
+         {
+
+             ClinicDAL.UserAuthendication UA;
+             UIClasses.Const Const = new UIClasses.Const();
+
+             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+             userObj.ClinicID = UA.ClinicID;
+             DataSet dtuser = userObj.GetUserDetailsByUserIDForWM();
+
+
+             string jsonResult = null;
+             DataSet ds = null;
+             ds = dtuser;
+
+             //Converting to Json
+             JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+             List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+             Dictionary<string, object> childRow;
+             if (ds.Tables[0].Rows.Count > 0)
+             {
+                 foreach (DataRow row in ds.Tables[0].Rows)
+                 {
+                     childRow = new Dictionary<string, object>();
+                     foreach (DataColumn col in ds.Tables[0].Columns)
+                     {
+                         childRow.Add(col.ColumnName, row[col]);
+                     }
+                     parentRow.Add(childRow);
+                 }
+             }
+             jsonResult = jsSerializer.Serialize(parentRow);
+
+             return jsonResult; //Converting to Json
+         }
+         #endregion BindUserDetailsOnEditClick
+
+
         #endregion Methods
 
-        #region Events
+         #region Events
 
-        #region Page Load
+         #region Page Load
 
-        protected void Page_Load(object sender, EventArgs e)
+         protected void Page_Load(object sender, EventArgs e)
         {
+            BindDummyRow();
+
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
          
-
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
 
-            if (!IsPostBack)
-            {
-                BindDummyRow();
-
-                BindGriewWithDetailsOfAllUsers();
-            }
-           
-           
         }
 
         #endregion Page Load
@@ -672,9 +776,9 @@ namespace TheClinicApp1._1.Admin
                     }
 
 
-                BindGriewWithDetailsOfAllUsers();
+                //BindGriewWithDetailsOfAllUsers();
 
-               
+
                 //hdnUserCountChanged.Value = "True";
 
 
@@ -697,6 +801,9 @@ namespace TheClinicApp1._1.Admin
 
                 eObj.InsertionNotSuccessMessage(page, msg);
             }
+
+            hdnUserID.Value = "";
+          
         }
 
         #endregion Save
@@ -788,8 +895,58 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Events
 
- 
-       
+
+        #region Bind Gridview
+        public void BindGriewWithDetailsOfAllUsers()
+        {
+            userObj.ClinicID = UA.ClinicID;
+            DataTable dtUsers = userObj.GetDetailsOfAllUsers();
+
+            if (dtUsers != null)
+            {
+                dtgViewAllUsers.DataSource = dtUsers;
+                dtgViewAllUsers.DataBind();
+
+                lblCaseCount.Text = dtgViewAllUsers.Rows.Count.ToString();
+
+            }
+
+            foreach (GridViewRow myRow in dtgViewAllUsers.Rows)
+            {
+                ImageButton EditButton = myRow.Cells[0].Controls[1] as ImageButton;
+                ImageButton DeleteButton = myRow.Cells[1].Controls[1] as ImageButton;
+
+                string name = myRow.Cells[2].Text;
+
+                if (EditButton != null && DeleteButton != null && name == UA.userName)
+                {
+                    EditButton.Enabled = false;
+                    DeleteButton.Enabled = false;
+
+                    //EditButton.ToolTip = Messages.EditImageButtonDisabled;
+                    //DeleteButton.ToolTip = Messages.DeleteImageButtonDisabled;
+
+                    EditButton.ImageUrl = "~/images/Editicon2 (2).png";
+                    DeleteButton.ImageUrl = "~/images/Deleteicon2 (3).png";
+
+
+                }
+                else
+                {
+                    EditButton.Enabled = true;
+                    DeleteButton.Enabled = true;
+
+                    EditButton.ImageUrl = "~/images/Editicon1.png";
+                    DeleteButton.ImageUrl = "~/images/Deleteicon1.png";
+
+
+                }
+
+            }
+
+        }
+
+        #endregion Bind Gridview
 
         
     }

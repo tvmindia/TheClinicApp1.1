@@ -4,13 +4,15 @@
     CompulsorySelect: "Select an item",
     SelectDoctor: "Please Select Doctor",
     AlreadyIssued: "Already issued.Can't be deleted",
-    DeletionSuccessFull : "Deleted Successfully"
+    DeletionSuccessFull: "Deleted Successfully",
+    AlreadyUsed: "Already used . Can't be deleted"
     
 }
 
 var Caption = {
     Confirm: "Please Confirm!",
-    SuccessMsgCaption : "Success!"
+    SuccessMsgCaption: "Success!",
+    FailureMsgCaption: "Failure!"
 }
 
 

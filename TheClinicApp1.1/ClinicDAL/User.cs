@@ -394,6 +394,51 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Get User Details By UserID
 
+        public DataSet GetUserDetailsByUserIDForWM()
+        {
+            SqlConnection con = null;
+            DataSet dtUsers = null;
+            try
+            {
+                dtUsers = new DataSet();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetUserDetailsByUserID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtUsers);
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = UA.UserID; ;
+                eObj.Method = "GetUserDetailsByUserID";
+
+                eObj.InsertError();
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dtUsers;
+        }
+
 
         public DataTable GetUserDetailsByUserID()
         {
@@ -574,6 +619,59 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Update User By UserID
 
         #region Delete User By UserID
+
+
+        public string DeleteUserByUserIDForWM()
+        {
+            string result = string.Empty;
+
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteUserByUserID";
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+
+                result = Output.Value.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "DeleteUserByUserID";
+
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+
+            return result;
+        }
 
         public void DeleteUserByUserID()
         {

@@ -333,6 +333,61 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Delete Assigned Role By UserID
 
+
+        public string DeleteAssignedRoleByUserIDForWM() 
+        {
+            string result = string.Empty;
+
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteUserInRolesByUserID";
+                cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
+
+                cmd.Parameters.Add("@RoleID", SqlDbType.UniqueIdentifier).Value = RoleID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+
+                result = Output.Value.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "DeleteAssignedRoleByUserID";
+
+                eObj.InsertError();
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+            return result;
+        }
+
         public void DeleteAssignedRoleByUserID()
         {
             SqlConnection con = null;

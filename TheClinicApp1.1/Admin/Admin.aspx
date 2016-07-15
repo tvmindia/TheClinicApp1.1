@@ -26,14 +26,24 @@
       <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
     <!-- Script Files -->
    
-    <style>
+   <%-- <style>
     .modal table thead {
-    background-color: #5681e6;
+    background: #5681e6;
+    color:red!important;
+    border: 0;
+    
+    border-left: 1px solid #dbdbdb;
+    
+    font-size: 13px!important;
+   
+    font-family: 'raleway-semibold';
     text-align: center;
-    color: white;
-     
     }
-    </style>
+
+    
+
+
+    </style>--%>
 
     <script>
        
@@ -61,99 +71,13 @@
 
       $(document).ready(function () 
 {
-     
- <%-- if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
-             GetMedicines(1);
-                $('#<%=hdnUserCountChanged.ClientID %>').val('False');
-            }--%>
-
-
-                //images that represents medicine name duplication hide and show
-               <%-- var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-                LnameImage.style.display = "none";
-                var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                errLname.style.display = "none";--%>
-
                 $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
               });
 
-           
-
               $('.nav_menu').click(function () {
                 $(".main_body").toggleClass("active_close");
                });
-
-
-              //$('table').tablePagination({});
-
-             
-             <%-- var rows = $('#<%=dtgViewAllUsers.ClientID%> tr').not('thead tr');
-
-
-          $('#txtSearchUser').keyup(function () {
-             
-                  var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
-
-              rows.hide().filter(function () {
-
-                
-                      var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                      var matchesSearch = true;
-                      $(val).each(function (index, value) {
-                          
-                          matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
-                         
-                      });
-                      
-                      return matchesSearch;
-                  }).show();
-              //-------------------------------No records found.-----------------------------------------// 
-              debugger;
-              //finding the row of html table displaying while searching 
-              var numOfVisibleRows = $('tbody tr').filter(function () {
-                  return $(this).css('display') !== 'none';
-              }).length;
-
-              //number of rows while no records found is 1
-              if (numOfVisibleRows == 0) {
-                  debugger;
-                  $('#norows').remove();
-                  var bodyId = "tbdy";
-                  $('table').attr('id', bodyId);
-                  var textdis = "No records found.";
-                  var html = '<div id="norows" style="width:100%; padding-left: 200px;">' + textdis + '</div>';
-                  $('#tbdy').after(html);
-              }
-              else {
-                  $('#norows').remove();
-              }
-              //----------------------------------No records found.--------------------------------------//
-
-              $('#tablePagination').hide();
-
-
-      var matchedRowCount =     $("table tr:visible").length-1;
-
-   
-
-      //if (matchedRowCount == 0)
-      //{
-      //    debugger;
-
-      //    //$('table tr').eq(1).html("No records found for the search criteria.");
-      //    $('table').find("tr:first").html("No records found for the search criteria.");
-          
-      //}
-
-      if (val == "")
-      {
-                 
-     $('table').tablePagination({});
-     $('#tablePagination').show();
-       }
-
-              });--%>
 
 
 });
@@ -292,6 +216,8 @@ else
 
     <script type="text/javascript">
 
+
+
         $(function () {
 
             $('[data-toggle="tooltip"]').tooltip();
@@ -329,64 +255,202 @@ function SetRequired()
 
 var   UserID = '';
 
-   $(function () {
-       $("[id*=dtgViewAllUsers] td:eq(1)").click(function () {
+//---getting data as json-----//
+function getJsonData(data, page) {
+    var jsonResult = {};
+    var req = $.ajax({
+        type: "post",
+        url: page,
+        data: data,
+        delay: 3,
+        async: false,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
 
-                var DeletionConfirmation = ConfirmDelete();
-
-                if (DeletionConfirmation == true) {
-                    UserID = $(this).closest('tr').find('td:eq(6)').text();
-
-
- window.location = "Admin.aspx?UsrID=" + UserID;
-
-
- /* PageMethods.DeleteUserByID(UserID, OnSuccess, onError);
-
-            function OnSuccess(response, userContext, methodName)
-             {
-
-               if(response == true)
-{
- GetMedicines(1);
+    }).done(function (data) {
+        jsonResult = data;
+    });
+    return jsonResult;
 }
+
+
+
+
+//-------------------------------- * EDIT Button Click * ------------------------- //
+
+
+$(function () {
+    $("[id*=dtgViewAllUsers] td:eq(0)").click(function () {
+        debugger;
+
+        if ($(this).text() == "") {
+
+            var jsonResult = {};
+            UserID = $(this).closest('tr').find('td:eq(6)').text();
+
+            //userObj
+
+            var User = new Object();
+
+            User.UserID = UserID;
+
+            jsonResult = GetUserDetailsByUserID(User);
+            if (jsonResult != undefined) {
+                debugger;
+                BindUserControls(jsonResult);
             }
-            function onError(response, userContext, methodName)
-             {
+        }
+    });
+});
 
 
+
+function BindUserControls(Records) {
+    $.each(Records, function (index, Records) {
+
+        debugger;
+
+        $("#<%=txtLoginName.ClientID %>").val(Records.LoginName);
+        $("#<%=txtFirstName.ClientID %>").val(Records.FirstName);
+        $("#<%=txtLastName.ClientID %>").val(Records.LastName);
+        $("#<%=txtPhoneNumber.ClientID %>").val(Records.PhoneNo);
+        $("#<%=txtEmail.ClientID %>").val(Records.Email);
+        $("#<%=txtEmail.ClientID %>").val(Records.Email);
+
+        $("#<%=hdnUserID.ClientID %>").val(Records.UserID);
+       
+        if (Records.Active == true)
+        {
+            $("#<%=rdoActiveYes.ClientID %>").prop('checked', true); 
+        }
+        else
+        {
+            $("#<%=rdoActiveNo.ClientID %>").prop('checked', true); 
+        }
+
+
+
+        PageMethods.CheckUserIsDoctor(Records.UserID, OnSuccess, onError);
+
+        function OnSuccess(response, userContext, methodName) {
+
+            
+            if (response == false) {
+
+                $("#<%=rdoNotDoctor.ClientID %>").prop('checked', true); 
             }
-*/
-                }
-            });
+            if (response == true) {
+                $("#<%=rdoDoctor.ClientID %>").prop('checked', true); 
+            }
+        }
+        function onError(response, userContext, methodName) {
 
 
-        });
+        }
 
-   $(function () {
-       $("[id*=dtgViewAllUsers] td:eq(0)").click(function () {
 
-           UserID = $(this).closest('tr').find('td:eq(6)').text();
-           window.location = "Admin.aspx?UsrIDtoEdit=" + UserID;
-       });
+        
 
-   });
+
+        $("#UserClose").click();
+    });
+   
+}
+
+
+
+
+function GetUserDetailsByUserID(User) {
+    var ds = {};
+    var table = {};
+    var data = "{'userObj':" + JSON.stringify(User) + "}";
+    ds = getJsonData(data, "../Admin/Admin.aspx/BindUserDetailsOnEditClick");
+    table = JSON.parse(ds.d);
+    return table;
+}
+
+
+
+
+//-------------------------------- * Delete Button Click * ------------------------- //
+
+$(function () {
+    $("[id*=dtgViewAllUsers] td:eq(1)").click(function () {
+        debugger;
+
+        if ($(this).text() == "") {
+            var DeletionConfirmation = ConfirmDelete();
+            if (DeletionConfirmation == true) {
+                UserID = $(this).closest('tr').find('td:eq(6)').text();
+                DeleteUserByID(UserID);
+                //window.location = "StockIn.aspx?HdrID=" + receiptID;
+            }
+        }
+    });
+});
+
+function DeleteUserByID(UserID) { //------* Delete Receipt Header by receiptID (using webmethod)
+
+    if (UserID != "") {
+
+        PageMethods.DeleteUserByID(UserID, OnSuccess, onError);
+
+        function OnSuccess(response, userContext, methodName) {
+
+            debugger;
+
+            if (response == false) {
+                var lblclass = Alertclasses.danger;
+                var lblmsg = msg.AlreadyUsed;
+                var lblcaptn = Caption.FailureMsgCaption;
+
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+            }
+
+            else {
+
+                $("#<%=hdnUserID.ClientID %>").val("");
+
+
+                var lblclass = Alertclasses.sucess;
+                var lblmsg = msg.DeletionSuccessFull;
+                var lblcaptn = Caption.SuccessMsgCaption;
+
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+            }
+
+            GetUsers(1);
+            $("#UserClose").click();
+
+        }
+        function onError(response, userContext, methodName) {
+
+        }
+
+    }
+}
+
+
+
+
+//-------------------------------- * END : Delete Button Click * ------------------------- //
+
 
         $(function () {
-           
-            GetMedicines(1);
+            debugger;
+            GetUsers(1);
         });
         $("[id*=txtSearch]").live("keyup", function () {
             debugger;
-            GetMedicines(parseInt(1));
+            GetUsers(parseInt(1));
         });
         $(".Pager .page").live("click", function () {
-            GetMedicines(parseInt($(this).attr('page')));
+            GetUsers(parseInt($(this).attr('page')));
         });
         function SearchTerm() {
             return jQuery.trim($("[id*=txtSearch]").val());
         };
-        function GetMedicines(pageIndex) {
+        function GetUsers(pageIndex) {
            
             $.ajax({
 
@@ -411,18 +475,23 @@ var   UserID = '';
             debugger;
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
-            var Medicines = xml.find("Users");
+            var Users = xml.find("Users");
             if (row == null) {
                 row = $("[id*=dtgViewAllUsers] tr:last-child").clone(true);
             }
             $("[id*=dtgViewAllUsers] tr").not($("[id*=dtgViewAllUsers] tr:first-child")).remove();
-            if (Medicines.length > 0) {
-                $.each(Medicines, function () {
+            if (Users.length > 0) {
+
+              
+
+             
+
+                $.each(Users, function () {
                     debugger;
 
 
                     var medicine = $(this);
-                 $("th", row).eq(0).text(" ");
+                 //$("th", row).eq(0).text(" ");
 
                     //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
                     $("td", row).eq(0).html($('<img />')
@@ -439,10 +508,21 @@ var   UserID = '';
                    
                     $("td", row).eq(6).html($(this).find("UserID").text());
 
+                   
+
+
                     $("[id*=dtgViewAllUsers]").append(row);
                     row = $("[id*=dtgViewAllUsers] tr:last-child").clone(true);
                 });
                 var pager = xml.find("Pager");
+
+           var GridRowCount =     pager.find("RecordCount").text();
+
+           debugger;
+
+           $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+
+
                 $(".Pager").ASPSnippets_Pager({
                     ActiveCssClass: "current",
                     PagerCssClass: "pager",
@@ -459,20 +539,31 @@ var   UserID = '';
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                 $("td:first-child", empty_row).attr("align", "center");
-                $("td:first-child", empty_row).html("No records found for the search criteria.");
+                $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=dtgViewAllUsers]").append(empty_row);
             }
 
 
 
- //var th = $("[id*=dtgViewAllUsers] th:contains('UserID')");
- //           th.css("display", "none");
- //           $("[id*=dtgViewAllUsers] tr").each(function () {
- //               $(this).find("td").eq(th.index()).css("display", "none");
- //           });
+ var th = $("[id*=dtgViewAllUsers] th:contains('UserID')");
+            th.css("display", "none");
+            $("[id*=dtgViewAllUsers] tr").each(function () {
+                $(this).find("td").eq(th.index()).css("display", "none");
+            });
 
         };
+
+        function OpenModal() {
+            debugger;
+
+                //$('#AllUsers').modal('show');
+            GetUsers(parseInt(1));
+
+
+        }
+
+
 
         </script>
 
@@ -518,7 +609,9 @@ var   UserID = '';
                             </asp:Label></span>
                    </a>--%>
 
-                <a class="all_admin_link" data-toggle="modal" data-target="#AllUsers" >
+             
+
+                <a class="all_admin_link" data-toggle="modal" data-target="#AllUsers" onclick="OpenModal();" >
                   <span class="count">  <asp:Label ID="lblCaseCount" runat="server" Text="0">
 
                             </asp:Label></span>
@@ -689,7 +782,7 @@ var   UserID = '';
 
                                 <div class="col-lg-4 ">
 
-                                      <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" name="name"  pattern="^[0-9+-]*$"   />
+                                      <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" onkeypress="return isNumber(event)" name="name"  pattern="^[0-9+-]*$"   />
 
                                    <%-- <label for="Phone">Phone</label>
                                     <asp:TextBox ID="txtPhoneNumber" runat="server"></asp:TextBox>
@@ -763,49 +856,25 @@ var   UserID = '';
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="border-color:#3661C7;">  
-          <button type="button" class="close" data-dismiss="modal">&times;</button>     
+          <button type="button" class="close" data-dismiss="modal" id="UserClose">&times;</button>     
         <h3 class="modal-title">View All Users</h3>
       </div>
-      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
-       <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         <div class="col-lg-12" style="height:480px">
 
-             <%--style="height:40px"--%>
+         
 
-               <div class="col-lg-12" > 
-
-                    <div class="grey_sec">
-
-                   <div class="search_div">
-                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
-                                    <input class="button" type="submit" value="Search" disabled/>
+       <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+                        <div class="col-lg-12" style="height: 480px;">
+                            <div class="col-lg-12" style="height: 40px">
+                                <div class="search_div">
+                                    <input class="field1" type="text" placeholder="Search with Name.." id="txtSearch" />
+                                    <input class="button3" type="button" value="Search" />
                                 </div>
-
-                        </div>
-            
-         </div>
-
-             <div class="col-lg-12" style="height:400px">
-
-                 <%--OnPreRender="dtgViewAllUsers_PreRender"--%>
-
-
-             <asp:GridView ID="dtgViewAllUsers" runat="server" AutoGenerateColumns="False"  DataKeyNames="UserID" Style="width: 100%"  class="table"  >
+                            </div>
+                            <div class="col-sm-12" style="height: 400px;">
+                                <asp:GridView ID="dtgViewAllUsers" runat="server" AutoGenerateColumns="False"  DataKeyNames="UserID" Style="width: 100%; font-size: 13px!important;"   >
                         
                         <Columns>
-                           <%-- <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Pencil-01.png" CommandName="Comment" CommandArgument='<%# Eval("UserID")+"|"+Eval("LoginName")+"|"+Eval("FirstName")+"|"+Eval("LastName")+"|"+Eval("Active")+"|"+Eval("Password")+"|"+Eval("Email")+"|"+Eval("PhoneNo")%>'  formnovalidate />
-
-                                </ItemTemplate>
-
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:ImageButton ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Cancel.png" CommandName="CommentDelete" CommandArgument='<%# Eval("UserID")%>'  OnClientClick=" return ConfirmDelete()" formnovalidate />
-
-                                </ItemTemplate>
-                            </asp:TemplateField>--%>
+                          
 
 
                             
@@ -818,28 +887,13 @@ var   UserID = '';
 
 
 
-             <asp:TemplateField HeaderText="">
+             <asp:TemplateField>
              <ItemTemplate>
               <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate />
                </ItemTemplate>
                 </asp:TemplateField>
 
-                          <%--  <asp:TemplateField HeaderText="Edit">
-                                                    <ItemTemplate>
-
-                                                        <asp:Image ID="img2" runat="server" 
-                                                            OnClientClick="ConfirmDelete()" />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-
-                            
-
-                             <asp:TemplateField HeaderText=" ">
-                                                    <ItemTemplate>
-                                                        <asp:Image ID="img1" runat="server" 
-                                                            OnClientClick="ConfirmDelete()" />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>--%>
+                         
 
                             <asp:BoundField DataField="LoginName" HeaderText="Login Name" ItemStyle-CssClass="Match">
                                
@@ -854,36 +908,49 @@ var   UserID = '';
                               
                             </asp:BoundField>
 
-                           <%--  <asp:BoundField DataField="UserID" HeaderText="UserID">
+                             <asp:BoundField DataField="UserID" HeaderText="UserID">
                               
-                            </asp:BoundField>--%>
+                            </asp:BoundField>
                             
-                           <%--  <asp:BoundField DataField="Password" HeaderText="Password">
-                                <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"></ItemStyle>
-                            </asp:BoundField>--%>
+                        
 
                         </Columns>
                         
                     </asp:GridView>
-            <div class="Pager"></div>
+
+                            </div>
+
+                            <div class="Pager">
+
+                              </div>
+
+                        </div>
+                    </div>
+          
+    
 
 
-          </div>       
-    </div>
+    
+
+
+
+
+
+         
     </div>
          
          
     </div>
 
   </div>
-        </div>
+       
 
 
 
     
 
 
-    <%--<asp:HiddenField ID="hdnUserCountChanged" runat="server" />--%>
+    <%--<asp:HiddenField ID="hdnUserCountChanged" runat="server" value="False"/>--%>
       <asp:HiddenField ID="hdnUserID" runat="server" />
     <asp:HiddenField ID="hdnDeleteButtonClick" runat="server" />
 
