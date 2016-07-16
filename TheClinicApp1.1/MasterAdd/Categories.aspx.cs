@@ -283,7 +283,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion Events
 
-//--NOT USING : Below events and functions are not using now
+//--NOTE: Below events and functions are not using now
 
         #region Delete Image Button Click
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)

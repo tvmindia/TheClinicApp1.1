@@ -1035,6 +1035,80 @@ namespace TheClinicApp1._1.ClinicDAL
         
         //------------------------------------* Unit :Start *--------------------------------------------//
 
+        #region UNIT View Search Paging
+
+        public string ViewAndFilterUnits(string searchTerm, int pageIndex, int PageSize)
+        {
+            dbConnection dcon = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+
+            var xml = string.Empty;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ViewAndFilterUnits";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+
+                cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds, "Units");
+
+                //-----------Paging Section 
+
+                DataTable dt = new DataTable("Pager");
+                dt.Columns.Add("PageIndex");
+                dt.Columns.Add("PageSize");
+                dt.Columns.Add("RecordCount");
+                dt.Rows.Add();
+                dt.Rows[0]["PageIndex"] = pageIndex;
+                dt.Rows[0]["PageSize"] = PageSize;
+                dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                ds.Tables.Add(dt);
+
+                xml = ds.GetXml();
+
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "ViewAndFilterUnits";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+            return xml;
+        }
+
+        #endregion UNIT View Search Paging
+
+
         #region AddUnit
         public void InsertUnits()
         {
@@ -1249,6 +1323,50 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion  Check Unit Is Used
 
         #region Get Unit By UnitID
+
+        public DataSet GetUnitByIDForWM()
+        {
+            SqlConnection con = null;
+            DataSet dsUnits = null;
+            try
+            {
+                dsUnits = new DataSet();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetUnitByID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dsUnits);
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetUnitByIDForWM";
+
+                eObj.InsertError();
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dsUnits;
+        }
+
         public DataTable GetUnitByID()
         {
             SqlConnection con = null;
@@ -1296,6 +1414,59 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion  Get Unit By UnitID
 
         #region Delete unit By UnitId
+
+        public string DeleteUnitByUnitIdForWM()
+        {
+            string result = string.Empty;
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteunitByID";
+
+                cmd.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+
+                result = Output.Value.ToString();
+
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "DeleteUnitByUnitId";
+
+                eObj.InsertError();
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+            return result;
+        }
 
         public void DeleteUnitByUnitId()
         {

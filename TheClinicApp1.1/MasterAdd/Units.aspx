@@ -20,9 +20,6 @@
         color:gray;
      }*/
 
-
-    
-
 .button1{
         background: url("../images/save.png") no-repeat 0 center;
         height: 33px;
@@ -87,8 +84,6 @@
          }
 
 
-
-
       $(document).ready(function () {
          
           <%--var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
@@ -107,62 +102,10 @@
               $(".main_body").toggleClass("active_close");
           });
 
-          $('table').tablePagination({});
+          
 
           $('[data-toggle="tooltip"]').tooltip();
 
-
-          var rows = $('#<%=dtgViewAllUnits.ClientID%> tr').not('thead tr');
-
-
-          $('#txtSearchUnits').keyup(function () {
-              debugger;
-              var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
-
-              rows.hide().filter(function () {
-                  var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                  var matchesSearch = true;
-                  $(val).each(function (index, value) {
-
-                      matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
-                  });
-                  return matchesSearch;
-              }).show();
-              //-------------------------------No records found.-----------------------------------------// 
-              debugger;
-              //finding the row of html table displaying while searching 
-              var numOfVisibleRows = $('tbody tr').filter(function () {
-                  return $(this).css('display') !== 'none';
-              }).length;
-
-              //number of rows while no records found is 0
-              if (numOfVisibleRows == 0) {
-                  debugger;
-                  $('#norows').remove();
-                  var bodyId = "tbdy";
-                  $('table').attr('id', bodyId);
-                  var textdis = "No records found.";
-                  var html = '<div id="norows" style="width:100%; padding-left: 200px;">' + textdis + '</div>';
-                  $('#tbdy').after(html);
-              }
-              else {
-                  $('#norows').remove();
-              }
-              //----------------------------------No records found.--------------------------------------//
-              $('#tablePagination').remove();
-
-              if (val == "") {
-                  debugger;
-                  $('table').tablePagination({
-                      rowCountstart: 1,
-                      rowCountend: 7
-                  });
-                  $('#tablePagination').show();
-              }
-
-          });
-
-          
 
 
       });
@@ -217,16 +160,268 @@
              }
          }
 
+   </script>
+
+
+     <script src="../js/jquery-1.8.3.min.js"></script>
+     <script src="../js/ASPSnippets_Pager.min.js"></script>
+     <link href="../css/TheClinicApp.css" rel="stylesheet" />
+
+    <script>
+
+        var UnitID = '';
+
+        //---getting data as json-----//
+        function getJsonData(data, page) {
+            var jsonResult = {};
+            var req = $.ajax({
+                type: "post",
+                url: page,
+                data: data,
+                delay: 3,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+
+            }).done(function (data) {
+                jsonResult = data;
+            });
+            return jsonResult;
+        }
 
 
 
 
-         </script>
+        //-------------------------------- * EDIT Button Click * ------------------------- //
 
 
-                     <div class="main_body">   
+        $(function () {
+            $("[id*=dtgViewAllUnits] td:eq(0)").click(function () {
+
+                document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+
+                document.getElementById('<%=imgWebLnames.ClientID %>').style.display = "none";
+                document.getElementById('<%=errorLnames.ClientID %>').style.display = "none";
+
+                if ($(this).text() == "") {
+
+                    var jsonResult = {};
+                    UnitID = $(this).closest('tr').find('td:eq(3)').text();
+
+                    var Master = new Object();
+
+                    Master.UnitID = UnitID;
+
+                    jsonResult = GetUnitDetailsByUnitID(Master);
+                    if (jsonResult != undefined) {
+                        BindUnitControls(jsonResult);
+                    }
+                }
+            });
+        });
+
+        function GetUnitDetailsByUnitID(Master) {
+            var ds = {};
+            var table = {};
+            var data = "{'mstrObj':" + JSON.stringify(Master) + "}";
+            ds = getJsonData(data, "../MasterAdd/Units.aspx/BindUnitDetailsOnEditClick");
+            table = JSON.parse(ds.d);
+            return table;
+        }
+
+
+        function BindUnitControls(Records) {
+            $.each(Records, function (index, Records) {
+
+                $("#<%=txtDescription.ClientID %>").val(Records.Description);
+
+                $("#<%=hdnUnitID.ClientID %>").val(Records.UnitID);
+
+                $("#UnitClose").click();
+            });
+
+        }
+
+
+
+
+        //-------------------------------- *END : EDIT Button Click * ------------------------- //
+
+
+
+        //-------------------------------- * Delete Button Click * ------------------------- //
+
+        $(function () {
+            $("[id*=dtgViewAllUnits] td:eq(1)").click(function () {
+                debugger;
+
+                if ($(this).text() == "") {
+                    var DeletionConfirmation = ConfirmDelete();
+                    if (DeletionConfirmation == true) {
+                        UnitID = $(this).closest('tr').find('td:eq(3)').text();
+                        DeleteUnitByID(UnitID);
+                        //window.location = "StockIn.aspx?HdrID=" + receiptID;
+                    }
+                }
+            });
+        });
+
+        function DeleteUnitByID(UnitID) { //------* Delete Receipt Header by receiptID (using webmethod)
+
+            if (UnitID != "") {
+
+                PageMethods.DeleteUnitByID(UnitID, OnSuccess, onError);
+
+                function OnSuccess(response, userContext, methodName) {
+
+                    debugger;
+
+                    if (response == false) {
+                        var lblclass = Alertclasses.danger;
+                        var lblmsg = msg.AlreadyUsed;
+                        var lblcaptn = Caption.FailureMsgCaption;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                    }
+
+                    else {
+
+                        $("#<%=hdnUnitID.ClientID %>").val("");
+
+                        var lblclass = Alertclasses.sucess;
+                        var lblmsg = msg.DeletionSuccessFull;
+                        var lblcaptn = Caption.SuccessMsgCaption;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                    }
+
+                    GetUnits(1);
+                    $("#UnitClose").click();
+
+                }
+                function onError(response, userContext, methodName) {
+
+                }
+
+            }
+        }
+
+
+
+
+        //-------------------------------- * END : Delete Button Click * ------------------------- //
+
+        $(function () {
+           
+            GetUnits(1);
+        });
+        $("[id*=txtSearch]").live("keyup", function () {
+            
+            GetUnits(parseInt(1));
+        });
+        $(".Pager .page").live("click", function () {
+            GetUnits(parseInt($(this).attr('page')));
+        });
+        function SearchTerm() {
+            return jQuery.trim($("[id*=txtSearch]").val());
+        };
+        function GetUnits(pageIndex) {
+
+            $.ajax({
+
+                type: "POST",
+                url: "../MasterAdd/Units.aspx/ViewAndFilterUnits",
+                data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+                failure: function (response) {
+
+                    alert(response.d);
+                },
+                error: function (response) {
+
+                    alert(response.d);
+                }
+            });
+        }
+        var row;
+        function OnSuccess(response) {
+            debugger;
+            var xmlDoc = $.parseXML(response.d);
+            var xml = $(xmlDoc);
+            var Units = xml.find("Units");
+            if (row == null) {
+                row = $("[id*=dtgViewAllUnits] tr:last-child").clone(true);
+            }
+            $("[id*=dtgViewAllUnits] tr").not($("[id*=dtgViewAllUnits] tr:first-child")).remove();
+            if (Units.length > 0) {
+
+
+                $.each(Units, function () {
+                   
+                    var medicine = $(this);
+                    
+                    $("td", row).eq(0).html($('<img />')
+                       .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
+
+                    $("td", row).eq(1).html($('<img />')
+                       .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+
+                    $("td", row).eq(2).html($(this).find("Description").text());
+                    $("td", row).eq(3).html($(this).find("UnitID").text());
+                   
+
+                    $("[id*=dtgViewAllUnits]").append(row);
+                    row = $("[id*=dtgViewAllUnits] tr:last-child").clone(true);
+                });
+                var pager = xml.find("Pager");
+
+                var GridRowCount = pager.find("RecordCount").text();
+
+                $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+
+                $(".Pager").ASPSnippets_Pager({
+                    ActiveCssClass: "current",
+                    PagerCssClass: "pager",
+                    PageIndex: parseInt(pager.find("PageIndex").text()),
+                    PageSize: parseInt(pager.find("PageSize").text()),
+                    RecordCount: parseInt(pager.find("RecordCount").text())
+                });
+
+                $(".Match").each(function () {
+                    var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+                    $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                });
+            } else {
+                var empty_row = row.clone(true);
+                $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                $("td:first-child", empty_row).attr("align", "center");
+                $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
+                $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                $("[id*=dtgViewAllUnits]").append(empty_row);
+            }
+
+            var th = $("[id*=dtgViewAllUnits] th:contains('UnitID')");
+            th.css("display", "none");
+            $("[id*=dtgViewAllUnits] tr").each(function () {
+                $(this).find("td").eq(th.index()).css("display", "none");
+            });
+
+        };
+
+
+        function OpenModal() {
+
+            GetUnits(parseInt(1));
+
+        }
+
+    </script>
+
+  <div class="main_body">   
       
-      <!-- Left Navigation Bar -->  
+         <!-- Left Navigation Bar -->  
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
          <ul class="menu">
@@ -254,7 +449,7 @@
           
               <div class="icon_box">
 
- <a class="all_assignrole_link" data-toggle="modal" data-target="#AllUnits" >
+ <a class="all_assignrole_link" data-toggle="modal" data-target="#AllUnits" onclick="OpenModal();">
      <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
      <span title="View All Units" data-toggle="tooltip" data-placement="left" >
          <img src="../images/units.png" /></span></a>
@@ -347,13 +542,7 @@
             </div>
 
 
-
-   
-
-      
  </div>  
-
-
 
 <div id="AllUnits" class="modal fade" role="dialog">
           <div class="modal-dialog" style="min-width:550px;">
@@ -361,23 +550,26 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="border-color:#3661C7;">  
-          <button type="button" class="close" data-dismiss="modal">&times;</button>     
+          <button type="button" class="close" data-dismiss="modal" id="UnitClose">&times;</button>     
         <h3 class="modal-title">View All Units</h3>
       </div>
-      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
-       <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
+      
+         <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
+       
          <div class="col-lg-12" style="height:480px">
 
                  <div class="col-lg-12" style="height:40px">
               <div class="search_div">
-              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchUnits" />
+              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchCategories" />
                   <input class="button3" type="button" value="Search" />
                   </div>
           </div>
-
+             
 
              <div class="col-lg-12" style="height:400px">
-             <asp:GridView ID="dtgViewAllUnits" runat="server" AutoGenerateColumns="False"   DataKeyNames="UnitID" OnPreRender="dtgViewAllUnits_PreRender" CssClass="table" >
+            
+
+                  <asp:GridView ID="dtgViewAllUnits" runat="server" AutoGenerateColumns="False"   DataKeyNames="UnitID"  class="table" >
                         
                         <Columns>
                           
@@ -398,10 +590,15 @@
 
 
 
-                            <asp:BoundField DataField="Description" HeaderText="Unit">
+                            <asp:BoundField DataField="Description" HeaderText="Unit" ItemStyle-CssClass="Match">
                                
                             </asp:BoundField>
                            
+                                 <asp:BoundField DataField="UnitID" HeaderText="UnitID">
+                               
+                            </asp:BoundField>
+                           
+
                                <%--<asp:BoundField DataField="Code" HeaderText="Code">
                                
                             </asp:BoundField>--%>
@@ -413,20 +610,20 @@
                     </asp:GridView>
            
 
+   </div>
+      <div class="Pager">
 
-          </div> 
+                              </div>
+             
+                  
     </div>
     </div>
-         
          
     </div>
 
   </div>
         </div>
 
-
-
-
-     <asp:HiddenField ID="hdnUnitID" runat="server" />
+<asp:HiddenField ID="hdnUnitID" runat="server" />
 
 </asp:Content>
