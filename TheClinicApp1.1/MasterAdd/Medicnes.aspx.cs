@@ -67,7 +67,7 @@ namespace TheClinicApp1._1.MasterAdd
             var page = HttpContext.Current.CurrentHandler as Page;
 
 
-            if (txtmedicineName.Value.TrimStart() != string.Empty || txtCode.Value.TrimStart() != string.Empty || txtOrderQuantity.Value.TrimStart() != string.Empty)
+            if (txtmedicineName.Value.Trim() != string.Empty || txtCode.Value.Trim() != string.Empty || txtOrderQuantity.Value.Trim() != string.Empty)
             {
 
                 if (ddlCategory.SelectedItem.Text == "--Select--")
@@ -107,8 +107,8 @@ namespace TheClinicApp1._1.MasterAdd
                 {
                     UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-                    StockObj.Name = txtmedicineName.Value.TrimStart();
-                    StockObj.MedCode = txtCode.Value;
+                    StockObj.Name = txtmedicineName.Value.Trim();
+                    StockObj.MedCode = txtCode.Value.Trim();
                     StockObj.CategoryID = ddlCategory.SelectedValue;
                     StockObj.ReOrderQty = Convert.ToInt32(txtOrderQuantity.Value);
                     StockObj.ClinicID = UA.ClinicID.ToString();
@@ -121,6 +121,7 @@ namespace TheClinicApp1._1.MasterAdd
                         StockObj.InsertMedicines();
 
                         hdnInsertedorNot.Value = "True";
+                        hdnMedID.Value = StockObj.MedicineID.ToString();
                         BindGridview();
                     }
 
@@ -201,22 +202,22 @@ namespace TheClinicApp1._1.MasterAdd
         #region Validate Medicine Name
         [WebMethod]
         public static bool ValidateMedicineName(string MedicineName)
-        {
-            ClinicDAL.UserAuthendication UA;
-            UIClasses.Const Const = new UIClasses.Const();
+            {      
+                 ClinicDAL.UserAuthendication UA;
+                 UIClasses.Const Const = new UIClasses.Const();
 
-            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                 UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
-            Master mstrobj = new Master();
+                 Master mstrobj = new Master();
 
-           
-            Stocks StockObj = new Stocks();
 
-            StockObj.ClinicID = UA.ClinicID.ToString();
-            if (StockObj.ValidateMedicineName(MedicineName))
-            {
-                return true;
-            }
+                 Stocks StockObj = new Stocks();
+
+                 StockObj.ClinicID = UA.ClinicID.ToString();
+                 if (StockObj.ValidateMedicineName(MedicineName.Trim()))
+                 {
+                     return true;
+                 }          
             return false;
         }
 
@@ -238,7 +239,7 @@ namespace TheClinicApp1._1.MasterAdd
 
             StockObj.ClinicID = UA.ClinicID.ToString();
 
-            if (StockObj.ValidateMedicineCode(MedicineCode))
+            if (StockObj.ValidateMedicineCode(MedicineCode.Trim()))
             {
                 return true;
             }
@@ -300,6 +301,7 @@ namespace TheClinicApp1._1.MasterAdd
         protected void btnSave_Click(object sender, EventArgs e)
         {
             AddMedicine();
+
         }
 
         #endregion Save Button Click

@@ -6,18 +6,14 @@
       <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
      <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
 
-    <style>
-    
+    <style>    
      .modal table thead {
     background-color: #5681e6;
     text-align: center;
     color: white;
      
     }
-
-
-
-.button1{
+     .button1{
         background: url("../images/save.png") no-repeat 0 center;
         height: 33px;
         width: 60px;
@@ -38,37 +34,26 @@
         background-position-x:5px;
 
         color: inherit;
-
-    }
-   
-
+    }  
     </style>
 
-
-
-
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <%--<script src="../js/bootstrap.min.js"></script>--%>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
-
     <script src="../js/DeletionConfirmation.js"></script>
-
-      <script src="../js/jquery.tablePagination.0.1.js"></script>
-
+    <script src="../js/jquery.tablePagination.0.1.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
-
     <script src="../js/Messages.js"></script>
-    <script>
 
+    <script>
 
         function Validation() {
             debugger;
             if (($('#<%=txtmedicineName.ClientID%>').val().trim() == "") || ($('#<%=txtCode.ClientID%>').val().trim() == "") || ($('#<%=txtOrderQuantity.ClientID%>').val().trim() == "")) {
 
-
+                
                 var lblclass = Alertclasses.danger;
                 var lblmsg = msg.Requiredfields;
                 var lblcaptn = Caption.Confirm;
@@ -78,16 +63,13 @@
                 return false;
             }
             else {
+
                 return true;
             }
-
         }
 
-
-
-     
-    $(document).ready(function () {
-         
+             
+    $(document).ready(function () {       
           
 
         //images that represents medicine name duplication hide and show
@@ -167,53 +149,37 @@
                 });
                 $('#tablePagination').show();
             }
-
-        });
-          
-       
-
+        });   
     });
-
-
-
 
         //---------------* Function to check medicine name duplication *-----------------//
 
         function CheckMedicineNameDuplication(txtmedicineName) {
-
-            var name = document.getElementById('<%=txtmedicineName.ClientID %>').value;
+           
+            var name = document.getElementById('<%=txtmedicineName.ClientID %>').value.trim();
             //name = name.replace(/\s/g, '');
 
             if (name != "") {
-
-
                 PageMethods.ValidateMedicineName(name, OnSuccess, onError);
 
                 function OnSuccess(response, userContext, methodName) {
-
+                  
                     var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
                     var errLname = document.getElementById('<%=errorLnames.ClientID %>');
                     if (response == false) {
-
                         LnameImage.style.display = "block";
                         errLname.style.display = "none";
-
                     }
                     if (response == true) {
                         errLname.style.display = "block";
                         errLname.style.color = "Red";
                         errLname.innerHTML = "Name Alreay Exists"
                         LnameImage.style.display = "none";
-
                     }
                 }
                 function onError(response, userContext, methodName) {
-
                 }
-
-            }
-
-
+            }                
             else {
                 if (name == "") {
                     var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
@@ -223,76 +189,58 @@
                 }
             }
         }
-
+        //---------------* Function to check medicine Code duplication *-----------------//
 
         function CheckMedicineCodeDuplication(txtCode) {
-
-            var name = document.getElementById('<%=txtCode.ClientID %>').value;
+            var name = document.getElementById('<%=txtCode.ClientID %>').value.trim();
             //name = name.replace(/\s/g, '');
 
             if (name != "") {
 
                 PageMethods.ValidateMedicineCode(name, OnSuccess, onError);
-
                 function OnSuccess(response, userContext, methodName) {
-
                     var CodeAvailableImage = document.getElementById('<%=imgCodeAvailable.ClientID %>');
                     var CodeUnavailableImage = document.getElementById('<%=imgCodeUnavailable.ClientID %>');
                     if (response == false) {
-
                         CodeAvailableImage.style.display = "block";
                         CodeUnavailableImage.style.display = "none";
-
                     }
                     if (response == true) {
                         CodeUnavailableImage.style.display = "block";
                         CodeUnavailableImage.style.color = "Red";
                         CodeUnavailableImage.innerHTML = "Name Alreay Exists"
                         CodeAvailableImage.style.display = "none";
-
                     }
                 }
                 function onError(response, userContext, methodName) {
-
                 }
             }
-
-
             else {
                 if (name == "") {
-                    var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-                    LnameImage.style.display = "none";
-                    var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-                    errLname.style.display = "none";
+                    var CodeAvailableImage = document.getElementById('<%=imgCodeAvailable.ClientID %>');
+                    CodeAvailableImage.style.display = "none";
+                    var CodeUnavailableImage = document.getElementById('<%=imgCodeUnavailable.ClientID %>');
+                    CodeUnavailableImage.style.display = "none";
                 }
             }
         }
-
-
-
-
-
+        
     </script>
 
     
-     <script src="../js/jquery-1.3.2.min.js"></script>
-   <script src="../js/jquery-1.12.0.min.js"></script>
-   <script src="../js/jquery-ui.js"></script>
-
-
-        <script src="../js/bootstrap.min.js"></script>
-      <script src="../js/jquery.tablePagination.0.1.js"></script>
+    <script src="../js/jquery-1.3.2.min.js"></script>
+    <script src="../js/jquery-1.12.0.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.tablePagination.0.1.js"></script>
 
     <script type="text/javascript">
 
-
         $(function () {
-
             $('[data-toggle="tooltip"]').tooltip();
         });
 
-
-</script>
+    </script>
 
 
 
