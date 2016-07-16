@@ -70,7 +70,6 @@ namespace TheClinicApp1._1.Admin
 
         }
 
-        #endregion Bind Gridview
 
         #region Bind Dummy Row
 
@@ -97,7 +96,11 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Bind Dummy Row
 
-        #region Set User Count 
+
+
+        #endregion User View Search Paging
+
+        #region Set User Count
 
         public void SetUserCount()
         {
@@ -568,6 +571,8 @@ namespace TheClinicApp1._1.Admin
          [WebMethod]
         public static bool DeleteUserByID(string UsrID)
         {
+             string result= string.Empty;
+
             bool UserDeleted = false;
 
             ClinicDAL.UserAuthendication UA;
@@ -603,18 +608,19 @@ namespace TheClinicApp1._1.Admin
                     roleObj.RoleID = Guid.Parse(DoctorRoleID);
 
                     roleObj.UserID = Guid.Parse(UsrID);
-                    roleObj.DeleteAssignedRoleByUserIDForWM();
+                  result=   roleObj.DeleteAssignedRoleByUserIDForWM();
 
-                    mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
-                    mstrObj.DeleteDoctorByIDForWM(true);
+                  if (result != string.Empty)
+                  {
 
-                  
-                        //DeleteUserByUserID(UserID);
+                      mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
+                        result=     mstrObj.DeleteDoctorByIDForWM(true);
 
-
-                    roleObj.UserID = Guid.Parse(UsrID);
-                    roleObj.ClinicID = UA.ClinicID;
-                    DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+                        if (result != string.Empty)
+                        {
+                             roleObj.UserID = Guid.Parse(UsrID);
+                             roleObj.ClinicID = UA.ClinicID;
+                             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
                     //RoleID
 
@@ -629,13 +635,23 @@ namespace TheClinicApp1._1.Admin
                     }
 
                     userObj.UserID = Guid.Parse(UsrID);
-                   
-                    string result = userObj.DeleteUserByUserIDForWM();
+
+                    result = userObj.DeleteUserByUserIDForWM();
 
                     if (result != string.Empty)
                     {
                         UserDeleted = true;
                     }
+                        }
+
+
+                  }
+
+
+                        //DeleteUserByUserID(UserID);
+
+
+                   
 
                 }
 
@@ -646,7 +662,7 @@ namespace TheClinicApp1._1.Admin
                 //DeleteAssignedRoleByUserID(UserID);
                 userObj.UserID = Guid.Parse(UsrID);
 
-                string result = userObj.DeleteUserByUserIDForWM();
+                 result = userObj.DeleteUserByUserIDForWM();
 
                 if (result != string.Empty)
                 {
@@ -744,6 +760,7 @@ namespace TheClinicApp1._1.Admin
             if (txtLoginName.Value.TrimStart() != string.Empty || txtPassword.Value.TrimStart() != string.Empty || txtFirstName.Value.TrimStart() != string.Empty || txtEmail.Value.TrimStart() != string.Empty)
             {
 
+
                 if (txtPassword.Value == txtConfirmPassword.Value)
 	        {
 		 
@@ -803,7 +820,7 @@ namespace TheClinicApp1._1.Admin
             }
 
             hdnUserID.Value = "";
-          
+           
         }
 
         #endregion Save

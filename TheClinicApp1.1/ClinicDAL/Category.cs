@@ -86,6 +86,81 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Methods
 
+        #region CATEGORY View Search Paging
+
+        public string ViewAndFilterCategories(string searchTerm, int pageIndex, int PageSize)
+        {
+            dbConnection dcon = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+
+            var xml = string.Empty;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ViewAndFilterCategory";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+
+                cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds, "Categories");
+
+                //-----------Paging Section 
+
+                DataTable dt = new DataTable("Pager");
+                dt.Columns.Add("PageIndex");
+                dt.Columns.Add("PageSize");
+                dt.Columns.Add("RecordCount");
+                dt.Rows.Add();
+                dt.Rows[0]["PageIndex"] = pageIndex;
+                dt.Rows[0]["PageSize"] = PageSize;
+                dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                ds.Tables.Add(dt);
+
+                xml = ds.GetXml();
+
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "ViewAndFilterCategories";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+            return xml;
+        }
+
+        #endregion CATEGORY View Search Paging
+
+
+
         #region Add New Category
         public void AddNewCategory()
         {
@@ -322,6 +397,60 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion View All Category
 
         #region Delete Category By CategoryID
+
+
+        public string DeleteCategoryByIdForWM()
+        {
+            string result = string.Empty;
+
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteCategories";
+                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+
+                result = Output.Value.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "DeleteCategoryById";
+
+                eObj.InsertError();
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+            return result;
+        }
+
+
         public void DeleteCategoryById()
         {
             SqlConnection con = null;
@@ -383,6 +512,50 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region View Category By CategoryID
 
+        public DataSet ViewCategoryByCategoryIDForWM()
+        {
+            SqlConnection con = null;
+            DataSet dsCatgry = null;
+            try
+            {
+                dsCatgry = new DataSet();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetCategoryDetailsByID", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dsCatgry);
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "ViewCategoryByCategoryIDForWM";
+
+                eObj.InsertError();
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+            return dsCatgry;
+        }
+
         public DataTable ViewCategoryByCategoryID()
         {
             SqlConnection con = null;
@@ -426,7 +599,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
             return dtRoles;
         }
-
 
         #endregion View Category By CategoryID
 
