@@ -263,7 +263,7 @@
 
         $(function () {
             $("[id*=dtgViewAllCategories] td:eq(1)").click(function () {
-                debugger;
+                document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
 
                 if ($(this).text() == "") {
                     var DeletionConfirmation = ConfirmDelete();
