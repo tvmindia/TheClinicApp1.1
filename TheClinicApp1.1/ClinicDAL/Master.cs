@@ -534,13 +534,14 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
+                DoctorID = Guid.NewGuid();
                 SqlCommand pud = new SqlCommand();
                 pud.Connection = con;
                 pud.CommandType = System.Data.CommandType.StoredProcedure;
                 pud.CommandText = "[InsertDoctors]";
 
                 pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-                pud.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.NewGuid();
+                pud.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
                 pud.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = DoctorName;
                 pud.Parameters.Add("@Phone", SqlDbType.NVarChar, 255).Value = DoctorPhone;
                 pud.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;

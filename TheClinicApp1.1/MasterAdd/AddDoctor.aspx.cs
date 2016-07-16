@@ -129,7 +129,7 @@ namespace TheClinicApp1._1.MasterAdd
         public void AddUserToUserTable()
         {
             userObj.firstName = txtName.Value.TrimStart();
-            userObj.loginName = txtName.Value.TrimStart();
+            userObj.loginName = txtLoginName.Value.TrimStart();
             userObj.lastName = string.Empty;
             userObj.isActive = true;
             userObj.ClinicID = UA.ClinicID;
@@ -139,7 +139,7 @@ namespace TheClinicApp1._1.MasterAdd
             userObj.Email = txtEmail.Value;
             userObj.PhoneNo = txtPhoneNumber.Value;
 
-
+            //-------------send this Password and Login Name to Email ID---------------//
             string password = SetDefaultPassword(txtName.Value.TrimStart());
 
             userObj.passWord = CryptObj.Encrypt(password);
@@ -224,6 +224,7 @@ namespace TheClinicApp1._1.MasterAdd
                 }
 
                 mstrObj.InsertDoctors();
+                hdnDrID.Value = mstrObj.DoctorID.ToString();
 
             }
 
@@ -243,11 +244,9 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion Doctror
 
-
         //---------- *  USER IN ROLES    *--------------//
 
         #region UserInRoles
-
 
         #region GetRoleIDOFDoctor
 
@@ -318,7 +317,66 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion UserInRoles
 
+        //-------------------------Webmethods------------------------//
+        #region Webmethods
+       
+        #region ValidateLoginName
+        [WebMethod]
+        ///Checking login name duplication
+        public static bool ValidateLoginName(string LogName)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            Master mstrObj = new Master();
+
+
+            string loginName = LogName;
+
+            ClinicDAL.User userObj = new ClinicDAL.User();
+            //userObj.ClinicID = UA.ClinicID;
+
+            if (userObj.ValidateUsername(loginName))
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+        #endregion ValidateLoginName
+
+        #region ValidateEmailID
+        [WebMethod]
+        ///Checking login name duplication
+        public static bool ValidateEmailID(string Email)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            User usrObj = new User();
+
+            usrObj.Email = Email;
+
+            usrObj.ClinicID = UA.ClinicID;
+
+            if (usrObj.ValidateEmailID())
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+        #endregion ValidateEmailID
+
+        #endregion Webmethods
+
         #endregion Methods
+
+        //-------------------------Events------------------------//
 
         #region Events
 
@@ -362,7 +420,8 @@ namespace TheClinicApp1._1.MasterAdd
             }
 
             BindGridview();
-            hdnUserID.Value = string.Empty; //clear the hidden field after save click
+            txtLoginName.Attributes.Add("readonly", "readonly");
+           
 
         }
 
@@ -447,7 +506,8 @@ namespace TheClinicApp1._1.MasterAdd
         txtName.Value = dtDrByID.Rows[0]["Name"].ToString();
         txtPhoneNumber.Value = dtDrByID.Rows[0]["Phone"].ToString();
         txtEmail.Value = dtDrByID.Rows[0]["Email"].ToString();
-
+        txtLoginName.Value = dtDrByID.Rows[0]["LoginName"].ToString();
+        txtLoginName.Attributes.Add("readonly", "readonly");
     }
 
         }
