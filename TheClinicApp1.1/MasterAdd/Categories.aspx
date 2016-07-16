@@ -58,14 +58,12 @@
     <script src="../js/DeletionConfirmation.js"></script>
 
     
-    <script src="../js/jquery.tablePagination.0.1.js"></script>
+   
     <script src="../js/Dynamicgrid.js"></script>
     
     <script src="../js/Messages.js"></script>
 
     <script>
-
-
 
 
         function Validation() {
@@ -88,16 +86,6 @@
         }
 
 
-
-
-
-
-
-
-
-
-
-
       $(document).ready(function () {
          
           //images that represents medicine name duplication hide and show
@@ -118,63 +106,11 @@
               $(".main_body").toggleClass("active_close");
           });
 
-          $('table').tablePagination({});
+          //$('table').tablePagination({});
 
           $('[data-toggle="tooltip"]').tooltip();
 
 
-          var rows = $('#<%=dtgViewAllCategories.ClientID%> tr').not('thead tr');
-
-
-          $('#txtSearchCategories').keyup(function () {
-              debugger;
-              var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
-
-              rows.hide().filter(function () {
-                  var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                  var matchesSearch = true;
-                  $(val).each(function (index, value) {
-
-                      matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
-                  });
-                  return matchesSearch;
-              }).show();
-
-              //-------------------------------No records found.-----------------------------------------// 
-              debugger;
-              //finding the row of html table displaying while searching 
-              var numOfVisibleRows = $('tbody tr').filter(function () {
-                  return $(this).css('display') !== 'none';
-              }).length;
-
-              //number of rows while no records found is 0
-              if (numOfVisibleRows == 0) {
-                  debugger;
-                  $('#norows').remove();
-                  var bodyId = "tbdy";
-                  $('table').attr('id', bodyId);
-                  var textdis = "No records found.";
-                  var html = '<div id="norows" style="width:100%; padding-left: 200px;">' + textdis + '</div>';
-                  $('#tbdy').after(html);
-              }
-              else {
-                  $('#norows').remove();
-              }
-              //----------------------------------No records found.--------------------------------------//
-
-              $('#tablePagination').remove();
-
-              if (val == "") {
-                  debugger;
-                  $('table').tablePagination({
-                      rowCountstart: 1,
-                      rowCountend: 7
-                  });
-                  $('#tablePagination').show();
-              }
-
-
-          });
 
       });
  //---------------* Function to check category name duplication *--------------//
@@ -229,12 +165,281 @@
       }
 
 
-
-
-
-
        </script>
 
+       <%--  //------------- AUTOFILL SCRIPT ---------%>
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
+    <script src="../js/jquery-1.8.3.min.js"></script>
+
+    <script src="../js/ASPSnippets_Pager.min.js"></script>
+
+    <script>
+
+
+        var CategoryID = '';
+
+
+        //---getting data as json-----//
+        function getJsonData(data, page) {
+            var jsonResult = {};
+            var req = $.ajax({
+                type: "post",
+                url: page,
+                data: data,
+                delay: 3,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+
+            }).done(function (data) {
+                jsonResult = data;
+            });
+            return jsonResult;
+        }
+
+
+
+
+        //-------------------------------- * EDIT Button Click * ------------------------- //
+
+
+        $(function () {
+            $("[id*=dtgViewAllCategories] td:eq(0)").click(function () {
+
+                document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+
+                document.getElementById('<%=imgWebLnames.ClientID %>').style.display = "none";
+                document.getElementById('<%=errorLnames.ClientID %>').style.display = "none";
+               
+                if ($(this).text() == "") {
+
+                    var jsonResult = {};
+                    CategoryID = $(this).closest('tr').find('td:eq(3)').text();
+
+                    var Category = new Object();
+
+                    Category.CategoryID = CategoryID;
+
+                    jsonResult = GetCategoryDetailsBycategoryID(Category);
+                    if (jsonResult != undefined) {
+                        debugger;
+                        BindCategoryControls(jsonResult);
+                    }
+                }
+            });
+        });
+
+        function GetCategoryDetailsBycategoryID(Category) {
+            var ds = {};
+            var table = {};
+            var data = "{'CategoryObj':" + JSON.stringify(Category) + "}";
+            ds = getJsonData(data, "../MasterAdd/Categories.aspx/BindCategoryDetailsOnEditClick");
+            table = JSON.parse(ds.d);
+            return table;
+        }
+
+
+        function BindCategoryControls(Records) {
+            $.each(Records, function (index, Records) {
+
+                $("#<%=txtCategoryName.ClientID %>").val(Records.Name);
+               
+                $("#<%=hdnCategoryId.ClientID %>").val(Records.CategoryID);
+
+              
+                $("#CategoryClose").click();
+            });
+
+        }
+
+  
+
+
+        //-------------------------------- *END : EDIT Button Click * ------------------------- //
+
+
+
+        //-------------------------------- * Delete Button Click * ------------------------- //
+
+        $(function () {
+            $("[id*=dtgViewAllCategories] td:eq(1)").click(function () {
+                debugger;
+
+                if ($(this).text() == "") {
+                    var DeletionConfirmation = ConfirmDelete();
+                    if (DeletionConfirmation == true) {
+                        CategoryID = $(this).closest('tr').find('td:eq(3)').text();
+                        DeleteCategoryByID(CategoryID);
+                        //window.location = "StockIn.aspx?HdrID=" + receiptID;
+                    }
+                }
+            });
+        });
+
+        function DeleteCategoryByID(CategoryID) { //------* Delete Receipt Header by receiptID (using webmethod)
+
+            if (CategoryID != "") {
+
+                PageMethods.DeleteCategoryByID(CategoryID, OnSuccess, onError);
+
+                function OnSuccess(response, userContext, methodName) {
+
+                    debugger;
+
+                    if (response == false) {
+                        var lblclass = Alertclasses.danger;
+                        var lblmsg = msg.AlreadyUsed;
+                        var lblcaptn = Caption.FailureMsgCaption;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                    }
+
+                    else {
+
+                        $("#<%=hdnCategoryId.ClientID %>").val("");
+
+                        var lblclass = Alertclasses.sucess;
+                        var lblmsg = msg.DeletionSuccessFull;
+                        var lblcaptn = Caption.SuccessMsgCaption;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                    }
+
+                    GetCategories(1);
+                    $("#CategoryClose").click();
+
+                }
+                function onError(response, userContext, methodName) {
+
+                }
+
+            }
+        }
+
+
+
+
+        //-------------------------------- * END : Delete Button Click * ------------------------- //
+
+
+
+        $(function () {
+            GetCategories(1);
+        });
+
+        $("[id*=txtSearch]").live("keyup", function () {
+            GetCategories(parseInt(1));
+        });
+
+        $(".Pager .page").live("click", function () {
+            GetCategories(parseInt($(this).attr('page')));
+        });
+
+        function SearchTerm() {
+            return jQuery.trim($("[id*=txtSearch]").val());
+        };
+
+        function GetCategories(pageIndex) {
+            $.ajax({
+                type: "POST",
+                url: "../MasterAdd/Categories.aspx/ViewAndFilterCategories",
+                data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+                failure: function (response) {
+                    alert(response.d);
+                },
+                error: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+
+        var row;
+
+        function OnSuccess(response) {
+            $(".Pager").show();
+            var xmlDoc = $.parseXML(response.d);
+            var xml = $(xmlDoc);
+            var Categories = xml.find("Categories");
+            debugger;
+           
+            if (row == null) {
+                row = $("[id*=dtgViewAllCategories] tr:last-child").clone(true);
+            }
+            $("[id*=dtgViewAllCategories] tr").not($("[id*=dtgViewAllCategories] tr:first-child")).remove();
+            if (Categories.length > 0) {
+                $.each(Categories, function () {
+                    var medicine = $(this);
+                    //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
+                   
+
+                    $("td", row).eq(0).html($('<img />')
+                     .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
+
+
+                    $("td", row).eq(1).html($('<img />')
+                       .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+
+                    $("td", row).eq(2).html($(this).find("Name").text());
+                    $("td", row).eq(3).html($(this).find("CategoryID").text());
+
+
+                    $("[id*=dtgViewAllCategories]").append(row);
+                    row = $("[id*=dtgViewAllCategories] tr:last-child").clone(true);
+
+                });
+                var pager = xml.find("Pager");
+
+                var GridRowCount = pager.find("RecordCount").text();
+
+                $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+
+
+                $(".Pager").ASPSnippets_Pager({
+                    ActiveCssClass: "current",
+                    PagerCssClass: "pager",
+                    PageIndex: parseInt(pager.find("PageIndex").text()),
+                    PageSize: parseInt(pager.find("PageSize").text()),
+                    RecordCount: parseInt(pager.find("RecordCount").text())
+                });
+
+                $(".Match").each(function () {
+                    var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+                    $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                });
+            }
+            else {
+
+                var empty_row = row.clone(true);
+                $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                $("td:first-child", empty_row).attr("align", "center");
+                $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
+                $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                $("[id*=dtgViewAllCategories]").append(empty_row);
+                $(".Pager").hide();
+
+            }
+
+          
+            var th = $("[id*=dtgViewAllCategories] th:contains('CategoryID')");
+            th.css("display", "none");
+            $("[id*=dtgViewAllCategories] tr").each(function () {
+                $(this).find("td").eq(th.index()).css("display", "none");
+            });
+
+
+        };
+
+
+        function OpenModal() {
+            
+            GetCategories(parseInt(1));
+
+        }
+
+        </script>
 
 
 
@@ -276,7 +481,7 @@
 
             <div class="icon_box">
 
- <a class="all_admin_link" data-toggle="modal" data-target="#AllCategories" >
+ <a class="all_admin_link" data-toggle="modal" data-target="#AllCategories"  onclick="OpenModal();">
      <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
      <span title="View All Categories" data-toggle="tooltip" data-placement="left" >
          <img src="../images/categories-512 copy.png" /></span></a>
@@ -408,7 +613,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="border-color:#3661C7;">  
-          <button type="button" class="close" data-dismiss="modal">&times;</button>     
+          <button type="button" class="close" data-dismiss="modal" id="CategoryClose">&times;</button>     
         <h3 class="modal-title">View All Categories</h3>
       </div>
       <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
@@ -424,7 +629,7 @@
              
 
              <div class="col-lg-12" style="height:400px">
-            <asp:GridView ID="dtgViewAllCategories" runat="server" AutoGenerateColumns="False"   DataKeyNames="CategoryID" OnPreRender="dtgViewAllCategories_PreRender" class="table">
+            <asp:GridView ID="dtgViewAllCategories" runat="server" AutoGenerateColumns="False"   DataKeyNames="CategoryID"  class="table">
                         
                         <Columns>
                          
@@ -445,12 +650,14 @@
 
 
 
-                            <asp:BoundField DataField="Name" HeaderText="Category Name">
+                            <asp:BoundField DataField="Name" HeaderText="Category Name" ItemStyle-CssClass="Match">
                                
                             </asp:BoundField>
                            
-
-
+                            <asp:BoundField DataField="CategoryID" HeaderText="CategoryID">
+                               
+                            </asp:BoundField>
+                            
                         
 
                         </Columns>
@@ -458,7 +665,11 @@
                     </asp:GridView>
 
    </div>
-           
+      <div class="Pager">
+
+                              </div>
+             
+                  
     </div>
     </div>
          

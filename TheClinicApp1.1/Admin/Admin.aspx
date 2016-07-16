@@ -281,7 +281,16 @@ function getJsonData(data, page) {
 
 $(function () {
     $("[id*=dtgViewAllUsers] td:eq(0)").click(function () {
-        debugger;
+       
+        document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+        document.getElementById('<%=imgWebLnames.ClientID %>').style.display = "none";
+        document.getElementById('<%=errorLnames.ClientID %>').style.display = "none";
+        document.getElementById('<%=imgEmailAvailable.ClientID %>').style.display = "none";
+        document.getElementById('<%=imgEmailUnAvailable.ClientID %>').style.display = "none";;
+
+
+      
+        $("#<%=txtLoginName.ClientID %>").attr("readonly", true);
 
         if ($(this).text() == "") {
 
@@ -304,11 +313,17 @@ $(function () {
 });
 
 
+        function GetUserDetailsByUserID(User) {
+            var ds = {};
+            var table = {};
+            var data = "{'userObj':" + JSON.stringify(User) + "}";
+            ds = getJsonData(data, "../Admin/Admin.aspx/BindUserDetailsOnEditClick");
+            table = JSON.parse(ds.d);
+            return table;
+        }
 
 function BindUserControls(Records) {
     $.each(Records, function (index, Records) {
-
-        debugger;
 
         $("#<%=txtLoginName.ClientID %>").val(Records.LoginName);
         $("#<%=txtFirstName.ClientID %>").val(Records.FirstName);
@@ -328,13 +343,10 @@ function BindUserControls(Records) {
             $("#<%=rdoActiveNo.ClientID %>").prop('checked', true); 
         }
 
-
-
         PageMethods.CheckUserIsDoctor(Records.UserID, OnSuccess, onError);
 
         function OnSuccess(response, userContext, methodName) {
 
-            
             if (response == false) {
 
                 $("#<%=rdoNotDoctor.ClientID %>").prop('checked', true); 
@@ -345,31 +357,12 @@ function BindUserControls(Records) {
         }
         function onError(response, userContext, methodName) {
 
-
         }
-
-
-        
-
 
         $("#UserClose").click();
     });
    
 }
-
-
-
-
-function GetUserDetailsByUserID(User) {
-    var ds = {};
-    var table = {};
-    var data = "{'userObj':" + JSON.stringify(User) + "}";
-    ds = getJsonData(data, "../Admin/Admin.aspx/BindUserDetailsOnEditClick");
-    table = JSON.parse(ds.d);
-    return table;
-}
-
-
 
 
 //-------------------------------- * Delete Button Click * ------------------------- //
