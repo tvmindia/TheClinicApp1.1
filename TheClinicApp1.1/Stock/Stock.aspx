@@ -177,15 +177,22 @@
                 </ul>
             </div>
 
-            <div class="icon_box">
-                <a class="all_registration_link" data-toggle="modal" data-target="#add_medicine">
-                    <span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')">
-                    <img src="../images/add_medicinedemo.png" /></span></a>
-
+            <div class="icon_box">          
+                 
+                <a class="all_registration_link" data-toggle="modal" data-target="#add_medicine" onclick="SetIframeSrc('NewMedicineIframe')">
+                       <span class="tooltip1">                    
+                    <img src="../images/add_medicinedemo.png" />
+                           <span class="tooltiptext1">Add New Medicine</span>
+                       </span>
+                </a>
                 <a class="OutOfStock_link" data-toggle="modal" data-target="#View_OutOfStock">
-                    <span class="count"><asp:Label ID="lblReOrderCount" runat="server" Text="0"></asp:Label></span>
-                    <span title="Reorder Alert" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('OutOfStockIframe')">
-                    <img src="../images/edited.png" /></span></a>
+                        <span class="tooltip1">
+                    <span class="count"><asp:Label ID="lblReOrderCount" runat="server" Text="0"></asp:Label>
+                    </span>
+                    <span  onclick="SetIframeSrc('OutOfStockIframe')">
+                    <img src="../images/edited.png" />
+                           <span class="tooltiptext1"> Reorder Alert</span>
+                    </span></span></a>
             </div>
 
             <div class="right_form tab_right_form">
