@@ -476,6 +476,8 @@
         };
 
         function OpenModal() {
+
+            $('#txtSearch').val();
             GetMedicines(parseInt(1));
         }
 

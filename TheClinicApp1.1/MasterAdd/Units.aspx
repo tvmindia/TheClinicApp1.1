@@ -420,7 +420,7 @@
 
 
         function OpenModal() {
-
+            $('#txtSearch').val();
             GetUnits(parseInt(1));
 
         }

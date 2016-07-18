@@ -440,6 +440,7 @@
 
         function OpenModal() {
             
+            $('#txtSearch').val('');
             GetCategories(parseInt(1));
 
         }

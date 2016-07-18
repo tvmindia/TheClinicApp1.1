@@ -435,7 +435,9 @@
         };
 
         function OpenModal()
-            {
+        {
+            $('#txtSearch').val();
+
             GetDoctors(parseInt(1));
             }
 
