@@ -523,9 +523,13 @@
               <div class="icon_box">
 
  <a class="all_medicine_link" data-toggle="modal" data-target="#AllMedicines" onclick="OpenModal();" >
-     <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
-     <span title="View All Medicines" data-toggle="tooltip" data-placement="left" >
-         <img src="../images/medicinesview copy.png" /></span></a>
+      <span class="tooltip1">
+     <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label>
+     </span>    
+         <img src="../images/medicinesview copy.png" />
+ <span class="tooltiptext1">View All Medicines</span>
+                    </span>
+ </a>
 
 
                 

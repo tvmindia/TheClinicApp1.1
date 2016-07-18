@@ -491,10 +491,13 @@
             </div>
             <div class="icon_box">
                 <a class="all_admin_link" data-toggle="modal" data-target="#AllDoctors" onclick="OpenModal();">
+                        <span class="tooltip1">
                     <span class="count">
-                        <asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
-                    <span title="View All Doctors" data-toggle="tooltip" data-placement="left">
-                        <img src="../images/viewdoctor.png" /></span></a>
+                        <asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>                 
+                        <img src="../images/viewdoctor.png" />
+                          <span class="tooltiptext1">View All Doctors</span>
+                    </span>
+                </a>
             </div>
             <div class="right_form tab_right_form">
                 <div class="page_tab">

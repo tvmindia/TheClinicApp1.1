@@ -467,9 +467,12 @@
               <div class="icon_box">
 
  <a class="all_assignrole_link" data-toggle="modal" data-target="#AllUnits" onclick="OpenModal();">
+      <span class="tooltip1">
      <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
-     <span title="View All Units" data-toggle="tooltip" data-placement="left" >
-         <img src="../images/units.png" /></span></a>
+           <img src="../images/units.png" /> 
+           <span class="tooltiptext1">View All Units</span>
+                    </span>
+      </a>
 
 
                 
