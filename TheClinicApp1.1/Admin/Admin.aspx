@@ -343,6 +343,9 @@ function DeleteUserByID(UserID) { //------* Delete Receipt Header by receiptID (
             debugger;
 
             if (response == false) {
+
+                $("#UserClose").click();
+
                 var lblclass = Alertclasses.danger;
                 var lblmsg = msg.AlreadyUsed;
                 var lblcaptn = Caption.FailureMsgCaption;
@@ -354,16 +357,25 @@ function DeleteUserByID(UserID) { //------* Delete Receipt Header by receiptID (
 
                 $("#<%=hdnUserID.ClientID %>").val("");
 
+                var PageIndx = parseInt(1);
 
+                if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
+
+                    PageIndx = parseInt($(".Pager span")[0].innerText);
+                }
+
+                GetUsers(PageIndx);
+
+<%--
                 var lblclass = Alertclasses.sucess;
                 var lblmsg = msg.DeletionSuccessFull;
                 var lblcaptn = Caption.SuccessMsgCaption;
 
-                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);--%>
             }
 
-            GetUsers(1);
-            $("#UserClose").click();
+           
+          
 
         }
         function onError(response, userContext, methodName) {
@@ -426,16 +438,9 @@ function DeleteUserByID(UserID) { //------* Delete Receipt Header by receiptID (
             if (Users.length > 0) {
 
                 $.each(Users, function () {
-                    debugger;
-
-
-                    var medicine = $(this);
-                 //$("th", row).eq(0).text(" ");
-
-                    //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
+                   
                     $("td", row).eq(0).html($('<img />')
                        .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
-
 
                     $("td", row).eq(1).html($('<img />')
                        .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
@@ -490,7 +495,7 @@ function DeleteUserByID(UserID) { //------* Delete Receipt Header by receiptID (
         };
 
         function OpenModal() {     
-                //$('#AllUsers').modal('show');
+            $('#txtSearch').val('');
             GetUsers(parseInt(1));
         }
 
