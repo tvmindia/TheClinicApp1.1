@@ -288,10 +288,19 @@
                     }
 
                     else {
+                        debugger;
 
                         $("#<%=hdnUnitID.ClientID %>").val("");
 
-                        GetUnits(1);
+                        var PageIndx = parseInt(1);
+
+                        if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
+
+                            PageIndx = parseInt($(".Pager span")[0].innerText);
+                        }
+
+
+                        GetUnits(PageIndx);
                       <%--  var lblclass = Alertclasses.sucess;
                         var lblmsg = msg.DeletionSuccessFull;
                         var lblcaptn = Caption.SuccessMsgCaption;

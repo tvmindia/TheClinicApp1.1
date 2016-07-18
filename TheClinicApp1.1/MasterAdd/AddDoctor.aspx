@@ -289,11 +289,20 @@
 
                     else {
 
-                        GetDoctors(1);
-
-                      <%--  debugger;
                         $("#<%=hdnUserID.ClientID %>").val("");
                         $("#<%=hdnDrID.ClientID %>").val("");
+
+                        var PageIndx = parseInt(1);
+
+                        if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
+
+                            PageIndx = parseInt($(".Pager span")[0].innerText);
+                        }
+
+                        GetDoctors(PageIndx);
+
+                      <%--  debugger;
+                        
 
                         var lblclass = Alertclasses.sucess;
                         var lblmsg = msg.DeletionSuccessFull;

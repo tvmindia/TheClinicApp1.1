@@ -334,7 +334,14 @@
                     else {
 
                         $("#<%=hdnMedID.ClientID %>").val("");
-                        GetMedicines(1);
+
+                        var PageIndx = parseInt(1);
+
+                        if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
+
+                            PageIndx = parseInt($(".Pager span")[0].innerText);
+                        }
+                        GetMedicines(PageIndx);
 
 
                         <%--var lblclass = Alertclasses.sucess;

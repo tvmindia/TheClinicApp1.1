@@ -297,7 +297,16 @@
                     }
 
                     else {
-                        GetCategories(1);
+                        debugger;
+                        var PageIndx = parseInt(1);
+
+                        if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
+
+                            PageIndx = parseInt($(".Pager span")[0].innerText);
+                        }
+                        
+                        GetCategories(PageIndx);
+                        
 
                         <%--$("#<%=hdnCategoryId.ClientID %>").val("");
 
@@ -335,6 +344,7 @@
         });
 
         $(".Pager .page").live("click", function () {
+
             GetCategories(parseInt($(this).attr('page')));
         });
 
