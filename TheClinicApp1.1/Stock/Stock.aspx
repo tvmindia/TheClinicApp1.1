@@ -126,7 +126,7 @@
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                 $("td:first-child", empty_row).attr("align", "center");
-                $("td:first-child", empty_row).html("No records found.");
+                $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=gvMedicines]").append(empty_row);
                 $(".Pager").hide();
