@@ -19,6 +19,7 @@ using System.Data.SqlClient;
 using TheClinicApp1._1.ClinicDAL;
 using System.Web.Services;
 using Messages = TheClinicApp1._1.UIClasses.Messages;
+using System.Web.Script.Serialization;
 
 #endregion Included Namespcaes
 
@@ -28,6 +29,7 @@ namespace TheClinicApp1._1.MasterAdd
     {
         #region Global Variables
 
+        private static int PageSize = 8;
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         User userObj = new User();
@@ -40,61 +42,161 @@ namespace TheClinicApp1._1.MasterAdd
 
         #region Methods
 
-        //------------ * General Methods * -----------//
+        #region Doctor View Search Paging
 
-        #region General Methods
-
-        #region Bind Gridview
-
-        public void BindGridview()
+        [WebMethod]
+        ///This method is called using AJAX For gridview bind , search , paging
+        ///It expects page index and search term which is passed from client side
+        ///Page size is declared and initialized in global variable section
+        public static string ViewAndFilterDoctor(string searchTerm, int pageIndex)
         {
-            
-            DataTable dtDoctors = mstrObj.ViewDoctors();
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
 
-            if (dtDoctors != null)
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            Master mstrObj = new Master();
+            mstrObj.ClinicID = UA.ClinicID;
+            var xml = mstrObj.ViewAndFilterDoctors(searchTerm, pageIndex, PageSize);
+            return xml;
+
+        }
+
+
+        #region Bind Dummy Row
+
+        /// <summary>
+        /// To implement search in gridview(on keypress) :Gridview is converted to table and
+        /// Its first row (of table header) is created using this function
+        /// </summary>
+        private void BindDummyRow()
+        {
+            DataTable dummy = new DataTable();
+
+            //dummy.Columns.Add("Edit");
+            //dummy.Columns.Add(" ");
+            dummy.Columns.Add("Name");
+            dummy.Columns.Add("Phone");
+            dummy.Columns.Add("Email");
+            dummy.Columns.Add("DoctorID");
+            dummy.Columns.Add("UserID");
+            dummy.Rows.Add();
+           
+            dtgDoctors.DataSource = dummy;
+            dtgDoctors.DataBind();
+        }
+
+        #endregion Bind Dummy Row
+
+        #endregion Doctor View Search Paging
+
+        #region Delete Doctor By ID
+
+        [WebMethod]
+        public static bool DeleteDoctorByID(string DoctorID,string UserID)
+        {
+            Master mstrObj = new Master();
+            RoleAssign roleObj = new RoleAssign();
+            User userObj = new User();
+
+            string result = string.Empty;
+            bool DoctorDeleted = false;
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            mstrObj.ClinicID = UA.ClinicID;
+            mstrObj.DoctorID = Guid.Parse(DoctorID);
+
+            bool IDUsedOrNot = mstrObj.CheckDoctorIdUsed();
+
+            if (IDUsedOrNot == false)
             {
-                dtgDoctors.DataSource = dtDoctors;
-                dtgDoctors.DataBind();
+                //Get roleID of doctor
 
-                lblCaseCount.Text = dtgDoctors.Rows.Count.ToString();
+                mstrObj.ClinicID = UA.ClinicID;
+                roleObj.RoleID = Guid.Parse(mstrObj.GetRoleIDOfDoctor());
+
+                //delete assigned role
+
+                roleObj.UserID = Guid.Parse(UserID);
+                result=   roleObj.DeleteAssignedRoleByUserIDForWM();
+
+                if (result != string.Empty)
+                {
+                    //delete doctor
+                    mstrObj.DoctorID = Guid.Parse(DoctorID);
+                    mstrObj.DeleteDoctorByIDForWM();
+
+
+                    if (result != string.Empty)
+                    {
+                        //delete user
+
+                    userObj.UserID = Guid.Parse(UserID);
+                    userObj.DeleteUserByUserIDForWM();
+
+                    DoctorDeleted = true;
+
+                    }
+
+
+                }
+
+                
             }
 
+
+            return DoctorDeleted;
+
         }
 
-        #endregion Bind Gridview
+        #endregion Delete Doctor By ID
 
-        #region Logout Click
-
-        protected void Logout_ServerClick(object sender, EventArgs e)
+        #region Bind Doctor Details On Edit Click
+        /// <summary>
+        /// To get specific order details by orderid for the editing purpose
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [System.Web.Services.WebMethod]
+        public static string BindDoctorDetailsOnEditClick(Master mstrObj)
         {
-            Session.Remove(Const.LoginSession);
-            Response.Redirect("../Default.aspx");
-        }
 
-        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
-        {
-            Session.Remove(Const.LoginSession);
-            Response.Redirect("../Default.aspx");
-        }
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
 
-        #endregion Logout Click
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
-        #region Paging
-        protected void dtgDoctors_PreRender(object sender, EventArgs e)
-        {
-            dtgDoctors.UseAccessibleHeader = false;
+            mstrObj.ClinicID = UA.ClinicID;
+            DataSet dtDoctor = mstrObj.GetDoctorDetailsByIDForWM();
 
-            if (dtgDoctors.Rows.Count > 0)
+            string jsonResult = null;
+            DataSet ds = null;
+            ds = dtDoctor;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+            Dictionary<string, object> childRow;
+            if (ds.Tables[0].Rows.Count > 0)
             {
-                dtgDoctors.HeaderRow.TableSection = TableRowSection.TableHeader;
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    childRow = new Dictionary<string, object>();
+                    foreach (DataColumn col in ds.Tables[0].Columns)
+                    {
+                        childRow.Add(col.ColumnName, row[col]);
+                    }
+                    parentRow.Add(childRow);
+                }
             }
+            jsonResult = jsSerializer.Serialize(parentRow);
 
-          
+            return jsonResult; //Converting to Json
         }
-
-        #endregion Paging
-
-        #endregion General Methods
+        #endregion Bind Doctor Details On Edit Click
 
         //---------- *  USER *------------//
 
@@ -387,11 +489,12 @@ namespace TheClinicApp1._1.MasterAdd
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             mstrObj.ClinicID = UA.ClinicID;
-          
-            if (!IsPostBack)
-            {
-                BindGridview();
-            }
+
+            BindDummyRow();
+            //if (!IsPostBack)
+            //{
+            //    BindGridview();
+            //}
         }
 
         #endregion  Page Load
@@ -418,10 +521,6 @@ namespace TheClinicApp1._1.MasterAdd
                 eObj.InsertionNotSuccessMessage(page, msg);
                
             }
-
-            BindGridview();
-            txtLoginName.Attributes.Add("readonly", "readonly");
-           
 
         }
 
@@ -514,7 +613,60 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion Update Image Button Click
 
+        #region Logout Click
+
+        protected void Logout_ServerClick(object sender, EventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Remove(Const.LoginSession);
+            Response.Redirect("../Default.aspx");
+        }
+
+        #endregion Logout Click
+
         #endregion Events
+
+
+        //--NOTE: Below events and functions are not using now
+
+        #region Bind Gridview
+
+        public void BindGridview()
+        {
+
+            DataTable dtDoctors = mstrObj.ViewDoctors();
+
+            if (dtDoctors != null)
+            {
+                dtgDoctors.DataSource = dtDoctors;
+                dtgDoctors.DataBind();
+
+                lblCaseCount.Text = dtgDoctors.Rows.Count.ToString();
+            }
+
+        }
+
+        #endregion Bind Gridview
+
+        #region Paging
+        protected void dtgDoctors_PreRender(object sender, EventArgs e)
+        {
+            dtgDoctors.UseAccessibleHeader = false;
+
+            if (dtgDoctors.Rows.Count > 0)
+            {
+                dtgDoctors.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
+
+        }
+
+        #endregion Paging
 
     }
 }

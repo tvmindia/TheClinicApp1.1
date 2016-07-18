@@ -428,10 +428,10 @@
 
                 var pager = xml.find("Pager");
 
-                var GridRowCount = pager.find("RecordCount").text();
-               
+                if ($('#txtSearch').val() == '') {
+                    var GridRowCount = pager.find("RecordCount").text();
                     $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
-              
+                }
                 $(".Pager").ASPSnippets_Pager({
                     ActiveCssClass: "current",
                     PagerCssClass: "pager",
@@ -467,7 +467,9 @@
 
         };
 
-
+        function OpenModal() {
+            GetMedicines(parseInt(1));
+        }
 
     </script>
 
@@ -503,7 +505,7 @@
           
               <div class="icon_box">
 
- <a class="all_medicine_link" data-toggle="modal" data-target="#AllMedicines" >
+ <a class="all_medicine_link" data-toggle="modal" data-target="#AllMedicines" onclick="OpenModal();" >
      <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
      <span title="View All Medicines" data-toggle="tooltip" data-placement="left" >
          <img src="../images/medicinesview copy.png" /></span></a>

@@ -125,7 +125,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion Delete Medicine By ID
 
-        #region Bind Category Details On Edit Click
+        #region Bind Medicine Details On Edit Click
         /// <summary>
         /// To get specific order details by orderid for the editing purpose
         /// </summary>
@@ -168,7 +168,7 @@ namespace TheClinicApp1._1.MasterAdd
 
             return jsonResult; //Converting to Json
         }
-        #endregion Bind Category Details On Edit Click
+        #endregion Bind Medicine Details On Edit Click
 
         #region Add New Medicine
         public void AddMedicine()
