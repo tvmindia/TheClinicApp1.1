@@ -7,12 +7,12 @@
      <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
 
     <style>    
-     .modal table thead {
+     /*.modal table thead {
     background-color: #5681e6;
     text-align: center;
     color: white;
      
-    }
+    }*/
      .button1{
         background: url("../images/save.png") no-repeat 0 center;
         height: 33px;
@@ -98,58 +98,6 @@
         });
 
       
-
-        $('table').tablePagination({});
-
-
-        var rows = $('#<%=gvMedicines.ClientID%> tr').not('thead tr');
-
-
-        $('#txtSearchMedicine').keyup(function () {
-     
-            var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
-
-            rows.hide().filter(function () {
-                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                var matchesSearch = true;
-                $(val).each(function (index, value) {
-
-                    matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
-                });
-                return matchesSearch;
-            }).show();
-            //-------------------------------No records found.-----------------------------------------// 
-            debugger;
-            //finding the row of html table displaying while searching 
-            var numOfVisibleRows = $('tbody tr').filter(function () {
-                return $(this).css('display') !== 'none';
-            }).length;
-
-            //number of rows while no records found is 1
-            if (numOfVisibleRows == 0) {
-                debugger;
-                $('#norows').remove();
-                var bodyId = "tbdy";
-                $('table').attr('id', bodyId);
-                var textdis = "No records found.";
-                var html = '<div id="norows" style="width:100%; padding-left: 200px;">' + textdis + '</div>';
-                $('#tbdy').after(html);
-            }
-            else {
-                $('#norows').remove();
-            }
-            //----------------------------------No records found.--------------------------------------//
-            $('#tablePagination').remove();
-
-            if (val == "") {
-                
-                $('table').tablePagination({
-                    rowCountstart: 1,
-                    rowCountend: 7
-                });
-                $('#tablePagination').show();
-            }
-        });   
     });
 
         //---------------* Function to check medicine name duplication *-----------------//
@@ -232,7 +180,7 @@
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jquery.tablePagination.0.1.js"></script>
+  
 
     <script type="text/javascript">
 
@@ -242,7 +190,286 @@
 
     </script>
 
+       <%--  //------------- AUTOFILL SCRIPT ---------%>
+    <script src="../js/jquery-1.8.3.min.js"></script>
+    <script src="../js/ASPSnippets_Pager.min.js"></script>
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
+    <script type="text/javascript">
 
+        var MedicineID = '';
+
+
+        //---getting data as json-----//
+        function getJsonData(data, page) {
+            var jsonResult = {};
+            var req = $.ajax({
+                type: "post",
+                url: page,
+                data: data,
+                delay: 3,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+
+            }).done(function (data) {
+                jsonResult = data;
+            });
+            return jsonResult;
+        }
+
+
+
+
+        //-------------------------------- * EDIT Button Click * ------------------------- //
+
+
+        $(function () {
+
+            $("[id*=gvMedicines] td:eq(0)").click(function () {
+
+                //$('#txtSearch').val('');
+                debugger;
+
+                document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+
+                document.getElementById('<%=imgWebLnames.ClientID %>').style.display = "none";
+                document.getElementById('<%=errorLnames.ClientID %>').style.display = "none";
+
+                if ($(this).text() == "") {
+
+                    var jsonResult = {};
+                    MedicineID = $(this).closest('tr').find('td:eq(8)').text();
+
+                    var Stocks = new Object();
+
+                    Stocks.MedicineID = MedicineID;
+
+                    jsonResult = GetMedicineDetailsByMedID(Stocks);
+                    if (jsonResult != undefined) {
+                        debugger;
+                        BindMedicineControls(jsonResult);
+                    }
+                }
+            });
+        });
+
+        function GetMedicineDetailsByMedID(Stocks) {
+            var ds = {};
+            var table = {};
+            var data = "{'StockObj':" + JSON.stringify(Stocks) + "}";
+            ds = getJsonData(data, "../MasterAdd/Medicnes.aspx/BindMedicinesDetailsOnEditClick");
+            table = JSON.parse(ds.d);
+            return table;
+        }
+
+
+        function BindMedicineControls(Records) {
+            $.each(Records, function (index, Records) {
+                debugger;
+                $("#<%=txtmedicineName.ClientID %>").val(Records.MedicineName);
+                $("#<%=txtCode.ClientID %>").val(Records.MedCode);
+                $("#<%=txtOrderQuantity.ClientID %>").val(Records.ReOrderQty);
+                $("#<%=ddlCategory.ClientID %>").val(Records.CategoryID);
+                $("#<%=ddlUnits.ClientID %> option:contains(" + Records.Unit + ")").attr('selected', 'selected');
+                $("#<%=hdnMedID.ClientID %>").val(Records.MedicineID);
+
+                $("#MedicineClose").click();
+            });
+
+        }
+
+
+
+
+        //-------------------------------- *END : EDIT Button Click * ------------------------- //
+
+
+
+        //-------------------------------- * Delete Button Click * ------------------------- //
+
+        $(function () {
+            $("[id*=gvMedicines] td:eq(1)").click(function () {
+
+                //$('#txtSearch').val('');
+
+                debugger;
+
+                document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+
+                if ($(this).text() == "") {
+                    var DeletionConfirmation = ConfirmDelete();
+                    if (DeletionConfirmation == true) {
+                        MedicineID = $(this).closest('tr').find('td:eq(8)').text();
+                        DeleteMedicineByID(MedicineID);
+                        //window.location = "StockIn.aspx?HdrID=" + receiptID;
+                    }
+                }
+            });
+        });
+
+        function DeleteMedicineByID(MedicineID) { //------* Delete Receipt Header by receiptID (using webmethod)
+
+            if (MedicineID != "") {
+
+                PageMethods.DeleteMedicineByID(MedicineID, OnSuccess, onError);
+
+                function OnSuccess(response, userContext, methodName) {
+
+                    debugger;
+
+                    if (response == false) {
+                        var lblclass = Alertclasses.danger;
+                        var lblmsg = msg.AlreadyUsed;
+                        var lblcaptn = Caption.FailureMsgCaption;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                    }
+
+                    else {
+
+                        $("#<%=hdnMedID.ClientID %>").val("");
+
+                        var lblclass = Alertclasses.sucess;
+                        var lblmsg = msg.DeletionSuccessFull;
+                        var lblcaptn = Caption.SuccessMsgCaption;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                    }
+
+                    GetMedicines(1);
+                    $("#MedicineClose").click();
+
+                }
+                function onError(response, userContext, methodName) {
+
+                }
+
+            }
+        }
+
+
+
+
+        //-------------------------------- * END : Delete Button Click * ------------------------- //
+
+
+
+
+
+        $(function () {
+            GetMedicines(1);
+        });
+
+        $("[id*=txtSearch]").live("keyup", function () {
+            GetMedicines(parseInt(1));
+        });
+
+        $(".Pager .page").live("click", function () {
+            GetMedicines(parseInt($(this).attr('page')));
+        });
+
+        function SearchTerm() {
+            return jQuery.trim($("[id*=txtSearch]").val());
+        };
+
+        function GetMedicines(pageIndex) {
+            $.ajax({
+                type: "POST",
+                url: "../MasterAdd/Medicnes.aspx/ViewAndFilterMedicine",
+                data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+                failure: function (response) {
+                    alert(response.d);
+                },
+                error: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+
+        var row;
+        
+        function OnSuccess(response) {
+            $(".Pager").show();
+            var xmlDoc = $.parseXML(response.d);
+            var xml = $(xmlDoc);
+            var Medicines = xml.find("Medicines");
+            if (row == null) {
+                row = $("[id*=gvMedicines] tr:last-child").clone(true);
+            }
+            $("[id*=gvMedicines] tr").not($("[id*=gvMedicines] tr:first-child")).remove();
+            if (Medicines.length > 0) {
+                $.each(Medicines, function () {
+                    var medicine = $(this);
+                    
+                    $("td", row).eq(0).html($('<img />')
+                     .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
+
+
+                    $("td", row).eq(1).html($('<img />')
+                       .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+
+
+                    $("td", row).eq(2).html($(this).find("MedicineCode").text());
+                    $("td", row).eq(3).html($(this).find("MedicineName").text());
+                    $("td", row).eq(4).html($(this).find("CategoryName").text());
+                    $("td", row).eq(5).html($(this).find("Unit").text());
+                    $("td", row).eq(6).html($(this).find("Qty").text());
+                    $("td", row).eq(7).html($(this).find("ReOrderQty").text());
+                    $("td", row).eq(8).html($(this).find("MedicineID").text());
+                    $("[id*=gvMedicines]").append(row);
+                    row = $("[id*=gvMedicines] tr:last-child").clone(true);
+
+                });
+
+                debugger;
+
+                var pager = xml.find("Pager");
+
+                var GridRowCount = pager.find("RecordCount").text();
+               
+                    $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+              
+                $(".Pager").ASPSnippets_Pager({
+                    ActiveCssClass: "current",
+                    PagerCssClass: "pager",
+                    PageIndex: parseInt(pager.find("PageIndex").text()),
+                    PageSize: parseInt(pager.find("PageSize").text()),
+                    RecordCount: parseInt(pager.find("RecordCount").text())
+                });
+
+                $(".Match").each(function () {
+                    var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+                    $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                });
+            }
+            else {
+
+                debugger;
+                var empty_row = row.clone(true);
+                $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                $("td:first-child", empty_row).attr("align", "center");
+                $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
+                $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                $("[id*=gvMedicines]").append(empty_row);
+                $(".Pager").hide();
+
+            }
+
+            var th = $("[id*=gvMedicines] th:contains('MedicineID')");
+            th.css("display", "none");
+            $("[id*=gvMedicines] tr").each(function () {
+                $(this).find("td").eq(th.index()).css("display", "none");
+            });
+
+
+        };
+
+
+
+    </script>
 
     <div class="main_body">   
       
@@ -457,61 +684,73 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header" style="border-color:#3661C7;">  
-          <button type="button" class="close" data-dismiss="modal">&times;</button>     
+          <button type="button" class="close" data-dismiss="modal" id="MedicineClose">&times;</button>     
         <h3 class="modal-title">View All Medicines</h3>
       </div>
-      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
-       <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
+      
+         <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
+       
          <div class="col-lg-12" style="height:480px">
 
-              <div class="col-lg-12" style="height:40px">
+                 <div class="col-lg-12" style="height:40px">
               <div class="search_div">
-              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchMedicine" />
+              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearch" />
                   <input class="button3" type="button" value="Search" />
                   </div>
           </div>
-
+             
 
              <div class="col-lg-12" style="height:400px">
-             <asp:GridView ID="gvMedicines" runat="server" AutoGenerateColumns="False" DataKeyNames="MedicineID" OnPreRender="gvMedicines_PreRender" >
+             <asp:GridView ID="gvMedicines" runat="server" AutoGenerateColumns="False" Style="width: 100%"  class="table" >
            
             <Columns>
             
-                <asp:TemplateField>
-                                    <ItemTemplate>
+                <asp:TemplateField >
+                                    <ItemTemplate >
                                         
                                         <asp:ImageButton ID="ImgBtnUpdate" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment"  formnovalidate OnClick="ImgBtnUpdate_Click"  />
                                     </ItemTemplate>
+                 
+
+
                                 </asp:TemplateField>
 
 
 
-                <asp:TemplateField HeaderText="">
+                <asp:TemplateField HeaderText="" >
              <ItemTemplate>
               <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate/>
                </ItemTemplate>
+
+                     
+
                 </asp:TemplateField>
 
                 
               <%--<asp:BoundField DataField="MedicineCode" HeaderText="Medicine Code"   ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow Match" />--%>
 
-                <asp:BoundField DataField="Name" HeaderText="Medicine Name"   />
-               <asp:BoundField DataField="MedCode" HeaderText="Medicine Code"   />
-                 <asp:BoundField DataField="Unit" HeaderText="Unit"   />
-               <asp:BoundField DataField="CategoryName" HeaderText="Category Name"   /> 
-                 <asp:BoundField DataField="Qty" HeaderText="Existing Qty"  ItemStyle-HorizontalAlign="Right" />
-                 <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Quantity" ItemStyle-HorizontalAlign="Right" />
-
-
+                <asp:BoundField DataField="MedicineName" HeaderText="Name" ItemStyle-CssClass="Match"   />
+               <asp:BoundField DataField="MedicineCode" HeaderText="Code"  ItemStyle-CssClass="Match" />
+                 <asp:BoundField DataField="Unit" HeaderText="Unit"  ItemStyle-CssClass="Match" />
+               <asp:BoundField DataField="CategoryName" HeaderText="Ctgry Name"  ItemStyle-CssClass="Match" /> 
+                 <asp:BoundField DataField="Qty" HeaderText="Qty"  ItemStyle-HorizontalAlign="Right"  ItemStyle-CssClass="Match"/>
+                 <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Qty" ItemStyle-HorizontalAlign="Right" ItemStyle-CssClass="Match" ItemStyle-Width="2%"/>
+                 <asp:BoundField DataField="MedicineID" HeaderText="MedicineID"   />
+                  
             </Columns>
             
         </asp:GridView>
 
 
-           </div>
+
+   </div>
+      <div class="Pager">
+
+                              </div>
+             
+                  
     </div>
     </div>
-         
          
     </div>
 
@@ -520,4 +759,5 @@
 
     <asp:HiddenField ID="hdnInsertedorNot" runat="server" />
      <asp:HiddenField ID="hdnMedID" runat="server" />
+   
 </asp:Content>
