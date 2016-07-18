@@ -402,12 +402,22 @@
                     </ul>
                 </div>
                 <div class="icon_box">
-                    <%--<a class="all_registration_link" data-toggle="modal" data-target="#myModal" ><span title="All Registerd" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('AllRegistrationIframe')"><img src="../images/registerd9724185.png" /></span></a>--%>
+         
 
-                    <a class="all_registration_link" onclick="OpenModal('1');"><span class="count"><asp:Label ID="lblRegCount" runat="server" Text="0"></asp:Label></span><span title="All Registered" data-toggle="tooltip" data-placement="left">
-                        <img src="../images/registerd9724185.png" /></span></a>
-                    <a class="Todays_registration_link" onclick="OpenModal('2');"><span class="count"><asp:Label ID="lblTodayRegCount" runat="server" Text="0"></asp:Label></span><span title="Todays Register" data-toggle="tooltip" data-placement="left">
-                        <img src="../images/registerd.png" /></span></a>
+                    <a class="all_registration_link" onclick="OpenModal('1');">
+                          <span class="tooltip1">
+                        <span class="count"><asp:Label ID="lblRegCount" runat="server" Text="0"></asp:Label></span>                     
+                        <img src="../images/registerd9724185.png" /> 
+                             <span class="tooltiptext1"> All Registration</span>
+                    </span>
+                    </a>
+                    <a class="Todays_registration_link" onclick="OpenModal('2');">
+                            <span class="tooltip1">
+                        <span class="count"><asp:Label ID="lblTodayRegCount" runat="server" Text="0"></asp:Label></span>                      
+                        <img src="../images/registerd.png" /> 
+                             <span class="tooltiptext1"> Today's Register</span>
+                    </span>
+                    </a>
                 </div>
                 <div class="grey_sec">
                     <div class="search_div">

@@ -2,23 +2,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 
-    <style type="text/css">
+<style type="text/css">
 
 table
 {
     width:150px!important;
     border-color:rgb(169, 169, 169);
-    border:none!important;
-   
+    border:none!important;   
 }
-
-
  table td
 {
      border-top:none!important;
      height:31px!important;
 }
-
  label {
     color: #666666;
     display: block;
@@ -31,9 +27,6 @@ table
     padding-left: 15px;
     text-indent: -15px;
 }
-
-
-
  .checkboxes label {
     display: inline!important;
     float: right!important;
@@ -131,25 +124,17 @@ table
 
     }
 
-
-
-
 </style>
 
 
      <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
-
     <%--<link href="../css/main.css" rel="stylesheet" />--%>
-
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <%--<script src="../js/bootstrap.min.js"></script>--%>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
-
     <script src="../js/DeletionConfirmation.js"></script>
-
     <script src="../js/jquery.tablePagination.0.1.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
     <script src="../js/Messages.js"></script>
@@ -173,29 +158,22 @@ table
             }
 
         }
-    </script>
-
-
-    
+    </script>    
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
         <style>
-    .modal table thead {
-    background-color: #5681e6;
-    text-align: center;
-    color: white;
-     
-    }
-    
-    </style>
+                .modal table thead {
+                        background-color: #5681e6;
+                        text-align: center;
+                        color: white;
+                }
+        </style>
 
     <script>
 
        var test = jQuery.noConflict();
-        test(document).ready(function () {
-
-            
+        test(document).ready(function () {            
 
 <%--            if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
                 GetMedicines(1);
@@ -208,29 +186,21 @@ table
             test('.nav_menu').click(function () {
                 test(".main_body").toggleClass("active_close");
             });
-
-
-
+            
             $('.alert_close').click(function () {
-
-
                 $(this).parent(".alert").hide();
-
             });
+
             $('.table').tablePagination({});
 
             var rows = $('#<%=dtgViewAllUserInRoles.ClientID%> tr').not('thead tr');
 
-
-            $('#txtSearchAssignedRole').keyup(function () {
-             
+            $('#txtSearchAssignedRole').keyup(function () {             
                 var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
-
                 rows.hide().filter(function () {
                     var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
                     var matchesSearch = true;
                     $(val).each(function (index, value) {
-
                         matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
                     });
                     return matchesSearch;
@@ -258,92 +228,66 @@ table
                 }
                 //----------------------------------No records found.--------------------------------------//
                 $('#tablePagination').hide();
-
-                if (val == "") {
-                   
+                if (val == "") {                   
                     $('.table').tablePagination({});
                     $('#tablePagination').show();
                 }
-
             });
-
         });
-
     </script>
 
       <%--  //------------- AUTOFILL SCRIPT ---------%>
-   <%-- <script src="../js/jquery-1.8.3.min.js"></script>
-    
+   <%-- <script src="../js/jquery-1.8.3.min.js"></script>    
     <script src="../js/ASPSnippets_Pager.min.js"></script>--%>
 
      <script src="../js/jquery-1.3.2.min.js"></script>
    <script src="../js/jquery-1.12.0.min.js"></script>
-   <script src="../js/jquery-ui.js"></script>
-
- 
+   <script src="../js/jquery-ui.js"></script> 
         <script src="../js/bootstrap.min.js"></script>
       <script src="../js/jquery.tablePagination.0.1.js"></script>
 
     <script type="text/javascript">
-
        
         $(function () {
-
             $('[data-toggle="tooltip"]').tooltip();
         });
 
-
         //var UniqueID = '';
-
 
         //$(function () {
         //    $("[id*=dtgViewAllUserInRoles] td:eq(0)").click(function () {
 
-
-
         //        var DeletionConfirmation = ConfirmDelete();
-
         //        if (DeletionConfirmation == true) {
-
         //            
-
         //            UniqueID = $(this).closest('tr').find('td:eq(3)').text();
-
-
-        //            window.location = "AssignRoles.aspx?UniqueID=" + UniqueID;
-
-
-                    
-
-
+        //            window.location = "AssignRoles.aspx?UniqueID=" + UniqueID;                  
+        
         //        }
         //    });
-
-
         //});
-
 
   
         //-------------*SEARCH AND PAGING SCRIPT------------------------//
 
         //$(function () {
-
         //    GetMedicines(1);
         //});
-        //$("[id*=txtSearch]").live("keyup", function () {
 
+        //$("[id*=txtSearch]").live("keyup", function () {
         //    GetMedicines(parseInt(1));
         //});
+
         //$(".Pager .page").live("click", function () {
         //    GetMedicines(parseInt($(this).attr('page')));
         //});
+
         //function SearchTerm() {
         //    return jQuery.trim($("[id*=txtSearch]").val());
         //};
+
         //function GetMedicines(pageIndex) {
-
         //    $.ajax({
-
         //        type: "POST",
         //        url: "../Admin/AssignRoles.aspx/GetMedicines",
         //        data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
@@ -351,11 +295,9 @@ table
         //        dataType: "json",
         //        success: OnSuccess,
         //        failure: function (response) {
-
         //            alert(response.d);
         //        },
         //        error: function (response) {
-
         //            alert(response.d);
         //        }
         //    });
@@ -372,7 +314,6 @@ table
         //    $("[id*=dtgViewAllUserInRoles] tr").not($("[id*=dtgViewAllUserInRoles] tr:first-child")).remove();
         //    if (Medicines.length > 0) {
         //        $.each(Medicines, function () {
-
         //            
 
         //            //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
@@ -464,26 +405,14 @@ table
          <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li></ul> </div>
           
               <div class="icon_box">
-
- <%--<a class="all_registration_link" data-toggle="modal" data-target="#AssignedRoles" >
-     <span title="View Assigned Roles" data-toggle="tooltip" data-placement="left" >
-         <img src="../images/AssignUser.png" />
-
-     </span></a>--%>
-
-
- <a class="all_assignrole_link" data-toggle="modal" data-target="#AssignedRoles" >
-                  <span class="count">  <asp:Label ID="lblCaseCount" runat="server" Text="0">
-
-                            </asp:Label></span>
-                        <span title="View Assigned Roles" data-toggle="tooltip" data-placement="left" >
-                        <img src="../images/AssignUser.png" /></span> 
-                          
+                   <a class="all_assignrole_link" data-toggle="modal" data-target="#AssignedRoles" >
+                         <span class="tooltip1">
+                             <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label>
+                             </span>
+                             <img src="../images/AssignUser.png" />
+                             <span class="tooltiptext1">View Assigned Roles</span>
+                         </span>           
                    </a>
-
-
-                
-
             </div>
 
                <div class="right_form tab_right_form">
@@ -538,10 +467,7 @@ table
       <label for="marital">User</label>
       <asp:DropDownList ID="ddlUsers" runat="server" Width="100%" Height="40px" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">
              
-          </asp:DropDownList>
-           
-
-
+          </asp:DropDownList>   
 
       </div>--%>
       <%--<div class="col-lg-4">
@@ -567,18 +493,13 @@ table
      
 
 
-<div class="">
-
-
-     
+<div class="">     
 
 <div class="row field_row">  
     <div style="height:40px;"></div>
       <div class="col-lg-5">
-         <label for="name">User</label>	
-          
-			 <asp:DropDownList ID="ddlUsers" runat="server" Width="250px" Height="31px" CssClass="drop" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">
-             
+         <label for="name">User</label>	          
+			 <asp:DropDownList ID="ddlUsers" runat="server" Width="250px" Height="31px" CssClass="drop" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">             
           </asp:DropDownList>
 		</div>
 
@@ -590,47 +511,12 @@ table
 		</div>
         </div>
     </div>
-
-	
-	
-
-        	
-
-
-
-
-
-    
-	
-	
-	
-	
-
-   
-</div>
-
-
-
-     
-
-                               
-                               
-
+</div>           
                             </div>
-
                         </div>
                     </div>
-
-                </div>
-
- 
+                </div> 
             </div>
-
-
-
-   
-
-      
  </div> 
 
     <div id="AssignedRoles" class="modal fade" role="dialog">
@@ -652,15 +538,11 @@ table
                   <input class="button3" type="button" value="Search" />
                   </div>
           </div>
-
               <div class="col-lg-12" style="height:400px">
 
              <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" OnPreRender="dtgViewAllUserInRoles_PreRender" DataKeyNames="UserId" GridLines="Horizontal">
              
-                            <Columns>
-
-                                
-
+                            <Columns>    
                               <%--   <asp:TemplateField HeaderText=" ">
                                                     <ItemTemplate>
                                                         <asp:Image ID="img1" runat="server" 
@@ -669,43 +551,20 @@ table
                                                 </asp:TemplateField>--%>
 
                                    <asp:BoundField DataField="Name" HeaderText="Name">
-
                                 </asp:BoundField>
-
-
-                                <asp:BoundField DataField="Role" HeaderText="Assigned Role">
+                                <asp:BoundField DataField="Role" HeaderText="Assigned Role">                                   
+                                </asp:BoundField>                           
                                    
-                                </asp:BoundField>
-
-                              
-                                   
-                                  
-                                   <%--  <asp:BoundField DataField="UniqueID" HeaderText="UniqueID">
-                                   
-                                   
-
+                                   <%--  <asp:BoundField DataField="UniqueID" HeaderText="UniqueID">   
                                 </asp:BoundField>--%>
-                            </Columns>
-                         
-                           
+                            </Columns>     
                         </asp:GridView>
-
-
             <div class="Pager"></div>
-
            </div>
     </div>
+    </div>      
     </div>
-         
-         
-    </div>
-
   </div>
-        </div>
-
-
-
-
-
+    </div>
       <asp:HiddenField ID="hdnUserCountChanged" runat="server" />
 </asp:Content>

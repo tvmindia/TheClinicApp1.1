@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" ValidateRequest="false" EnableEventValidation="false" CodeBehind="Pharmacy.aspx.cs" Inherits="TheClinicApp1._1.Pharmacy.Pharmacy" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">   
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:Panel DefaultButton="btnSave" runat="server">
@@ -275,8 +275,14 @@
 
             </div>
             <div class="icon_box">
-                <a class="patient_list" data-toggle="modal" data-target="#patient_list"><span class="count"><asp:Label ID="lblPharmacyCount" runat="server" Text="0"></asp:Label></span><span title="Patient List" data-toggle="tooltip" data-placement="left">
-                    <img src="../images/patient_list.png" /></span></a>
+                <a class="patient_list" data-toggle="modal" data-target="#patient_list">
+                     <span class="tooltip1">
+                         <span class="count"><asp:Label ID="lblPharmacyCount" runat="server" Text="0"></asp:Label>
+                         </span>
+                         <img src="../images/patient_list.png" />
+                         <span class="tooltiptext1"> Pharmacy Patient List</span>
+                    </span>
+                </a>
             </div>
             <div class="grey_sec">
                 <div class="search_div">

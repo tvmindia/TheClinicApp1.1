@@ -287,9 +287,12 @@
             
             </div>
             <div class="icon_box">
-                <a class="add_medicine" data-toggle="modal" data-target="#add_medicine"><span title="Add New Medicine" data-toggle="tooltip" data-placement="left" onclick="SetIframeSrc('NewMedicineIframe')">
-                    <img src="../images/add_medicinedemo.png" /></span></a>
-
+                          <a class="add_medicine" data-toggle="modal" data-target="#add_medicine"  onclick="SetIframeSrc('NewMedicineIframe')">
+                       <span class="tooltip1">                    
+                    <img src="../images/add_medicinedemo.png" />   
+                         <span class="tooltiptext1">Add New Medicine</span>                   
+                       </span>
+                </a>
             </div>
             <div class="right_form tab_right_form">
 

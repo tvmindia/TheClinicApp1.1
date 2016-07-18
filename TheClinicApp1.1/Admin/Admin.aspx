@@ -1,25 +1,19 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="TheClinicApp1._1.Admin.Admin" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-
    <%-- <link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
-     <link href="../css/main.css" rel="stylesheet" />
-    
+     <link href="../css/main.css" rel="stylesheet" />    
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/jquery-1.3.2.min.js"></script>
-    <script src="../js/jquery-1.12.0.min.js"></script>
-   
+    <script src="../js/jquery-1.12.0.min.js"></script>   
     <%--<script src="../js/bootstrap.min.js"></script>--%>
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
     <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
     <script src="../js/Dynamicgrid.js"></script>
-
     <script src="../js/Messages.js"></script>
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -38,36 +32,25 @@
    
     font-family: 'raleway-semibold';
     text-align: center;
-    }
-
-    
-
-
+    }   
     </style>--%>
 
-    <script>
-       
+    <script>      
 
         function Validation() {
             debugger;
             if (($('#<%=txtLoginName.ClientID%>').val().trim() == "") || ($('#<%=txtFirstName.ClientID%>').val().trim() == "") || ($('#<%=txtPassword.ClientID%>').val().trim() == "") || ($('#<%=txtConfirmPassword.ClientID%>').val().trim() == "")||($('#<%=txtPhoneNumber.ClientID%>').val().trim() == "") || ($('#<%=txtEmail.ClientID%>').val().trim() == "")) {
 
-
                 var lblclass = Alertclasses.danger;
                 var lblmsg = msg.Requiredfields;
                 var lblcaptn = Caption.Confirm;
-
                 ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
-
                 return false;
             }
             else {
                 return true;
             }
-
         }
-
-
 
       $(document).ready(function () 
 {
@@ -78,49 +61,37 @@
               $('.nav_menu').click(function () {
                 $(".main_body").toggleClass("active_close");
                });
-
-
 });
 
-        function SetIframeSrc(HyperlinkID) {
-            
+        function SetIframeSrc(HyperlinkID) {            
             if (HyperlinkID == "AllUsersIframe") {
                 var AllUsersIframe = document.getElementById('AllUsersIframe');
                 AllUsersIframe.src = "AddNewMedicine.aspx";
                 //$('#OutOfStock').modal('show');
             }
-
         }
 
 //EmailID duplication check
 
         function EmailIDDuplicationCheck(txtEmail) {
-
-
             var name = document.getElementById('<%=txtEmail.ClientID %>').value;
             name = name.trim();
             if (name != "") {
-
                 //name = name.replace(/\s/g, '');
-
                 PageMethods.ValidateEmailID(name, OnSuccess, onError);
 
                 function OnSuccess(response, userContext, methodName) {
-
                     var LnameImage = document.getElementById('<%=imgEmailAvailable.ClientID %>');
                     var errLname = document.getElementById('<%=imgEmailUnAvailable.ClientID %>');
                     if (response == false) {
-
                         LnameImage.style.display = "block";
                         errLname.style.display = "none";
-
                     }
                     if (response == true) {
                         errLname.style.display = "block";
                         errLname.style.color = "Red";
                         errLname.innerHTML = "EmailID Alreay Exists"
                         LnameImage.style.display = "none";
-
                     }
                 }
                 function onError(response, userContext, methodName) {
@@ -136,8 +107,6 @@
                     errLname.style.display = "none";
                 }
             }
-
-
         }
 
 
@@ -172,8 +141,6 @@ if(name != "")
                 }
             }
             function onError(response, userContext, methodName) {
-
-
             }
 }
 
@@ -187,8 +154,6 @@ else
         errLname.style.display = "none";
     }
 }
-
-
         }
 
         function PassowrdEqualityCheck()
@@ -197,40 +162,29 @@ else
             {
                 document.getElementById('<%=txtConfirmPassword.ClientID %>').style.borderColor = "#ff0000";
             }
-
             else
             {
                 document.getElementById('<%=txtConfirmPassword.ClientID %>').style.borderColor = "#00b300";
             }
-
         }
-
     </script>
 
      <script src="../js/jquery-1.3.2.min.js"></script>
    <script src="../js/jquery-1.12.0.min.js"></script>
    <script src="../js/jquery-ui.js"></script>
-
         <script src="../js/bootstrap.min.js"></script>
       <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
 
     <script type="text/javascript">
 
-
-
         $(function () {
-
             $('[data-toggle="tooltip"]').tooltip();
 
            <%-- var gridViewRowCount = document.getElementById("<%= dtgViewAllUsers.ClientID %>").rows.length;
-
-
             if (gridViewRowCount >0) {
                 $('table').tablePagination({});
             }--%>
-
-
-        });
+             });
 
 function SetRequired()
         {
@@ -247,8 +201,7 @@ function SetRequired()
 
 
       <%--  //------------- AUTOFILL SCRIPT ---------%>
-    <script src="../js/jquery-1.8.3.min.js"></script>
-    
+    <script src="../js/jquery-1.8.3.min.js"></script>    
     <script src="../js/ASPSnippets_Pager.min.js"></script>
 
     <script type="text/javascript">
@@ -272,9 +225,6 @@ function getJsonData(data, page) {
     });
     return jsonResult;
 }
-
-
-
 
 //-------------------------------- * EDIT Button Click * ------------------------- //
 
@@ -539,16 +489,10 @@ function DeleteUserByID(UserID) { //------* Delete Receipt Header by receiptID (
 
         };
 
-        function OpenModal() {
-            debugger;
-
+        function OpenModal() {     
                 //$('#AllUsers').modal('show');
             GetUsers(parseInt(1));
-
-
         }
-
-
 
         </script>
 
@@ -585,36 +529,15 @@ function DeleteUserByID(UserID) { //------* Delete Receipt Header by receiptID (
          <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li></ul>
             </div>
 
-            <div class="icon_box">
-               <%-- <a class="all_registration_link" data-toggle="modal" data-target="#AllUsers" >
-                    <span title="View All Users" data-toggle="tooltip" data-placement="left" >
-                        <img src="../images/multiuser.png" /></span> <span class="count">
-                            <asp:Label ID="lblCaseCount" runat="server" Text="0">
-
-                            </asp:Label></span>
-                   </a>--%>
-
-             
-
+            <div class="icon_box">   
                 <a class="all_admin_link" data-toggle="modal" data-target="#AllUsers" onclick="OpenModal();" >
+                        <span class="tooltip1">
                   <span class="count">  <asp:Label ID="lblCaseCount" runat="server" Text="0">
-
-                            </asp:Label></span>
-                       <span title="View All Users" data-toggle="tooltip" data-placement="left" >
-                        <img src="../images/multiuser.png" /> </span> 
-                          
+                            </asp:Label></span>                      
+                        <img src="../images/multiuser.png" />  
+                             <span class="tooltiptext1">View All Users</span>
+                            </span>                           
                    </a>
-
-
-              <%--  <a class="all_token_link" data-toggle="modal" data-target="#all_token" onclick="SetIframeSrc('AllTokenIframe')">
-                    <span class="count"><asp:Label ID="Label1" runat="server" Text="0"></asp:Label></span>
-                    <span title="All Tokens" data-toggle="tooltip" data-placement="left">
-                        <img src="../images/tokens.png" />
-                    </span>
-                </a>--%>
-
-
-
                   </div>
 
             <div class="right_form tab_right_form">

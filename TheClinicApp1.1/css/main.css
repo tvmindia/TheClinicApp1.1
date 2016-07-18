@@ -915,8 +915,31 @@ border-radius: 0;
 
 
 
+.tooltip1 {
+    position: relative;
+    display: inline-block;
+    
+}
 
+.tooltip1 .tooltiptext1 {
+    visibility: hidden;
+    width: 100px;
+    background-color:#505050;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 10%;
+    right: 105%;
+}
 
+.tooltip1:hover .tooltiptext1 {
+    visibility: visible;
+}
 
 
 /* ==========================================================================
