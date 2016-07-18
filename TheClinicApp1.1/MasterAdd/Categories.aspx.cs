@@ -199,7 +199,7 @@ namespace TheClinicApp1._1.MasterAdd
             CategoryObj.CreatedBy = UA.userName;
 
             CategoryObj.AddNewCategory();
-
+            hdnCategoryId.Value = CategoryObj.CategoryID.ToString();
         }
 
         #endregion Add New Category

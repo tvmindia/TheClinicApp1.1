@@ -475,10 +475,6 @@ function DeleteUserByID(UserID) { //------* Delete Receipt Header by receiptID (
             $("[id*=dtgViewAllUsers] tr").not($("[id*=dtgViewAllUsers] tr:first-child")).remove();
             if (Users.length > 0) {
 
-              
-
-             
-
                 $.each(Users, function () {
                     debugger;
 
@@ -501,20 +497,16 @@ function DeleteUserByID(UserID) { //------* Delete Receipt Header by receiptID (
                    
                     $("td", row).eq(6).html($(this).find("UserID").text());
 
-                   
-
-
                     $("[id*=dtgViewAllUsers]").append(row);
                     row = $("[id*=dtgViewAllUsers] tr:last-child").clone(true);
                 });
                 var pager = xml.find("Pager");
 
-           var GridRowCount =     pager.find("RecordCount").text();
+                if ($('#txtSearch').val() == '') {
+                    var GridRowCount = pager.find("RecordCount").text();
 
-           debugger;
-
-           $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
-
+                    $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+                }
 
                 $(".Pager").ASPSnippets_Pager({
                     ActiveCssClass: "current",

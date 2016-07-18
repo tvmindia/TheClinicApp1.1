@@ -377,10 +377,13 @@
                 });
                 var pager = xml.find("Pager");
 
-                var GridRowCount = pager.find("RecordCount").text();
+                if ($('#txtSearch').val() == '') {
 
-                $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+                    var GridRowCount = pager.find("RecordCount").text();
 
+                    $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+
+                }
                 $(".Pager").ASPSnippets_Pager({
                     ActiveCssClass: "current",
                     PagerCssClass: "pager",
@@ -560,7 +563,7 @@
 
                  <div class="col-lg-12" style="height:40px">
               <div class="search_div">
-              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchCategories" />
+              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearch" />
                   <input class="button3" type="button" value="Search" />
                   </div>
           </div>

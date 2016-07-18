@@ -1241,7 +1241,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Connection = con;
                 pud.CommandType = System.Data.CommandType.StoredProcedure;
                 pud.CommandText = "[InsertUnits]";
-               
+
+                UnitID = Guid.NewGuid();
+
+                pud.Parameters.Add("@UnitID", SqlDbType.UniqueIdentifier).Value = UnitID;
                 pud.Parameters.Add("@Code", SqlDbType.NVarChar, 255).Value = Code;
                 pud.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
                 pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
