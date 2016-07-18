@@ -477,7 +477,7 @@
 
         function OpenModal() {
 
-            $('#txtSearch').val();
+            $('#txtSearch').val('');
             GetMedicines(parseInt(1));
         }
 

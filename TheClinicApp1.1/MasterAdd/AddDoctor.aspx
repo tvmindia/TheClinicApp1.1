@@ -436,7 +436,7 @@
 
         function OpenModal()
         {
-            $('#txtSearch').val();
+            $('#txtSearch').val('');
 
             GetDoctors(parseInt(1));
             }
