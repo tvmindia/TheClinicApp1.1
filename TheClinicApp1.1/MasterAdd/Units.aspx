@@ -277,6 +277,9 @@
                     debugger;
 
                     if (response == false) {
+
+                        $("#UnitClose").click();
+
                         var lblclass = Alertclasses.danger;
                         var lblmsg = msg.AlreadyUsed;
                         var lblcaptn = Caption.FailureMsgCaption;
@@ -288,15 +291,17 @@
 
                         $("#<%=hdnUnitID.ClientID %>").val("");
 
-                        var lblclass = Alertclasses.sucess;
+                        GetUnits(1);
+                      <%--  var lblclass = Alertclasses.sucess;
                         var lblmsg = msg.DeletionSuccessFull;
                         var lblcaptn = Caption.SuccessMsgCaption;
 
-                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);--%>
+
                     }
 
-                    GetUnits(1);
-                    $("#UnitClose").click();
+                   
+                 
 
                 }
                 function onError(response, userContext, methodName) {
@@ -377,10 +382,13 @@
                 });
                 var pager = xml.find("Pager");
 
-                var GridRowCount = pager.find("RecordCount").text();
+                if ($('#txtSearch').val() == '') {
 
-                $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+                    var GridRowCount = pager.find("RecordCount").text();
 
+                    $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+
+                }
                 $(".Pager").ASPSnippets_Pager({
                     ActiveCssClass: "current",
                     PagerCssClass: "pager",
@@ -412,7 +420,7 @@
 
 
         function OpenModal() {
-
+            $('#txtSearch').val('');
             GetUnits(parseInt(1));
 
         }
@@ -560,7 +568,7 @@
 
                  <div class="col-lg-12" style="height:40px">
               <div class="search_div">
-              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchCategories" />
+              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearch" />
                   <input class="button3" type="button" value="Search" />
                   </div>
           </div>

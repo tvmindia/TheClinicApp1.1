@@ -175,7 +175,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[InsertCategories]";
 
-                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = Guid.NewGuid();
+                CategoryID = Guid.NewGuid();
+
+                cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = CategoryName; 

@@ -12,11 +12,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
-
 using Messages = TheClinicApp1._1.UIClasses.Messages;
 
 #endregion Included Namespaces
@@ -28,7 +28,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         #region Global Variables
 
-
+        private static int PageSize = 8;
         Master mstrObj = new Master();
         Stocks StockObj = new Stocks();
         UIClasses.Const Const = new UIClasses.Const();
@@ -39,25 +39,136 @@ namespace TheClinicApp1._1.MasterAdd
 
         #region Methods
 
-        #region  Bind Medicine Gridview
-
-        public void BindGridview()
+        #region Medicine View Search Paging
+        [WebMethod]
+        ///This method is called using AJAX For gridview bind , search , paging
+        ///It expects page index and search term which is passed from client side
+        ///Page size is declared and initialized in global variable section
+        public static string ViewAndFilterMedicine(string searchTerm, int pageIndex)
         {
-            mstrObj.ClinicID = UA.ClinicID;
-           DataTable dt = mstrObj.ViewAllMedicines();
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            Stocks StockObj = new Stocks();
 
-           if (dt != null)
-           {
-               gvMedicines.DataSource = dt;
-               gvMedicines.DataBind();
+            StockObj.ClinicID = UA.ClinicID.ToString();
 
-               lblCaseCount.Text = gvMedicines.Rows.Count.ToString();  
-           }
+            var xml = StockObj.ViewAndFilterMedicine(searchTerm, pageIndex, PageSize);
 
+            return xml;
         }
 
 
-        #endregion Bind Medicine Gridview
+        #region Bind Dummy Row
+
+        /// <summary>
+        /// To implement search in gridview(on keypress) :Gridview is converted to table and
+        /// Its first row (of table header) is created using this function
+        /// </summary>
+        private void BindDummyRow()
+        {
+            DataTable dummy = new DataTable();
+            dummy.Columns.Add("MedicineName");
+            dummy.Columns.Add("CategoryName");
+            dummy.Columns.Add("MedicineCode");
+            dummy.Columns.Add("Unit");
+            dummy.Columns.Add("Qty");
+            dummy.Columns.Add("ReOrderQty");
+            dummy.Columns.Add("MedicineID");
+
+            dummy.Rows.Add();
+            gvMedicines.DataSource = dummy;
+            gvMedicines.DataBind();
+        }
+
+        #endregion Bind Dummy Row
+
+        #endregion Medicine View Search Paging
+
+        #region Delete Medicine By ID
+
+        [WebMethod]
+        public static bool DeleteMedicineByID(string MedicineID)
+        {
+            string result = string.Empty;
+            bool MedicineDeleted = false;
+
+            Stocks StockObj = new Stocks();
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            bool isUsed = false;
+
+
+            StockObj.MedicineID = Guid.Parse(MedicineID);
+
+            StockObj.ClinicID = UA.ClinicID.ToString();
+
+            isUsed = StockObj.CheckMedicineIDIsUsed();
+
+            if (isUsed == false)
+            {
+            result=    StockObj.DeleteMedicinesForWM(Guid.Parse(MedicineID));
+
+            if (result != string.Empty)
+            {
+                MedicineDeleted = true;
+            }
+
+            }
+
+            return MedicineDeleted;
+
+        }
+
+        #endregion Delete Medicine By ID
+
+        #region Bind Medicine Details On Edit Click
+        /// <summary>
+        /// To get specific order details by orderid for the editing purpose
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [System.Web.Services.WebMethod]
+        public static string BindMedicinesDetailsOnEditClick(Stocks StockObj)
+        {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            StockObj.ClinicID = UA.ClinicID.ToString();
+            DataSet dsMedicines = StockObj.GetMedicineDetailsByMedicineID(StockObj.MedicineID);
+
+
+            string jsonResult = null;
+            DataSet ds = null;
+            ds = dsMedicines;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+            Dictionary<string, object> childRow;
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    childRow = new Dictionary<string, object>();
+                    foreach (DataColumn col in ds.Tables[0].Columns)
+                    {
+                        childRow.Add(col.ColumnName, row[col]);
+                    }
+                    parentRow.Add(childRow);
+                }
+            }
+            jsonResult = jsSerializer.Serialize(parentRow);
+
+            return jsonResult; //Converting to Json
+        }
+        #endregion Bind Medicine Details On Edit Click
 
         #region Add New Medicine
         public void AddMedicine()
@@ -122,14 +233,14 @@ namespace TheClinicApp1._1.MasterAdd
 
                         hdnInsertedorNot.Value = "True";
                         hdnMedID.Value = StockObj.MedicineID.ToString();
-                        BindGridview();
+                        //BindGridview();
                     }
 
                     else
                     {
                         StockObj.UpdatedBy = UA.userName;
                         StockObj.UpdateMedicines(hdnMedID.Value);
-                        BindGridview();
+                        //BindGridview();
                     }
 
 
@@ -248,19 +359,6 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion  Validate Medicine Code
 
-        #region Paging
-        protected void gvMedicines_PreRender(object sender, EventArgs e)
-        {
-            gvMedicines.UseAccessibleHeader = false;
-
-            if (gvMedicines.Rows.Count >0)
-            {
-                gvMedicines.HeaderRow.TableSection = TableRowSection.TableHeader;
-            }
-
-        }
-        #endregion Paging
-
         #region Logout
 
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
@@ -279,19 +377,20 @@ namespace TheClinicApp1._1.MasterAdd
 
         #endregion Methods
 
-
         #region Events
 
         #region Page Load
         protected void Page_Load(object sender, EventArgs e)
         {
+            BindDummyRow();
+
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
            
             if (!IsPostBack)
             {
                 BindCategory();
                 BindUnits();
-                BindGridview();
+                //BindGridview();
             }
         }
 
@@ -341,7 +440,7 @@ namespace TheClinicApp1._1.MasterAdd
                 msg = Messages.AlreadyUsedForDeletion;
                 eObj.DeletionNotSuccessMessage(page, msg);
             }
-            BindGridview();
+            //BindGridview();
         }
 
         #endregion  Delete Image Button Click
@@ -377,11 +476,47 @@ namespace TheClinicApp1._1.MasterAdd
             
             }
 
-            BindGridview();
+            //BindGridview();
         }
 
         #endregion Update Image Button Click
 
         #endregion Events
+
+//--NOTE: Below events and functions are not using now
+
+        #region Paging
+        protected void gvMedicines_PreRender(object sender, EventArgs e)
+        {
+            gvMedicines.UseAccessibleHeader = false;
+
+            if (gvMedicines.Rows.Count > 0)
+            {
+                gvMedicines.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
+        }
+        #endregion Paging
+
+        #region  Bind Medicine Gridview
+
+        public void BindGridview()
+        {
+            mstrObj.ClinicID = UA.ClinicID;
+            DataTable dt = mstrObj.ViewAllMedicines();
+
+            if (dt != null)
+            {
+                gvMedicines.DataSource = dt;
+                gvMedicines.DataBind();
+
+                lblCaseCount.Text = gvMedicines.Rows.Count.ToString();
+            }
+
+        }
+
+
+        #endregion Bind Medicine Gridview
+
     }
 }

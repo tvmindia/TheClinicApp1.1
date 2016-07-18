@@ -233,6 +233,7 @@ namespace TheClinicApp1._1.MasterAdd
                 {
                      mstrObj.createdBy = UA.userName;
                     mstrObj.InsertUnits();
+                    hdnUnitID.Value = mstrObj.UnitID.ToString();
                 }
 
                 else
