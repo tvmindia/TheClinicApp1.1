@@ -318,26 +318,34 @@
                     debugger;
 
                     if (response == false) {
+
+                        $("#MedicineClose").click();
+
                         var lblclass = Alertclasses.danger;
                         var lblmsg = msg.AlreadyUsed;
                         var lblcaptn = Caption.FailureMsgCaption;
 
                         ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                       
+
                     }
 
                     else {
 
                         $("#<%=hdnMedID.ClientID %>").val("");
+                        GetMedicines(1);
 
-                        var lblclass = Alertclasses.sucess;
+
+                        <%--var lblclass = Alertclasses.sucess;
                         var lblmsg = msg.DeletionSuccessFull;
                         var lblcaptn = Caption.SuccessMsgCaption;
 
-                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);--%>
                     }
 
-                    GetMedicines(1);
-                    $("#MedicineClose").click();
+                    
+                   
 
                 }
                 function onError(response, userContext, methodName) {
@@ -599,45 +607,25 @@
      <div class="col-lg-4">
 
            <label for="name">Category</label>
-  <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                            <ContentTemplate>--%>
+  <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <ContentTemplate>
                                 <asp:DropDownList ID="ddlCategory" CssClass="drop"  runat="server" AutoPostBack="true"  Width="100%" Height="31px">
                                 </asp:DropDownList>
                                   
-                              <%-- <asp:RequiredFieldValidator
-             ID="RequiredFieldValidator1"
-             runat="server"
-             ControlToValidate="ddlCategory"
-             InitialValue="--Select--"
-             ErrorMessage="* Please select an item."
-             ForeColor="Red"
-            
-             >
-        </asp:RequiredFieldValidator>
-
                             </ContentTemplate>
-                        </asp:UpdatePanel>--%>
+                        </asp:UpdatePanel>
 
          </div>
 
     <div class="col-lg-4">
          <label for="name">Unit</label>
-   <%--  <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-                            <ContentTemplate>--%>
+     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                            <ContentTemplate>
                                 <asp:DropDownList ID="ddlUnits"  runat="server" AutoPostBack="true" CssClass="drop"  Width="100%" Height="31px">
                                 </asp:DropDownList>
-                           <%-- <asp:RequiredFieldValidator
-             ID="RequiredFieldValidator2"
-             runat="server"
-             ControlToValidate="ddlUnits"
-             InitialValue="--Select--"
-             ErrorMessage="* Please select an item."
-             ForeColor="Red"
-            
-             >
-        </asp:RequiredFieldValidator>
+                            
                                   </ContentTemplate>
-                        </asp:UpdatePanel>--%>
+                        </asp:UpdatePanel>
 
 
          </div>

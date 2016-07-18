@@ -275,15 +275,23 @@
                 function OnSuccess(response, userContext, methodName) {
                     debugger;
                     if (response == false) {
+
+                        $("#DoctorClose").click();
+
                         var lblclass = Alertclasses.danger;
                         var lblmsg = msg.AlreadyUsed;
                         var lblcaptn = Caption.FailureMsgCaption;
 
                         ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                        
                     }
 
                     else {
-                        debugger;
+
+                        GetDoctors(1);
+
+                      <%--  debugger;
                         $("#<%=hdnUserID.ClientID %>").val("");
                         $("#<%=hdnDrID.ClientID %>").val("");
 
@@ -291,11 +299,11 @@
                         var lblmsg = msg.DeletionSuccessFull;
                         var lblcaptn = Caption.SuccessMsgCaption;
 
-                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);--%>
                     }
 
-                    GetDoctors(1);
-                    $("#DoctorClose").click();
+                    
+                   
 
                 }
                 function onError(response, userContext, methodName) {
