@@ -5,7 +5,23 @@
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+    <style>
+    .search_div input.field {
+    padding: 2px 2px 2px 20px;
+    height: 34px;
+    line-height: 34px;
+    background: #D7E2EA;
+    border: burlywood;
+    display: block;
+    color: #000;
+    font-size: 14px;
+    font-family: 'caviardreams-regular';
+    width: 100%;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+    </style>
     <script src="../js/jquery-1.12.0.min.js"></script>
 
     <script src="../js/jquery-1.8.3.min.js"></script>
@@ -99,18 +115,22 @@
         
     </script>
 
-    <div class="grey_sec">
+     <div class="col-lg-12" style="height: 480px;">
+
+         <div class="col-lg-12" style="height: 40px">
+
+   
                                 <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
                                     <input class="button" type="submit" value="Search" disabled />
                                 </div>
                                
-                            </div>
+                          
+          </div>
 
+          <div class="col-sm-12" style="height: 400px;">
 
-    <div id="StockOutMainDiv">
-        <div id="StockOutTableDiv" style="height:300px">
-    <asp:GridView ID="gvOutOfStock1" runat="server" AutoGenerateColumns="False" Style="width: 100%; border-color: #dbdbdb" class="table">
+              <asp:GridView ID="gvOutOfStock1" runat="server" AutoGenerateColumns="False" Style="width: 100%; border-color: #dbdbdb" class="table">
         <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
         <Columns>
             <%--  <asp:BoundField DataField="MedicineID" HeaderText="MedicineID" />--%>
@@ -124,8 +144,15 @@
         </Columns>
 
     </asp:GridView>
-            </div>
-    <div class="Pager"></div>
-      </div>
+
+           </div>
+
+         <div class="Pager"></div>
+         </div>
+
+      
+
+
+  
 
 </asp:Content>
