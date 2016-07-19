@@ -539,8 +539,14 @@
                                  <div class="row field_row">
                                     <div class="col-lg-8">
                                         <label for="name">Login Name</label><input id="txtLoginName" onchange="LoginNameCheck(this)" runat="server" type="text" name="lname" />                                      
-                                        <asp:Image ID="imgWebLnames" runat="server" ToolTip="Login name is Available" ImageUrl="~/Images/newfff.png" style="display:none"/>
-                                        <asp:Image ID="errorLnames" runat="server" ToolTip="Login name is Unavailable" ImageUrl="~/Images/newClose.png" style="display:none"/>
+                                        <span class="tooltip2">
+                                              <asp:Image ID="imgWebLnames" runat="server" ImageUrl="~/Images/newfff.png" style="display:none"/>
+                                              <span class="tooltiptext2">Login name is Available</span>
+                                        </span>
+                                          <span class="tooltip2">
+                                        <asp:Image ID="errorLnames" runat="server"  ImageUrl="~/Images/newClose.png" style="display:none"/>
+                                                  <span class="tooltiptext2">Login name is Unavailable</span>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="row field_row">
@@ -551,8 +557,14 @@
                                 <div class="row field_row">
                                     <div class="col-lg-8">
                                         <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name" onchange="EmailIDDuplicationCheck(this)" pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" />
-                                          <asp:Image ID="imgEmailAvailable" runat="server" ToolTip="Email ID is Available" ImageUrl="~/Images/newfff.png" style="display:none"/>
-                                        <asp:Image ID="imgEmailUnAvailable" runat="server" ToolTip="Email ID is Unavailable" ImageUrl="~/Images/newClose.png" style="display:none"/>
+                                          <span class="tooltip2">
+                                        <asp:Image ID="imgEmailAvailable" runat="server"  ImageUrl="~/Images/newfff.png" style="display:none"/>
+                                                <span class="tooltiptext2">Email ID  is Available</span>
+                                        </span> 
+                                               <span class="tooltip2">
+                                        <asp:Image ID="imgEmailUnAvailable" runat="server"  ImageUrl="~/Images/newClose.png" style="display:none"/>
+                                                     <span class="tooltiptext2">Email ID  is Unavailable</span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

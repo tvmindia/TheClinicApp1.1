@@ -1,159 +1,109 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="Categories.aspx.cs" Inherits="TheClinicApp1._1.MasterAdd.Categories" EnableEventValidation="true" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
 
-     <style>
-    .modal table thead {
-    background-color: #5681e6;
-    text-align: center;
-    color: white;
-     
-    }
-
-   
-    
-.button1{
-        background: url("../images/save.png") no-repeat 0 center;
-        height: 33px;
-        width: 60px;
-        display: inline-block;
-        vertical-align: top;
-        padding: 8px 10px 7px;
-        text-transform: uppercase;
-        font-size: 14px;
-        line-height: 18px;
-        text-align: center;
-        font-family:'raleway-semibold';
-        min-width: 83px;
-        background-color:#abd357 ;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
-        text-indent: 20px;
-        background-position-x:5px;
-
-        color: inherit;
-
-    }
-
-
-   
-
-
-
+    <style>
+        .modal table thead {
+            background-color: #5681e6;
+            text-align: center;
+            color: white;
+        }
+        .button1 {
+            background: url("../images/save.png") no-repeat 0 center;
+            height: 33px;
+            width: 60px;
+            display: inline-block;
+            vertical-align: top;
+            padding: 8px 10px 7px;
+            text-transform: uppercase;
+            font-size: 14px;
+            line-height: 18px;
+            text-align: center;
+            font-family: 'raleway-semibold';
+            min-width: 83px;
+            background-color: #abd357;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+            text-indent: 20px;
+            background-position-x: 5px;
+            color: inherit;
+        }
     </style>
 
-
-
-     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
+    <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
-
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/fileinput.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
-
-    
-   
     <script src="../js/Dynamicgrid.js"></script>
-    
     <script src="../js/Messages.js"></script>
 
     <script>
-
-
+        
         function Validation() {
             debugger;
-            if (($('#<%=txtCategoryName.ClientID%>').val().trim() == "") ) {
-
-
+            if (($('#<%=txtCategoryName.ClientID%>').val().trim() == "")) {
                 var lblclass = Alertclasses.danger;
                 var lblmsg = msg.Requiredfields;
                 var lblcaptn = Caption.Confirm;
-
                 ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
-
                 return false;
             }
             else {
                 return true;
             }
-
         }
 
+        $(document).ready(function () {
 
-      $(document).ready(function () {
-         
-          //images that represents medicine name duplication hide and show
-         <%-- var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-          LnameImage.style.display = "none";
-          var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-          errLname.style.display = "none";--%>
+            $('.alert_close').click(function () {
+                $(this).parent(".alert").hide();
+            });
 
+            $('.nav_menu').click(function () {
+                $(".main_body").toggleClass("active_close");
+            });
 
+            //$('table').tablePagination({});
 
-          $('.alert_close').click(function () {
-              $(this).parent(".alert").hide();
-          });
+            $('[data-toggle="tooltip"]').tooltip();
 
+        });
+        //---------------* Function to check category name duplication *--------------//
 
+        function CheckCategoryNameDuplication(txtCategoryName) {
 
-          $('.nav_menu').click(function () {
-              $(".main_body").toggleClass("active_close");
-          });
+            var name = document.getElementById('<%=txtCategoryName.ClientID %>').value;
+            name = name.trim();
+            if (name != "") {
+                //name = name.replace(/\s/g, '');
 
-          //$('table').tablePagination({});
+                PageMethods.ValidateCategoryName(name, OnSuccess, onError);
 
-          $('[data-toggle="tooltip"]').tooltip();
+                function OnSuccess(response, userContext, methodName) {
 
-
-
-      });
- //---------------* Function to check category name duplication *--------------//
-
-      function CheckCategoryNameDuplication(txtCategoryName) {
-          
-          var name = document.getElementById('<%=txtCategoryName.ClientID %>').value;
-
-          name = name.trim();
-
-
-          if (name != "")
-          {
-
-
-              //name = name.replace(/\s/g, '');
-
-              PageMethods.ValidateCategoryName(name, OnSuccess, onError);
-
-              function OnSuccess(response, userContext, methodName) {
-
-                  var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                    var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
                   var errLname = document.getElementById('<%=errorLnames.ClientID %>');
                   if (response == false) {
-
                       LnameImage.style.display = "block";
                       errLname.style.display = "none";
-
                   }
                   if (response == true) {
                       errLname.style.display = "block";
                       errLname.style.color = "Red";
                       errLname.innerHTML = "Name Alreay Exists"
                       LnameImage.style.display = "none";
-
                   }
               }
               function onError(response, userContext, methodName) {
-
               }
           }
-
-
           else {
               if (name == "") {
                   var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
@@ -164,20 +114,15 @@
           }
       }
 
+    </script>
 
-       </script>
-
-       <%--  //------------- AUTOFILL SCRIPT ---------%>
+    <%--  //------------- AUTOFILL SCRIPT ---------%>
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <script src="../js/jquery-1.8.3.min.js"></script>
-
     <script src="../js/ASPSnippets_Pager.min.js"></script>
-
     <script>
 
-
         var CategoryID = '';
-
 
         //---getting data as json-----//
         function getJsonData(data, page) {
@@ -197,29 +142,20 @@
             return jsonResult;
         }
 
-
-
-
         //-------------------------------- * EDIT Button Click * ------------------------- //
 
 
         $(function () {
             $("[id*=dtgViewAllCategories] td:eq(0)").click(function () {
-
                 document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
-
                 document.getElementById('<%=imgWebLnames.ClientID %>').style.display = "none";
                 document.getElementById('<%=errorLnames.ClientID %>').style.display = "none";
-               
-                if ($(this).text() == "") {
 
+                if ($(this).text() == "") {
                     var jsonResult = {};
                     CategoryID = $(this).closest('tr').find('td:eq(3)').text();
-
                     var Category = new Object();
-
                     Category.CategoryID = CategoryID;
-
                     jsonResult = GetCategoryDetailsBycategoryID(Category);
                     if (jsonResult != undefined) {
                         debugger;
@@ -241,24 +177,13 @@
 
         function BindCategoryControls(Records) {
             $.each(Records, function (index, Records) {
-
                 $("#<%=txtCategoryName.ClientID %>").val(Records.Name);
-               
                 $("#<%=hdnCategoryId.ClientID %>").val(Records.CategoryID);
-
-              
                 $("#CategoryClose").click();
             });
-
         }
-
-  
-
-
         //-------------------------------- *END : EDIT Button Click * ------------------------- //
-
-
-
+        
         //-------------------------------- * Delete Button Click * ------------------------- //
 
         $(function () {
@@ -279,62 +204,40 @@
         function DeleteCategoryByID(CategoryID) { //------* Delete Receipt Header by receiptID (using webmethod)
 
             if (CategoryID != "") {
-
                 PageMethods.DeleteCategoryByID(CategoryID, OnSuccess, onError);
-
                 function OnSuccess(response, userContext, methodName) {
-
                     debugger;
-
                     if (response == false) {
-
                         $("#CategoryClose").click();
                         var lblclass = Alertclasses.danger;
                         var lblmsg = msg.AlreadyUsed;
                         var lblcaptn = Caption.FailureMsgCaption;
-
                         ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
                     }
 
                     else {
                         debugger;
                         var PageIndx = parseInt(1);
-
                         if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
-
                             PageIndx = parseInt($(".Pager span")[0].innerText);
                         }
-                        
                         GetCategories(PageIndx);
-                        
 
                         <%--$("#<%=hdnCategoryId.ClientID %>").val("");
-
                         var lblclass = Alertclasses.sucess;
                         var lblmsg = msg.DeletionSuccessFull;
                         var lblcaptn = Caption.SuccessMsgCaption;
-
                         ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);--%>
                     }
-
-                  
-                   
-
                 }
                 function onError(response, userContext, methodName) {
-
                 }
-
             }
         }
-
-
-
-
+                
         //-------------------------------- * END : Delete Button Click * ------------------------- //
 
-
-
+        
         $(function () {
             GetCategories(1);
         });
@@ -377,7 +280,7 @@
             var xml = $(xmlDoc);
             var Categories = xml.find("Categories");
             debugger;
-           
+
             if (row == null) {
                 row = $("[id*=dtgViewAllCategories] tr:last-child").clone(true);
             }
@@ -386,7 +289,7 @@
                 $.each(Categories, function () {
                     var medicine = $(this);
                     //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
-                   
+
 
                     $("td", row).eq(0).html($('<img />')
                      .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
@@ -437,7 +340,7 @@
 
             }
 
-          
+
             var th = $("[id*=dtgViewAllCategories] th:contains('CategoryID')");
             th.css("display", "none");
             $("[id*=dtgViewAllCategories] tr").each(function () {
@@ -449,13 +352,13 @@
 
 
         function OpenModal() {
-            
+
             $('#txtSearch').val('');
             GetCategories(parseInt(1));
 
         }
 
-        </script>
+    </script>
 
 
 
@@ -476,12 +379,13 @@
                 <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
                 <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
-                 <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
+                <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
                 <li id="master" runat="server" class="active"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
                 <li id="log" runat="server"><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
             </ul>
 
-            <p class="copy">&copy;
+            <p class="copy">
+                &copy;
                 <asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label>
             </p>
         </div>
@@ -490,20 +394,25 @@
         <div class="right_part">
             <div class="tagline">
                 <a class="nav_menu">Menu</a>
-                Masters <ul class="top_right_links"><li>
-         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" ></asp:Label></li><li>
-         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click"  formnovalidate /></li></ul>
+                Masters
+                <ul class="top_right_links">
+                    <li>
+                        <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"></asp:Label></li>
+                    <li>
+                        <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png" BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li>
+                </ul>
             </div>
 
             <div class="icon_box">
 
- <a class="all_admin_link" data-toggle="modal" data-target="#AllCategories"  onclick="OpenModal();">
-       <span class="tooltip1">
-     <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>   
-         <img src="../images/categories-512 copy.png" />
-   <span class="tooltiptext1">View All Categories</span>
+                <a class="all_admin_link" data-toggle="modal" data-target="#AllCategories" onclick="OpenModal();">
+                    <span class="tooltip1">
+                        <span class="count">
+                            <asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label></span>
+                        <img src="../images/categories-512 copy.png" />
+                        <span class="tooltiptext1">View All Categories</span>
                     </span>
- </a>
+                </a>
             </div>
 
             <div class="right_form tab_right_form">
@@ -515,8 +424,8 @@
 
                         <li role="presentation"><a href="Units.aspx">Units</a></li>
 
-                          <li role="presentation" ><a href="Medicnes.aspx">Medicines</a></li>
-                        <li role="presentation"   ><a href="AddDoctor.aspx">Doctor</a></li>
+                        <li role="presentation"><a href="Medicnes.aspx">Medicines</a></li>
+                        <li role="presentation"><a href="AddDoctor.aspx">Doctor</a></li>
 
                     </ul>
                     <!-- Tab panes -->
@@ -530,7 +439,7 @@
                                 <ul class="top_right_links">
                                     <li>
                                         <%--<a class="save" id="Save" runat="server" onserverclick="Save_ServerClick"><span></span>Save</a>--%>
-                                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="return Validation(); "  />
+                                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="return Validation(); " />
                                     </li>
                                     <li><a class="new" href="Categories.aspx"><span></span>New</a></li>
                                 </ul>
@@ -551,60 +460,52 @@
                                     <div>
                                         <asp:Label ID="lblDisplayFileNumber" runat="server" Text="File Number"></asp:Label>:&nbsp;<strong><asp:Label ID="lblFileCount" runat="server" Text=""></asp:Label></strong>&nbsp;&nbsp;<asp:Label ID="lblTokenNumber" runat="server" Text="Token Number"></asp:Label>:&nbsp;<strong><asp:Label ID="lblTokencount" runat="server" Text=""></asp:Label></strong>
                                     </div>
-
                                 </div>
-
                             </div>
-
-                            
-
-                          <div class="tab_table">
-
+                            <div class="tab_table">
                                 <div class="row field_row">
+                                    <div class="col-lg-8">
+                                        <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" onchange="CheckCategoryNameDuplication(this)" />
+                                        <span class="tooltip2">
+                                            <asp:Image ID="imgWebLnames" runat="server" ImageUrl="~/Images/newfff.png" Style="display: none" />
+                                            <span class="tooltiptext2">Category name is Available</span>
+                                        </span>
+                                        <span class="tooltip2">
+                                        <asp:Image ID="errorLnames" runat="server" ImageUrl="~/Images/newClose.png" Style="display: none" />
+                                            <span class="tooltiptext2">Category name is Unavailable</span>
+                                        </span>
+                                    </div>
 
-                                     
-                                    
-      <div class="col-lg-8">
-      <label for="address">Category Name</label><input name="address" id="txtCategoryName" type="text" title="Please enter a value" runat="server" onchange="CheckCategoryNameDuplication(this)"   />
-       <asp:Image ID="imgWebLnames" runat="server" ToolTip="Category name is Available" ImageUrl="~/Images/newfff.png" style="display:none" />
-
-
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Category name is Unavailable" ImageUrl="~/Images/newClose.png" style="display:none" />
-      </div>      
-     
 
 
 
                                     <%--<div class="col-lg-4">--%>
 
-                                      
-
-                                            <%--<label for="name">CAtegory Name</label><input id="txtCategoryName" runat="server" type="text" name="name" required="required" pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." autofocus="autofocus" />--%>
 
 
+                                    <%--<label for="name">CAtegory Name</label><input id="txtCategoryName" runat="server" type="text" name="name" required="required" pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." autofocus="autofocus" />--%>
 
-                                      <%-- <asp:TextBox ID="txtCategoryName" runat="server" onchange="CheckCategoryNameDuplication(this)"></asp:TextBox>
+
+
+                                    <%-- <asp:TextBox ID="txtCategoryName" runat="server" onchange="CheckCategoryNameDuplication(this)"></asp:TextBox>
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtCategoryName" ErrorMessage="Please fill out this field" ForeColor="Red">
 
                                         </asp:RequiredFieldValidator>--%>
 
-                                   <%-- </div>--%>
-                                      <%--<div class="col-lg-4">--%>
-                               
-                                          <%--<br />
+                                    <%-- </div>--%>
+                                    <%--<div class="col-lg-4">--%>
+
+                                    <%--<br />
                                              <br />--%>
 
-                                   
-                                           <%--</div>--%>
 
-                                       
-                                     
+                                    <%--</div>--%>
                                 </div>
 
-                        </div>
+                            </div>
 
 
-                         
+
 
 
 
@@ -623,76 +524,71 @@
 
 
     <div id="AllCategories" class="modal fade" role="dialog">
-          <div class="modal-dialog" style="min-width:550px;">
+        <div class="modal-dialog" style="min-width: 550px;">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header" style="border-color:#3661C7;">  
-          <button type="button" class="close" data-dismiss="modal" id="CategoryClose">&times;</button>     
-        <h3 class="modal-title">View All Categories</h3>
-      </div>
-      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
-       
-         <div class="col-lg-12" style="height:480px">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="border-color: #3661C7;">
+                    <button type="button" class="close" data-dismiss="modal" id="CategoryClose">&times;</button>
+                    <h3 class="modal-title">View All Categories</h3>
+                </div>
+                <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
 
-                 <div class="col-lg-12" style="height:40px">
-              <div class="search_div">
-              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearch" />
-                  <input class="button3" type="button" value="Search" />
-                  </div>
-          </div>
-             
+                    <div class="col-lg-12" style="height: 480px">
 
-             <div class="col-lg-12" style="height:400px">
-            <asp:GridView ID="dtgViewAllCategories" runat="server" AutoGenerateColumns="False"   DataKeyNames="CategoryID"  class="table">
-                        
-                        <Columns>
-                         
-                        <asp:TemplateField>
-                                    <ItemTemplate>
-                                        
-                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment"  formnovalidate OnClick="ImgBtnUpdate_Click" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>      
-                            
-                            
-                             
-                       <asp:TemplateField HeaderText="">
-             <ItemTemplate>
-              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate/>
-               </ItemTemplate>
-                </asp:TemplateField>
+                        <div class="col-lg-12" style="height: 40px">
+                            <div class="search_div">
+                                <input class="field1" type="text" placeholder="Search with Name.." id="txtSearch" />
+                                <input class="button3" type="button" value="Search" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12" style="height: 400px">
+                            <asp:GridView ID="dtgViewAllCategories" runat="server" AutoGenerateColumns="False" DataKeyNames="CategoryID" class="table">
+
+                                <Columns>
+
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+
+                                            <asp:ImageButton ID="ImgBtnUpdate" runat="server" Style="border: none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment" formnovalidate OnClick="ImgBtnUpdate_Click" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
 
 
-                            <asp:BoundField DataField="Name" HeaderText="Category Name" ItemStyle-CssClass="Match">
-                               
-                            </asp:BoundField>
-                           
-                            <asp:BoundField DataField="CategoryID" HeaderText="CategoryID">
-                               
-                            </asp:BoundField>
-                            
-                        
+                                    <asp:TemplateField HeaderText="">
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="ImgBtnDelete" Style="border: none!important" runat="server" ImageUrl="~/images/Deleteicon1.png" OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                        </Columns>
-                        
-                    </asp:GridView>
 
-   </div>
-      <div class="Pager">
 
-                              </div>
-             
-                  
-    </div>
-    </div>
-         
-         
-    </div>
+                                    <asp:BoundField DataField="Name" HeaderText="Category Name" ItemStyle-CssClass="Match"></asp:BoundField>
 
-  </div>
+                                    <asp:BoundField DataField="CategoryID" HeaderText="CategoryID"></asp:BoundField>
+
+
+
+                                </Columns>
+
+                            </asp:GridView>
+
+                        </div>
+                        <div class="Pager">
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
         </div>
+    </div>
 
 
 
