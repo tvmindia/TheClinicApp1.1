@@ -71,16 +71,16 @@ namespace TheClinicApp1._1.Pharmacy
             DataTable dummy = new DataTable();
 
             //dummy.Columns.Add("Edit");
-            //dummy.Columns.Add(" ");
+            dummy.Columns.Add(" ");
             dummy.Columns.Add("DOCNAME");
-
+            dummy.Columns.Add("Name");
             dummy.Columns.Add("CreatedDate");
             dummy.Columns.Add("IsProcessed");
             dummy.Columns.Add("DoctorID");
-
+         
             dummy.Columns.Add("PatientID");
 
-            dummy.Columns.Add("Name");
+           
 
             dummy.Rows.Add();
 

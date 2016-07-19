@@ -3,6 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">   
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <style>
+              .selected_row
+    {
+        background-color: #d3d3d3!important;
+    }
+        </style>
+
+
     <asp:Panel DefaultButton="btnSave" runat="server">
     <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
 
@@ -236,12 +245,21 @@
             }
         } 
     </script>
+        
+
+
+
         <link href="../css/TheClinicApp.css" rel="stylesheet" />
        
           <script src="../js/jquery-1.8.3.min.js"></script>
     <script src="../js/ASPSnippets_Pager.min.js"></script>
 
-        <script>        
+        <script>     
+            
+           
+
+
+
             $(function () {
             debugger;
             GetPatientsOfPharmacy(1);
@@ -289,7 +307,7 @@
                 if (Pharmacy.length > 0) {
 
                     $.each(Pharmacy, function () {
-                       
+                        debugger;
                         $("td", row).eq(0).html($('<img />')
                            .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
 
@@ -302,6 +320,15 @@
 
                         $("td", row).eq(5).html($(this).find("DoctorID").text());
                         $("td", row).eq(6).html($(this).find("PatientID").text());
+
+                      
+
+                        if ($(this).find("IsProcessed").text()=="true") {
+                            $("td", row).addClass("selected_row");
+                        }
+                        if ($(this).find("IsProcessed").text() == "false") {
+                            $("td", row).removeClass("selected_row");
+                        }
 
 
                         $("[id*=GridViewPharmacylist]").append(row);
@@ -338,17 +365,17 @@
 
 
 
-                //var th = $("[id*=GridViewPharmacylist] th:contains('DoctorID')");
-                //th.css("display", "none");
-                //$("[id*=GridViewPharmacylist] tr").each(function () {
-                //    $(this).find("td").eq(th.index()).css("display", "none");
-                //});
+                var th = $("[id*=GridViewPharmacylist] th:contains('DoctorID')");
+                th.css("display", "none");
+                $("[id*=GridViewPharmacylist] tr").each(function () {
+                    $(this).find("td").eq(th.index()).css("display", "none");
+                });
 
-                //var th1 = $("[id*=GridViewPharmacylist] th:contains('PatientID')");
-                //th1.css("display", "none");
-                //$("[id*=GridViewPharmacylist] tr").each(function () {
-                //    $(this).find("td").eq(th1.index()).css("display", "none");
-                //});
+                var th1 = $("[id*=GridViewPharmacylist] th:contains('PatientID')");
+                th1.css("display", "none");
+                $("[id*=GridViewPharmacylist] tr").each(function () {
+                    $(this).find("td").eq(th1.index()).css("display", "none");
+                });
 
             };
 
@@ -572,8 +599,8 @@
                             <asp:BoundField HeaderText="Patient" DataField="Name" ItemStyle-CssClass="Match" />
                               <asp:BoundField HeaderText="DateTime" DataField="CreatedDate" ItemStyle-CssClass="Match" />
                          <asp:BoundField HeaderText="Issued" DataField="IsProcessed" ItemStyle-CssClass="Match"/>
-                            <asp:BoundField HeaderText="DoctorID" Visible="false" DataField="DoctorID" />
-                            <asp:BoundField HeaderText="PatientID" Visible="false" DataField="PatientID" />
+                            <asp:BoundField HeaderText="DoctorID"  DataField="DoctorID" />
+                            <asp:BoundField HeaderText="PatientID"  DataField="PatientID" />
                         
                            
                         </Columns>
