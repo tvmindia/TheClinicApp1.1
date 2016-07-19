@@ -321,14 +321,14 @@
                                         <div class="col-lg-7">
                                             <label for="height">Height</label>
                                             <div class="input-group spinner height" data-trigger="spinner" id="customize-spinner">
-                                                <input type="text" class="form-control text-center" id="txtHeightFeet" runat="server" data-min="0" data-max="100" data-step="1" />
+                                                <input type="text" class="form-control text-center" id="txtHeightFeet" runat="server" data-min="0" data-max="100" data-step="1" onkeypress="return isNumber(event)"/>
                                                 <div class="input-group-addon">
                                                     <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                     <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
                                                 </div>
                                             </div>
                                             <div class="input-group spinner height" data-trigger="spinner" id="customize-spinner">
-                                                <input type="text" class="form-control text-center" id="txtHeightInch" runat="server" data-min="0" data-max="100" data-step="1" />
+                                                <input type="text" class="form-control text-center" id="txtHeightInch" runat="server" data-min="0" data-max="100" data-step="1" onkeypress="return isNumber(event)" />
                                                 <div class="input-group-addon">
                                                     <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                     <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
@@ -338,7 +338,7 @@
                                         <div class="col-lg-5">
                                             <label for="weight">Weight</label>
                                             <div class="input-group spinner weight" data-trigger="spinner" id="customize-spinner">
-                                                <input type="text" class="form-control text-center" id="txtWeight" runat="server" data-min="0" data-max="200" data-step="1" />
+                                                <input type="text" class="form-control text-center" id="txtWeight" runat="server" data-min="0" data-max="200" data-step="1" onkeypress="return isNumber(event)"/>
                                                 <div class="input-group-addon">
                                                     <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                     <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
