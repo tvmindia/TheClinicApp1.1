@@ -5,6 +5,7 @@
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <script src="../js/jquery-1.12.0.min.js"></script>
 
     <script src="../js/jquery-1.8.3.min.js"></script>
