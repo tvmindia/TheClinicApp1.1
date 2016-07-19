@@ -115,7 +115,7 @@
         
     </script>
 
-     <div class="col-lg-12" style="height: 480px;">
+    <div class="col-lg-12" style="height: 480px;">
 
          <div class="col-lg-12" style="height: 40px">
 
@@ -150,9 +150,5 @@
          <div class="Pager"></div>
          </div>
 
-      
-
-
-  
 
 </asp:Content>

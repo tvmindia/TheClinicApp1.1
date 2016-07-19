@@ -255,32 +255,14 @@
 
                         <h4 class="modal-title">Add New Medicine</h4>
                     </div>
-                    <div class="modal-body" style="height: 500px;">
 
-                        <iframe id="NewMedicineIframe" style="width: 100%; height: 100%" frameborder="0"></iframe>
-                        <%--<table class="table" width="100%" border="0">
-          <tr>
-            <th>Sl No.</th>
-            <th>Date</th>
-            <th>Remarks</th>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-        </table>--%>
+                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+                        <div class="col-lg-12" style="height: 480px;">
+                            <iframe id="NewMedicineIframe" style="width: 100%; height: 100%" frameborder="0"></iframe>
+                        </div>
                     </div>
+
+                    
                 </div>
 
             </div>
