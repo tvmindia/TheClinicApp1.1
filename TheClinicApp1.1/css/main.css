@@ -913,8 +913,8 @@ border-radius: 0;
 .details_table {margin: 0 0 20px;}
 .details_table td {border: 0; padding: 5px 10px;}
 
-
-
+/*--------------------------------ToolTips Css----------------------------------------------*/
+/*--------------- Tooltip1 : For Icon Display,tooltip showing left ------------------------- */
 .tooltip1 {
     position: relative;
     display: inline-block;
@@ -941,6 +941,34 @@ border-radius: 0;
     visibility: visible;
 }
 
+/*--------------------- Tooltip2 : For Icon Display,tooltip showing below ------------------  */
+.tooltip2 {
+    position: relative;
+    display: inline-block;
+    
+}
+
+.tooltip2 .tooltiptext2 {
+    visibility: hidden;
+    width: 100px;
+    background-color:#505050;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 105%;
+    right: -500%;
+}
+
+.tooltip2:hover .tooltiptext2 {
+    visibility: visible;
+}
+
+/*--------------------------------ToolTips----------------------------------------------*/
 
 /* ==========================================================================
    Media Queries
@@ -1100,7 +1128,6 @@ ul.top_right_links {display: block; float: none; text-align: center;}
 .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {padding: 5px; font-size: 13px;}
 
 }
-
 @media only screen and (min-width:30em) and (max-width:47.937em) {/*(min-width:480px)(max-width:767px)*/
 
 .modal.fade .modal-dialog {        

@@ -1,40 +1,40 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="Medicnes.aspx.cs" Inherits="TheClinicApp1._1.MasterAdd.Medicnes" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-      <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
-     <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" EnablePartialRendering="true" EnableCdn="true"></asp:ScriptManager>
+    <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
 
-    <style>    
-     /*.modal table thead {
+    <style>
+        /*.modal table thead {
     background-color: #5681e6;
     text-align: center;
     color: white;
      
     }*/
-     .button1{
-        background: url("../images/save.png") no-repeat 0 center;
-        height: 33px;
-        width: 60px;
-        display: inline-block;
-        vertical-align: top;
-        padding: 8px 10px 7px;
-        text-transform: uppercase;
-        font-size: 14px;
-        line-height: 18px;
-        text-align: center;
-        font-family:'raleway-semibold';
-        min-width: 83px;
-        background-color:#abd357 ;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
-        text-indent: 20px;
-        background-position-x:5px;
-
-        color: inherit;
-    }  
+        .button1 {
+            background: url("../images/save.png") no-repeat 0 center;
+            height: 33px;
+            width: 60px;
+            display: inline-block;
+            vertical-align: top;
+            padding: 8px 10px 7px;
+            text-transform: uppercase;
+            font-size: 14px;
+            line-height: 18px;
+            text-align: center;
+            font-family: 'raleway-semibold';
+            min-width: 83px;
+            background-color: #abd357;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+            text-indent: 20px;
+            background-position-x: 5px;
+            color: inherit;
+        }
     </style>
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -53,7 +53,7 @@
             debugger;
             if (($('#<%=txtmedicineName.ClientID%>').val().trim() == "") || ($('#<%=txtCode.ClientID%>').val().trim() == "") || ($('#<%=txtOrderQuantity.ClientID%>').val().trim() == "")) {
 
-                
+
                 var lblclass = Alertclasses.danger;
                 var lblmsg = msg.Requiredfields;
                 var lblcaptn = Caption.Confirm;
@@ -68,51 +68,51 @@
             }
         }
 
-             
-    $(document).ready(function () {       
-          
 
-        //images that represents medicine name duplication hide and show
+        $(document).ready(function () {
+
+
+            //images that represents medicine name duplication hide and show
       <%--  var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
         LnameImage.style.display = "none";
         var errLname = document.getElementById('<%=errorLnames.ClientID %>');
         errLname.style.display = "none";--%>
 
-        var CodeAvailableImage = document.getElementById('<%=imgCodeAvailable.ClientID %>');
-        CodeAvailableImage.style.display = "none";
-        var CodeUnavailableImage = document.getElementById('<%=imgCodeUnavailable.ClientID %>');
+            var CodeAvailableImage = document.getElementById('<%=imgCodeAvailable.ClientID %>');
+            CodeAvailableImage.style.display = "none";
+            var CodeUnavailableImage = document.getElementById('<%=imgCodeUnavailable.ClientID %>');
         CodeUnavailableImage.style.display = "none";
 
         $('.alert_close').click(function () {
-                
+
             $(this).parent(".alert").hide();
         });
 
-        //$('[data-toggle="tooltip"]').tooltip();
+            //$('[data-toggle="tooltip"]').tooltip();
 
 
 
         $('.nav_menu').click(function () {
-                
+
             $(".main_body").toggleClass("active_close");
         });
 
-      
-    });
 
-        //---------------* Function to check medicine name duplication *-----------------//
+        });
 
-        function CheckMedicineNameDuplication(txtmedicineName) {
-           
-            var name = document.getElementById('<%=txtmedicineName.ClientID %>').value.trim();
-            //name = name.replace(/\s/g, '');
+    //---------------* Function to check medicine name duplication *-----------------//
 
-            if (name != "") {
-                PageMethods.ValidateMedicineName(name, OnSuccess, onError);
+    function CheckMedicineNameDuplication(txtmedicineName) {
 
-                function OnSuccess(response, userContext, methodName) {
-                  
-                    var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+        var name = document.getElementById('<%=txtmedicineName.ClientID %>').value.trim();
+        //name = name.replace(/\s/g, '');
+
+        if (name != "") {
+            PageMethods.ValidateMedicineName(name, OnSuccess, onError);
+
+            function OnSuccess(response, userContext, methodName) {
+
+                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
                     var errLname = document.getElementById('<%=errorLnames.ClientID %>');
                     if (response == false) {
                         LnameImage.style.display = "block";
@@ -127,7 +127,7 @@
                 }
                 function onError(response, userContext, methodName) {
                 }
-            }                
+            }
             else {
                 if (name == "") {
                     var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
@@ -172,15 +172,15 @@
                 }
             }
         }
-        
+
     </script>
 
-    
+
     <script src="../js/jquery-1.3.2.min.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-  
+
 
     <script type="text/javascript">
 
@@ -190,7 +190,7 @@
 
     </script>
 
-       <%--  //------------- AUTOFILL SCRIPT ---------%>
+    <%--  //------------- AUTOFILL SCRIPT ---------%>
     <script src="../js/jquery-1.8.3.min.js"></script>
     <script src="../js/ASPSnippets_Pager.min.js"></script>
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
@@ -216,9 +216,6 @@
             });
             return jsonResult;
         }
-
-
-
 
         //-------------------------------- * EDIT Button Click * ------------------------- //
 
@@ -277,10 +274,6 @@
             });
 
         }
-
-
-
-
         //-------------------------------- *END : EDIT Button Click * ------------------------- //
 
 
@@ -327,49 +320,30 @@
 
                         ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
 
-                       
-
                     }
 
                     else {
 
                         $("#<%=hdnMedID.ClientID %>").val("");
-
                         var PageIndx = parseInt(1);
 
                         if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
-
                             PageIndx = parseInt($(".Pager span")[0].innerText);
                         }
                         GetMedicines(PageIndx);
-
-
                         <%--var lblclass = Alertclasses.sucess;
                         var lblmsg = msg.DeletionSuccessFull;
                         var lblcaptn = Caption.SuccessMsgCaption;
-
                         ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);--%>
                     }
-
-                    
-                   
-
                 }
                 function onError(response, userContext, methodName) {
-
                 }
-
             }
         }
-
-
-
-
+        
         //-------------------------------- * END : Delete Button Click * ------------------------- //
-
-
-
-
+        
 
         $(function () {
             GetMedicines(1);
@@ -405,7 +379,7 @@
         }
 
         var row;
-        
+
         function OnSuccess(response) {
             $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
@@ -418,7 +392,7 @@
             if (Medicines.length > 0) {
                 $.each(Medicines, function () {
                     var medicine = $(this);
-                    
+
                     $("td", row).eq(0).html($('<img />')
                      .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
 
@@ -490,82 +464,82 @@
 
     </script>
 
-    <div class="main_body">   
-      
-      <!-- Left Navigation Bar -->  
-         <div class="left_part">
-         <div class="logo"><a href="#"><img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a></div>
-         <ul class="menu">
-         <li  id="patients" ><a name="hello" onclick="selectTile('patients','')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
-         <li id="token"><a name="hello" onclick="selectTile('token','')"><span class="icon token"></span><span class="text">Token</span></a></li>
-         <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
-         <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
-         <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-          <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+    <div class="main_body">
 
-              <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-         <li id="master" runat="server" class="active"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+        <!-- Left Navigation Bar -->
+        <div class="left_part">
+            <div class="logo">
+                <a href="#">
+                    <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
+            </div>
+            <ul class="menu">
+                <li id="patients"><a name="hello" onclick="selectTile('patients','')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+                <li id="token"><a name="hello" onclick="selectTile('token','')"><span class="icon token"></span><span class="text">Token</span></a></li>
+                <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+                <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
+                <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
+                <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+                <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
+                <li id="master" runat="server" class="active"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+                <li id="log" runat="server"><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
+            </ul>
+            <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
+        </div>
 
-             <li  id="log" runat="server"><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
-         </ul>
-         
-         <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
-         </div>
-         
-         <!-- Right Main Section -->
-         <div class="right_part">
-         <div class="tagline">
-         <a class="nav_menu">Menu</a>
-        Masters <ul class="top_right_links"><li>
-         <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22" ></asp:Label></li><li>
-         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click"   formnovalidate /></li></ul></div>
-          
-              <div class="icon_box">
+        <!-- Right Main Section -->
+        <div class="right_part">
 
- <a class="all_medicine_link" data-toggle="modal" data-target="#AllMedicines" onclick="OpenModal();" >
-      <span class="tooltip1">
-     <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label>
-     </span>    
-         <img src="../images/medicinesview copy.png" />
- <span class="tooltiptext1">View All Medicines</span>
-                    </span>
- </a>
-
-
-                
-
+            <div class="tagline">
+                <a class="nav_menu">Menu</a>
+                Masters
+                <ul class="top_right_links">
+                    <li>
+                        <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"></asp:Label></li>
+                    <li>
+                        <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png" BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li>
+                </ul>
             </div>
 
-<div class="right_form tab_right_form">
+            <div class="icon_box">
+                <a class="all_medicine_link" data-toggle="modal" data-target="#AllMedicines" onclick="OpenModal();">
+                    <span class="tooltip1">
+                        <span class="count">
+                            <asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label>
+                        </span>
+                        <img src="../images/medicinesview copy.png" />
+                        <span class="tooltiptext1">View All Medicines</span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="right_form tab_right_form">
 
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation"><a href="Categories.aspx">Categories</a></li>
-                        <li role="presentation" ><a href="Units.aspx">Units</a></li>
+                        <li role="presentation"><a href="Units.aspx">Units</a></li>
                         <li role="presentation" class="active"><a href="Medicnes.aspx">Medicines</a></li>
-                         <li role="presentation"   ><a href="AddDoctor.aspx">Doctor</a></li>
+                        <li role="presentation"><a href="AddDoctor.aspx">Doctor</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
 
                         <div role="tabpanel" class="tab-pane active" id="stock_in">
+
                             <div class="grey_sec">
-                              <%--  <div class="search_div">
+                                <%--  <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
                                     <input class="button" type="submit" value="Search" />
                                 </div>--%>
                                 <ul class="top_right_links">
                                     <li>
                                         <%--<a class="save" id="btSave" runat="server" onserverclick="btSave_ServerClick"><span></span>Save</a>--%>
-                                         <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="return Validation();" />
-
+                                        <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="button1" OnClick="btnSave_Click" OnClientClick="return Validation();" />
                                     </li>
-                                    <li><a class="new"  href="Medicnes.aspx"><span></span>New</a></li>
+                                    <li><a class="new" href="Medicnes.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
-
-
 
                             <div id="Errorbox" style="display: none;" runat="server">
                                 <a class="alert_close">X</a>
@@ -574,193 +548,128 @@
                                         <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
                                     </strong>
                                     <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
-
                                 </div>
-
                             </div>
-
-                            
-
 
                             <div class="tab_table">
 
-                                 
-                                <div class="row field_row">  
-      <div class="col-lg-8">
-     
-              <label for="name">Medicine Name</label><input id="txtmedicineName" runat="server" type="text" name="name"  onchange="CheckMedicineNameDuplication(this)"  />
-           <asp:Image ID="imgWebLnames" runat="server" ToolTip="Medicne name is Available" ImageUrl="~/Images/newfff.png" style="display:none" />
+                                <div class="row field_row">
+                                    <div class="col-lg-8">
+                                        <label for="name">Medicine Name</label><input id="txtmedicineName" runat="server" type="text" name="name" onchange="CheckMedicineNameDuplication(this)" />
+                                        <span class="tooltip2">
+                                            <asp:Image ID="imgWebLnames" runat="server" ImageUrl="~/Images/newfff.png" Style="display: none" />
+                                            <span class="tooltiptext2">Medicine name is Available</span>
+                                        </span>
+                                        <span class="tooltip2">
+                                            <asp:Image ID="errorLnames" runat="server"  ImageUrl="~/Images/newClose.png" Style="display: none" />
+                                            <span class="tooltiptext2">Medicine name is Unavailable</span>
+                                        </span>
+                                    </div>
 
+                                </div>
 
-                                    <asp:Image ID="errorLnames" runat="server" ToolTip="Medicne name Unavailable" ImageUrl="~/Images/newClose.png" style="display:none" />
+                                <div class="row field_row">
+                                    <div class="col-lg-8">
+                                        <label for="name">Medicine Code </label>
+                                        <input id="txtCode" runat="server" type="text" name="name" onchange="CheckMedicineCodeDuplication(this)" />
+                                        <span class="tooltip2">
+                                            <asp:Image ID="imgCodeAvailable" runat="server" ImageUrl="~/Images/newfff.png" Style="display: none" />
+                                            <span class="tooltiptext2">Medicine code is Available</span>
+                                        </span>
+                                        <span class="tooltip2">
+                                            <asp:Image ID="imgCodeUnavailable" runat="server" ImageUrl="~/Images/newClose.png" Style="display: none" />
+                                            <span class="tooltiptext2">Medicine code is Unavailable</span>
+                                        </span>
+                                    </div>
+                                </div>
 
-      </div>
+                                <div class="row field_row">
+                                    <div class="col-lg-4">
+                                        <label for="name">Category</label>
+                                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                            <ContentTemplate>
+                                                <asp:DropDownList ID="ddlCategory" CssClass="drop" runat="server" AutoPostBack="true" Width="100%" Height="31px">
+                                                </asp:DropDownList>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                    </div>
 
- </div>
+                                    <div class="col-lg-4">
+                                        <label for="name">Unit</label>
+                                        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                                            <ContentTemplate>
+                                                <asp:DropDownList ID="ddlUnits" runat="server" AutoPostBack="true" CssClass="drop" Width="100%" Height="31px">
+                                                </asp:DropDownList>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                    </div>
+                                </div>
 
-<div class="row field_row"> 
-
-      <div class="col-lg-8">
-          <label for="name">Medicine Code </label><input id="txtCode" runat="server" type="text" name="name" onchange="CheckMedicineCodeDuplication(this)"   />
-
-
-          <asp:Image ID="imgCodeAvailable" runat="server" ToolTip="Medicne code is Available" ImageUrl="~/Images/newfff.png"  style="display:none"/>
-
-
-                                    <asp:Image ID="imgCodeUnavailable" runat="server" ToolTip="Medicne code Unavailable" ImageUrl="~/Images/newClose.png"  style="display:none"/>
-
-      </div>
-
-     
-    </div>
- 
-
-<div class="row field_row"> 
-
-     <div class="col-lg-4">
-
-           <label for="name">Category</label>
-  <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                            <ContentTemplate>
-                                <asp:DropDownList ID="ddlCategory" CssClass="drop"  runat="server" AutoPostBack="true"  Width="100%" Height="31px">
-                                </asp:DropDownList>
-                                  
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-
-         </div>
-
-    <div class="col-lg-4">
-         <label for="name">Unit</label>
-     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-                            <ContentTemplate>
-                                <asp:DropDownList ID="ddlUnits"  runat="server" AutoPostBack="true" CssClass="drop"  Width="100%" Height="31px">
-                                </asp:DropDownList>
-                            
-                                  </ContentTemplate>
-                        </asp:UpdatePanel>
-
-
-         </div>
-
-     </div>
-
-
-
-
-     <div class="row field_row"> 
-     <div class="col-lg-8">
-
-         <label for="name"> Reorder Quantity</label>
-         <input id="txtOrderQuantity" runat="server" onkeypress="return isNumber(event)" value="1" type="number" name="age" min="1" pattern="\d*"  title="⚠ Should be greater than 0" />
-        
-         </div>
-
-
-
-   </div>
-     
-
-                               
+                                <div class="row field_row">
+                                    <div class="col-lg-8">
+                                        <label for="name">Reorder Quantity</label>
+                                        <input id="txtOrderQuantity" runat="server" onkeypress="return isNumber(event)" value="1" type="number" name="age" min="1" pattern="\d*" title="⚠ Should be greater than 0" />
+                                    </div>
                                 </div>
 
                             </div>
 
                         </div>
                     </div>
-
                 </div>
-
- 
             </div>
-
-
-
-   
-
-      
- </div>
+        </div>
+    </div>
 
     <div id="AllMedicines" class="modal fade" role="dialog">
-          <div class="modal-dialog" style="min-width:550px;">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header" style="border-color:#3661C7;">  
-          <button type="button" class="close" data-dismiss="modal" id="MedicineClose">&times;</button>     
-        <h3 class="modal-title">View All Medicines</h3>
-      </div>
-      
-         <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
-       
-         <div class="col-lg-12" style="height:480px">
-
-                 <div class="col-lg-12" style="height:40px">
-              <div class="search_div">
-              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearch" />
-                  <input class="button3" type="button" value="Search" />
-                  </div>
-          </div>
-             
-
-             <div class="col-lg-12" style="height:400px">
-             <asp:GridView ID="gvMedicines" runat="server" AutoGenerateColumns="False" Style="width: 100%"  class="table" >
-           
-            <Columns>
-            
-                <asp:TemplateField >
-                                    <ItemTemplate >
-                                        
-                                        <asp:ImageButton ID="ImgBtnUpdate" runat="server" style="border:none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment"  formnovalidate OnClick="ImgBtnUpdate_Click"  />
-                                    </ItemTemplate>
-                 
-
-
-                                </asp:TemplateField>
-
-
-
-                <asp:TemplateField HeaderText="" >
-             <ItemTemplate>
-              <asp:ImageButton ID="ImgBtnDelete" style="border:none!important" runat="server" ImageUrl="~/images/Deleteicon1.png"  OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate/>
-               </ItemTemplate>
-
-                     
-
-                </asp:TemplateField>
-
-                
-              <%--<asp:BoundField DataField="MedicineCode" HeaderText="Medicine Code"   ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow Match" />--%>
-
-                <asp:BoundField DataField="MedicineName" HeaderText="Name" ItemStyle-CssClass="Match"   />
-               <asp:BoundField DataField="MedicineCode" HeaderText="Code"  ItemStyle-CssClass="Match" />
-                 <asp:BoundField DataField="Unit" HeaderText="Unit"  ItemStyle-CssClass="Match" />
-               <asp:BoundField DataField="CategoryName" HeaderText="Ctgry Name"  ItemStyle-CssClass="Match" /> 
-                 <asp:BoundField DataField="Qty" HeaderText="Qty"  ItemStyle-HorizontalAlign="Right"  ItemStyle-CssClass="Match"/>
-                 <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Qty" ItemStyle-HorizontalAlign="Right" ItemStyle-CssClass="Match" ItemStyle-Width="2%"/>
-                 <asp:BoundField DataField="MedicineID" HeaderText="MedicineID"   />
-                  
-            </Columns>
-            
-        </asp:GridView>
-
-
-
-   </div>
-      <div class="Pager">
-
-                              </div>
-             
-                  
-    </div>
-    </div>
-         
-    </div>
-
-  </div>
+        <div class="modal-dialog" style="min-width: 550px;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="border-color: #3661C7;">
+                    <button type="button" class="close" data-dismiss="modal" id="MedicineClose">&times;</button>
+                    <h3 class="modal-title">View All Medicines</h3>
+                </div>
+                <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+                    <div class="col-lg-12" style="height: 480px">
+                        <div class="col-lg-12" style="height: 40px">
+                            <div class="search_div">
+                                <input class="field1" type="text" placeholder="Search with Name.." id="txtSearch" />
+                                <input class="button3" type="button" value="Search" />
+                            </div>
+                        </div>
+                        <div class="col-lg-12" style="height: 400px">
+                            <asp:GridView ID="gvMedicines" runat="server" AutoGenerateColumns="False" Style="width: 100%" class="table">
+                                <Columns>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="ImgBtnUpdate" runat="server" Style="border: none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment" formnovalidate OnClick="ImgBtnUpdate_Click" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="">
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="ImgBtnDelete" Style="border: none!important" runat="server" ImageUrl="~/images/Deleteicon1.png" OnClientClick="return ConfirmDelete();" OnClick="ImgBtnDelete_Click" formnovalidate />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <%--<asp:BoundField DataField="MedicineCode" HeaderText="Medicine Code"   ItemStyle-Font-Underline="true" ItemStyle-Font-Bold="true" ItemStyle-ForeColor="Blue" ItemStyle-CssClass="cursorshow Match" />--%>
+                                    <asp:BoundField DataField="MedicineName" HeaderText="Name" ItemStyle-CssClass="Match" />
+                                    <asp:BoundField DataField="MedicineCode" HeaderText="Code" ItemStyle-CssClass="Match" />
+                                    <asp:BoundField DataField="Unit" HeaderText="Unit" ItemStyle-CssClass="Match" />
+                                    <asp:BoundField DataField="CategoryName" HeaderText="Ctgry Name" ItemStyle-CssClass="Match" />
+                                    <asp:BoundField DataField="Qty" HeaderText="Qty" ItemStyle-HorizontalAlign="Right" ItemStyle-CssClass="Match" />
+                                    <asp:BoundField DataField="ReOrderQty" HeaderText="ReOrder Qty" ItemStyle-HorizontalAlign="Right" ItemStyle-CssClass="Match" ItemStyle-Width="2%" />
+                                    <asp:BoundField DataField="MedicineID" HeaderText="MedicineID" />
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                        <div class="Pager">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
     <asp:HiddenField ID="hdnInsertedorNot" runat="server" />
-     <asp:HiddenField ID="hdnMedID" runat="server" />
-   
+    <asp:HiddenField ID="hdnMedID" runat="server" />
+
 </asp:Content>
