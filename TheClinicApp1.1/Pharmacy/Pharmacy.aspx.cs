@@ -20,6 +20,7 @@ namespace TheClinicApp1._1.Pharmacy
     {
 
         #region Gobalvariables
+        private static int PageSize = 8;
 
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
@@ -37,43 +38,61 @@ namespace TheClinicApp1._1.Pharmacy
 
         #endregion Gobalvariables
 
-        #region PageLoad
-        protected void Page_Load(object sender, EventArgs e)
+        #region Methods
+
+        #region Pharmacy View Search Paging
+        [WebMethod]
+        ///This method is called using AJAX For gridview bind , search , paging
+        ///It expects page index and search term which is passed from client side
+        ///Page size is declared and initialized in global variable section
+        public static string ViewAndFilterPatientBooking(string searchTerm, int pageIndex)
         {
-            List<string> RoleName = new List<string>();
-            DataTable dtRols = new DataTable();
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            string Login = UA.userName;
-            tokobj.ClinicID = UA.ClinicID.ToString();
-            RoleName= UA.GetRoleName1(Login);  
-            pharmacypobj.ClinicID = UA.ClinicID;
-            PrescriptionObj.ClinicID = UA.ClinicID.ToString();
-            listFilter = null;
-            listFilter = GetMedicineNames();
-            NameBind = null;
-            NameBind = BindName();
-            gridviewbind();
-            btnSave.Attributes.Add("onclick", "return  GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "','" + lblErrorCaption.ClientID + "','" + Errorbox.ClientID + "','" + lblMsgges.ClientID + "');");
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            pharmacy pharmacypobj = new pharmacy();
+             pharmacypobj.ClinicID = UA.ClinicID;
+
+             var xml = pharmacypobj.ViewAndFilterPatientsInPharmacy(searchTerm, pageIndex, PageSize);
+
+            return xml;
         }
-        #endregion Pageload
 
-        #region Gridviewbind
-        public void gridviewbind()
+        #region Bind Dummy Row
+
+        /// <summary>
+        /// To implement search in gridview(on keypress) :Gridview is converted to table and
+        /// Its first row (of table header) is created using this function
+        /// </summary>
+        private void BindDummyRow()
         {
-            DataSet gds = pharmacypobj.GetPatientPharmacyDetails(); //Function Call to Get Patient Pharamacy Details
+            DataTable dummy = new DataTable();
 
-            DataRow[] dr = gds.Tables[0].Select("IsProcessed=False");
-            lblPharmacyCount.Text = dr.Length.ToString();
+            //dummy.Columns.Add("Edit");
+            //dummy.Columns.Add(" ");
+            dummy.Columns.Add("DOCNAME");
 
-            GridViewPharmacylist.EmptyDataText = "No Records Found";
-            GridViewPharmacylist.DataSource = gds;
+            dummy.Columns.Add("CreatedDate");
+            dummy.Columns.Add("IsProcessed");
+            dummy.Columns.Add("DoctorID");
+
+            dummy.Columns.Add("PatientID");
+
+            dummy.Columns.Add("Name");
+
+            dummy.Rows.Add();
+
+            GridViewPharmacylist.DataSource = dummy;
             GridViewPharmacylist.DataBind();
-
-           // lblPharmacyCount.Text = gds.Tables[0].Rows.Count.ToString();
-
-
         }
-        #endregion Gridviewbind
+
+        #endregion Pharmacy View Search Paging
+
+
+        #endregion ToKen booking View Search Paging
+
 
         #region WebMethod
 
@@ -85,7 +104,7 @@ namespace TheClinicApp1._1.Pharmacy
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             obj.ClinicID = UA.ClinicID.ToString();
-           
+
             DataSet ds = obj.GetpatientDetails(file); //Function Call to Get Patient Details
 
             string FileNumber = Convert.ToString(ds.Tables[0].Rows[0]["FileNumber"]);
@@ -96,7 +115,7 @@ namespace TheClinicApp1._1.Pharmacy
             string Email = Convert.ToString(ds.Tables[0].Rows[0]["Email"]);
             string PatientID = Convert.ToString(ds.Tables[0].Rows[0]["PatientID"]);
             string ClinicID = Convert.ToString(ds.Tables[0].Rows[0]["ClinicID"]);
-            string lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);        
+            string lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
 
             DateTime date = DateTime.Now;
             int year = date.Year;
@@ -162,10 +181,10 @@ namespace TheClinicApp1._1.Pharmacy
         #endregion BindSearch
 
         #region Get MedicineDetails By Medicine Name
-     
+
         [WebMethod]
         public static string MedDetails(string MedName)
-            {
+        {
             IssueHeaderDetails IssuedtlsObj = new IssueHeaderDetails();
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
@@ -174,17 +193,87 @@ namespace TheClinicApp1._1.Pharmacy
 
             DataSet ds = IssuedtlsObj.GetMedicineDetailsByMedicineName(MedName); //Get Medicine Details By Medicine Name
             string Unit = "";
-            string Quantity="";
+            string Quantity = "";
 
             if (ds.Tables[0].Rows.Count > 0)
             {
                 Unit = Convert.ToString(ds.Tables[0].Rows[0]["Unit"]);
                 Quantity = Convert.ToString(ds.Tables[0].Rows[0]["Qty"]);
             }
-            return String.Format("{0}"+"|"+"{1}", Unit,Quantity);
+            return String.Format("{0}" + "|" + "{1}", Unit, Quantity);
         }
 
         #endregion Get MedicineDetails By Medicine Name
+
+        #region Row Coloring for Pharmacy View
+        /// <summary>
+        /// color the Isprocessed rows in the Token View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
+
+        int GetColumnIndexByName(GridViewRow row, string columnName)
+        {
+            int columnIndex = 0;
+            foreach (DataControlFieldCell cell in row.Cells)
+            {
+                if (cell.ContainingField is BoundField)
+                    if (((BoundField)cell.ContainingField).DataField.Equals(columnName))
+                        break;
+                columnIndex++; // keep adding 1 while we don't have the correct name
+            }
+            return columnIndex;
+        }
+        protected void GridViewPharmacylist_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int index = GetColumnIndexByName(e.Row, "IsProcessed");
+                string columnValue = e.Row.Cells[index].Text;
+
+                //foreach (TableCell cell in e.Row.Cells)
+                //{
+                if (columnValue == "True")
+                {
+                    e.Row.Cells[index].Text = "Yes";
+                    e.Row.BackColor = Color.LightGray;
+                }
+                else
+                {
+                    e.Row.Cells[index].Text = "No";
+                }
+                //}               
+            }
+
+        }
+        #endregion Row Coloring for Pharmacy View
+
+        #endregion Methods
+
+        #region Events
+
+        #region PageLoad
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            BindDummyRow();
+
+            List<string> RoleName = new List<string>();
+            DataTable dtRols = new DataTable();
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            string Login = UA.userName;
+            tokobj.ClinicID = UA.ClinicID.ToString();
+            RoleName = UA.GetRoleName1(Login);
+            pharmacypobj.ClinicID = UA.ClinicID;
+            PrescriptionObj.ClinicID = UA.ClinicID.ToString();
+            listFilter = null;
+            listFilter = GetMedicineNames();
+            NameBind = null;
+            NameBind = BindName();
+            //gridviewbind();
+            btnSave.Attributes.Add("onclick", "return  GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "','" + lblErrorCaption.ClientID + "','" + Errorbox.ClientID + "','" + lblMsgges.ClientID + "');");
+        }
+        #endregion Pageload
 
         #region ClickEvents
 
@@ -235,8 +324,8 @@ namespace TheClinicApp1._1.Pharmacy
         {
             string msg = string.Empty;
             DataRow dr = null;
-          
-            if (HiddenPatientID.Value != "" || Patientidtorefill.Value!="")
+
+            if (HiddenPatientID.Value != "" || Patientidtorefill.Value != "")
             {
                 if (hdnTextboxValues.Value != "")
                 {
@@ -295,7 +384,7 @@ namespace TheClinicApp1._1.Pharmacy
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
             }
-              else 
+            else
             {
                 var page = HttpContext.Current.CurrentHandler as Page;
                 msg = "Patient Details not found ";
@@ -308,7 +397,7 @@ namespace TheClinicApp1._1.Pharmacy
                     var xml = MedicinList.GetXml();
                     hdnXmlData.Value = xml;
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
-                }                       
+                }
             }
         }
         protected void Logout_ServerClick(object sender, EventArgs e)
@@ -324,48 +413,29 @@ namespace TheClinicApp1._1.Pharmacy
 
         #endregion ClickEvents
 
-        #region Row Coloring for Pharmacy View
-        /// <summary>
-        /// color the Isprocessed rows in the Token View
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// 
+        #endregion Events
 
-        int GetColumnIndexByName(GridViewRow row, string columnName)
-        {
-            int columnIndex = 0;
-            foreach (DataControlFieldCell cell in row.Cells)
-            {
-                if (cell.ContainingField is BoundField)
-                    if (((BoundField)cell.ContainingField).DataField.Equals(columnName))
-                        break;
-                columnIndex++; // keep adding 1 while we don't have the correct name
-            }
-            return columnIndex;
-        }
-        protected void GridViewPharmacylist_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-               if (e.Row.RowType == DataControlRowType.DataRow)
-             {    
-                 int index = GetColumnIndexByName(e.Row,"IsProcessed");
-                 string columnValue = e.Row.Cells[index].Text;
+        //--NOTE: Below events and functions are not using now
 
-                 //foreach (TableCell cell in e.Row.Cells)
-                 //{
-                     if (columnValue == "True")
-                     {
-                         e.Row.Cells[index].Text = "Yes";
-                         e.Row.BackColor = Color.LightGray;    
-                     }
-                     else
-                     {   e.Row.Cells[index].Text = "No";                          
-                     }
-                 //}               
-             }
+        #region Gridviewbind
+        public void gridviewbind()
+        {
+            DataSet gds = pharmacypobj.GetPatientPharmacyDetails(); //Function Call to Get Patient Pharamacy Details
+
+            DataRow[] dr = gds.Tables[0].Select("IsProcessed=False");
+            lblPharmacyCount.Text = dr.Length.ToString();
+
+            GridViewPharmacylist.EmptyDataText = "No Records Found";
+            GridViewPharmacylist.DataSource = gds;
+            GridViewPharmacylist.DataBind();
+
+           // lblPharmacyCount.Text = gds.Tables[0].Rows.Count.ToString();
+
 
         }
-        #endregion Row Coloring for Pharmacy View
+        #endregion Gridviewbind
+
+       
 
     }
 }

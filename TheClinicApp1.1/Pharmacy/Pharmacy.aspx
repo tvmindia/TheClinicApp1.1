@@ -236,7 +236,131 @@
             }
         } 
     </script>
+        <link href="../css/TheClinicApp.css" rel="stylesheet" />
+       
+          <script src="../js/jquery-1.8.3.min.js"></script>
+    <script src="../js/ASPSnippets_Pager.min.js"></script>
 
+        <script>        
+            $(function () {
+            debugger;
+            GetPatientsOfPharmacy(1);
+        });
+            $("[id*=txtSearchINGridview]").live("keyup", function () {
+                debugger;
+                GetPatientsOfPharmacy(parseInt(1));
+            });
+            $(".Pager .page").live("click", function () {
+                GetPatientsOfPharmacy(parseInt($(this).attr('page')));
+            });
+            function SearchTerm() {
+                return jQuery.trim($("[id*=txtSearchINGridview]").val());
+            };
+            function GetPatientsOfPharmacy(pageIndex) {
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "../Pharmacy/Pharmacy.aspx/ViewAndFilterPatientBooking",
+                    data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess,
+                    failure: function (response) {
+
+                        alert(response.d);
+                    },
+                    error: function (response) {
+
+                        alert(response.d);
+                    }
+                });
+            }
+            var row;
+            function OnSuccess(response) {
+                debugger;
+                var xmlDoc = $.parseXML(response.d);
+                var xml = $(xmlDoc);
+                var Pharmacy = xml.find("Pharmacy");
+                if (row == null) {
+                    row = $("[id*=GridViewPharmacylist] tr:last-child").clone(true);
+                }
+                $("[id*=GridViewPharmacylist] tr").not($("[id*=GridViewPharmacylist] tr:first-child")).remove();
+                if (Pharmacy.length > 0) {
+
+                    $.each(Pharmacy, function () {
+                       
+                        $("td", row).eq(0).html($('<img />')
+                           .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
+
+                        $("td", row).eq(1).html($(this).find("DOCNAME").text());
+                        $("td", row).eq(2).html($(this).find("Name").text());
+
+
+                        $("td", row).eq(3).html($(this).find("CreatedDate").text());
+                        $("td", row).eq(4).html($(this).find("IsProcessed").text());
+
+                        $("td", row).eq(5).html($(this).find("DoctorID").text());
+                        $("td", row).eq(6).html($(this).find("PatientID").text());
+
+
+                        $("[id*=GridViewPharmacylist]").append(row);
+                        row = $("[id*=GridViewPharmacylist] tr:last-child").clone(true);
+                    });
+                    var pager = xml.find("Pager");
+
+                    if ($('#txtSearchINGridview').val() == '') {
+                        var GridRowCount = pager.find("RecordCount").text();
+
+                        $("#<%=lblPharmacyCount.ClientID %>").text(GridRowCount);
+                    }
+
+                    $(".Pager").ASPSnippets_Pager({
+                        ActiveCssClass: "current",
+                        PagerCssClass: "pager",
+                        PageIndex: parseInt(pager.find("PageIndex").text()),
+                        PageSize: parseInt(pager.find("PageSize").text()),
+                        RecordCount: parseInt(pager.find("RecordCount").text())
+                    });
+
+                    $(".Match").each(function () {
+                        var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+                        $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                    });
+                } else {
+                    var empty_row = row.clone(true);
+                    $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                    $("td:first-child", empty_row).attr("align", "center");
+                    $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
+                    $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                    $("[id*=GridViewPharmacylist]").append(empty_row);
+                }
+
+
+
+                //var th = $("[id*=GridViewPharmacylist] th:contains('DoctorID')");
+                //th.css("display", "none");
+                //$("[id*=GridViewPharmacylist] tr").each(function () {
+                //    $(this).find("td").eq(th.index()).css("display", "none");
+                //});
+
+                //var th1 = $("[id*=GridViewPharmacylist] th:contains('PatientID')");
+                //th1.css("display", "none");
+                //$("[id*=GridViewPharmacylist] tr").each(function () {
+                //    $(this).find("td").eq(th1.index()).css("display", "none");
+                //});
+
+            };
+
+            function OpenModal() {
+
+                $('#txtSearchINGridview').val('');
+                GetPatientsOfPharmacy(parseInt(1));
+
+            }
+
+
+            </script>
 
 
     <div class="main_body">
@@ -275,7 +399,7 @@
 
             </div>
             <div class="icon_box">
-                <a class="patient_list" data-toggle="modal" data-target="#patient_list">
+                <a class="patient_list" data-toggle="modal" data-target="#patient_list" onclick="OpenModal();">
                      <span class="tooltip1">
                          <span class="count"><asp:Label ID="lblPharmacyCount" runat="server" Text="0"></asp:Label>
                          </span>
@@ -418,33 +542,56 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header" style="border-color:royalblue;">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="PharmacyClose"><span aria-hidden="true">&times;</span></button>
                     <h3 class="modal-title">Patient List</h3>
                 </div>
-                <div class="modal-body" style="height: 500px; overflow-y: scroll; overflow-x: hidden;">
 
-                    <asp:GridView ID="GridViewPharmacylist" OnRowDataBound="GridViewPharmacylist_RowDataBound" runat="server" AutoGenerateColumns="False" DataKeyNames="PatientID">
+                <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+
+                    <div class="col-lg-12" style="height: 480px">
+
+                        <div class="col-lg-12" style="height: 40px">
+                            <div class="search_div">
+                                <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchINGridview" />
+                                <input class="button3" type="button" value="Search" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12" style="height: 400px">
+                            <asp:GridView ID="GridViewPharmacylist"  runat="server" AutoGenerateColumns="False" >
 
                         <Columns>
                             <asp:TemplateField ItemStyle-Width="35px">
                                 <ItemTemplate>
-                                    <asp:ImageButton ID="ImgBtn" runat="server" ImageUrl="../images/paper.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("DoctorID") %>' OnCommand="ImgBtn_Command" ImageAlign="Middle" BorderColor="White" formnovalidate />
+                                    <asp:ImageButton ID="ImgBtn" runat="server" ImageUrl="../images/paper.png"  ImageAlign="Middle" BorderColor="White" formnovalidate />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField HeaderText="Doctor" DataField="DOCNAME" />
-                          <%--<asp:BoundField HeaderText="Token No" DataField="TokenNo" />--%>
-                            <asp:BoundField HeaderText="Patient Name" DataField="Name" />
-                            <asp:BoundField HeaderText="DateTime" DataField="CreatedDate" />
-                            <asp:BoundField HeaderText="Issued" DataField="IsProcessed" />
+                           <asp:BoundField HeaderText="Doctor" DataField="DOCNAME" ItemStyle-CssClass="Match" />
+                         
+                            <asp:BoundField HeaderText="Patient" DataField="Name" ItemStyle-CssClass="Match" />
+                              <asp:BoundField HeaderText="DateTime" DataField="CreatedDate" ItemStyle-CssClass="Match" />
+                         <asp:BoundField HeaderText="Issued" DataField="IsProcessed" ItemStyle-CssClass="Match"/>
                             <asp:BoundField HeaderText="DoctorID" Visible="false" DataField="DoctorID" />
                             <asp:BoundField HeaderText="PatientID" Visible="false" DataField="PatientID" />
-                          
-
+                        
+                           
                         </Columns>
                     </asp:GridView>
 
+                        </div>
+                        <div class="Pager">
+                        </div>
 
+
+                    </div>
                 </div>
+
+
+
+
+
+               
             </div>
 
         </div>
