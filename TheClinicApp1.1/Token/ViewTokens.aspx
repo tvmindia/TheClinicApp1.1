@@ -67,7 +67,10 @@ table th {
 {
     width: 50px!important;
 }
-
+     .selected_row
+    {
+        background-color: #d3d3d3;
+    }
 </style>
     
     <script src="../js/DeletionConfirmation.js"></script>
@@ -83,6 +86,7 @@ table th {
 
         var UniqueID = '';
 
+        
         //-------------------------------- * Delete Button Click * ------------------------- //
 
         $(function () {
@@ -185,6 +189,12 @@ table th {
                     $("td", row).eq(4).html($(this).find("Date").text());
                     $("td", row).eq(5).html($(this).find("IsProcessed").text());
                     $("td", row).eq(6).html($(this).find("UniqueID").text());
+
+                    if ($(this).find("IsProcessed").text()=="true") {
+                        $("td", row).addClass("selected_row");
+                    }
+
+
 
                     $("[id*=GridViewTokenlist]").append(row);
                     row = $("[id*=GridViewTokenlist] tr:last-child").clone(true);
