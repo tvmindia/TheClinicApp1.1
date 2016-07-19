@@ -296,10 +296,12 @@
 
                         <h3 class="modal-title">Reorder Alert</h3>
                     </div>
-                    <div class="modal-body" style="height: 500px;">
+                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+                          <div class="col-lg-12" style="height: 480px;">
+
                         <iframe id="OutOfStockIframe" style="width: 100%; height: 100%" frameborder="0"></iframe>
 
-
+                              </div>
                     </div>
                 </div>
 
