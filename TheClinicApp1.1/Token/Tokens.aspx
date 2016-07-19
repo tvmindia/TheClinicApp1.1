@@ -24,8 +24,12 @@
         <script src="../js/Messages.js"></script>
         <script>
             $(document).ready(function () {
-            
-            
+                debugger;
+                //$("#AllTokenIframe").prop('contentWindow').GetTokenBooking(parseInt(1));
+
+
+              
+
                 $('.alert_close').click(function () {                
             
                     $(this).parent(".alert").hide();            
@@ -167,7 +171,16 @@
     {     
     }  
     document.getElementById('txtSearch').value="";
-}
+            }
+
+
+           function SetGridviewRowCount(GridRowCount)
+            {
+                $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+            }
+
+
+
         </script>
 
         <!-- #main-container -->
