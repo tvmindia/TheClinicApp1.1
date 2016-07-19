@@ -285,21 +285,18 @@
                     </td>
 
                     <td style="width:10%;border:none;">
-
- <asp:Image ID="imgWebLnames" runat="server" ToolTip="Medicine Name is Available" ImageUrl="~/Images/newfff.png" />
-
-                    <asp:Image ID="errorLnames" runat="server" ToolTip="Medicine Name is Unavailable" ImageUrl="~/Images/newClose.png" />
-
-                    </td>
-                   
-
-
+                        <span class="tooltip1">
+                        <asp:Image ID="imgWebLnames" runat="server" ImageUrl="~/Images/newfff.png" />
+                             <span class="tooltiptext1">Medicine Name is Available</span>
+                    </span>
+                    <span class="tooltip1">                        
+                        <asp:Image ID="errorLnames" runat="server"  ImageUrl="~/Images/newClose.png" />
+                         <span class="tooltiptext1">Medicine Name  is Unavailable</span>
+                    </span>
+                    </td>                                    
                 </tr>
-
                 <tr>
-                    <td >Medicine Code 
-
-                    </td>
+                    <td >Medicine Code</td>
                     <td >
                         <asp:TextBox ID="txtCode" runat="server"   onchange="CheckMedicineCodeDuplication(this)" required></asp:TextBox>
                          <asp:RequiredFieldValidator id="RequiredFieldValidator4" runat="server"
@@ -309,9 +306,14 @@
 </asp:RequiredFieldValidator>
                     </td>
                     <td >
-                         <asp:Image ID="imgCodeAvailable" runat="server" ToolTip="Medicine Code is Available" ImageUrl="~/Images/newfff.png"  />
-
-                    <asp:Image ID="imgCodeUnavailable" runat="server" ToolTip="Medicine Code is Unavailable" ImageUrl="~/Images/newClose.png" />
+                       <span class="tooltip1">
+                        <asp:Image ID="imgCodeAvailable" runat="server"  ImageUrl="~/Images/newfff.png" />
+                        <span class="tooltiptext1">Medicine Code is Available</span>
+                    </span>
+                    <span class="tooltip1">
+                        <asp:Image ID="imgCodeUnavailable" runat="server"  ImageUrl="~/Images/newClose.png" />
+                        <span class="tooltiptext1">Medicine Code  is Unavailable</span>
+                    </span>
                     </td>
                 </tr>
 

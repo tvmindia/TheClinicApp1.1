@@ -411,10 +411,16 @@
                                             <asp:TextBox ID="txtIssueNO" Width="80%" runat="server"  onchange="CheckIssueNoDuplication(this)"></asp:TextBox></td>
 
                                         <td >
-                                            <asp:Image ID="imgWebLnames" runat="server" ToolTip="Issue No is Available" ImageUrl="~/Images/newfff.png"  />
-
-                                            <asp:Image ID="errorLnames" runat="server" ToolTip="Issue No is Unavailable" ImageUrl="~/Images/newClose.png" /></td>
-
+                                            <span class="tooltip2">
+                                            <asp:Image ID="imgWebLnames" runat="server" ImageUrl="~/Images/newfff.png"  />
+                                                 <span class="tooltiptext2">Issue No  is Available</span>
+                                            </span>
+                                            <span class="tooltip2">
+                                            <asp:Image ID="errorLnames" runat="server"  ImageUrl="~/Images/newClose.png" />
+                                                <span class="tooltiptext2">Issue No  is Unavailable</span>
+                                            </span>
+                                        </td>        
+                                        
                                         <td>Date</td>
                                         <td>
                                             <asp:TextBox ID="txtDate1" CssClass="txtDate1Class" Width="80%" runat="server" ></asp:TextBox></td>
@@ -423,7 +429,6 @@
                                         <td>Issued To</td>
                                         <td>
                                             <asp:TextBox ID="txtIssuedTo" Width="80%" runat="server" EnableViewState="false" ></asp:TextBox>
-
                                         </td>
                                         <td></td>
                                         <td></td>
