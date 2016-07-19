@@ -193,7 +193,9 @@ table th {
                     if ($(this).find("IsProcessed").text()=="true") {
                         $("td", row).addClass("selected_row");
                     }
-
+                    if ($(this).find("IsProcessed").text() == "false") {
+                        $("td", row).removeClass("selected_row");
+                    }
 
 
                     $("[id*=GridViewTokenlist]").append(row);
