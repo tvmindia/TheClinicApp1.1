@@ -941,7 +941,7 @@ border-radius: 0;
     visibility: visible;
 }
 
-/*--------------------- Tooltip2 : For Icon Display,tooltip showing below ------------------  */
+/*--------------------- Tooltip2 : For Avialable/Unavailabe Pic Display,tooltip showing below ------------------  */
 .tooltip2 {
     position: relative;
     display: inline-block;
@@ -967,6 +967,32 @@ border-radius: 0;
 .tooltip2:hover .tooltiptext2 {
     visibility: visible;
 }
+/*--------------------- Tooltip3 : For NEW button,tooltip showing below ------------------  */
+.tooltip3 {
+    position: relative;
+    display: inline-block;    
+}
+
+.tooltip3 .tooltiptext3 {
+    visibility: hidden;
+    width: 100px;
+    background-color:#505050;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 105%;
+    right: -500%;
+}
+
+.tooltip3:hover .tooltiptext3 {
+    visibility: visible;
+}
+
 
 /*--------------------------------ToolTips----------------------------------------------*/
 

@@ -1039,6 +1039,7 @@ function ErrorMessagesDisplay(ErrorCaption, lblMsgges, Errorbox,lblclass,lblcapt
  
 
 
+// function Allowing only numbers in Textbox
 
 function isNumber(evt) {
     evt = (evt) ? evt : window.event;
@@ -1047,4 +1048,14 @@ function isNumber(evt) {
         return false;
     }
     return true;
+}
+
+// function Allowing only alphabets in Textbox 
+function isnotNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123)) {
+        return true;
+    }
+    return false;
 }

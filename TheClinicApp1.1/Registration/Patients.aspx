@@ -455,7 +455,7 @@
                             <div class="col-lg-8">
                                 <div class="row">
                                     <div class="col-lg-8 margin_bottom">
-                                        <label for="name">Name</label><input id="txtName" runat="server" type="text" name="name" pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." />
+                                        <label for="name">Name</label><input id="txtName" runat="server" onkeypress="return isnotNumber(event)" type="text" name="name" pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." />
                                     </div>
                                     <div class="col-lg-4 upload_photo_col">
                                         <div class="margin_bottom upload_photo">
