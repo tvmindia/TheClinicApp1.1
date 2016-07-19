@@ -4,6 +4,7 @@
     
 
     <script src="Scripts/jquery-1.12.0.min.js"></script>
+    <script src="../js/jquery-1.9.1.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
 
     <style>
@@ -75,26 +76,18 @@ table td{
     </style>
 
     <script>
-        function test()
-        {
-            debugger;
-            var $row = $(this).find('td:first');
-
-
-                var clickeedID = $row.eq(1).text();
-                alert(clickeedID);
-
-            //editedrow = $(this).closest('tr');
-            //var id = $(this).attr('idval')
-            //var manu = $(editedrow).find("td:eq(1)").text();
-
-            
-        }
+        $(document).ready(function () {         
+        
+            $('.nav_menu').click(function () {
+                
+                $(".main_body").toggleClass("active_close");
+            });  
+        });
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-            <div class="main_body">   
+            <div class="main_body">
       
       <!-- Left Navigation Bar -->  
          <div class="left_part">
@@ -157,5 +150,5 @@ table td{
     </div>
                
              
-                 
+                 </div>   
 </asp:Content>
