@@ -10,7 +10,8 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Drawing;
 using System.Web.UI.WebControls;
-using TheClinicApp1._1.ClinicDAL; 
+using TheClinicApp1._1.ClinicDAL;
+using System.Web.Script.Serialization; 
 
 #endregion Namespaces
 
@@ -93,6 +94,50 @@ namespace TheClinicApp1._1.Pharmacy
 
         #endregion ToKen booking View Search Paging
 
+        #region Bind Pharmacy Details On Edit Click
+        /// <summary>
+        /// To get specific order details by orderid for the editing purpose
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [System.Web.Services.WebMethod]
+        public static string BindPharmacyDetailsOnEditClick(pharmacy pharmacypobj)
+        {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            pharmacypobj.ClinicID = UA.ClinicID;
+            DataSet dtPharmacy = pharmacypobj.GetPatientPharmacyDetailsByID();
+
+
+            string jsonResult = null;
+            DataSet ds = null;
+            ds = dtPharmacy;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+            Dictionary<string, object> childRow;
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    childRow = new Dictionary<string, object>();
+                    foreach (DataColumn col in ds.Tables[0].Columns)
+                    {
+                        childRow.Add(col.ColumnName, row[col]);
+                    }
+                    parentRow.Add(childRow);
+                }
+            }
+            jsonResult = jsSerializer.Serialize(parentRow);
+
+            return jsonResult; //Converting to Json
+        }
+        #endregion Bind Pharmacy Details On Edit Click
 
         #region WebMethod
 
@@ -277,6 +322,8 @@ namespace TheClinicApp1._1.Pharmacy
 
         #region ClickEvents
 
+        #region ImageBUtton Click
+
         protected void ImgBtn_Command(object sender, CommandEventArgs e)
         {
             string[] Visits = e.CommandArgument.ToString().Split(new char[] { '|' });
@@ -320,6 +367,11 @@ namespace TheClinicApp1._1.Pharmacy
                 ProfilePic.Src = "../images/UploadPic1.png";
             }
         }
+
+        #endregion ImageBUtton Click
+
+        #region Save Button Click
+
         protected void btnSave_Click(object sender, EventArgs e)
         {
             string msg = string.Empty;
@@ -400,6 +452,11 @@ namespace TheClinicApp1._1.Pharmacy
                 }
             }
         }
+
+        #endregion Save Button Click
+
+        #region LogOuT
+
         protected void Logout_ServerClick(object sender, EventArgs e)
         {
             Session.Remove(Const.LoginSession);
@@ -410,6 +467,8 @@ namespace TheClinicApp1._1.Pharmacy
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
         }
+
+        #endregion LogOuT
 
         #endregion ClickEvents
 
@@ -434,8 +493,6 @@ namespace TheClinicApp1._1.Pharmacy
 
         }
         #endregion Gridviewbind
-
-       
 
     }
 }

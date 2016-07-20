@@ -256,10 +256,112 @@
 
         <script>     
             
-           
+            var DoctorID ='';
+            var PatientID = '';
+
+            //---getting data as json-----//
+            function getJsonData(data, page) {
+                var jsonResult = {};
+                var req = $.ajax({
+                    type: "post",
+                    url: page,
+                    data: data,
+                    delay: 3,
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json"
+
+                }).done(function (data) {
+                    jsonResult = data;
+                });
+                return jsonResult;
+            }
+
+            function ConvertJsonToDate(jsonDate) {
+                if (jsonDate != null) {
+                    var dateString = jsonDate.substr(6);
+                    var currentTime = new Date(parseInt(dateString));
+                    var month = currentTime.getMonth();
+                    var day = currentTime.getDate();
+                    var year = currentTime.getFullYear();
+                    var monthNames = [
+                                  "Jan", "Feb", "Mar",
+                                  "Apr", "May", "Jun", "Jul",
+                                  "Aug", "Sep", "Oct",
+                                  "Nov", "Dec"
+                    ];
+                    var result = day + '-' + monthNames[month] + '-' + year;
+                    return result;
+                }
+            }
 
 
 
+            //-------------------------------- * VIEW Button Click * ------------------------- //
+
+
+            $(function () {
+                $("[id*=GridViewPharmacylist] td:eq(0)").click(function () {
+
+                    debugger;
+
+                    document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+                    
+                    if ($(this).text() == "") {
+                        var jsonResult = {};
+                        DoctorID = $(this).closest('tr').find('td:eq(5)').text();
+                        PatientID = $(this).closest('tr').find('td:eq(6)').text();
+
+                        $("#<%=Patientidtorefill.ClientID %>").val(PatientID)
+                        
+                        var pharmacy = new Object();
+                        pharmacy.DoctorID = DoctorID;
+                        pharmacy.PatientID = PatientID;
+
+                        jsonResult = GetPharmacyDetailsByID(pharmacy);
+                        if (jsonResult != undefined) {
+                            debugger;
+                            BindPharmayControls(jsonResult);
+                        }
+                    }
+                });
+            });
+
+            function GetPharmacyDetailsByID(pharmacy) {
+                var ds = {};
+                var table = {};
+                var data = "{'pharmacypobj':" + JSON.stringify(pharmacy) + "}";
+                ds = getJsonData(data, "../Pharmacy/Pharmacy.aspx/BindPharmacyDetailsOnEditClick");
+                table = JSON.parse(ds.d);
+                return table;
+            }
+
+
+            function BindPharmayControls(Records) {
+                $.each(Records, function (index, Records) {
+                    <%-- $("#<%=txtCategoryName.ClientID %>").val(Records.Name);
+                    $("#<%=hdnCategoryId.ClientID %>").val(Records.CategoryID);--%>
+
+                    debugger;
+
+                    $("#<%=lblPatientName.ClientID %>").text(Records.Name) ;
+                    $("#<%=lblDoctor.ClientID %>").text(Records.DOCNAME);
+                    $("#<%=lblFileNum.ClientID %>").text(Records.FileNumber);
+                    $("#<%=lblGenderDis.ClientID %>").text(Records.Gender);
+                    $("#<%=lblGenderDis.ClientID %>").text(Records.Gender);
+
+                    //---- Age Calculation By substracting DOB year from Current year
+
+                    var DOB = new Date(Date.parse(ConvertJsonToDate(Records.DOB),"MM/dd/yyyy"));
+                    var Age = (new Date().getFullYear() )-   (DOB.getFullYear());
+                    
+                    $("#<%=lblAgeCount.ClientID %>").text(Age) ;
+
+                    $("#PharmacyClose").click();
+                });
+            }
+            //-------------------------------- *END : VIEW Button Click * ------------------------- //
+        
             $(function () {
             debugger;
             GetPatientsOfPharmacy(1);
