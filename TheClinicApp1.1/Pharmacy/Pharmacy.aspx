@@ -58,6 +58,8 @@
             $( "#txtSearch" ).autocomplete({
                 maxResults: 10,
                 source: function(request, response) {
+                    debugger;
+
 
                     //--- Search by name or description(file no , mobile no, address) , by accessing matched results with search term and setting this result to the source for autocomplete
                     var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
@@ -253,7 +255,7 @@
        
           <script src="../js/jquery-1.8.3.min.js"></script>
     <script src="../js/ASPSnippets_Pager.min.js"></script>
-
+         <script src="../js/jquery-ui.js"></script>
         <script>     
             
             var DoctorID ='';
