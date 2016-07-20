@@ -78,11 +78,8 @@ namespace TheClinicApp1._1.Pharmacy
             dummy.Columns.Add("CreatedDate");
             dummy.Columns.Add("IsProcessed");
             dummy.Columns.Add("DoctorID");
-         
             dummy.Columns.Add("PatientID");
-
-           
-
+            
             dummy.Rows.Add();
 
             GridViewPharmacylist.DataSource = dummy;
@@ -138,6 +135,27 @@ namespace TheClinicApp1._1.Pharmacy
             return jsonResult; //Converting to Json
         }
         #endregion Bind Pharmacy Details On Edit Click
+
+        #region Get Prescription Details Xml
+        [WebMethod]
+        public static string GetPrescriptionDetailsXml(string PatientID)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            pharmacy pharmacypobj = new pharmacy();
+            pharmacypobj.ClinicID = UA.ClinicID;
+            pharmacypobj.PatientID = Guid.Parse(PatientID);
+
+            DataSet MedicinList = pharmacypobj.PrescriptionDetails();  //Prescription Details Function Call
+            var xml = MedicinList.GetXml();
+
+            return xml;
+        }
+
+        #endregion Get Prescription Details Xml
+
 
         #region WebMethod
 

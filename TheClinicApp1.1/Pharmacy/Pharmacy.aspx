@@ -303,8 +303,6 @@
             $(function () {
                 $("[id*=GridViewPharmacylist] td:eq(0)").click(function () {
 
-                    debugger;
-
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                     
                     if ($(this).text() == "") {
@@ -320,7 +318,7 @@
 
                         jsonResult = GetPharmacyDetailsByID(pharmacy);
                         if (jsonResult != undefined) {
-                            debugger;
+                          
                             BindPharmayControls(jsonResult);
                         }
                     }
@@ -342,7 +340,7 @@
                     <%-- $("#<%=txtCategoryName.ClientID %>").val(Records.Name);
                     $("#<%=hdnCategoryId.ClientID %>").val(Records.CategoryID);--%>
 
-                    debugger;
+//Fill Patient Details
 
                     $("#<%=lblPatientName.ClientID %>").text(Records.Name) ;
                     $("#<%=lblDoctor.ClientID %>").text(Records.DOCNAME);
@@ -354,20 +352,94 @@
 
                     var DOB = new Date(Date.parse(ConvertJsonToDate(Records.DOB),"MM/dd/yyyy"));
                     var Age = (new Date().getFullYear() )-   (DOB.getFullYear());
-                    
                     $("#<%=lblAgeCount.ClientID %>").text(Age) ;
+
+//Fill Prescription Details
+
+                    GetPrescriptionDetails(PatientID);
+
+                    debugger;
+
+                    var   imagetype =Records.ImageType;
+
+                    var ProfilePic = $("#<%=ProfilePic.ClientID %>");
+
+                    if (imagetype != '')
+                    {
+                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.toString();
+                    }
+                    else
+                    {
+                        ProfilePic.src = "../images/UploadPic1.png";
+                    }
 
                     $("#PharmacyClose").click();
                 });
             }
             //-------------------------------- *END : VIEW Button Click * ------------------------- //
         
+
+
+            function GetPrescriptionDetails(PatientID) {
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "../Pharmacy/Pharmacy.aspx/GetPrescriptionDetailsXml",
+                    data: '{PatientID: "' + PatientID + '"}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess1,
+                    failure: function (response) {
+
+                        alert(response.d);
+                    },
+                    error: function (response) {
+
+                        alert(response.d);
+                    }
+                });
+            }
+           
+            function OnSuccess1(response) {
+              
+                debugger;
+
+
+                $("#<%=hdnXmlData.ClientID %>").val(response.d) ;
+
+                var xmlDoc = $.parseXML(response.d);
+                var xml = $(xmlDoc);
+                var Pharmacy = xml.find("Medicines");
+               
+                FillTextboxUsingXml();
+
+                if (Pharmacy.length > 0) {
+
+                    $.each(Pharmacy, function () 
+                    {
+                  var PrescriptionID =      $(this).find("PrescriptionID").text()
+
+                  $("#<%=hdnPrescID.ClientID %>").val(PrescriptionID)      
+                       
+                    });
+                   
+
+                } 
+                else{
+                    $("#<%=hdnPrescID.ClientID %>").val('');
+                }
+
+
+            };
+
+
             $(function () {
-            debugger;
+           
             GetPatientsOfPharmacy(1);
         });
             $("[id*=txtSearchINGridview]").live("keyup", function () {
-                debugger;
+              
                 GetPatientsOfPharmacy(parseInt(1));
             });
             $(".Pager .page").live("click", function () {
@@ -398,7 +470,7 @@
             }
             var row;
             function OnSuccess(response) {
-                debugger;
+               
                 var xmlDoc = $.parseXML(response.d);
                 var xml = $(xmlDoc);
                 var Pharmacy = xml.find("Pharmacy");
@@ -409,7 +481,7 @@
                 if (Pharmacy.length > 0) {
 
                     $.each(Pharmacy, function () {
-                        debugger;
+                       
                         $("td", row).eq(0).html($('<img />')
                            .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
 
@@ -490,7 +562,7 @@
 
 
             </script>
-
+       
 
     <div class="main_body">
 
