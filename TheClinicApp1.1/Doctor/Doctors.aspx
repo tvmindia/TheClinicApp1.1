@@ -166,12 +166,15 @@
                     document.getElementById('txtSearch').value="";//clear search box  
                     
 
-                    PatientID = string1[7];
+                    var   patientid = string1[7];
 
-                    if ( PatientID!= '') 
+                    if ( patientid!= '') 
                     {
+                        GetHistory(1,patientid);
 
-                        GetHistory(1,PatientID);
+                        var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
+                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
+                       
                     }
 
                 }          
@@ -286,12 +289,16 @@
 
                     //Fill Patient Details
 
+                    debugger;
+
                     $("#<%=lblPatientName.ClientID %>").text(Records.Name) ;
                     $("#<%=lblDoctor.ClientID %>").text(Records.DOCNAME);
                     $("#<%=lblFileNum.ClientID %>").text(Records.FileNumber);
                     $("#<%=lblGenderDis.ClientID %>").text(Records.Gender);
                     $("#<%=HiddenField1.ClientID %>").val(Records.PatientID); 
-
+                    $("#<%=HiddenPatientID.ClientID %>").val(Records.PatientID); 
+                 
+                    var patientid = Records.PatientID;
                    
                     //---- Age Calculation By substracting DOB year from Current year
 
@@ -301,11 +308,13 @@
 
                     var   imagetype =Records.ImageType;
 
-                    var ProfilePic = $("#<%=ProfilePic.ClientID %>");
+                    var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
 
                     if (imagetype != '')
                     {
-                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID;
+                        debugger;
+
+                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
                     }
                     else
                     {
@@ -484,13 +493,26 @@
             {
                 //Search in Visit table
 
-                GetHistory(parseInt(1),PatientID);
+                debugger;
+
+                var patientid =      $("#<%=HiddenPatientID.ClientID %>").val();
+
+                if (patientid != '') {
+
+                    GetHistory(parseInt(1),patientid);
+                }
             });
             $(".Pager .page").live("click", function () 
             {
                 //Next Click(paging) of Visit table
 
-                GetHistory(parseInt($(this).attr('page')),PatientID);
+                var patientid =      $("#<%=HiddenPatientID.ClientID %>").val();
+
+                if (patientid != '') {
+    
+                    GetHistory(parseInt($(this).attr('page')),patientid);
+                }
+
             });
             function SearchTerm() {
                 return jQuery.trim($("[id*=txtSearchVisit]").val());
@@ -684,16 +706,21 @@
 
 
                         $("td", row).eq(3).html($(this).find("DateTime").text());
-                        $("td", row).eq(4).html($(this).find("IsProcessed").text());
+                      
                          $("td", row).eq(5).html($(this).find("PatientID").text());
 
                       
 
                         if ($(this).find("IsProcessed").text()=="true") {
                             $("td", row).addClass("selected_row");
+
+                            $("td", row).eq(4).html("Yes");
+
                         }
                         if ($(this).find("IsProcessed").text() == "false") {
                             $("td", row).removeClass("selected_row");
+
+                            $("td", row).eq(4).html("No");
                         }
 
 

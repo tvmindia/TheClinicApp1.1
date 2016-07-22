@@ -142,19 +142,15 @@
             
                 document.getElementById('txtSearch').value="";//clearin the Search box
                 
-                var ProfilePic = $("#<%=ProfilePic.ClientID %>");
+                var patientid=    string1[7];
 
-                //if (string1[7] != '')
-                //{
-                //var patientid=    string1[7].toString()
+                var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
 
-                //ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
-                //}
-                //else
-                //{
-                //    ProfilePic.src = "../images/UploadPic1.png";
-                //}
-
+                if (patientid != '')
+                {
+                    ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
+                }
+               
 
             }          
             function onError(response, userContext, methodName)
@@ -506,7 +502,7 @@
 
 
                         $("td", row).eq(3).html($(this).find("CreatedDate").text());
-                        $("td", row).eq(4).html($(this).find("IsProcessed").text());
+                      
 
                         $("td", row).eq(5).html($(this).find("DoctorID").text());
                         $("td", row).eq(6).html($(this).find("PatientID").text());
@@ -514,9 +510,15 @@
                       
 
                         if ($(this).find("IsProcessed").text()=="true") {
+                            $("td", row).eq(4).html("Yes");
+
                             $("td", row).addClass("selected_row");
+
+
                         }
                         if ($(this).find("IsProcessed").text() == "false") {
+
+                            $("td", row).eq(4).html("No");
                             $("td", row).removeClass("selected_row");
                         }
 
@@ -671,7 +673,7 @@
 
                 <div class="token_id_card">
                     <div class="name_field">
-                        <img src="../images/UploadPic1.png" id="ProfilePic" runat="server" width="80" height="80" /><asp:Label ID="lblPatientName" runat="server" Text="Patient_Name"></asp:Label>
+                        <img src="../images/UploadPic1.png" id="ProfilePic" runat="server" width="80" height="80"  /><asp:Label ID="lblPatientName" runat="server" Text="Patient_Name"></asp:Label>
                     </div>
                     <div class="light_grey">
                         <div class="col3_div">

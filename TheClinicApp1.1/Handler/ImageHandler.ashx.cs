@@ -38,7 +38,7 @@ namespace TheClinicApp.Handler
                     else
                     {
                         context.Response.ContentType = "image/png";
-                        context.Response.WriteFile("~/images/UploadPic1.jpg"); 
+                        context.Response.WriteFile("~/images/UploadPic1.png"); 
 
                     }
 
