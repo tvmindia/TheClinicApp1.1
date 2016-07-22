@@ -31,6 +31,7 @@ namespace TheClinicApp1._1.ClinicDAL
         ClinicDAL.UserAuthendication UA;            
         public string Module = "Doctor";
 
+
         #endregion global
 
         #region GrabFileID
@@ -44,6 +45,12 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+
+        //public string fileID
+        //{
+        //    get;
+        //    set;
+        //}
 
         #endregion Property
 
@@ -412,6 +419,7 @@ namespace TheClinicApp1._1.ClinicDAL
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
             public string Module = "Doctor/CaseFile/Visit";
+            common cmn = new common();
 
             private DateTime CreatedDateLocal;
             private DateTime UpdatedDateLocal;
@@ -908,7 +916,88 @@ namespace TheClinicApp1._1.ClinicDAL
                 return GridBindVisits;
             }
 
-            #endregion GetVisitsGrid        
+
+            /*--------- View Search Paging Of Visits ------------*/
+
+            #region ViewAndFilterVisits
+
+            public string ViewAndFilterVisits(string searchTerm, int pageIndex, int PageSize)
+            {
+                var xml = string.Empty;
+                SqlConnection con = null;
+                DataSet ds = null;
+                SqlDataAdapter sda = null;
+                try
+                {
+                    DateTime now = DateTime.Now;
+                    dbConnection dcon = new dbConnection();
+                    con = dcon.GetDBConnection();
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "[ViewAndFilterVisits]";
+
+                    cmd.Parameters.Add("@FileID", SqlDbType.UniqueIdentifier).Value = FileID;
+                    cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode;
+
+                    cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                    cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                    cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                    cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+
+
+                    sda = new SqlDataAdapter();
+                    cmd.ExecuteNonQuery();
+                    sda.SelectCommand = cmd;
+                    ds = new DataSet();
+                    sda.Fill(ds, "Visits");
+
+                    //-----------Paging Section 
+
+                    DataTable dt = new DataTable("Pager");
+                    dt.Columns.Add("FILEID");
+                    dt.Columns.Add("PageIndex");
+                    dt.Columns.Add("PageSize");
+                    dt.Columns.Add("RecordCount");
+                    dt.Rows.Add();
+                    dt.Rows[0]["FILEID"] = FileID;
+                    dt.Rows[0]["PageIndex"] = pageIndex;
+                    dt.Rows[0]["PageSize"] = PageSize;
+                    dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                    ds.Tables.Add(dt);
+
+                    xml = ds.GetXml();
+
+                }
+
+                catch (Exception ex)
+                {
+                    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                    eObj.Description = ex.Message;
+                    eObj.Module = Module;
+                    eObj.UserID = UA.UserID;
+                    eObj.Method = "ViewAndFilterVisits";
+                    eObj.InsertError();
+                }
+
+                finally
+                {
+                    if (con != null)
+                    {
+                        con.Dispose();
+                    }
+
+                }
+                return xml;
+
+            }
+
+            #endregion ViewAndFilterVisits
+
+
+
+            #endregion GetVisitsGrid
 
             #region UpdateVisits
             /// <summary>
@@ -1288,6 +1377,54 @@ namespace TheClinicApp1._1.ClinicDAL
                         }
                         return dt;
                     }
+
+                    public DataSet GetVisitAttachment()
+                    {
+
+                        if (VisitID == Guid.Empty)
+                        {
+                            throw new Exception("VisitID Is Empty!!");
+                        }
+                        SqlConnection con = null;
+                        DataSet ds = new DataSet();
+
+                        try
+                        {
+                            DateTime now = DateTime.Now;
+
+                            dbConnection dcon = new dbConnection();
+                            con = dcon.GetDBConnection();
+                            SqlCommand cmd = new SqlCommand("GetAttachmentUsingVisitID", con);
+                            cmd.Parameters.Add("@VisitID", SqlDbType.UniqueIdentifier).Value = VisitID;
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            SqlDataAdapter adapter = new SqlDataAdapter();
+                            adapter.SelectCommand = cmd;
+                            ds = new DataSet();
+                            adapter.Fill(ds);
+                            con.Close();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                            eObj.Description = ex.Message;
+                            eObj.Module = Module;
+                            eObj.UserID = UA.UserID;
+                            eObj.Method = "GetVisitAttachment";
+                            eObj.InsertError();
+                        }
+                        finally
+                        {
+                            if (con != null)
+                            {
+                                con.Dispose();
+                            }
+
+                        }
+                        return ds;
+                    }
+
+
                     #endregion GetAttachID using VisitID
                     
                     #region GetAttachmentImages

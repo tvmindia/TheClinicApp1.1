@@ -142,6 +142,20 @@
             
                 document.getElementById('txtSearch').value="";//clearin the Search box
                 
+                var ProfilePic = $("#<%=ProfilePic.ClientID %>");
+
+                //if (string1[7] != '')
+                //{
+                //var patientid=    string1[7].toString()
+
+                //ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
+                //}
+                //else
+                //{
+                //    ProfilePic.src = "../images/UploadPic1.png";
+                //}
+
+
             }          
             function onError(response, userContext, methodName)
             {                   

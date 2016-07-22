@@ -3,48 +3,20 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <style>
+              .selected_row
+    {
+        background-color: #d3d3d3!important;
+    }
+
+
+
+        </style>
+
     <asp:Panel DefaultButton="btnSave" runat="server">
         <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
-        <style>
-            img .imagpreview {
-                display: inline-flex;
-            }
-
-            .modal table td {
-                text-align: left;
-                height: auto;
-            }
-
-            .modal table td {
-                width: 30px;
-                height: auto;
-                padding-left: 4px;
-            }
-
-                .modal table td + td {
-                    width: auto;
-                    height: auto;
-                    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
-                    font-size: 14px;
-                    font-weight: 200;
-                    padding-left: 4px;
-                }
-
-            .modal table th {
-                font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
-                font-size: 16px;
-            }
-
-            .table {
-                margin-bottom: 7px !important;
-            }
-
-            #accordion table td {
-                border: 0;
-                border-top: 1px solid #E6E5E5 !important;
-                border-left: 1px solid #E6E5E5 !important;
-            }
-        </style>
+        
 
         <script src="../js/jquery-1.12.0.min.js"></script>
         <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -159,6 +131,11 @@
 
         </script>
         <script> 
+
+            ///Called for onblur event of SEARCH textbox
+            //retrieves patient details by web method and then bind controls
+            //Calls the function to bind history using PatientID
+
             function bindPatientDetails()
             {              
                 var PatientName = document.getElementById("project-description").innerText;            
@@ -183,18 +160,597 @@
                     document.getElementById('<%=lblGenderDis.ClientID%>').innerHTML=string1[3];            
                     document.getElementById('<%=HiddenPatientID.ClientID%>').value=string1[7];
            
-                    var BtID=document.getElementById('<%=btnSearch.ClientID%>')
+                 <%--   var BtID=document.getElementById('<%=btnSearch.ClientID%>')
                 
-                    $('#<%=btnSearch.ClientID%>').click();
-                    document.getElementById('txtSearch').value="";//clear search box                
+                    $('#<%=btnSearch.ClientID%>').click();--%>
+                    document.getElementById('txtSearch').value="";//clear search box  
+                    
+
+                    PatientID = string1[7];
+
+                    if ( PatientID!= '') 
+                    {
+
+                        GetHistory(1,PatientID);
+                    }
+
                 }          
                 function onError(response, userContext, methodName)
                 {                   
-                }         
+                }   
+                
+
+            }
+
+           
+        </script>
+
+        <%--Script And Css For Paging,Search--%>
+
+         <link href="../css/TheClinicApp.css" rel="stylesheet" />
+
+         <script src="../js/jquery-1.8.3.min.js"></script>
+        <script src="../js/ASPSnippets_Pager.min.js"></script>
+         <script src="../js/jquery-ui.js"></script>
+       
+        <script> 
+            
+            var PatientID = '';
+
+            //---getting data as json-----//
+            function getJsonData(data, page) {
+                var jsonResult = {};
+                var req = $.ajax({
+                    type: "post",
+                    url: page,
+                    data: data,
+                    delay: 3,
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json"
+
+                }).done(function (data) {
+                    jsonResult = data;
+                });
+                return jsonResult;
+            }
+
+            function ConvertJsonToDate(jsonDate) {
+                if (jsonDate != null) {
+                    var dateString = jsonDate.substr(6);
+                    var currentTime = new Date(parseInt(dateString));
+                    var month = currentTime.getMonth();
+                    var day = currentTime.getDate();
+                    var year = currentTime.getFullYear();
+                    var monthNames = [
+                                  "Jan", "Feb", "Mar",
+                                  "Apr", "May", "Jun", "Jul",
+                                  "Aug", "Sep", "Oct",
+                                  "Nov", "Dec"
+                    ];
+                    var result = day + '-' + monthNames[month] + '-' + year;
+                    return result;
+                }
             }
 
 
-        </script>
+            //-------------------------------- * VIEW Button Click OF TOKEN List * ------------------------- //
+
+            //On Clicking view button Patient details will be binded
+            //Calls the function to bind history ,by patientID
+
+            $(function () {
+                $("[id*=GridViewTokenlist] td:eq(0)").click(function () { 
+                    
+                    PatientID = $(this).closest('tr').find('td:eq(5)').text();
+
+                    reset();
+
+                    document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+                    
+                    if ($(this).text() == "") {
+                        var jsonResult = {};
+                        var jsonResult1 = {};
+
+                        var Patient = new Object();
+                        Patient.PatientID = PatientID;
+                       
+                        jsonResult = GetPatientDetailsByID(Patient);
+                        if (jsonResult != undefined) {
+                          
+                            BindControlsWithPatientDetails(jsonResult); 
+                        }
+                       
+                        GetHistory(1,PatientID);
+
+                    }
+
+                });
+            });
+
+            //-------------------------------- *END : VIEW Button Click * ------------------------- //
+
+            function GetPatientDetailsByID(Patient) {
+                var ds = {};
+                var table = {};
+                var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
+                ds = getJsonData(data, "../Doctor/Doctors.aspx/BindPatientDetailsOnEditClick");
+                table = JSON.parse(ds.d);
+                return table;
+            }
+
+            function BindControlsWithPatientDetails(Records) {
+                $.each(Records, function (index, Records) {
+                    <%-- $("#<%=txtCategoryName.ClientID %>").val(Records.Name);
+                    $("#<%=hdnCategoryId.ClientID %>").val(Records.CategoryID);--%>
+
+                    //Fill Patient Details
+
+                    $("#<%=lblPatientName.ClientID %>").text(Records.Name) ;
+                    $("#<%=lblDoctor.ClientID %>").text(Records.DOCNAME);
+                    $("#<%=lblFileNum.ClientID %>").text(Records.FileNumber);
+                    $("#<%=lblGenderDis.ClientID %>").text(Records.Gender);
+                    $("#<%=HiddenField1.ClientID %>").val(Records.PatientID); 
+
+                   
+                    //---- Age Calculation By substracting DOB year from Current year
+
+                    var DOB = new Date(Date.parse(ConvertJsonToDate(Records.DOB),"MM/dd/yyyy"));
+                    var Age = (new Date().getFullYear() )-   (DOB.getFullYear());
+                    $("#<%=lblAgeCount.ClientID %>").text(Age) ;
+
+                    var   imagetype =Records.ImageType;
+
+                    var ProfilePic = $("#<%=ProfilePic.ClientID %>");
+
+                    if (imagetype != '')
+                    {
+                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID;
+                    }
+                    else
+                    {
+                        ProfilePic.src = "../images/UploadPic1.png";
+                    }
+
+                    $("#DoctrClose").click();
+                });
+            }
+
+
+//------------------------------------------------- * History Edit Click * ------------------------------------//
+
+            var FileID ='';
+            var VisitID = '';
+            var PrescriptionID ='';
+
+            ///On clicking history's EDIT button 
+            //visit details are binded by visitID
+            //Visit Attachment details are binded by visistID
+            //Prescription details are binded by prescriptionID
+            //(patient Detils are already binded)
+
+            $(function () {
+                $("[id*=GridViewVisitsHistory] td:eq(0)").click(function () {
+
+                    $("#HistoryClose").click();
+
+                    reset();
+
+                    document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+                    
+                    if ($(this).text() == "") {
+                        var jsonVisit = {};
+                        var jsonVisitAttchmnt = {};
+
+                        FileID = $(this).closest('tr').find('td:eq(3)').text();
+                        VisitID = $(this).closest('tr').find('td:eq(4)').text();
+                        PrescriptionID = $(this).closest('tr').find('td:eq(5)').text();
+
+
+                        $("#<%=HdnPrescID.ClientID %>").val(PrescriptionID);
+                        $("#<%=HdnForVisitID.ClientID %>").val(VisitID);
+
+                        //------------------------ Binding Visit Deatils By VisitID
+
+                         var Visit = new Object();
+                         Visit.VisitID = VisitID;
+
+                         jsonVisit = GetVisitDetailsByvisitID(Visit);
+                         if (jsonVisit != undefined) {
+                          
+                             BindVisitDetails(jsonVisit);
+                         }
+
+                        //----------------------- Binding Visit Attachment Deatils By VisitID
+
+                         var   VisitAttachment = new Object();
+                         VisitAttachment.VisitID = VisitID;
+
+                         jsonVisitAttchmnt = GetAttachmentDetailsByvisitID(VisitAttachment)
+
+                         if (jsonVisitAttchmnt != undefined) {
+                          
+                             BindAttachment(jsonVisitAttchmnt);
+                        }
+
+                        //----------------------- Binding Prescription Details
+                        GetPrescriptionDetails(PrescriptionID);
+
+                    }
+                });
+            });
+
+            function GetVisitDetailsByvisitID(Visit) {
+                var ds = {};
+                var table = {};
+                var data = "{'CaseFileObj':" + JSON.stringify(Visit) + "}";
+                ds = getJsonData(data, "../Doctor/Doctors.aspx/BindVisitDetailsOnEditClick");
+                table = JSON.parse(ds.d);
+                return table;
+            }
+
+            function GetAttachmentDetailsByvisitID(VisitAttachment) {
+
+                var ds = {};
+                var table = {};
+                var data = "{'AttachObj':" + JSON.stringify(VisitAttachment) + "}";
+                ds = getJsonData(data, "../Doctor/Doctors.aspx/GetVisitAttatchment");
+                table = JSON.parse(ds.d);
+                return table;
+            }
+
+            function BindAttachment(Records)
+            {
+                $.each(Records, function (index, Records) {
+
+                    var AttchmntID = Records.AttachID;
+
+                    var img= $('<img id="'+AttchmntID+'">'); //Equivalent: $(document.createElement('img'))
+                    img.attr('src', "../Handler/ImageHandler.ashx?AttachID="+AttchmntID);
+                    img.attr("height", "120");
+                    img.attr("class", "imagpreview");
+
+                    img.appendTo(  $("#<%=VistImagePreview.ClientID %>"));
+
+                });
+            }
+
+            function BindVisitDetails(Records) {
+                
+                    $("#<%=txtHeightFeet.ClientID %>").val(Records.Height);
+                    $("#<%=txtWeight.ClientID %>").val(Records.Weight);
+                    $("#<%=bowel.ClientID %>").val(Records.Bowel);
+                    $("#<%=appettie.ClientID %>").val(Records.Appettie);
+                    $("#<%=micturation.ClientID %>").val(Records.Micturation);
+                    $("#<%=sleep.ClientID %>").val(Records.Sleep);
+                    $("#<%=symptoms.ClientID %>").val(Records.Symptoms);
+                    $("#<%=cardiovascular.ClientID %>").val(Records.Cardiovascular);
+                    $("#<%=nervoussystem.ClientID %>").val(Records.Nervoussystem);
+                    $("#<%=musculoskeletal.ClientID %>").val(Records.Musculoskeletal);
+                    $("#<%=palloe.ClientID %>").val(Records.Palloe);
+                    $("#<%=icterus.ClientID %>").val(Records.Icterus);
+                    $("#<%=clubbing.ClientID %>").val(Records.Clubbing);
+                    $("#<%=cyanasis.ClientID %>").val(Records.Cyanasis);
+                    $("#<%=lymphGen.ClientID %>").val(Records.LymphGen);
+                    $("#<%=edima.ClientID %>").val(Records.Edima);
+                    $("#<%=diagnosys.ClientID %>").val(Records.Diagnosys);
+                    $("#<%=remarks.ClientID %>").val(Records.Remarks);
+                    $("#<%=pulse.ClientID %>").val(Records.Pulse);
+                    $("#<%=bp.ClientID %>").val(Records.Bp);
+                    $("#<%=tounge.ClientID %>").val(Records.Tounge);
+                    $("#<%=heart.ClientID %>").val(Records.Heart);
+                    $("#<%=lymphnodes.ClientID %>").val(Records.LymphClinic);
+                    $("#<%=resp_rate.ClientID %>").val(Records.RespRate);
+                    $("#<%=others.ClientID %>").val(Records.Others);
+                   
+            }
+
+            function GetPrescriptionDetails(PrescriptionID) {
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "../Doctor/Doctors.aspx/GetPrescriptionDetailsXml",
+                    data: '{PrescriptionID: "' + PrescriptionID + '"}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: PrescriptionSuccess,
+                    failure: function (response) {
+
+                        alert(response.d);
+                    },
+                    error: function (response) {
+
+                        alert(response.d);
+                    }
+                });
+            }
+           
+            function PrescriptionSuccess(response) {
+              
+                $("#<%=hdnXmlData.ClientID %>").val(response.d) ;
+
+                var xmlDoc = $.parseXML(response.d);
+                var xml = $(xmlDoc);
+                var Pharmacy = xml.find("Medicines");
+               
+                FillTextboxUsingXml();
+
+            };
+
+            //---------------------------------------------------------- * HISTORY Grid BinD,Paging,Search *--------------------------------------------------//
+
+            $("[id*=txtSearchVisit]").live("keyup", function () 
+            {
+                //Search in Visit table
+
+                GetHistory(parseInt(1),PatientID);
+            });
+            $(".Pager .page").live("click", function () 
+            {
+                //Next Click(paging) of Visit table
+
+                GetHistory(parseInt($(this).attr('page')),PatientID);
+            });
+            function SearchTerm() {
+                return jQuery.trim($("[id*=txtSearchVisit]").val());
+            };
+
+            function GetHistory(pageIndex,PatientID) {
+                $.ajax({
+
+                    type: "POST",
+                    url: "../Doctor/Doctors.aspx/GetHistory",
+                    data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + ', PatientID: "' + PatientID + '"}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: HistorySuccess,
+                    failure: function (response) {
+
+                        alert(response.d);
+                    },
+                    error: function (response) {
+
+                        alert(response.d);
+                    }
+                });
+            }
+
+            var row= null;
+            function HistorySuccess(response) {
+                
+                var xmlDoc = $.parseXML(response.d);
+                var xml = $(xmlDoc);
+                var Visits = xml.find("Visits");
+
+                if (row == null) {
+                    row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+                }
+                $("[id*=GridViewVisitsHistory] tr").not($("[id*=GridViewVisitsHistory] tr:first-child")).remove();
+                if (Visits.length > 0) {
+
+                    $.each(Visits, function () {
+                      
+                        $("td", row).eq(0).html($('<img />')
+                           .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
+                         
+                        //$("td", row).eq(1).html($(this).find("TokenNo").text());
+                        $("td", row).eq(1).html($(this).find("Remarks").text());
+
+                        $("td", row).eq(2).html($(this).find("CrDate").text());
+                       
+                        $("td", row).eq(3).html($(this).find("FileID").text());
+
+                        $("td", row).eq(4).html($(this).find("VisitID").text());
+                        $("td", row).eq(5).html($(this).find("PrescriptionID").text());
+
+                        $("[id*=GridViewVisitsHistory]").append(row);
+                        row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+                    });
+                    var pager = xml.find("Pager");
+
+                    $.each(pager, function ()
+                    {
+                        $("#<%=HiddenField2.ClientID %>").val($(this).find("FILEID").text()); 
+
+                    });
+
+                    if ($('#txtSearchVisit').val() == '') {
+                        var GridRowCount = pager.find("RecordCount").text();
+
+                        $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+                    }
+
+                    $(".Pager").ASPSnippets_Pager({
+                        ActiveCssClass: "current",
+                        PagerCssClass: "pager",
+                        PageIndex: parseInt(pager.find("PageIndex").text()),
+                        PageSize: parseInt(pager.find("PageSize").text()),
+                        RecordCount: parseInt(pager.find("RecordCount").text())
+                    });
+
+                    $(".Match").each(function () {
+                        var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+                        $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                    });
+                } else {
+
+                    var pager = xml.find("Pager");
+
+                    $.each(pager, function ()
+                    {
+                        $("#<%=HiddenField2.ClientID %>").val($(this).find("FILEID").text()); 
+
+                    });
+
+                    var empty_row = row.clone(true);
+                    $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                    $("td:first-child", empty_row).attr("align", "center");
+                    $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
+                    $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                    $("[id*=GridViewVisitsHistory]").append(empty_row);
+                }
+
+
+//-------- Hiding Columns fileid ,visitid,prescriptionid
+
+                var FileIDColumn = $("[id*=GridViewVisitsHistory] th:contains('FileID')");
+                FileIDColumn.css("display", "none");
+                $("[id*=GridViewVisitsHistory] tr").each(function () {
+                    $(this).find("td").eq(FileIDColumn.index()).css("display", "none");
+                });
+
+
+                var VisitIDColumn = $("[id*=GridViewVisitsHistory] th:contains('VisitID')");
+                VisitIDColumn.css("display", "none");
+                $("[id*=GridViewVisitsHistory] tr").each(function () {
+                    $(this).find("td").eq(VisitIDColumn.index()).css("display", "none");
+                });
+
+
+                var PrescriptionIDColumn = $("[id*=GridViewVisitsHistory] th:contains('PrescriptionID')");
+                PrescriptionIDColumn.css("display", "none");
+                $("[id*=GridViewVisitsHistory] tr").each(function () {
+                    $(this).find("td").eq(PrescriptionIDColumn.index()).css("display", "none");
+                });
+
+                row= null;
+
+            };
+            
+            //---------------------------------------------------------- * Token Grid BinD,Paging,Search *--------------------------------------------------//
+
+            $(function () {
+           
+                GetBookingsForDoctor(1);
+            });
+            $("[id*=txtSearchINGridview]").live("keyup", function () {
+              
+                //Search in Token table
+
+                GetBookingsForDoctor(parseInt(1));
+            });
+            $(".Pager .page").live("click", function () {
+
+               //Next Click(paging) of Token table
+
+                GetBookingsForDoctor(parseInt($(this).attr('page')));
+            });
+            function SearchTerm() {
+                return jQuery.trim($("[id*=txtSearchINGridview]").val());
+            };
+
+            //----------- * Bind Token table * -------- //
+
+            function GetBookingsForDoctor(pageIndex) {
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "../Doctor/Doctors.aspx/ViewAndFilterBookingsForDoctor",
+                    data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess,
+                    failure: function (response) {
+
+                        alert(response.d);
+                    },
+                    error: function (response) {
+
+                        alert(response.d);
+                    }
+                });
+            }
+            var row;
+            function OnSuccess(response) {
+               
+                var xmlDoc = $.parseXML(response.d);
+                var xml = $(xmlDoc);
+                var DoctorTokens = xml.find("DoctorTokens");
+                if (row == null) {
+                    row = $("[id*=GridViewTokenlist] tr:last-child").clone(true);
+                }
+                $("[id*=GridViewTokenlist] tr").not($("[id*=GridViewTokenlist] tr:first-child")).remove();
+                if (DoctorTokens.length > 0) {
+
+                    $.each(DoctorTokens, function () {
+                       
+                        $("td", row).eq(0).html($('<img />')
+                           .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
+
+                        $("td", row).eq(1).html($(this).find("TokenNo").text());
+                        $("td", row).eq(2).html($(this).find("Name").text());
+
+
+                        $("td", row).eq(3).html($(this).find("DateTime").text());
+                        $("td", row).eq(4).html($(this).find("IsProcessed").text());
+                         $("td", row).eq(5).html($(this).find("PatientID").text());
+
+                      
+
+                        if ($(this).find("IsProcessed").text()=="true") {
+                            $("td", row).addClass("selected_row");
+                        }
+                        if ($(this).find("IsProcessed").text() == "false") {
+                            $("td", row).removeClass("selected_row");
+                        }
+
+
+                        $("[id*=GridViewTokenlist]").append(row);
+                        row = $("[id*=GridViewTokenlist] tr:last-child").clone(true);
+                    });
+                    var pager = xml.find("Pager");
+
+                    if ($('#txtSearchINGridview').val() == '') {
+                        var GridRowCount = pager.find("RecordCount").text();
+
+                        $("#<%=lblTokenCount.ClientID %>").text(GridRowCount);
+                    }
+
+                    $(".Pager").ASPSnippets_Pager({
+                        ActiveCssClass: "current",
+                        PagerCssClass: "pager",
+                        PageIndex: parseInt(pager.find("PageIndex").text()),
+                        PageSize: parseInt(pager.find("PageSize").text()),
+                        RecordCount: parseInt(pager.find("RecordCount").text())
+                    });
+
+                    $(".Match").each(function () {
+                        var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+                        $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                    });
+                } else {
+                    var empty_row = row.clone(true);
+                    $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                    $("td:first-child", empty_row).attr("align", "center");
+                    $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
+                    $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                    $("[id*=GridViewTokenlist]").append(empty_row);
+                }
+
+                var PatientIDColumn = $("[id*=GridViewTokenlist] th:contains('PatientID')");
+                PatientIDColumn.css("display", "none");
+                $("[id*=GridViewTokenlist] tr").each(function () {
+                    $(this).find("td").eq(PatientIDColumn.index()).css("display", "none");
+                });
+
+                row= null;
+
+            };
+
+            //------ * Function To open modal popup * -----//
+
+            function OpenModal() {
+
+                $('#txtSearchINGridview').val('');
+                GetBookingsForDoctor(parseInt(1));
+
+            }
+
+
+       </script>
+
         <!-- #main-container -->
         <asp:HiddenField ID="hdnfileID" runat="server" />
         <asp:HiddenField ID="HiddenPatientID" runat="server" />
@@ -233,7 +789,7 @@
                 </div>
 
                 <div class="icon_box">
-                    <a class="records" data-toggle="modal" data-target="#casehistory">
+                    <a class="records" data-toggle="modal" data-target="#casehistory" >
                         <span class="tooltip1">
                         <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label>
                         </span>                      
@@ -241,7 +797,7 @@
                             <span class="tooltiptext1">Case History</span>
                         </span>
                     </a>
-                    <a class="casehistory_link" data-toggle="modal" data-target="#tokens">
+                    <a class="casehistory_link" data-toggle="modal" data-target="#tokens" onclick="OpenModal();">
                         <span class="tooltip1">
                         <span class="count"><asp:Label ID="lblTokenCount" runat="server" Text="0"></asp:Label>  
                              </span>                       
@@ -254,10 +810,10 @@
                 <div class="grey_sec">
 
                     <div class="search_div">
-                        <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search patient..." />
+                        <input class="field" id="txtSearch" onblur="  bindPatientDetails();" name="txtSearch" type="search" placeholder="Search patient..." />
                         <input type="hidden" id="project-id" />
                         <p id="project-description" style="display: none"></p>
-                        <asp:Button ID="btnSearch" runat="server" CssClass="button" Text="Search" OnClick="btnSearch_Click" />
+                        <asp:Button ID="btnSearch" runat="server" CssClass="button" Text="Search"  />
                         <%--<input class="button" type="submit" id="btnSearch" value="Search" />--%>
                     </div>
 
@@ -551,34 +1107,55 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header" style="border-color: #3661C7;">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="HistoryClose"><span aria-hidden="true">&times;</span></button>
                         <h3 class="modal-title">Case History</h3>
                     </div>
-                    <div class="modal-body" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden;">
-                        <div class="col-lg-12" style="height: 480px;">
-                            <asp:GridView ID="GridViewVisitsHistory" runat="server" AutoGenerateColumns="False" DataKeyNames="FileID">
+                    
+                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+
+                    <div class="col-lg-12" style="height: 480px">
+
+                        <div class="col-lg-12" style="height: 40px">
+                            <div class="search_div">
+                                <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchVisit" />
+                                <input class="button3" type="button" value="Search" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12" style="height: 400px">
+                            
+  <asp:GridView ID="GridViewVisitsHistory" runat="server" AutoGenerateColumns="False" class="table" >
                                 <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>
 
-                                            <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" Style="border: none!important" ImageUrl="~/images/Editicon1.png" CommandName="Comment" CommandArgument='<%# Eval("VisitID")+"|" + Eval("PrescriptionID") %>' OnCommand="ImgBtnUpdateVisits_Command" formnovalidate />
+                                            <asp:ImageButton ID="ImgBtnUpdateVisits" runat="server" Style="border: none!important" ImageUrl="~/images/Editicon1.png"  />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Sl.No">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblRowNumber" Text='<%# Container.DataItemIndex + 1 %>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:BoundField HeaderText="Remarks" DataField="Remarks" />
-                                    <asp:BoundField DataField="CreatedDate" HeaderText="Date" ></asp:BoundField>
+                                  
+                                    <asp:BoundField HeaderText="Remarks" DataField="Remarks" ItemStyle-CssClass="Match" />
+                                    <asp:BoundField DataField="CrDate" HeaderText="Date" ItemStyle-CssClass="Match"></asp:BoundField>
+
+                                   <asp:BoundField HeaderText="FileID" DataField="FileID"  /> 
+                                     <asp:BoundField HeaderText="VisitID" DataField="VisitID"  /> 
+                                     <asp:BoundField HeaderText="PrescriptionID" DataField="PrescriptionID"  /> 
+
+                                  
                                 </Columns>
 
 
                             </asp:GridView>
-                        </div>
-                    </div>
 
+
+                        </div>
+                        <div class="Pager">
+                        </div>
+
+
+                    </div>
+                </div>
                 </div>
 
             </div>
@@ -589,29 +1166,53 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header" style="border-color: royalblue;">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="DoctrClose"><span aria-hidden="true">&times;</span></button>
 
                         <h3 class="modal-title">Tokens</h3>
                     </div>
-                    <div class="modal-body" style="max-height: 500px; overflow-y: scroll; overflow-x: hidden;">
-                        <div class="col-lg-12" style="height: 480px;">
-                            <asp:GridView ID="GridViewTokenlist" OnRowDataBound="GridViewTokenlist_RowDataBound" runat="server" AutoGenerateColumns="False" Style="text-align: center; width: 100%;" DataKeyNames="UniqueId" CellPadding="4" GridLines="None">
+
+                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+
+                    <div class="col-lg-12" style="height: 480px">
+
+                        <div class="col-lg-12" style="height: 40px">
+                            <div class="search_div">
+                                <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchINGridview" />
+                                <input class="button3" type="button" value="Search" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12" style="height: 400px">
+                            <asp:GridView ID="GridViewTokenlist" OnRowDataBound="GridViewTokenlist_RowDataBound" runat="server" AutoGenerateColumns="False" >
 
                                 <Columns>
                                     <asp:TemplateField ItemStyle-Width="35px">
                                         <ItemTemplate>
-                                            <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="../images/paper.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")%>' OnCommand="ImgBtnUpdate_Command1" ImageAlign="Middle" BorderColor="White" formnovalidate />
+                                            <asp:ImageButton ID="ImgBtnUpdate" runat="server" ImageUrl="../images/paper.png"   />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:BoundField HeaderText="Token No" DataField="TokenNo" />
-                                    <asp:BoundField HeaderText="Patient Name" DataField="Name" />
-                                    <asp:BoundField HeaderText="Time" DataField="DateTime" />
-                                    <asp:BoundField HeaderText="Consulted" DataField="IsProcessed" />
+                                    <asp:BoundField HeaderText="Token No" DataField="TokenNo" ItemStyle-CssClass="Match"  />
+                                    <asp:BoundField HeaderText="Patient Name" DataField="Name" ItemStyle-CssClass="Match" />
+                                    <asp:BoundField HeaderText="Time" DataField="DateTime" ItemStyle-CssClass="Match" />
+                                    <asp:BoundField HeaderText="Consulted" DataField="IsProcessed" ItemStyle-CssClass="Match" />
+                                   <asp:BoundField HeaderText="PatientID" DataField="PatientID" />  
                                 </Columns>
                             </asp:GridView>
+
                         </div>
+                        <div class="Pager">
+                        </div>
+
+
                     </div>
+                </div>
+
+
+
+
+                   
 
                 </div>
                 <asp:HiddenField ID="HdnPrescID" runat="server" />
@@ -645,7 +1246,6 @@
             var validFiles = ["bmp", "gif", "png", "jpg", "jpeg"];
             function OnUpload() 
             {
-                debugger;
                 var obj = document.getElementById("<%=FileUpload1.ClientID%>");
                 var source = obj.value;
                 var ext = source.substring(source.lastIndexOf(".") + 1, source.length).toLowerCase();
@@ -792,7 +1392,8 @@
                         $( "#project" ).val( ui.item.label );
       
                         $( "#project-description" ).html( ui.item.desc );        
-                        bindPatientDetails();
+
+                        //bindPatientDetails();
 
                         return false;
                     }

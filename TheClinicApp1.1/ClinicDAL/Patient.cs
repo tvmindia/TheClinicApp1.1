@@ -849,6 +849,27 @@ namespace TheClinicApp1._1.ClinicDAL
             return dt;
 
         }
+
+        public DataSet GetPatientDetailsByID()
+        {
+
+            DataSet ds = null;
+            SqlConnection con = null;
+            dbConnection dcon = new dbConnection();
+            con = dcon.GetDBConnection();
+            SqlCommand cmd = new SqlCommand("SelectPatient", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = cmd;
+            ds = new DataSet();
+            adapter.Fill(ds);
+            con.Close();
+            return ds;
+
+        }
+
+
         #endregion SelectPatient
 
         #endregion Methods
