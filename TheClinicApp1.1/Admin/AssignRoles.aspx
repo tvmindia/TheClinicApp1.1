@@ -135,7 +135,7 @@ table
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.0.min.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
-    <script src="../js/jquery.tablePagination.0.1.js"></script>
+    <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
     <script src="../js/Dynamicgrid.js"></script>
     <script src="../js/Messages.js"></script>
     
@@ -191,48 +191,48 @@ table
                 $(this).parent(".alert").hide();
             });
 
-            $('.table').tablePagination({});
+            //$('.table').tablePagination({});
 
-            var rows = $('#<%=dtgViewAllUserInRoles.ClientID%> tr').not('thead tr');
+            //var rows = $('#<%=dtgViewAllUserInRoles.ClientID%> tr').not('thead tr');
 
-            $('#txtSearchAssignedRole').keyup(function () {             
-                var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
-                rows.hide().filter(function () {
-                    var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                    var matchesSearch = true;
-                    $(val).each(function (index, value) {
-                        matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
-                    });
-                    return matchesSearch;
-                }).show();
+            //$('#txtSearchAssignedRole').keyup(function () {             
+            //    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
+            //    rows.hide().filter(function () {
+            //        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            //        var matchesSearch = true;
+            //        $(val).each(function (index, value) {
+            //            matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
+            //        });
+            //        return matchesSearch;
+            //    }).show();
 
-                //-------------------------------No records found.-----------------------------------------// 
-                debugger;
-                //finding the row of html table displaying while searching 
-                var numOfVisibleRows = $('tbody tr').filter(function () {
-                    return $(this).css('display') !== 'none';
-                }).length;
+            //    //-------------------------------No records found.-----------------------------------------// 
+            //    debugger;
+            //    //finding the row of html table displaying while searching 
+            //    var numOfVisibleRows = $('tbody tr').filter(function () {
+            //        return $(this).css('display') !== 'none';
+            //    }).length;
 
-                //here number of rows while no records found is 3
-                if (numOfVisibleRows == 3) {
-                    debugger;
-                    $('#norows').remove();
-                    var bodyId = "tbdy";
-                    $('table thead').attr('id', bodyId);
-                    var textdis = "No records found.";
-                    var html = '<div id="norows" style="width:100%; padding-left: 200px;">' + textdis + '</div>';
-                    $('#tbdy').after(html);
-                }
-                else {
-                    $('#norows').remove();
-                }
-                //----------------------------------No records found.--------------------------------------//
-                $('#tablePagination').hide();
-                if (val == "") {                   
-                    $('.table').tablePagination({});
-                    $('#tablePagination').show();
-                }
-            });
+            //    //here number of rows while no records found is 3
+            //    if (numOfVisibleRows == 3) {
+            //        debugger;
+            //        $('#norows').remove();
+            //        var bodyId = "tbdy";
+            //        $('table thead').attr('id', bodyId);
+            //        var textdis = "No records found.";
+            //        var html = '<div id="norows" style="width:100%; padding-left: 200px;">' + textdis + '</div>';
+            //        $('#tbdy').after(html);
+            //    }
+            //    else {
+            //        $('#norows').remove();
+            //    }
+            //    //----------------------------------No records found.--------------------------------------//
+            //    $('#tablePagination').hide();
+            //    if (val == "") {                   
+            //        $('.table').tablePagination({});
+            //        $('#tablePagination').show();
+            //    }
+            //});
         });
     </script>
 
@@ -244,128 +244,135 @@ table
    <script src="../js/jquery-1.12.0.min.js"></script>
    <script src="../js/jquery-ui.js"></script> 
         <script src="../js/bootstrap.min.js"></script>
-      <script src="../js/jquery.tablePagination.0.1.js"></script>
+    
+     <link href="../css/TheClinicApp.css" rel="stylesheet" />
+      <script src="../js/jquery-1.8.3.min.js"></script>
+    <script src="../js/ASPSnippets_Pager.min.js"></script>
 
     <script type="text/javascript">
        
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
+      
 
-        //var UniqueID = '';
+        var UniqueID = '';
 
-        //$(function () {
-        //    $("[id*=dtgViewAllUserInRoles] td:eq(0)").click(function () {
-
-        //        var DeletionConfirmation = ConfirmDelete();
-        //        if (DeletionConfirmation == true) {
-        //            
-        //            UniqueID = $(this).closest('tr').find('td:eq(3)').text();
-        //            window.location = "AssignRoles.aspx?UniqueID=" + UniqueID;                  
-        
-        //        }
-        //    });
-        //});
+      
 
   
-        //-------------*SEARCH AND PAGING SCRIPT------------------------//
+      //  -------------*SEARCH AND PAGING SCRIPT------------------------//
 
-        //$(function () {
-        //    GetMedicines(1);
-        //});
+        $(function () {
 
-        //$("[id*=txtSearch]").live("keyup", function () {
-        //    GetMedicines(parseInt(1));
-        //});
+            debugger;
 
-        //$(".Pager .page").live("click", function () {
-        //    GetMedicines(parseInt($(this).attr('page')));
-        //});
+            GetAssignedRoles(1);
+        });
 
-        //function SearchTerm() {
-        //    return jQuery.trim($("[id*=txtSearch]").val());
-        //};
+        $("[id*=txtSearch]").live("keyup", function () {
+            GetAssignedRoles(parseInt(1));
+        });
 
-        //function GetMedicines(pageIndex) {
-        //    $.ajax({
-        //        type: "POST",
-        //        url: "../Admin/AssignRoles.aspx/GetMedicines",
-        //        data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
-        //        contentType: "application/json; charset=utf-8",
-        //        dataType: "json",
-        //        success: OnSuccess,
-        //        failure: function (response) {
-        //            alert(response.d);
-        //        },
-        //        error: function (response) {
-        //            alert(response.d);
-        //        }
-        //    });
-        //}
-        //var row;
-        //function OnSuccess(response) {
+        $(".Pager .page").live("click", function () {
+            GetAssignedRoles(parseInt($(this).attr('page')));
+        });
 
-        //    var xmlDoc = $.parseXML(response.d);
-        //    var xml = $(xmlDoc);
-        //    var Medicines = xml.find("Medicines");
-        //    if (row == null) {
-        //        row = $("[id*=dtgViewAllUserInRoles] tr:last-child").clone(true);
-        //    }
-        //    $("[id*=dtgViewAllUserInRoles] tr").not($("[id*=dtgViewAllUserInRoles] tr:first-child")).remove();
-        //    if (Medicines.length > 0) {
-        //        $.each(Medicines, function () {
-        //            
+        function SearchTerm() {
+            return jQuery.trim($("[id*=txtSearch]").val());
+        };
 
-        //            //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
+        function GetAssignedRoles(pageIndex) {
+            $.ajax({
+                type: "POST",
+                url: "../Admin/AssignRoles.aspx/ViewAndFilterAssignedRoles",
+                data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+                failure: function (response) {
+                    alert(response.d);
+                },
+                error: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+        var row;
+        function OnSuccess(response) {
+
+            var xmlDoc = $.parseXML(response.d);
+            var xml = $(xmlDoc);
+            var AssignedRoles = xml.find("AssignedRoles");
+            if (row == null) {
+                row = $("[id*=dtgViewAllUserInRoles] tr:last-child").clone(true);
+            }
+            $("[id*=dtgViewAllUserInRoles] tr").not($("[id*=dtgViewAllUserInRoles] tr:first-child")).remove();
+            if (AssignedRoles.length > 0) {
+                $.each(AssignedRoles, function () {
+                    
+
+                    //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
                    
 
 
-        //            //$("td", row).eq(0).html($('<img />')
-        //            //                      .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+                    //$("td", row).eq(0).html($('<img />')
+                    //                      .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
                    
 
-        //            $("td", row).eq(0).html($(this).find("Name").text());
+                    $("td", row).eq(0).html($(this).find("Name").text());
 
-        //            $("td", row).eq(1).html($(this).find("Role").text());
+                    $("td", row).eq(1).html($(this).find("Role").text());
                    
-        //            $("td", row).eq(2).html($(this).find("UniqueID").text());
+                    $("td", row).eq(2).html($(this).find("UniqueID").text());
                   
 
-        //            $("[id*=dtgViewAllUserInRoles]").append(row);
-        //            row = $("[id*=dtgViewAllUserInRoles] tr:last-child").clone(true);
-        //        });
-        //        var pager = xml.find("Pager");
-        //        $(".Pager").ASPSnippets_Pager({
-        //            ActiveCssClass: "current",
-        //            PagerCssClass: "pager",
-        //            PageIndex: parseInt(pager.find("PageIndex").text()),
-        //            PageSize: parseInt(pager.find("PageSize").text()),
-        //            RecordCount: parseInt(pager.find("RecordCount").text())
-        //        });
+                    $("[id*=dtgViewAllUserInRoles]").append(row);
+                    row = $("[id*=dtgViewAllUserInRoles] tr:last-child").clone(true);
+                });
 
-        //        $(".Match").each(function () {
-        //            var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
-        //            $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
-        //        });
-        //    } else {
-        //        var empty_row = row.clone(true);
-        //        $("td:first-child", empty_row).attr("colspan", $("td", row).length);
-        //        $("td:first-child", empty_row).attr("align", "center");
-        //        $("td:first-child", empty_row).html("No records found for the search criteria.");
-        //        $("td", empty_row).not($("td:first-child", empty_row)).remove();
-        //        $("[id*=dtgViewAllUserInRoles]").append(empty_row);
-        //    }
+                var pager = xml.find("Pager");
+               
+                    var GridRowCount = pager.find("RecordCount").text();
+
+                    $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+              
+                $(".Pager").ASPSnippets_Pager({
+                    ActiveCssClass: "current",
+                    PagerCssClass: "pager",
+                    PageIndex: parseInt(pager.find("PageIndex").text()),
+                    PageSize: parseInt(pager.find("PageSize").text()),
+                    RecordCount: parseInt(pager.find("RecordCount").text())
+                });
+
+                $(".Match").each(function () {
+                    var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+                    $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                });
+            } else {
+                var empty_row = row.clone(true);
+                $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                $("td:first-child", empty_row).attr("align", "center");
+                $("td:first-child", empty_row).html("No records found for the search criteria.");
+                $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                $("[id*=dtgViewAllUserInRoles]").append(empty_row);
+            }
 
 
 
-        //    var th = $("[id*=dtgViewAllUserInRoles] th:contains('UniqueID')");
-        //    th.css("display", "none");
-        //    $("[id*=dtgViewAllUserInRoles] tr").each(function () {
-        //        $(this).find("td").eq(th.index()).css("display", "none");
-        //    });
+            var th = $("[id*=dtgViewAllUserInRoles] th:contains('UniqueID')");
+            th.css("display", "none");
+            $("[id*=dtgViewAllUserInRoles] tr").each(function () {
+                $(this).find("td").eq(th.index()).css("display", "none");
+            });
 
-        //};
+        };
+
+
+        function OpenModal() {
+
+            GetAssignedRoles(parseInt(1));
+
+        }
+
 
         //$(function() {
         //    $('#chkveg').multiselect({
@@ -405,7 +412,7 @@ table
          <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" formnovalidate /></li></ul> </div>
           
               <div class="icon_box">
-                   <a class="all_assignrole_link" data-toggle="modal" data-target="#AssignedRoles" >
+                   <a class="all_assignrole_link" data-toggle="modal" data-target="#AssignedRoles" onclick="OpenModal();">
                          <span class="tooltip1">
                              <span class="count"><asp:Label ID="lblCaseCount" runat="server" Text="0"></asp:Label>
                              </span>
@@ -528,19 +535,22 @@ table
           <button type="button" class="close" data-dismiss="modal">&times;</button>     
         <h3 class="modal-title">View All AssignedRoles</h3>
       </div>
-      <div class="modal-body"  style="overflow-y: scroll; overflow-x: hidden;max-height:500px;">
-       <%--<iframe id="ViewAllRegistration" style ="width: 100%; height: 100%" ></iframe>--%>
-         <div class="col-lg-12" style="height:480px">
+      
+        <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
 
-                <div class="col-lg-12" style="height:40px">
-              <div class="search_div">
-              <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchAssignedRole" />
-                  <input class="button3" type="button" value="Search" />
-                  </div>
-          </div>
-              <div class="col-lg-12" style="height:400px">
+                    <div class="col-lg-12" style="height: 480px">
 
-             <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" OnPreRender="dtgViewAllUserInRoles_PreRender" DataKeyNames="UserId" GridLines="Horizontal">
+                        <div class="col-lg-12" style="height: 40px">
+                          <%--  <div class="search_div">
+                                <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchAssignedRole" />
+                                <input class="button3" type="button" value="Search" />
+                            </div>--%>
+                        </div>
+
+
+                        <div class="col-lg-12" style="height: 400px">
+                            
+  <asp:GridView ID="dtgViewAllUserInRoles" runat="server" AutoGenerateColumns="False" >
              
                             <Columns>    
                               <%--   <asp:TemplateField HeaderText=" ">
@@ -555,14 +565,20 @@ table
                                 <asp:BoundField DataField="Role" HeaderText="Assigned Role">                                   
                                 </asp:BoundField>                           
                                    
-                                   <%--  <asp:BoundField DataField="UniqueID" HeaderText="UniqueID">   
-                                </asp:BoundField>--%>
+                                   <asp:BoundField DataField="UniqueID" HeaderText="UniqueID">   
+                                </asp:BoundField>
                             </Columns>     
                         </asp:GridView>
-            <div class="Pager"></div>
-           </div>
-    </div>
-    </div>      
+
+
+                        </div>
+                        <div class="Pager">
+                        </div>
+
+
+                    </div>
+                </div>
+              
     </div>
   </div>
     </div>

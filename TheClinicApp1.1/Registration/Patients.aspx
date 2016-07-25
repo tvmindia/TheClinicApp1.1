@@ -155,7 +155,10 @@
                         return false;
                     },
                     select: function( event, ui ) {
-                        $('#<%=btnSearch.ClientID%>').click();
+
+                   // BindPatientDetails();
+
+                      $('#<%=btnSearch.ClientID%>').click();
 
                         //$( "#project" ).val( ui.item.label );
       
@@ -358,8 +361,228 @@
                 $('#TodaysRegistration').modal('show');
             }
         }
+            </script>
+            <script>
+       //---getting data as json-----//
+            function getJsonData(data, page) {
+                var jsonResult = {};
+                var req = $.ajax({
+                    type: "post",
+                    url: page,
+                    data: data,
+                    delay: 3,
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json"
 
-       
+                }).done(function (data) {
+                    jsonResult = data;
+                });
+                return jsonResult;
+            }
+
+      function ConvertJsonToDate(jsonDate) {
+                if (jsonDate != null) {
+                    var dateString = jsonDate.substr(6);
+                    var currentTime = new Date(parseInt(dateString));
+                    var month = currentTime.getMonth();
+                    var day = currentTime.getDate();
+                    var year = currentTime.getFullYear();
+                    var monthNames = [
+                                  "Jan", "Feb", "Mar",
+                                  "Apr", "May", "Jun", "Jul",
+                                  "Aug", "Sep", "Oct",
+                                  "Nov", "Dec"
+                    ];
+                    var result = day + '-' + monthNames[month] + '-' + year;
+                    return result;
+                }
+            }
+
+
+            
+                
+      $(function () {
+          $("[id*=dtgViewTodaysRegistra] td:eq(0)").click(function () { 
+                    
+              debugger;
+
+              //PatientID = $(this).closest('tr').find('td:eq(5)').text();
+                        
+
+              PatientID = "5824a16e-863c-43f3-8683-1a49bf52c189";
+
+              document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+                    
+                       
+              var jsonResult = {};
+                          
+
+              var Patient = new Object();
+              Patient.PatientID = PatientID;
+                       
+              jsonResult = GetPatientDetailsByID(Patient);
+              if (jsonResult != undefined) {
+                          
+                  BindControlsWithPatientDetails(jsonResult);
+              }
+                       
+                   
+          });
+
+      });
+
+      function GetPatientDetailsByID(Patient) {
+          var ds = {};
+          var table = {};
+          var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
+          ds = getJsonData(data, "../Registration/Patients.aspx/BindPatientDetailsOnEditClick");
+          table = JSON.parse(ds.d);
+          return table;
+      }
+
+
+
+
+             function BindPatientDetails()
+              {
+
+debugger;
+            var jsonPatient = {};
+               var SearchTerm = $('#txtSearch').val();
+               var Patient = new Object();
+
+              if(SearchTerm != '')
+              { 
+                Patient.Name = SearchTerm;
+
+                jsonPatient = GetPatientDetails(Patient);
+                if (jsonPatient != undefined)
+                 {
+                          
+                 BindPatient(jsonPatient);
+                 }
+
+               }      
+
+                        }
+
+
+
+          function GetPatientDetails(Patient) {
+
+                var ds = {};
+                var table = {};
+                var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
+                ds = getJsonData(data, "../Registration/Patients.aspx/BindPatientDetails");
+                table = JSON.parse(ds.d);
+                return table;
+            }
+
+            function BindPatient(Records)
+          {
+              
+            $("#<%=txtName.ClientID %>").val(Records.Name);
+            $("#<%=txtAge.ClientID %>").val(Records.Age);
+            $("#<%=txtAddress.ClientID %>").val(Records.Address);
+            $("#<%=txtMobile.ClientID %>").val(Records.Phone);
+            $("#<%=txtEmail.ClientID %>").val(Records.Email);
+            $("#<%=txtOccupation.ClientID %>").val(Records.Occupation);
+            $("#<%=Hdnimagetype.ClientID %>").val(Records.ImageType);
+            $("#<%=HiddenField1.ClientID %>").val(Records.PatientID);
+           
+
+                if (Records.Gender ==  "Male") {
+                    $("#<%=rdoMale.ClientID %>").prop('checked', true);
+                }
+                else {
+                    $("#<%=rdoFemale.ClientID %>").prop('checked', true);
+                }
+
+                $("#<%=ddlMarital.ClientID %> option:contains(" + Records.MaritalStatus + ")").attr('selected', 'selected');
+
+
+             var   imagetype =Records.ImageType;
+             var patientid = Records.PatientID;
+                    var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
+
+                    if (imagetype != '')
+                    {
+                        debugger;
+
+                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
+                    }
+                    else
+                    {
+                        ProfilePic.src = "../images/UploadPic1.png";
+                    }
+
+                    var DOB = new Date(Date.parse(ConvertJsonToDate(Records.DOB),"MM/dd/yyyy"));
+                    var Age = (new Date().getFullYear() )-   (DOB.getFullYear());
+
+                    $("#<%=txtAge.ClientID %>").val(parseInt(Age)) ;
+               
+            }
+
+
+            function BindControlsWithPatientDetails(Records) {
+                $.each(Records, function (index, Records) {
+                    <%-- $("#<%=txtCategoryName.ClientID %>").val(Records.Name);
+                    $("#<%=hdnCategoryId.ClientID %>").val(Records.CategoryID);--%>
+
+                    //Fill Patient Details
+
+                    debugger;
+
+                     
+                    $("#<%=txtName.ClientID %>").val(Records.Name);
+                    $("#<%=txtAge.ClientID %>").val(Records.Age);
+                    $("#<%=txtAddress.ClientID %>").val(Records.Address);
+                    $("#<%=txtMobile.ClientID %>").val(Records.Phone);
+                    $("#<%=txtEmail.ClientID %>").val(Records.Email);
+                    $("#<%=txtOccupation.ClientID %>").val(Records.Occupation);
+                    $("#<%=Hdnimagetype.ClientID %>").val(Records.ImageType);
+                    $("#<%=HiddenField1.ClientID %>").val(Records.PatientID);
+           
+
+                    if (Records.Gender ==  "Male") {
+                        $("#<%=rdoMale.ClientID %>").prop('checked', true);
+                    }
+                    else {
+                        $("#<%=rdoFemale.ClientID %>").prop('checked', true);
+                    }
+
+                    $("#<%=ddlMarital.ClientID %> option:contains(" + Records.MaritalStatus + ")").attr('selected', 'selected');
+
+
+                    var   imagetype =Records.ImageType;
+                    var patientid =  Records.PatientID;
+                    var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
+
+                    if (imagetype != '')
+                    {
+                        debugger;
+
+                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + "5824a16e-863c-43f3-8683-1a49bf52c189";
+                    }
+                    else
+                    {
+                        ProfilePic.src = "../images/UploadPic1.png";
+                    }
+
+                    var DOB = new Date(Date.parse(ConvertJsonToDate(Records.DOB),"MM/dd/yyyy"));
+                    var Age = (new Date().getFullYear() )-   (DOB.getFullYear());
+
+                    $("#<%=txtAge.ClientID %>").val(parseInt(Age)) ;
+                });
+
+                $("#AllRegistrationClose").click();
+
+            }
+
+
+
+          
         </script>
         <!------------------------------------------------------------------------------>
         <!---------------------------------------------------------------------->
@@ -422,7 +645,7 @@
                 <div class="grey_sec">
                     <div class="search_div">
 
-                        <input class="field" type="search" id="txtSearch" onblur="bindPatient();" name="txtSearch" placeholder="Search patient..." />
+                        <input class="field" type="search" id="txtSearch" onblur="bindPatient()" name="txtSearch" placeholder="Search patient..." />
                         <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" />
                     </div>
                     <ul class="top_right_links">

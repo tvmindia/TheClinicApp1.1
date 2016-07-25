@@ -187,14 +187,17 @@ table th {
                     $("td", row).eq(2).html($(this).find("TokenNo").text());
                     $("td", row).eq(3).html($(this).find("Name").text());
                     $("td", row).eq(4).html($(this).find("Date").text());
-                    $("td", row).eq(5).html($(this).find("IsProcessed").text());
+                    //$("td", row).eq(5).html($(this).find("IsProcessed").text());
                     $("td", row).eq(6).html($(this).find("UniqueID").text());
 
                     if ($(this).find("IsProcessed").text()=="true") {
                         $("td", row).addClass("selected_row");
+                        $("td", row).eq(5).html("Yes");
+
                     }
                     if ($(this).find("IsProcessed").text() == "false") {
                         $("td", row).removeClass("selected_row");
+                        $("td", row).eq(5).html("No");
                     }
 
 

@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -27,7 +28,10 @@ namespace TheClinicApp1._1.Registration
 {
     public partial class Patients : System.Web.UI.Page
     {
-        #region GlobalVariables
+      
+
+ #region GlobalVariables
+        private static int PageSize = 8;
         UIClasses.Const Const = new UIClasses.Const();    
         ClinicDAL.UserAuthendication UA;
         Patient PatientObj = new Patient();
@@ -41,7 +45,9 @@ namespace TheClinicApp1._1.Registration
         {            
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];           
             tok.ClinicID = UA.ClinicID.ToString();
-            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());            
+            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
+
+            //BindDummyRow();
             gridDataBind();
             listFilter = null;
             listFilter = BindName();
@@ -49,7 +55,53 @@ namespace TheClinicApp1._1.Registration
         #endregion PageLoad
 
         #region Methods
-       
+
+        #region All patient View Search Paging
+        [WebMethod]
+        ///This method is called using AJAX For gridview bind , search , paging
+        ///It expects page index and search term which is passed from client side
+        ///Page size is declared and initialized in global variable section
+        public static string ViewAndFilterAllPatients(string searchTerm, int pageIndex)
+        {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            Patient PatientObj = new Patient();
+            PatientObj.ClinicID = UA.ClinicID;
+
+            var xml = PatientObj.ViewAndFilterAllPatients(searchTerm, pageIndex, PageSize);
+
+            return xml;
+        }
+
+        #region Bind Dummy Row
+
+        /// <summary>
+        /// To implement search in gridview(on keypress) :Gridview is converted to table and
+        /// Its first row (of table header) is created using this function
+        /// </summary>
+        private void BindDummyRow()
+        {
+            DataTable dummy = new DataTable();
+
+            //dummy.Columns.Add("Edit");
+            //dummy.Columns.Add(" ");
+            dummy.Columns.Add("Name");
+            dummy.Columns.Add("Address");
+            dummy.Columns.Add("Phone");
+
+            dummy.Rows.Add();
+
+            GridView1.DataSource = dummy;
+            GridView1.DataBind();
+        }
+
+        #endregion All patient View Search Paging
+
+
+
         #region GridBind
         public void gridDataBind()
         {
@@ -57,9 +109,9 @@ namespace TheClinicApp1._1.Registration
             #region GridAllRegistration   
             //*Grid Bind Showing All Registered Patients In the Modal POPUP
 
-            GridView1.EmptyDataText = "No Records Found";
             GridView1.DataSource = PatientObj.GetAllRegistration();
             GridView1.DataBind();
+            GridView1.EmptyDataText = "No Records Found";
             lblRegCount.Text = GridView1.Rows.Count.ToString();
             if (Convert.ToInt32(lblRegCount.Text) > 99)
                 lblRegCount.Text = "99+";
@@ -476,6 +528,65 @@ namespace TheClinicApp1._1.Registration
         }
         #endregion MainButton
 
+        #region Get Patient Details
+
+        [System.Web.Services.WebMethod]
+        public static string BindPatientDetails(Patient PatientObj)
+        {
+            PatientObj.GetSearchWithName(PatientObj.Name);
+           
+            string jsonResult = null;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+
+            jsonResult = jsSerializer.Serialize(PatientObj);
+
+            return jsonResult; //Converting to Json
+        }
+        #endregion Get Patient Details
+
+        #region Bind Patient Details On Edit Click
+
+        [System.Web.Services.WebMethod]
+        public static string BindPatientDetailsOnEditClick(Patient PatientObj)
+        {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            PatientObj.ClinicID = UA.ClinicID;
+            DataSet dsPatient = PatientObj.GetPatientDetailsByID();
+
+
+            string jsonResult = null;
+            DataSet ds = null;
+            ds = dsPatient;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+            Dictionary<string, object> childRow;
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    childRow = new Dictionary<string, object>();
+                    foreach (DataColumn col in ds.Tables[0].Columns)
+                    {
+                        childRow.Add(col.ColumnName, row[col]);
+                    }
+                    parentRow.Add(childRow);
+                }
+            }
+            jsonResult = jsSerializer.Serialize(parentRow);
+
+            return jsonResult; //Converting to Json
+        }
+        #endregion Bind Patient Details On Edit Click
+
         #region SearchButtonClick
         /// <summary>
         /// Search Button click which check the String from txtsearch
@@ -603,6 +714,9 @@ namespace TheClinicApp1._1.Registration
 
        
         #endregion Events
+
+    }
+
+        #endregion
        
     }
-}

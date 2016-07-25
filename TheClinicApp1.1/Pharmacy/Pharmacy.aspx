@@ -510,16 +510,15 @@
                       
 
                         if ($(this).find("IsProcessed").text()=="true") {
-                            $("td", row).eq(4).html("Yes");
-
+                          
                             $("td", row).addClass("selected_row");
-
+                            $("td", row).eq(4).html("Yes");
 
                         }
                         if ($(this).find("IsProcessed").text() == "false") {
 
-                            $("td", row).eq(4).html("No");
                             $("td", row).removeClass("selected_row");
+                            $("td", row).eq(4).html("No");
                         }
 
 
