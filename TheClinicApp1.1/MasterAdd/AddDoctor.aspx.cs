@@ -20,6 +20,7 @@ using TheClinicApp1._1.ClinicDAL;
 using System.Web.Services;
 using Messages = TheClinicApp1._1.UIClasses.Messages;
 using System.Web.Script.Serialization;
+using System.Threading;
 
 #endregion Included Namespcaes
 
@@ -37,6 +38,7 @@ namespace TheClinicApp1._1.MasterAdd
         ErrorHandling eObj = new ErrorHandling();
         ClinicDAL.CryptographyFunctions CryptObj = new CryptographyFunctions();
         ClinicDAL.RoleAssign roleObj = new RoleAssign();
+        MailSending mailObj = new MailSending();
 
         #endregion Global Variables
 
@@ -243,8 +245,8 @@ namespace TheClinicApp1._1.MasterAdd
 
             //-------------send this Password and Login Name to Email ID---------------//
             string password = SetDefaultPassword(txtName.Value.TrimStart());
-
-            userObj.passWord = CryptObj.Encrypt(password);
+            
+            userObj.passWord = CryptObj.Encrypt(password); ;
 
             if (hdnUserID.Value == string.Empty)
             {
@@ -260,6 +262,18 @@ namespace TheClinicApp1._1.MasterAdd
                 userObj.UpdateuserByUserID();
             }
 
+
+            HttpContext ctx = HttpContext.Current;
+            new Thread(delegate()
+            {
+                HttpContext.Current = ctx;
+
+                mailObj.MailSubject = "Login Password";
+                mailObj.msg = password;
+                mailObj.Email = txtEmail.Value;
+                mailObj.SendEmail();
+                
+            }).Start();
 
         }
 

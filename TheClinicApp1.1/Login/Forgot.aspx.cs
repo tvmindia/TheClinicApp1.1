@@ -178,7 +178,7 @@ namespace TheClinicApp1._1.Login
 
                         mailObj.Email = txtEmail.Value;
                         mailObj.msg = msg;
-                        mailObj.SendEmail();
+                        mailObj.SendForgotPaaswordEmail();
 
                     }
 

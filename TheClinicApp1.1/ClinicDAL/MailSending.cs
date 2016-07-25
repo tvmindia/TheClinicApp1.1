@@ -32,6 +32,12 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
+        public string MailSubject
+        {
+            get;
+            set;
+        }
+
         #endregion Global Variables
 
         #region Public Variables
@@ -49,6 +55,16 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Methods
 
+        public void SendForgotPaaswordEmail()
+        {
+            string message = "<body><h3>Hello ,</h3>" + msg + "<p>Enter Your Code in given field and change your Password<p><p><p><p>&nbsp;&nbsp;&nbsp;&nbsp; ClinicApp&nbsp; Admin<p><p><p><p><p>Please do not reply to this email with your password. We will never ask for your password, and we strongly discourage you from sharing it with anyone.</body>";
+            msg= message;
+            MailSubject = VerificationCode;
+
+            SendEmail();
+        }
+
+
         #region SendEmail
 
         public void SendEmail()
@@ -59,15 +75,15 @@ namespace TheClinicApp1._1.ClinicDAL
 
             Msg.To.Add(Email);
 
-            string message = "<body><h3>Hello ,</h3>" + msg + "<p>Enter Your Code in given field and change your Password<p><p><p><p>&nbsp;&nbsp;&nbsp;&nbsp; ClinicApp&nbsp; Admin<p><p><p><p><p>Please do not reply to this email with your password. We will never ask for your password, and we strongly discourage you from sharing it with anyone.</body>";
-            Msg.Subject = VerificationCode;
-            Msg.Body = message;
+           
+            Msg.Subject = MailSubject; 
+            Msg.Body = msg;
             Msg.IsBodyHtml = true;
 
             // your remote SMTP server IP.
             SmtpClient smtp = new SmtpClient();
             smtp.Host = host;
-            smtp.Port = 587;
+            smtp.Port = Convert.ToInt32(port);
             smtp.Credentials = new System.Net.NetworkCredential(smtpUserName, smtpPassword);
             smtp.EnableSsl = true;
             smtp.Send(Msg);
