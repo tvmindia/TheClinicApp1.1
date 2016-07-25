@@ -72,6 +72,17 @@
                         var lblcaptn = Caption.SuccessMsgCaption;
 
                         ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                        var PageIndx = parseInt(1);
+
+                        //if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
+
+                        //    PageIndx = parseInt($(".Pager span")[0].innerText);
+                        //}
+
+                        //GetMedicines(PageIndx);
+
+
                     }
 
                 }
