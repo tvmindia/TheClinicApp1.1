@@ -426,11 +426,7 @@ namespace TheClinicApp1._1.Doctor
 
         #endregion Bookings for doctor View Search Paging
 
-        #region Bind Token For Doctors Details On View Click
-        
        
-        #endregion Bind Token For Doctors Details On View Click
-
         #endregion ToKen booking View Search Paging
 
         //History's Edit Click
@@ -568,16 +564,26 @@ namespace TheClinicApp1._1.Doctor
             UIClasses.Const Const = new UIClasses.Const();
 
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-            DoctorObj.PatientIdForFile = Guid.Parse(PatientID);
-            DataTable DtFileID = DoctorObj.GetFileIDUSingPatientID();
-            GridBindVisits = new DataSet();
-            if (DtFileID.Rows.Count > 0)
-            {
-                FileIDForGrid = Guid.Parse(DtFileID.Rows[0]["FileID"].ToString());
-                CaseFileObj.FileID = FileIDForGrid;
 
-                xml = CaseFileObj.ViewAndFilterVisits(searchTerm, pageIndex, PageSize);
+            if (PatientID != null && PatientID != string.Empty)
+            {
+                DoctorObj.PatientIdForFile = Guid.Parse(PatientID);
+                DataTable DtFileID = DoctorObj.GetFileIDUSingPatientID();
+                GridBindVisits = new DataSet();
+                if (DtFileID.Rows.Count > 0)
+                {
+                    FileIDForGrid = Guid.Parse(DtFileID.Rows[0]["FileID"].ToString());
+                    CaseFileObj.FileID = FileIDForGrid;
+
+                    xml = CaseFileObj.ViewAndFilterVisits(searchTerm, pageIndex, PageSize);
+                }
             }
+
+            //else
+            //{
+            //    //It will return pager part , so that no records found text will be dispalyed
+            //    xml = CaseFileObj.ViewAndFilterVisits(searchTerm, pageIndex, PageSize);
+            //}
 
             return xml;
 
@@ -587,6 +593,8 @@ namespace TheClinicApp1._1.Doctor
         #region Bind History Dummy Table
         private void BindHistoryDummyRow()
         {
+           
+
             DataTable dummy = new DataTable();
 
             //dummy.Columns.Add("Edit");
@@ -601,6 +609,7 @@ namespace TheClinicApp1._1.Doctor
 
             GridViewVisitsHistory.DataSource = dummy;
             GridViewVisitsHistory.DataBind();
+            
         }
         #endregion Bind History Dummy Table
 

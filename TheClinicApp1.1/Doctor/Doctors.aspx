@@ -10,8 +10,7 @@
         background-color: #d3d3d3!important;
     }
 
-
-
+ 
         </style>
 
     <asp:Panel DefaultButton="btnSave" runat="server">
@@ -498,11 +497,19 @@
                 var patientid =      $("#<%=HiddenPatientID.ClientID %>").val();
 
                 if (patientid != '') {
-
+                   
                     GetHistory(parseInt(1),patientid);
                 }
             });
-            $(".Pager .page").live("click", function () 
+
+            //$(function () {
+
+            //   GetHistory(1,"");
+
+            //});
+
+          
+            $(".pgrHistory .page").live("click", function () 
             {
                 //Next Click(paging) of Visit table
 
@@ -514,7 +521,8 @@
                 }
 
             });
-            function SearchTerm() {
+            function SearchInVisit() {
+                debugger;
                 return jQuery.trim($("[id*=txtSearchVisit]").val());
             };
 
@@ -523,7 +531,7 @@
 
                     type: "POST",
                     url: "../Doctor/Doctors.aspx/GetHistory",
-                    data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + ', PatientID: "' + PatientID + '"}',
+                    data: '{searchTerm: "' + SearchInVisit() + '", pageIndex: ' + pageIndex + ', PatientID: "' + PatientID + '"}',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: HistorySuccess,
@@ -540,19 +548,53 @@
 
             var row= null;
             function HistorySuccess(response) {
-                
+                debugger;
+
+
+             
+
                 var xmlDoc = $.parseXML(response.d);
                 var xml = $(xmlDoc);
                 var Visits = xml.find("Visits");
 
+               
+
+                //$("[id*=GridViewVisitsHistory] > tbody").empty();
+
                 if (row == null) {
+
                     row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+
+
+                    //if ($("[id*=GridViewVisitsHistory] tr:last-child").text().indexOf("No records found.") != -1) 
+                    //{  
+                    //    $("[id*=GridViewVisitsHistory] tr:last-child").append($("#hdnEmptyRow").val());
+
+                    //    row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+                    //    }
+                    //else{
+                    //    row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+                    //    }
+
+                  
+
+                  
+                    //{
+                    //    $("[id*=GridViewVisitsHistory] tr:last-child").remove();
+                    //    $("[id*=GridViewVisitsHistory] tr:last-child").append('<td></td><td></td><td></td><td></td><td></td><td></td>');
+
+                    //    row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+                    //}
+
+                   
+                       
+                   
                 }
                 $("[id*=GridViewVisitsHistory] tr").not($("[id*=GridViewVisitsHistory] tr:first-child")).remove();
                 if (Visits.length > 0) {
 
                     $.each(Visits, function () {
-                      
+                        debugger;
                         $("td", row).eq(0).html($('<img />')
                            .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
                          
@@ -583,7 +625,7 @@
                         $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
                     }
 
-                    $(".Pager").ASPSnippets_Pager({
+                    $(".pgrHistory").ASPSnippets_Pager({
                         ActiveCssClass: "current",
                         PagerCssClass: "pager",
                         PageIndex: parseInt(pager.find("PageIndex").text()),
@@ -595,9 +637,18 @@
                         var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
                         $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
                     });
-                } else {
+                } 
+                
+               else {
 
                     var pager = xml.find("Pager");
+
+                    if ($('#txtSearchVisit').val() == '') {
+                        var GridRowCount = pager.find("RecordCount").text();
+
+                        $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+                    }
+
 
                     $.each(pager, function ()
                     {
@@ -605,8 +656,13 @@
 
                     });
 
-                    var empty_row = row.clone(true);
-                    $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                   var columnCount = $("[id*=GridViewVisitsHistory]").find('tr')[0].cells.length;
+
+
+                   var empty_row = row.clone(true);
+                   $("#hdnEmptyRow").val(row);
+
+                    $("td:first-child", empty_row).attr("colspan", columnCount);
                     $("td:first-child", empty_row).attr("align", "center");
                     $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
                     $("td", empty_row).not($("td:first-child", empty_row)).remove();
@@ -749,6 +805,8 @@
                     });
                 } else {
                     var empty_row = row.clone(true);
+                    
+
                     $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                     $("td:first-child", empty_row).attr("align", "center");
                     $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
@@ -1177,7 +1235,7 @@
 
 
                         </div>
-                        <div class="Pager">
+                        <div class="pgrHistory">
                         </div>
 
 
@@ -1440,5 +1498,7 @@
         </script>
 
     </asp:Panel>
+
+    <input type="hidden" id="hdnEmptyRow" value=""/>
 
 </asp:Content>
