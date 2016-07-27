@@ -88,7 +88,6 @@
         $(function () {
             $("[id*=GridViewTokenlist] td:eq(0)").click(function () {
 
-                debugger;
                 var isProcessed = $(this).closest('tr').find('td:eq(5)').text();
 
 
@@ -111,8 +110,7 @@
             if (UniqueID != "") {
                 PageMethods.DeleteTokenByUniqueID(UniqueID, OnSuccess, onError);
                 function OnSuccess(response, userContext, methodName) {
-                    debugger;
-
+                    
                     if (response == true) {
                         var PageIndx = parseInt(1);
                         if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
@@ -177,8 +175,6 @@
 
         function OnSuccess(response) {
 
-            debugger;
-
             $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
@@ -191,8 +187,6 @@
             $("[id*=GridViewTokenlist] tr").not($("[id*=GridViewTokenlist] tr:first-child")).remove();
             if (PatientBooking.length > 0) {
                 $.each(PatientBooking, function () {
-
-                    debugger;
 
                     $("td", row).eq(1).html($(this).find("DOCNAME").text());
                     $("td", row).eq(2).html($(this).find("TokenNo").text());
@@ -227,7 +221,7 @@
                 var pager = xml.find("Pager");
 
                 if ($('#txtSearch').val() == '') {
-                    debugger;
+                  
                     var GridRowCount = pager.find("RecordCount").text();
 
                     parent.SetGridviewRowCount(GridRowCount);

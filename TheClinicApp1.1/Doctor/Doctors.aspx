@@ -284,13 +284,7 @@
 
             function BindControlsWithPatientDetails(Records) {
                 $.each(Records, function (index, Records) {
-                    <%-- $("#<%=txtCategoryName.ClientID %>").val(Records.Name);
-                    $("#<%=hdnCategoryId.ClientID %>").val(Records.CategoryID);--%>
-
-                    //Fill Patient Details
-
-                    debugger;
-
+                   
                     $("#<%=lblPatientName.ClientID %>").text(Records.Name) ;
                     $("#<%=lblDoctor.ClientID %>").text(Records.DOCNAME);
                     $("#<%=lblFileNum.ClientID %>").text(Records.FileNumber);
@@ -312,8 +306,6 @@
 
                     if (imagetype != '')
                     {
-                        debugger;
-
                         ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
                     }
                     else
@@ -493,8 +485,6 @@
             {
                 //Search in Visit table
 
-                debugger;
-
                 var patientid =      $("#<%=HiddenPatientID.ClientID %>").val();
 
                 if (patientid != '') {
@@ -523,7 +513,7 @@
 
             });
             function SearchInVisit() {
-                debugger;
+               
                 return jQuery.trim($("[id*=txtSearchVisit]").val());
             };
 
@@ -549,8 +539,6 @@
 
             var HistoryRow= null;
             function HistorySuccess(response) {
-                debugger;
-
                 
                 $(".pgrHistory").show();
                 
@@ -569,7 +557,7 @@
                 if (Visits.length > 0) {
 
                     $.each(Visits, function () {
-                        debugger;
+                      
                         $("td", HistoryRow).eq(0).html($('<img />')
                            .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
                          
@@ -732,8 +720,6 @@
 
                     $.each(DoctorTokens, function () {
                        
-                      
-
                         $("td", row).eq(1).html($(this).find("TokenNo").text());
                         $("td", row).eq(2).html($(this).find("Name").text());
 
@@ -742,7 +728,6 @@
                       
                          $("td", row).eq(5).html($(this).find("PatientID").text());
 
-                      
 
                         if ($(this).find("IsProcessed").text()=="true") {
                             $("td", row).addClass("selected_row");
