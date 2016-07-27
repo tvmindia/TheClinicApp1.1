@@ -47,10 +47,17 @@ namespace TheClinicApp1._1.Registration
             tok.ClinicID = UA.ClinicID.ToString();
             PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
 
-            //BindDummyRow();
-            gridDataBind();
+            BindDummyRow();
+            BindTodayregistrationDummyRow();
+            //gridDataBind();
             listFilter = null;
             listFilter = BindName();
+
+            if (!IsPostBack)
+            {
+                //*Bind Patients in to the dropdown for token registration
+                DropdownDoctors();
+            }      
         }
         #endregion PageLoad
 
@@ -86,12 +93,12 @@ namespace TheClinicApp1._1.Registration
         {
             DataTable dummy = new DataTable();
 
-            //dummy.Columns.Add("Edit");
-            //dummy.Columns.Add(" ");
+            dummy.Columns.Add("Edit");
+            dummy.Columns.Add(" ");
             dummy.Columns.Add("Name");
             dummy.Columns.Add("Address");
             dummy.Columns.Add("Phone");
-
+            dummy.Columns.Add("PatientID"); 
             dummy.Rows.Add();
 
             GridView1.DataSource = dummy;
@@ -127,14 +134,7 @@ namespace TheClinicApp1._1.Registration
 
             lblTodayRegCount.Text = dtgViewTodaysRegistration.Rows.Count.ToString();
             #endregion GridTodaysRegistration
-
-            listFilter = null;
-            listFilter = BindName();
-            if (!IsPostBack)
-            {
-                //*Bind Patients in to the dropdown for token registration
-                DropdownDoctors();
-            }        
+  
         }
         #endregion GridBind
 
@@ -219,6 +219,99 @@ namespace TheClinicApp1._1.Registration
 
     
         #endregion Methods
+
+
+        [WebMethod]
+        ///This method is called using AJAX For gridview bind , search , paging
+        ///It expects page index and search term which is passed from client side
+        ///Page size is declared and initialized in global variable section
+        public static string ViewAndFilterTodayPatients(string searchTerm, int pageIndex)
+        {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            Patient PatientObj = new Patient();
+            PatientObj.ClinicID = UA.ClinicID;
+
+            var xml = PatientObj.ViewAndFilterTodayPatients(searchTerm, pageIndex, PageSize);
+
+            return xml;
+        }
+
+
+        #region Bind Today Registration Dummy Row
+
+        /// <summary>
+        /// To implement search in gridview(on keypress) :Gridview is converted to table and
+        /// Its first row (of table header) is created using this function
+        /// </summary>
+        private void BindTodayregistrationDummyRow()
+        {
+            DataTable dummy = new DataTable();
+
+            //dummy.Columns.Add("Edit");
+            //dummy.Columns.Add(" ");
+            dummy.Columns.Add("Name");
+            dummy.Columns.Add("Address");
+            dummy.Columns.Add("Phone");
+            dummy.Columns.Add("PatientID");
+            dummy.Rows.Add();
+
+            dtgViewTodaysRegistration.DataSource = dummy;
+            dtgViewTodaysRegistration.DataBind();
+        }
+
+        #endregion Bind Today Registration Dummy Row
+
+
+        [WebMethod]
+        public static string DeletePatientByID(string PatientID)
+        {
+            string result = string.Empty;
+            bool DoctorDeleted = false;
+
+            if (PatientID != string.Empty)
+            {
+                Patient PatientObj = new Patient();
+                PatientObj.PatientID = Guid.Parse(PatientID);
+                if (!(PatientObj.CheckPatientTokenExist(Guid.Parse(PatientID))))
+                {
+                 result =   PatientObj.DeletePatientByPatientID();
+
+                 if (result != string.Empty)
+                 {
+                     DoctorDeleted = true; 
+                 }
+
+                }  
+            }
+            return result;
+        }
+
+
+        [System.Web.Services.WebMethod]
+        public static string DeletePatient(Patient PatientObj)
+        {
+            string result = string.Empty;
+            if (!(PatientObj.CheckPatientTokenExist(PatientObj.PatientID)))
+            {
+                result = PatientObj.DeletePatientByPatientID();
+            }
+
+            string jsonResult = null;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+
+            jsonResult = jsSerializer.Serialize(PatientObj);
+
+            return jsonResult; //Converting to Json
+        }
+
+        #endregion Get Patient Details
+
 
         #region Events
         protected void btngrid_Click(object sender, EventArgs e)
@@ -381,7 +474,7 @@ namespace TheClinicApp1._1.Registration
             lblTokencount.Text = ":" + tokenNo.ToString();
             //lblToken.Visible = true;
             divDisplayNumber.Visible = true;
-            gridDataBind();
+            //gridDataBind();
         }
         #endregion BookingToken
 
@@ -509,7 +602,7 @@ namespace TheClinicApp1._1.Registration
                     msg = Messages.AgeIssue;
                     eObj.InsertionNotSuccessMessage(page, msg);
                 }
-                gridDataBind();
+                //gridDataBind();
                 lblFileCount.Text = PatientObj.FileNumber;
                 if (HiddenField1.Value == "")
                 {
@@ -717,6 +810,6 @@ namespace TheClinicApp1._1.Registration
 
     }
 
-        #endregion
+       
        
     }

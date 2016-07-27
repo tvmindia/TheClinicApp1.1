@@ -167,6 +167,9 @@ table th {
         var row;
 
         function OnSuccess(response) {
+
+            debugger;
+
             $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
@@ -180,6 +183,8 @@ table th {
             if (PatientBooking.length > 0) {
                 $.each(PatientBooking, function () {
                  
+                    debugger;
+
                     $("td", row).eq(0).html($('<img />')
                        .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
@@ -228,6 +233,8 @@ table th {
                 });
             }
             else {
+                debugger;
+                var c = row;
 
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);

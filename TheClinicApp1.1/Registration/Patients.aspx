@@ -1,9 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false"    AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Script for Custom Alert Box For Checking Uploded image is Supported or not--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+       <asp:ScriptManager runat="server" EnablePageMethods="true"  ></asp:ScriptManager>
+
     <asp:Panel DefaultButton="btnSave" runat="server">
         <style type="text/css">
             /* Simple message styles customization */
@@ -68,7 +71,8 @@
         <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
         <script src="../js/jquery-1.3.2.min.js"></script>
         <script src="../js/jquery-1.12.0.min.js"></script>
-
+       <script src="../js/jquery-ui.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
         <script src="../js/fileinput.js"></script>
         <script src="../js/JavaScript_selectnav.js"></script>
         <script src="../js/DeletionConfirmation.js"></script>
@@ -115,7 +119,7 @@
         </script>
         <!--------------------------------------------------------------------->
         <!---   Script Nav button to srink and reform, AutoComplete Textbox, Table Pagination in document Ready --->
-        <script src="../js/jquery.tablePagination.0.1.js"></script>
+        <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
         <script type="text/javascript">
             $(document).ready( function (){
                 debugger;
@@ -130,7 +134,7 @@
                     var name= ac[i].split('🏠');
                     projects.push({  value : name[0], label: name[0], desc: name[1]})   
                 }
-
+                debugger;
                 $( "#txtSearch" ).autocomplete({
                     maxResults: 10,
                     source: function(request, response) {
@@ -188,13 +192,11 @@
                 });--%>
 
 
-            
-                $(function () {
-               
-                    $('[data-toggle="tooltip"]').tooltip()
-                })
 
                 $('.alert_close').click(function () {
+
+                    debugger;
+
                     $(this).parent(".alert").hide();
                 });
 
@@ -204,111 +206,6 @@
                 });
             
          
-
-                var rows = $('#<%=GridView1.ClientID%> tr').not('thead tr');
-
-            $('#txtSearchPatient').keyup(function() {                  
-                var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
-
-                rows.hide().filter(function() {                  
-                    var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                    var matchesSearch = true;
-                    $(val).each(function(index, value) {                       
-                        matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
-                    });                                   
-                    return matchesSearch;                    
-                }).show();
-
-                debugger;
-                //finding the row of html table displaying while searching 
-                var numOfVisibleRows = $('tbody tr').filter(function() {
-                    return $(this).css('display') !== 'none';
-                }).length;
-
- 
-
-                //number of rows while no records found is 1
-                if (numOfVisibleRows==1)
-                {
-                    debugger;
-                    $('#norows').remove();
-                    var bodyId="tbdy";              
-                    $('table').attr('id', bodyId);
-                    var textdis="No records found.";
-                    var html = '<div id="norows" style="width:100%; padding-left: 200px;">'+textdis+'</div>';                  
-                    $('#tbdy').after(html);                
-                }
-                else
-                {
-                    $('#norows').remove();
-                } 
-
-                $('#tablePagination').remove();
-                if (val == "") {                 
-                    $('table').tablePagination({
-                        rowCountstart:1,
-                        rowCountend :7
-                    });
-                }               
-            });
-          
-
-         
-            var rowss = $('#<%=dtgViewTodaysRegistration.ClientID%> tr').not('thead tr');           
-
-
-            $('#txtSearchPatient1').keyup(function() {
-                debugger;
-                var val1 = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase().split(' ');
-
-                rowss.hide().filter(function() {
-                    var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                    var matchesSearch = true;
-                    $(val1).each(function(index, value) {
-                        
-                        matchesSearch = (!matchesSearch) ? false : ~text.indexOf(value);
-                    });
-                    return matchesSearch;
-                }).show();
-                
-              debugger;
-                //finding the row of html table displaying while searching 
-                var numOfVisibleRows1 = $('tbody tr').filter(function() {
-                    return $(this).css('display') !== 'none';
-                }).length;
-
- 
-
-                //number of rows while no records found is 2
-                if (numOfVisibleRows1==7)
-                {
-                    debugger;
-                    $('#norows1').remove();
-                    //var bodyId1="tbdy1";              
-                   // $('thead').attr('id', bodyId1);
-                    var text1="No records found.";
-                    var html1 = '<div id="norows1" style="width:100%; padding-left: 200px;">'+text1+'</div>';     
-                   // $('#ContentPlaceHolder1_dtgViewTodaysRegistration').append(html1);
-                    $('#ContentPlaceHolder1_dtgViewTodaysRegistration').after(html1);                
-                }
-                else
-                {
-                    $('#norows1').remove();
-                } 
-
-
-                $('#tablePagination').remove();
-                if (val1 == "") {
-                    debugger;
-                    $('table').tablePagination({
-                        rowCountstart:1,
-                        rowCountend :7
-                    });
-                    $('#tablePagination').show();
-                }
-               
-            });
-            
 
             }); 
         
@@ -339,26 +236,15 @@
         function OpenModal(id){
             if(id=='1')            
             {
-                $('#tablePagination').remove();
-                $('table').tablePagination({
-                    rowCountstart:1,
-                    rowCountend :7,
-                    currPage:1
-                });
-                $('#tablePagination').show();
-                $('#txtSearchPatient').val('');
-                $('#myModal').modal('show');
+                 $('#myModal').modal('show');
+
+                GetAllPatients(1);
             }
             else if(id==2)
             {
-                $('#tablePagination').remove();
-                $('table').tablePagination({
-            
-                    rowCountstart:1,
-                    rowCountend :7
-                });              
-                $('#txtSearchPatient1').val('');
+                
                 $('#TodaysRegistration').modal('show');
+                GetTodayPatients(1);
             }
         }
             </script>
@@ -400,38 +286,6 @@
             }
 
 
-            
-                
-      $(function () {
-          $("[id*=dtgViewTodaysRegistra] td:eq(0)").click(function () { 
-                    
-              debugger;
-
-              //PatientID = $(this).closest('tr').find('td:eq(5)').text();
-                        
-
-              PatientID = "5824a16e-863c-43f3-8683-1a49bf52c189";
-
-              document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
-                    
-                       
-              var jsonResult = {};
-                          
-
-              var Patient = new Object();
-              Patient.PatientID = PatientID;
-                       
-              jsonResult = GetPatientDetailsByID(Patient);
-              if (jsonResult != undefined) {
-                          
-                  BindControlsWithPatientDetails(jsonResult);
-              }
-                       
-                   
-          });
-
-      });
-
       function GetPatientDetailsByID(Patient) {
           var ds = {};
           var table = {};
@@ -442,19 +296,17 @@
       }
 
 
-
-
              function BindPatientDetails()
               {
 
 debugger;
             var jsonPatient = {};
-               var SearchTerm = $('#txtSearch').val();
+               var SearchItem = $('#txtSearch').val();
                var Patient = new Object();
 
-              if(SearchTerm != '')
+               if(SearchItem != '')
               { 
-                Patient.Name = SearchTerm;
+                   Patient.Name = SearchItem;
 
                 jsonPatient = GetPatientDetails(Patient);
                 if (jsonPatient != undefined)
@@ -563,7 +415,7 @@ debugger;
                     {
                         debugger;
 
-                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + "5824a16e-863c-43f3-8683-1a49bf52c189";
+                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
                     }
                     else
                     {
@@ -580,10 +432,489 @@ debugger;
 
             }
 
-
-
-          
+             
         </script>
+       
+        
+        <link href="../css/TheClinicApp.css" rel="stylesheet" />
+       
+       <script src="../js/jquery-1.8.3.min.js"></script>
+    <script src="../js/ASPSnippets_Pager.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+
+        <script>
+
+            function DeletePatient(Patient) {
+                var ds = {};
+                var table = {};
+                var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
+                ds = getJsonData(data, "../Registration/Patients.aspx/DeletePatient");
+                table = JSON.parse(ds.d);
+                return table;
+            }
+
+
+
+            
+            function DeleteTodayPatientByID(PatientID) { 
+
+                if (PatientID != "") {
+
+                    var Patient = new Object();
+                    Patient.PatientID = PatientID;
+                    var  response =    DeletePatient(Patient);
+
+
+                    if (response.isPatientDeleted == false) {
+
+                        $("#TodayRegistrationClose").click();
+
+                        var lblclass = Alertclasses.danger;
+                        var lblmsg = msg.AlreadyUsed;
+                        var lblcaptn = Caption.FailureMsgCaption;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                        
+                    }
+
+                    else {
+
+                        var PageIndx = parseInt(1);
+
+                        if ($(".pgrHistory span")[0] != null && $(".Pager span")[0].innerText != '') {
+
+                            PageIndx = parseInt($(".pgrHistory span")[0].innerText);
+                        }
+
+                        GetTodayPatients(PageIndx); 
+
+                               
+                    }
+                   
+              
+                }
+
+            }
+
+
+
+
+
+
+            function DeletePatientByID(PatientID) { 
+
+                if (PatientID != "") {
+
+                    var Patient = new Object();
+                    Patient.PatientID = PatientID;
+                    var  response =    DeletePatient(Patient);
+
+
+                    if (response.isPatientDeleted == false) {
+
+                        $("#AllRegistrationClose").click();
+
+                        var lblclass = Alertclasses.danger;
+                        var lblmsg = msg.AlreadyUsed;
+                        var lblcaptn = Caption.FailureMsgCaption;
+
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                        
+                    }
+
+                    else {
+
+                        var PageIndx = parseInt(1);
+
+                        if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
+
+                            PageIndx = parseInt($(".Pager span")[0].innerText);
+                        }
+
+                        GetAllPatients(PageIndx);
+
+                               
+                    }
+                    debugger;
+                    //PageMethods.DeletePatientByID(PatientID, OnSuccess, onError);
+                    debugger;
+ <%--                   function OnSuccess(response, userContext, methodName) {
+                        debugger;
+                        if (response.isPatientDeleted == true) {
+
+                            $("#AllRegistrationClose").click();
+
+                            var lblclass = Alertclasses.danger;
+                            var lblmsg = msg.AlreadyUsed;
+                            var lblcaptn = Caption.FailureMsgCaption;
+
+                            ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                        
+                        }
+
+                        else {
+
+                            var PageIndx = parseInt(1);
+
+                            if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
+
+                                PageIndx = parseInt($(".Pager span")[0].innerText);
+                            }
+
+                            GetAllPatients(PageIndx);
+
+                               
+                        }
+                        function onError(response, userContext, methodName) {
+
+                        }
+
+                    }--%>
+                }
+
+            }
+
+
+
+            $(function () {
+                $("[id*=GridView1] td:eq(0)").click(function () { 
+
+                    PatientID = $(this).closest('tr').find('td:eq(5)').text();
+                       
+                    document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+                    
+                    var jsonResult = {};
+                          
+
+                    var Patient = new Object();
+                    Patient.PatientID = PatientID;
+                       
+                    jsonResult = GetPatientDetailsByID(Patient);
+                    if (jsonResult != undefined) {
+                          
+                        BindControlsWithPatientDetails(jsonResult);
+                    }
+             
+                });
+
+            });
+
+
+            $(function () {
+                $("[id*=dtgViewTodaysRegistration] td:eq(0)").click(function () { 
+                    debugger;
+                    PatientID = $(this).closest('tr').find('td:eq(5)').text();
+                       
+                    document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+                    
+                    var jsonResult = {};
+                          
+
+                    var Patient = new Object();
+                    Patient.PatientID = PatientID;
+                       
+                    jsonResult = GetPatientDetailsByID(Patient);
+                    if (jsonResult != undefined) {
+                          
+                        BindControlsWithPatientDetails(jsonResult);
+                    }
+                    $("#TodayRegistrationClose").click();
+                });
+
+            });
+
+            $(function () {
+                $("[id*=GridView1] td:eq(1)").click(function () {
+                    debugger;
+
+                    if ($(this).text() == "") {
+                        var DeletionConfirmation = ConfirmDelete();
+                        if (DeletionConfirmation == true) {
+                            PatientID = $(this).closest('tr').find('td:eq(5)').text();
+                            DeletePatientByID(PatientID);
+                            //window.location = "StockIn.aspx?HdrID=" + receiptID;
+                        }
+                    }
+                });
+            });
+
+           
+            $(function () {
+                $("[id*=dtgViewTodaysRegistration] td:eq(1)").click(function () {
+                    debugger;
+
+                    if ($(this).text() == "") {
+                        var DeletionConfirmation = ConfirmDelete();
+                        if (DeletionConfirmation == true) {
+                            PatientID = $(this).closest('tr').find('td:eq(5)').text();
+                           
+                            DeleteTodayPatientByID(PatientID);
+                        }
+                    }
+                });
+            });
+
+
+
+            $("[id*=txtSearchTodayPatient]").live("keyup", function () {
+                debugger;
+                GetTodayPatients(parseInt(1));
+            });
+
+            $(".pgrHistory .page").live("click", function () {
+                GetTodayPatients(parseInt($(this).attr('page')));
+            });
+            function SearchTermInTodayList() {
+                return jQuery.trim($("[id*=txtSearchTodayPatient]").val());
+            };
+
+            function GetTodayPatients(pageIndex) {
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "../Registration/Patients.aspx/ViewAndFilterTodayPatients",
+                    data: '{searchTerm: "' + SearchTermInTodayList() + '", pageIndex: ' + pageIndex + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: TodayRegistrationSuccess,
+                    failure: function (response) {
+
+                        alert(response.d);
+                    },
+                    error: function (response) {
+
+                        alert(response.d);
+                    }
+                });
+            }
+
+
+
+            $(function () {
+                debugger;
+                GetAllPatients(1);
+                GetTodayPatients(1);
+            });
+            $("[id*=txtSearchPatient]").live("keyup", function () {
+                debugger;
+                GetAllPatients(parseInt(1));
+            });
+            $(".Pager .page").live("click", function () {
+                GetAllPatients(parseInt($(this).attr('page')));
+            });
+           
+            
+
+            function SearchTerm() {
+                return jQuery.trim($("[id*=txtSearchPatient]").val());
+            };
+            function GetAllPatients(pageIndex) {
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "../Registration/Patients.aspx/ViewAndFilterAllPatients",
+                    data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess,
+                    failure: function (response) {
+
+                        alert(response.d);
+                    },
+                    error: function (response) {
+
+                        alert(response.d);
+                    }
+                });
+            }
+            var row;
+            function OnSuccess(response) {
+
+                $(".Pager").show();
+
+                debugger;
+                var xmlDoc = $.parseXML(response.d);
+                var xml = $(xmlDoc);
+                var AllRegistration = xml.find("AllRegistration");
+
+
+                if (row == null) {
+                    row = $("[id*=GridView1] tr:last-child").clone(true);
+                }
+                $("[id*=GridView1] tr").not($("[id*=GridView1] tr:first-child")).remove();
+                if (AllRegistration.length > 0) {
+                    
+                    $.each(AllRegistration, function () {
+                        debugger;
+                        $("td", row).eq(0).html($('<img id="ImgBtnUpdate" />')
+                           .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
+
+                        $("td", row).eq(1).html($('<img id="ImgBtnDelete" />')
+                         .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+
+                        $("td", row).eq(2).html($(this).find("Name").text());
+                        $("td", row).eq(3).html($(this).find("Address").text());
+
+
+                        $("td", row).eq(4).html($(this).find("Phone").text());
+                      
+                        $("td", row).eq(5).html($(this).find("PatientID").text());
+
+                        $("[id*=GridView1]").append(row);
+                        row = $("[id*=GridView1] tr:last-child").clone(true);
+                    });
+                    var pager = xml.find("Pager");
+
+                    if ($('#txtSearchPatient').val() == '') {
+                        var GridRowCount = pager.find("RecordCount").text();
+
+                        $("#<%=lblRegCount.ClientID %>").text(GridRowCount);
+                    }
+
+                    $(".Pager").ASPSnippets_Pager({
+                        ActiveCssClass: "current",
+                        PagerCssClass: "pager",
+                        PageIndex: parseInt(pager.find("PageIndex").text()),
+                        PageSize: parseInt(pager.find("PageSize").text()),
+                        RecordCount: parseInt(pager.find("RecordCount").text())
+                    });
+
+                    $(".Match").each(function () {
+                        var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
+                        $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                    });
+                } else {
+
+                    debugger;
+
+                    var empty_row = row.clone(true);
+                    $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                    $("td:first-child", empty_row).attr("align", "center");
+                    $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
+                    $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                    $("[id*=GridView1]").append(empty_row);
+
+                    $(".Pager").hide();
+                }
+
+
+
+                //var th = $("[id*=GridView1] th:contains('DoctorID')");
+                //th.css("display", "none");
+                //$("[id*=GridViewPharmacylist] tr").each(function () {
+                //    $(this).find("td").eq(th.index()).css("display", "none");
+                //});
+
+                var PatienIDColumn = $("[id*=GridView1] th:contains('PatientID')");
+                PatienIDColumn.css("display", "none");
+                $("[id*=GridView1] tr").each(function () {
+                    $(this).find("td").eq(PatienIDColumn.index()).css("display", "none");
+                });
+                
+            };
+
+            row= null;
+
+
+            var TodayRegRow;
+            function TodayRegistrationSuccess(response) {
+
+                $(".pgrHistory").show();
+               
+                debugger;
+                var xmlDoc = $.parseXML(response.d);
+                var xml = $(xmlDoc);
+                var AllRegistration = xml.find("TodayRegistration");
+                if (TodayRegRow == null) {
+                    TodayRegRow = $("[id*=dtgViewTodaysRegistration] tr:last-child").clone(true);
+                }
+                $("[id*=dtgViewTodaysRegistration] tr").not($("[id*=dtgViewTodaysRegistration] tr:first-child")).remove();
+                if (AllRegistration.length > 0) {
+                    
+                    $.each(AllRegistration, function () {
+                        debugger;
+                        $("td", TodayRegRow).eq(0).html($('<img />')
+                           .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
+
+                        $("td", TodayRegRow).eq(1).html($('<img />')
+                         .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+
+                        $("td", TodayRegRow).eq(2).html($(this).find("Name").text());
+                        $("td", TodayRegRow).eq(3).html($(this).find("Address").text());
+
+
+                        $("td", TodayRegRow).eq(4).html($(this).find("Phone").text());
+                      
+                        $("td", TodayRegRow).eq(5).html($(this).find("PatientID").text());
+
+                        $("[id*=dtgViewTodaysRegistration]").append(TodayRegRow);
+                        TodayRegRow = $("[id*=dtgViewTodaysRegistration] tr:last-child").clone(true);
+                    });
+                    var pager = xml.find("Pager");
+
+                    if ($('#txtSearchTodayPatient').val() == '') {
+                        var GridRowCount = pager.find("RecordCount").text();
+
+                        $("#<%=lblTodayRegCount.ClientID %>").text(GridRowCount);
+                    }
+
+                    $(".pgrHistory").ASPSnippets_Pager({
+                        ActiveCssClass: "current",
+                        PagerCssClass: "pager",
+                        PageIndex: parseInt(pager.find("PageIndex").text()),
+                        PageSize: parseInt(pager.find("PageSize").text()),
+                        RecordCount: parseInt(pager.find("RecordCount").text())
+                    });
+
+                    $(".Match").each(function () {
+                        var searchPattern = new RegExp('(' + SearchTermInTodayList() + ')', 'ig');
+                        $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTermInTodayList() + "</span>"));
+                    });
+                } else {
+                    var empty_row = TodayRegRow.clone(true);
+                    $("td:first-child", empty_row).attr("colspan", $("td", TodayRegRow).length);
+                    $("td:first-child", empty_row).attr("align", "center");
+                    $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
+                    $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                    $("[id*=dtgViewTodaysRegistration]").append(empty_row);
+
+                    $(".pgrHistory").hide();
+
+                }
+
+
+
+                //var th = $("[id*=GridView1] th:contains('DoctorID')");
+                //th.css("display", "none");
+                //$("[id*=GridViewPharmacylist] tr").each(function () {
+                //    $(this).find("td").eq(th.index()).css("display", "none");
+                //});
+
+                var PatienIDColumn = $("[id*=dtgViewTodaysRegistration] th:contains('PatientID')");
+                PatienIDColumn.css("display", "none");
+                $("[id*=dtgViewTodaysRegistration] tr").each(function () {
+                    $(this).find("td").eq(PatienIDColumn.index()).css("display", "none");
+                });
+              
+            };
+
+            TodayRegRow = null;
+
+</script>
+
+
+
+
+
+
+
+
+
         <!------------------------------------------------------------------------------>
         <!---------------------------------------------------------------------->
         <!------------------------------------->
@@ -745,7 +1076,7 @@ debugger;
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header" style="border-color: #3661C7;">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal" id="AllRegistrationClose">&times;</button>
                         <h3 class="modal-title">All Registration</h3>
                     </div>
                     <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
@@ -758,25 +1089,33 @@ debugger;
                                 </div>
                             </div>
                             <div class="col-lg-12" style="height: 400px;">
-                                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" EnableModelValidation="true" OnPreRender="GridView1_PreRender" GridLines="Horizontal">
+                                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" >
 
                                     <Columns>
-                                        <asp:TemplateField>
+                              <asp:TemplateField>
                                             <ItemTemplate>
-                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Editicon1.png" CommandName="Comment" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Editicon1.png"   />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
                                             <ItemTemplate>
-                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Deleteicon1.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return ConfirmDelete();" OnCommand="ImgBtnDelete_Command" formnovalidate />
+                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnDelete" runat="server" ImageUrl="~/Images/Deleteicon1.png" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"></asp:BoundField>
-                                        <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address"></asp:BoundField>
-                                        <asp:BoundField DataField="Phone" HeaderText="Phone" SortExpression="Phone"></asp:BoundField>
+                                        <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" ItemStyle-CssClass="Match"></asp:BoundField>
+                                        <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" ItemStyle-CssClass="Match"></asp:BoundField>
+                                        <asp:BoundField DataField="Phone" HeaderText="Phone" SortExpression="Phone" ItemStyle-CssClass="Match"></asp:BoundField>
+                                          <asp:BoundField DataField="PatientID" HeaderText="PatientID"></asp:BoundField>
+                                          
+
                                     </Columns>
                                 </asp:GridView>
                             </div>
+
+                              <div class="Pager">
+
+                              </div>
+
                         </div>
                     </div>
                 </div>
@@ -789,7 +1128,7 @@ debugger;
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header" style="border-color: #3661C7;">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal" >&times;</button>
                         <h3 class="modal-title">Token Registration</h3>
                     </div>
                     <div class="modal-body" style="">
@@ -820,7 +1159,7 @@ debugger;
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header" style="border-color: #3661C7;">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal" id="TodayRegistrationClose">&times;</button>
                         <h3 class="modal-title">Today's Registrations</h3>
 
                     </div>
@@ -828,30 +1167,35 @@ debugger;
                         <div class="col-lg-12" style="height: 480px;">
                             <div class="col-lg-12" style="height: 40px">
                                 <div class="search_div">
-                                    <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchPatient1" />
+                                    <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchTodayPatient" />
                                     <input class="button3" type="button" value="Search" />
                                 </div>
                             </div>
                             <div class="col-sm-12" style="height: 400px;">
-                                <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" EnableModelValidation="true" OnPreRender="dtgViewTodaysRegistration_PreRender" GridLines="Horizontal">
+                                <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" >
 
                                     <Columns>
                                         <asp:TemplateField>
                                             <ItemTemplate>
-                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon1.png" CommandArgument='<%# Eval("PatientID")+"|" + Eval("Name") + "|" + Eval("Address")+"|"+ Eval("Phone")+"|"+ Eval("Email")+"|"+Eval("DOB")+"|"+Eval("Gender")+"|"+Eval("MaritalStatus")+"|"+Eval("Occupation")+"|"+Eval("ImageType")%>' OnCommand="ImgBtnUpdate_Command" formnovalidate />
+                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon1.png" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
                                             <ItemTemplate>
-                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Deleteicon1.png" CommandName="CommentDelete" CommandArgument='<%# Eval("PatientID")%>' OnClientClick="return ConfirmDelete();" OnCommand="ImgBtnDelete_Command" formnovalidate />
+                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Deleteicon1.png" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>
                                         <asp:BoundField DataField="Address" HeaderText="Address"></asp:BoundField>
-                                        <asp:BoundField DataField="Phone" HeaderText="Phone"></asp:BoundField>
+                                       <asp:BoundField DataField="Phone" HeaderText="Phone"></asp:BoundField>
+                                        <asp:BoundField DataField="PatientID" HeaderText="PatientID"></asp:BoundField>
                                     </Columns>
                                 </asp:GridView>
                             </div>
+
+                             <div class="pgrHistory">
+
+                              </div>
                         </div>
                     </div>
                     <asp:HiddenField ID="HiddenField1" runat="server" />
@@ -870,15 +1214,21 @@ debugger;
         <!--------------------->
         <!------------------------------------------------------------------------------------------>
         <!-- Script Files -->
-        <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-        <script src="../js/jquery-1.3.2.min.js"></script>
-        <script src="../js/jquery-1.12.0.min.js"></script>
-        <script src="../js/jquery-ui.js"></script>
+
+          
+     <%--<script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>--%>
+    <%--<script src="../js/jquery-1.3.2.min.js"></script>--%>
+   
+         <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
+
+      <script src="../js/jquery-1.12.0.min.js"></script>
+         <script src="../js/ASPSnippets_Pager.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
 
-        <script src="../js/jquery.tablePagination.0.1.js"></script>
+       <script src="../js/jquery-ui.js"></script>
+
         <!---   Script includes function for open Modals preview, Created By:Thomson Kattingal --->
-        <asp:ScriptManager runat="server"></asp:ScriptManager>
+     
 
         <script type="text/javascript">  
     <!---Function for Open Token Registration Modal and All Registarion Modal----->
@@ -895,6 +1245,16 @@ debugger;
 
     
         </script>
+
+
+
+
+
+
+
+
+
+
 
         <style>
 

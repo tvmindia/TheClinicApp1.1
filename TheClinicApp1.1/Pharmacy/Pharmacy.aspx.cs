@@ -438,14 +438,14 @@ namespace TheClinicApp1._1.Pharmacy
                         IssuedtlObj.InsertIssueDetails();                       // insert issue Details function call  
                     }
                     // hdnsave.Value = "saved";
-                    lblPatientName.Text = "PATIENT_NAME";
-                    lblAgeCount.Text = "AGE";
-                    lblGenderDis.Text = "GENDER";
-                    lblFileNum.Text = "FILE NO";
-                    lblDoctor.Text = "";
-                    HiddenPatientID.Value = "";
-                    Patientidtorefill.Value = "";
-                    ProfilePic.Src = "../images/UploadPic1.png";
+                    //lblPatientName.Text = "PATIENT_NAME";
+                    //lblAgeCount.Text = "AGE";
+                    //lblGenderDis.Text = "GENDER";
+                    //lblFileNum.Text = "FILE NO";
+                    //lblDoctor.Text = "";
+                    //HiddenPatientID.Value = "";
+                    //Patientidtorefill.Value = "";
+                    //ProfilePic.Src = "../images/UploadPic1.png";
                 }
                 else
                 {

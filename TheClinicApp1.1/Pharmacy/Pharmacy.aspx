@@ -321,7 +321,8 @@
                         var jsonResult = {};
                         DoctorID = $(this).closest('tr').find('td:eq(5)').text();
                         PatientID = $(this).closest('tr').find('td:eq(6)').text();
-
+                       
+                        $("#<%=HiddenPatientID.ClientID %>").val(PatientID)      
                         $("#<%=Patientidtorefill.ClientID %>").val(PatientID)
                         
                         var pharmacy = new Object();
@@ -482,7 +483,7 @@
             }
             var row;
             function OnSuccess(response) {
-               
+                $(".Pager").show();
                 var xmlDoc = $.parseXML(response.d);
                 var xml = $(xmlDoc);
                 var Pharmacy = xml.find("Pharmacy");
@@ -494,6 +495,8 @@
 
                     $.each(Pharmacy, function () {
                        
+                        debugger;
+
                         $("td", row).eq(0).html($('<img />')
                            .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
 
@@ -552,6 +555,8 @@
                     $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
                     $("td", empty_row).not($("td:first-child", empty_row)).remove();
                     $("[id*=GridViewPharmacylist]").append(empty_row);
+
+                    $(".Pager").hide();
                 }
 
 

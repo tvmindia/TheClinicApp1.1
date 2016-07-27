@@ -122,6 +122,13 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+        public bool isPatientDeleted
+        {
+            get;
+            set;
+        }
+
+
         #endregion Patientproperty
 
         #region FileProperty
@@ -217,6 +224,83 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion Patient All Registration View Search Paging
+
+
+        #region Today's Patient: Registration View Search Paging
+
+        public string ViewAndFilterTodayPatients(string searchTerm, int pageIndex, int PageSize)
+        {
+            dbConnection dcon = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+
+            DateTime now = DateTime.Now;
+
+            var xml = string.Empty;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ViewAndFilterTodayRegistration";
+
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                //cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode;
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+                cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds, "TodayRegistration");
+
+                //-----------Paging Section 
+
+                DataTable dt = new DataTable("Pager");
+                dt.Columns.Add("PageIndex");
+                dt.Columns.Add("PageSize");
+                dt.Columns.Add("RecordCount");
+                dt.Rows.Add();
+                dt.Rows[0]["PageIndex"] = pageIndex;
+                dt.Rows[0]["PageSize"] = PageSize;
+                dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                ds.Tables.Add(dt);
+
+                xml = ds.GetXml();
+
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "ViewAndFilterTodayPatients";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+            return xml;
+        }
+
+        #endregion Today's Patient: Registration View Search Paging
 
 
         #region UpdatePatientPicture
@@ -574,6 +658,53 @@ namespace TheClinicApp1._1.ClinicDAL
             }
 
         }
+
+        public string DeletePatientByPatientID()
+        {
+            string result = string.Empty;
+            SqlConnection con = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand pud = new SqlCommand();
+                pud.Connection = con;
+                pud.CommandType = System.Data.CommandType.StoredProcedure;
+                pud.CommandText = "DeletePatientDetails";
+                pud.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                pud.Parameters.Add(Output);
+                pud.ExecuteNonQuery();
+
+                isPatientDeleted = true;
+                result = Output.Value.ToString();
+
+               
+            }
+            catch (Exception ex)
+            {
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = usrid;
+                eObj.Method = "DeletePatientDetails";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return result;
+        }
+
         #endregion DeletePatientDetails
         #endregion Patients Methods
 

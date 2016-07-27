@@ -284,6 +284,7 @@
         var row;
         function OnSuccess(response) {
             debugger;
+            $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
             var Units = xml.find("Units");
@@ -339,6 +340,7 @@
                 $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=dtgViewAllUnits]").append(empty_row);
+                $(".Pager").hide();
             }
 
             var th = $("[id*=dtgViewAllUnits] th:contains('UnitID')");

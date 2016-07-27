@@ -57,6 +57,9 @@
                     debugger;
                     DeleteIssueheader(issueID);
                     //window.location = "StockOut.aspx?HdrID=" + issueID;
+
+                   
+
                 }
                 }
             });
@@ -82,6 +85,8 @@
 
     <script>
         function DeleteIssueheader(issueID) { //------* Delete Issue Header by IssueID (using webmethod)
+            debugger;
+
 
             if (issueID != "") {
 
@@ -100,19 +105,17 @@
 
                     else
                     {
-                        var lblclass = Alertclasses.sucess;
+                      <%--  var lblclass = Alertclasses.sucess;
                         var lblmsg = msg.DeletionSuccessFull;
                         var lblcaptn = Caption.SuccessMsgCaption;
 
-                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);--%>
 
-                        //if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
-
-                        //    PageIndx = parseInt($(".Pager span")[0].innerText);
-                        //}
-
-                        //GetMedicines(PageIndx);
-
+                        var PageIndx = parseInt(1);
+                        if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
+                            PageIndx = parseInt($(".Pager span")[0].innerText);
+                        }
+                        GetIssueHD(PageIndx);
 
                     }
 

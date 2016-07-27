@@ -377,6 +377,8 @@
         }
         var row;
         function OnSuccess(response) {
+
+            $(".Pager").show();
             debugger;
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
@@ -432,6 +434,8 @@
                 $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=dtgViewAllUsers]").append(empty_row);
+
+                $(".Pager").hide();
             }
 
 

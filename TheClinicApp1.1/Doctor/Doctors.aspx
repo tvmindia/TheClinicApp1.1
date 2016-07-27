@@ -546,70 +546,44 @@
                 });
             }
 
-            var row= null;
+            var HistoryRow= null;
             function HistorySuccess(response) {
                 debugger;
 
-
-             
-
+                
+                $(".pgrHistory").show();
+                
                 var xmlDoc = $.parseXML(response.d);
                 var xml = $(xmlDoc);
                 var Visits = xml.find("Visits");
 
-               
+             
+                if (HistoryRow == null) {
 
-                //$("[id*=GridViewVisitsHistory] > tbody").empty();
-
-                if (row == null) {
-
-                    row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+                    HistoryRow = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
 
 
-                    //if ($("[id*=GridViewVisitsHistory] tr:last-child").text().indexOf("No records found.") != -1) 
-                    //{  
-                    //    $("[id*=GridViewVisitsHistory] tr:last-child").append($("#hdnEmptyRow").val());
-
-                    //    row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
-                    //    }
-                    //else{
-                    //    row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
-                    //    }
-
-                  
-
-                  
-                    //{
-                    //    $("[id*=GridViewVisitsHistory] tr:last-child").remove();
-                    //    $("[id*=GridViewVisitsHistory] tr:last-child").append('<td></td><td></td><td></td><td></td><td></td><td></td>');
-
-                    //    row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
-                    //}
-
-                   
-                       
-                   
                 }
                 $("[id*=GridViewVisitsHistory] tr").not($("[id*=GridViewVisitsHistory] tr:first-child")).remove();
                 if (Visits.length > 0) {
 
                     $.each(Visits, function () {
                         debugger;
-                        $("td", row).eq(0).html($('<img />')
+                        $("td", HistoryRow).eq(0).html($('<img />')
                            .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
                          
                         //$("td", row).eq(1).html($(this).find("TokenNo").text());
-                        $("td", row).eq(1).html($(this).find("Remarks").text());
+                        $("td", HistoryRow).eq(1).html($(this).find("Remarks").text());
 
-                        $("td", row).eq(2).html($(this).find("CrDate").text());
+                        $("td", HistoryRow).eq(2).html($(this).find("CrDate").text());
                        
-                        $("td", row).eq(3).html($(this).find("FileID").text());
+                        $("td", HistoryRow).eq(3).html($(this).find("FileID").text());
 
-                        $("td", row).eq(4).html($(this).find("VisitID").text());
-                        $("td", row).eq(5).html($(this).find("PrescriptionID").text());
+                        $("td", HistoryRow).eq(4).html($(this).find("VisitID").text());
+                        $("td", HistoryRow).eq(5).html($(this).find("PrescriptionID").text());
 
-                        $("[id*=GridViewVisitsHistory]").append(row);
-                        row = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+                        $("[id*=GridViewVisitsHistory]").append(HistoryRow);
+                        HistoryRow = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
                     });
                     var pager = xml.find("Pager");
 
@@ -634,8 +608,8 @@
                     });
 
                     $(".Match").each(function () {
-                        var searchPattern = new RegExp('(' + SearchTerm() + ')', 'ig');
-                        $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
+                        var searchPattern = new RegExp('(' + SearchInVisit() + ')', 'ig');
+                        $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchInVisit() + "</span>"));
                     });
                 } 
                 
@@ -659,14 +633,15 @@
                    var columnCount = $("[id*=GridViewVisitsHistory]").find('tr')[0].cells.length;
 
 
-                   var empty_row = row.clone(true);
-                   $("#hdnEmptyRow").val(row);
-
+                   var empty_row = HistoryRow.clone(true);
+                  
                     $("td:first-child", empty_row).attr("colspan", columnCount);
                     $("td:first-child", empty_row).attr("align", "center");
                     $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
                     $("td", empty_row).not($("td:first-child", empty_row)).remove();
                     $("[id*=GridViewVisitsHistory]").append(empty_row);
+
+                    $(".pgrHistory").hide();
                 }
 
 
@@ -692,10 +667,12 @@
                     $(this).find("td").eq(PrescriptionIDColumn.index()).css("display", "none");
                 });
 
-                row= null;
+               
 
             };
             
+            HistoryRow= null;
+
             //---------------------------------------------------------- * Token Grid BinD,Paging,Search *--------------------------------------------------//
 
             $(function () {
@@ -742,7 +719,7 @@
             }
             var row;
             function OnSuccess(response) {
-               
+                $(".Pager").show();
                 var xmlDoc = $.parseXML(response.d);
                 var xml = $(xmlDoc);
                 var DoctorTokens = xml.find("DoctorTokens");
@@ -805,13 +782,13 @@
                     });
                 } else {
                     var empty_row = row.clone(true);
-                    
-
                     $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                     $("td:first-child", empty_row).attr("align", "center");
                     $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
                     $("td", empty_row).not($("td:first-child", empty_row)).remove();
                     $("[id*=GridViewTokenlist]").append(empty_row);
+
+                    $(".Pager").hide();
                 }
 
                 var PatientIDColumn = $("[id*=GridViewTokenlist] th:contains('PatientID')");
@@ -820,9 +797,11 @@
                     $(this).find("td").eq(PatientIDColumn.index()).css("display", "none");
                 });
 
-                row= null;
+             
 
             };
+            row= null;
+
 
             //------ * Function To open modal popup * -----//
 
@@ -1499,6 +1478,6 @@
 
     </asp:Panel>
 
-    <input type="hidden" id="hdnEmptyRow" value=""/>
+  
 
 </asp:Content>

@@ -297,7 +297,7 @@ table
         }
         var row;
         function OnSuccess(response) {
-
+            $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
             var AssignedRoles = xml.find("AssignedRoles");
@@ -354,6 +354,7 @@ table
                 $("td:first-child", empty_row).html("No records found for the search criteria.");
                 $("td", empty_row).not($("td:first-child", empty_row)).remove();
                 $("[id*=dtgViewAllUserInRoles]").append(empty_row);
+                $(".Pager").hide();
             }
 
 

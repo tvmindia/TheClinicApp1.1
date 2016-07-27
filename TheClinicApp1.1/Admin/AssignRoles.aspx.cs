@@ -88,6 +88,7 @@ namespace TheClinicApp1._1.Admin
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string loginedUserID = UA.UserID.ToString();
 
+            roleObj.ClinicID = UA.ClinicID;
             dtUsers = roleObj.GetDetailsOfAllUsers();
             ViewState["dtUsers"] = dtUsers;
 
