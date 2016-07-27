@@ -127,31 +127,48 @@
                 //---------------* Function to check Issue Number duplication *-----------------// 
             
                 var IssueNo = document.getElementById('<%=txtIssueNO.ClientID %>').value;
-            IssueNo = IssueNo.replace(/\s/g, '');
 
-            PageMethods.CheckIssueNoDuplication(IssueNo, OnSuccess, onError);
+                IssueNo = IssueNo.trim();
 
-            function OnSuccess(response, userContext, methodName) {
+                if (IssueNo != "") {
 
-                var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
-        var errLname = document.getElementById('<%=errorLnames.ClientID %>');
-        if (response == false) {
+                    IssueNo = IssueNo.replace(/\s/g, '');
 
-            LnameImage.style.display = "block";
-            errLname.style.display = "none";
+                    PageMethods.CheckIssueNoDuplication(IssueNo, OnSuccess, onError);
 
-        }
-        if (response == true) {
-            errLname.style.display = "block";
-            errLname.style.color = "Red";
-            errLname.innerHTML = "Name Alreay Exists"
-            LnameImage.style.display = "none";
+                    function OnSuccess(response, userContext, methodName) {
 
-        }
-    }
-    function onError(response, userContext, methodName) {
+                        var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                        var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                        if (response == false) {
 
-    }
+                            LnameImage.style.display = "block";
+                            errLname.style.display = "none";
+
+                        }
+                        if (response == true) {
+                            errLname.style.display = "block";
+                            errLname.style.color = "Red";
+                            errLname.innerHTML = "Name Alreay Exists"
+                            LnameImage.style.display = "none";
+
+                        }
+                    }
+                    function onError(response, userContext, methodName) {
+
+                    }
+                }
+                else{
+                    if (IssueNo == "") {
+                        var LnameImage = document.getElementById('<%=imgWebLnames.ClientID %>');
+                        LnameImage.style.display = "none";
+                        var errLname = document.getElementById('<%=errorLnames.ClientID %>');
+                        errLname.style.display = "none";
+                    }
+                }
+
+
+
 }
        
       

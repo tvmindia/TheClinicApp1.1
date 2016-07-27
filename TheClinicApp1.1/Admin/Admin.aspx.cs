@@ -148,11 +148,12 @@ namespace TheClinicApp1._1.Admin
                 //INSERT
 
                 userObj.AddUser();
+                hdnUserID.Value = userObj.UserID.ToString();
 
-                if (rdoDoctor.Checked == true)
-                {
-                    hdnUserID.Value = userObj.UserID.ToString();
-                }
+                //if (rdoDoctor.Checked == true)
+                //{
+                //    hdnUserID.Value = userObj.UserID.ToString();
+                //}
              
 
             }
@@ -819,7 +820,7 @@ namespace TheClinicApp1._1.Admin
                 eObj.InsertionNotSuccessMessage(page, msg);
             }
 
-            hdnUserID.Value = "";
+           // hdnUserID.Value = "";
            
         }
 
