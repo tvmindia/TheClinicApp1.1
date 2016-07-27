@@ -579,11 +579,11 @@ namespace TheClinicApp1._1.Doctor
                 }
             }
 
-            //else
-            //{
-            //    //It will return pager part , so that no records found text will be dispalyed
-            //    xml = CaseFileObj.ViewAndFilterVisits(searchTerm, pageIndex, PageSize);
-            //}
+            else
+            {
+                //It will return pager part , so that no records found text will be dispalyed
+                xml = CaseFileObj.ViewAndFilterVisits(searchTerm, pageIndex, PageSize);
+            }
 
             return xml;
 

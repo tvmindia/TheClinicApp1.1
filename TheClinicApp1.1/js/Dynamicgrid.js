@@ -982,7 +982,7 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
                                     else if (InputQty > Qty || InputQty <= 0) {
                                         debugger;
                                         $("#txtMedQty" + ControlNo).addClass("warning");
-                                        $("#txtMedQty" + ControlNo).attr('type', 'text');
+                                      //  $("#txtMedQty" + ControlNo).attr('type', 'text');
                                        // $("#txtMedQty" + ControlNo).css({ 'color': ' #ffad99' });
 
                                         if (InputQty > Qty) {
@@ -1004,7 +1004,7 @@ function CheckPharmacyMedicineIsOutOfStock(ControlNo)
                                         debugger;
                                         $("#txtMedQty" + ControlNo).removeClass("warning");
                                         $("#txtMedQty" + ControlNo).css({ 'color': 'black' });
-                                        $("#txtMedQty" + ControlNo).attr('type', 'number');
+                                      //  $("#txtMedQty" + ControlNo).attr('type', 'number');
                                        // document.getElementById('OutOfStockMessage').style.display = "none";
                                     }  
                             }

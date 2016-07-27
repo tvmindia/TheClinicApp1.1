@@ -145,11 +145,13 @@ namespace TheClinicApp1._1.Registration
         public void DropdownDoctors()
         {
             DataSet ds = tok.DropBindDoctorsName();
-            ddlDoctorName.SelectedIndex = -1;
+           // ddlDoctorName.SelectedIndex = -1;
             ddlDoctorName.DataSource = ds.Tables[0];
             ddlDoctorName.DataValueField = "DoctorID";
             ddlDoctorName.DataTextField = "Name";
             ddlDoctorName.DataBind();
+
+            ddlDoctorName.Items.Insert(0, "--Select--");
         }
         #endregion BindDropdownDOc
 

@@ -973,23 +973,23 @@ namespace TheClinicApp1._1.ClinicDAL
                     xml = ds.GetXml();
                     }
 
-                    //else
-                    //{
-                    //    ds = new DataSet();
-                    //    DataTable dt = new DataTable("Pager");
+                    else
+                    {
+                        ds = new DataSet();
+                        DataTable dt = new DataTable("Pager");
 
-                    //    dt.Columns.Add("PageIndex");
-                    //    dt.Columns.Add("PageSize");
-                    //    dt.Columns.Add("RecordCount");
-                    //    dt.Rows.Add();
+                        dt.Columns.Add("PageIndex");
+                        dt.Columns.Add("PageSize");
+                        dt.Columns.Add("RecordCount");
+                        dt.Rows.Add();
 
-                    //    dt.Rows[0]["PageIndex"] = pageIndex;
-                    //    dt.Rows[0]["PageSize"] = PageSize;
-                    //    dt.Rows[0]["RecordCount"] = 0;
-                    //    ds.Tables.Add(dt);
+                        dt.Rows[0]["PageIndex"] = pageIndex;
+                        dt.Rows[0]["PageSize"] = PageSize;
+                        dt.Rows[0]["RecordCount"] = 0;
+                        ds.Tables.Add(dt);
 
-                    //    xml = ds.GetXml();
-                    //}
+                        xml = ds.GetXml();
+                    }
 
 
                 }

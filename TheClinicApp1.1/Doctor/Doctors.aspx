@@ -493,11 +493,11 @@
                 }
             });
 
-            //$(function () {
+            $(function () {
 
-            //   GetHistory(1,"");
+               GetHistory(1,"");
 
-            //});
+            });
 
           
             $(".pgrHistory .page").live("click", function () 
