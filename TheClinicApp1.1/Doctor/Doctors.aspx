@@ -731,8 +731,7 @@
 
                     $.each(DoctorTokens, function () {
                        
-                        $("td", row).eq(0).html($('<img />')
-                           .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
+                      
 
                         $("td", row).eq(1).html($(this).find("TokenNo").text());
                         $("td", row).eq(2).html($(this).find("Name").text());
@@ -749,11 +748,18 @@
 
                             $("td", row).eq(4).html("Yes");
 
+                            $("td", row).eq(0).html($('<img />')
+                         .attr('src', "" + '../images/paper.png' + "")).removeClass('CursorShow');
+
                         }
                         if ($(this).find("IsProcessed").text() == "false") {
                             $("td", row).removeClass("selected_row");
 
                             $("td", row).eq(4).html("No");
+
+                            $("td", row).eq(0).html($('<img />')
+                       .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
+
                         }
 
 

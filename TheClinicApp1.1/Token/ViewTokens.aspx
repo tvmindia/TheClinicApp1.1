@@ -185,9 +185,6 @@ table th {
                  
                     debugger;
 
-                    $("td", row).eq(0).html($('<img />')
-                       .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
-
                     $("td", row).eq(1).html($(this).find("DOCNAME").text());
                     $("td", row).eq(2).html($(this).find("TokenNo").text());
                     $("td", row).eq(3).html($(this).find("Name").text());
@@ -198,11 +195,19 @@ table th {
                     if ($(this).find("IsProcessed").text()=="true") {
                         $("td", row).addClass("selected_row");
                         $("td", row).eq(5).html("Yes");
+                        $("td", row).eq(0).html($('<img />')
+                     .attr('src', "" + '../images/Deleteicon1.png' + "")).removeClass('CursorShow');
+                      
 
                     }
                     if ($(this).find("IsProcessed").text() == "false") {
                         $("td", row).removeClass("selected_row");
                         $("td", row).eq(5).html("No");
+
+                        $("td", row).eq(0).html($('<img />')
+                    .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+
+                       
                     }
 
 

@@ -747,7 +747,7 @@ namespace TheClinicApp1._1.Registration
                     Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "FUNNNN", "Alert.render('Invalid Suggesion');", true);
 
                 }
-                gridDataBind();
+               // gridDataBind();
             }
             catch
             {

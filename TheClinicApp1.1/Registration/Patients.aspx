@@ -160,9 +160,9 @@
                     },
                     select: function( event, ui ) {
 
-                   // BindPatientDetails();
+                    BindPatientDetails();
 
-                      $('#<%=btnSearch.ClientID%>').click();
+                    //  $('#<%=btnSearch.ClientID%>').click();
 
                         //$( "#project" ).val( ui.item.label );
       
@@ -236,13 +236,15 @@
         function OpenModal(id){
             if(id=='1')            
             {
+                $('#txtSearchPatient').val('');
+
                  $('#myModal').modal('show');
 
                 GetAllPatients(1);
             }
             else if(id==2)
             {
-                
+                $('#txtSearchTodayPatient').val('');
                 $('#TodaysRegistration').modal('show');
                 GetTodayPatients(1);
             }
@@ -692,7 +694,7 @@ debugger;
                 });
             }
 
-
+          
 
             $(function () {
                 debugger;
