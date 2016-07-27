@@ -141,7 +141,7 @@ table
     
     <script>
         function Validation() {
-            debugger;
+          
             if (($('#<%=ddlUsers.ClientID%>').val().trim() == "--Select--")) {
 
 
@@ -261,8 +261,6 @@ table
       //  -------------*SEARCH AND PAGING SCRIPT------------------------//
 
         $(function () {
-
-            debugger;
 
             GetAssignedRoles(1);
         });

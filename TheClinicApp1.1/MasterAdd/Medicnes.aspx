@@ -50,7 +50,7 @@
     <script>
 
         function Validation() {
-            debugger;
+         
             if (($('#<%=txtmedicineName.ClientID%>').val().trim() == "") || ($('#<%=txtCode.ClientID%>').val().trim() == "") || ($('#<%=txtOrderQuantity.ClientID%>').val().trim() == "")) {
 
 
@@ -224,9 +224,6 @@
 
             $("[id*=gvMedicines] td:eq(0)").click(function () {
 
-                //$('#txtSearch').val('');
-                debugger;
-
                 document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
 
                 document.getElementById('<%=imgWebLnames.ClientID %>').style.display = "none";
@@ -243,7 +240,7 @@
 
                     jsonResult = GetMedicineDetailsByMedID(Stocks);
                     if (jsonResult != undefined) {
-                        debugger;
+                       
                         BindMedicineControls(jsonResult);
                     }
                 }
@@ -262,7 +259,7 @@
 
         function BindMedicineControls(Records) {
             $.each(Records, function (index, Records) {
-                debugger;
+               
                 $("#<%=txtmedicineName.ClientID %>").val(Records.MedicineName);
                 $("#<%=txtCode.ClientID %>").val(Records.MedCode);
                 $("#<%=txtOrderQuantity.ClientID %>").val(Records.ReOrderQty);
@@ -282,10 +279,6 @@
 
         $(function () {
             $("[id*=gvMedicines] td:eq(1)").click(function () {
-
-                //$('#txtSearch').val('');
-
-                debugger;
 
                 document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
 
@@ -307,8 +300,6 @@
                 PageMethods.DeleteMedicineByID(MedicineID, OnSuccess, onError);
 
                 function OnSuccess(response, userContext, methodName) {
-
-                    debugger;
 
                     if (response == false) {
 
@@ -344,6 +335,8 @@
         
         //-------------------------------- * END : Delete Button Click * ------------------------- //
         
+
+        //---------------------------------------------------------- * Medicines Grid BinD,Paging,Search *--------------------------------------------------//
 
         $(function () {
             GetMedicines(1);
@@ -413,8 +406,6 @@
 
                 });
 
-                debugger;
-
                 var pager = xml.find("Pager");
 
                 if ($('#txtSearch').val() == '') {
@@ -436,7 +427,6 @@
             }
             else {
 
-                debugger;
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                 $("td:first-child", empty_row).attr("align", "center");
@@ -456,6 +446,8 @@
 
         };
 
+
+        //Open Modal Popup
         function OpenModal() {
 
             $('#txtSearch').val('');

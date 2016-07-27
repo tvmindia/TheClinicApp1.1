@@ -47,7 +47,7 @@
     <script>
         
         function Validation() {
-            debugger;
+           
             if (($('#<%=txtCategoryName.ClientID%>').val().trim() == "")) {
                 var lblclass = Alertclasses.danger;
                 var lblmsg = msg.Requiredfields;
@@ -158,7 +158,7 @@
                     Category.CategoryID = CategoryID;
                     jsonResult = GetCategoryDetailsBycategoryID(Category);
                     if (jsonResult != undefined) {
-                        debugger;
+                       
                         BindCategoryControls(jsonResult);
                     }
                 }
@@ -206,7 +206,7 @@
             if (CategoryID != "") {
                 PageMethods.DeleteCategoryByID(CategoryID, OnSuccess, onError);
                 function OnSuccess(response, userContext, methodName) {
-                    debugger;
+                  
                     if (response == false) {
                         $("#CategoryClose").click();
                         var lblclass = Alertclasses.danger;
@@ -216,7 +216,7 @@
                     }
 
                     else {
-                        debugger;
+                      
                         var PageIndx = parseInt(1);
                         if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
                             PageIndx = parseInt($(".Pager span")[0].innerText);
@@ -238,6 +238,8 @@
         //-------------------------------- * END : Delete Button Click * ------------------------- //
 
         
+        //---------------------------------------------------------- * Category Grid BinD,Paging,Search *--------------------------------------------------//
+
         $(function () {
             GetCategories(1);
         });
@@ -279,8 +281,7 @@
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
             var Categories = xml.find("Categories");
-            debugger;
-
+            
             if (row == null) {
                 row = $("[id*=dtgViewAllCategories] tr:last-child").clone(true);
             }
@@ -289,7 +290,6 @@
                 $.each(Categories, function () {
                     var medicine = $(this);
                     //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
-
 
                     $("td", row).eq(0).html($('<img />')
                      .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
@@ -300,7 +300,6 @@
 
                     $("td", row).eq(2).html($(this).find("Name").text());
                     $("td", row).eq(3).html($(this).find("CategoryID").text());
-
 
                     $("[id*=dtgViewAllCategories]").append(row);
                     row = $("[id*=dtgViewAllCategories] tr:last-child").clone(true);
@@ -347,10 +346,11 @@
                 $(this).find("td").eq(th.index()).css("display", "none");
             });
 
-
         };
 
 
+
+        //Open Modal Popup
         function OpenModal() {
 
             $('#txtSearch').val('');

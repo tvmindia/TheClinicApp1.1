@@ -66,7 +66,7 @@
         });
 
         function Validation() {
-            debugger;
+          
             if (($('#<%=txtName.ClientID%>').val().trim() == "") || ($('#<%=txtLoginName.ClientID%>').val().trim() == "") || ($('#<%=txtPhoneNumber.ClientID%>').val().trim() == "") || ($('#<%=txtEmail.ClientID%>').val().trim() == "")) {
                 var lblclass = Alertclasses.danger;
                 var lblmsg = msg.Requiredfields;
@@ -119,7 +119,7 @@
        
         function EmailIDDuplicationCheck(txtEmail) {
 
-            debugger;
+           
             var name = document.getElementById('<%=txtEmail.ClientID %>').value;
             name = name.trim();
             if (name != "") {
@@ -211,7 +211,7 @@
 
                     jsonResult = GetDoctorDetailsByUserID(Master);
                     if (jsonResult != undefined) {
-                        debugger;
+                     
                         BindDoctorControls(jsonResult);
                     }
                 }
@@ -252,7 +252,7 @@
 
         $(function () {
             $("[id*=dtgDoctors] td:eq(1)").click(function () {
-                debugger;
+               
 
                 if ($(this).text() == "") {
                     var DeletionConfirmation = ConfirmDelete();
@@ -269,11 +269,11 @@
         function DeleteDoctorByID(DoctorID, UserID) { //------* Delete Receipt Header by receiptID (using webmethod)
 
             if (DoctorID != "") {
-                debugger;
+               
                 PageMethods.DeleteDoctorByID(DoctorID,UserID, OnSuccess, onError);
-                debugger;
+               
                 function OnSuccess(response, userContext, methodName) {
-                    debugger;
+                   
                     if (response == false) {
 
                         $("#DoctorClose").click();
@@ -284,7 +284,6 @@
 
                         ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
 
-                        
                     }
 
                     else {
@@ -301,18 +300,7 @@
 
                         GetDoctors(PageIndx);
 
-                      <%--  debugger;
-                        
-
-                        var lblclass = Alertclasses.sucess;
-                        var lblmsg = msg.DeletionSuccessFull;
-                        var lblcaptn = Caption.SuccessMsgCaption;
-
-                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);--%>
                     }
-
-                    
-                   
 
                 }
                 function onError(response, userContext, methodName) {
@@ -322,12 +310,10 @@
             }
         }
 
-
-
-
         //-------------------------------- * END : Delete Button Click * ------------------------- //
 
 
+        //---------------------------------------------------------- * Doctor Grid BinD,Paging,Search *--------------------------------------------------//
 
         $(function () {
            GetDoctors(1);
@@ -365,7 +351,7 @@
         function OnSuccess(response) {
 
             $(".Pager").show();
-            debugger;
+           
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
             var Doctors = xml.find("Doctors");
@@ -405,8 +391,6 @@
 
                 }
 
-               
-
                 $(".Pager").ASPSnippets_Pager({
                     ActiveCssClass: "current",
                     PagerCssClass: "pager",
@@ -430,8 +414,6 @@
                 $(".Pager").hide();
             }
 
-
-
             var th = $("[id*=dtgDoctors] th:contains('DoctorID')");
             th.css("display", "none");
             $("[id*=dtgDoctors] tr").each(function () {
@@ -447,6 +429,8 @@
 
         };
 
+
+        //Open MOdal Popup
         function OpenModal()
         {
             $('#txtSearch').val('');

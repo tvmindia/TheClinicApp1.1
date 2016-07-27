@@ -38,7 +38,7 @@
     <script>
 
         function Validation() {
-            debugger;
+          
             if (($('#<%=txtLoginName.ClientID%>').val().trim() == "") || ($('#<%=txtFirstName.ClientID%>').val().trim() == "") || ($('#<%=txtPassword.ClientID%>').val().trim() == "") || ($('#<%=txtConfirmPassword.ClientID%>').val().trim() == "") || ($('#<%=txtPhoneNumber.ClientID%>').val().trim() == "") || ($('#<%=txtEmail.ClientID%>').val().trim() == "")) {
 
                 var lblclass = Alertclasses.danger;
@@ -236,7 +236,7 @@
                     User.UserID = UserID;
                     jsonResult = GetUserDetailsByUserID(User);
                     if (jsonResult != undefined) {
-                        debugger;
+                      
                         BindUserControls(jsonResult);
                     }
                 }
@@ -293,7 +293,7 @@
 
         $(function () {
             $("[id*=dtgViewAllUsers] td:eq(1)").click(function () {
-                debugger;
+               
                 if ($(this).text() == "") {
                     var DeletionConfirmation = ConfirmDelete();
                     if (DeletionConfirmation == true) {
@@ -311,7 +311,7 @@
                 PageMethods.DeleteUserByID(UserID, OnSuccess, onError);
 
                 function OnSuccess(response, userContext, methodName) {
-                    debugger;
+                  
                     if (response == false) {
                         $("#UserClose").click();
                         var lblclass = Alertclasses.danger;
@@ -342,11 +342,11 @@
 
 
         $(function () {
-            debugger;
+         
             GetUsers(1);
         });
         $("[id*=txtSearch]").live("keyup", function () {
-            debugger;
+        
             GetUsers(parseInt(1));
         });
         $(".Pager .page").live("click", function () {
@@ -379,7 +379,7 @@
         function OnSuccess(response) {
 
             $(".Pager").show();
-            debugger;
+          
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
             var Users = xml.find("Users");

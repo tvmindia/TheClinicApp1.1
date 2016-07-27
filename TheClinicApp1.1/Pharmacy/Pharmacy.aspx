@@ -58,9 +58,7 @@
             $( "#txtSearch" ).autocomplete({
                 maxResults: 10,
                 source: function(request, response) {
-                    debugger;
-
-
+                    
                     //--- Search by name or description(file no , mobile no, address) , by accessing matched results with search term and setting this result to the source for autocomplete
                     var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
                     var matching = $.grep(projects, function (value) {
@@ -258,9 +256,6 @@
         } 
     </script>
         
-
-
-
         <link href="../css/TheClinicApp.css" rel="stylesheet" />
        
           <script src="../js/jquery-1.8.3.min.js"></script>
@@ -371,8 +366,6 @@
 
                     GetPrescriptionDetails(PatientID);
 
-                    debugger;
-
                     var   imagetype =Records.ImageType;
 
                     var ProfilePic = $("#<%=ProfilePic.ClientID %>");
@@ -392,7 +385,6 @@
             //-------------------------------- *END : VIEW Button Click * ------------------------- //
         
 
-
             function GetPrescriptionDetails(PatientID) {
 
                 $.ajax({
@@ -402,7 +394,7 @@
                     data: '{PatientID: "' + PatientID + '"}',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: OnSuccess1,
+                    success: PrescriptionSuccess,
                     failure: function (response) {
 
                         alert(response.d);
@@ -414,11 +406,8 @@
                 });
             }
            
-            function OnSuccess1(response) {
+            function PrescriptionSuccess(response) {
               
-                debugger;
-
-
                 $("#<%=hdnXmlData.ClientID %>").val(response.d) ;
 
                 var xmlDoc = $.parseXML(response.d);
@@ -436,13 +425,10 @@
                   $("#<%=hdnPrescID.ClientID %>").val(PrescriptionID)      
                        
                     });
-                   
-
                 } 
                 else{
                     $("#<%=hdnPrescID.ClientID %>").val('');
                 }
-
 
             };
 
@@ -495,19 +481,11 @@
 
                     $.each(Pharmacy, function () {
                        
-                        debugger;
-
                         $("td", row).eq(1).html($(this).find("DOCNAME").text());
                         $("td", row).eq(2).html($(this).find("Name").text());
-
-
                         $("td", row).eq(3).html($(this).find("CreatedDate").text());
-                      
-
                         $("td", row).eq(5).html($(this).find("DoctorID").text());
                         $("td", row).eq(6).html($(this).find("PatientID").text());
-
-                      
 
                         if ($(this).find("IsProcessed").text()=="true") {
                           
@@ -525,7 +503,6 @@
                             $("td", row).eq(0).html($('<img />')
                           .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
                         }
-
 
                         $("[id*=GridViewPharmacylist]").append(row);
                         row = $("[id*=GridViewPharmacylist] tr:last-child").clone(true);
@@ -561,8 +538,6 @@
                     $(".Pager").hide();
                 }
 
-
-
                 var th = $("[id*=GridViewPharmacylist] th:contains('DoctorID')");
                 th.css("display", "none");
                 $("[id*=GridViewPharmacylist] tr").each(function () {
@@ -576,6 +551,8 @@
                 });
 
             };
+
+            // Open Modal Popup
 
             function OpenModal() {
 

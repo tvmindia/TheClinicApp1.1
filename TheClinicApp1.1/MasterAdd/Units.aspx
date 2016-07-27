@@ -47,7 +47,7 @@
     <script>
 
          function Validation() {
-             debugger;
+            
              if (($('#<%=txtDescription.ClientID%>').val().trim() == "")) {
                  var lblclass = Alertclasses.danger;
                  var lblmsg = msg.Requiredfields;
@@ -220,7 +220,7 @@
                 PageMethods.DeleteUnitByID(UnitID, OnSuccess, onError);
 
                 function OnSuccess(response, userContext, methodName) {
-                    debugger;
+                   
                     if (response == false) {
                         $("#UnitClose").click();
                         var lblclass = Alertclasses.danger;
@@ -230,7 +230,7 @@
                     }
 
                     else {
-                        debugger;
+                       
                         $("#<%=hdnUnitID.ClientID %>").val("");
                         var PageIndx = parseInt(1);
                         if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
@@ -246,6 +246,9 @@
         }
 
         //-------------------------------- * END : Delete Button Click * ------------------------- //
+
+
+        //---------------------------------------------------------- * Unit Grid BinD,Paging,Search *--------------------------------------------------//
 
         $(function () {
            
@@ -283,7 +286,7 @@
         }
         var row;
         function OnSuccess(response) {
-            debugger;
+           
             $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
@@ -351,7 +354,7 @@
 
         };
 
-
+        //Open Modal Popup
         function OpenModal() {
             $('#txtSearch').val('');
             GetUnits(parseInt(1));
