@@ -884,7 +884,7 @@
                         <input class="field" id="txtSearch" onblur="  bindPatientDetails();" name="txtSearch" type="search" placeholder="Search patient..." />
                         <input type="hidden" id="project-id" />
                         <p id="project-description" style="display: none"></p>
-                        <asp:Button ID="btnSearch" runat="server" CssClass="button" Text="Search"  />
+                        <asp:Button ID="btnSearch" runat="server" CssClass="button" Text="Search" disabled />
                         <%--<input class="button" type="submit" id="btnSearch" value="Search" />--%>
                     </div>
 
@@ -1189,7 +1189,7 @@
                         <div class="col-lg-12" style="height: 40px">
                             <div class="search_div">
                                 <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchVisit" />
-                                <input class="button3" type="button" value="Search" />
+                                <input class="button3" type="button" value="Search" disabled/>
                             </div>
                         </div>
 
@@ -1249,7 +1249,7 @@
                         <div class="col-lg-12" style="height: 40px">
                             <div class="search_div">
                                 <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchINGridview" />
-                                <input class="button3" type="button" value="Search" />
+                                <input class="button3" type="button" value="Search" disabled/>
                             </div>
                         </div>
 

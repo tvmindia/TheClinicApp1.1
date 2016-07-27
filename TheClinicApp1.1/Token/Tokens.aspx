@@ -234,7 +234,7 @@
                         <input type="hidden" id="project-id" />
                         <p id="project-description" style="display: none"></p>
                         <%--  <input class="button" onserverclick="btnSearch_ServerClick" runat="server"  value="Search" />--%>
-                        <input id="btnSearch" class="button" type="button" value="Search" />
+                        <input id="btnSearch" class="button" type="button" value="Search" disabled />
                     </div>
                     <ul class="top_right_links">
                         <li>

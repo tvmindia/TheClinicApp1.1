@@ -979,7 +979,7 @@ debugger;
                     <div class="search_div">
 
                         <input class="field" type="search" id="txtSearch" onblur="bindPatient()" name="txtSearch" placeholder="Search patient..." />
-                        <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" />
+                        <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" disabled/>
                     </div>
                     <ul class="top_right_links">
                         <li>
@@ -1087,7 +1087,7 @@ debugger;
                             <div class="col-lg-12" style="height: 40px">
                                 <div class="search_div">
                                     <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchPatient" />
-                                    <input class="button3" type="button" value="Search" />
+                                    <input class="button3" type="button" value="Search" disabled />
                                 </div>
                             </div>
                             <div class="col-lg-12" style="height: 400px;">
@@ -1170,7 +1170,7 @@ debugger;
                             <div class="col-lg-12" style="height: 40px">
                                 <div class="search_div">
                                     <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchTodayPatient" />
-                                    <input class="button3" type="button" value="Search" />
+                                    <input class="button3" type="button" value="Search" disabled />
                                 </div>
                             </div>
                             <div class="col-sm-12" style="height: 400px;">

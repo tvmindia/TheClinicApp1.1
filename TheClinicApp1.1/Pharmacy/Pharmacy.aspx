@@ -638,7 +638,7 @@
                     <input class="field" id="txtSearch" onblur="bindPatientDetails()" name="txtSearch" type="search" placeholder="Search patient..." />
                     <input type="hidden" id="project-id" />
                     <p id="project-description" style="display: none"></p>
-                    <input class="button" type="button" value="Search" />
+                    <input class="button" type="button" value="Search" disabled/>
                 </div>
                 <ul class="top_right_links">
                     <li>
@@ -778,7 +778,7 @@
                         <div class="col-lg-12" style="height: 40px">
                             <div class="search_div">
                                 <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchINGridview" />
-                                <input class="button3" type="button" value="Search" />
+                                <input class="button3" type="button" value="Search" disabled/>
                             </div>
                         </div>
 

@@ -645,7 +645,7 @@
                         <div class="col-lg-12" style="height: 40px">
                             <div class="search_div">
                                 <input class="field1" type="text" placeholder="Search with Name.." id="txtSearch" />
-                                <input class="button3" type="button" value="Search" />
+                                <input class="button3" type="button" value="Search" disabled />
                             </div>
                         </div>
                         <div class="col-sm-12" style="height: 400px;">
