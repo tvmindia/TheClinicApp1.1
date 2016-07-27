@@ -1,11 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false"    AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="Patients.aspx.cs" Inherits="TheClinicApp1._1.Registration.Patients" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Script for Custom Alert Box For Checking Uploded image is Supported or not--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-       <asp:ScriptManager runat="server" EnablePageMethods="true"  ></asp:ScriptManager>
+    <asp:ScriptManager runat="server" EnablePageMethods="true"></asp:ScriptManager>
 
     <asp:Panel DefaultButton="btnSave" runat="server">
         <style type="text/css">
@@ -71,7 +71,7 @@
         <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
         <script src="../js/jquery-1.3.2.min.js"></script>
         <script src="../js/jquery-1.12.0.min.js"></script>
-       <script src="../js/jquery-ui.js"></script>
+        <script src="../js/jquery-ui.js"></script>
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/fileinput.js"></script>
         <script src="../js/JavaScript_selectnav.js"></script>
@@ -97,24 +97,24 @@
                 function OnUpload() 
                 {
                     var obj = document.getElementById("<%=FileUpload1.ClientID%>");
-              var source = obj.value;
-              var ext = source.substring(source.lastIndexOf(".") + 1, source.length).toLowerCase();
-              for (var i = 0; i < validFiles.length; i++) 
-              {
-                  if (validFiles[i] == ext)
-                      break;
+                    var source = obj.value;
+                    var ext = source.substring(source.lastIndexOf(".") + 1, source.length).toLowerCase();
+                    for (var i = 0; i < validFiles.length; i++) 
+                    {
+                        if (validFiles[i] == ext)
+                            break;
+                    }
+                    if (i >= validFiles.length) 
+                    {
+                        Alert.render("Format Not Supporting\n\n Try:" + validFiles.join(", "));
+                        document.getElementById("<%=FileUpload1.ClientID%>").value = '';
               }
-              if (i >= validFiles.length) 
-              {
-                  Alert.render("Format Not Supporting\n\n Try:" + validFiles.join(", "));
-                  document.getElementById("<%=FileUpload1.ClientID%>").value = '';
+              return true;
+          }
+          function bindPatient(){                
+              if (document.getElementById("txtSearch").innerText !="")
+                  $('#<%=btnSearch.ClientID%>').click();
             }
-            return true;
-        }
-            function bindPatient(){                
-                if (document.getElementById("txtSearch").innerText !="")
-                $('#<%=btnSearch.ClientID%>').click();
-        }
          
         </script>
         <!--------------------------------------------------------------------->
@@ -122,10 +122,9 @@
         <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
         <script type="text/javascript">
             $(document).ready( function (){
-                debugger;
+               
                 var ac=null;
                 ac = <%=listFilter %>;
-
 
                 var length= ac.length;
                 var projects = new Array();
@@ -134,7 +133,7 @@
                     var name= ac[i].split('🏠');
                     projects.push({  value : name[0], label: name[0], desc: name[1]})   
                 }
-                debugger;
+              
                 $( "#txtSearch" ).autocomplete({
                     maxResults: 10,
                     source: function(request, response) {
@@ -160,15 +159,8 @@
                     },
                     select: function( event, ui ) {
 
-                    BindPatientDetails();
+                        BindPatientDetails();
 
-                    //  $('#<%=btnSearch.ClientID%>').click();
-
-                        //$( "#project" ).val( ui.item.label );
-      
-                        //$( "#project-description" ).html( ui.item.desc );                  
-                        
- 
                         return false;
                     }
                 })
@@ -179,23 +171,7 @@
 
             };             
 
-
-
-
-                <%--$( "#txtSearch" ).autocomplete({
-                    source: ac,
-                    select: function(event, ui){
-                        $( "#txtSearch" ).val( ui.item.label );
-                        $('#<%=btnSearch.ClientID%>').click();
-                    }
-
-                });--%>
-
-
-
                 $('.alert_close').click(function () {
-
-                    debugger;
 
                     $(this).parent(".alert").hide();
                 });
@@ -205,8 +181,6 @@
                     $(".main_body").toggleClass("active_close");
                 });
             
-         
-
             }); 
         
            
@@ -223,35 +197,34 @@
                     var lblcaptn = Caption.Confirm;
                     ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
 
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
 
-
-        }
+            }
         
-        function OpenModal(id){
-            if(id=='1')            
-            {
-                $('#txtSearchPatient').val('');
+            function OpenModal(id){
+                if(id=='1')            
+                {
+                    $('#txtSearchPatient').val('');
 
-                 $('#myModal').modal('show');
+                    $('#myModal').modal('show');
 
-                GetAllPatients(1);
+                    GetAllPatients(1);
+                }
+                else if(id==2)
+                {
+                    $('#txtSearchTodayPatient').val('');
+                    $('#TodaysRegistration').modal('show');
+                    GetTodayPatients(1);
+                }
             }
-            else if(id==2)
-            {
-                $('#txtSearchTodayPatient').val('');
-                $('#TodaysRegistration').modal('show');
-                GetTodayPatients(1);
-            }
-        }
-            </script>
-            <script>
-       //---getting data as json-----//
+        </script>
+        <script>
+            //---getting data as json-----//
             function getJsonData(data, page) {
                 var jsonResult = {};
                 var req = $.ajax({
@@ -269,7 +242,7 @@
                 return jsonResult;
             }
 
-      function ConvertJsonToDate(jsonDate) {
+            function ConvertJsonToDate(jsonDate) {
                 if (jsonDate != null) {
                     var dateString = jsonDate.substr(6);
                     var currentTime = new Date(parseInt(dateString));
@@ -287,43 +260,37 @@
                 }
             }
 
+            function GetPatientDetailsByID(Patient) {
+                var ds = {};
+                var table = {};
+                var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
+                ds = getJsonData(data, "../Registration/Patients.aspx/BindPatientDetailsOnEditClick");
+                table = JSON.parse(ds.d);
+                return table;
+            }
 
-      function GetPatientDetailsByID(Patient) {
-          var ds = {};
-          var table = {};
-          var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
-          ds = getJsonData(data, "../Registration/Patients.aspx/BindPatientDetailsOnEditClick");
-          table = JSON.parse(ds.d);
-          return table;
-      }
+            function BindPatientDetails()
+            {
+                var jsonPatient = {};
+                var SearchItem = $('#txtSearch').val();
+                var Patient = new Object();
 
+                if(SearchItem != '')
+                { 
+                    Patient.Name = SearchItem;
 
-             function BindPatientDetails()
-              {
-
-debugger;
-            var jsonPatient = {};
-               var SearchItem = $('#txtSearch').val();
-               var Patient = new Object();
-
-               if(SearchItem != '')
-              { 
-                   Patient.Name = SearchItem;
-
-                jsonPatient = GetPatientDetails(Patient);
-                if (jsonPatient != undefined)
-                 {
+                    jsonPatient = GetPatientDetails(Patient);
+                    if (jsonPatient != undefined)
+                    {
                           
-                 BindPatient(jsonPatient);
-                 }
+                        BindPatient(jsonPatient);
+                    }
 
-               }      
+                }      
 
-                        }
+            }
 
-
-
-          function GetPatientDetails(Patient) {
+            function GetPatientDetails(Patient) {
 
                 var ds = {};
                 var table = {};
@@ -334,16 +301,16 @@ debugger;
             }
 
             function BindPatient(Records)
-          {
+            {
               
-            $("#<%=txtName.ClientID %>").val(Records.Name);
-            $("#<%=txtAge.ClientID %>").val(Records.Age);
-            $("#<%=txtAddress.ClientID %>").val(Records.Address);
-            $("#<%=txtMobile.ClientID %>").val(Records.Phone);
-            $("#<%=txtEmail.ClientID %>").val(Records.Email);
-            $("#<%=txtOccupation.ClientID %>").val(Records.Occupation);
-            $("#<%=Hdnimagetype.ClientID %>").val(Records.ImageType);
-            $("#<%=HiddenField1.ClientID %>").val(Records.PatientID);
+                $("#<%=txtName.ClientID %>").val(Records.Name);
+                $("#<%=txtAge.ClientID %>").val(Records.Age);
+                $("#<%=txtAddress.ClientID %>").val(Records.Address);
+                $("#<%=txtMobile.ClientID %>").val(Records.Phone);
+                $("#<%=txtEmail.ClientID %>").val(Records.Email);
+                $("#<%=txtOccupation.ClientID %>").val(Records.Occupation);
+                $("#<%=Hdnimagetype.ClientID %>").val(Records.ImageType);
+                $("#<%=HiddenField1.ClientID %>").val(Records.PatientID);
            
 
                 if (Records.Gender ==  "Male") {
@@ -356,39 +323,33 @@ debugger;
                 $("#<%=ddlMarital.ClientID %> option:contains(" + Records.MaritalStatus + ")").attr('selected', 'selected');
 
 
-             var   imagetype =Records.ImageType;
-             var patientid = Records.PatientID;
-                    var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
+                var   imagetype =Records.ImageType;
+                var patientid = Records.PatientID;
+                var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
 
-                    if (imagetype != '')
-                    {
-                        debugger;
+             if (imagetype != '')
+             {
+                      
 
-                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
-                    }
-                    else
-                    {
-                        ProfilePic.src = "../images/UploadPic1.png";
-                    }
+                 ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
+             }
+             else
+             {
+                 ProfilePic.src = "../images/UploadPic1.png";
+             }
 
-                    var DOB = new Date(Date.parse(ConvertJsonToDate(Records.DOB),"MM/dd/yyyy"));
-                    var Age = (new Date().getFullYear() )-   (DOB.getFullYear());
+             var DOB = new Date(Date.parse(ConvertJsonToDate(Records.DOB),"MM/dd/yyyy"));
+             var Age = (new Date().getFullYear() )-   (DOB.getFullYear());
 
-                    $("#<%=txtAge.ClientID %>").val(parseInt(Age)) ;
+             $("#<%=txtAge.ClientID %>").val(parseInt(Age)) ;
                
-            }
+                }
 
 
-            function BindControlsWithPatientDetails(Records) {
-                $.each(Records, function (index, Records) {
-                    <%-- $("#<%=txtCategoryName.ClientID %>").val(Records.Name);
-                    $("#<%=hdnCategoryId.ClientID %>").val(Records.CategoryID);--%>
-
-                    //Fill Patient Details
-
-                    debugger;
-
-                     
+            function BindControlsWithPatientDetails(Records) 
+            {
+                    $.each(Records, function (index, Records) {
+                   
                     $("#<%=txtName.ClientID %>").val(Records.Name);
                     $("#<%=txtAge.ClientID %>").val(Records.Age);
                     $("#<%=txtAddress.ClientID %>").val(Records.Address);
@@ -398,7 +359,6 @@ debugger;
                     $("#<%=Hdnimagetype.ClientID %>").val(Records.ImageType);
                     $("#<%=HiddenField1.ClientID %>").val(Records.PatientID);
            
-
                     if (Records.Gender ==  "Male") {
                         $("#<%=rdoMale.ClientID %>").prop('checked', true);
                     }
@@ -408,15 +368,12 @@ debugger;
 
                     $("#<%=ddlMarital.ClientID %> option:contains(" + Records.MaritalStatus + ")").attr('selected', 'selected');
 
-
                     var   imagetype =Records.ImageType;
                     var patientid =  Records.PatientID;
                     var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
 
                     if (imagetype != '')
                     {
-                        debugger;
-
                         ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
                     }
                     else
@@ -436,13 +393,11 @@ debugger;
 
              
         </script>
-       
-        
+
         <link href="../css/TheClinicApp.css" rel="stylesheet" />
-       
-       <script src="../js/jquery-1.8.3.min.js"></script>
-    <script src="../js/ASPSnippets_Pager.min.js"></script>
-    <script src="../js/jquery-ui.js"></script>
+        <script src="../js/jquery-1.8.3.min.js"></script>
+        <script src="../js/ASPSnippets_Pager.min.js"></script>
+        <script src="../js/jquery-ui.js"></script>
 
         <script>
 
@@ -455,17 +410,13 @@ debugger;
                 return table;
             }
 
-
-
-            
-            function DeleteTodayPatientByID(PatientID) { 
+            function DeleteTodayPatientByID(PatientID) {  //Deletion In Today's Registration
 
                 if (PatientID != "") {
 
                     var Patient = new Object();
                     Patient.PatientID = PatientID;
                     var  response =    DeletePatient(Patient);
-
 
                     if (response.isPatientDeleted == false) {
 
@@ -477,11 +428,9 @@ debugger;
 
                         ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
 
-                        
                     }
 
                     else {
-
                         var PageIndx = parseInt(1);
 
                         if ($(".pgrHistory span")[0] != null && $(".Pager span")[0].innerText != '') {
@@ -490,28 +439,19 @@ debugger;
                         }
 
                         GetTodayPatients(PageIndx); 
-
-                               
+    
                     }
-                   
-              
                 }
-
             }
 
 
-
-
-
-
-            function DeletePatientByID(PatientID) { 
+            function DeletePatientByID(PatientID) { //Deletion In All Registration
 
                 if (PatientID != "") {
 
                     var Patient = new Object();
                     Patient.PatientID = PatientID;
                     var  response =    DeletePatient(Patient);
-
 
                     if (response.isPatientDeleted == false) {
 
@@ -523,11 +463,9 @@ debugger;
 
                         ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
 
-                        
                     }
 
                     else {
-
                         var PageIndx = parseInt(1);
 
                         if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
@@ -536,50 +474,14 @@ debugger;
                         }
 
                         GetAllPatients(PageIndx);
-
-                               
+     
                     }
-                    debugger;
-                    //PageMethods.DeletePatientByID(PatientID, OnSuccess, onError);
-                    debugger;
- <%--                   function OnSuccess(response, userContext, methodName) {
-                        debugger;
-                        if (response.isPatientDeleted == true) {
 
-                            $("#AllRegistrationClose").click();
-
-                            var lblclass = Alertclasses.danger;
-                            var lblmsg = msg.AlreadyUsed;
-                            var lblcaptn = Caption.FailureMsgCaption;
-
-                            ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
-
-                        
-                        }
-
-                        else {
-
-                            var PageIndx = parseInt(1);
-
-                            if ($(".Pager span")[0] != null && $(".Pager span")[0].innerText != '') {
-
-                                PageIndx = parseInt($(".Pager span")[0].innerText);
-                            }
-
-                            GetAllPatients(PageIndx);
-
-                               
-                        }
-                        function onError(response, userContext, methodName) {
-
-                        }
-
-                    }--%>
                 }
 
             }
 
-
+            //------------------------------- * All Registration Edit Click * -------------------------------//
 
             $(function () {
                 $("[id*=GridView1] td:eq(0)").click(function () { 
@@ -589,8 +491,7 @@ debugger;
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                     
                     var jsonResult = {};
-                          
-
+                         
                     var Patient = new Object();
                     Patient.PatientID = PatientID;
                        
@@ -605,16 +506,17 @@ debugger;
             });
 
 
+            //------------------------------- * Today's Registration Edit Click * -------------------------------//
+
             $(function () {
                 $("[id*=dtgViewTodaysRegistration] td:eq(0)").click(function () { 
-                    debugger;
+                   
                     PatientID = $(this).closest('tr').find('td:eq(5)').text();
                        
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                     
                     var jsonResult = {};
-                          
-
+                      
                     var Patient = new Object();
                     Patient.PatientID = PatientID;
                        
@@ -628,26 +530,29 @@ debugger;
 
             });
 
+
+            //------------------------------- * All Registration Delete Click * -------------------------------//
+
             $(function () {
                 $("[id*=GridView1] td:eq(1)").click(function () {
-                    debugger;
-
+                  
                     if ($(this).text() == "") {
                         var DeletionConfirmation = ConfirmDelete();
                         if (DeletionConfirmation == true) {
                             PatientID = $(this).closest('tr').find('td:eq(5)').text();
                             DeletePatientByID(PatientID);
-                            //window.location = "StockIn.aspx?HdrID=" + receiptID;
+                            
                         }
                     }
                 });
             });
 
-           
+
+            //------------------------------- * Today Registration Delete Click * -------------------------------//
+            
             $(function () {
                 $("[id*=dtgViewTodaysRegistration] td:eq(1)").click(function () {
-                    debugger;
-
+                   
                     if ($(this).text() == "") {
                         var DeletionConfirmation = ConfirmDelete();
                         if (DeletionConfirmation == true) {
@@ -660,15 +565,18 @@ debugger;
             });
 
 
+            //------------------------------- * Search In All Registration Gridview * -------------------------------//
 
             $("[id*=txtSearchTodayPatient]").live("keyup", function () {
-                debugger;
+              
                 GetTodayPatients(parseInt(1));
             });
 
+            //------------------------------- * Next Click(Paging) of All Registration Gridview * -------------------------------//
             $(".pgrHistory .page").live("click", function () {
                 GetTodayPatients(parseInt($(this).attr('page')));
             });
+
             function SearchTermInTodayList() {
                 return jQuery.trim($("[id*=txtSearchTodayPatient]").val());
             };
@@ -694,26 +602,31 @@ debugger;
                 });
             }
 
-          
-
             $(function () {
-                debugger;
+               
                 GetAllPatients(1);
                 GetTodayPatients(1);
             });
+
+
+            //------------------------------- * Search In Today Registration Gridview * -------------------------------//
             $("[id*=txtSearchPatient]").live("keyup", function () {
-                debugger;
+               
                 GetAllPatients(parseInt(1));
             });
+
+            //------------------------------- * Next Click(Paging) of Today's Registration Gridview * -------------------------------//
             $(".Pager .page").live("click", function () {
                 GetAllPatients(parseInt($(this).attr('page')));
             });
            
-            
-
             function SearchTerm() {
                 return jQuery.trim($("[id*=txtSearchPatient]").val());
             };
+
+
+            //---------------------------------- * Bind All Registration Gridview * -----------------------------//
+
             function GetAllPatients(pageIndex) {
 
                 $.ajax({
@@ -734,16 +647,15 @@ debugger;
                     }
                 });
             }
+
             var row;
             function OnSuccess(response) {
 
                 $(".Pager").show();
 
-                debugger;
                 var xmlDoc = $.parseXML(response.d);
                 var xml = $(xmlDoc);
                 var AllRegistration = xml.find("AllRegistration");
-
 
                 if (row == null) {
                     row = $("[id*=GridView1] tr:last-child").clone(true);
@@ -752,7 +664,7 @@ debugger;
                 if (AllRegistration.length > 0) {
                     
                     $.each(AllRegistration, function () {
-                        debugger;
+                      
                         $("td", row).eq(0).html($('<img id="ImgBtnUpdate" />')
                            .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
 
@@ -792,8 +704,6 @@ debugger;
                     });
                 } else {
 
-                    debugger;
-
                     var empty_row = row.clone(true);
                     $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                     $("td:first-child", empty_row).attr("align", "center");
@@ -803,14 +713,6 @@ debugger;
 
                     $(".Pager").hide();
                 }
-
-
-
-                //var th = $("[id*=GridView1] th:contains('DoctorID')");
-                //th.css("display", "none");
-                //$("[id*=GridViewPharmacylist] tr").each(function () {
-                //    $(this).find("td").eq(th.index()).css("display", "none");
-                //});
 
                 var PatienIDColumn = $("[id*=GridView1] th:contains('PatientID')");
                 PatienIDColumn.css("display", "none");
@@ -823,12 +725,13 @@ debugger;
             row= null;
 
 
+         //---------------------- * Bind Today's Registration Gridview *--------------------------------------------------//
+
             var TodayRegRow;
             function TodayRegistrationSuccess(response) {
 
                 $(".pgrHistory").show();
                
-                debugger;
                 var xmlDoc = $.parseXML(response.d);
                 var xml = $(xmlDoc);
                 var AllRegistration = xml.find("TodayRegistration");
@@ -839,7 +742,7 @@ debugger;
                 if (AllRegistration.length > 0) {
                     
                     $.each(AllRegistration, function () {
-                        debugger;
+                      
                         $("td", TodayRegRow).eq(0).html($('<img />')
                            .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
 
@@ -889,14 +792,6 @@ debugger;
 
                 }
 
-
-
-                //var th = $("[id*=GridView1] th:contains('DoctorID')");
-                //th.css("display", "none");
-                //$("[id*=GridViewPharmacylist] tr").each(function () {
-                //    $(this).find("td").eq(th.index()).css("display", "none");
-                //});
-
                 var PatienIDColumn = $("[id*=dtgViewTodaysRegistration] th:contains('PatientID')");
                 PatienIDColumn.css("display", "none");
                 $("[id*=dtgViewTodaysRegistration] tr").each(function () {
@@ -907,13 +802,7 @@ debugger;
 
             TodayRegRow = null;
 
-</script>
-
-
-
-
-
-
+        </script>
 
 
 
@@ -958,28 +847,30 @@ debugger;
                     </ul>
                 </div>
                 <div class="icon_box">
-         
+
 
                     <a class="all_registration_link" onclick="OpenModal('1');">
-                          <span class="tooltip1">
-                        <span class="count"><asp:Label ID="lblRegCount" runat="server" Text="0"></asp:Label></span>                     
-                        <img src="../images/registerd9724185.png" /> 
-                             <span class="tooltiptext1"> All Registration</span>
-                    </span>
+                        <span class="tooltip1">
+                            <span class="count">
+                                <asp:Label ID="lblRegCount" runat="server" Text="0"></asp:Label></span>
+                            <img src="../images/registerd9724185.png" />
+                            <span class="tooltiptext1">All Registration</span>
+                        </span>
                     </a>
                     <a class="Todays_registration_link" onclick="OpenModal('2');">
-                            <span class="tooltip1">
-                        <span class="count"><asp:Label ID="lblTodayRegCount" runat="server" Text="0"></asp:Label></span>                      
-                        <img src="../images/registerd.png" /> 
-                             <span class="tooltiptext1"> Today's Register</span>
-                    </span>
+                        <span class="tooltip1">
+                            <span class="count">
+                                <asp:Label ID="lblTodayRegCount" runat="server" Text="0"></asp:Label></span>
+                            <img src="../images/registerd.png" />
+                            <span class="tooltiptext1">Today's Register</span>
+                        </span>
                     </a>
                 </div>
                 <div class="grey_sec">
                     <div class="search_div">
 
                         <input class="field" type="search" id="txtSearch" onblur="bindPatient()" name="txtSearch" placeholder="Search patient..." />
-                        <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" disabled/>
+                        <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" disabled />
                     </div>
                     <ul class="top_right_links">
                         <li>
@@ -1091,12 +982,12 @@ debugger;
                                 </div>
                             </div>
                             <div class="col-lg-12" style="height: 400px;">
-                                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" >
+                                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
 
                                     <Columns>
-                              <asp:TemplateField>
+                                        <asp:TemplateField>
                                             <ItemTemplate>
-                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Editicon1.png"   />
+                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnUpdate" runat="server" ImageUrl="~/Images/Editicon1.png" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -1107,16 +998,15 @@ debugger;
                                         <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" ItemStyle-CssClass="Match"></asp:BoundField>
                                         <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" ItemStyle-CssClass="Match"></asp:BoundField>
                                         <asp:BoundField DataField="Phone" HeaderText="Phone" SortExpression="Phone" ItemStyle-CssClass="Match"></asp:BoundField>
-                                          <asp:BoundField DataField="PatientID" HeaderText="PatientID"></asp:BoundField>
-                                          
+                                        <asp:BoundField DataField="PatientID" HeaderText="PatientID"></asp:BoundField>
+
 
                                     </Columns>
                                 </asp:GridView>
                             </div>
 
-                              <div class="Pager">
-
-                              </div>
+                            <div class="Pager">
+                            </div>
 
                         </div>
                     </div>
@@ -1130,7 +1020,7 @@ debugger;
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header" style="border-color: #3661C7;">
-                        <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h3 class="modal-title">Token Registration</h3>
                     </div>
                     <div class="modal-body" style="">
@@ -1174,7 +1064,7 @@ debugger;
                                 </div>
                             </div>
                             <div class="col-sm-12" style="height: 400px;">
-                                <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False" >
+                                <asp:GridView ID="dtgViewTodaysRegistration" runat="server" AutoGenerateColumns="False">
 
                                     <Columns>
                                         <asp:TemplateField>
@@ -1189,15 +1079,14 @@ debugger;
                                         </asp:TemplateField>
                                         <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>
                                         <asp:BoundField DataField="Address" HeaderText="Address"></asp:BoundField>
-                                       <asp:BoundField DataField="Phone" HeaderText="Phone"></asp:BoundField>
+                                        <asp:BoundField DataField="Phone" HeaderText="Phone"></asp:BoundField>
                                         <asp:BoundField DataField="PatientID" HeaderText="PatientID"></asp:BoundField>
                                     </Columns>
                                 </asp:GridView>
                             </div>
 
-                             <div class="pgrHistory">
-
-                              </div>
+                            <div class="pgrHistory">
+                            </div>
                         </div>
                     </div>
                     <asp:HiddenField ID="HiddenField1" runat="server" />
@@ -1217,20 +1106,20 @@ debugger;
         <!------------------------------------------------------------------------------------------>
         <!-- Script Files -->
 
-          
-     <%--<script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>--%>
-    <%--<script src="../js/jquery-1.3.2.min.js"></script>--%>
-   
-         <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
 
-      <script src="../js/jquery-1.12.0.min.js"></script>
-         <script src="../js/ASPSnippets_Pager.min.js"></script>
+        <%--<script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>--%>
+        <%--<script src="../js/jquery-1.3.2.min.js"></script>--%>
+
+        <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
+
+        <script src="../js/jquery-1.12.0.min.js"></script>
+        <script src="../js/ASPSnippets_Pager.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
 
-       <script src="../js/jquery-ui.js"></script>
+        <script src="../js/jquery-ui.js"></script>
 
         <!---   Script includes function for open Modals preview, Created By:Thomson Kattingal --->
-     
+
 
         <script type="text/javascript">  
     <!---Function for Open Token Registration Modal and All Registarion Modal----->
