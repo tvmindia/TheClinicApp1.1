@@ -586,7 +586,7 @@
                                         <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" onkeypress="return isNumber(event)" name="name" pattern="^[0-9+-]*$" />
                                     </div>
                                     <div class="col-lg-4 ">
-                                        <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name" pattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" onchange="EmailIDDuplicationCheck(this)" />
+                                        <label for="name">Email</label><input id="txtEmail" runat="server" type="email" name="name"  onchange="EmailIDDuplicationCheck(this)" />
                                         <span class="tooltip2">
                                         <asp:Image ID="imgEmailAvailable" runat="server" ImageUrl="~/Images/newfff.png" Style="display: none" />
                                             <span class="tooltiptext2">EmailID is Available</span>

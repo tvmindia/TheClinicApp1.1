@@ -244,6 +244,7 @@
             $(function () {
                 $("[id*=GridViewTokenlist] td:eq(0)").click(function () { 
                     
+
                     PatientID = $(this).closest('tr').find('td:eq(5)').text();
 
                     reset();
@@ -266,7 +267,7 @@
                         GetHistory(1,PatientID);
 
                     }
-
+                
                 });
             });
 

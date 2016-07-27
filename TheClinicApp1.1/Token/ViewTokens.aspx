@@ -91,15 +91,24 @@ table th {
 
         $(function () {
             $("[id*=GridViewTokenlist] td:eq(0)").click(function () {
-               
-                if ($(this).text() == "") {
-                    var DeletionConfirmation = ConfirmDelete();
-                    if (DeletionConfirmation == true) {
-                        UniqueID = $(this).closest('tr').find('td:eq(6)').text();
-                        DeleteTokenByUniqueID(UniqueID);
-                        //window.location = "StockIn.aspx?HdrID=" + receiptID;
-                    }
+
+                debugger;
+                var isProcessed = $(this).closest('tr').find('td:eq(5)').text();
+
+
+                if (isProcessed == "No")
+                {
+                    if ($(this).text() == "")
+                    {
+                      var DeletionConfirmation = ConfirmDelete();
+                      if (DeletionConfirmation == true) {
+                       UniqueID = $(this).closest('tr').find('td:eq(6)').text();
+                      DeleteTokenByUniqueID(UniqueID);
+                                        //window.location = "StockIn.aspx?HdrID=" + receiptID;
+                   }
                 }
+
+            }
             });
         });
 
@@ -238,9 +247,7 @@ table th {
                 });
             }
             else {
-                debugger;
-                var c = row;
-
+               
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                 $("td:first-child", empty_row).attr("align", "center");
