@@ -85,6 +85,34 @@
                     bindPatientDetails();
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
 
+                    
+
+                    //var i = 1;
+                    //$('.input').each(function () {
+                    //    i++;
+                    //});
+
+                    //var NumberOfColumns = i - 1;
+                    //var NumberOfRows = NumberOfColumns / 6;
+
+                    //for (var k = 0; k <= NumberOfRows; k++)
+
+                    //{
+                    //    if ( document.getElementById('txtMedName' + k) != null) 
+                    //    {
+                    //        $("#txtMedName"+k).val('');
+                      
+                    //        $("#txtMedQty"+k).val('');
+                    //        $("#txtMedUnit"+k).val('');
+                    //        $("#txtMedDos"+k).val('');
+                    //        $("#txtMedTime"+k).val('');
+                    //        $("#txtMedDay"+k).val('');
+                    //        $("#hdnDetailID"+k).val('');
+                    //        $("#hdnQty"+k).val('');
+                          
+                    //    }
+                    //}
+
                     return false;
                 }
             })
@@ -690,7 +718,7 @@
                                     <th>Unit</th>
                                     <th>Dosage</th>
                                     <th>Timing</th>
-                                    <th>Days</th>
+                                    <th>Days</th> 
                                 </tr>
                                 <tr>
                                     <td>
