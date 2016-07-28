@@ -86,10 +86,6 @@ namespace TheClinicApp1._1.Registration
 
         #endregion All patient View Search Paging
 
-
-
-        
-
         #region BindDropdownDoc
         /// <summary>
         /// Bind Dropdown For Selecting Doctor While Booking
@@ -171,7 +167,8 @@ namespace TheClinicApp1._1.Registration
         }
         #endregion convertImage
 
-    
+        #region Today's patient View Search Paging
+
         [WebMethod]
         ///This method is called using AJAX For gridview bind , search , paging
         ///It expects page index and search term which is passed from client side
@@ -190,7 +187,6 @@ namespace TheClinicApp1._1.Registration
 
             return xml;
         }
-
 
         #region Bind Today Registration Dummy Row
 
@@ -216,31 +212,9 @@ namespace TheClinicApp1._1.Registration
 
         #endregion Bind Today Registration Dummy Row
 
+        #endregion  Today's patient View Search Paging
 
-        [WebMethod]
-        public static string DeletePatientByID(string PatientID)
-        {
-            string result = string.Empty;
-            bool DoctorDeleted = false;
-
-            if (PatientID != string.Empty)
-            {
-                Patient PatientObj = new Patient();
-                PatientObj.PatientID = Guid.Parse(PatientID);
-                if (!(PatientObj.CheckPatientTokenExist(Guid.Parse(PatientID))))
-                {
-                 result =   PatientObj.DeletePatientByPatientID();
-
-                 if (result != string.Empty)
-                 {
-                     DoctorDeleted = true; 
-                 }
-
-                }  
-            }
-            return result;
-        }
-
+        #region Delete Patient
 
         [System.Web.Services.WebMethod]
         public static string DeletePatient(Patient PatientObj)
@@ -260,6 +234,8 @@ namespace TheClinicApp1._1.Registration
 
             return jsonResult; //Converting to Json
         }
+
+        #endregion Delete Patient
 
         #endregion Get Patient Details
 
@@ -373,6 +349,8 @@ namespace TheClinicApp1._1.Registration
         /// <param name="e"></param>
         protected void btntokenbooking_Click(object sender, EventArgs e)
         {
+            if (ddlDoctorName.SelectedValue != "--Select--")
+            {
             //btnnew.Visible = true;
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             tok.DoctorID = ddlDoctorName.SelectedValue;
@@ -394,6 +372,7 @@ namespace TheClinicApp1._1.Registration
             //lblToken.Visible = true;
             divDisplayNumber.Visible = true;
             //gridDataBind();
+                 }
         }
         #endregion BookingToken
 
@@ -814,6 +793,33 @@ namespace TheClinicApp1._1.Registration
 
         }
         #endregion GridBind
+
+        #region Deletion
+        [WebMethod]
+        public static string DeletePatientByID(string PatientID)
+        {
+            string result = string.Empty;
+            bool DoctorDeleted = false;
+
+            if (PatientID != string.Empty)
+            {
+                Patient PatientObj = new Patient();
+                PatientObj.PatientID = Guid.Parse(PatientID);
+                if (!(PatientObj.CheckPatientTokenExist(Guid.Parse(PatientID))))
+                {
+                    result = PatientObj.DeletePatientByPatientID();
+
+                    if (result != string.Empty)
+                    {
+                        DoctorDeleted = true;
+                    }
+
+                }
+            }
+            return result;
+        }
+
+        #endregion Deletion
     }
 
        

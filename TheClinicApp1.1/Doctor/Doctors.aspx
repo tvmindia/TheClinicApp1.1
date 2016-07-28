@@ -1461,7 +1461,7 @@
                         $( "#project-description" ).html( ui.item.desc );        
 
                         //bindPatientDetails();
-
+                        document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                         return false;
                     }
                 })

@@ -875,7 +875,7 @@ namespace TheClinicApp1._1.ClinicDAL
         //***Grid Bind For All regisration && Todays Registration
         #region GridBind
 
-        #region ViewAllRegistration
+         #region ViewAllRegistration
      
         public DataTable GetAllRegistration()
         {

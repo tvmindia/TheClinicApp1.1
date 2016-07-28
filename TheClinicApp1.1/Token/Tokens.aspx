@@ -84,7 +84,8 @@
       
                         $( "#project-description" ).html( ui.item.desc );                  
                     
- bindPatientDetails();
+                        bindPatientDetails();
+                        document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                         return false;
                     }
                 })

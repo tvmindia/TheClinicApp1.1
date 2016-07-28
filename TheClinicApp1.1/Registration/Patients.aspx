@@ -96,6 +96,8 @@
                 var validFiles = ["bmp", "gif", "png", "jpg", "jpeg"];
                 function OnUpload() 
                 {
+                    document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+
                     var obj = document.getElementById("<%=FileUpload1.ClientID%>");
                     var source = obj.value;
                     var ext = source.substring(source.lastIndexOf(".") + 1, source.length).toLowerCase();
@@ -160,6 +162,8 @@
                     select: function( event, ui ) {
 
                         BindPatientDetails();
+                        document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+
 
                         return false;
                     }
