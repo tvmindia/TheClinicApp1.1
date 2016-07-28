@@ -9,8 +9,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
 using System.Web;
 
 #endregion Included Namespaces
@@ -92,6 +94,29 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         #endregion SendEmail
+
+
+        public void FormatAndSendEmail(string FirstName, string Clinic,string LoginName, string Password)
+        {
+            string Url = "";
+
+            Url = "Templates/unsubscribe.html";
+
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/" + Url)))
+            {
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("User", FirstName);
+            body = body.Replace("Tritvam General Clinic", Clinic);
+            body = body.Replace("Name", LoginName);
+            body = body.Replace("6502", Password);
+           
+            msg = body;
+            SendEmail();
+        }
+
 
         #endregion Methods
 

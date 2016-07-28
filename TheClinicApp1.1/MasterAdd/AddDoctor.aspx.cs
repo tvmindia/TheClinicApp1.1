@@ -271,7 +271,7 @@ namespace TheClinicApp1._1.MasterAdd
                 mailObj.MailSubject = "Login Password";
                 mailObj.msg = password;
                 mailObj.Email = txtEmail.Value;
-                mailObj.SendEmail();
+                mailObj.FormatAndSendEmail(txtName.Value, UA.Clinic, txtLoginName.Value, password);
                 
             }).Start();
 

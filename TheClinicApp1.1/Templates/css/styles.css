@@ -1,0 +1,91 @@
+/* Layout */
+
+html {
+	background: #222222;
+}
+body {
+	font-family: Arial,Helvetica, sans-serif;
+}
+
+.logo {
+	margin: 0 0 10px 0;
+}
+
+#container {
+	margin: 100px auto;
+	width: 560px;
+	text-align: center;
+}
+
+#message {
+	background: #eee;
+	border: 10px solid #ccc;
+	padding: 15px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+
+/* Links */
+a:link, a:visited, a:active {
+	color: #fffefe;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover {
+	color:#9dcb3b;
+}
+
+/* Type */
+
+p {
+	font-size: 14px;
+	line-height: 25px;
+}
+
+h1 { 
+	font-size: 35px;
+	font-weight: bold;
+	margin-top: 30px;
+}
+
+
+/* Form */
+
+label { width: 300px;  }
+label.error { float: left; color: red; margin: 10px 0 0 35px;}
+
+.submit {
+	background: #9dcb3b;
+	border: 1px solid #83b418;
+	width: 150px;
+	height: 35px;
+	margin: 10px 0 0 -10px;
+	color: #FFF;
+		cursor: pointer;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.submit:hover {
+	background: #777;
+	border: 1px solid #ccc;
+}
+
+#email {
+	width: 250px;
+	margin-top: 10px;
+	padding: 5px;
+	border: 1px #666 solid;
+	color: #777;
+	text-align: center;
+}
+#email:hover {
+	border: 1px #999 solid;
+}
+
+#subscribe-form {
+	width: 370px;
+	margin: 20px auto;
+}

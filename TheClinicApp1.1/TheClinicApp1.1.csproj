@@ -337,6 +337,9 @@
     <Content Include="Stock\StockOut.aspx" />
     <Content Include="Stock\StockOutDetails.aspx" />
     <Content Include="Stock\test page.txt" />
+    <Content Include="Templates\css\reset.css" />
+    <Content Include="Templates\css\styles.css" />
+    <Content Include="Templates\unsubscribe.html" />
     <Content Include="Token\test page.txt" />
     <Content Include="Token\Tokens.aspx" />
     <Content Include="Token\ViewTokens.aspx" />
