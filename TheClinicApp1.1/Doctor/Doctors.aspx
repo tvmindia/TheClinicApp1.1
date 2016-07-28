@@ -443,7 +443,18 @@
                     $("#<%=lymphnodes.ClientID %>").val(Records.LymphClinic);
                     $("#<%=resp_rate.ClientID %>").val(Records.RespRate);
                     $("#<%=others.ClientID %>").val(Records.Others);
-                   
+
+                var historyDate= new Date(Date.parse(ConvertJsonToDate(Records.Date),"MM/dd/yyyy"));
+                var month = historyDate.getMonth() + 1;
+              
+                locale = "en-us",
+                month =  historyDate.toLocaleString(locale, { month: "short" });
+
+                var day = historyDate.getDate();
+                var year = historyDate.getFullYear();
+                historyDate = day + " " + month + " " + year;
+
+                $("#<%=lblNew_history.ClientID %>").text("History: " +historyDate);
             }
 
             function GetPrescriptionDetails(PrescriptionID) {
