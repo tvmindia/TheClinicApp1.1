@@ -28,9 +28,8 @@ namespace TheClinicApp1._1.Registration
 {
     public partial class Patients : System.Web.UI.Page
     {
-      
+        #region GlobalVariables
 
- #region GlobalVariables
         private static int PageSize = 8;
         UIClasses.Const Const = new UIClasses.Const();    
         ClinicDAL.UserAuthendication UA;
@@ -38,31 +37,11 @@ namespace TheClinicApp1._1.Registration
         TokensBooking tok = new TokensBooking();
         ErrorHandling eObj = new ErrorHandling();
         public string listFilter = null;
+
         #endregion GlobalVariables
 
-        #region PageLoad
-        protected void Page_Load(object sender, EventArgs e)
-        {            
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];           
-            tok.ClinicID = UA.ClinicID.ToString();
-            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
-
-            BindDummyRow();
-            BindTodayregistrationDummyRow();
-            //gridDataBind();
-            listFilter = null;
-            listFilter = BindName();
-
-            if (!IsPostBack)
-            {
-                //*Bind Patients in to the dropdown for token registration
-                DropdownDoctors();
-            }      
-        }
-        #endregion PageLoad
-
         #region Methods
-
+       
         #region All patient View Search Paging
         [WebMethod]
         ///This method is called using AJAX For gridview bind , search , paging
@@ -109,34 +88,7 @@ namespace TheClinicApp1._1.Registration
 
 
 
-        #region GridBind
-        public void gridDataBind()
-        {
-            
-            #region GridAllRegistration   
-            //*Grid Bind Showing All Registered Patients In the Modal POPUP
-
-            GridView1.DataSource = PatientObj.GetAllRegistration();
-            GridView1.DataBind();
-            GridView1.EmptyDataText = "No Records Found";
-            lblRegCount.Text = GridView1.Rows.Count.ToString();
-            if (Convert.ToInt32(lblRegCount.Text) > 99)
-                lblRegCount.Text = "99+";
-            #endregion GridAllRegistration
-
-            #region GridTodaysRegistration
-            //*Grid Bind Showing Todays Registered Patients In the Modal POPUP
-
-            dtgViewTodaysRegistration.EmptyDataText = "....Till Now No Registration....";
-            dtgViewTodaysRegistration.DataSource = PatientObj.GetDateRegistration();
-         
-            dtgViewTodaysRegistration.DataBind();
-
-            lblTodayRegCount.Text = dtgViewTodaysRegistration.Rows.Count.ToString();
-            #endregion GridTodaysRegistration
-  
-        }
-        #endregion GridBind
+        
 
         #region BindDropdownDoc
         /// <summary>
@@ -220,9 +172,6 @@ namespace TheClinicApp1._1.Registration
         #endregion convertImage
 
     
-        #endregion Methods
-
-
         [WebMethod]
         ///This method is called using AJAX For gridview bind , search , paging
         ///It expects page index and search term which is passed from client side
@@ -314,122 +263,6 @@ namespace TheClinicApp1._1.Registration
 
         #endregion Get Patient Details
 
-
-        #region Events
-        protected void btngrid_Click(object sender, EventArgs e)
-        {
-            gridDataBind();
-        }
-        #region GridDelete
-        /// <summary>
-        /// Delete Patient Details and File If Exist Token and more Cant delete Msg
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void ImgBtnDelete_Command(object sender, CommandEventArgs e)
-        {
-            try
-            {
-                lblErrorCaption.Text = string.Empty;
-                lblMsgges.Text = string.Empty;
-                Errorbox.Style["display"] = "none";
-                lblFileCount.Text = string.Empty;
-                lblTokencount.Text = string.Empty;
-                divDisplayNumber.Style["display"] = "none";
-                Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
-                PatientObj.PatientID = PatientID;
-                if (!(PatientObj.CheckPatientTokenExist(PatientID)))
-                {
-                    PatientObj.DeletePatientDetails();
-                }
-                else
-                {
-                    string msg = string.Empty;
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    msg = Messages.TokenExist;
-                    eObj.DeletionNotSuccessMessage(page, msg);
-                }
-
-                gridDataBind();
-            }
-            catch
-            {
-                Response.Redirect("../Default.aspx");
-            }
-           
-        }
-
-
-        #endregion GridDelete
-
-        #region FillPatientsDetails In to Registration Sheet
-        /// <summary>
-        /// Fill the Patient Details For Update
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
-        {
-            try
-            {
-                lblErrorCaption.Text = string.Empty;
-                lblMsgges.Text = string.Empty;
-                Errorbox.Style["display"] = "none";
-                lblFileCount.Text = string.Empty;
-                lblTokencount.Text = string.Empty;
-                divDisplayNumber.Style["display"] = "none";
-                DateTime date = DateTime.Now;
-                int year = date.Year;
-                string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
-                Guid PatientID = Guid.Parse(Patient[0]);
-                txtName.Value = Patient[1];
-                if (Patient[6].Trim() == "Male")
-                {
-                    rdoFemale.Checked = false;
-                    rdoMale.Checked = true;
-                }
-                else if (Patient[6].Trim() == "Female")
-                {
-                    rdoMale.Checked = false;
-                    rdoFemale.Checked = true;
-                }
-                else
-                {
-                    rdoMale.Checked = false;
-                    rdoFemale.Checked = false;
-                }
-
-                DateTime dt = Convert.ToDateTime(Patient[5]);
-                int Age = year - dt.Year;
-                txtAge.Value = Age.ToString();
-                txtAddress.Value = Patient[2];
-                txtMobile.Value = Patient[3];
-                txtEmail.Value = Patient[4];
-                ddlMarital.SelectedValue = Patient[7];
-                txtOccupation.Value = Patient[8];
-                if(Patient[9]!=string.Empty)
-                {
-                    Hdnimagetype.Value = Patient[9].Trim();
-                    ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
-                }
-                else
-                {
-                    ProfilePic.Src = "../images/UploadPic1.png";
-                }
-                ProfilePic.Visible = true;
-                //btnnew.Visible = true;
-                HiddenField1.Value = PatientID.ToString();
-                gridDataBind();
-            }
-            catch
-            {
-                Response.Redirect("../Default.aspx");
-            }
-            
-
-        }
-        #endregion FillPatientsDetails In to Registration Sheet
-
         #region ClearScreen
         /// <summary>
         /// New Button click for New screen where field get cleared
@@ -447,6 +280,90 @@ namespace TheClinicApp1._1.Registration
             HiddenField1.Value = string.Empty;
         }
         #endregion ClearScreen
+
+        #region Get Patient Details
+
+        [System.Web.Services.WebMethod]
+        public static string BindPatientDetails(Patient PatientObj)
+        {
+            PatientObj.GetSearchWithName(PatientObj.Name);
+           
+            string jsonResult = null;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+
+            jsonResult = jsSerializer.Serialize(PatientObj);
+
+            return jsonResult; //Converting to Json
+        }
+        #endregion Get Patient Details
+
+        #region Bind Patient Details On Edit Click
+
+        [System.Web.Services.WebMethod]
+        public static string BindPatientDetailsOnEditClick(Patient PatientObj)
+        {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            PatientObj.ClinicID = UA.ClinicID;
+            DataSet dsPatient = PatientObj.GetPatientDetailsByID();
+
+
+            string jsonResult = null;
+            DataSet ds = null;
+            ds = dsPatient;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+            Dictionary<string, object> childRow;
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    childRow = new Dictionary<string, object>();
+                    foreach (DataColumn col in ds.Tables[0].Columns)
+                    {
+                        childRow.Add(col.ColumnName, row[col]);
+                    }
+                    parentRow.Add(childRow);
+                }
+            }
+            jsonResult = jsSerializer.Serialize(parentRow);
+
+            return jsonResult; //Converting to Json
+        }
+        #endregion Bind Patient Details On Edit Click
+
+        #endregion Methods
+
+        #region Events
+
+        #region PageLoad
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            tok.ClinicID = UA.ClinicID.ToString();
+            PatientObj.ClinicID = Guid.Parse(UA.ClinicID.ToString());
+
+            BindDummyRow();
+            BindTodayregistrationDummyRow();
+            //gridDataBind();
+            listFilter = null;
+            listFilter = BindName();
+
+            if (!IsPostBack)
+            {
+                //*Bind Patients in to the dropdown for token registration
+                DropdownDoctors();
+            }
+        }
+        #endregion PageLoad
 
         #region BookingToken
         /// <summary>
@@ -488,7 +405,7 @@ namespace TheClinicApp1._1.Registration
         /// <param name="e"></param>
         protected void btnSave_Click(object sender, EventArgs e)
         {
-           
+
             try
             {
 
@@ -508,7 +425,7 @@ namespace TheClinicApp1._1.Registration
                         PatientObj.DOB = DateTime.Parse(DOB + "-01-01");
                     }
                 }
-                             
+
                 string clinID = UA.ClinicID.ToString();
                 PatientObj.Name = (txtName.Value != "") ? txtName.Value.ToString() : null;
                 PatientObj.Address = (txtAddress.Value != "") ? txtAddress.Value.ToString() : null;
@@ -533,9 +450,9 @@ namespace TheClinicApp1._1.Registration
                 PatientObj.Occupation = (txtOccupation.Value != "") ? txtOccupation.Value.ToString() : null;
                 PatientObj.CreatedBy = UA.userName;
                 PatientObj.UpdatedBy = UA.userName;
-                if ((PatientObj.Name != null)&&(parsedValue!=0))
+                if ((PatientObj.Name != null) && (parsedValue != 0))
                 {
-                    
+
                     PatientObj.FileNumber = PatientObj.Generate_File_Number().ToString();
 
 
@@ -549,18 +466,18 @@ namespace TheClinicApp1._1.Registration
                             PatientObj.ImageType = Path.GetExtension(FileUpload1.PostedFile.FileName);
                             Hdnimagetype.Value = PatientObj.ImageType;
                         }
-                       
+
                         Guid g = Guid.NewGuid();
                         PatientObj.PatientID = g;
-                        HdnFirstInsertID.Value = PatientObj.PatientID.ToString(); 
- 
+                        HdnFirstInsertID.Value = PatientObj.PatientID.ToString();
+
                         //*Insert New Patient and Case File 
 
                         PatientObj.AddPatientDetails();
                         PatientObj.AddFile();
                         if (FileUpload1.HasFile)
-                        { 
-                        ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + g.ToString();
+                        {
+                            ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + g.ToString();
                         }
                         else
                         {
@@ -622,65 +539,6 @@ namespace TheClinicApp1._1.Registration
             }
         }
         #endregion MainButton
-
-        #region Get Patient Details
-
-        [System.Web.Services.WebMethod]
-        public static string BindPatientDetails(Patient PatientObj)
-        {
-            PatientObj.GetSearchWithName(PatientObj.Name);
-           
-            string jsonResult = null;
-
-            //Converting to Json
-            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-
-            jsonResult = jsSerializer.Serialize(PatientObj);
-
-            return jsonResult; //Converting to Json
-        }
-        #endregion Get Patient Details
-
-        #region Bind Patient Details On Edit Click
-
-        [System.Web.Services.WebMethod]
-        public static string BindPatientDetailsOnEditClick(Patient PatientObj)
-        {
-
-            ClinicDAL.UserAuthendication UA;
-            UIClasses.Const Const = new UIClasses.Const();
-
-            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-
-            PatientObj.ClinicID = UA.ClinicID;
-            DataSet dsPatient = PatientObj.GetPatientDetailsByID();
-
-
-            string jsonResult = null;
-            DataSet ds = null;
-            ds = dsPatient;
-
-            //Converting to Json
-            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
-            Dictionary<string, object> childRow;
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow row in ds.Tables[0].Rows)
-                {
-                    childRow = new Dictionary<string, object>();
-                    foreach (DataColumn col in ds.Tables[0].Columns)
-                    {
-                        childRow.Add(col.ColumnName, row[col]);
-                    }
-                    parentRow.Add(childRow);
-                }
-            }
-            jsonResult = jsSerializer.Serialize(parentRow);
-
-            return jsonResult; //Converting to Json
-        }
-        #endregion Bind Patient Details On Edit Click
 
         #region SearchButtonClick
         /// <summary>
@@ -759,35 +617,6 @@ namespace TheClinicApp1._1.Registration
         }
         #endregion SearchButtonClick
         
-        #region Paging
-        /// <summary>
-        /// Paging for Grid
-        /// Setting header for Paging 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void GridView1_PreRender(object sender, EventArgs e)
-        {
-            GridView1.UseAccessibleHeader = false;
-            if (GridView1.Rows.Count > 0)
-            {
-                GridView1.HeaderRow.TableSection = TableRowSection.TableHeader;
-            }           
-            
-        }
-
-
-        protected void dtgViewTodaysRegistration_PreRender(object sender, EventArgs e)
-        {
-            dtgViewTodaysRegistration.UseAccessibleHeader = false;
-            if (dtgViewTodaysRegistration.Rows.Count > 0)
-            {
-                dtgViewTodaysRegistration.HeaderRow.TableSection = TableRowSection.TableHeader;
-            }
-
-        }
-        #endregion Paging
-
         #region Logout
         //*Event For SideBar Logout Button
         protected void Logout_ServerClick(object sender, EventArgs e)
@@ -807,9 +636,184 @@ namespace TheClinicApp1._1.Registration
         
         #endregion Logout
 
-       
         #endregion Events
 
+        //--NOTE: Below events and functions are not using now
+
+        #region Paging
+        /// <summary>
+        /// Paging for Grid
+        /// Setting header for Paging 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void GridView1_PreRender(object sender, EventArgs e)
+        {
+            GridView1.UseAccessibleHeader = false;
+            if (GridView1.Rows.Count > 0)
+            {
+                GridView1.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
+        }
+
+
+        protected void dtgViewTodaysRegistration_PreRender(object sender, EventArgs e)
+        {
+            dtgViewTodaysRegistration.UseAccessibleHeader = false;
+            if (dtgViewTodaysRegistration.Rows.Count > 0)
+            {
+                dtgViewTodaysRegistration.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
+        }
+        #endregion Paging
+
+        #region FillPatientsDetails In to Registration Sheet
+        /// <summary>
+        /// Fill the Patient Details For Update
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void ImgBtnUpdate_Command(object sender, CommandEventArgs e)
+        {
+            try
+            {
+                lblErrorCaption.Text = string.Empty;
+                lblMsgges.Text = string.Empty;
+                Errorbox.Style["display"] = "none";
+                lblFileCount.Text = string.Empty;
+                lblTokencount.Text = string.Empty;
+                divDisplayNumber.Style["display"] = "none";
+                DateTime date = DateTime.Now;
+                int year = date.Year;
+                string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
+                Guid PatientID = Guid.Parse(Patient[0]);
+                txtName.Value = Patient[1];
+                if (Patient[6].Trim() == "Male")
+                {
+                    rdoFemale.Checked = false;
+                    rdoMale.Checked = true;
+                }
+                else if (Patient[6].Trim() == "Female")
+                {
+                    rdoMale.Checked = false;
+                    rdoFemale.Checked = true;
+                }
+                else
+                {
+                    rdoMale.Checked = false;
+                    rdoFemale.Checked = false;
+                }
+
+                DateTime dt = Convert.ToDateTime(Patient[5]);
+                int Age = year - dt.Year;
+                txtAge.Value = Age.ToString();
+                txtAddress.Value = Patient[2];
+                txtMobile.Value = Patient[3];
+                txtEmail.Value = Patient[4];
+                ddlMarital.SelectedValue = Patient[7];
+                txtOccupation.Value = Patient[8];
+                if (Patient[9] != string.Empty)
+                {
+                    Hdnimagetype.Value = Patient[9].Trim();
+                    ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientID.ToString();
+                }
+                else
+                {
+                    ProfilePic.Src = "../images/UploadPic1.png";
+                }
+                ProfilePic.Visible = true;
+                //btnnew.Visible = true;
+                HiddenField1.Value = PatientID.ToString();
+                gridDataBind();
+            }
+            catch
+            {
+                Response.Redirect("../Default.aspx");
+            }
+
+
+        }
+        #endregion FillPatientsDetails In to Registration Sheet
+
+        #region GridDelete
+        /// <summary>
+        /// Delete Patient Details and File If Exist Token and more Cant delete Msg
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void ImgBtnDelete_Command(object sender, CommandEventArgs e)
+        {
+            try
+            {
+                lblErrorCaption.Text = string.Empty;
+                lblMsgges.Text = string.Empty;
+                Errorbox.Style["display"] = "none";
+                lblFileCount.Text = string.Empty;
+                lblTokencount.Text = string.Empty;
+                divDisplayNumber.Style["display"] = "none";
+                Guid PatientID = Guid.Parse(e.CommandArgument.ToString());
+                PatientObj.PatientID = PatientID;
+                if (!(PatientObj.CheckPatientTokenExist(PatientID)))
+                {
+                    PatientObj.DeletePatientDetails();
+                }
+                else
+                {
+                    string msg = string.Empty;
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    msg = Messages.TokenExist;
+                    eObj.DeletionNotSuccessMessage(page, msg);
+                }
+
+                gridDataBind();
+            }
+            catch
+            {
+                Response.Redirect("../Default.aspx");
+            }
+
+        }
+
+
+        #endregion GridDelete
+
+        #region Grid Click
+        protected void btngrid_Click(object sender, EventArgs e)
+        {
+            gridDataBind();
+        }
+        #endregion  Grid Click
+
+        #region GridBind
+        public void gridDataBind()
+        {
+
+            #region GridAllRegistration
+            //*Grid Bind Showing All Registered Patients In the Modal POPUP
+
+            GridView1.DataSource = PatientObj.GetAllRegistration();
+            GridView1.DataBind();
+            GridView1.EmptyDataText = "No Records Found";
+            lblRegCount.Text = GridView1.Rows.Count.ToString();
+            if (Convert.ToInt32(lblRegCount.Text) > 99)
+                lblRegCount.Text = "99+";
+            #endregion GridAllRegistration
+
+            #region GridTodaysRegistration
+            //*Grid Bind Showing Todays Registered Patients In the Modal POPUP
+
+            dtgViewTodaysRegistration.EmptyDataText = "....Till Now No Registration....";
+            dtgViewTodaysRegistration.DataSource = PatientObj.GetDateRegistration();
+
+            dtgViewTodaysRegistration.DataBind();
+
+            lblTodayRegCount.Text = dtgViewTodaysRegistration.Rows.Count.ToString();
+            #endregion GridTodaysRegistration
+
+        }
+        #endregion GridBind
     }
 
        

@@ -775,93 +775,6 @@ namespace TheClinicApp1._1.Doctor
         }
         #endregion ClearButton Method
 
-        #region WebMethod
-
-        [WebMethod(EnableSession = true)]
-        public static string PatientDetails(string file)
-        {
-            try { 
-            ClinicDAL.TokensBooking obj = new ClinicDAL.TokensBooking();
-            UIClasses.Const Const = new UIClasses.Const();
-            ClinicDAL.UserAuthendication UA;
-            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-                                           
-            obj.ClinicID = UA.ClinicID.ToString();
-
-            DataSet ds = obj.GetpatientDetails(file);
-
-            string FileNumber = Convert.ToString(ds.Tables[0].Rows[0]["FileNumber"]);
-            string Name = Convert.ToString(ds.Tables[0].Rows[0]["Name"]);
-            string Gender = Convert.ToString(ds.Tables[0].Rows[0]["Gender"]);
-            string Address = Convert.ToString(ds.Tables[0].Rows[0]["Address"]);
-            string Phone = Convert.ToString(ds.Tables[0].Rows[0]["Phone"]);
-            string Email = Convert.ToString(ds.Tables[0].Rows[0]["Email"]);
-
-            string PatientID = Convert.ToString(ds.Tables[0].Rows[0]["PatientID"]);
-            string ClinicID = Convert.ToString(ds.Tables[0].Rows[0]["ClinicID"]);
-            string lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
-            
-            DateTime date = DateTime.Now;
-            int year = date.Year;
-            DateTime DT = Convert.ToDateTime(ds.Tables[0].Rows[0]["DOB"].ToString());
-            int Age = year - DT.Year;
-            string DOB = Age.ToString();
-          
-            return String.Format("{0}" + "|" + "{1}" + " | " + "{2}" + "|" + "{3}" + " | " + "{4}" + "|" + "{5}" + " | " + "{6}" + "|" + "{7}" + " | " + "{8}", FileNumber, Name, DOB, Gender, Address, Phone, Email, PatientID, ClinicID);
-            }
-            catch
-            {
-                
-                return null;
-            }
-           
-        }
-        #endregion WebMethod
-
-        #region Row Coloring for Tokens View
-        /// <summary>
-        /// color the Isprocessed rows in the Token View
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// 
-
-        int GetColumnIndexByName(GridViewRow row, string columnName)
-        {
-            int columnIndex = 0;
-            foreach (DataControlFieldCell cell in row.Cells)
-            {
-                if (cell.ContainingField is BoundField)
-                    if (((BoundField)cell.ContainingField).DataField.Equals(columnName))
-                        break;
-                columnIndex++; // keep adding 1 while we don't have the correct name
-            }
-            return columnIndex;
-        }
-
-        protected void GridViewTokenlist_RowDataBound(object sender, GridViewRowEventArgs e)
-        {          
-             if (e.Row.RowType == DataControlRowType.DataRow)
-             {    
-                 int index = GetColumnIndexByName(e.Row,"IsProcessed");
-                 string columnValue = e.Row.Cells[index].Text;
-
-                 //foreach (TableCell cell in e.Row.Cells)
-                 //{
-                     if (columnValue == "True")
-                     {
-                         e.Row.Cells[index].Text = "Yes";
-                         e.Row.BackColor = Color.LightGray;    
-                     }
-                     else
-                     {   e.Row.Cells[index].Text = "No";                          
-                     }
-                 //}               
-             }          
-
-        }
-        #endregion Row Coloring for Tokens View
-
         #region convertImage
         /// <summary>
         /// Conveting Image into Bytes Array
@@ -1038,6 +951,95 @@ namespace TheClinicApp1._1.Doctor
 
         }
         #endregion GridBindTokens
+
+        #region WebMethod
+
+        [WebMethod(EnableSession = true)]
+        public static string PatientDetails(string file)
+        {
+            try
+            {
+                ClinicDAL.TokensBooking obj = new ClinicDAL.TokensBooking();
+                UIClasses.Const Const = new UIClasses.Const();
+                ClinicDAL.UserAuthendication UA;
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+                obj.ClinicID = UA.ClinicID.ToString();
+
+                DataSet ds = obj.GetpatientDetails(file);
+
+                string FileNumber = Convert.ToString(ds.Tables[0].Rows[0]["FileNumber"]);
+                string Name = Convert.ToString(ds.Tables[0].Rows[0]["Name"]);
+                string Gender = Convert.ToString(ds.Tables[0].Rows[0]["Gender"]);
+                string Address = Convert.ToString(ds.Tables[0].Rows[0]["Address"]);
+                string Phone = Convert.ToString(ds.Tables[0].Rows[0]["Phone"]);
+                string Email = Convert.ToString(ds.Tables[0].Rows[0]["Email"]);
+
+                string PatientID = Convert.ToString(ds.Tables[0].Rows[0]["PatientID"]);
+                string ClinicID = Convert.ToString(ds.Tables[0].Rows[0]["ClinicID"]);
+                string lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
+
+                DateTime date = DateTime.Now;
+                int year = date.Year;
+                DateTime DT = Convert.ToDateTime(ds.Tables[0].Rows[0]["DOB"].ToString());
+                int Age = year - DT.Year;
+                string DOB = Age.ToString();
+
+                return String.Format("{0}" + "|" + "{1}" + " | " + "{2}" + "|" + "{3}" + " | " + "{4}" + "|" + "{5}" + " | " + "{6}" + "|" + "{7}" + " | " + "{8}", FileNumber, Name, DOB, Gender, Address, Phone, Email, PatientID, ClinicID);
+            }
+            catch
+            {
+
+                return null;
+            }
+
+        }
+        #endregion WebMethod
+
+        #region Row Coloring for Tokens View
+        /// <summary>
+        /// color the Isprocessed rows in the Token View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
+
+        int GetColumnIndexByName(GridViewRow row, string columnName)
+        {
+            int columnIndex = 0;
+            foreach (DataControlFieldCell cell in row.Cells)
+            {
+                if (cell.ContainingField is BoundField)
+                    if (((BoundField)cell.ContainingField).DataField.Equals(columnName))
+                        break;
+                columnIndex++; // keep adding 1 while we don't have the correct name
+            }
+            return columnIndex;
+        }
+
+        protected void GridViewTokenlist_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int index = GetColumnIndexByName(e.Row, "IsProcessed");
+                string columnValue = e.Row.Cells[index].Text;
+
+                //foreach (TableCell cell in e.Row.Cells)
+                //{
+                if (columnValue == "True")
+                {
+                    e.Row.Cells[index].Text = "Yes";
+                    e.Row.BackColor = Color.LightGray;
+                }
+                else
+                {
+                    e.Row.Cells[index].Text = "No";
+                }
+                //}               
+            }
+
+        }
+        #endregion Row Coloring for Tokens View
 
     }
         

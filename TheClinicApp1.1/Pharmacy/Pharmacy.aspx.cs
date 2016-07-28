@@ -21,6 +21,7 @@ namespace TheClinicApp1._1.Pharmacy
     {
 
         #region Gobalvariables
+
         private static int PageSize = 8;
 
         UIClasses.Const Const = new UIClasses.Const();
@@ -156,8 +157,7 @@ namespace TheClinicApp1._1.Pharmacy
 
         #endregion Get Prescription Details Xml
 
-
-        #region WebMethod
+        #region PatientDetails
 
         [WebMethod(EnableSession = true)]
         public static string PatientDetails(string file)
@@ -190,7 +190,7 @@ namespace TheClinicApp1._1.Pharmacy
 
         }
 
-        #endregion WebMethod
+        #endregion PatientDetails
 
         #region Get Medicine Names
 
@@ -268,50 +268,6 @@ namespace TheClinicApp1._1.Pharmacy
 
         #endregion Get MedicineDetails By Medicine Name
 
-        #region Row Coloring for Pharmacy View
-        /// <summary>
-        /// color the Isprocessed rows in the Token View
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// 
-
-        int GetColumnIndexByName(GridViewRow row, string columnName)
-        {
-            int columnIndex = 0;
-            foreach (DataControlFieldCell cell in row.Cells)
-            {
-                if (cell.ContainingField is BoundField)
-                    if (((BoundField)cell.ContainingField).DataField.Equals(columnName))
-                        break;
-                columnIndex++; // keep adding 1 while we don't have the correct name
-            }
-            return columnIndex;
-        }
-        protected void GridViewPharmacylist_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                int index = GetColumnIndexByName(e.Row, "IsProcessed");
-                string columnValue = e.Row.Cells[index].Text;
-
-                //foreach (TableCell cell in e.Row.Cells)
-                //{
-                if (columnValue == "True")
-                {
-                    e.Row.Cells[index].Text = "Yes";
-                    e.Row.BackColor = Color.LightGray;
-                }
-                else
-                {
-                    e.Row.Cells[index].Text = "No";
-                }
-                //}               
-            }
-
-        }
-        #endregion Row Coloring for Pharmacy View
-
         #endregion Methods
 
         #region Events
@@ -339,54 +295,6 @@ namespace TheClinicApp1._1.Pharmacy
         #endregion Pageload
 
         #region ClickEvents
-
-        #region ImageBUtton Click
-
-        protected void ImgBtn_Command(object sender, CommandEventArgs e)
-        {
-            string[] Visits = e.CommandArgument.ToString().Split(new char[] { '|' });
-            string PatientId = Visits[0];
-            string DoctorID = Visits[1];
-            pharmacypobj.DoctorID = Guid.Parse(DoctorID);
-            pharmacypobj.PatientID = Guid.Parse(PatientId);
-            tokobj.ClinicID = UA.ClinicID.ToString();
-            Patientidtorefill.Value = PatientId;//saving in a hidden field to reill
-            DataSet gds = pharmacypobj.GetPatientPharmacyDetailsByID();
-            //DataSet ds = tokobj.GetPatientTokenDetailsbyID(PatientId); //Get Patient Token Details by ID Function Call
-            lblPatientName.Text = gds.Tables[0].Rows[0][1].ToString();
-            lblDoctor.Text = gds.Tables[0].Rows[0][12].ToString();
-            lblFileNum.Text = gds.Tables[0].Rows[0][7].ToString();
-            lblGenderDis.Text = gds.Tables[0].Rows[0][6].ToString();
-            DateTime date = DateTime.Now;
-            int year = date.Year;
-            DateTime DT = Convert.ToDateTime(gds.Tables[0].Rows[0][8].ToString());
-            int Age = year - DT.Year;
-            lblAgeCount.Text = Age.ToString();
-            DataSet MedicinList = pharmacypobj.PrescriptionDetails();  //Prescription Details Function Call
-            if (MedicinList.Tables[0].Rows.Count > 0)
-            {
-                hdnPrescID.Value = MedicinList.Tables[0].Rows[0][0].ToString();
-            }
-            else
-            {
-                hdnPrescID.Value = "";
-            }
-            var xml = MedicinList.GetXml();
-            hdnXmlData.Value = xml;
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
-
-            string imagetype = gds.Tables[0].Rows[0][13].ToString();
-            if (imagetype.Trim() != string.Empty)
-            {
-                ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientId.ToString();
-            }
-            else
-            {
-                ProfilePic.Src = "../images/UploadPic1.png";
-            }
-        }
-
-        #endregion ImageBUtton Click
 
         #region Save Button Click
 
@@ -511,6 +419,98 @@ namespace TheClinicApp1._1.Pharmacy
 
         }
         #endregion Gridviewbind
+
+        #region Row Coloring for Pharmacy View
+        /// <summary>
+        /// color the Isprocessed rows in the Token View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
+
+        int GetColumnIndexByName(GridViewRow row, string columnName)
+        {
+            int columnIndex = 0;
+            foreach (DataControlFieldCell cell in row.Cells)
+            {
+                if (cell.ContainingField is BoundField)
+                    if (((BoundField)cell.ContainingField).DataField.Equals(columnName))
+                        break;
+                columnIndex++; // keep adding 1 while we don't have the correct name
+            }
+            return columnIndex;
+        }
+        protected void GridViewPharmacylist_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int index = GetColumnIndexByName(e.Row, "IsProcessed");
+                string columnValue = e.Row.Cells[index].Text;
+
+                //foreach (TableCell cell in e.Row.Cells)
+                //{
+                if (columnValue == "True")
+                {
+                    e.Row.Cells[index].Text = "Yes";
+                    e.Row.BackColor = Color.LightGray;
+                }
+                else
+                {
+                    e.Row.Cells[index].Text = "No";
+                }
+                //}               
+            }
+
+        }
+        #endregion Row Coloring for Pharmacy View
+
+        #region ImageBUtton Click
+
+        protected void ImgBtn_Command(object sender, CommandEventArgs e)
+        {
+            string[] Visits = e.CommandArgument.ToString().Split(new char[] { '|' });
+            string PatientId = Visits[0];
+            string DoctorID = Visits[1];
+            pharmacypobj.DoctorID = Guid.Parse(DoctorID);
+            pharmacypobj.PatientID = Guid.Parse(PatientId);
+            tokobj.ClinicID = UA.ClinicID.ToString();
+            Patientidtorefill.Value = PatientId;//saving in a hidden field to reill
+            DataSet gds = pharmacypobj.GetPatientPharmacyDetailsByID();
+            //DataSet ds = tokobj.GetPatientTokenDetailsbyID(PatientId); //Get Patient Token Details by ID Function Call
+            lblPatientName.Text = gds.Tables[0].Rows[0][1].ToString();
+            lblDoctor.Text = gds.Tables[0].Rows[0][12].ToString();
+            lblFileNum.Text = gds.Tables[0].Rows[0][7].ToString();
+            lblGenderDis.Text = gds.Tables[0].Rows[0][6].ToString();
+            DateTime date = DateTime.Now;
+            int year = date.Year;
+            DateTime DT = Convert.ToDateTime(gds.Tables[0].Rows[0][8].ToString());
+            int Age = year - DT.Year;
+            lblAgeCount.Text = Age.ToString();
+            DataSet MedicinList = pharmacypobj.PrescriptionDetails();  //Prescription Details Function Call
+            if (MedicinList.Tables[0].Rows.Count > 0)
+            {
+                hdnPrescID.Value = MedicinList.Tables[0].Rows[0][0].ToString();
+            }
+            else
+            {
+                hdnPrescID.Value = "";
+            }
+            var xml = MedicinList.GetXml();
+            hdnXmlData.Value = xml;
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
+
+            string imagetype = gds.Tables[0].Rows[0][13].ToString();
+            if (imagetype.Trim() != string.Empty)
+            {
+                ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + PatientId.ToString();
+            }
+            else
+            {
+                ProfilePic.Src = "../images/UploadPic1.png";
+            }
+        }
+
+        #endregion ImageBUtton Click
 
     }
 }

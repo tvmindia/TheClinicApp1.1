@@ -30,7 +30,6 @@ namespace TheClinicApp1._1.Token
        
         #endregion Global Variables
 
-
         #region Methods
 
         #region ToKen booking View Search Paging
@@ -112,7 +111,6 @@ namespace TheClinicApp1._1.Token
         #endregion Delete Token By UniqueID
 
         #endregion Methods
-
 
         #region Events
 

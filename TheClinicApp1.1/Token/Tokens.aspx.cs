@@ -33,7 +33,7 @@ namespace TheClinicApp1._1.Token
 
         #region Methods
 
-        #region Dropdown
+        #region Bind Dropdown
         public void dropdowndoctor()
         {
             //binding the values of doctor dropdownlist
@@ -54,7 +54,7 @@ namespace TheClinicApp1._1.Token
 
         }
 
-        #endregion Dropdown
+        #endregion Bind Dropdown
 
         #region listerfilterbind
         public void listerfilterbind()
@@ -84,7 +84,7 @@ namespace TheClinicApp1._1.Token
         }
         #endregion BindDataAutocomplete
 
-        #region WebMethod
+        #region PatientDetails
         /// <summary>
         /// WEB METHOD called from javascript from aspx page
         /// To Get Patient Details  
@@ -135,7 +135,28 @@ namespace TheClinicApp1._1.Token
             return String.Format("{0}" + "|" + "{1}" + " | " + "{2}" + "|" + "{3}" + " | " + "{4}" + "|" + "{5}" + " | " + "{6}" + "|" + "{7}" + " | " + "{8}" + " | " + "{9}", FileNumber, Name, DOB, Gender, Address, Phone, Email, PatientID, ClinicID, lastvisit);
 
         }
-        #endregion WebMethod
+        #endregion PatientDetails
+
+        #region Clear Fields
+        public void ClearFields()
+        {
+            lblFileNo.Text = "";
+            lblPatientName.Text = "name";
+            lblAge.Text = "";
+            lblGender.Text = "";
+            lblAddress.Text = "";
+            lblMobile.Text = "";
+            lblEmail.Text = "";
+            lblLastVisit.Text = "";
+            lblToken.Text = "_";
+            BookedDoctorName.Visible = false;
+            lblDoctor.Visible = false;
+            ddlDoctor.SelectedIndex = 0;
+            dropdowndoctor();
+
+        }
+
+        #endregion Clear Fields
 
         #endregion Methods
 
@@ -167,26 +188,7 @@ namespace TheClinicApp1._1.Token
 
         #endregion PageLoad
 
-        #region ButtonClicks
-
-        public void ClearFields()
-        {
-            lblFileNo.Text = "";
-            lblPatientName.Text = "name";
-            lblAge.Text = "";
-            lblGender.Text = "";
-            lblAddress.Text = "";
-            lblMobile.Text = "";
-            lblEmail.Text = "";
-            lblLastVisit.Text = "";
-            lblToken.Text = "_";
-            BookedDoctorName.Visible = false;
-            lblDoctor.Visible = false;
-            ddlDoctor.SelectedIndex = 0;
-            dropdowndoctor();
-
-        }
-
+        #region Book Button Click
         protected void btnBookToken_ServerClick(object sender, EventArgs e)
         {
             string msg = string.Empty;
@@ -241,6 +243,10 @@ namespace TheClinicApp1._1.Token
             }
         }
 
+        #endregion Book Button Click
+
+        #region LogOut
+
         protected void Logout_ServerClick(object sender, EventArgs e)
         {
             Session.Remove(Const.LoginSession);
@@ -253,10 +259,9 @@ namespace TheClinicApp1._1.Token
             Response.Redirect("../Default.aspx");
         }
 
-        #endregion ButtonClicks
+        #endregion LogOut
 
         #endregion Events
 
-       
     }
 }
