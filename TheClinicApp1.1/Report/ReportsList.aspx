@@ -75,14 +75,70 @@ table td{
 
     </style>
 
+      <%--Style ANd Script Files OF CAlenderControl--%>
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
+    <script src="../js/jquery-1.9.1.min.js"></script>     
+    <script src="../js/jquery-ui.js"></script>
+
+
+    
+
+
+
+
     <script>
+
+
         $(document).ready(function () {         
-        
+            
+         
+           
+
             $('.nav_menu').click(function () {
                 
                 $(".main_body").toggleClass("active_close");
             });  
         });
+
+        function SetIframeSrc(ID, ReportName)
+        {
+            //This function loads report within an iframe 
+            //Browser back button causes navigations to previous tabs instead of report list . 
+            //Inordser to solve the browser back issue history is manipulated using PUSHSTATE
+            //Changing the src of iframe causes additional entry in pustate
+            //To avoid additional entry issue, rather changing src of iframe , Iframe Is Recreated
+            //While displaying Report , list will be hidden and vice versa
+          
+            document.getElementById('ReprtList').style.display = "none";
+           
+            if (window.history && window.history.pushState) {
+
+                window.history.pushState('forward', null, 'IndividualReport.aspx'); //Manipulation of url as well as browser history
+                $(window).on('popstate', function () {
+
+                document.getElementById('ReprtList').style.display = "";
+                 
+                $("#IframeReport").attr("src", "");
+                  
+                });
+
+            }
+
+            //--------------------------- * replace the old iframe with a new one * ---------------------------//
+            var urls = " IndividualReport .aspx?ID=" + ID + "&ReportName=" + ReportName;
+            var original = document.getElementsByTagName("iframe")[0];
+            var newFrame = document.createElement("iframe");
+            newFrame.src = urls;
+            newFrame.frameBorder = 0;
+            newFrame.id = "IframeReport";
+            newFrame.style = "width: 100%; height: 600px";
+            var parent = original.parentNode;
+            parent.replaceChild(newFrame, original);
+
+          // $("#IframeReport").attr("src", " IndividualReport .aspx?ID=" + ID + "&ReportName=" + ReportName);
+          
+        }
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -130,15 +186,15 @@ table td{
 
       </div>--%>
 
-             <div style="height:20px"></div>
-               <div class="row field_row">
+          
+               <div class="row field_row" id="ReprtList">
 
                                      
 
                                     <div class="col-lg-12">
 
  <div class="col-lg-1"></div>
-    <div class="col-lg-10">  <asp:PlaceHolder ID = "PlaceHolder1" runat="server" /></div>
+    <div class="col-lg-10">  <asp:PlaceHolder ID = "PlaceHolder1" runat="server"  /></div>
                                         
   <div class="col-lg-1"></div>                                   
                                     
@@ -147,8 +203,14 @@ table td{
                  
 
      </div>
+              
+              
+                <div class="col-lg-12" >
+              <iframe id="IframeReport" style ="width: 100%; height: 600px" frameBorder="0"></iframe>-
+
+                </div>
     </div>
-               
+            
              
                  </div>   
 </asp:Content>

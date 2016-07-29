@@ -66,7 +66,11 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
-
+        public DateTime Date // For equality check
+        {
+            get;
+            set;
+        }
         public Guid PatientID
         {
             get;
@@ -200,6 +204,21 @@ namespace TheClinicApp1._1.ClinicDAL
                 if (cmd != null)
                 {
                     cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
+
+                    if (FromDate != null && FromDate != DateTime.MinValue)
+                    {
+                        cmd.Parameters.Add("@FromDate", SqlDbType.Date).Value =  FromDate.ToString("yyyy-MM-dd"); 
+                    }
+
+                    if (ToDate != null && ToDate != DateTime.MinValue)
+                    {
+                        cmd.Parameters.Add("@ToDate", SqlDbType.Date).Value = ToDate.ToString("yyyy-MM-dd"); 
+                    }
+
+                    //if (Date != null && Date != DateTime.MinValue)
+                    //{
+                    //     cmd.Parameters.Add("@Date", SqlDbType.Date).Value = Date.ToString("yyyy-MM-dd");;
+                    //}
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     SqlDataAdapter adapter = new SqlDataAdapter();

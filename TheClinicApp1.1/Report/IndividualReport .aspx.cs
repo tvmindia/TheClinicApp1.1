@@ -34,31 +34,62 @@ namespace TheClinicApp1._1.Report
 
         #region Events
 
+        protected override void OnInit(EventArgs e)
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.MinValue);
+
+            base.OnInit(e);
+        }
+
+
         #region Page Load
         protected void Page_Load(object sender, EventArgs e)
         {
 
+
             if (Request.QueryString["ReportName"] != null)
             {
                 Page.Title = Request.QueryString["ReportName"].ToString();
+
+              //  hdfReportName.Value = Request.QueryString["ReportName"].ToString();
             }
 
            
             string ID = string.Empty;
-
+            string Date = string.Empty;
             if (Request.QueryString["ID"] != null)
             {
                 ID = Request.QueryString["ID"].ToString();
             }
 
+            //if (Request.QueryString["Date"] != null && Request.QueryString["Date"].ToString() !=string.Empty)
+            //{
+            //    Date = Request.QueryString["Date"].ToString();
+            //}
+
              UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-            if (!IsPostBack)
-            {
+            //if (!IsPostBack)
+            //{
                 if (ID != string.Empty)
 	            {
                 clinicReprtObj.ReportID = Guid.Parse(ID);
 
+
+
+                //if (txtFromDate.Value != string.Empty)
+                //{
+                //    clinicReprtObj.FromDate = Convert.ToDateTime(txtFromDate.Value);
+                //}
+
+                //if (txtToDate.Value != string.Empty)
+                //{
+                //    clinicReprtObj.ToDate = Convert.ToDateTime(txtToDate.Value);
+                //}
+
+               
                 string html = clinicReprtObj.GetReport();                               //body
 
 
@@ -93,11 +124,20 @@ namespace TheClinicApp1._1.Report
                
             }
 
-            }
+           // }
+
+           
+
+
 
         }
 
         #endregion Page Load
+
+        protected void btnFilter_Click(object sender, EventArgs e)
+        {
+
+        }
 
         #endregion Events
 

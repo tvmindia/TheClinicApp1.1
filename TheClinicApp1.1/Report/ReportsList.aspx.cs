@@ -146,7 +146,9 @@ namespace TheClinicApp1._1
 
                                 if (column.ColumnName == "Report")
                                 {
-                                   ReportName =  row[column.ColumnName].ToString(); 
+                                   ReportName =  row[column.ColumnName].ToString();
+
+                                   ReportName = ReportName.Replace(" ", "_");
                                 }
 
 
@@ -172,7 +174,11 @@ namespace TheClinicApp1._1
 
                     html.Append("<td>");                                          //Create clickable image to view report
 
-                    html.Append(" <a href='IndividualReport .aspx?ID=" + ReportID + "&ReportName=" + ReportName + "'><img src='../images/package_icon13.png' title='View report' /></a>");
+
+                   
+
+
+                    html.Append(" <a   onclick=SetIframeSrc('" + ReportID + "','" + ReportName + "') ><img src='../images/package_icon13.png' title='View report' /></a>");
 
                     html.Append("</td>");
                   
@@ -191,6 +197,10 @@ namespace TheClinicApp1._1
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
         }
+
+     
+
+       
 
         }
     
