@@ -109,33 +109,35 @@ table td{
             //To avoid additional entry issue, rather changing src of iframe , Iframe Is Recreated
             //While displaying Report , list will be hidden and vice versa
           
-            document.getElementById('ReprtList').style.display = "none";
+           // document.getElementById('ReprtList').style.display = "none";
            
-            if (window.history && window.history.pushState) {
+            //if (window.history && window.history.pushState) {
 
-                window.history.pushState('forward', null, 'IndividualReport.aspx'); //Manipulation of url as well as browser history
-                $(window).on('popstate', function () {
+             //   window.history.pushState('forward', null, 'IndividualReport.aspx'); //Manipulation of url as well as browser history
+              //  $(window).on('popstate', function () {
 
-                document.getElementById('ReprtList').style.display = "";
+            //    document.getElementById('ReprtList').style.display = "";
                  
-                $("#IframeReport").attr("src", "");
+            //    $("#IframeReport").attr("src", "");
                   
-                });
+            //    });
 
-            }
+            //}
 
             //--------------------------- * replace the old iframe with a new one * ---------------------------//
-            var urls = " IndividualReport .aspx?ID=" + ID + "&ReportName=" + ReportName;
-            var original = document.getElementsByTagName("iframe")[0];
-            var newFrame = document.createElement("iframe");
-            newFrame.src = urls;
-            newFrame.frameBorder = 0;
-            newFrame.id = "IframeReport";
-            newFrame.style = "width: 100%; height: 600px";
-            var parent = original.parentNode;
-            parent.replaceChild(newFrame, original);
+            //var urls = " IndividualReport .aspx?ID=" + ID + "&ReportName=" + ReportName;
+            //var original = document.getElementsByTagName("iframe")[0];
+            //var newFrame = document.createElement("iframe");
+            //newFrame.src = urls;
+            //newFrame.frameBorder = 0;
+            //newFrame.id = "IframeReport";
+            //newFrame.style = "width: 100%; height: 600px";
+            //var parent = original.parentNode;
+            //parent.replaceChild(newFrame, original);
 
-          // $("#IframeReport").attr("src", " IndividualReport .aspx?ID=" + ID + "&ReportName=" + ReportName);
+
+          document.getElementById('ReprtList').style.display = "none";
+        $("#IframeReport").attr("src", " IndividualReport .aspx?ID=" + ID + "&ReportName=" + ReportName);
           
         }
 
