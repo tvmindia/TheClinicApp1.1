@@ -60,28 +60,6 @@
         }
 
 
-
-        /*border-collapse:separate;
-    border-spacing:0 20px; */
-
-
-        /*.tab, tr, td, th {
-           
-           
-            border: none;
-           
-        }
-
-             .tab th {
-                 
-                border: none;
-                border-collapse: collapse;
-                text-align: left;
-                background-color: white;
-                color: black;
-                text-decoration: underline;
-            }*/
-
         .footer {
             color: #0e3782;
             text-align: right;
@@ -152,6 +130,8 @@
                 }
 
 
+/*Advanced search css*/
+
         .noBorder {
             border: none !important;
             border-collapse: collapse;
@@ -166,22 +146,7 @@
                 width: 0;
             }
 
-
-        .myListBox {
-            border-style: none;
-            border-width: 0px;
-            border: none;
-            font-size: 12pt;
-            font-family: Verdana;
-        }
-
-        .conditionli {
-            border: 1px solid darkgrey;
-            padding: 0px 6px 4px 6px;
-            background-color: lightgray;
-            position: relative;
-            cursor: pointer;
-        }
+       
     </style>
 
     <%--Style ANd Script Files OF CAlenderControl--%>
@@ -192,15 +157,17 @@
 
     <script>
 
+
+        //----- * Global Variables * ----------//
+
         var Conditions = [];
-
         var isPostBack = <%=Convert.ToString(Page.IsPostBack).ToLower()%>;
-
         var IsAddButtonClicked = false;
         var IsRemoveButtonClicked = false;
 
         $(document).ready(function () {
-            debugger;
+            
+            //--- Managing advanced search panel hide - show
 
             if (isPostBack) 
             {
@@ -223,16 +190,11 @@
             });
 
 
-
-
             // $("#paneldiv").css("display", "none");
 
             //$("#UpIcon").css("display", "none");
 
             $("#searchIcon").click(function () {
-
-                debugger;
-
 
                 $("#searchIcon").css("display", "none");
                 $("#paneldiv").slideDown("slow");
@@ -253,164 +215,10 @@
             });
 
 
-            
-            //$(".deleteMe").on("click", function(){
-            //    debugger;
-
-
-            //    $(this).closest("li").remove(); 
-            //});
-           
-
-
         });
 
-
-        
-
-
-        function RemoveCondition() {
-            debugger;
-
-            var c=  $(this);
-
-
-            $(this).closest("li").remove(); 
-<%--            var ClosestTr = document.getElementById('btRemove').closest('tr');
-           // ClosestTr.remove();
-            var tdContent = ClosestTr.innerText;
-
-
-            var searchColumn = tdContent.split('=')[0];
-            var searchValue =  tdContent.split('=')[1].trim() ;
-
-
-       var Conditions = document.getElementById('<%=hdnWhereConditions.ClientID %>').value;
-            var IndividualCondition=   Conditions.split(',');
-            var html ='';--%>
-        }
-
-        //for (var i = 0; i < IndividualCondition.length; i++) {
-    
-        //    var Column=   IndividualCondition[i].split('LIKE')[0];
-        //    var Value =  IndividualCondition[i].split('LIKE')[1];
-
-        //    Value = Value.replace("%", "");
-        //    Value = Value.replace("'","");
-        //    Value = Value.trim();
-
-        //    if (Column != searchColumn && Value) 
-        //    {
-    
-                
-
-
-        //    html = '<tr ><td >' + Column + " = "+Value + '</td><td style="width:10px" ><input type="button" id="btRemove" onclick="RemoveCondition()" class="bt1" value="-"  accesskey="-" /></td></tr>';
-
-        //    }
-
-        //    $("#SearchConditions").append(html);
-
-        //}
-
-        //var html = '<tr ><td >' + SelectedColumn + " = "+value + '</td><td style="width:10px" ><input type="button" id="btRemove" onclick="RemoveCondition()" class="bt1" value="-"  accesskey="-" /></td></tr>';
-
-        //$("#SearchConditions").append(html);
-
-
-
-
-
-
-
-        //var ClosestTr = document.getElementById('btRemove').closest('tr');
-        //ClosestTr.remove();
-        //var tdContent = ClosestTr.innerText;
-
-
-        //var searchColumn = tdContent.split('=')[0];
-        //var searchValue = "'" + tdContent.split('=')[1].trim() + "%'";
-
-           
-
-        //for (var i = 0; i < Conditions.length; i++) {
-    
-        //    var c=   Conditions[i].split('LIKE')[0];
-        //    var d =  Conditions[i].split('LIKE')[1];
-
-
-        //    if (searchColumn == c && searchValue == d) {
-    
-        //        Conditions.splice( i, 1 );
-
-
-        //    }
-
-        //}
-
-
-
-
-        <%-- for (var i = 0; i < Conditions.length; i++) {
-                var individualCondition = Conditions[i].split('LIKE');
-
-                if (individualCondition[0].trim() == searchColumn.trim() && individualCondition[1].trim() == searchValue) {
-                    alert(document.getElementById('<%=hdnWhereConditions.ClientID %>').value);--%>
-
-        <%-- if ( document.getElementById('<%=hdnWhereConditions.ClientID %>').value.indexOf(" OR "+Conditions[i]) >0) {
-                        document.getElementById('<%=hdnWhereConditions.ClientID %>').value = document.getElementById('<%=hdnWhereConditions.ClientID %>').value.replace(" OR " +Conditions[i], "");
-                    }
-
-                    if (document.getElementById('<%=hdnWhereConditions.ClientID %>').value.indexOf(Conditions[i] + " OR ") > 0)
-                    {
-                        document.getElementById('<%=hdnWhereConditions.ClientID %>').value = document.getElementById('<%=hdnWhereConditions.ClientID %>').value.replace(" OR " + Conditions[i], "");
-                    }--%>
-
-        <%--  document.getElementById('<%=hdnWhereConditions.ClientID %>').value = document.getElementById('<%=hdnWhereConditions.ClientID %>').value.replace(Conditions[i], "");
-                    alert(document.getElementById('<%=hdnWhereConditions.ClientID %>').value);--%>
-
-        //  }
-
-        //  }
-
-
-
-
-        // var condition = tdContent.replace("=","LIKE")
-
-        // var afterComma = condition.substr(condition.indexOf(",") + 1);
-
-        <%--          var  condition = tdContent.split('=')[0] + " LIKE " + "'"+tdContent.split('=')[1]+"'%";
-
-          if (document.getElementById('<%=hdnWhereConditions.ClientID %>').value.indexOf(condition) > 0) {
-              alert(1);
-          }--%>
-
-
-        // document.getElementById('<%=hdnWhereConditions.ClientID %>').value.split('OR');
-
-
-        // condition = condition + "%'";
-
-        <%--alert(document.getElementById('<%=hdnWhereConditions.ClientID %>').value);
-            alert(document.getElementById('<%=hdnWhereConditions.ClientID %>').value.indexOf(condition));
-
-            if (document.getElementById('<%=hdnWhereConditions.ClientID %>').value.indexOf(condition) > 0)
-            {
-                alert(1);
-            }--%>
-          
-         <%--   if (document.getElementById('<%=hdnWhereConditions.ClientID %>').value.search(condition) > 0) {
-                alert(1);
-            }--%>
-        
-
-        //$('div.deleteMe').click(function(){
-        //    alert(333);
-        //});
-
-        function RemoveLi(i)
-        {debugger;
+        function RemoveConditionsFromArray(i)
+        {
             Conditions.splice(i,1);
 
             $('ul li').remove();
@@ -420,20 +228,8 @@
             MakeListUsingArray();
         }
 
-
-
         function MakeListUsingArray()
         {
-            debugger;
-
-           
-
-            //if (isPostBack)
-            //{
-            //    document.getElementById("ulConditions").removeChild(li);
-            //}
-
-
             if (  isPostBack && document.getElementById('<%= hdnArray.ClientID %>').value != "" && Conditions.length == 0 && IsRemoveButtonClicked== false) 
             {
                 var ArrayContent = document.getElementById('<%= hdnArray.ClientID %>').value ;
@@ -446,32 +242,11 @@
 
             var ul = document.getElementById("ulConditions");
            
-            //var list = ul.children.length;
-            //alert(list);
-
-
-
             if (  (isPostBack == false || Conditions.length >0)   || (IsAddButtonClicked == true) ) 
             {
                 var li = document.createElement("LI");
                
-
-                //if (IsAddButtonClicked == true) 
-                //{
-                //    IsAddButtonClicked = false;
-                //}
-
             }
-
-            //for (var i = 0; i < Conditions.length; i++)
-            //{
-
-            //    var node = document.createElement("LI");
-            //    var textnode = document.createTextNode(Conditions[i]);
-            //    node.appendChild(textnode);
-            //    document.getElementById("ulConditions").appendChild(node);
-            //}
-
 
             for (var i = 0; i < Conditions.length; i++)
             {
@@ -479,22 +254,21 @@
                 {
                     var li = document.createElement("LI");
 
-                   
                 }
 
                 li.id = "lstCondition"+i;
               
               //  li.innerHTML = '<span class="conditionli" title="Remove this condition" onclick="RemoveLi('+i+')">-</span>'+" "+ Conditions[i] ;
 
-                li.innerHTML ='<img src="../Images/Deleteicon1.png" title="Remove this condition" onclick="RemoveLi('+i+')"/>'+" "+ Conditions[i] ;
+               // li.innerHTML ='<img style="cursor: pointer; width: 11px; height: 11px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/>&nbsp;&nbsp;'+""+ Conditions[i] ;
+                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width: 120px;overflow:hidden;text-overflow:hidden" >'+Conditions[i]+'</div>'+" " +'<div><img style="cursor: pointer; width: 11px; height: 11px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
+                
                 column = Conditions[i].split("=")[0];
                 value = Conditions[i].split("=")[1];
                 value = value.trim();
 
-
                 var Condition = column + " LIKE '"+value+"%'"
                 WhereCondition.push(Condition);
-
 
                 document.getElementById("ulConditions").appendChild(li);
             }
@@ -512,16 +286,16 @@
             document.getElementById('<%= hdnWhereConditions.ClientID %>').value =  WhereCondition;
             document.getElementById('<%= hdnArray.ClientID %>').value =  Conditions;
 
-
-           
         }
 
 
 
+        ///Function Is called when clicking on ADD button
+        // Condition is generated by concatinating the selected column value with textbox value
+        //Condition will be added to codition array
+
         function AddCondition() {
-            debugger;
-
-
+           
             if (($('#<%=ddlColumns.ClientID%>').val().trim() != "--Select--")) {
 
                 if (document.getElementById('<%= txtvalue.ClientID %>').value != "") {
@@ -534,55 +308,9 @@
 
                     Conditions.push(cndtion)
 
-                    //document.getElementById('<%= hdnArray.ClientID %>').value =  Conditions;
-
                     IsAddButtonClicked = true;
 
                     MakeListUsingArray();
-
-                    <%--var selectoption = document.getElementById("<%=ddlColumns.ClientID %>");
-                    var SelectedColumn = selectoption.options[selectoption.selectedIndex].text;
-
-                    var li = document.createElement("LI");  
-                    var value = document.getElementById('<%= txtvalue.ClientID %>').value;
-
-                    var cndtion = SelectedColumn + " = "+value ;
-
-                    Conditions.push(cndtion);--%>
-
-                    // var html =  ' <li onclick="RemoveLi()">'+cndtion+'</li>'
-                    //li.innerHTML = cndtion;
-                    //li.onclick = function() {
-                    //        this.parentNode.removeChild(this);
-                    
-                    //            }
-                    //document.getElementById("ulConditions").appendChild(li);
-
-                    
-                    <%-- var Condition = SelectedColumn + " LIKE '"+value+"%'";
-                    Conditions.push( Condition);
-                 document.getElementById('<%= hdnWhereConditions.ClientID %>').value = Conditions;--%>
-
-                    //  var html = '<tr ><td >' + SelectedColumn + " = "+value + '</td><td style="width:10px" ><input type="button" id="btRemove" onclick="RemoveCondition()" class="bt1" value="-"  accesskey="-" /></td></tr>';
-
-                    //$("#SearchConditions").append(html);
-
-                    //  Conditions.push(SelectedColumn + "=" + value + "%");
-
-            
-
-
-
-                
-
-              <%--  if (document.getElementById('<%= hdnWhereConditions.ClientID %>').value == "") {
-
-                    document.getElementById('<%= hdnWhereConditions.ClientID %>').value = document.getElementById('<%= hdnWhereConditions.ClientID %>').value + SelectedColumn + " LIKE '" + value + "%'";
-                }
-                else {
-                    document.getElementById('<%= hdnWhereConditions.ClientID %>').value = document.getElementById('<%= hdnWhereConditions.ClientID %>').value + " OR " + SelectedColumn + " LIKE '" + value + "%'";
-                }--%>
-
 
                 }
 
@@ -600,23 +328,6 @@
 
         }
 
-        function AddListItemsToArray()
-        {
-            debugger;
-
-            var list =   document.getElementById("ulConditions");
-            var items = list.getElementsByTagName("li");
-
-
-            for (var i = 0; i < list.length; i++) 
-            {
-                debugger;
-
-                var liText = items[i].innerHTML;
-            }
-        }
-
-
 
     </script>
 
@@ -625,26 +336,41 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div style="height: 15px"></div>
 
+    
+
+
     <table class="noBorder">
         <tr>
             <td>
 
-                <img src="../Images/gggg.png" id="UpIcon" style="cursor: pointer; display: none" title="Hide search box" width="20" height="20" align="right" />
-                <img src="../Images/Search.png" width="20" height="20" id="searchIcon" style="cursor: pointer" title="Advanced Search" align="right" />
-
+                
 
             </td>
         </tr>
     </table>
 
+    <div class="col-lg-12">
 
+                    <div class="col-lg-1"></div>
+                      <div class="col-lg-10">
 
+                           <span class="tooltip2" style="float:right">
+                                            <img src="../Images/gggg.png" id="UpIcon" style="cursor: pointer; display: none"  width="20" height="20" align="right"  />
+                                            <span class="tooltiptext2">Hide Advanced Search</span>
+                                        </span>
 
+                    
+                           <span class="tooltip2" style="float:right">
+                                           <img src="../Images/Search.png" width="20" height="20" id="searchIcon" style="cursor: pointer"  align="right"  />
+                                            <span class="tooltiptext2"> Advanced Search</span>
+                                        </span>
 
+                
+                          </div>
+        <div class="col-lg-1"></div>
+                </div>
 
     <div id="paneldiv" style="width: 100%; display: none;" class="col-lg-12">
-
-
 
         <div class="col-lg-1"></div>
 
@@ -655,7 +381,9 @@
             <fieldset style="border-radius: 15px!important;
     border: 2px solid #c7d4f3!important;">
 
-               <legend style="font-family:caviardreams-regular;color:#2196F3;width:20%;" >Advanced Search</legend>
+               <legend style="font-family:caviardreams-regular;color:#89a7ef;width:20%;margin-left:2%" >Advanced Search</legend>
+
+                
 
                 <div class="col-lg-5">
 
@@ -696,7 +424,7 @@
                                    
                                 </asp:BulletedList>--%>
 
-                                <ul id="ulConditions">
+                                <ul id="ulConditions" style="box-shadow:blue 10px 10px inherit">
                                 
                                 </ul>
 
@@ -720,51 +448,16 @@
                 </div>
 
                
-              <div class="col-lg-3">  <asp:Button ID="btnSearch" runat="server" Class="button" Text="SEARCH" Style="width: 40%" OnClick="btnSearch_Click" /></div>
+              <div class="col-lg-3">  <asp:Button ID="btnSearch" runat="server" CssClass="button1" Text="SEARCH" Style="width: 50%;background-color:#89a7ef;color:white;background-image:url('../images/magnifier-tool.png')" OnClick="btnSearch_Click" /></div>
           </fieldset>
 
         </div>
 
         <div class="col-lg-1"></div>
-
-        <%--<table class="noBorder" style="width: 100%; background-color: #c5cdde;">
-
-            <tr>
-
-                <td style="width: 50%">
-                    
-
-                </td>
-
-                <td style="width: 50%">
-                    
-
-                </td>
-            </tr>
-
-        </table>--%>
-    </div>
+         </div>
 
 
-
-    <%--<div class="col-lg-12">
-        <div style="height:15px"></div>
-            <div class="col-lg-1" ></div>
-            <div class="col-lg-7">
-                Column Name  
-            </div>
-
-          <div class="col-lg-4" style="width:10%">
-
-              Value 
-          </div>
-
-        </div>--%>
-
-
-
-
-
+    <%------------------------ * PRINT * ------------------%>
 
     <%-- <div class="grey_sec">
                                
@@ -779,16 +472,7 @@
 
     <%--<a class="btn btn-primary button" id="addBtn" onclick="return PrintPanel();"><span>Print</span></></a>--%>
 
-
-
-
-
-
-
     <%--<asp:Button ID="btnPrint" runat="server" Text="Print" class="btn btn-primary button"  OnClientClick="return PrintPanel();" />--%>
-
-
-
 
     <asp:Panel ID="pnlContents" runat="server">
 
@@ -827,7 +511,6 @@
 
 
     </asp:Panel>
-
 
     <input id="hdnWhereConditions" type="hidden" value="" runat="server" />
     <input id="hdnArray" type="hidden" value="" runat="server" />
