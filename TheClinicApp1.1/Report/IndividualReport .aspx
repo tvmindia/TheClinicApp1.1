@@ -174,12 +174,13 @@
             font-size: 12pt;
             font-family: Verdana;
         }
-        .conditionli{
-            border:1px solid darkgrey;
-            padding:0px 6px 4px 6px;
-            background-color:lightgray;
-            position:relative;
-            cursor:pointer;
+
+        .conditionli {
+            border: 1px solid darkgrey;
+            padding: 0px 6px 4px 6px;
+            background-color: lightgray;
+            position: relative;
+            cursor: pointer;
         }
     </style>
 
@@ -410,12 +411,12 @@
 
         function RemoveLi(i)
         {debugger;
-        Conditions.splice(i,1);
+            Conditions.splice(i,1);
 
-        $('ul li').remove();
-        IsRemoveButtonClicked = true;
+            $('ul li').remove();
+            IsRemoveButtonClicked = true;
 
-           // document.getElementById("ulConditions").removeChild();
+            // document.getElementById("ulConditions").removeChild();
             MakeListUsingArray();
         }
 
@@ -433,7 +434,7 @@
             //}
 
 
-            if (isPostBack && document.getElementById('<%= hdnArray.ClientID %>').value != "" && Conditions.length == 0 ) 
+            if (  isPostBack && document.getElementById('<%= hdnArray.ClientID %>').value != "" && Conditions.length == 0 && IsRemoveButtonClicked== false) 
             {
                 var ArrayContent = document.getElementById('<%= hdnArray.ClientID %>').value ;
                 var array = ArrayContent.split(",");
@@ -475,7 +476,7 @@
             for (var i = 0; i < Conditions.length; i++)
             {
                 if ( (isPostBack && IsAddButtonClicked == false) || (IsRemoveButtonClicked==true && IsAddButtonClicked == false) ) 
-                 {
+                {
                     var li = document.createElement("LI");
 
                    
@@ -483,9 +484,9 @@
 
                 li.id = "lstCondition"+i;
               
-                li.innerHTML = '<span class="conditionli" title="Remove this condition" onclick="RemoveLi('+i+')">-</span>'+" "+ Conditions[i] ;
+              //  li.innerHTML = '<span class="conditionli" title="Remove this condition" onclick="RemoveLi('+i+')">-</span>'+" "+ Conditions[i] ;
 
-
+                li.innerHTML ='<img src="../Images/Deleteicon1.png" title="Remove this condition" onclick="RemoveLi('+i+')"/>'+" "+ Conditions[i] ;
                 column = Conditions[i].split("=")[0];
                 value = Conditions[i].split("=")[1];
                 value = value.trim();
@@ -499,14 +500,17 @@
             }
 
 
-            //if (IsRemoveButtonClicked == true) 
-            //{
-            //    IsRemoveButtonClicked = false;
-            //}
-
+            if (IsRemoveButtonClicked == true) 
+            {
+                IsRemoveButtonClicked = false;
+            }
+            if (IsAddButtonClicked == true) 
+            {
+                IsAddButtonClicked = false;
+            }
 
             document.getElementById('<%= hdnWhereConditions.ClientID %>').value =  WhereCondition;
-     document.getElementById('<%= hdnArray.ClientID %>').value =  Conditions;
+            document.getElementById('<%= hdnArray.ClientID %>').value =  Conditions;
 
 
            
@@ -625,8 +629,8 @@
         <tr>
             <td>
 
-                <img src="../Images/HideSearch.png" id="UpIcon" style="cursor: pointer; display: none" title="Hide search box" width="15" height="15" align="right" />
-                <img src="../Images/Search.png" width="20" height="20" id="searchIcon" style="cursor: pointer" title="Click to filter" align="right" />
+                <img src="../Images/gggg.png" id="UpIcon" style="cursor: pointer; display: none" title="Hide search box" width="20" height="20" align="right" />
+                <img src="../Images/Search.png" width="20" height="20" id="searchIcon" style="cursor: pointer" title="Advanced Search" align="right" />
 
 
             </td>
@@ -634,53 +638,56 @@
     </table>
 
 
-    
-
-
-
-    <div id="paneldiv" style="width:100%;display:none" class="row field_row">
-
-        <div class="col-lg-4">
-
-
-            <table class="noBorder">
-                        <tr>
-                            <td>Search Column</td>
-
-                            <td>
-                                <asp:DropDownList ID="ddlColumns" runat="server" Width="100%"></asp:DropDownList></td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>Value</td>
-                            <td>
-                                <asp:TextBox ID="txtvalue" runat="server" Width="100%"></asp:TextBox></td>
-
-                        </tr>
-                        <tr>
-
-                            <td colspan="2">
-
-                                <%--<asp:ImageButton ID="imgAddIcon" runat="server" OnClick="imgAddIcon_Click" ImageUrl="../Images/plus1.png" Style="cursor: pointer; width: 15px; height: 15px;" ToolTip="Search" />--%>
 
 
 
 
-                                <img id="imgAddIcon" src="../Images/plus1.png" onclick="return AddCondition();" alt="" align="right" style="cursor: pointer; width: 15px; height: 15px;" /></td>
-
-                        </tr>
-
-                    </table>
+    <div id="paneldiv" style="width: 100%; display: none;" class="col-lg-12">
 
 
-            </div>
-      
 
-        <div class="col-lg-4"">
+        <div class="col-lg-1"></div>
 
-            <table class="noBorder">
+        <div class="col-lg-10" >
+
+<%------------------------ * ADVANCED SEARCH * ------------------%>
+
+            <fieldset style="border-radius: 15px!important;
+    border: 2px solid #c7d4f3!important;">
+
+               <legend style="font-family:caviardreams-regular;color:#2196F3;width:20%;" >Advanced Search</legend>
+
+                <div class="col-lg-5">
+
+
+                    <div class="row field_row">
+                        <div class="col-lg-5 ">
+                            <label for="name">Search Column</label>
+                            <asp:DropDownList ID="ddlColumns" runat="server" Width="100%" Height="31px" CssClass="drop"></asp:DropDownList>
+                        </div>
+                        <div class="col-lg-5 ">
+                            <label for="name">Value</label>
+                            <asp:TextBox ID="txtvalue" runat="server" Width="100%"></asp:TextBox>
+                        </div>
+
+                        <div class="col-lg-2 ">
+                            <label for="name">Add</label>
+
+                            <img id="imgAddIcon" src="../Images/plus1.png" onclick="return AddCondition();" alt="" style="cursor: pointer; width: 15px; height: 15px;" />
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+
+
+                <div class="col-lg-4">
+
+                    <table class="noBorder">
                         <tr>
                             <td>
 
@@ -690,6 +697,7 @@
                                 </asp:BulletedList>--%>
 
                                 <ul id="ulConditions">
+                                
                                 </ul>
 
 
@@ -700,23 +708,24 @@
                             </td>
                         </tr>
 
-
-
-                        <tr>
-                            <td>
-
-                                <asp:Button ID="btnSearch" runat="server" Text="SEARCH" Style="width: 40%" OnClick="btnSearch_Click" />
+                                
 
                                 <%--<asp:ImageButton ID="imgbtnSearch" runat="server" OnClick="imgbtnSearch_Click" ImageUrl="../Images/Search.png" Style="cursor: pointer; width: 15px; height: 15px;" ToolTip="Search" />--%>
 
-                            </td>
-                        </tr>
+                            
+                       
                     </table>
 
+                    
+                </div>
 
-            </div>
+               
+              <div class="col-lg-3">  <asp:Button ID="btnSearch" runat="server" Class="button" Text="SEARCH" Style="width: 40%" OnClick="btnSearch_Click" /></div>
+          </fieldset>
 
+        </div>
 
+        <div class="col-lg-1"></div>
 
         <%--<table class="noBorder" style="width: 100%; background-color: #c5cdde;">
 
@@ -734,14 +743,6 @@
             </tr>
 
         </table>--%>
-
-
-
-
-
-
-
-
     </div>
 
 
@@ -787,9 +788,9 @@
     <%--<asp:Button ID="btnPrint" runat="server" Text="Print" class="btn btn-primary button"  OnClientClick="return PrintPanel();" />--%>
 
 
-  
 
-    <asp:Panel ID="pnlContents" runat="server" >
+
+    <asp:Panel ID="pnlContents" runat="server">
 
         <div class="col-lg-12">
 

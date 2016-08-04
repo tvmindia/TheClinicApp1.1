@@ -80,6 +80,8 @@ namespace TheClinicApp1._1.Report
                     DataTable dt = clinicReprtObj.GetDataToBeReported();
                     string SpecifiedColumns = clinicReprtObj.SpecifiedColumns;
 
+                   
+
                     if (!IsPostBack)
                     {
                         BindCoulmnNameDropdown();
@@ -322,6 +324,7 @@ namespace TheClinicApp1._1.Report
 
 
             BindReport();
+
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -349,7 +352,12 @@ namespace TheClinicApp1._1.Report
 
             BindReport();
 
+
             ClientScript.RegisterStartupScript(GetType(), "id", "MakeListUsingArray()", true);
+
+
+            txtvalue.Text = string.Empty;
+            BindCoulmnNameDropdown();
 
          //   hdnArray.Value = "";
         }
