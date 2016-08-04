@@ -35,6 +35,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
         public List<string> ClinicColumns = new List<string>();
 
+        //public string DefaultColumns { get; set; }
+        //public string CoulmnAlias { get; set; }
+
         public string ReportName
         {
             get;
@@ -82,7 +85,31 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-      
+
+        public String DefaultCoulmns
+        {
+            get;
+            set;
+        }
+
+
+        public string ColumnCaptions
+        {
+            get;
+            set;
+        }
+
+        public string WhereCondition
+        {
+            get;
+            set;
+        }
+        public string SpecifiedColumns
+        {
+            get;
+            set;
+        }
+
         #endregion Public Properties
 
         #region Methods
@@ -94,11 +121,40 @@ namespace TheClinicApp1._1.ClinicDAL
         /// To get report ,by giving a datasource and calls the function to convert it to html table
         /// </summary>
         /// <returns></returns>
-        public string GetReport()
+        public string GetReport( DataTable dt)
         {
             string html = string.Empty;
 
-            DataTable dt = GetDataToBeReported();
+          //  DataTable dt = GetDataToBeReported();
+
+            if (WhereCondition != null & WhereCondition != string.Empty)
+            {
+             
+
+                 DataRow[] FilteredRow = dt.Select(WhereCondition);
+                 DataTable filteredTable = dt.Clone();
+
+                 //foreach (string str in filter)
+                 //{
+                 //    DataRow[] filteredRows = dt.Select("categoryid=" + str); //search for categoryID
+                 //    foreach (DataRow dtr in filteredRows)
+                 //    {
+                 //        filteredTable.ImportRow(dtr);
+                 //    }
+
+                 //}
+
+                
+
+                 foreach (DataRow dr in FilteredRow)
+                 {
+                     filteredTable.ImportRow(dr);
+                    
+                 }
+                 dt = filteredTable;
+
+            }
+
 
             if (dt != null)
             {
@@ -149,6 +205,8 @@ namespace TheClinicApp1._1.ClinicDAL
                     HtmlReprtObj.Columns.Add("Marital Status", 0);
                     HtmlReprtObj.Columns.Add("Occupation", 0);
 
+                    SpecifiedColumns = "Name" + "," + "Address" + "," + "Phone" + "," + "Email" + "Marital Status" + "," + "Occupation";
+
 
                 }
                 else if (ReportCode == 1003)                                    //Individual Patient //NOT using now
@@ -164,7 +222,9 @@ namespace TheClinicApp1._1.ClinicDAL
                     HtmlReprtObj.Columns.Add("Gender",0);
                     HtmlReprtObj.Columns.Add("MaritalStatus",0);
                     HtmlReprtObj.Columns.Add("Occupation",0);
-                     
+
+                    SpecifiedColumns = "Name" + "," + "Address" + "," + "Phone" + "," + "Email" + "Marital Status" + "," + "Occupation";
+
                 }
 
                 else if (ReportCode == 1002)                           //Out of stock
@@ -172,11 +232,14 @@ namespace TheClinicApp1._1.ClinicDAL
                     cmd = new SqlCommand("ReportOutOfStockMedicine", con);
 
                     HtmlReprtObj.Columns.Add("Name", 0);
-                    HtmlReprtObj.Columns.Add("Medicine Code", 0);
+                    HtmlReprtObj.Columns.Add("Code", 0);
                     HtmlReprtObj.Columns.Add("Unit", 0);
                     HtmlReprtObj.Columns.Add("Qty", 0);
-                    HtmlReprtObj.Columns.Add("Category Name", 0);
-                    HtmlReprtObj.Columns.Add("ReOrder Qty", 0);
+                    HtmlReprtObj.Columns.Add("Category", 0);
+                    HtmlReprtObj.Columns.Add("ReOrderQty", 0);
+
+                    SpecifiedColumns = "Name" + "," + "Code" + "," + "Unit" + "," + "Category" ;
+
 
                 }
 
@@ -185,11 +248,13 @@ namespace TheClinicApp1._1.ClinicDAL
                     cmd = new SqlCommand("ReportMedicines", con);
 
                     HtmlReprtObj.Columns.Add("Name", 0);
-                    HtmlReprtObj.Columns.Add("Medicine Code", 0);
+                    HtmlReprtObj.Columns.Add("Code", 0);
                     HtmlReprtObj.Columns.Add("Unit", 0);
                     HtmlReprtObj.Columns.Add("Qty", 0);
-                    HtmlReprtObj.Columns.Add("Category Name", 0);
-                    HtmlReprtObj.Columns.Add("ReOrder Qty", 0);
+                    HtmlReprtObj.Columns.Add("Category", 0);
+                    HtmlReprtObj.Columns.Add("ReOrderQty", 0);
+
+                    SpecifiedColumns = "Name" + "," + "Code" + "," + "Unit" + "," + "Category";
                 }
 
                 else if (ReportCode == 1004)       //Transaction  //NOT using now
@@ -203,6 +268,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 if (cmd != null)
                 {
+
                     cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = UA.ClinicID;
 
                     if (FromDate != null && FromDate != DateTime.MinValue)
@@ -224,7 +290,18 @@ namespace TheClinicApp1._1.ClinicDAL
                     SqlDataAdapter adapter = new SqlDataAdapter();
                     adapter.SelectCommand = cmd;
                     dt = new DataTable();
+
                     adapter.Fill(dt);
+
+
+                    //foreach (DataColumn column in dt.Columns)
+                    //{
+                    //    column.ColumnName = column.ColumnName.Replace("_", " ");
+                    //}
+
+                    //dt.AcceptChanges();
+                       
+
                     con.Close();
                 }
 
@@ -357,6 +434,8 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 ReportCode = Convert.ToInt32(dt.Rows[0]["ReportCode"].ToString());
                 ReportName = dt.Rows[0]["Name"].ToString();
+                DefaultCoulmns = dt.Rows[0]["ColumnNames"].ToString();
+                ColumnCaptions = dt.Rows[0]["ColumnCaptions"].ToString();
             }
 
         }

@@ -206,7 +206,7 @@ table td{
               
               
                 <div class="col-lg-12" >
-              <iframe id="IframeReport" style ="width: 100%; height: 600px" frameBorder="0"></iframe>-
+              <iframe id="IframeReport" style ="width: 100%; height: 700px;overflow:hidden" frameBorder="0"></iframe>-
 
                 </div>
     </div>

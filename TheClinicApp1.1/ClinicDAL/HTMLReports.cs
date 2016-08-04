@@ -109,8 +109,8 @@ namespace TheClinicApp1._1.ClinicDAL
                     {
                         if (Columns!= null)
 	                            {
-                             if (Columns.Count > 0)            
-                                {
+                            if (Columns.Count > 0)            
+                              {
                                     if (Columns.ContainsKey(column.ColumnName))  //Adding the specified columns
                                 {
                                     int ColumnWidth = Columns[column.ColumnName];
@@ -129,7 +129,7 @@ namespace TheClinicApp1._1.ClinicDAL
                                         html.Append("</th>");
                                     }
                                 }
-                                }
+                               }
                          }
                         else
                         {
