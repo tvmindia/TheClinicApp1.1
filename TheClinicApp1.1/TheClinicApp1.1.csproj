@@ -242,6 +242,7 @@
     <Content Include="images\stock-hover.png" />
     <Content Include="images\stock.png" />
     <Content Include="images\Successs.jpg" />
+    <Content Include="images\swipe-to-right.png" />
     <Content Include="images\today-registration.png" />
     <Content Include="images\token-hover.png" />
     <Content Include="images\token.png" />

@@ -29,21 +29,23 @@ namespace TheClinicApp1._1.Report
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
 
-
         #endregion Global Variables
 
+        #region Bind Report
+
+        /// <summary>
+        /// Report ID and Name are passed via query string
+        /// Specified columns are binded to coulmns dropdown
+        /// Get The report content by reportID
+        /// Returned html are set to corresponding placeholders
+        /// </summary>
         public void BindReport()
         {
-           
-            
-
                 if (Request.QueryString["ReportName"] != null)
                 {
                     Page.Title = Request.QueryString["ReportName"].ToString();
 
-                    //  hdfReportName.Value = Request.QueryString["ReportName"].ToString();
                 }
-
 
                 string ID = string.Empty;
                 string Date = string.Empty;
@@ -52,35 +54,14 @@ namespace TheClinicApp1._1.Report
                     ID = Request.QueryString["ID"].ToString();
                 }
 
-                //if (Request.QueryString["Date"] != null && Request.QueryString["Date"].ToString() !=string.Empty)
-                //{
-                //    Date = Request.QueryString["Date"].ToString();
-                //}
-
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-
-                //if (!IsPostBack)
-                //{
                 if (ID != string.Empty)
                 {
                     clinicReprtObj.ReportID = Guid.Parse(ID);
 
-                    
-
-                    //if (txtFromDate.Value != string.Empty)
-                    //{
-                    //    clinicReprtObj.FromDate = Convert.ToDateTime(txtFromDate.Value);
-                    //}
-
-                    //if (txtToDate.Value != string.Empty)
-                    //{
-                    //    clinicReprtObj.ToDate = Convert.ToDateTime(txtToDate.Value);
-                    //}
                     DataTable dt = clinicReprtObj.GetDataToBeReported();
                     string SpecifiedColumns = clinicReprtObj.SpecifiedColumns;
-
-                   
 
                     if (!IsPostBack)
                     {
@@ -99,7 +80,6 @@ namespace TheClinicApp1._1.Report
 
                         if (htmlRprtObj.LogoURL != null && htmlRprtObj.Name != null && htmlRprtObj.ReportName != null)
                         {
-
                             string header = htmlRprtObj.GenerateHeader();
                             PlaceHolder3.Controls.Add(new Literal { Text = header });
                         }
@@ -112,29 +92,14 @@ namespace TheClinicApp1._1.Report
                             PlaceHolder2.Controls.Add(new Literal { Text = footer });
                         }
 
-
-
                     }
                    
-
                 }
-
-                // }
-
-           
-
-           
-
-           
-
-
         }
 
-
-
+        #endregion Bind Report
 
         #region Events
-
 
         #region Page Load
         protected void Page_Load(object sender, EventArgs e)
@@ -144,19 +109,48 @@ namespace TheClinicApp1._1.Report
                 BindReport();
             }
 
-
-            if (IsPostBack)
-            {
-               // Page.ClientScript.RegisterStartupScript(this.GetType(), "PostbackKey", "<script type='text/javascript'>var isPostBack = true;</script>");
-            }
         }
 
         #endregion Page Load
 
-        protected void btnFilter_Click(object sender, EventArgs e)
+        #region Search Button Click
+        /// <summary>
+        /// Where Condition is passed to class from here
+        /// Hiddenfield contains array of conditions
+        /// Array items retrieved by comma, and replace comma by OR , to build where condition ,which joins the conditions by OR 
+        /// Some times search value may contain comma (eg:address ), Then value is passed from client side by replacing comma by # symbol
+        /// If # symbol is there , it will be replaced by commas 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnSearch_Click(object sender, EventArgs e)
         {
+            if (hdnWhereConditions.Value != string.Empty)
+            {
+                if (hdnWhereConditions.Value.Contains(","))
+                {
+                    hdnWhereConditions.Value = hdnWhereConditions.Value.Replace(",", " OR ");
+                }
 
+                if (hdnWhereConditions.Value.Contains("#"))
+                {
+                    hdnWhereConditions.Value = hdnWhereConditions.Value.Replace("#", ",");
+                }
+
+            }
+
+            clinicReprtObj.WhereCondition = hdnWhereConditions.Value.ToString();
+            BindReport();
+            ClientScript.RegisterStartupScript(GetType(), "id", "MakeListUsingArray()", true);
+
+            //------ * Clearing Controls * ------//
+            txtvalue.Text = string.Empty;
+            BindCoulmnNameDropdown();
+
+            //   hdnArray.Value = "";
         }
+
+        #endregion Search Button Click
 
         #endregion Events
 
@@ -225,148 +219,7 @@ namespace TheClinicApp1._1.Report
 
         #endregion Bind Dropdown With Column Names
 
-        protected void imgAddIcon_Click(object sender, ImageClickEventArgs e)
-        {
-        
-        //     ListItem li = new ListItem();
-        //     li.Text = ddlColumns.SelectedItem.Text + "= " + txtvalue.Text;
-        //lstSearchConditions.Items.Add(li);
-            
-
-
-          //  string WhereCondition = ddlColumns.SelectedItem.Text + " LIKE '" + txtvalue.Text + "%'";
-
-           
-
-
-            //lstSearchConditions.Items.Add(WhereCondition);
-
-           
-            //DataTable dtCurrentTable = null;
-
-            //if (ViewState["WhereCondition"] != null && dtCurrentTable != null)
-            //{
-            //    dtCurrentTable = (DataTable)ViewState["dtWhereCondition"];//this viewstate contains a datatable structure on page load
-
-            //}
-            //else
-            //{
-            //    //CreateDatatableForWhereCondition();
-
-               
-
-
-            //    dtCurrentTable = new DataTable();
-            //    dtCurrentTable.Columns.AddRange(new DataColumn[1] { new DataColumn(" ", typeof(string)) });
-            //   // dtCurrentTable = (DataTable)ViewState["WhereCondition"];
-
-
-            //    DataRow drCurrentRow = dtCurrentTable.NewRow();
-            //    dtCurrentTable.Rows.Add(drCurrentRow);
-            //    // int  rowIndex = dtCurrentTable.Rows.Count - 1;
-            //    dtCurrentTable.Rows[0][0] = WhereCondition;
-
-            //    gvSearchConditions.DataSource = dtCurrentTable;
-            //    gvSearchConditions.DataBind();
-
-
-            //    //  BindReport();
-
-            //    //  DataTable dt = (DataTable)ViewState["dt"];
-            //    //DataTable dt = clinicReprtObj.GetDataToBeReported();
-
-
-            //    //string html = clinicReprtObj.GetReport(dt);
-            //    //   BindReport();
-
-            //}
-        }
         #endregion Methods
 
-        protected void imgbtnSearch_Click(object sender, ImageClickEventArgs e)
-        {
-            //clinicReprtObj.WhereCondition = "";
-
-            //string WhereCondition = ddlColumns.SelectedItem.Text + " LIKE '" + txtvalue.Text + "%'";
-
-            //if (ViewState["WhereCondition"] != null)
-            //{
-            //    ViewState["WhereCondition"] = " " + ViewState["WhereCondition"].ToString() + "   OR  " + WhereCondition;
-            //}
-
-            //else
-            //{
-            //    ViewState["WhereCondition"] = " " + WhereCondition;
-            //}
-
-
-            
-
-
-            if (hdnWhereConditions.Value != string.Empty)
-            {
-                if (hdnWhereConditions.Value.Contains(","))
-                {
-                    hdnWhereConditions.Value = hdnWhereConditions.Value.Replace(",", " OR ");
-                }
-
-                if (hdnWhereConditions.Value.Contains("="))
-                {
-                    hdnWhereConditions.Value = hdnWhereConditions.Value.Replace("=", " LIKE ");
-
-
-
-                }
-
-            }
-
-            clinicReprtObj.WhereCondition = hdnWhereConditions.Value.ToString();
-
-
-            BindReport();
-
-        }
-
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            if (hdnWhereConditions.Value != string.Empty)
-            {
-
-
-                if (hdnWhereConditions.Value.Contains(","))
-                {
-                    hdnWhereConditions.Value = hdnWhereConditions.Value.Replace(",", " OR ");
-                }
-
-                if (hdnWhereConditions.Value.Contains("#"))
-                {
-                    hdnWhereConditions.Value = hdnWhereConditions.Value.Replace("#", ",");
-                }
-
-                //if (hdnWhereConditions.Value.Contains("="))
-                //{
-                //    hdnWhereConditions.Value = hdnWhereConditions.Value.Replace("=", " LIKE ");
-                //}
-
-              
-
-
-                //'s%'
-            }
-
-            clinicReprtObj.WhereCondition = hdnWhereConditions.Value.ToString();
-
-
-            BindReport();
-
-
-            ClientScript.RegisterStartupScript(GetType(), "id", "MakeListUsingArray()", true);
-
-
-            txtvalue.Text = string.Empty;
-            BindCoulmnNameDropdown();
-
-         //   hdnArray.Value = "";
-        }
     }
 }
