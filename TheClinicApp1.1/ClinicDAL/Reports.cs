@@ -205,7 +205,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     HtmlReprtObj.Columns.Add("Marital Status", 0);
                     HtmlReprtObj.Columns.Add("Occupation", 0);
 
-                    SpecifiedColumns = "Name" + "," + "Address" + "," + "Phone" + "," + "Email" + "," + "Marital Status" + "," + "Occupation";
+                    SpecifiedColumns = "Name" + "," + "Address" + "," + "Phone" + "," + "Email" + "," + "Occupation";
 
 
                 }
@@ -223,7 +223,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     HtmlReprtObj.Columns.Add("MaritalStatus",0);
                     HtmlReprtObj.Columns.Add("Occupation",0);
 
-                    SpecifiedColumns = "Name" + "," + "Address" + "," + "Phone" + "," + "Email" +","+ "Marital Status" + "," + "Occupation";
+                    SpecifiedColumns = "Name" + "," + "Address" + "," + "Phone" + "," + "Email" +","+  "Occupation";
 
                 }
 

@@ -147,6 +147,52 @@
             }
 
        
+            .AddTolist {
+  display: inline-block;
+  border-radius: 3px;
+  background-color: #2D89EF;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 16px;
+  /*padding: 20px;*/
+  /*padding-top:20px;*/
+  /*padding-bottom:20px;*/
+  /*position:center;*/
+  width: 100%;
+  /*height:30px;*/
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 2%;
+  font-family:Garamond;
+}
+
+.AddTolist span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.AddTolist span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.AddTolist:hover span {
+  padding-right: 25px;
+}
+
+.AddTolist:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
     </style>
 
     <%--Style ANd Script Files OF CAlenderControl--%>
@@ -224,10 +270,11 @@
         //List will be recreated using datastructure
         //IsRemoveButtonClicked will set to true , to identify remove click
         function RemoveConditionsFromArray(i)
-        {
+        {debugger;
             Conditions.splice(i,1);
 
-            $('ul li').remove();
+            $('#ulConditions li').remove();
+
             IsRemoveButtonClicked = true;
 
             MakeListUsingArray();
@@ -240,6 +287,9 @@
        
         function MakeListUsingArray()
         {
+            $('li:contains("No Search Conditions Added!")').remove();
+
+
             if (  isPostBack && document.getElementById('<%= hdnArray.ClientID %>').value != "" && Conditions.length == 0 && IsRemoveButtonClicked== false) 
             {
                 var ArrayContent = document.getElementById('<%= hdnArray.ClientID %>').value ;
@@ -271,7 +321,7 @@
               //  li.innerHTML = '<span class="conditionli" title="Remove this condition" onclick="RemoveLi('+i+')">-</span>'+" "+ Conditions[i] ;
 
                // li.innerHTML ='<img style="cursor: pointer; width: 11px; height: 11px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/>&nbsp;&nbsp;'+""+ Conditions[i] ;
-                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width: 120px;overflow:hidden;text-overflow:hidden" >'+Conditions[i]+'</div>'+" " +'<div><img style="cursor: pointer; width: 11px; height: 11px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
+                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width:90%;overflow:hidden;text-overflow:hidden" >'+Conditions[i]+'</div>'+" " +'<div  style="width:10%"><img style="cursor: pointer; width: 70%; height: 11px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
                 
                 column = Conditions[i].split("=")[0];
                 value = Conditions[i].split("=")[1];
@@ -295,6 +345,14 @@
 
             document.getElementById('<%= hdnWhereConditions.ClientID %>').value =  WhereCondition;
             document.getElementById('<%= hdnArray.ClientID %>').value =  Conditions;
+
+            if ( $('#ulConditions li').length == 0) 
+            {
+                var li = document.createElement("LI");
+                li.innerText = "No Search Conditions Added!";
+                document.getElementById("ulConditions").appendChild(li);
+            } 
+
 
         }
 
@@ -393,7 +451,7 @@
 
                <legend style="font-family:caviardreams-regular;color:#89a7ef;width:20%;margin-left:2%" >Advanced Search</legend>
 
-                <div class="col-lg-5">
+                <div class="col-lg-8">
 
                     <div class="row field_row">
                         <div class="col-lg-5 ">
@@ -406,9 +464,15 @@
                         </div>
 
                         <div class="col-lg-2 ">
-                            <label for="name">Add</label>
+                            <label for="name" style="color:white">Add</label>
 
-                            <img id="imgAddIcon" src="../Images/plus1.png" onclick="return AddCondition();" alt="" style="cursor: pointer; width: 15px; height: 15px;" />
+                            
+                           <a class="btn btn-primary AddTolist" id="addBtn" onclick="return AddCondition();"><span>Add</span></></a>              
+                                                
+
+
+
+                            <%--<img id="imgAddIcon" src="../Images/plus1.png" onclick="return AddCondition();" alt="" style="cursor: pointer; width: 15px; height: 15px;" />--%>
                         </div>
 
                     </div>
@@ -417,48 +481,38 @@
 
 
                 <div class="col-lg-4">
+                    
+                     <label for="name" style="text-align:center;color:white">Conditions</label>
 
-                    <table class="noBorder">
-                        <tr>
-                            <td>
-
-                                <ul id="ulConditions" style="box-shadow:blue 10px 10px inherit">
-                                
+                     <ul id="ulConditions">
+                                <li  >No Search Conditions Added!</li>
                                 </ul>
 
-                            </td>
-                        </tr>
-
-                    </table>
-
-                    
                 </div>
 
-               
-              <div class="col-lg-3">  
+               <div class="col-lg-12"  >
+            
+          
 
-
-
-                
-                                <%--<div class="search_div">
-                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
-                                    <input class="button" type="submit" value="Search" />
-                                </div>--%>
-                                <ul class="top_right_links">
+                  <ul class="top_right_links" style="float:right">
                                     <li>
-                                      <asp:Button ID="btnSearch" runat="server" CssClass="button1" Text="SEARCH" Style="width: 100%;background-color:#89a7ef;color:white;background-image:url('../images/magnifier-tool.png')" OnClick="btnSearch_Click" />
+                                      <asp:Button ID="btnSearch" runat="server" CssClass="button1" Text="SEARCH" Style="width: 100%;background-color:#89a7ef;color:white;background-image:url('../images/magnifier-tool.png')" OnClick="btnSearch_Click"  />
                                     </li>
                                     
                                 </ul>
-                            
-                 
+             
 
-              </div>
+         </div>
+               
           </fieldset>
 
         </div>
 
-        <div class="col-lg-1"></div>
+         
+
+
+
+      
          </div>
 
 
