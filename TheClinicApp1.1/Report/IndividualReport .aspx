@@ -287,6 +287,8 @@
        
         function MakeListUsingArray()
         {
+            debugger;
+
             $('li:contains("No Search Conditions Added!")').remove();
 
 
@@ -317,17 +319,29 @@
                 }
 
                 li.id = "lstCondition"+i;
-              
+                var liHTML = Conditions[i];
+
+
               //  li.innerHTML = '<span class="conditionli" title="Remove this condition" onclick="RemoveLi('+i+')">-</span>'+" "+ Conditions[i] ;
 
                // li.innerHTML ='<img style="cursor: pointer; width: 11px; height: 11px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/>&nbsp;&nbsp;'+""+ Conditions[i] ;
-                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width:90%;overflow:hidden;text-overflow:hidden" >'+Conditions[i]+'</div>'+" " +'<div  style="width:10%"><img style="cursor: pointer; width: 70%; height: 11px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
-                
+               
                 column = Conditions[i].split("=")[0];
                 value = Conditions[i].split("=")[1];
                 value = value.trim();
 
                 var Condition = column + " LIKE '"+value+"%'"
+
+                if (value.indexOf("#") > 0) 
+                {
+                    value = value.replace(/#/g, ",");
+
+                    liHTML =   column + " = "+value ;
+                }
+
+                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width:90%;overflow:hidden;text-overflow:hidden" >'+liHTML+'</div>'+" " +'<div  style="width:10%"><img style="cursor: pointer; width: 70%; height: 11px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
+
+               
                 WhereCondition.push(Condition);
 
                 document.getElementById("ulConditions").appendChild(li);
@@ -366,14 +380,20 @@
         // IsAddButtonClicked global variable will set to true, to identify add button click
 
         function AddCondition() {
-           
+            debugger;
             if (($('#<%=ddlColumns.ClientID%>').val().trim() != "--Select--")) {
 
-                if (document.getElementById('<%= txtvalue.ClientID %>').value != "") {
+                if (document.getElementById('<%= txtvalue.ClientID %>').value.trim() != "") {
 
                     var selectoption = document.getElementById("<%=ddlColumns.ClientID %>");
                     var SelectedColumn = selectoption.options[selectoption.selectedIndex].text;
                     var value = document.getElementById('<%= txtvalue.ClientID %>').value;
+
+                    if (value.indexOf(",") > 0) 
+                    {
+                        value = value.replace(/,/g, "#");
+                    }
+
 
                     var cndtion = SelectedColumn + " = "+value ;
 

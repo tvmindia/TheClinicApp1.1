@@ -331,9 +331,16 @@ namespace TheClinicApp1._1.Report
         {
             if (hdnWhereConditions.Value != string.Empty)
             {
+
+
                 if (hdnWhereConditions.Value.Contains(","))
                 {
                     hdnWhereConditions.Value = hdnWhereConditions.Value.Replace(",", " OR ");
+                }
+
+                if (hdnWhereConditions.Value.Contains("#"))
+                {
+                    hdnWhereConditions.Value = hdnWhereConditions.Value.Replace("#", ",");
                 }
 
                 //if (hdnWhereConditions.Value.Contains("="))
