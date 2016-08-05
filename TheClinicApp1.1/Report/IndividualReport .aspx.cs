@@ -152,6 +152,19 @@ namespace TheClinicApp1._1.Report
 
         #endregion Search Button Click
 
+        #region Refresh Button Click
+        protected void imgbtnRefresh_Click(object sender, ImageClickEventArgs e)
+        {
+            BindReport();
+           
+            //------ * Clearing Controls * ------//
+            txtvalue.Text = string.Empty;
+            BindCoulmnNameDropdown();
+
+        }
+
+        #endregion Refresh Button Click
+
         #endregion Events
 
         #region Methods

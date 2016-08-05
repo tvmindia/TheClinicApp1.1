@@ -23,7 +23,7 @@
 
 
     <style>
-table {
+        table {
             border-collapse: collapse;
             border: 1px solid black;
             border-top: 1px solid white !important;
@@ -32,7 +32,7 @@ table {
         }
 
 
-table th {
+            table th {
                 border-top: 1px solid black;
                 border-right: 1px solid black;
                 border-left: 1px solid black;
@@ -42,7 +42,7 @@ table th {
                 font-weight: 100;
             }
 
-table td {
+            table td {
                 width: 19%;
                 height: auto !important;
                 padding-left: 5px;
@@ -51,38 +51,38 @@ table td {
                 font-size: 14px;
             }
 
-tr.even td {
+        tr.even td {
             background-color: #e1e6ef;
         }
 
-tr.odd td {
+        tr.odd td {
             background-color: #ffffff;
         }
 
-.footer {
+        .footer {
             color: #0e3782;
             text-align: right;
         }
 
-.header {
+        .header {
             color: #0e3782;
         }
 
-p {
+        p {
             font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
             font-size: 32px;
         }
 
-.Clinicname {
+        .Clinicname {
             font-family: 'caviardreams-regular';
         }
 
-.logo1 {
+        .logo1 {
             margin: 15px 15px 15px 15px;
             width: 150px;
         }
 
-.button {
+        .button {
             display: inline-block;
             border-radius: 3px;
             background-color: #2D89EF;
@@ -102,14 +102,14 @@ p {
             font-family: Garamond;
         }
 
-.button span {
+            .button span {
                 cursor: pointer;
                 display: inline-block;
                 position: relative;
                 transition: 0.5s;
             }
 
-.button span:after {
+                .button span:after {
                     content: '»';
                     position: absolute;
                     opacity: 0;
@@ -118,47 +118,48 @@ p {
                     transition: 0.5s;
                 }
 
-.button:hover span {
+            .button:hover span {
                 padding-right: 25px;
             }
 
-.button:hover span:after {
+                .button:hover span:after {
                     opacity: 1;
                     right: 0;
                 }
 
 
 
-   /*----------------  Add To List Button Styles  --------------------*/
-         
+        /*----------------  Add To List Button Styles  --------------------*/
 
 
-/*.AddTolist span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
 
-.AddTolist span:after {
-  content: '»';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
+        .AddTolist span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
 
-.AddTolist:hover span {
-  padding-right: 25px;
-}
-
-.AddTolist:hover span:after {
-  opacity: 1;
-  right: 0;
-}*/
+            .AddTolist span:after {
+                content: '»';
+                position: absolute;
+                opacity: 0;
+                top: 0;
+                right: -20px;
+                transition: 0.5s;
+            }
 
 
+
+
+        .AddTolist:hover span {
+            padding-right: 25px;
+        }
+
+            .AddTolist:hover span:after {
+                opacity: 1;
+                right: 0;
+            }
     </style>
 
     <%--Style ANd Script Files OF CAlenderControl--%>
@@ -306,7 +307,7 @@ p {
                     liHTML =   column + " = "+value ;
                 }
 
-                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width:90%;overflow:hidden;text-overflow:hidden" >'+liHTML+'</div>'+" " +'<div  style="width:10%"><img style="cursor: pointer; width: 70%; height: 11px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
+                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width:55%;overflow:hidden;text-overflow:hidden" >'+liHTML+'</div>'+" " +'<div  style="width:10%"><img style="cursor: pointer; width: 30%; height: 8px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
 
                
                 WhereCondition.push(Condition);
@@ -387,6 +388,47 @@ p {
         }
 
 
+        function  Refresh()
+        {
+             Conditions = [];
+             IsAddButtonClicked = false;
+             IsRemoveButtonClicked = false;
+             document.getElementById('<%= hdnWhereConditions.ClientID %>').value ="";
+             document.getElementById('<%= hdnArray.ClientID %>').value ="";
+            
+        }
+
+
+
+        function SearchValidation()
+        {
+            debugger;
+            if ( $('#ulConditions li').length  == 1  ) 
+            {
+
+                if ( $('#ulConditions li').text() == "No Search Conditions Added!" )
+                {
+                    alert("Please add search conditions");
+                    return false;
+                }
+
+            } 
+            
+           <%-- if (($('#<%=ddlColumns.ClientID%>').val().trim() == "--Select--")) 
+            {
+                alert("Please select a column");
+
+                return false;
+            }
+
+            if (document.getElementById('<%= txtvalue.ClientID %>').value.trim() != "")
+            {
+                alert("Please enter a value");
+
+                return false;
+            }--%>
+        }
+
     </script>
 
 
@@ -429,7 +471,7 @@ p {
 
                 <legend style="font-family: caviardreams-regular; color: #89a7ef; width: 20%; margin-left: 2%">Advanced Search</legend>
 
-                <div class="col-lg-8">
+                <div class="col-lg-7">
 
                     <div class="row field_row">
                         <div class="col-lg-5 ">
@@ -446,43 +488,51 @@ p {
                             <label for="name" style="color: white">Add</label>
 
 
-                            <%--<a class="btn btn-primary AddTolist" id="addBtn" onclick="return AddCondition();"><span>Add</span></></a>--%>
+                            <a class="btn btn-primary AddTolist" title="Add" id="addBtn" onclick="return AddCondition();"><span>+</span></></a>
 
 
 
 
-                            <img id="imgAddIcon" src="../Images/swipe-to-right.png" onclick="return AddCondition();" alt="" style="cursor: pointer; width: 15px; height: 15px;" />
+                            <%--<img id="imgAddIcon" src="../Images/swipe-to-right.png" onclick="return AddCondition();" alt="" style="cursor: pointer; width: 15px; height: 15px;" />--%>
                         </div>
 
                     </div>
 
                 </div>
 
-
                 <div class="col-lg-4">
 
-                    <label for="name" style="text-align: center; color: white">Conditions</label>
+                        <label for="name" style="text-align: center; color: white;">Conditions</label>
 
-                    <ul id="ulConditions">
-                        <li>No Search Conditions Added!</li>
-                    </ul>
+                        <ul id="ulConditions">
+                            <li>No Search Conditions Added!</li>
+                        </ul>
+                    
+                </div>
 
+                <div class="col-lg-1">
+
+                     <label for="name" style="text-align: center; color: white;">Refresh</label>
+
+                    <asp:ImageButton ID="imgbtnRefresh" runat="server" OnClientClick="Refresh()"  ImageUrl="../Images/refresh.png" Style="cursor: pointer; width:60%; height: 10%;" OnClick="imgbtnRefresh_Click" ToolTip="Refresh"  />
                 </div>
 
                 <div class="col-lg-12">
 
-                    <div class="grey_sec" style="background-color:#e8eaef">
-                                <%--<div class="search_div">
-                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
-                                    <input class="button" type="submit" value="Search" />
-                                </div>--%>
-                                <ul class="top_right_links">
-                                    <li>
-                                        <asp:Button ID="btnSearch" runat="server" CssClass="button1" Text="SEARCH"  OnClick="btnSearch_Click" style="background-color:#265a88;width:100%" />
-                                    </li>
-                                   
-                                </ul>
-                            </div>
+                    <div class="grey_sec" style="background-color: #e8eaef">
+
+                        <ul class="top_right_links">
+                            <li>
+
+                                <%--<a class="btn btn-primary AddTolist" id="btnSearch" onclick="return AddCondition();"><span>SEARCH</span></></a>--%>
+
+                                <asp:Button ID="btnSearch" runat="server" CssClass="button1" Text="SEARCH" OnClientClick="return SearchValidation()" OnClick="btnSearch_Click" Style="background-color: #265a88; width: 100%; background-image: url('../images/magnifier-tool.png')" />
+                            </li>
+
+
+
+                        </ul>
+                    </div>
 
                 </div>
 
@@ -514,6 +564,8 @@ p {
     <%--<a class="btn btn-primary button" id="addBtn" onclick="return PrintPanel();"><span>Print</span></></a>--%>
 
     <%--<asp:Button ID="btnPrint" runat="server" Text="Print" class="btn btn-primary button"  OnClientClick="return PrintPanel();" />--%>
+
+
 
     <asp:Panel ID="pnlContents" runat="server">
 

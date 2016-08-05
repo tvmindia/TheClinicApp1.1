@@ -31,6 +31,15 @@ namespace TheClinicApp1._1.Report {
         protected global::System.Web.UI.WebControls.TextBox txtvalue;
         
         /// <summary>
+        /// imgbtnRefresh control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnRefresh;
+        
+        /// <summary>
         /// btnSearch control.
         /// </summary>
         /// <remarks>
