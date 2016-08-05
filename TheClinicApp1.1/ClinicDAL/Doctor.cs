@@ -185,6 +185,403 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion GrabFileID
 
+        #region Doctor Properties
+        #endregion Doctor Properties
+        public string ClinicID
+        {
+            get;
+            set;
+        }
+        #region Doctor Schedule properties
+        public string DocScheduleID
+        {
+            get;
+            set;
+        }
+        public string DoctorID
+        {
+            get;
+            set;
+        }
+        public string DoctorAvailDate
+        {
+            get;
+            set;
+        }
+        public Int16 PatientLimit
+        {
+            get;
+            set;
+        }
+        public Boolean IsAvailable
+        {
+            get;
+            set;
+        }
+       
+        public decimal StartTime
+        {
+            get;
+            set;
+        }
+        public decimal EndTime
+        {
+            get;
+            set;
+        }
+        public string CreatedBy
+        {
+            get;
+            set;
+
+        }
+        public string CreatedDate
+        {
+            get;
+            set;
+        }
+        public string UpdatedBy
+        {
+            get;
+            set;
+        }
+        public string UpdatedDate
+        {
+            get;
+            set;
+        }
+        public string StartDate
+        {
+            get;
+            set;
+        }
+        public string EndDate
+        {
+            get;
+            set;
+        }
+        #endregion Doctor Schedule properties
+
+        #region Doctor Schedule methods
+        #region GetDoctorScheduleDetailsByDocScheduleID
+        public DataSet GetDoctorScheduleDetailsByDocScheduleID()
+        {
+            if (DocScheduleID == "")
+            {
+                throw new Exception("DocScheduleID is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataSet ds = null;
+
+
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetDoctorScheduleDetailsByDocScheduleID";
+                cmd.Parameters.Add("@ID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.DocScheduleID);
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+
+
+            }
+            catch (Exception ex)
+            {
+
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetDoctorScheduleDetailsByDocScheduleID";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return ds;
+        }
+        #endregion GetDoctorScheduleDetailsByDocScheduleID
+
+        #region GetDoctorScheduleDetailsByDoctorID
+        public DataSet GetDoctorScheduleDetailsByDoctorID()
+        {
+            if (DoctorID == "")
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataSet ds = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetDoctorScheduleDetailsByDoctorID";
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.DoctorID);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+           }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetDoctorScheduleDetailsByDoctorID";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return ds;
+        }
+
+        #endregion GetDoctorScheduleDetailsByDoctorID
+
+        #region GetAllDoctorsScheduledBetweenDates
+        public DataSet GetAllDoctorsScheduledBetweenDates()
+        {
+          
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataSet ds = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetAllDoctorsScheduledBetweenDates";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
+                cmd.Parameters.Add("@StartDate", SqlDbType.DateTime).Value = StartDate;
+                cmd.Parameters.Add("@EndDate", SqlDbType.DateTime).Value = EndDate;
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAllDoctorsScheduledBetweenDates";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return ds;
+        }
+        #endregion GetAllDoctorsScheduledBetweenDates
+
+        #region InsertDoctorSchedule
+        public Int16 InsertDoctorSchedule()
+        {
+            
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlParameter outParameter=null, outSchedulID = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if(DoctorID == "")
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "InsertDoctorSchedule";
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
+                cmd.Parameters.Add("@AvailableDate", SqlDbType.DateTime).Value = DoctorAvailDate;
+                cmd.Parameters.Add("@PatientLimit", SqlDbType.Int).Value = PatientLimit;
+                cmd.Parameters.Add("@IsAvailable", SqlDbType.Bit).Value = IsAvailable;
+                cmd.Parameters.Add("@Starttime", SqlDbType.Decimal).Value = StartTime;
+                cmd.Parameters.Add("@Endtime", SqlDbType.Decimal).Value = EndTime;
+                cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar,255).Value = CreatedBy;
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                outParameter = cmd.Parameters.Add("@InsertStatus", SqlDbType.SmallInt);
+                outParameter.Direction = ParameterDirection.Output;
+                outSchedulID = cmd.Parameters.Add("@outID", SqlDbType.UniqueIdentifier);
+                outSchedulID.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                DocScheduleID = outSchedulID.Value.ToString();
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "InsertDoctorSchedule";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            //insert success or failure
+            return Int16.Parse(outParameter.Value.ToString());
+        }
+        #endregion InsertDoctorSchedule
+
+        #region UpdateDoctorSchedule
+        public Int16 UpdateDoctorSchedule()
+        {
+
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlParameter outParameter = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (DoctorID == "")
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
+            if (DocScheduleID == "")
+            {
+                throw new Exception("DocScheduleID is Empty!!");
+            }
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateDoctorSchedule";
+                cmd.Parameters.Add("@ScheduleID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DocScheduleID);
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
+                cmd.Parameters.Add("@AvailableDate", SqlDbType.DateTime).Value = DoctorAvailDate;
+                cmd.Parameters.Add("@PatientLimit", SqlDbType.Int).Value = PatientLimit;
+                cmd.Parameters.Add("@IsAvailable", SqlDbType.Bit).Value = IsAvailable;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@Starttime", SqlDbType.Decimal).Value = StartTime;
+                cmd.Parameters.Add("@Endtime", SqlDbType.Decimal).Value = EndTime;
+                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                outParameter = cmd.Parameters.Add("@UpdateStatus", SqlDbType.SmallInt);
+                outParameter.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+              
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "UpdateDoctorSchedule";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            //insert success or failure
+            return Int16.Parse(outParameter.Value.ToString());
+        }
+        #region UpdateDoctorSchedule
+
+        #endregion Doctor Schedule methods
+
+        #region Doctor Methods
+        #region GetAllDoctorsByClinicID
+        public DataSet GetAllDoctorsByClinicID()
+        {
+            SqlConnection con = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetDoctorDetails]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                sda = new SqlDataAdapter(cmd);
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAllDoctorsByClinicID";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return ds;
+
+        }
+        #endregion GetAllDoctorsByClinicID
+
+        
+        #endregion Doctor Methods
+
     }
     public class CaseFile
     {
