@@ -127,6 +127,7 @@
   <ItemGroup>
     <Content Include="Admin\Admin.aspx" />
     <Content Include="Admin\AssignRoles.aspx" />
+    <Content Include="Appointment\Appointment.aspx" />
     <Content Include="Button-Warning-iconedited.png" />
     <Content Include="common\test page.txt" />
     <Content Include="css\bootstrap-spinner.css" />
@@ -285,6 +286,7 @@
     <Content Include="Scripts\ASPSnippets_Pager.min.js" />
     <Content Include="Scripts\bootcards.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Common\Common.js" />
     <Content Include="Scripts\DeletionConfirmation.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-1.12.0.min.js" />
@@ -312,6 +314,7 @@
     <Content Include="Scripts\mui.js" />
     <Content Include="Scripts\mui.min.js" />
     <Content Include="Scripts\selectize.js" />
+    <Content Include="Scripts\UserJS\Appointment.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
     <Content Include="Scripts\WebForms\GridView.js" />
@@ -396,6 +399,14 @@
     <Compile Include="Admin\AssignRoles.aspx.designer.cs">
       <DependentUpon>AssignRoles.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Appointment\Appointment.aspx.cs">
+      <DependentUpon>Appointment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Appointment\Appointment.aspx.designer.cs">
+      <DependentUpon>Appointment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClinicDAL\Appointments.cs" />
     <Compile Include="ClinicDAL\CaseSheet.cs" />
     <Compile Include="ClinicDAL\Category.cs" />
     <Compile Include="ClinicDAL\HTMLReports.cs" />
