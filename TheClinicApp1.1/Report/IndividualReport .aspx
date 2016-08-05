@@ -451,7 +451,7 @@ p {
 
 
 
-                            <img id="imgAddIcon" src="../Images/plus1.png" onclick="return AddCondition();" alt="" style="cursor: pointer; width: 15px; height: 15px;" />
+                            <img id="imgAddIcon" src="../Images/swipe-to-right.png" onclick="return AddCondition();" alt="" style="cursor: pointer; width: 15px; height: 15px;" />
                         </div>
 
                     </div>
