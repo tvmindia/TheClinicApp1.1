@@ -367,7 +367,6 @@ namespace TheClinicApp1._1.ClinicDAL
         #region GetAllDoctorsScheduledBetweenDates
         public DataSet GetAllDoctorsScheduledBetweenDates()
         {
-          
             if (ClinicID == "")
             {
                 throw new Exception("ClinicID is Empty!!");
@@ -532,7 +531,7 @@ namespace TheClinicApp1._1.ClinicDAL
             //insert success or failure
             return Int16.Parse(outParameter.Value.ToString());
         }
-        #region UpdateDoctorSchedule
+        #endregion UpdateDoctorSchedule
 
         #endregion Doctor Schedule methods
 
