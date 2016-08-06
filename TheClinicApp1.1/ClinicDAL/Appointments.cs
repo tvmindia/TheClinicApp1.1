@@ -319,7 +319,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 sda = new SqlDataAdapter();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[]";
+                cmd.CommandText = "[GetAllPatientAppointmentDetailsBetweenDates]";
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.DoctorID);
                 cmd.Parameters.Add("@StartDate", SqlDbType.DateTime).Value = StartDate;
