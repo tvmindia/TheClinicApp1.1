@@ -224,6 +224,7 @@
     <Content Include="images\plus1.png" />
     <Content Include="images\prev.gif" />
     <Content Include="images\Previous.png" />
+    <Content Include="images\printer.png" />
     <Content Include="images\profile_pic.png" />
     <Content Include="images\records.png" />
     <Content Include="images\refresh.png" />
@@ -231,11 +232,13 @@
     <Content Include="images\registerd9724185.png" />
     <Content Include="images\registration-hover.png" />
     <Content Include="images\registration.png" />
+    <Content Include="images\reload.png" />
     <Content Include="images\Report-Next.png" />
     <Content Include="images\ReportBlack.png" />
     <Content Include="images\ReportWhite.png" />
     <Content Include="images\save.png" />
     <Content Include="images\Search.png" />
+    <Content Include="images\searchPanel.png" />
     <Content Include="images\spindown - Copy.png" />
     <Content Include="images\spindown.png" />
     <Content Include="images\spinup - Copy.png" />
@@ -249,6 +252,7 @@
     <Content Include="images\token.png" />
     <Content Include="images\tokens.png" />
     <Content Include="images\units.png" />
+    <Content Include="images\up-arrow.png" />
     <Content Include="images\UploadPic1.png" />
     <Content Include="images\viewdoctor.png" />
     <Content Include="js\ASPSnippets_Pager.min.js" />

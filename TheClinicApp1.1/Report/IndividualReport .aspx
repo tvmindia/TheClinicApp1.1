@@ -160,6 +160,23 @@
                 opacity: 1;
                 right: 0;
             }
+
+                 .noBorder {
+            border: none !important;
+            border-collapse: collapse;
+        }
+
+            .noBorder tr {
+                border: none !important;
+            }
+
+            .noBorder td {
+                border: none !important;
+                width: 0;
+            }
+
+
+
     </style>
 
     <%--Style ANd Script Files OF CAlenderControl--%>
@@ -443,17 +460,40 @@
         <div class="col-lg-1"></div>
         <div class="col-lg-10">
 
-            <span class="tooltip2" style="float: right">
-                <img src="../Images/gggg.png" id="UpIcon" style="cursor: pointer; display: none" width="20" height="20" align="right" />
-                <span class="tooltiptext2">Hide</span>
+            <table style="width:100%" class="noBorder">
+
+                 <tr>
+
+                     <td style="width:90%"></td>
+                     <td style="width:3%">
+
+                          <span class="tooltip2" style="float: right">
+                <img src="../Images/printer.png" style="cursor: pointer; "  align="right" onclick="PrintPanel()" />
+                <span class="tooltiptext2">Print</span>
             </span>
 
 
+                     </td>
+                      <td style="width:4%">
+
+                           <span class="tooltip2" style="float: right">
+                <img src="../Images/up-arrow.png" id="UpIcon" style="cursor: pointer; display: none"  align="right" />
+                <span class="tooltiptext2">Hide</span>
+            </span>
+                
+
+                 
+
             <span class="tooltip2" style="float: right">
-                <img src="../Images/Search.png" width="20" height="20" id="searchIcon" style="cursor: pointer" align="right" />
+                <img src="../Images/searchPanel.png"  id="searchIcon" style="cursor: pointer" align="right" />
                 <span class="tooltiptext2">Search</span>
             </span>
 
+
+                      </td>
+                 </tr>
+
+             </table>
 
         </div>
         <div class="col-lg-1"></div>
@@ -514,7 +554,7 @@
 
                      <label for="name" style="text-align: center; color: white;">Refresh</label>
 
-                    <asp:ImageButton ID="imgbtnRefresh" runat="server" OnClientClick="Refresh()"  ImageUrl="../Images/refresh.png" Style="cursor: pointer; width:60%; height: 10%;" OnClick="imgbtnRefresh_Click" ToolTip="Refresh"  />
+                    <asp:ImageButton ID="imgbtnRefresh" runat="server" OnClientClick="Refresh()"  ImageUrl="../Images/reload.png" Style="cursor: pointer; width:60%; height: 10%;" OnClick="imgbtnRefresh_Click" ToolTip="Refresh"  />
                 </div>
 
                 <div class="col-lg-12">
