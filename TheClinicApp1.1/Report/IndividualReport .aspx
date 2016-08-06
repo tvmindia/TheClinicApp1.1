@@ -4,12 +4,11 @@
 
     <script type="text/javascript">
 
-
-
         function PrintPanel() {
             var panel = document.getElementById("<%=pnlContents.ClientID %>");
             var printWindow = window.open('');
-            printWindow.document.write('<html><head><title>DIV Contents</title>');
+            printWindow.document.write('<html><head><title>DIV Contents</title><style type="text/css"> table {border-collapse: collapse;border: 1px solid black;border-top: 1px solid white !important; border-right: 1px solid black;border-left: 1px solid black; } table th {border-top: 1px solid black;border-right: 1px solid black;border-left: 1px solid black;border-bottom: 1px solid black;font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 16px;font-weight: 100;}table td {width: 19%;height: auto !important;padding-left: 5px;margin: 5px 5px 5px 5px 5px;font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 14px;} tr.even td {background-color: #e1e6ef; } tr.odd td {background-color: #ffffff;} .footer {color: #0e3782; text-align: right;} .header {color: #0e3782;}p {font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 32px;}.Clinicname {font-family: caviardreams-regular;}.logo1 {margin: 15px 15px 15px 15px;width: 150px;}</style>');
+
             printWindow.document.write('</head><body >');
             printWindow.document.write(panel.innerHTML);
             printWindow.document.write('</body></html>');
@@ -468,7 +467,7 @@
                      <td style="width:3%">
 
                           <span class="tooltip2" style="float: right">
-                <img src="../Images/printer.png" style="cursor: pointer; "  align="right" onclick="PrintPanel()" />
+                <img src="../Images/printer.png" style="cursor: pointer; "  align="right" onclick="return PrintPanel();" />
                 <span class="tooltiptext2">Print</span>
             </span>
 
