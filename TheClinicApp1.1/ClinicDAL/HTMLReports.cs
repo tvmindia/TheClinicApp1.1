@@ -264,28 +264,34 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 if (LogoURL != null && Name != null && ReportName != null)
                 {
-                    //html.Append("<div class='col-lg-12'>");
+                  
+//----------------------------------
 
-                    //html.Append("<div class='col-lg-2'>");
+                    //html.Append("<div class='header'>");
+                    //html.Append("<div class='logo1'>");
                     //html.Append("<img  src='" + LogoURL + "'/>");
                     //html.Append("</div>");
-
-                    //html.Append("<div class='col-lg-8'>");
+                    //html.Append("<div class='logo2'>");
+                    //html.Append("<span class='Clinicname'> " + Name + "</span><p align='center' style='line-height:0px!important;'>" + ReportName + "</p>");
 
                     //html.Append("</div>");
+                    //html.Append("</div>");
 
-                    //html.Append("</div>"); 
 
-
-                    html.Append("<div class='header'>");
-                    html.Append("<div class='logo1'>");
+                    html.Append("<div style='float:left;width:20%'>");
                     html.Append("<img  src='" + LogoURL + "'/>");
+                    html.Append("<div>");
+                    html.Append("<span class='Clinicname'> " + Name + "</span>");
                     html.Append("</div>");
-                    html.Append("<div class='logo2'>");
-                    html.Append("<span class='Clinicname'> " + Name + "</span><p align='center' style='line-height:0px!important;'>" + ReportName + "</p>");
+                    html.Append("</div>");
 
+                    html.Append("<div style='float:left;color:#0e3782;width:60%'>");
+                   
+                    html.Append("<p align='center'>" + ReportName + "</p>");
+                   
                     html.Append("</div>");
-                    html.Append("</div>");
+
+
                 }
                 else
                 {
