@@ -102,6 +102,7 @@ table td{
 
         function SetIframeSrc(ID, ReportName)
         {
+            debugger;
             //This function loads report within an iframe 
             //Browser back button causes navigations to previous tabs instead of report list . 
             //Inordser to solve the browser back issue history is manipulated using PUSHSTATE

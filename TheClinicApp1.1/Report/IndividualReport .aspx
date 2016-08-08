@@ -5,9 +5,17 @@
     <script type="text/javascript">
 
         function PrintPanel() {
+            var PageTitle = "";
+            if (document.getElementById("<%=hdnPageTitle.ClientID %>").value != "") 
+            {
+                PageTitle = document.getElementById("<%=hdnPageTitle.ClientID %>").value;
+            }
+
+            
+
             var panel = document.getElementById("<%=pnlContents.ClientID %>");
             var printWindow = window.open('');
-            printWindow.document.write('<html><head><title>DIV Contents</title><style type="text/css"> table {border-collapse: collapse;border: 1px solid black;border-top: 1px solid white !important; border-right: 1px solid black;border-left: 1px solid black; } table th {border-top: 1px solid black;border-right: 1px solid black;border-left: 1px solid black;border-bottom: 1px solid black;font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 16px;font-weight: 100;}table td {width: 19%;height: auto !important;padding-left: 5px;margin: 5px 5px 5px 5px 5px;font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 14px;} tr.even td {background-color: #e1e6ef; } tr.odd td {background-color: #ffffff;} .footer {color: #0e3782; text-align: right;} .header {color: #0e3782;}p {font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 32px;}.Clinicname {font-family: caviardreams-regular;}.logo1 {margin: 15px 15px 15px 15px;width: 150px;}</style>');
+            printWindow.document.write('<html><head><title>'+PageTitle+'</title><style type="text/css"> table {border-collapse: collapse;border: 1px solid black;border-top: 1px solid white !important; border-right: 1px solid black;border-left: 1px solid black; } table th {border-top: 1px solid black;border-right: 1px solid black;border-left: 1px solid black;border-bottom: 1px solid black;font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 16px;font-weight: 100;}table td {width: 19%;height: auto !important;padding-left: 5px;margin: 5px 5px 5px 5px 5px;font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 14px;} tr.even td {background-color: #e1e6ef; } tr.odd td {background-color: #ffffff;} .footer {color: #0e3782; text-align: right;} .header {color: #0e3782;}p {font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 32px;}.Clinicname {font-family: caviardreams-regular;}.logo1 {margin: 15px 15px 15px 15px;width: 150px;}</style>');
 
             printWindow.document.write('</head><body >');
             printWindow.document.write(panel.innerHTML);
@@ -467,7 +475,7 @@
                      <td style="width:3%">
 
                           <span class="tooltip2" style="float: right">
-                <img src="../Images/printer.png" style="cursor: pointer; "  align="right" onclick="return PrintPanel();" />
+                <img src="../Images/printer.png" style="cursor: pointer;width:50px!important;height:30px!important"  align="right" onclick="return PrintPanel();" />
                 <span class="tooltiptext2">Print</span>
             </span>
 
@@ -476,7 +484,7 @@
                       <td style="width:4%">
 
                            <span class="tooltip2" style="float: right">
-                <img src="../Images/up-arrow.png" id="UpIcon" style="cursor: pointer; display: none"  align="right" />
+                <img src="../Images/up-arrow.png" id="UpIcon" style="cursor: pointer; display: none;width:50px!important;height:30px!important"  align="right" />
                 <span class="tooltiptext2">Hide</span>
             </span>
                 
@@ -484,7 +492,7 @@
                  
 
             <span class="tooltip2" style="float: right">
-                <img src="../Images/searchPanel.png"  id="searchIcon" style="cursor: pointer" align="right" />
+                <img src="../Images/searchPanel.png"  id="searchIcon" style="cursor: pointer;width:50px!important;height:30px!important" align="right" />
                 <span class="tooltiptext2">Search</span>
             </span>
 
@@ -511,6 +519,8 @@
                 <legend style="font-family: caviardreams-regular; color: #89a7ef; width: 20%; margin-left: 2%">Advanced Search</legend>
 
                 <div class="col-lg-7">
+
+
 
                     <div class="row field_row">
                         <div class="col-lg-5 ">
@@ -553,7 +563,7 @@
 
                      <label for="name" style="text-align: center; color: white;">Refresh</label>
 
-                    <asp:ImageButton ID="imgbtnRefresh" runat="server" OnClientClick="Refresh()"  ImageUrl="../Images/reload.png" Style="cursor: pointer; width:60%; height: 10%;" OnClick="imgbtnRefresh_Click" ToolTip="Refresh"  />
+                    <asp:ImageButton ID="imgbtnRefresh" runat="server" OnClientClick="Refresh()"  ImageUrl="../Images/reload.png" Style="cursor: pointer; " OnClick="imgbtnRefresh_Click" ToolTip="Refresh"  />
                 </div>
 
                 <div class="col-lg-12">
@@ -646,4 +656,5 @@
 
     <input id="hdnWhereConditions" type="hidden" value="" runat="server" />
     <input id="hdnArray" type="hidden" value="" runat="server" />
+    <input id="hdnPageTitle" type="hidden" value="" runat="server" />
 </asp:Content>

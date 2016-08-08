@@ -43,7 +43,14 @@ namespace TheClinicApp1._1.Report
         {
                 if (Request.QueryString["ReportName"] != null)
                 {
-                    Page.Title = Request.QueryString["ReportName"].ToString();
+                  string ReprtName =  Request.QueryString["ReportName"].ToString();
+
+                  if (ReprtName.Contains("_"))
+                  {
+                      ReprtName = ReprtName.Replace("_", " ");
+
+                  }
+                  hdnPageTitle.Value = ReprtName;
 
                 }
 
