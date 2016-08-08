@@ -178,6 +178,7 @@
     <Content Include="images\AssignUser.png" />
     <Content Include="images\back.png" />
     <Content Include="images\Backgroundnew.png" />
+    <Content Include="images\blackfinal.png" />
     <Content Include="images\book_token.png" />
     <Content Include="images\Button-Warning-iconedited1.png" />
     <Content Include="images\calendar 32x32.png" />
@@ -279,6 +280,7 @@
     <Content Include="images\up-arrow.png" />
     <Content Include="images\UploadPic1.png" />
     <Content Include="images\viewdoctor.png" />
+    <Content Include="images\whitefinal.png" />
     <Content Include="js\ASPSnippets_Pager.min.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\DeletionConfirmation.js" />

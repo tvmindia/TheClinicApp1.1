@@ -479,6 +479,7 @@ ul.menu li:first-child {padding: 0; background: none; border-top: 1px solid #eee
 ul.menu li a span.icon {display: inline-block; vertical-align: top; width: 50px; position: relative; height: 58px; z-index: 9999;}
 
 ul.menu li a span.icon.registration {background: url(../images/registration.png) no-repeat center center #fff; }
+ul.menu li a span.icon.Appoinmnts {background: url(../images/blackfinal.png) no-repeat center center #fff; }
 ul.menu li a span.icon.token {background: url(../images/token.png) no-repeat center center #fff;}
 ul.menu li a span.icon.doctor {background: url(../images/doctor.png) no-repeat center center #fff;}
 ul.menu li a span.icon.pharmacy {background: url(../images/pharmacy.png) no-repeat center center #fff;}
@@ -524,6 +525,7 @@ ul.menu li:hover a.logout { color: #ff0000; border-left: 5px solid #ff0000; }
 
 
 ul.menu li.active a span.icon.registration {background: url(../images/registration-hover.png) no-repeat center center #3661c7;}
+ul.menu li.active a span.icon.Appoinmnts {background: url(../images/whitefinal.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.token {background: url(../images/token-hover.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.doctor {background: url(../images/doctor-hover.png) no-repeat center center #3661c7;}
 ul.menu li.active a span.icon.pharmacy {background: url(../images/pharmacy-hover.png) no-repeat center center #3661c7;}
