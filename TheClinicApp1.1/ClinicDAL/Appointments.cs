@@ -115,6 +115,11 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+        public int AppointmentStatus
+        {
+            get;
+            set;
+        }
         #endregion Appointment Properties
 
         #region Appointment Methods
@@ -148,9 +153,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@IsRegistered", SqlDbType.Bit).Value = IsRegistered;
                 cmd.Parameters.Add("@appointmentno", SqlDbType.Int).Value = appointmentno;
                 cmd.Parameters.Add("@AllottingTime", SqlDbType.Decimal).Value = AllottingTime;
-                cmd.Parameters.Add("@IsPresent", SqlDbType.Bit).Value = IsPresent;
+                cmd.Parameters.Add("@AppointmentStatus", SqlDbType.Int).Value = AppointmentStatus;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                cmd.Parameters.Add("@Location", SqlDbType.NVarChar).Value = Location;
                 cmd.Parameters.Add("@Location", SqlDbType.NVarChar).Value = Location;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar,255).Value = CreatedBy;
                 cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
@@ -223,7 +227,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@IsRegistered", SqlDbType.Bit).Value = IsRegistered;
                 cmd.Parameters.Add("@appointmentno", SqlDbType.Int).Value = appointmentno;
                 cmd.Parameters.Add("@AllottingTime", SqlDbType.Decimal).Value = AllottingTime;
-                cmd.Parameters.Add("@IsPresent", SqlDbType.Bit).Value = IsPresent;
+                cmd.Parameters.Add("@AppointmentStatus", SqlDbType.Int).Value = AppointmentStatus;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@Location", SqlDbType.NVarChar).Value = Location;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
@@ -380,17 +384,14 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[]";
+                cmd.CommandText = "[UpdatePatientAppointmentStatus]";
                 cmd.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(AppointmentID);
-                cmd.Parameters.Add("@AllottingTime", SqlDbType.Decimal).Value = AllottingTime;
-                cmd.Parameters.Add("@IsPresent", SqlDbType.Bit).Value = IsPresent;
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@AppointmentStatus", SqlDbType.Int).Value = AppointmentStatus;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 outParameter = cmd.Parameters.Add("@UpdateStatus", SqlDbType.SmallInt);
                 outParameter.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
-
             }
             catch (Exception ex)
             {

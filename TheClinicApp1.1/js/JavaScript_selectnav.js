@@ -1,5 +1,6 @@
 ﻿var settingOpen = 0;
 var patientPageURL = '../Registration/Patients.aspx';
+var AppoinmentsPageURL = '../Appointment/Appointment.aspx'
 var tokenPageURL = '../Token/Tokens.aspx';
 var doctorPageURL = '../Doctor/Doctors.aspx';
 var pharmacyPageURL = '../Pharmacy/Pharmacy.aspx';
@@ -9,9 +10,9 @@ var masterPageURL = '../MasterAdd/Categories.aspx';
 
 function selectTile(id, RoleName) {
      
-    
-      var tileList = ['patients', 'token', 'doctor', 'pharmacy', 'stock', 'ContentPlaceHolder1_admin', 'ContentPlaceHolder1_master'];
-    var Url = [patientPageURL, tokenPageURL, doctorPageURL, pharmacyPageURL, stockPageURL,adminPageURL,masterPageURL];
+    debugger;
+      var tileList = ['patients','Appoinments' ,'token', 'doctor', 'pharmacy', 'stock', 'ContentPlaceHolder1_admin', 'ContentPlaceHolder1_master'];
+      var Url = [patientPageURL,AppoinmentsPageURL, tokenPageURL, doctorPageURL, pharmacyPageURL, stockPageURL,adminPageURL,masterPageURL];
 
      
 
@@ -33,8 +34,8 @@ function selectTile(id, RoleName) {
 
 function activateTabSelection(id) {
 
-    var tileList = ['patients', 'token', 'doctor', 'pharmacy', 'stock', 'ContentPlaceHolder1_admin', 'ContentPlaceHolder1_master'];
-    var Url = [patientPageURL, tokenPageURL, doctorPageURL, pharmacyPageURL, stockPageURL, adminPageURL,masterPageURL];
+    var tileList = ['patients', 'Appoinments', 'token', 'doctor', 'pharmacy', 'stock', 'ContentPlaceHolder1_admin', 'ContentPlaceHolder1_master'];
+    var Url = [patientPageURL,AppoinmentsPageURL, tokenPageURL, doctorPageURL, pharmacyPageURL, stockPageURL, adminPageURL,masterPageURL];
 
 
 
