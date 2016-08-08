@@ -69,7 +69,37 @@
                     </ul>
                 </div>
                 
-                
+                <div class="right_form tab_right_form">
+
+                <div class="page_tab">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                         <li role="presentation" class="active"><a href="Appointment.aspx">Appoinments</a></li>
+                        <li role="presentation" ><a href="DoctorSchedule.aspx">Schedule</a></li>
+                       
+                        
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" >
+                            <div class="grey_sec">
+                                <div class="search_div">
+                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
+                                    <input class="button" type="submit" value="Search" disabled/>
+                                </div>
+                                <ul class="top_right_links" >
+                                    <li><a class="save" href="#"><span></span>Save</a></li>
+                                    <li><a class="new" href="#"><span></span>New</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="tab_table">
+                               Appoinments
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                  
 
                 
