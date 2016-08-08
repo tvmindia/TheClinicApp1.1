@@ -23,7 +23,8 @@ $(document).ready(function ()
               $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
           }
       }).prev(".ui-dialog-titlebar").css("background", "#336699");;
-      GetAllCalendarData();
+   
+      GetAllPatientAppointmentData();
     
       setTimeout(function () {
           var initialLangCode = 'en';
@@ -170,10 +171,8 @@ $(document).ready(function ()
 
 /*Add New Calendar Event */
     function AddEvent(CalendarSchedule)
-{
-    debugger;
+    {
     var data = "{'calendarObj':" + JSON.stringify(CalendarSchedule) + "}";
-
     jsonResult = getJsonData(data, "../JqueryEvents.aspx/AddCalendarEvent");
     var table = {};
     table = JSON.parse(jsonResult.d);
@@ -223,12 +222,21 @@ function CustomClick()
     $("#txtEndTime").val(endtime);
     $("#txtEndDate").val(eventEndDate);
 }
-
-/*Web method to get all calendar data from database*/
-function GetAllCalendarData(data, page)
+function GetAllPatientAppointmentData()
 {
-          
-    $.ajax({
+    var Appointments = new Object();
+    var data = "{'AppObj':" + JSON.stringify(Appointments) + "}";
+    var page = "../Appointment/Appointment.aspx/";
+    GetJSonDataForCalender(data, page);
+
+}
+
+
+//
+/*Web method to get all calendar data from database*/
+function GetJSonDataForCalender(data, page)
+{
+     $.ajax({
         type: "POST",
         contentType: "application/json",
         data: data,
@@ -256,13 +264,9 @@ function GetAllCalendarData(data, page)
           //  json = $.parseJSON(data.d);
             //json = JSON.parse(json);
             // return json;
-          
-        },
+         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert("error");
-           
-        }
-         
-    });
-   
+          }
+     });
 }
