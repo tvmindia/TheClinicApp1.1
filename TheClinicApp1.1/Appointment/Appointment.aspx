@@ -5,16 +5,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-  <%--   <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-        <script src="../js/jquery-1.3.2.min.js"></script>
-        <script src="../js/jquery-1.12.0.min.js"></script>
-        <script src="../js/jquery-ui.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/fileinput.js"></script>
-        <script src="../js/JavaScript_selectnav.js"></script>
-        <script src="../js/DeletionConfirmation.js"></script>
-        <script src="../js/Messages.js"></script>
-        <script src="../js/Dynamicgrid.js"></script>--%>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
      <script src="../js/jquery-1.12.0.min.js"></script>
      <script src='../js/moment.min.js'></script>
@@ -216,7 +206,7 @@ margin-left:50px;
                 </div>
                 <ul class="menu">
                      <li id="patients" ><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
-                     <li id="Appoinments"  class="active"><a name="hello" onclick="selectTile('Appoinments')"><span class="icon registration"></span><span class="text">Appoinments</span></a></li>
+                     <li id="Appoinments"  class="active"><a name="hello" onclick="selectTile('Appoinments')"><span class="icon Appoinmnts"></span><span class="text">Appoinments</span></a></li>
                     <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
                     <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
                     <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
