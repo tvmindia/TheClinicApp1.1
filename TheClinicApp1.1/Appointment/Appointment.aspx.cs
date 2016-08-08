@@ -8,12 +8,16 @@
 
 #region Included Namespaces
 
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TheClinicApp1._1.ClinicDAL;
 
 #endregion  Included Namespaces
 
@@ -29,6 +33,199 @@ namespace TheClinicApp1._1.Appointment
         #endregion Global Variables
 
         #region Methods
+
+        #region InsertPatientAppointment
+        [System.Web.Services.WebMethod]
+
+        public static string InsertPatientAppointment(Appointments AppointObj)
+        {
+
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            try
+            {
+                if (UA != null)
+                {
+                    if (UA.ClinicID.ToString() != "")
+                    {
+
+                        AppointObj.CreatedBy = UA.userName;
+                        AppointObj.status = AppointObj.InsertPatientAppointment().ToString();
+                    }
+                }
+                else
+                {
+                  //redirect to login page
+
+                   // return "NullUA";
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandling eObj = new ErrorHandling();
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = "Appointment.aspx.cs";
+                eObj.UserID = UA.UserID;
+                eObj.Method = "InsertPatientAppointment";
+                eObj.InsertError();
+            }
+            return jsSerializer.Serialize(AppointObj);
+        }
+
+        #endregion InsertPatientAppointment
+
+        #region UpdatePatientAppointment
+        [System.Web.Services.WebMethod]
+        public static string UpdatePatientAppointment(Appointments AppointObj)
+        {
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            try
+            {
+                if (UA != null)
+                {
+                    if (UA.ClinicID.ToString() != "")
+                    {
+
+                        AppointObj.UpdatedBy = UA.userName;
+                        AppointObj.status = AppointObj.UpdatePatientAppointment().ToString();
+                    }
+                }
+                else
+                {
+                    //redirect to login page
+
+                    // return "NullUA";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandling eObj = new ErrorHandling();
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = "Appointment.aspx.cs";
+                eObj.UserID = UA.UserID;
+                eObj.Method = "UpdatePatientAppointment";
+                eObj.InsertError();
+            }
+            return jsSerializer.Serialize(AppointObj);
+        }
+        #endregion UpdatePatientAppointment
+
+        #region GetAllPatientAppointmentDetailsByClinicID
+        [System.Web.Services.WebMethod]
+        public static string GetAllPatientAppointmentDetailsByClinicID(Appointments AppointObj)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            if (UA != null)
+            {
+                DataSet ds = null;
+                ds = AppointObj.GetAllPatientAppointmentDetailsByClinicID();
+                //Converting to Json
+                List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+                Dictionary<string, object> childRow;
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        childRow = new Dictionary<string, object>();
+                        foreach (DataColumn col in ds.Tables[0].Columns)
+                        {
+                            childRow.Add(col.ColumnName, row[col].ToString());
+                        }
+                        parentRow.Add(childRow);
+                    }
+                }
+                return jsSerializer.Serialize(parentRow);
+            }
+            return jsSerializer.Serialize("");
+        }
+        #endregion GetAllPatientAppointmentDetailsByClinicID
+
+        #region GetAllPatientAppointmentDetailsBetweenDates
+        [System.Web.Services.WebMethod]
+        public static string GetAllPatientAppointmentDetailsBetweenDates(Appointments AppointObj)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            if (UA != null)
+            {
+                DataSet ds = null;
+                ds = AppointObj.GetAllPatientAppointmentDetailsBetweenDates();
+                //Converting to Json
+                List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+                Dictionary<string, object> childRow;
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        childRow = new Dictionary<string, object>();
+                        foreach (DataColumn col in ds.Tables[0].Columns)
+                        {
+                            childRow.Add(col.ColumnName, row[col].ToString());
+                        }
+                        parentRow.Add(childRow);
+                    }
+                }
+                return jsSerializer.Serialize(parentRow);
+            }
+            return jsSerializer.Serialize("");
+        }
+        #endregion GetAllPatientAppointmentDetailsBetweenDates
+
+        #region AllotedPatientAbsentUpdate
+        [System.Web.Services.WebMethod]
+        public static string AllotedPatientAbsentUpdate(Appointments AppointObj)
+        {
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            try
+            {
+                if (UA != null)
+                {
+                    if (UA.ClinicID.ToString() != "")
+                    {
+
+                        AppointObj.UpdatedBy = UA.userName;
+                        AppointObj.status = AppointObj.AllotedPatientAbsentUpdate().ToString();
+                    }
+                }
+                else
+                {
+                    //redirect to login page
+
+                    // return "NullUA";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandling eObj = new ErrorHandling();
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = "Appointment.aspx.cs";
+                eObj.UserID = UA.UserID;
+                eObj.Method = "UpdatePatientAppointment";
+                eObj.InsertError();
+            }
+            return jsSerializer.Serialize(AppointObj);
+        }
+        #endregion AllotedPatientAbsentUpdate
+
 
         #endregion Methods
 

@@ -120,6 +120,11 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+        public string status
+        {
+            get;
+            set;
+        }
         #endregion Appointment Properties
 
         #region Appointment Methods
