@@ -153,6 +153,7 @@
     <Content Include="css\uniform.default.css" />
     <Content Include="Default.aspx" />
     <Content Include="Doctor\Doctors.aspx" />
+    <Content Include="Doctor\DoctorSchedule.aspx" />
     <Content Include="Doctor\test page.txt" />
     <CodeAnalysisDictionary Include="favicon.ico" />
     <Content Include="Error Page\Oops.aspx" />
@@ -331,6 +332,7 @@
     <Content Include="Scripts\mui.min.js" />
     <Content Include="Scripts\selectize.js" />
     <Content Include="Scripts\UserJS\Appointment.js" />
+    <Content Include="Scripts\UserJS\DoctorSchedule.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
     <Content Include="Scripts\WebForms\GridView.js" />
@@ -460,6 +462,13 @@
     </Compile>
     <Compile Include="Doctor\Doctors.aspx.designer.cs">
       <DependentUpon>Doctors.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Doctor\DoctorSchedule.aspx.cs">
+      <DependentUpon>DoctorSchedule.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Doctor\DoctorSchedule.aspx.designer.cs">
+      <DependentUpon>DoctorSchedule.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error Page\Oops.aspx.cs">
       <DependentUpon>Oops.aspx</DependentUpon>
