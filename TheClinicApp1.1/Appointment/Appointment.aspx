@@ -322,24 +322,24 @@ margin-left:50px;
         var tooltip;
 
         $(document).ready(function () {
-            //$("#txtstartTime").timepicki();
-            //$("#txtEndTime").timepicki();
-            //$("#myModal").dialog({
-            //    autoOpen: false,
-            //    closeOnEscape: false,
-            //    draggable: false,
-            //    height: 300,
-            //    width: 500,
-            //    hide: { effect: "explode", duration: 1000 },
-            //    //modal: true,
-            //    resizable: false, 
+           // $("#txtstartTime").timepicki();
+           // $("#txtEndTime").timepicki();
+          //  $("#myModal").dialog({
+           //    autoOpen: false,
+            //   closeOnEscape: false,
+             //   draggable: false,
+             //   height: 300,
+              //  width: 500,
+             //   hide: { effect: "explode", duration: 1000 },
+             //   //modal: true,
+             //   resizable: false, 
             //    show: { effect: "blind", duration: 800 },
-            //    title: "New Event",
-            //    dialogClass: 'no-close success-dialog',
-            //    open: function (event, ui) {
-            //        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-            //    }
-            //}).prev(".ui-dialog-titlebar").css("background", "#336699");
+             //   title: "New Event",
+             //   dialogClass: 'no-close success-dialog',
+             //   open: function (event, ui) {
+              //      $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+             //  }
+          //  }).prev(".ui-dialog-titlebar").css("background", "#336699");
             //GetAllCalendarData();
 
             setTimeout(function () {
