@@ -331,7 +331,7 @@
                     liHTML =   column + " = "+value ;
                 }
 
-                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width:55%;overflow:hidden;text-overflow:hidden" >'+liHTML+'</div>'+" " +'<div  style="width:10%"><img style="cursor: pointer; width: 30%; height: 8px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
+                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width:55%;overflow:hidden;text-overflow:hidden" >'+liHTML+'</div>'+" " +'<div  style="width:10%"><img style="cursor: pointer; width: 13px; height: 6px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
 
                
                 WhereCondition.push(Condition);
