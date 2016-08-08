@@ -10,7 +10,7 @@ var masterPageURL = '../MasterAdd/Categories.aspx';
 
 function selectTile(id, RoleName) {
      
-    
+    debugger;
       var tileList = ['patients','Appoinments' ,'token', 'doctor', 'pharmacy', 'stock', 'ContentPlaceHolder1_admin', 'ContentPlaceHolder1_master'];
       var Url = [patientPageURL,AppoinmentsPageURL, tokenPageURL, doctorPageURL, pharmacyPageURL, stockPageURL,adminPageURL,masterPageURL];
 
