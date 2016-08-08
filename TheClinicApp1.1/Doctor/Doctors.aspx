@@ -402,6 +402,7 @@
 
             function BindAttachment(Records)
             {
+                debugger;
                 $.each(Records, function (index, Records) {
 
                     var AttchmntID = Records.AttachID;
@@ -412,6 +413,10 @@
                     img.attr("class", "imagpreview");
 
                     img.appendTo(  $("#<%=VistImagePreview.ClientID %>"));
+                    //var newlabel = document.createElement("Label");
+                    //newlabel.setAttribute("for",id_from_input);
+                    //newlabel.innerHTML = "Here goes the text";
+                    //newlabel
 
                 });
             }
