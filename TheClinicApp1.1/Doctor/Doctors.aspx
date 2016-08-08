@@ -9,7 +9,9 @@
     {
         background-color: #d3d3d3!important;
     }
-
+.lblDesc{
+    width:100px;
+}
  
         </style>
 
@@ -413,10 +415,10 @@
                     img.attr("class", "imagpreview");
 
                     img.appendTo(  $("#<%=VistImagePreview.ClientID %>"));
-                    //var newlabel = document.createElement("Label");
-                    //newlabel.setAttribute("for",id_from_input);
-                    //newlabel.innerHTML = "Here goes the text";
-                    //newlabel
+                    if(Records.Description!=null)
+                    {
+                        $("#<%=VistImagePreview.ClientID %>").append('<label for="name" class="lblDesc">'+Records.Description+'</label>');
+                    }
 
                 });
             }
@@ -457,9 +459,16 @@
 
                 var day = historyDate.getDate();
                 var year = historyDate.getFullYear();
+                debugger;
                 historyDate = day + " " + month + " " + year;
-
-                $("#<%=lblNew_history.ClientID %>").text("History: " +historyDate);
+                if(historyDate!="NaN Invalid Date NaN")
+                {
+                    $("#<%=lblNew_history.ClientID %>").text("History: " +historyDate);
+                }
+                else
+                {
+                    $("#<%=lblNew_history.ClientID %>").text("History");
+                }
             }
 
             function GetPrescriptionDetails(PrescriptionID) {
