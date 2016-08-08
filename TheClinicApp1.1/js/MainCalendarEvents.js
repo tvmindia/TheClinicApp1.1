@@ -225,27 +225,27 @@ function CustomClick()
 }
 
 /*Web method to get all calendar data from database*/
-function GetAllCalendarData()
+function GetAllCalendarData(data, page)
 {
           
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        data: "{}",
-        url: "JqueryEvents.aspx/GetEvents",
+        data: data,
+        url: page,
         dataType: "json",
         success: function (data) {
             //json = $.parseJSON(data.d);
             json = JSON.parse(data.d);
-            //$('div[id*=fullcal]').fullCalendar({
-            //    header: {
-            //        left: 'prev,next today',
-            //        center: 'title',
-            //        right: 'month,agendaWeek,agendaDay'
-            //    },
-            //    editable: true,
-            //    events: json//data.d
-            //});
+            $('div[id*=fullcal]').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                editable: true,
+                events: json//data.d
+            });
             //$("div[id=loading]").hide();
             //$("div[id=fullcal]").show();
            
