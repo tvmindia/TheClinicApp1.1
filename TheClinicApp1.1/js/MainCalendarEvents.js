@@ -22,7 +22,7 @@ $(document).ready(function ()
           open: function (event, ui) {
               $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
           }
-      }).prev(".ui-dialog-titlebar").css("background", "#336699");;
+      }).prev(".ui-dialog-titlebar").css("background", "#336699");
    
       GetJSonDataForCalender();
     
@@ -37,7 +37,7 @@ $(document).ready(function ()
                       right: 'month,agendaWeek,agendaDay'
                   },
                  
-                  defaultDate: '2016-07-12',
+                  defaultDate: '2016-08-12',
                   businessHours: true, // display business hours
                   lang: initialLangCode,
                   selectable: true,

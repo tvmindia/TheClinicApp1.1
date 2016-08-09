@@ -38,6 +38,14 @@
    margin-top:20%;
    margin-left:45%;
 }
+        .modal table td
+        {
+            border:none!important;
+        }
+        .modal table
+        {
+            border:none!important;
+        }
         .icon-plus
         {
             background-color: #5677a4;
@@ -73,6 +81,8 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    overflow:hidden!important;
+    min-height:300px!important;
 }
 
 /* Modal Content */
@@ -116,6 +126,7 @@
     padding: 2px 16px;
     /*background-color: #5cb85c;*/
     color: white;
+    border:none!important;
 }
 .btnOkay
 {
