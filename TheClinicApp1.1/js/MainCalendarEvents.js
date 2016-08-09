@@ -24,7 +24,7 @@ $(document).ready(function ()
           }
       }).prev(".ui-dialog-titlebar").css("background", "#336699");;
    
-      GetAllPatientAppointmentData();
+      GetJSonDataForCalender();
     
       setTimeout(function () {
           var initialLangCode = 'en';
@@ -222,26 +222,28 @@ function CustomClick()
     $("#txtEndTime").val(endtime);
     $("#txtEndDate").val(eventEndDate);
 }
-function GetAllPatientAppointmentData()
-{
-    var Appointments = new Object();
-    var data = "{'AppObj':" + JSON.stringify(Appointments) + "}";
-    var page = "../Appointment/Appointment.aspx/";
-    GetJSonDataForCalender(data, page);
+//function GetAllPatientAppointmentData()
+//{
+//    debugger;
+//    var Appointments = new Object();
+//    var data = "{'AppObj':" + JSON.stringify(Appointments) + "}";
+//    var page = "../Appointment/Appointment.aspx/GetAllPatientAppointmentDetailsByClinicID";
+//    GetJSonDataForCalender();
 
-}
+//}
 
 
 //
 /*Web method to get all calendar data from database*/
-function GetJSonDataForCalender(data, page)
+function GetJSonDataForCalender()
 {
+    debugger;
      $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        data: data,
-        url: page,
-        dataType: "json",
+         type: "POST",
+         contentType: "application/json",
+         data: "{}",
+         url: "Appointment.aspx/GetAllPatientAppointmentDetailsByClinicID",
+         dataType: "json",
         success: function (data) {
             //json = $.parseJSON(data.d);
             json = JSON.parse(data.d);

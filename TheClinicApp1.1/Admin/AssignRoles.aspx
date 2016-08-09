@@ -49,7 +49,7 @@ table
     text-align: left;
     height:auto;
     border-top:1px solid lightgrey!important;
-    border:1px solid lightgrey!important;
+    border:none !important;
     }
 
 .modal table td{
@@ -60,6 +60,7 @@ table
     font-size:14px;
     font-weight:200;
     padding-left:4px;
+     border:none !important;
    
 }
 
@@ -70,7 +71,7 @@ table
     font-size:14px;
     font-weight:200;
     padding-left:4px;
-    
+     border:none !important;
 }
 
 .modal table th {
