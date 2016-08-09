@@ -32,7 +32,20 @@ namespace TheClinicApp1._1.Appointment
 
         #endregion Global Variables
 
+        #region Event Properties
+        public class Event
+        {
+            public string id { get; set; }
+            public string title { get; set; }
+            public string start { get; set; }
+            public string end { get; set; }
+
+        }
+        #endregion Event Properties
+
         #region Methods
+
+
         #region GetDoctorScheduleDetailsByDocScheduleID
         [System.Web.Services.WebMethod]
         public static string GetDoctorScheduleDetailsByDocScheduleID(TheClinicApp1._1.ClinicDAL.Doctor DocObj)
@@ -75,28 +88,50 @@ namespace TheClinicApp1._1.Appointment
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            List<Event> events = new List<Event>();
             if (UA != null)
             {
                 DataSet ds = null;
+                DocObj.ClinicID = UA.ClinicID.ToString();
                 ds = DocObj.GetDoctorScheduleDetailsByDoctorID();
-                //Converting to Json
-                List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
-                Dictionary<string, object> childRow;
-                if (ds.Tables[0].Rows.Count > 0)
+
+
+                int count = ds.Tables[0].Rows.Count;
+                for (int i = 0; i <= count - 1; i++)
                 {
-                    foreach (DataRow row in ds.Tables[0].Rows)
+                    events.Add(new Event()
                     {
-                        childRow = new Dictionary<string, object>();
-                        foreach (DataColumn col in ds.Tables[0].Columns)
-                        {
-                            childRow.Add(col.ColumnName, row[col].ToString());
-                        }
-                        parentRow.Add(childRow);
-                    }
+                        id = ds.Tables[0].Rows[i]["event_id"].ToString(),
+                        title = ds.Tables[0].Rows[i]["title"].ToString(),
+                        start = ds.Tables[0].Rows[i]["event_start"].ToString(),
+                        end = ds.Tables[0].Rows[i]["event_end"].ToString()
+                    });
                 }
-                return jsSerializer.Serialize(parentRow);
+
+
+
+
             }
-            return jsSerializer.Serialize("");
+
+            return jsSerializer.Serialize(events);
+            //    //Converting to Json
+            //    List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+            //    Dictionary<string, object> childRow;
+            //    if (ds.Tables[0].Rows.Count > 0)
+            //    {
+            //        foreach (DataRow row in ds.Tables[0].Rows)
+            //        {
+            //            childRow = new Dictionary<string, object>();
+            //            foreach (DataColumn col in ds.Tables[0].Columns)
+            //            {
+            //                childRow.Add(col.ColumnName, row[col].ToString());
+            //            }
+            //            parentRow.Add(childRow);
+            //        }
+            //    }
+            //    return jsSerializer.Serialize(parentRow);
+            //}
+            //return jsSerializer.Serialize("");
         }
         #endregion GetDoctorScheduleDetailsByDoctorID
 
