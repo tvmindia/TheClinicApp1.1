@@ -1621,6 +1621,50 @@ namespace TheClinicApp1._1.ClinicDAL
             }
             #endregion Get Visit List with Name for Mobile
 
+            #region Search_VisitList_from Mobile
+            /// <summary>
+            /// Get Visit List with Name for Mobile app to upload image
+            /// </summary>
+            /// <returns>Datatable with details from table</returns>
+            public DataTable GetVisitSearchforMobile(string stringsearch)
+            {
+                DataTable dt = new DataTable();
+                SqlConnection con = null;
+                SqlDataAdapter daObj;
+                try
+                {
+
+                    dbConnection dcon = new dbConnection();
+                    con = dcon.GetDBConnection();
+
+                    SqlCommand cmdSelect = new SqlCommand("SearchVisitsfromMobile", con);
+                    cmdSelect.CommandType = CommandType.StoredProcedure;
+                    cmdSelect.Parameters.AddWithValue("@clinicid", ClinicID);
+                    cmdSelect.Parameters.AddWithValue("@stringsearch", stringsearch);
+
+                    daObj = new SqlDataAdapter(cmdSelect);
+
+                    daObj.Fill(dt);
+
+                }
+                catch (SqlException ex)
+                {
+                    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                    eObj.Description = ex.Message;
+                    eObj.Module = Module;
+                    eObj.UserID = UA.UserID;
+                    eObj.Method = "GetVisitSearchforMobile";
+                    eObj.InsertError();
+                }
+                finally
+                {
+                    con.Close();
+                }
+
+                return dt;
+            }
+            #endregion  Search_VisitList_from Mobile
+
             #endregion Visit Methods
 
             #region Visit Attachment Class

@@ -101,6 +101,41 @@ namespace TheClinicApp1._1.Webservices
         }
         #endregion  Get Visit List with Name
 
+        #region Search_Visit_List 
+        /// <summary>
+        /// Search_Visit_List 
+        /// </summary>
+        /// <returns>JSON of list of visit search</returns>
+        [WebMethod]
+        public string SearchVisitList(string stringsearch,string clinicid)
+        {  //return msg data initialization
+            DataSet ds = new DataSet();
+            try
+            {   //Retrieving details
+                ClinicDAL.CaseFile.Visit visit = new ClinicDAL.CaseFile.Visit();
+                visit.ClinicID = Guid.Parse(clinicid);
+
+                ds.Tables.Add(visit.GetVisitSearchforMobile(stringsearch));
+            }
+            catch (Exception ex)
+            {
+                //Return error message
+                DataTable ErrorMsg = new DataTable();
+                ErrorMsg.Columns.Add("Flag", typeof(Boolean));
+                ErrorMsg.Columns.Add("Message", typeof(String));
+                DataRow dr = ErrorMsg.NewRow();
+                dr["Flag"] = false;
+                dr["Message"] = ex.Message;
+                ErrorMsg.Rows.Add(dr);
+                ds.Tables.Add(ErrorMsg);
+            }
+            finally
+            {
+            }
+            return getDbDataAsJSON(ds);
+        }
+        #endregion  Search_Visit_List
+
         #region Add Vist Attatchment
         /// <summary>
         /// Webservice to get new attachment file from mobile
