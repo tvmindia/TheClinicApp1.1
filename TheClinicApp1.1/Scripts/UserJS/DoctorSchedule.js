@@ -80,6 +80,7 @@ $(document).ready(function () {
 
             },
             eventAfterRender: function (event, element) {
+                debugger;
                 $(element).tooltip({
                     title: event.title,
                     container: "body"
