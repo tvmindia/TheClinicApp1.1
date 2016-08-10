@@ -1986,6 +1986,51 @@ namespace TheClinicApp1._1.ClinicDAL
                     }
                     #endregion GetBoutiqueLogo
 
+                    #region Delete Visit Attachment By AttachID
+
+                    public void DeletevisitAttachmentByAttachID()
+                    {
+                        dbConnection dcon = null;
+
+                        try
+                        {
+                            dcon = new dbConnection();
+                            dcon.GetDBConnection();
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.Connection = dcon.SQLCon;
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.CommandText = "[DeleteVisitAttachmentByID]";
+
+                            cmd.Parameters.Add("@AttachID", SqlDbType.UniqueIdentifier).Value = AttachID;
+
+                            cmd.ExecuteNonQuery();
+
+                        }
+
+                        catch (Exception ex)
+                        {
+                            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                            eObj.Description = ex.Message;
+                            eObj.Module = Module;
+                            eObj.UserID = UA.UserID;
+                            eObj.Method = "DeletevisitAttachmentByAttachID";
+
+                            eObj.InsertError();
+                        }
+
+                        finally
+                        {
+                            if (dcon.SQLCon != null)
+                            {
+                                dcon.DisconectDB();
+                            }
+
+                        }
+
+                    }
+
+                    #endregion Delete Visit Attachment By AttachID
+
                     #endregion VisitAttachment methods
                 }
             #endregion Visit Attachment Class

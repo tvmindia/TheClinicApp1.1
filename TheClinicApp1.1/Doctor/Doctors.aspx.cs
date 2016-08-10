@@ -560,6 +560,18 @@ namespace TheClinicApp1._1.Doctor
 
         #endregion Get Prescription Details Xml
 
+        [WebMethod]
+        public static void DeleteAttachment(string AttachID)
+        {
+            CaseFile.Visit.VisitAttachment AttachObj = new CaseFile.Visit.VisitAttachment();
+
+            AttachObj.AttachID = Guid.Parse(AttachID);
+
+            AttachObj.DeletevisitAttachmentByAttachID();
+
+        }
+
+
        //History
 
         #region Get History

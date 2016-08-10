@@ -1453,10 +1453,13 @@
                             var DescID = "Desc"+MainImgID;
                             document.getElementById(DescID).remove();  
 
-                        }
+                            
+                            PageMethods.DeleteAttachment(MainImgID);       
+                          
+                      
                         
                          
-                         
+                        }
                     }
                 })
 
