@@ -28,7 +28,7 @@ namespace TheClinicApp1._1.Webservices
         public string UserLogin(string username, string password)
         {
             //return msg data initialization
-            DataSet ds = new DataSet();
+            DataTable dt = new DataTable();
             DataTable loginMsg = new DataTable();
             loginMsg.Columns.Add("Flag", typeof(Boolean));
             loginMsg.Columns.Add("Message", typeof(String));
@@ -65,9 +65,9 @@ namespace TheClinicApp1._1.Webservices
             {
                 //returning data
                 loginMsg.Rows.Add(dr);
-                ds.Tables.Add(loginMsg);
+                dt=(loginMsg);
             }
-            return getDbDataAsJSON(ds);
+            return getDbDataAsJSON(dt);
         }
         #endregion User Login
 
@@ -79,11 +79,11 @@ namespace TheClinicApp1._1.Webservices
         [WebMethod]
         public string GetVisitList()
         {  //return msg data initialization
-            DataSet ds = new DataSet();
+            DataTable dt = new DataTable();
             try
             {   //Retrieving details
                 ClinicDAL.CaseFile.Visit visit = new ClinicDAL.CaseFile.Visit();
-                ds.Tables.Add(visit.GetVisitListforMobile());
+                dt=visit.GetVisitListforMobile();
             }
             catch (Exception ex)
             {
@@ -95,12 +95,12 @@ namespace TheClinicApp1._1.Webservices
                 dr["Flag"] = false;
                 dr["Message"] = ex.Message;
                 ErrorMsg.Rows.Add(dr);
-                ds.Tables.Add(ErrorMsg);
+                dt=(ErrorMsg);
             }
             finally
             {
             }
-            return getDbDataAsJSON(ds);
+            return getDbDataAsJSON(dt);
         }
         #endregion  Get Visit List with Name
 
@@ -112,14 +112,14 @@ namespace TheClinicApp1._1.Webservices
         [WebMethod]
         public string SearchVisitList(string stringsearch,string clinicid)
         {  //return msg data initialization
-            DataSet ds = new DataSet();
+            DataTable dt = new DataTable();
             try
             {   //Retrieving details
                 ClinicDAL.CaseFile.Visit visit = new ClinicDAL.CaseFile.Visit();
                 visit.ClinicID = Guid.Parse(clinicid);
 
-                ds.Tables.Add(visit.GetVisitSearchforMobile(stringsearch));
-                if (ds.Tables[0].Rows.Count == 0) { throw new Exception(constants.NoItems); }
+                dt=visit.GetVisitSearchforMobile(stringsearch);
+                if (dt.Rows.Count == 0) { throw new Exception(constants.NoItems); }
             }
             catch (Exception ex)
             {
@@ -131,12 +131,12 @@ namespace TheClinicApp1._1.Webservices
                 dr["Flag"] = false;
                 dr["Message"] = ex.Message;
                 ErrorMsg.Rows.Add(dr);
-                ds.Tables.Add(ErrorMsg);
+                dt=ErrorMsg;
             }
             finally
             {
             }
-            return getDbDataAsJSON(ds);
+            return getDbDataAsJSON(dt);
         }
         #endregion  Search_Visit_List
 
@@ -215,12 +215,11 @@ namespace TheClinicApp1._1.Webservices
         #endregion Add Vist Attatchment
 
         #region JSON converter and sender
-        public String getDbDataAsJSON(DataSet ds)
+        public String getDbDataAsJSON(DataTable dt)
         {
             ClinicDAL.CryptographyFunctions crypto = new ClinicDAL.CryptographyFunctions();
             try
             {
-                DataTable dt = ds.Tables[0];
                 System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
                 List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
                 Dictionary<string, object> row;
