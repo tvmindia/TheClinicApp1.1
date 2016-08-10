@@ -20,6 +20,9 @@ namespace TheClinicApp1._1.Webservices
     [System.Web.Script.Services.ScriptService]
     public class WebServices : System.Web.Services.WebService
     {
+        TheClinicApp1._1.UIClasses.Const constants = new TheClinicApp1._1.UIClasses.Const();
+        
+        
         #region User Login
         [WebMethod]
         public string UserLogin(string username, string password)
@@ -116,6 +119,7 @@ namespace TheClinicApp1._1.Webservices
                 visit.ClinicID = Guid.Parse(clinicid);
 
                 ds.Tables.Add(visit.GetVisitSearchforMobile(stringsearch));
+                if (ds.Tables[0].Rows.Count == 0) { throw new Exception(constants.NoItems); }
             }
             catch (Exception ex)
             {
