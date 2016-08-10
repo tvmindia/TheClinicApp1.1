@@ -23,6 +23,7 @@
         <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
         <script src="../js/jquery-ui.js"></script>
         <script src="../js/fileinput.js"></script>
+         <script src="../js/DeletionConfirmation.js"></script>
         <script src="../js/Messages.js"></script>
         <script>
             function BindMedunitbyMedicneName(ControlNo) 
@@ -114,6 +115,22 @@
             $('input[type=hidden]').val(''); 
         }
 
+        function ResetToNewCase(){
+            $('input[type=text]').val('');  
+            $('textarea').val(''); 
+            $('input[type=select]').val('');
+            $('input[type=radio]').val('');
+            $('input[type=checkbox]').val('');  
+         //   $('input[type=hidden]').val(''); 
+
+            $("#<%=lblNew_history.ClientID %>").text("New Case");
+            $("#<%=VistImagePreview.ClientID %> img").remove();
+            $('.lblDesc').remove();
+
+
+        }
+
+
         function CheckEmpty()
         {                
             if(($('#<%=txtHeightFeet.ClientID%>').val() != '')&&($('#<%=txtHeightInch.ClientID%>').val()!='')&&($('#<%=txtWeight.ClientID%>').val()!=''))
@@ -140,7 +157,8 @@
             //Calls the function to bind history using PatientID
 
             function bindPatientDetails()
-            {              
+            {   debugger;
+                 
                 var PatientName = document.getElementById("project-description").innerText;            
                             
                 var file=PatientName.split('|')      
@@ -185,7 +203,7 @@
                 {                   
                 }   
                 
-
+                ResetToNewCase();
             }
 
            
@@ -251,7 +269,7 @@
 
                     PatientID = $(this).closest('tr').find('td:eq(5)').text();
 
-                    reset();
+                   
 
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                     
@@ -272,6 +290,9 @@
 
                     }
                 
+                    ResetToNewCase();
+
+                   
                 });
             });
 
@@ -336,12 +357,18 @@
 
             $(function () {
                 $("[id*=GridViewVisitsHistory] td:eq(0)").click(function () {
-
+                    
                     debugger;
 
                     $("#HistoryClose").click();
 
-                    reset();
+                    //$("#VistImagePreview").find("img").remove(); 
+
+                    //$("#VistImagePreview").empty();
+
+                    //$("#VistImagePreview img:last-child").remove()
+
+                   // reset();
 
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                     
@@ -408,23 +435,40 @@
 
             function BindAttachment(Records)
             {
+                $("#<%=VistImagePreview.ClientID %> img").remove();
+
                 debugger;
                 $.each(Records, function (index, Records) {
 
                     var AttchmntID = Records.AttachID;
 
-                    var img= $('<img id="'+AttchmntID+'">'); //Equivalent: $(document.createElement('img'))
-                    img.attr('src', "../Handler/ImageHandler.ashx?AttachID="+AttchmntID);
-                    img.attr("height", "120");
-                    img.attr("class", "imagpreview");
+                        var img= $('<img id="'+AttchmntID+'">'); //Equivalent: $(document.createElement('img'))
+                        img.attr('src', "../Handler/ImageHandler.ashx?AttachID="+AttchmntID);
+                        img.attr("height", "120");
+                        img.attr("class", "imagpreview");
 
-                    img.appendTo(  $("#<%=VistImagePreview.ClientID %>"));
-                    if(Records.Description!=null)
-                    {
-                        $("#<%=VistImagePreview.ClientID %>").append('<label for="name" class="lblDesc">'+Records.Description+'</label>');
-                    }
+                        img.appendTo(  $("#<%=VistImagePreview.ClientID %>"));
+                      
 
+                    var Deleteimg = $('<img id="Delete#'+AttchmntID+'">');
+                    
+                        Deleteimg.attr('src',"../images/Deleteicon1.png");
+                        Deleteimg.attr("class", "imgdelete");
+
+                        Deleteimg.appendTo(  $("#<%=VistImagePreview.ClientID %>"));
+
+
+                        if(Records.Description!=null)
+                        {
+                            $("#<%=VistImagePreview.ClientID %>").append('<label id="Desc'+AttchmntID+'" for="name" class="lblDesc">'+Records.Description+'</label>');
+                        }
+                   
                 });
+            }
+
+            function test()
+            {
+                alert(1);
             }
 
             function BindVisitDetails(Records) {
@@ -547,6 +591,7 @@
             };
 
             function GetHistory(pageIndex,PatientID) {
+
                 $.ajax({
 
                     type: "POST",
@@ -565,7 +610,7 @@
                     }
                 });
             }
-
+            
             var HistoryRow= null;
             function HistorySuccess(response) {
                 
@@ -837,10 +882,7 @@
        </script>
 
         <!-- #main-container -->
-        <asp:HiddenField ID="hdnfileID" runat="server" />
-        <asp:HiddenField ID="HiddenPatientID" runat="server" />
-         <asp:HiddenField ID="hdnFileIDAfterPostBack" runat="server" />
-        <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
+       
         <div class="main_body">
             <div class="left_part">
                 <div class="logo">
@@ -1163,7 +1205,22 @@
 
                         </div>
 
+                        
+
+
                     </div>
+
+                    <div class="grey_sec">
+
+                    <ul class="top_right_links">
+                        <li>
+                            <asp:Button ID="Button2" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();"  OnClick="btnSave_Click" /></li>
+                        <li><a class="new" href="#" id="A1" runat="server" onclick="reset();" onserverclick="btnNew_ServerClick"><span></span>New</a></li>
+                    </ul>
+
+                </div>
+
+
 
                     <asp:HiddenField ID="HiddenField1" runat="server"></asp:HiddenField>
                     <asp:HiddenField ID="hdnXmlData" runat="server" />
@@ -1176,7 +1233,10 @@
                 </div>
 
             </div>
+            
         </div>
+        
+
 
         <!-- Modal -->
         <!-- Alert Container -->
@@ -1297,12 +1357,21 @@
                 </div>
 
 
-
+                    
 
                    
 
                 </div>
                 <asp:HiddenField ID="HdnPrescID" runat="server" />
+
+
+                 <asp:HiddenField ID="hdnfileID" runat="server" />
+        <asp:HiddenField ID="HiddenPatientID" runat="server" />
+         <asp:HiddenField ID="hdnFileIDAfterPostBack" runat="server" />
+  <asp:HiddenField ID="PatntIdAftrPostback" runat="server" />
+                
+        <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
+
             </div>
         </div>
 
@@ -1363,8 +1432,41 @@
             var test=jQuery.noConflict();
             test(document).ready(function () {
                 debugger;
-              
                
+
+                $(".imgdelete").live({
+                    click: function (e) {// Clear controls
+                        debugger;
+
+                        //Conditions[i].split("=")[0];
+
+                        var DeletionConfirmation = ConfirmDelete();
+                        if (DeletionConfirmation == true) {
+
+                            var DeleteImgID = $(this).attr('id');
+                            document.getElementById(DeleteImgID).remove();   
+
+                            MainImgID =   DeleteImgID.split("#")[1];
+                            document.getElementById(MainImgID).remove(); 
+
+
+                            var DescID = "Desc"+MainImgID;
+                            document.getElementById(DescID).remove();  
+
+                        }
+                        
+                         
+                         
+                    }
+                })
+
+
+                if (document.getElementById('<%=PatntIdAftrPostback.ClientID %>').value != "")
+                {
+                    document.getElementById('<%=PatntIdAftrPostback.ClientID %>').value = document.getElementById('<%=HiddenPatientID.ClientID %>').value ;
+                }
+
+
                 if (document.getElementById('<%=HiddenPatientID.ClientID %>').value != "")
                 {
 
