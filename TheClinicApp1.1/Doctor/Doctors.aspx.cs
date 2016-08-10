@@ -348,9 +348,9 @@ namespace TheClinicApp1._1.Doctor
                 Response.Redirect("../Doctor/Doctors.aspx");
             }
 
-            if (HiddenField2.Value != string.Empty)
+            if (HiddenPatientID.Value != string.Empty)
             {
-                HiddenField2.Value = HiddenField2.Value;
+                PatntIdAftrPostback.Value = HiddenPatientID.Value;
             }
            
         }
@@ -823,7 +823,7 @@ namespace TheClinicApp1._1.Doctor
 
             ClearButton();
 
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "func1", "reset();", true);
+           // Page.ClientScript.RegisterStartupScript(this.GetType(), "func1", "reset();", true);
 
             lblErrorCaption.Text = string.Empty;
             lblMsgges.Text = string.Empty;
@@ -874,6 +874,7 @@ namespace TheClinicApp1._1.Doctor
                 //ProfilePic.Visible = true;
 
                 HiddenField1.Value = PatientID.ToString();
+                HiddenPatientID.Value = PatientID.ToString();
             }
         }
         #endregion Search And Find the Patient Visits
