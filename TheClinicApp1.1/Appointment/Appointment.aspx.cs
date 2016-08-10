@@ -390,5 +390,15 @@ namespace TheClinicApp1._1.Appointment
 
         #endregion Events
 
+        protected void btnNew_ServerClick(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

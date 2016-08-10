@@ -291,7 +291,11 @@ border:none!important;
                   .appendTo(ul);
 
             };
+            $(".save").click(function () {
+                alert();
+            });
         });
+        //end of document.ready
         function bindPatient() {
            
             if (document.getElementById("txtSearch").innerText != "")
