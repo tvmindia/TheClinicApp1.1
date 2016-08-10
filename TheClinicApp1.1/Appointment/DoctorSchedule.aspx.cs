@@ -8,6 +8,7 @@
 
 #region Included Namespaces
 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -113,7 +114,7 @@ namespace TheClinicApp1._1.Appointment
 
             }
 
-            return jsSerializer.Serialize(events);
+            return JsonConvert.SerializeObject(events);
             //    //Converting to Json
             //    List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
             //    Dictionary<string, object> childRow;

@@ -232,6 +232,17 @@ namespace TheClinicApp1._1.UIClasses
 
 
 
+        //----------------* Messages For Mobile App *--------------//
+        public string NoItems
+        {
+            get
+            {
+                return "No Results Found."; 
+            }
+        }
+
+
+
 
         public string GetCurrentPageName(HttpRequest Request )
         {
