@@ -48,7 +48,7 @@ namespace TheClinicApp1._1.Appointment
 
         #region InsertPatientAppointment
         [System.Web.Services.WebMethod]
-
+            
         public static string InsertPatientAppointment(Appointments AppointObj)
         {
 
