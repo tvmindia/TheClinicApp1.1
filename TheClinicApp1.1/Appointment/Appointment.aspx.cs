@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
@@ -30,7 +31,7 @@ namespace TheClinicApp1._1.Appointment
 
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
-
+        public string listFilter = null;
         #endregion Global Variables
 
         #region Event Properties
@@ -262,7 +263,62 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion AllotedPatientAbsentUpdate
 
+        #region Bind Dropdown
+        public void dropdowndoctor()
+        {
+            TokensBooking tokenObj = new TokensBooking();
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            tokenObj.ClinicID = Convert.ToString(UA.ClinicID);
+            //binding the values of doctor dropdownlist
+            DataSet ds = tokenObj.DropBindDoctorsName();
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                ddlDoctor.Items.Clear();
+                ddlDoctor.DataSource = ds.Tables[0];
+                ddlDoctor.DataValueField = "DoctorID";
+                ddlDoctor.DataTextField = "Name";
+                ddlDoctor.DataBind();
+                if (ddlDoctor.Items.Count != 1)//checking number of doctors.if there is only one doctor, no need of select 
+                {
+                    ddlDoctor.Items.Insert(0, "--Select--");
+                }
+            }
 
+
+        }
+
+        #endregion Bind Dropdown
+
+        #region BindDataAutocomplete
+        /// <summary>
+        /// Binding Data From DataBase For the Search Field provided for Patient Search
+        /// </summary>
+        /// <returns></returns>
+        private string BindName()
+        {
+            Patient PatientObj = new Patient();
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            PatientObj.ClinicID = UA.ClinicID;
+            DataTable dt = PatientObj.GetSearchBoxData(); //Function call to get  Search BoxData
+            StringBuilder output = new StringBuilder();
+            output.Append("[");
+            for (int i = 0; i < dt.Rows.Count; ++i)
+            {
+                output.Append("\"" + dt.Rows[i]["Name"].ToString() + "🏠📰 " + dt.Rows[i]["FileNumber"].ToString() + "|" + dt.Rows[i]["Address"].ToString() + "|" + dt.Rows[i]["Phone"].ToString() + "\"");
+                if (i != (dt.Rows.Count - 1))
+                {
+                    output.Append(",");
+                }
+            }
+            output.Append("]");
+            return output.ToString();
+
+        }
+        #endregion BindDataAutocomplete 
         #endregion Methods
 
         #region Events
@@ -271,7 +327,12 @@ namespace TheClinicApp1._1.Appointment
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            listFilter = null;
+            listFilter = BindName();
+            if (!IsPostBack)
+            {
+                dropdowndoctor();
+            }
         }
 
         #endregion Page Load
@@ -286,6 +347,46 @@ namespace TheClinicApp1._1.Appointment
         }
 
         #endregion Logout
+
+        protected void btnSearch_ServerClick(object sender, EventArgs e)
+        {
+            Patient PatientObj = new Patient();
+            try
+            {
+               // lblErrorCaption.Text = string.Empty;
+              //  lblMsgges.Text = string.Empty;
+               // Errorbox.Style["display"] = "none";
+               // lblFileCount.Text = string.Empty;
+               // lblTokencount.Text = string.Empty;
+               // divDisplayNumber.Style["display"] = "none";
+
+                string path = Server.MapPath("~/Content/ProfilePics/").ToString();
+                string Name = Request.Form["txtSearch"];
+                if (Name != string.Empty)
+                {
+                    PatientObj.GetSearchWithName(Name);
+                    DateTime date = DateTime.Now;
+                    int year = date.Year;
+                    Guid PatientID = PatientObj.PatientID;
+                    txtPatientName.Text = PatientObj.Name;
+                    string Gender = PatientObj.Gender;
+                    txtPatientMobile.Text = PatientObj.Phone;
+                    txtPatientPlace.Text = PatientObj.Occupation;
+                    
+                }
+                else
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "FUNNNN", "Alert.render('Invalid Suggesion');", true);
+
+                }
+                // gridDataBind();
+            }
+            catch
+            {
+                Response.Redirect("../Appointment/Appointment.aspx");
+
+            }
+        }
 
         #endregion Events
 

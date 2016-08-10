@@ -7,22 +7,22 @@ $(document).ready(function ()
 {
     $("#txtstartTime").timepicki();
     $("#txtEndTime").timepicki();
-      $("#myModal").dialog({
-          autoOpen: false,
-          closeOnEscape: false,
-          draggable: false,
-          height: 300,
-          width: 500,
-          hide: { effect: "explode", duration: 1000 },
-          //modal: true,
-          resizable: false,
-          show: { effect: "blind", duration: 800 },
-          title: "New Event",
-          dialogClass: 'no-close success-dialog',
-          open: function (event, ui) {
-              $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-          }
-      }).prev(".ui-dialog-titlebar").css("background", "#336699");
+      //$("#myModal").dialog({
+      //    autoOpen: false,
+      //    closeOnEscape: false,
+      //    draggable: false,
+      //    height: 300,
+      //    width: 500,
+      //    hide: { effect: "explode", duration: 1000 },
+      //    //modal: true,
+      //    resizable: false,
+      //    show: { effect: "blind", duration: 800 },
+      //    title: "New Event",
+      //    dialogClass: 'no-close success-dialog',
+      //    open: function (event, ui) {
+      //        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+      //    }
+      //}).prev(".ui-dialog-titlebar").css("background", "#336699");
    
       GetJSonDataForCalender();
     
@@ -43,12 +43,13 @@ $(document).ready(function ()
                   selectable: true,
                   selectHelper: true,
                   select: function (start, end) {
-                    
-                      CustomClick();
+                      debugger;
+                      //CustomClick();
                          // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-                      
+                      $("#txtAppointmentDate").val(eventStartDate);
                       $('#calendar').fullCalendar('unselect');
                   },
+                  displayEventTime: false,
                   editable: true,
                   viewRender: function (view, element) {
                       var add_url = '<a class="tip add-task" title="" href="#"\n\
@@ -199,29 +200,29 @@ $(document).ready(function ()
     return jsonResult;
     }
 /*open modal dialog*/
-function CustomClick()
-    {
-    debugger;
-    $("#myModal").dialog('open');
-    function D(J) { return (J < 10 ? '0' : '') + J; };
-    var dt = new Date();
-    var hours = dt.getHours();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    var starttime = D(dt.getHours()) + " : " + dt.getMinutes()+" : " + ampm;
-    $("#txtstartTime").val(starttime);
+//function CustomClick()
+//    {
+//    debugger;
+//    $("#myModal").dialog('open');
+//    function D(J) { return (J < 10 ? '0' : '') + J; };
+//    var dt = new Date();
+//    var hours = dt.getHours();
+//    var ampm = hours >= 12 ? 'PM' : 'AM';
+//    hours = hours % 12;
+//    hours = hours ? hours : 12; // the hour '0' should be '12'
+//    var starttime = D(dt.getHours()) + " : " + dt.getMinutes()+" : " + ampm;
+//    $("#txtstartTime").val(starttime);
    
-    var mins = hours * 60 + dt.getMinutes() + 30;
+//    var mins = hours * 60 + dt.getMinutes() + 30;
 
     
-    var minutes = (mins % (24 * 60) / 60 | 0) + ' : ' + D(mins % 60);
+//    var minutes = (mins % (24 * 60) / 60 | 0) + ' : ' + D(mins % 60);
 
 
-    var endtime =  minutes +" : "+ ampm;
-    $("#txtEndTime").val(endtime);
-    $("#txtEndDate").val(eventEndDate);
-}
+//    var endtime =  minutes +" : "+ ampm;
+//    $("#txtEndTime").val(endtime);
+//    $("#txtEndDate").val(eventEndDate);
+//}
 //function GetAllPatientAppointmentData()
 //{
 //    debugger;

@@ -4,6 +4,8 @@
    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+     <script src="../js/JavaScript_selectnav.js"></script>
+  
        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
   <script src='../js/moment.min.js'></script>
@@ -214,7 +216,126 @@ width:230px !important;
 {
 border:none !important;
 }
+.search_div
+{
+    width:200px;
+}
+ .ddl
+        {
+            border:2px solid #7d6754;
+            border-radius:5px;
+            padding:3px;
+            -webkit-appearance: none; 
+            text-indent: 0.01px;/*In Firefox*/
+            text-overflow: '';/*In Firefox*/
+            font-size:inherit;
+        }
+ table td
+ {
+     border:none!important;
+ }
+ table
+ {
+border:none!important;
+ }
     </style>
+    <script>
+        $(document).ready(function () {
+           
+            var ac=null;
+            ac = <%=listFilter %>;
+
+            var length= ac.length;
+            var projects = new Array();
+            for (i=0;i<length;i++)
+            {  
+                var name= ac[i].split('🏠');
+                projects.push({  value : name[0], label: name[0], desc: name[1]})   
+            }
+        $("#txtSearch").autocomplete({
+           
+            maxResults: 10,
+            source: function (request, response) {
+               
+                //--- Search by name or description(file no , mobile no, address) , by accessing matched results with search term and setting this result to the source for autocomplete
+                var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+                var matching = $.grep(projects, function (value) {
+
+                    var name = value.value;
+                    var label = value.label;
+                    var desc = value.desc;
+
+                    return matcher.test(name) || matcher.test(desc);
+                });
+                var results = matching; // Matched set of result is set to variable 'result'
+
+                response(results.slice(0, this.options.maxResults));
+            },
+            focus: function (event, ui) {
+                $("#txtSearch").val(ui.item.label);
+
+                return false;
+            },
+            select: function (event, ui) {
+
+                BindPatientDetails();
+               <%-- document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";--%>
+
+
+                return false;
+            }
+        })
+            .autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                  .append("<a>" + item.label + "<br>" + item.desc + "</a>")
+                  .appendTo(ul);
+
+            };
+        });
+        function bindPatient() {
+           
+            if (document.getElementById("txtSearch").innerText != "")
+                $('#<%=btnSearch.ClientID%>').click();
+        }
+        function BindPatientDetails() {
+            var jsonPatient = {};
+            var SearchItem = $('#txtSearch').val();
+            var Patient = new Object();
+
+            if (SearchItem != '') {
+                Patient.Name = SearchItem;
+
+                jsonPatient = GetPatientDetails(Patient);
+                if (jsonPatient != undefined) {
+
+                    BindPatient(jsonPatient);
+                }
+
+            }
+
+        }
+        function BindPatient(Records)
+        {
+           
+            $("#<%=txtPatientName.ClientID %>").val(Records.Name);
+            $("#<%=txtPatientMobile.ClientID %>").val(Records.Phone);
+            $("#<%=txtPatientPlace.ClientID %>").val(Records.Address);
+     
+               
+        }
+
+        function GetPatientDetails(Patient) {
+         
+            var ds = {};
+            var table = {};
+            var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
+            ds = getJsonData(data, "../Registration/Patients.aspx/BindPatientDetails");
+            table = JSON.parse(ds.d);
+            return table;
+        }
+   
+
+    </script>
     <div class="main_body">
             <div class="left_part">
                 <div class="logo">
@@ -272,8 +393,7 @@ border:none !important;
                         <div role="tabpanel" class="tab-pane active" >
                             <div class="grey_sec">
                                 <div class="search_div">
-                                    <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
-                                    <input class="button" type="submit" value="Search" disabled/>
+                                    <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" CssClass="ddl"></asp:DropDownList>
                                 </div>
                                 <ul class="top_right_links" >
                                     <li><a class="save" href="#"><span></span>Save</a></li>
@@ -282,7 +402,9 @@ border:none !important;
                             </div>
 
                             <div class="tab_table">
-                            <div class="loader"></div>
+                          <div class="row field_row" >
+                                    <div class="col-lg-12">
+                                <div class="col-lg-5">
     <div id='calendar'></div>
 <div id="myModal" class="modal">
 
@@ -324,6 +446,75 @@ border:none !important;
   </div>
 
 </div>
+                                    </div>
+                                   <div class="col-lg-1"  style="float:left" >
+
+                                            <div class="loader" style="float:left"></div>
+
+                                        </div>
+                                          <div class="col-lg-6" >
+                                              <div id="AppointmentLit"></div>
+                                              <div id="PatientReg">
+                                                  <table>
+                                                       <tr>
+                                                          <td>
+                                                              <asp:Label ID="lblAppointmentDate" runat="server" Text="Date:"></asp:Label>
+                                                          </td>
+                                                          <td>
+                                                               <input class="" name="Date" id="txtAppointmentDate" type="text" disabled="disabled"/>
+                                                             <%-- <asp:TextBox ID="txtAppointmentDate" runat="server"></asp:TextBox>--%>
+                                                              <br />
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td> <asp:Label ID="lblPatient" runat="server" Text="Patient:"></asp:Label></td>
+                                                          <td>
+                                                               <div class="search_div">
+
+                        <input class="field" type="search" id="txtSearch" onblur="bindPatient()" name="txtSearch" placeholder="Search patient..." />
+                        <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" disabled />
+                    </div>
+                                                              <br />
+                                                          </td>
+                                                          
+                                                      </tr>
+                                                      <tr>
+                                                          <td>
+                                                              <asp:Label ID="lblPatientName" runat="server" Text="Name:"></asp:Label>
+                                                          </td>
+                                                          <td>
+                                                              <asp:TextBox ID="txtPatientName" runat="server"></asp:TextBox>
+                                                              <br />
+                                                          </td>
+
+                                                      </tr>
+                                                     
+                                                      <tr>
+                                                          <td>
+                                                              <asp:Label ID="lblPatientMobile" runat="server" Text="Mobile:"></asp:Label>
+                                                          </td>
+                                                          <td>
+                                                              <asp:TextBox ID="txtPatientMobile" runat="server"></asp:TextBox>
+                                                              <br />
+                                                          </td>
+                                                      </tr>
+                                                      
+                                                      <tr>
+                                                           <td>
+                                                              <asp:Label ID="lblPatientPlace" runat="server" Text="Place:"></asp:Label>
+                                                          </td>
+                                                          <td>
+                                                              <asp:TextBox ID="txtPatientPlace" runat="server"></asp:TextBox>
+                                                          </td>
+                                                      </tr>
+                                                     
+                                                  </table>
+                                                 
+                                                 
+                                              </div>
+                                          </div>
+                                        </div>
+                              </div>
                             </div>
                         </div>
                     </div>

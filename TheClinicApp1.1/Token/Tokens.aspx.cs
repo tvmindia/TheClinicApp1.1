@@ -37,6 +37,7 @@ namespace TheClinicApp1._1.Token
         public void dropdowndoctor()
         {
             //binding the values of doctor dropdownlist
+          
             DataSet ds = tokenObj.DropBindDoctorsName();
             if (ds.Tables[0].Rows.Count > 0)
             {
