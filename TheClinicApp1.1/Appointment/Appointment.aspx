@@ -301,7 +301,7 @@ border:none!important;
             if (document.getElementById("txtSearch").innerText != "")
                 $('#<%=btnSearch.ClientID%>').click();
         }
-        function BindPatientDetails() {
+        function BindPatientDetails() {   
             var jsonPatient = {};
             var SearchItem = $('#txtSearch').val();
             var Patient = new Object();
