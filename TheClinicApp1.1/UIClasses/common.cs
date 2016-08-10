@@ -237,7 +237,7 @@ namespace TheClinicApp1._1.UIClasses
         {
             get
             {
-                return "Search Details Not Found."; 
+                return "No Results Found."; 
             }
         }
 
