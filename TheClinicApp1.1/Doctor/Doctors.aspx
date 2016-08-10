@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" ValidateRequest="false" EnableEventValidation="false" CodeBehind="Doctors.aspx.cs" Inherits="TheClinicApp1._1.Doctor.Doctors" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" EnableViewState="true" AutoEventWireup="true" ValidateRequest="false" EnableEventValidation="false" CodeBehind="Doctors.aspx.cs" Inherits="TheClinicApp1._1.Doctor.Doctors" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -16,7 +16,7 @@
         </style>
 
     <asp:Panel DefaultButton="btnSave" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" EnableCdn="true"></asp:ScriptManager>
+        <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" ></asp:ScriptManager>
         
 
         <script src="../js/jquery-1.12.0.min.js"></script>
@@ -94,7 +94,8 @@
 
 
             function GetTextBoxValuesPresLocal()
-            {   
+            {  
+
                 GetTextBoxValuesPresDoc('<%=hdnTextboxValues.ClientID%>');
             }
                     
@@ -110,6 +111,7 @@
             $('input[type=select]').val('');
             $('input[type=radio]').val('');
             $('input[type=checkbox]').val('');  
+            $('input[type=hidden]').val(''); 
         }
 
         function CheckEmpty()
@@ -335,6 +337,8 @@
             $(function () {
                 $("[id*=GridViewVisitsHistory] td:eq(0)").click(function () {
 
+                    debugger;
+
                     $("#HistoryClose").click();
 
                     reset();
@@ -352,7 +356,7 @@
 
                         $("#<%=HdnPrescID.ClientID %>").val(PrescriptionID);
                         $("#<%=HdnForVisitID.ClientID %>").val(VisitID);
-
+                        $("#<%=HiddenField2.ClientID %>").val(FileID); 
                         //------------------------ Binding Visit Deatils By VisitID
 
                          var Visit = new Object();
@@ -835,6 +839,7 @@
         <!-- #main-container -->
         <asp:HiddenField ID="hdnfileID" runat="server" />
         <asp:HiddenField ID="HiddenPatientID" runat="server" />
+         <asp:HiddenField ID="hdnFileIDAfterPostBack" runat="server" />
         <asp:HiddenField ID="hdnRowCount" runat="server" Value="0" />
         <div class="main_body">
             <div class="left_part">
@@ -901,7 +906,7 @@
 
                     <ul class="top_right_links">
                         <li>
-                            <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();" OnClick="btnSave_Click" /></li>
+                            <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();"  OnClick="btnSave_Click" /></li>
                         <li><a class="new" href="#" id="btnNew" runat="server" onclick="reset();" onserverclick="btnNew_ServerClick"><span></span>New</a></li>
                     </ul>
 
@@ -1357,8 +1362,56 @@
 
             var test=jQuery.noConflict();
             test(document).ready(function () {
-       
+                debugger;
+              
                
+                if (document.getElementById('<%=HiddenPatientID.ClientID %>').value != "")
+                {
+
+                    var Patient = new Object();
+                    Patient.PatientID = document.getElementById('<%=HiddenPatientID.ClientID %>').value;
+                       
+                    jsonResult = GetPatientDetailsByID(Patient);
+                    if (jsonResult != undefined) {
+                          
+                        BindControlsWithPatientDetails(jsonResult); 
+                    }
+                       
+                    GetHistory(1, document.getElementById('<%=HiddenPatientID.ClientID %>').value);
+
+
+                }
+
+
+                if (document.getElementById('<%=HdnForVisitID.ClientID %>').value != "")
+                {
+                   
+                    var   VisitAttachment = new Object();
+                    VisitAttachment.VisitID =document.getElementById('<%=HdnForVisitID.ClientID %>').value;
+
+                    var Visit = new Object();
+                    Visit.VisitID = document.getElementById('<%=HdnForVisitID.ClientID %>').value;
+
+
+                    jsonVisitAttchmnt = GetAttachmentDetailsByvisitID(VisitAttachment)
+
+                    if (jsonVisitAttchmnt != undefined) {
+                          
+                        BindAttachment(jsonVisitAttchmnt);
+                    }
+
+                   
+
+                    jsonVisit = GetVisitDetailsByvisitID(Visit);
+                    if (jsonVisit != undefined) {
+                          
+                        BindVisitDetails(jsonVisit);
+                    }
+
+
+                }
+
+
                 blink('.blink');//div blinking function
 			   
                 test('.alert_close').click(function () {

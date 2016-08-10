@@ -101,6 +101,16 @@ namespace TheClinicApp1._1.Doctor
         {
             try
             {
+              if (HiddenField2.Value != string.Empty)
+                {
+                    hdnFileIDAfterPostBack.Value = HiddenField2.Value;
+                }
+              else
+              {
+                  HiddenField2.Value = hdnFileIDAfterPostBack.Value;
+              }
+
+
                 if (HiddenField2.Value != string.Empty)
                 {
                     UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -337,6 +347,12 @@ namespace TheClinicApp1._1.Doctor
             {
                 Response.Redirect("../Doctor/Doctors.aspx");
             }
+
+            if (HiddenField2.Value != string.Empty)
+            {
+                HiddenField2.Value = HiddenField2.Value;
+            }
+           
         }
 
         #endregion Save Button Click
