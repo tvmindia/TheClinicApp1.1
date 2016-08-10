@@ -49,6 +49,16 @@ namespace TheClinicApp1._1.Webservices
                     dr["Message"] = UIClasses.Messages.LoginSuccess;
                     loginMsg.Columns.Add("ClinicID", typeof(String));
                     dr["ClinicID"] = UA.ClinicID;
+
+                    // Passing doctorid and doctor name along json data  
+                    DataTable dt1 = new DataTable();
+                    dt1 = UA.GetDoctorAndDoctorID(username);
+                    string docid = dt1.Rows[0][0].ToString();
+                    string docname = dt1.Rows[0][1].ToString();
+                    loginMsg.Columns.Add("DoctorID", typeof(String));
+                    dr["DoctorID"] = docid;
+                    loginMsg.Columns.Add("DoctorName", typeof(String));
+                    dr["DoctorName"] = docname;
                 }
                 else
                 {
