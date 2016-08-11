@@ -49,8 +49,43 @@ $(document).ready(function () {
             selectable: true,
             selectHelper: true,
            
+            select: function (start, end) {
+                debugger;
+                //CustomClick();
+                // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                $("#txtAppointmentDate").val(eventStartDate);
+                $('#calendar').fullCalendar('unselect');
+
+                var jsonDeatilsByDate = {};
+
+                var Doctor = new Object();
+                Doctor.SearchDate = eventStartDate;
+
+                jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+
+                if (jsonDeatilsByDate != undefined) {
+                    
+                    BindTimes(jsonDeatilsByDate);
+
+                }
+               
+            },
+
+
+
             editable: true,
            
+            eventRender: function (event, element, view) { 
+                // like that
+                //var dateString = moment(event.start).format('YYYY-MM-DD');
+                //$('#calendar').find('.fc-day-number[data-date="' + dateString + '"]').css('background-color', '#FAA732');
+                //$('#calendar').find('.fc-day-number[data-date="' + dateString + '"]').addClass('fc-today ui-state-highlight');
+               // fc-day-number fc-thu fc-today ui-state-highlight
+              //  fc-day-number fc-tue fc-future
+                 
+            
+            },
+
             dayClick: function (date, jsEvent, view) {
 
                 eventStartDate = date.format();
@@ -59,6 +94,9 @@ $(document).ready(function () {
             },
             eventAfterRender: function (event, element) {
                 debugger;
+             //  $('.fc-content').remove();
+
+
                 $(element).tooltip({
                    
                     container: "body"
@@ -150,7 +188,11 @@ $(document).ready(function () {
 
         }
     });
+
+    
 });
+
+
 /*end of document.ready*/
 
 
@@ -173,109 +215,159 @@ function GetScheduleByDrID(drID) {
 }
 
 
-function GetDoctorScheduleDetailsByDoctorID(Doctor) {
+function GetAllDoctorScheduleDetailsByDate(Doctor)
+{
     var ds = {};
     var table = {};
     var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
-    ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetDoctorScheduleDetailsByDoctorID");
+    ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetAllDoctorScheduleDetailsByDate");
     table = JSON.parse(ds.d);
     return table;
 }
 
+function BindTimes(Records) {
 
-/*Add New Calendar Event */
-function AddEvent(CalendarSchedule) {
-    debugger;
-    var data = "{'calendarObj':" + JSON.stringify(CalendarSchedule) + "}";
+    $("#Times tr").remove();
 
-    jsonResult = getJsonData(data, "../JqueryEvents.aspx/AddCalendarEvent");
-    var table = {};
-    table = JSON.parse(jsonResult.d);
-    return table;
+    $.each(Records, function (index, Records) {
+
+        var ScheduleID = Records.ID;
+
+      
+
+        var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + Records.Starttime + "-" + Records.Endtime + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
+        $("#Times").append(html);
+
+    });
+
 }
 
-/*Call webmethod to insert new Event  */
-function getJsonData(data, page) {
-    var jsonResult = {};
-    // $("#loadingimage").show();
-    var req = $.ajax({
-        type: "post",
-        url: page,
-        data: data,
-        delay: 3,
-        async: false,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
+
+function RemoveTime(ScheduleID) {
+    debugger;
+
+  
+        var Doctor = new Object();
+        Doctor.DocScheduleID = ScheduleID;
+
+        var ds = {};
+        var table = {};
+
+    var data = "{'DocObj':" +JSON.stringify(Doctor) + "}";
+    ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelDoctorSchedule");
+    table = JSON.parse(ds.d);
+
+    alert(table.status);
+
+
+}
+
+
+    function GetDoctorScheduleDetailsByDoctorID(Doctor) {
+        var ds = { };
+        var table = { };
+        var data = "{'DocObj':" +JSON.stringify(Doctor) + "}";
+        ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetDoctorScheduleDetailsByDoctorID");
+        table = JSON.parse(ds.d);
+        return table;
+}
+
+
+    /*Add New Calendar Event */
+    function AddEvent(CalendarSchedule) {
+        debugger;
+        var data = "{'calendarObj':" +JSON.stringify(CalendarSchedule) + "}";
+
+        jsonResult = getJsonData(data, "../JqueryEvents.aspx/AddCalendarEvent");
+        var table = { };
+        table = JSON.parse(jsonResult.d);
+        return table;
+}
+
+    /*Call webmethod to insert new Event  */
+    function getJsonData(data, page) {
+        var jsonResult = {
+    };
+        // $("#loadingimage").show();
+        var req = $.ajax({
+            type: "post",
+            url: page,
+            data: data,
+            delay: 3,
+            async: false,
+                contentType: "application/json; charset=utf-8",
+            dataType: "json"
     }).done(function (data) {
 
         //     $("#loadingimage").hide();
-        jsonResult = data;
+            jsonResult = data;
     });
     return jsonResult;
 }
-/*open modal dialog*/
-function CustomClick() {
-    debugger;
-    $("#myModal").dialog('open');
-    function D(J) { return (J < 10 ? '0' : '') + J; };
-    var dt = new Date();
-    var hours = dt.getHours();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    var starttime = D(dt.getHours()) + " : " + dt.getMinutes() + " : " + ampm;
-    $("#txtstartTime").val(starttime);
+    /*open modal dialog*/
+    function CustomClick() {
+        debugger;
+        $("#myModal").dialog('open');
+        function D(J) { return (J < 10 ? '0': '') +J;
+        };
+        var dt = new Date();
+        var hours = dt.getHours();
+        var ampm = hours >= 12 ? 'PM': 'AM';
+        hours = hours % 12;
+        hours = hours ? hours: 12; // the hour '0' should be '12'
+        var starttime = D(dt.getHours()) + " : " +dt.getMinutes() + " : " +ampm;
+        $("#txtstartTime").val(starttime);
 
-    var mins = hours * 60 + dt.getMinutes() + 30;
-
-
-    var minutes = (mins % (24 * 60) / 60 | 0) + ' : ' + D(mins % 60);
+        var mins = hours * 60 +dt.getMinutes() +30;
 
 
-    var endtime = minutes + " : " + ampm;
-    $("#txtEndTime").val(endtime);
-    $("#txtEndDate").val(eventEndDate);
+        var minutes = (mins % (24 * 60) / 60 | 0) + ' : ' + D(mins % 60);
+
+
+        var endtime = minutes + " : " +ampm;
+        $("#txtEndTime").val(endtime);
+        $("#txtEndDate").val(eventEndDate);
 }
 
-/*Web method to get all calendar data from database*/
-function GetAllCalendarData(data, page) {
+    /*Web method to get all calendar data from database*/
+    function GetAllCalendarData(data, page) {
 
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        data: data,
-        url: page,
-        dataType: "json",
-        success: function (data) {
-            //json = $.parseJSON(data.d);
+        $.ajax({
+            type: "POST",
+                contentType: "application/json",
+            data: data,
+            url: page,
+            dataType: "json",
+            success: function (data) {
+                //json = $.parseJSON(data.d);
             json = JSON.parse(data.d);
             $('div[id*=fullcal]').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+            },
                 editable: true,
                 events: json//data.d
-            });
-            //$("div[id=loading]").hide();
-            //$("div[id=fullcal]").show();
+        });
+                //$("div[id=loading]").hide();
+                //$("div[id=fullcal]").show();
 
-            //  var table = {};
-            // table = 
-            //  alert(table);
-            //  $("div[id=fullcal]").show();
-            //  json = $.parseJSON(data.d);
-            //json = JSON.parse(json);
-            // return json;
+                //  var table = {};
+                // table = 
+                //  alert(table);
+                //  $("div[id=fullcal]").show();
+                //  json = $.parseJSON(data.d);
+                //json = JSON.parse(json);
+                // return json;
 
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert("error");
 
         }
 
-    });
+});
 
 }
 
