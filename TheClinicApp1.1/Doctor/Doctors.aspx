@@ -436,6 +436,7 @@
             function BindAttachment(Records)
             {
                 $("#<%=VistImagePreview.ClientID %> img").remove();
+                $('.lblDesc').remove();
 
                 debugger;
                 $.each(Records, function (index, Records) {
