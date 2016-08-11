@@ -21,7 +21,7 @@ namespace TheClinicApp1._1.Webservices
     public class WebServices : System.Web.Services.WebService
     {
         TheClinicApp1._1.UIClasses.Const constants = new TheClinicApp1._1.UIClasses.Const();
-        
+        #region LoginTile
         
         #region User Login
         [WebMethod]
@@ -81,6 +81,10 @@ namespace TheClinicApp1._1.Webservices
         }
         #endregion User Login
 
+        #endregion
+
+        #region CaseImageAttachmentTiles
+      
         #region Get Visit List with Name
         /// <summary>
         /// Get Visit List with Name
@@ -223,6 +227,91 @@ namespace TheClinicApp1._1.Webservices
             }
         }
         #endregion Add Vist Attatchment
+
+        #endregion
+
+        #region AppointmentTiles
+
+        #region GetAppointmentsDateandCount
+        /// <summary>
+        ///  GET APPOINTMENT DATES AND COUNT OF PATIENTS FOR MOBILE APP 
+        /// </summary>
+        /// <returns>JSON of list of visit search</returns>
+        [WebMethod]
+        public string GetAppointmentDetails(string doctorid, string clinicid)
+        {  //return msg data initialization
+            DataTable dt = new DataTable();
+            try
+            {   //Retrieving details
+                
+                ClinicDAL.Appointments Appointments = new ClinicDAL.Appointments();
+                Appointments.ClinicID =clinicid;
+                Appointments.DoctorID=doctorid;
+
+                dt = Appointments.GetAppointmentDatesandPatientCount();
+                if (dt.Rows.Count == 0) { throw new Exception(constants.NoItems); }
+            }
+            catch (Exception ex)
+            {
+                //Return error message
+                DataTable ErrorMsg = new DataTable();
+                ErrorMsg.Columns.Add("Flag", typeof(Boolean));
+                ErrorMsg.Columns.Add("Message", typeof(String));
+                DataRow dr = ErrorMsg.NewRow();
+                dr["Flag"] = false;
+                dr["Message"] = ex.Message;
+                ErrorMsg.Rows.Add(dr);
+                dt = ErrorMsg;
+            }
+            finally
+            {
+            }
+            return getDbDataAsJSON(dt);
+        }
+        #endregion  GetAppointmentsDateandCount
+
+        #region GetAppointmentsPatientDetails
+        /// <summary>
+        /// GET APPOINTMENT  PATIENTS Details FOR MOBILE APP
+        /// </summary>
+        /// <returns>JSON of list of visit search</returns>
+        [WebMethod]
+        public string GetAppointmentPatientDetails(string doctorid, string clinicid,string appointmentdate)
+        {  //return msg data initialization
+            DataTable dt = new DataTable();
+            try
+            {   //Retrieving details
+
+                ClinicDAL.Appointments Appointments = new ClinicDAL.Appointments();
+                Appointments.ClinicID = clinicid;
+                Appointments.DoctorID = doctorid;
+                Appointments.AppointmentDate = appointmentdate;
+
+                dt = Appointments.GetAppointmentPatientDetails();
+                if (dt.Rows.Count == 0) { throw new Exception(constants.NoItems); }
+            }
+            catch (Exception ex)
+            {
+                //Return error message
+                DataTable ErrorMsg = new DataTable();
+                ErrorMsg.Columns.Add("Flag", typeof(Boolean));
+                ErrorMsg.Columns.Add("Message", typeof(String));
+                DataRow dr = ErrorMsg.NewRow();
+                dr["Flag"] = false;
+                dr["Message"] = ex.Message;
+                ErrorMsg.Rows.Add(dr);
+                dt = ErrorMsg;
+            }
+            finally
+            {
+            }
+            return getDbDataAsJSON(dt);
+        }
+        #endregion  
+
+
+
+        #endregion
 
         #region JSON converter and sender
         public String getDbDataAsJSON(DataTable dt)

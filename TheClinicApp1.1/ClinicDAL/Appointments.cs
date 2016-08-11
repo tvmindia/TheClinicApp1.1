@@ -128,6 +128,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Appointment Properties
 
         #region Appointment Methods
+
         #region InsertPatientAppointment
         public Int16 InsertPatientAppointment()
         {
@@ -360,6 +361,7 @@ namespace TheClinicApp1._1.ClinicDAL
             return ds;
         }
         #endregion GetAllPatientAppointmentDetailsBetweenDates
+
         #region AllotedPatientAbsentUpdate
         public Int16 AllotedPatientAbsentUpdate()
         {
@@ -419,6 +421,106 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion AllotedPatientAbsentUpdate
+
+        #region MobileMethods
+
+
+        #region GetAppointmentDatesandPatientCount
+        public DataTable GetAppointmentDatesandPatientCount()
+        {
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataTable dt = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetAppointmentDatesandCount]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
+                sda.SelectCommand = cmd;
+                dt = new DataTable();
+                sda.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAppointmentDatesandCount";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return dt;
+        }
+
+        #endregion GetAllPatientAppointmentDetailsByClinicID
+
+        #region GetAppointmentPatientDetails
+        public DataTable GetAppointmentPatientDetails()
+        {
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataTable dt = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetAppointmentPatientsDetails]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
+                cmd.Parameters.Add("@AppointmentDate", SqlDbType.Date).Value = AppointmentDate;
+                sda.SelectCommand = cmd;
+                dt = new DataTable();
+                sda.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAppointmentPatientDetails";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return dt;
+        }
+
+        #endregion GetAppointmentPatientDetails
+
+        #endregion MobileMethods
 
 
 
