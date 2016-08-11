@@ -46,7 +46,6 @@ namespace TheClinicApp1._1.Appointment
 
         #region Methods
 
-
         #region GetDoctorScheduleDetailsByDocScheduleID
         [System.Web.Services.WebMethod]
         public static string GetDoctorScheduleDetailsByDocScheduleID(TheClinicApp1._1.ClinicDAL.Doctor DocObj)
@@ -80,6 +79,33 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion GetDoctorScheduleDetailsByDocScheduleID
 
+        #region Bind Dropdown
+        public void BindDoctorDropdown()
+        {
+            TokensBooking tokenObj = new TokensBooking();
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            tokenObj.ClinicID = Convert.ToString(UA.ClinicID);
+            //binding the values of doctor dropdownlist
+            DataSet ds = tokenObj.DropBindDoctorsName();
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                ddlDoctor.Items.Clear();
+                ddlDoctor.DataSource = ds.Tables[0];
+                ddlDoctor.DataValueField = "DoctorID";
+                ddlDoctor.DataTextField = "Name";
+                ddlDoctor.DataBind();
+                if (ddlDoctor.Items.Count != 1)//checking number of doctors.if there is only one doctor, no need of select 
+                {
+                    ddlDoctor.Items.Insert(0, "--Select--");
+                }
+            }
+
+        }
+
+        #endregion Bind Dropdown
+
         #region GetDoctorScheduleDetailsByDoctorID
         
         [System.Web.Services.WebMethod]
@@ -96,43 +122,24 @@ namespace TheClinicApp1._1.Appointment
                 DocObj.ClinicID = UA.ClinicID.ToString();
                 ds = DocObj.GetDoctorScheduleDetailsByDoctorID();
 
-
                 int count = ds.Tables[0].Rows.Count;
                 for (int i = 0; i <= count - 1; i++)
                 {
                     events.Add(new Event()
                     {
                         id = ds.Tables[0].Rows[i]["event_id"].ToString(),
-                        title = ds.Tables[0].Rows[i]["title"].ToString(),
+                       // title = ds.Tables[0].Rows[i]["title"].ToString(),
+                       title = "",
                         start = ds.Tables[0].Rows[i]["event_start"].ToString(),
+                      
                         end = ds.Tables[0].Rows[i]["event_end"].ToString()
                     });
                 }
 
-
-
-
             }
 
             return JsonConvert.SerializeObject(events);
-            //    //Converting to Json
-            //    List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
-            //    Dictionary<string, object> childRow;
-            //    if (ds.Tables[0].Rows.Count > 0)
-            //    {
-            //        foreach (DataRow row in ds.Tables[0].Rows)
-            //        {
-            //            childRow = new Dictionary<string, object>();
-            //            foreach (DataColumn col in ds.Tables[0].Columns)
-            //            {
-            //                childRow.Add(col.ColumnName, row[col].ToString());
-            //            }
-            //            parentRow.Add(childRow);
-            //        }
-            //    }
-            //    return jsSerializer.Serialize(parentRow);
-            //}
-            //return jsSerializer.Serialize("");
+           
         }
         #endregion GetDoctorScheduleDetailsByDoctorID
 
@@ -169,7 +176,6 @@ namespace TheClinicApp1._1.Appointment
         }
 
         #endregion GetAllDoctorsScheduledBetweenDates
-
 
         #region InsertDoctorSchedule
         [System.Web.Services.WebMethod]
@@ -304,12 +310,16 @@ namespace TheClinicApp1._1.Appointment
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                BindDoctorDropdown();
+            }
 
         }
 
         #endregion Page Load
 
-         #region Logout
+        #region Logout
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
             Session.Remove(Const.LoginSession);
@@ -318,6 +328,18 @@ namespace TheClinicApp1._1.Appointment
         }
 
          #endregion Logout
+
+        #region Doctor Dropdown Selected Index Changed
+        protected void ddlDoctor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlDoctor.SelectedItem.Text !=  "--Select--")
+            {
+                hdnDoctorID.Value = ddlDoctor.SelectedValue;     
+            }
+
+        }
+
+        #endregion Doctor Dropdown Selected Index Changed
 
         #endregion Events
 
