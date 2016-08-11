@@ -265,6 +265,12 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+
+        public string SearchDate
+        {
+            get;
+            set;
+        }
         #endregion Doctor Schedule properties
 
         #region Doctor Schedule methods
@@ -595,6 +601,10 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlConnection con = null;
             DataSet ds = null;
             SqlDataAdapter sda = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
             try
             {
                 dbConnection dcon = new dbConnection();
@@ -630,9 +640,112 @@ namespace TheClinicApp1._1.ClinicDAL
 
         }
         #endregion GetAllDoctorsByClinicID
+        #region GetAllScheduleDetailsByDoctorID
+        public DataSet GetAllScheduleDetailsByDoctorID()
+        {
+            SqlConnection con = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (DoctorID == "")
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetAllScheduleDetailsByDoctorID]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
+                sda = new SqlDataAdapter(cmd);
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
 
-        
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAllScheduleDetailsByDoctorID";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return ds;
+
+        }
+        #endregion GetAllScheduleDetailsByDoctorID
+
+
+        #region GetAllDoctorScheduleDetailsByDate
+        public DataSet GetAllDoctorScheduleDetailsByDate()
+        {
+            SqlConnection con = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (SearchDate == "")
+            {
+                throw new Exception("SearchDate is Empty!!");
+            }
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@SearchDate", SqlDbType.Date).Value = DateTime.Parse(SearchDate);
+                sda = new SqlDataAdapter(cmd);
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAllDoctorScheduleDetailsByDate";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return ds;
+
+        }
+        #endregion GetAllDoctorScheduleDetailsByDate
         #endregion Doctor Methods
+
+
+
 
     }
     public class CaseFile

@@ -9,27 +9,27 @@ $(document).ready(function () {
    
     debugger;
 
-    GetScheduleByDrID();
+
+  //  GetScheduleByDrID();
 
 
-    $("#txtstartTime").timepicki();
-              $("#txtEndTime").timepicki();
-             $("#myModal").dialog({
-                  autoOpen: false,
-                 closeOnEscape: false,
-                draggable: false,
-                height: 300,
-               width: 500,
-              hide: { effect: "explode", duration: 1000 },
-               modal: true,
-                resizable: false, 
-            show: { effect: "blind", duration: 800 },
-               title: "New Event",
-               dialogClass: 'no-close success-dialog',
-             open: function (event, ui) {
-               $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-               }
-              }).prev(".ui-dialog-titlebar").css("background", "#336699");
+    // ---- Get date in yyyy mm dd format , to set default date----- //
+
+    Date.prototype.yyyymmdd = function () {
+        var mm = this.getMonth() + 1; // getMonth() is zero-based
+        var dd = this.getDate();
+
+        return [this.getFullYear(), !mm[1] && '0', mm, !dd[1] && '0', dd].join(''); // padding
+    };
+
+    var today = new Date();
+    today.yyyymmdd();
+
+//----------------------------------------------------------------------//
+
+    //$("#txtstartTime").timepicki();
+    //          $("#txtEndTime").timepicki();
+            
     //GetAllCalendarData();
 
     setTimeout(function () {
@@ -43,36 +43,14 @@ $(document).ready(function () {
                 right: 'month,agendaWeek,agendaDay'
             },
 
-            defaultDate: '2016-08-09',
+            defaultDate: today,
             businessHours: true, // display business hours
             lang: initialLangCode,
             selectable: true,
             selectHelper: true,
-            select: function (start, end) {
-
-                CustomClick();
-                // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-
-                $('#calendar').fullCalendar('unselect');
-            },
+           
             editable: true,
-            viewRender: function (view, element) {
-                var add_url = '<a class="tip add-task" title="" href="#"\n\
-        data-original-title="Dodaj zadanie" onClick="CustomClick();" style="height:25px;margin-left:100px;margin-top:50px;"><img src="../img/add.png" width="25px;"/></a>';
-                $(".fc-more-cell").prepend(add_url);
-            },
-            eventDrop: function (event, delta, revertFunc) {
-
-                alert(event.title + " was dropped on " + event.start.format());
-
-                if (!confirm("Are you sure about this change?")) {
-                    revertFunc();
-                }
-
-            },
-            eventOverlap: function (stillEvent, movingEvent) {
-                return stillEvent.allDay && movingEvent.allDay;
-            },
+           
             dayClick: function (date, jsEvent, view) {
 
                 eventStartDate = date.format();
@@ -82,7 +60,7 @@ $(document).ready(function () {
             eventAfterRender: function (event, element) {
                 debugger;
                 $(element).tooltip({
-                    title: event.title,
+                   
                     container: "body"
                 });
             },
@@ -90,10 +68,10 @@ $(document).ready(function () {
             eventMouseover: function (calEvent, jsEvent) {
 
                 if ((calEvent.end != null) && (calEvent.title) != null && (calEvent.id) != null && (calEvent.start) != null) {
-                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;border-style: solid; border-width: 5px;height:150px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center">' + calEvent.title + '</h3><p><b>id:</b>' + calEvent.id + '<br/><p><b>Start:</b>' + calEvent.start._i + '<p><b>End:</b>' + calEvent.end._i + '</p></div>';
+                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;border-style: solid; border-width: 5px;height:150px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>id:</b>' + calEvent.id + '<br/><p><b>Start:</b>' + calEvent.start._i + '<p><b>End:</b>' + calEvent.end._i + '</p></div>';
                 }
                 if (calEvent.end == null) {
-                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;height:110px;border-style: solid; border-width: 5px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center">' + calEvent.title + '</h3><p><b>Start:</b>' + calEvent.start._i + '</p></div>';
+                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;height:110px;border-style: solid; border-width: 5px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>Start:</b>' + calEvent.start._i + '</p></div>';
                 }
                 $("body").append(tooltip);
                 $(this).mouseover(function (e) {
@@ -176,14 +154,15 @@ $(document).ready(function () {
 /*end of document.ready*/
 
 
-function GetScheduleByDrID() {
+function GetScheduleByDrID(drID) {
     debugger;
 
+   
 
     var jsonDrSchedule = {};
 
     var Doctor = new Object();
-    Doctor.DoctorID = "78257026-6da9-40d4-b534-ad346481177d";
+    Doctor.DoctorID = drID;
 
     jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
     if (jsonDrSchedule != undefined) {

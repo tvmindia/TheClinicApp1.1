@@ -5,8 +5,10 @@
 
      <script src="../js/JavaScript_selectnav.js"></script>
   
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <script src="../js/jquery-1.12.4.js"></script>
+    <script src="../js/1.12.0jquery-ui.js"></script> 
+
+
     <script src="../js/moment.min.js"></script>
     <script src="../js/fullcalendar.min.js"></script>
     <script src="../js/lang-all.js"></script>
@@ -203,7 +205,22 @@ margin-left:50px;
 }
     </style>
 
-    
+    <script>
+
+      $(document).ready(function ()
+      {
+         var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
+
+          if (DoctorID != "" && DoctorID != null) {
+              GetScheduleByDrID(DoctorID);
+          }
+
+         
+          
+        });
+
+
+    </script>
     
     <div class="main_body">
             <div class="left_part">
@@ -261,6 +278,9 @@ margin-left:50px;
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" >
                             <div class="grey_sec">
+
+                                 <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" Font-Names="Andalus" CssClass="ddl"></asp:DropDownList>
+
                                <%-- <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
                                     <input class="button" type="submit" value="Search" disabled/>
@@ -344,13 +364,16 @@ margin-left:50px;
                                         </div>
                                           <div class="col-lg-6" >
                                               
+                                              <div style="height:50%"></div>
+
+                                              <div style="height:50%"></div>
                                           </div>
 
                                     </div>
                                 </div>
 
 
-
+                                <asp:HiddenField ID="hdnDoctorID" runat="server" Value="" />
                             </div>
                         </div>
                     </div>
@@ -362,6 +385,8 @@ margin-left:50px;
 
             </div>
         </div>
+
+
 
 
 </asp:Content>
