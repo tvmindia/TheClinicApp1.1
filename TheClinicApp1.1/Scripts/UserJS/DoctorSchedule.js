@@ -12,6 +12,20 @@ $(document).ready(function () {
     GetScheduleByDrID();
 
 
+    // ---- Get date in yyyy mm dd format , to set default date----- //
+
+    Date.prototype.yyyymmdd = function () {
+        var mm = this.getMonth() + 1; // getMonth() is zero-based
+        var dd = this.getDate();
+
+        return [this.getFullYear(), !mm[1] && '0', mm, !dd[1] && '0', dd].join(''); // padding
+    };
+
+    var date = new Date();
+    date.yyyymmdd();
+
+//----------------------------------------------------------------------//
+
     $("#txtstartTime").timepicki();
               $("#txtEndTime").timepicki();
              $("#myModal").dialog({
@@ -43,7 +57,7 @@ $(document).ready(function () {
                 right: 'month,agendaWeek,agendaDay'
             },
 
-            defaultDate: '2016-08-09',
+            defaultDate: date,
             businessHours: true, // display business hours
             lang: initialLangCode,
             selectable: true,

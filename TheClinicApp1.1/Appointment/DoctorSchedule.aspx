@@ -5,8 +5,10 @@
 
      <script src="../js/JavaScript_selectnav.js"></script>
   
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <script src="../js/jquery-1.12.4.js"></script>
+    <script src="../js/1.12.0jquery-ui.js"></script> 
+
+
     <script src="../js/moment.min.js"></script>
     <script src="../js/fullcalendar.min.js"></script>
     <script src="../js/lang-all.js"></script>
