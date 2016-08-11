@@ -5,9 +5,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <script src="../js/JavaScript_selectnav.js"></script>
-  
-       <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="../js/jquery-1.12.4.js"></script>
+    <script src="../js/1.12.0jquery-ui.js"></script>
   <script src='../js/moment.min.js'></script>
   <script src='../js/fullcalendar.min.js'></script>
   <script src='../js/lang-all.js'></script>
@@ -238,6 +237,15 @@ border:none !important;
  {
 border:none!important;
  }
+ .searchBtn{
+     position: absolute; top: 0; right: 2px; bottom: 0; margin: auto; background: #1d49b2; color: #fff; font-family:'caviardreams-regular'; height: 26px; padding: 0; text-align: center; line-height: 26px; font-size: 14px; border: 0; width: 78px; 
+-webkit-border-top-right-radius: 0px;
+-webkit-border-bottom-right-radius: 0px;
+-moz-border-radius-topright: 0px;
+-moz-border-radius-bottomright: 0px;
+border-top-right-radius: 0px;
+border-bottom-right-radius: 0px;
+ }
     </style>
     <script>
         $(document).ready(function () {
@@ -292,7 +300,18 @@ border:none!important;
 
             };
             $(".save").click(function () {
-                alert();
+                var appointmentDate=$("#txtAppointmentDate").val();
+                var name=$("#txtPatientName").val();
+                var mobile=$("#txtPatientMobile").val();
+                var place=$("#txtPatientPlace").val();
+
+                var Appointments=new Object();
+
+                appointmentDate.AppointmentDate=appointmentDate;
+                appointmentDate.Name=name;
+                appointmentDate.Mobile=mobile;
+                appointmentDate.Location=place;
+                InsertPatientAppointment();
             });
         });
         //end of document.ready
@@ -476,7 +495,7 @@ border:none!important;
                                                                <div class="search_div">
 
                         <input class="field" type="search" id="txtSearch" onblur="bindPatient()" name="txtSearch" placeholder="Search patient..." />
-                        <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" disabled />
+                        <input class="searchBtn" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" disabled />
                     </div>
                                                               <br />
                                                           </td>
