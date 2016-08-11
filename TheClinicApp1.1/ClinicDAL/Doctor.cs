@@ -422,6 +422,65 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion GetAllDoctorsScheduledBetweenDates
 
+        #region GetAllDoctorsScheduleDetailsBetweenDates
+        public DataSet GetAllDoctorsScheduleDetailsBetweenDates()
+        {
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (DoctorID == "")
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
+            if (StartDate == "")
+            {
+                throw new Exception("StartDate is Empty!!");
+            }
+            if (EndDate == "")
+            {
+                throw new Exception("EndDate is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataSet ds = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetAllDoctorsScheduleDetailsBetweenDatesForCalender";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
+                cmd.Parameters.Add("@StartDate", SqlDbType.DateTime).Value = StartDate;
+                cmd.Parameters.Add("@EndDate", SqlDbType.DateTime).Value = EndDate;
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAllDoctorsScheduleDetailsBetweenDates";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return ds;
+        }
+        #endregion GetAllDoctorsScheduleDetailsBetweenDates
+
         #region InsertDoctorSchedule
         public Int16 InsertDoctorSchedule()
         {
@@ -654,6 +713,14 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 throw new Exception("DoctorID is Empty!!");
             }
+            if (StartDate == "")
+            {
+                throw new Exception("StartDate is Empty!!");
+            }
+            if (EndDate == "")
+            {
+                throw new Exception("EndDate is Empty!!");
+            }
             try
             {
                 dbConnection dcon = new dbConnection();
@@ -664,6 +731,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandText = "[GetAllScheduleDetailsByDoctorID]";
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
+                cmd.Parameters.Add("@StartDate", SqlDbType.DateTime).Value = StartDate;
+                cmd.Parameters.Add("@EndDate", SqlDbType.DateTime).Value = EndDate;
                 sda = new SqlDataAdapter(cmd);
                 ds = new DataSet();
                 sda.Fill(ds);
@@ -742,6 +811,8 @@ namespace TheClinicApp1._1.ClinicDAL
 
         }
         #endregion GetAllDoctorScheduleDetailsByDate
+
+      
         #endregion Doctor Methods
 
 
