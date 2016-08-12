@@ -206,6 +206,7 @@ margin-left:50px;
 }
 
 
+
 /*.fc-content
 {
     display:none;
@@ -223,13 +224,23 @@ margin-left:50px;
 
       $(document).ready(function ()
       {
+
+          debugger;
+
          var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
 
           if (DoctorID != "" && DoctorID != null) {
               GetScheduleByDrID(DoctorID);
           }
 
-         
+          else
+          {
+              $("#tblDates tr").remove();
+
+                  var html = '<tr><td>' + "No Scheduled Date yet !" + '</td></tr>';
+                  $("#tblDates").append(html);
+             
+          }
           
         });
 
@@ -418,9 +429,11 @@ margin-left:50px;
 
                                               </div>
 
-                                              <div style="height:50%">
+                                             <div style="height:130px"></div>
+                                          
+                                              <div class="col-lg-12">
 
-                                             <%--     <table  >
+                                                 <table  >
 
                                                       <thead>
                                                           <tr>  <th colspan="2" style="background-color: #dae4f1!important;color:black">Schedule List</th></tr>
@@ -431,7 +444,7 @@ margin-left:50px;
                                                           <tr>
                                                               <td>Date</td>
                                                               <td>
-                                                                  <table id="tblScheduledDates">
+                                                                  <table id="tblDates">
                                                                       
                                                                   </table>
 
@@ -442,7 +455,7 @@ margin-left:50px;
                                                           
                                                       </tbody>
 
-                                                  </table>--%>
+                                                  </table>
 
                                               </div>
                                           </div>
