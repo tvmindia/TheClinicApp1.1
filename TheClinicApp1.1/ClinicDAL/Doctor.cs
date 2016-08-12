@@ -713,7 +713,7 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 throw new Exception("DoctorID is Empty!!");
             }
-            
+          
             try
             {
                 dbConnection dcon = new dbConnection();
@@ -858,7 +858,9 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion IsDoctorScheduleAllotedForPatientAppointment
 
+      
 
+       
         #endregion Doctor Methods
 
 
