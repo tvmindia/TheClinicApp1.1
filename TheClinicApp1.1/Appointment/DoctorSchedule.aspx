@@ -29,6 +29,7 @@
             padding: 0;
             font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
             font-size: 14px;
+           
         }
 
         #calendar {
@@ -235,7 +236,7 @@ margin-left:50px;
 
     </script>
     
-    <div class="main_body">
+    <div class="main_body" >
             <div class="left_part">
                 <div class="logo">
                     <a href="#">
@@ -306,7 +307,7 @@ margin-left:50px;
 
                             <div class="tab_table">
                               
-                                <div class="row field_row" >
+                                <div class="row field_row"  >
                                     <div class="col-lg-12">
 
                                        
@@ -367,19 +368,19 @@ margin-left:50px;
                                                 </div>
                                             </div>
 
-
+                                             <div class="loader" style="float:left"></div>
                                         </div>
 
-                                         <div class="col-lg-1"  style="float:left" >
+                                         <%--<div class="col-lg-1"  style="float:left" >
 
-                                            <div class="loader" style="float:left"></div>
+                                           
 
-                                        </div>
+                                        </div>--%>
                                           <div class="col-lg-6" >
                                               
                                               <div style="height:50%;" class="col-lg-12" >
 
-                                                  <table>
+                                                  <table  >
 
                                                       <thead>
                                                           <tr>  <th colspan="2">Add Schedule</th></tr>
