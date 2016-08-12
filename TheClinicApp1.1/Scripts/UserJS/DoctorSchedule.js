@@ -4,6 +4,7 @@
         var json;
 var title, eventStartDate, eventEndDate;
 var tooltip;
+var DoctorID;
 
 $(document).ready(function () {
    
@@ -53,22 +54,10 @@ $(document).ready(function () {
                 debugger;
                 //CustomClick();
                 // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-                $("#txtAppointmentDate").val(eventStartDate);
+              
                 $('#calendar').fullCalendar('unselect');
 
-                var jsonDeatilsByDate = {};
-
-                var Doctor = new Object();
-                Doctor.SearchDate = eventStartDate;
-
-                jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
-
-                if (jsonDeatilsByDate != undefined) {
-                    
-                    BindTimes(jsonDeatilsByDate);
-
-                }
-               
+                GetScheduledTimesByDate();
             },
 
 
@@ -195,11 +184,41 @@ $(document).ready(function () {
 
 /*end of document.ready*/
 
+function GetScheduledTimesByDate()
+{
+    var jsonDeatilsByDate = {};
+
+    var Doctor = new Object();
+
+
+    if (DoctorID != null && DoctorID != "") {
+
+        $("#txtAppointmentDate").val(eventStartDate);
+
+        Doctor.DoctorID = DoctorID;
+        Doctor.SearchDate = eventStartDate;
+
+        jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+
+        if (jsonDeatilsByDate != undefined)
+        {
+         BindTimes(jsonDeatilsByDate);
+        }
+    }
+
+    else {
+        alert("Please Select a doctor");
+    }
+
+}
+
+
+
 
 function GetScheduleByDrID(drID) {
     debugger;
 
-   
+    DoctorID = drID;
 
     var jsonDrSchedule = {};
 
@@ -227,18 +246,24 @@ function GetAllDoctorScheduleDetailsByDate(Doctor)
 
 function BindTimes(Records) {
 
-    $("#Times tr").remove();
-
+    $("#tblTimes tr").remove();
+  
     $.each(Records, function (index, Records) {
 
         var ScheduleID = Records.ID;
 
-      
-
         var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + Records.Starttime + "-" + Records.Endtime + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
-        $("#Times").append(html);
+        $("#tblTimes").append(html);
 
     });
+
+    if (Records.length == 0)
+    {
+        var html = '<tr><td>' + "No Scheduled time yet !" + '</td></tr>';
+        $("#tblTimes").append(html);
+    }
+  
+
 
 }
 
@@ -246,7 +271,6 @@ function BindTimes(Records) {
 function RemoveTime(ScheduleID) {
     debugger;
 
-  
         var Doctor = new Object();
         Doctor.DocScheduleID = ScheduleID;
 
@@ -257,9 +281,13 @@ function RemoveTime(ScheduleID) {
     ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelDoctorSchedule");
     table = JSON.parse(ds.d);
 
-    alert(table.status);
-
-
+    if (table.status == 0)
+    {
+        alert(" Sorry, Already scheduled an appointment!")
+    }
+    else {
+        GetScheduledTimesByDate();
+    }
 }
 
 

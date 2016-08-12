@@ -776,6 +776,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "GetAllDoctorScheduleDetailsByDate";
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
                 cmd.Parameters.Add("@SearchDate", SqlDbType.Date).Value = DateTime.Parse(SearchDate);
                 sda = new SqlDataAdapter(cmd);
                 ds = new DataSet();
