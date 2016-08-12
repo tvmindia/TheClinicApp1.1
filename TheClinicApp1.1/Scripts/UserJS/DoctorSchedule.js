@@ -241,6 +241,16 @@ function BindScheduledDates(Records)
 {
     debugger;
 
+    //var Doctor = new Object();
+    //Doctor.DoctorID = drID;
+
+    //var ds = {};
+    //var table = {};
+    //var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+    //ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetDoctorScheduleDetailsByDoctorID");
+    //Records = JSON.parse(ds.d);
+
+
     $("#tblDates tr").remove();
 
     $.each(Records, function (index, Records) {
@@ -281,8 +291,13 @@ function BindTimes(Records) {
 
         var ScheduleID = Records.ID;
 
+
+        if (Records.Starttime != null && Records.Endtime != null) {
+
+       
         var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + Records.Starttime + "-" + Records.Endtime + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
         $("#tblTimes").append(html);
+        }
 
     });
 
