@@ -203,6 +203,19 @@ margin-left:50px;
   height: 10px;
   z-index: 3;
 }
+
+
+/*.fc-content
+{
+    display:none;
+}
+.fc-time {
+    display:none;
+}
+
+.fc-day-grid-event .fc-time{
+    display:none;
+}*/
     </style>
 
     <script>
@@ -364,7 +377,40 @@ margin-left:50px;
                                         </div>
                                           <div class="col-lg-6" >
                                               
-                                              <div style="height:50%"></div>
+                                              <div style="height:50%;" class="col-lg-12" >
+
+                                                  <table>
+
+                                                      <thead>
+                                                          <tr>  <th colspan="2">Add Schedule</th></tr>
+                                                        
+                                                      </thead>
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>Date</td>
+                                                              <td><input class="" name="Date" id="txtAppointmentDate" type="text" disabled="disabled"/></td>
+
+                                                          </tr>
+                                                          <tr>
+                                                              <td>Time</td>
+                                                              <td>
+                                                                  <table id="Times">
+                                                                      
+                                                                  </table>
+
+
+                                                              </td>
+
+                                                          </tr>
+                                                          
+                                                      </tbody>
+
+                                                  </table>
+
+
+                                                   
+
+                                              </div>
 
                                               <div style="height:50%"></div>
                                           </div>

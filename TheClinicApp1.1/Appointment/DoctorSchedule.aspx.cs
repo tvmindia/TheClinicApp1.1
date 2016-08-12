@@ -46,6 +46,42 @@ namespace TheClinicApp1._1.Appointment
 
         #region Methods
 
+        #region GetAllDoctorScheduleDetailsByDate
+        [System.Web.Services.WebMethod]
+        public static string GetAllDoctorScheduleDetailsByDate(TheClinicApp1._1.ClinicDAL.Doctor DocObj)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            if (UA != null)
+            {
+                DataSet ds = null;
+
+                DocObj.ClinicID = UA.ClinicID.ToString();
+                ds = DocObj.GetAllDoctorScheduleDetailsByDate();
+                //Converting to Json
+                List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+                Dictionary<string, object> childRow;
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        childRow = new Dictionary<string, object>();
+                        foreach (DataColumn col in ds.Tables[0].Columns)
+                        {
+                            childRow.Add(col.ColumnName, row[col].ToString());
+                        }
+                        parentRow.Add(childRow);
+                    }
+                }
+                return jsSerializer.Serialize(parentRow);
+            }
+            return jsSerializer.Serialize("");
+        }
+        #endregion GetAllDoctorScheduleDetailsByDate
+
+
         #region GetDoctorScheduleDetailsByDocScheduleID
         [System.Web.Services.WebMethod]
         public static string GetDoctorScheduleDetailsByDocScheduleID(TheClinicApp1._1.ClinicDAL.Doctor DocObj)

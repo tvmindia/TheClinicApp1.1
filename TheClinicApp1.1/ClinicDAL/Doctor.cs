@@ -782,7 +782,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "";
+                cmd.CommandText = "GetAllDoctorScheduleDetailsByDate";
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@SearchDate", SqlDbType.Date).Value = DateTime.Parse(SearchDate);
                 sda = new SqlDataAdapter(cmd);
