@@ -301,7 +301,7 @@ margin-left:50px;
                                 </div>--%>
                                 <ul class="top_right_links" >
                                     <li><a class="save" href="#"><span></span>Save</a></li>
-                                    <li><a class="new" href="#"><span></span>New</a></li>
+                                    <li><a class="new" href="DoctorSchedule.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
 
@@ -383,13 +383,18 @@ margin-left:50px;
                                                   <table  >
 
                                                       <thead>
-                                                          <tr>  <th colspan="2">Add Schedule</th></tr>
+                                                          <tr>  <th colspan="2" style="background-color: #dae4f1!important;color:black">Add Schedule</th></tr>
                                                         
                                                       </thead>
                                                       <tbody>
                                                           <tr>
                                                               <td>Date</td>
-                                                              <td><input class="" name="Date" id="txtAppointmentDate" type="text" disabled="disabled"/></td>
+                                                              <td>
+                                                                 
+
+                                                                  <input class="" name="Date" id="txtAppointmentDate" type="text" readonly="true"/>
+
+                                                              </td>
 
                                                           </tr>
                                                           <tr>

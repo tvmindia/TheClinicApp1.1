@@ -81,7 +81,6 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion GetAllDoctorScheduleDetailsByDate
 
-
         #region GetDoctorScheduleDetailsByDocScheduleID
         [System.Web.Services.WebMethod]
         public static string GetDoctorScheduleDetailsByDocScheduleID(TheClinicApp1._1.ClinicDAL.Doctor DocObj)
@@ -312,8 +311,19 @@ namespace TheClinicApp1._1.Appointment
                     if (UA.ClinicID.ToString() != "")
                     {
 
-                        DocObj.UpdatedBy = UA.userName;
-                        DocObj.status = DocObj.CancelDoctorSchedule().ToString();
+                        DocObj.ClinicID = UA.ClinicID.ToString();
+                        bool isSccheduleIDUsed = DocObj.CheckDoctorScheduleAllotedForPatientAppointment();
+
+                        if (isSccheduleIDUsed == false)
+                        {
+                            DocObj.UpdatedBy = UA.userName;
+                            DocObj.status = DocObj.CancelDoctorSchedule().ToString();
+                        }
+
+                        else
+                        {
+                            DocObj.status = "0"; //Already Used
+                        }
                     }
                 }
                 else

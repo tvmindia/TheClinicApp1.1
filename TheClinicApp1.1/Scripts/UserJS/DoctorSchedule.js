@@ -4,6 +4,7 @@
         var json;
 var title, eventStartDate, eventEndDate;
 var tooltip;
+var DoctorID;
 
 $(document).ready(function () {
    
@@ -56,19 +57,7 @@ $(document).ready(function () {
                 $("#txtAppointmentDate").val(eventStartDate);
                 $('#calendar').fullCalendar('unselect');
 
-                var jsonDeatilsByDate = {};
-
-                var Doctor = new Object();
-                Doctor.SearchDate = eventStartDate;
-
-                jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
-
-                if (jsonDeatilsByDate != undefined) {
-                    
-                    BindTimes(jsonDeatilsByDate);
-
-                }
-               
+                GetScheduledTimesByDate();
             },
 
 
@@ -195,11 +184,36 @@ $(document).ready(function () {
 
 /*end of document.ready*/
 
+function GetScheduledTimesByDate()
+{
+    var jsonDeatilsByDate = {};
+
+    var Doctor = new Object();
+
+
+    if (DoctorID != null && DoctorID != "") {
+
+        Doctor.DoctorID = DoctorID;
+
+        Doctor.SearchDate = eventStartDate;
+
+        jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+
+        if (jsonDeatilsByDate != undefined) {
+
+            BindTimes(jsonDeatilsByDate);
+
+        }
+    }
+}
+
+
+
 
 function GetScheduleByDrID(drID) {
     debugger;
 
-   
+    DoctorID = drID;
 
     var jsonDrSchedule = {};
 
@@ -233,8 +247,6 @@ function BindTimes(Records) {
 
         var ScheduleID = Records.ID;
 
-      
-
         var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + Records.Starttime + "-" + Records.Endtime + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
         $("#Times").append(html);
 
@@ -246,7 +258,6 @@ function BindTimes(Records) {
 function RemoveTime(ScheduleID) {
     debugger;
 
-  
         var Doctor = new Object();
         Doctor.DocScheduleID = ScheduleID;
 
@@ -257,8 +268,10 @@ function RemoveTime(ScheduleID) {
     ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelDoctorSchedule");
     table = JSON.parse(ds.d);
 
-    alert(table.status);
-
+    if (table.status == 0)
+    {
+        alert(" Sorry, Already scheduled an appointment!")
+    }
 
 }
 
