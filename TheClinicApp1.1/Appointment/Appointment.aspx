@@ -246,6 +246,49 @@ border:none!important;
 border-top-right-radius: 0px;
 border-bottom-right-radius: 0px;
  }
+ .header {
+    height: 40px;
+ text-align:center;
+    background-color: #c6d9eb;
+    border: 2px solid #c6d9eb;
+    height: 40px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+ .Patientheader
+ {
+ height: 40px;
+ text-align:center;
+    background-color: #dae4f1;
+    border: 2px solid #dae4f1;
+    height: 40px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+ }
+ .mainbody {
+    margin-top: 0;
+    min-height: 150px;
+    max-height: 388px;
+    overflow: auto;
+    background-color:#ecf2f8;
+    text-align:center;
+}
+ .PatientBody
+ {
+ margin-top: 0;
+    min-height: 150px;
+    max-height: 388px;
+    overflow: auto;
+    background-color: #edf2f8;
+ }
     </style>
     <script>
         $(document).ready(function () {
@@ -307,14 +350,28 @@ border-bottom-right-radius: 0px;
 
                 var Appointments=new Object();
 
-                appointmentDate.AppointmentDate=appointmentDate;
-                appointmentDate.Name=name;
-                appointmentDate.Mobile=mobile;
-                appointmentDate.Location=place;
-                InsertPatientAppointment();
+                Appointments.AppointmentDate=appointmentDate;
+                Appointments.Name=name;
+                Appointments.Mobile=mobile;
+                Appointments.Location=place;
+                InsertPatientAppointment(Appointments);
             });
         });
         //end of document.ready
+
+        function InsertPatientAppointment(Appointments)
+        {
+            debugger;
+            var ds = {};
+            var table = {};
+           
+            var data = "{'AppointObj':" + JSON.stringify(MailSending) + "}";
+            ds = getJsonData(data, "../Appointment/Appointment.aspx/InsertPatientAppointment");
+                table = JSON.parse(ds.d);
+            
+       
+            return table;
+        }
         function bindPatient() {
            
             if (document.getElementById("txtSearch").innerText != "")
@@ -476,8 +533,9 @@ border-bottom-right-radius: 0px;
 
                                         </div>
                                           <div class="col-lg-6" >
-                                              <div id="AppointmentLit"></div>
-                                              <div id="PatientReg">
+                                               <div id="PatientReg">
+                                                   <div class="Patientheader">Add Appointment</div>
+                                                   <div class="PatientBody">
                                                   <table>
                                                        <tr>
                                                           <td>
@@ -532,9 +590,17 @@ border-bottom-right-radius: 0px;
                                                       </tr>
                                                      
                                                   </table>
-                                                 
+                                                 </div>
                                                  
                                               </div>
+                                              <br />
+                                              <div id="AppointmentList" >
+                                                  <div class="header">Patient List</div>
+                                                  <div class="mainbody" id="listBody">
+       
+    </div>
+                                              </div>
+                                             
                                           </div>
                                         </div>
                               </div>
