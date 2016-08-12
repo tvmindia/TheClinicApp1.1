@@ -185,23 +185,7 @@ $(document).ready(function () {
 /*end of document.ready*/
 
 
-function ConvertJsonToDate(jsonDate) {
-    if (jsonDate != null) {
-        var dateString = jsonDate.substr(6);
-        var currentTime = new Date(parseInt(dateString));
-        var month = currentTime.getMonth();
-        var day = currentTime.getDate();
-        var year = currentTime.getFullYear();
-        var monthNames = [
-                      "Jan", "Feb", "Mar",
-                      "Apr", "May", "Jun", "Jul",
-                      "Aug", "Sep", "Oct",
-                      "Nov", "Dec"
-        ];
-        var result = day + '-' + monthNames[month] + '-' + year;
-        return result;
-    }
-}
+
 
 
 function GetScheduledTimesByDate()
@@ -260,8 +244,8 @@ function BindScheduledDates(Records)
     $("#tblDates tr").remove();
 
     $.each(Records, function (index, Records) {
-        alert(Records.start);
-        var html = '<tr><td>' +ConvertJsonToDate( Records.start)+ '</td></tr>';
+
+        var html = '<tr><td>' + Records.start + '</td></tr>';
         $("#tblDates").append(html);
 
     });
