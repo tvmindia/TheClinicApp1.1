@@ -400,7 +400,7 @@ margin-left:50px;
                                                           <tr>
                                                               <td>Time</td>
                                                               <td>
-                                                                  <table id="Times">
+                                                                  <table id="tblTimes">
                                                                       
                                                                   </table>
 
@@ -418,7 +418,33 @@ margin-left:50px;
 
                                               </div>
 
-                                              <div style="height:50%"></div>
+                                              <div style="height:50%">
+
+                                             <%--     <table  >
+
+                                                      <thead>
+                                                          <tr>  <th colspan="2" style="background-color: #dae4f1!important;color:black">Schedule List</th></tr>
+                                                        
+                                                      </thead>
+                                                      <tbody>
+                                                         
+                                                          <tr>
+                                                              <td>Date</td>
+                                                              <td>
+                                                                  <table id="tblScheduledDates">
+                                                                      
+                                                                  </table>
+
+
+                                                              </td>
+
+                                                          </tr>
+                                                          
+                                                      </tbody>
+
+                                                  </table>--%>
+
+                                              </div>
                                           </div>
 
                                     </div>

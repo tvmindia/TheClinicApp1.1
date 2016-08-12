@@ -54,7 +54,7 @@ $(document).ready(function () {
                 debugger;
                 //CustomClick();
                 // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-                $("#txtAppointmentDate").val(eventStartDate);
+              
                 $('#calendar').fullCalendar('unselect');
 
                 GetScheduledTimesByDate();
@@ -193,18 +193,23 @@ function GetScheduledTimesByDate()
 
     if (DoctorID != null && DoctorID != "") {
 
-        Doctor.DoctorID = DoctorID;
+        $("#txtAppointmentDate").val(eventStartDate);
 
+        Doctor.DoctorID = DoctorID;
         Doctor.SearchDate = eventStartDate;
 
         jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
 
-        if (jsonDeatilsByDate != undefined) {
-
-            BindTimes(jsonDeatilsByDate);
-
+        if (jsonDeatilsByDate != undefined)
+        {
+         BindTimes(jsonDeatilsByDate);
         }
     }
+
+    else {
+        alert("Please Select a doctor");
+    }
+
 }
 
 
@@ -241,16 +246,24 @@ function GetAllDoctorScheduleDetailsByDate(Doctor)
 
 function BindTimes(Records) {
 
-    $("#Times tr").remove();
-
+    $("#tblTimes tr").remove();
+  
     $.each(Records, function (index, Records) {
 
         var ScheduleID = Records.ID;
 
         var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + Records.Starttime + "-" + Records.Endtime + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
-        $("#Times").append(html);
+        $("#tblTimes").append(html);
 
     });
+
+    if (Records.length == 0)
+    {
+        var html = '<tr><td>' + "No Scheduled time yet !" + '</td></tr>';
+        $("#tblTimes").append(html);
+    }
+  
+
 
 }
 
@@ -272,7 +285,9 @@ function RemoveTime(ScheduleID) {
     {
         alert(" Sorry, Already scheduled an appointment!")
     }
-
+    else {
+        GetScheduledTimesByDate();
+    }
 }
 
 
