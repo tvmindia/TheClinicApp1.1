@@ -812,7 +812,60 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion GetAllDoctorScheduleDetailsByDate
 
-      
+        #region IsDoctorScheduleAllotedForPatientAppointment
+        public Boolean  CheckDoctorScheduleAllotedForPatientAppointment()
+        {
+            SqlConnection con = null;
+            SqlParameter outstatusparm = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (DocScheduleID == "")
+            {
+                throw new Exception("DocScheduleID is Empty!!");
+            }
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "IsDoctorScheduleAllotedForPatientAppointment";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@ScheduleID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DocScheduleID);
+                outstatusparm = cmd.Parameters.Add("@Status", SqlDbType.Bit);
+
+                outstatusparm.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                
+               
+              
+            }
+
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "CheckDoctorScheduleAllotedForPatientAppointment";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return bool.Parse(outstatusparm.Value.ToString());
+        }
+        #endregion IsDoctorScheduleAllotedForPatientAppointment
+
+
         #endregion Doctor Methods
 
 
