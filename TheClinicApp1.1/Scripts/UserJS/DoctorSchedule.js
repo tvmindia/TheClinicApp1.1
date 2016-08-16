@@ -336,11 +336,12 @@ function RemoveTime(ScheduleID) {
 
         jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
         if (jsonDrSchedule != undefined) {
-            events = jsonDrSchedule;
-
+           
             $('#calendar').fullCalendar('removeEventSource', json);
-            $('#calendar').fullCalendar('removeEventSource', events);
-            $('#calendar').fullCalendar('addEventSource', events);
+          
+            json = jsonDrSchedule;
+
+            $('#calendar').fullCalendar('addEventSource', json);
             $('#calendar').fullCalendar('refetchEvents');
         }
 
@@ -509,11 +510,12 @@ function RemoveTime(ScheduleID) {
 
         jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
         if (jsonDrSchedule != undefined) {
-            events = jsonDrSchedule;
 
             $('#calendar').fullCalendar('removeEventSource', json);
-            $('#calendar').fullCalendar('removeEventSource', events);
-            $('#calendar').fullCalendar('addEventSource', events);
+           
+            json = jsonDrSchedule;
+
+            $('#calendar').fullCalendar('addEventSource', json);
             $('#calendar').fullCalendar('refetchEvents');
         }
 
