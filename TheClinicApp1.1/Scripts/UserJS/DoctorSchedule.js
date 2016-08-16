@@ -311,7 +311,7 @@ function BindTimes(Records) {
 
 function RemoveTime(ScheduleID) {
     
-
+    debugger;
         var Doctor = new Object();
         Doctor.DocScheduleID = ScheduleID;
 
@@ -328,6 +328,24 @@ function RemoveTime(ScheduleID) {
     }
     else {
         GetScheduledTimesByDate();
+      
+        var jsonDrSchedule = {};
+
+        var Doctor = new Object();
+        Doctor.DoctorID = DoctorID;
+
+        jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+        if (jsonDrSchedule != undefined) {
+            events = jsonDrSchedule;
+
+            $('#calendar').fullCalendar('removeEventSource', json);
+            $('#calendar').fullCalendar('removeEventSource', events);
+            $('#calendar').fullCalendar('addEventSource', events);
+            $('#calendar').fullCalendar('refetchEvents');
+        }
+
+
+       // $('#calendar').fullCalendar('refetchEvents');
     }
 }
 
@@ -464,18 +482,59 @@ function RemoveTime(ScheduleID) {
             if (JsonNewSchedule.status == "1") {
                 //SUCCESS
 
-            var lblErrorCaption = document.getElementById('lblErrorCaption');
-            var lblMsgges = document.getElementById('lblMsgges');
-            var Errorbox = document.getElementById('Errorbox');
+                var jsonDeatilsByDate = {};
 
-            var lblclass = Alertclasses.sucess;
-            var lblmsg = msg.InsertionSuccessFull;
-            var lblcaptn = Caption.SuccessMsgCaption;
+                var Doctor = new Object();
 
-            Errorbox.style.display = "";
-            Errorbox.className = lblclass;
-            lblErrorCaption.innerHTML = lblcaptn;
-            lblMsgges.innerHTML = lblmsg;
+
+                if (DoctorID != null && DoctorID != "") {
+
+                    Doctor.DoctorID = DoctorID;
+                    Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
+
+                    jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+
+                    if (jsonDeatilsByDate != undefined) {
+
+                        BindTimes(jsonDeatilsByDate);
+
+                        $("#txtStartTime").val("");
+                        $("#txtEndTime").val("");
+                        $("#txtMaxAppoinments").val("");
+
+                     var jsonDrSchedule = {};
+
+        var Doctor = new Object();
+        Doctor.DoctorID = DoctorID;
+
+        jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+        if (jsonDrSchedule != undefined) {
+            events = jsonDrSchedule;
+
+            $('#calendar').fullCalendar('removeEventSource', json);
+            $('#calendar').fullCalendar('removeEventSource', events);
+            $('#calendar').fullCalendar('addEventSource', events);
+            $('#calendar').fullCalendar('refetchEvents');
+        }
+
+
+                    }
+                }
+
+
+
+            //var lblErrorCaption = document.getElementById('lblErrorCaption');
+            //var lblMsgges = document.getElementById('lblMsgges');
+            //var Errorbox = document.getElementById('Errorbox');
+
+            //var lblclass = Alertclasses.sucess;
+            //var lblmsg = msg.InsertionSuccessFull;
+            //var lblcaptn = Caption.SuccessMsgCaption;
+
+            //Errorbox.style.display = "";
+            //Errorbox.className = lblclass;
+            //lblErrorCaption.innerHTML = lblcaptn;
+            //lblMsgges.innerHTML = lblmsg;
 
             }
 
