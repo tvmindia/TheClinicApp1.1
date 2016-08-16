@@ -8,9 +8,6 @@ var DoctorID;
 
 $(document).ready(function () {
    
-    debugger;
-
-
   //  GetScheduleByDrID();
 
 
@@ -51,7 +48,7 @@ $(document).ready(function () {
             selectHelper: true,
            
             select: function (start, end) {
-                debugger;
+             
                 //CustomClick();
                 // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
               
@@ -82,7 +79,7 @@ $(document).ready(function () {
 
             },
             eventAfterRender: function (event, element) {
-                debugger;
+              
              //  $('.fc-content').remove();
 
 
@@ -157,7 +154,7 @@ $(document).ready(function () {
         CalendarSchedule.endTime = $("#txtEndTime").val();
 
         if (title != null) {
-            debugger;
+          
             var result = AddEvent(CalendarSchedule);
             if (result.status == "1") {
                 alert("Sucessfull..!!!")
@@ -220,7 +217,7 @@ function GetScheduledTimesByDate()
 
 
 function GetScheduleByDrID(drID) {
-    debugger;
+  
 
     DoctorID = drID;
 
@@ -239,7 +236,7 @@ function GetScheduleByDrID(drID) {
 
 function BindScheduledDates(Records)
 {
-    debugger;
+  
 
     //var Doctor = new Object();
     //Doctor.DoctorID = drID;
@@ -313,7 +310,7 @@ function BindTimes(Records) {
 
 
 function RemoveTime(ScheduleID) {
-    debugger;
+    
 
         var Doctor = new Object();
         Doctor.DocScheduleID = ScheduleID;
@@ -347,7 +344,7 @@ function RemoveTime(ScheduleID) {
 
     /*Add New Calendar Event */
     function AddEvent(CalendarSchedule) {
-        debugger;
+      
         var data = "{'calendarObj':" +JSON.stringify(CalendarSchedule) + "}";
 
         jsonResult = getJsonData(data, "../JqueryEvents.aspx/AddCalendarEvent");
@@ -378,7 +375,7 @@ function RemoveTime(ScheduleID) {
 }
     /*open modal dialog*/
     function CustomClick() {
-        debugger;
+      
         $("#myModal").dialog('open');
         function D(J) { return (J < 10 ? '0': '') +J;
         };
@@ -441,7 +438,59 @@ function RemoveTime(ScheduleID) {
 
 });
 
-}
+    }
+
+    function AddSchedule() {
+
+        debugger;
+
+        var JsonNewSchedule = {};
+
+        var Doctor = new Object();
+        Doctor.DoctorID = DoctorID;
+        Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
+        Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
+        Doctor.IsAvailable = true;
+        Doctor.Starttime = document.getElementById('txtStartTime').value;
+        Doctor.Endtime = document.getElementById('txtEndTime').value;
+
+        JsonNewSchedule = AddDrSchedule(Doctor);
+
+        if (JsonNewSchedule != undefined)
+        {
+          //  alert(JsonNewSchedule.status);
+
+
+            if (JsonNewSchedule.status == "1") {
+                //SUCCESS
+
+            var lblErrorCaption = document.getElementById('lblErrorCaption');
+            var lblMsgges = document.getElementById('lblMsgges');
+            var Errorbox = document.getElementById('Errorbox');
+
+            var lblclass = Alertclasses.sucess;
+            var lblmsg = msg.InsertionSuccessFull;
+            var lblcaptn = Caption.SuccessMsgCaption;
+
+            Errorbox.style.display = "";
+            Errorbox.className = lblclass;
+            lblErrorCaption.innerHTML = lblcaptn;
+            lblMsgges.innerHTML = lblmsg;
+
+            }
+
+        }
+
+    }
+
+    function AddDrSchedule(Doctor) {
+        var ds = {};
+        var table = {};
+        var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+        ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/InsertDoctorSchedule");
+        table = JSON.parse(ds.d);
+        return table;
+    }
 
 
 

@@ -43,7 +43,7 @@ $(document).ready(function ()
                   selectable: true,
                   selectHelper: true,
                   select: function (start, end) {
-                      debugger;
+                    
                       //CustomClick();
                          // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
                       $("#txtAppointmentDate").val(eventStartDate);
@@ -52,13 +52,13 @@ $(document).ready(function ()
                   displayEventTime: false,
                   editable: true,
                   viewRender: function (view, element) {
-                      debugger;
+                    
                       var add_url = '<a class="tip add-task" title="" href="#"\n\
         data-original-title="Dodaj zadanie" onClick="CustomClick();" style="height:25px;margin-left:100px;margin-top:50px;"><img src="../img/add.png" width="25px;"/></a>';
                       $(".fc-more-cell").prepend(add_url);
                   },
                   eventDrop: function(event, delta, revertFunc) {
-                      debugger;
+                    
                       alert(event.title + " was dropped on " + event.start.format());
 
                       if (!confirm("Are you sure about this change?")) {
@@ -67,17 +67,17 @@ $(document).ready(function ()
 
                   },
                   eventOverlap: function (stillEvent, movingEvent) {
-                      debugger;
+                    
                       return stillEvent.allDay && movingEvent.allDay;
                   },
                   dayClick: function (date,  jsEvent, view) {
-                      debugger;
+                    
                       eventStartDate= date.format();
                       eventEndDate = date.format();
 
                   },
                   eventClick: function(calEvent, jsEvent, view) {
-                      debugger;
+                   
                       document.getElementById("listBody").innerHTML = '';
                     title=calEvent.title;
                     eventStartDate = calEvent.start._i;
@@ -88,8 +88,7 @@ $(document).ready(function ()
                     parentDiv.appendChild(newlabel);
                   },
                   eventAfterRender: function (event, element, view) {
-                      debugger;
-                      
+                    
                       $(element).removeClass('MaxHght');
                       if (view.name == 'month') {
 
@@ -129,7 +128,7 @@ $(document).ready(function ()
                   },
 
                   eventMouseout: function (calEvent, jsEvent) {
-                      debugger;
+                     
                       $(this).css('z-index', 8);
                       $('.tooltipevent').remove();
                   },
@@ -139,7 +138,7 @@ $(document).ready(function ()
  },
                   events: json,
                   viewDisplay: function getDate(date) {
-                      debugger;
+                     
                       var lammCurrentDate = new Date();
                       var lammMinDate = new Date(lammCurrentDate.getFullYear(), lammCurrentDate.getMonth(), 1, 0, 0, 0, 0);
 
@@ -177,7 +176,7 @@ $(document).ready(function ()
               CalendarSchedule.endTime = $("#txtEndTime").val();
           
               if (title != null) {
-                  debugger; 
+                
               var result = AddEvent(CalendarSchedule);
               if (result.status == "1") {
                   alert("Sucessfull..!!!")
@@ -268,7 +267,7 @@ $(document).ready(function ()
 /*Web method to get all calendar data from database*/
 function GetJSonDataForCalender()
 {
-    debugger;
+  
      $.ajax({
          type: "POST",
          contentType: "application/json",

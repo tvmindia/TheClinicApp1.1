@@ -504,6 +504,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "InsertDoctorSchedule";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
                 cmd.Parameters.Add("@AvailableDate", SqlDbType.DateTime).Value = DoctorAvailDate;
                 cmd.Parameters.Add("@PatientLimit", SqlDbType.Int).Value = PatientLimit;

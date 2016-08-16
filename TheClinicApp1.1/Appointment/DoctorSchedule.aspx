@@ -7,7 +7,8 @@
   
   <script src="../js/jquery-1.12.4.js"></script>
     <script src="../js/1.12.0jquery-ui.js"></script> 
-
+    <script src="../js/Dynamicgrid.js"></script>
+    <script src="../js/Messages.js"></script>
 
     <script src="../js/moment.min.js"></script>
     <script src="../js/fullcalendar.min.js"></script>
@@ -224,7 +225,9 @@ margin-left:50px;
 
       $(document).ready(function ()
       {
-
+          $('.alert_close').click(function () {
+              $(this).parent(".alert").hide();
+          });
           debugger;
 
          var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
@@ -244,7 +247,7 @@ margin-left:50px;
           
         });
 
-
+     
     </script>
     
     <div class="main_body" >
@@ -299,6 +302,23 @@ margin-left:50px;
                        
                         
                     </ul>
+
+                    <div id="Errorbox" style="height: 30%; display: none;" >
+                                <a class="alert_close">X</a>
+                                <div>
+                                    <strong>
+                                      <label id="lblErrorCaption"></label>
+                                      </strong>
+                                      <label id="lblMsgges"></label>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" >
@@ -311,7 +331,7 @@ margin-left:50px;
                                     <input class="button" type="submit" value="Search" disabled/>
                                 </div>--%>
                                 <ul class="top_right_links" >
-                                    <li><a class="save" href="#"><span></span>Save</a></li>
+                                    <li><a class="save"  onclick=" AddSchedule();"><span></span>Save</a></li>
                                     <li><a class="new" href="DoctorSchedule.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
@@ -322,63 +342,9 @@ margin-left:50px;
                                     <div class="col-lg-12">
 
                                        
-                                        <div class="col-lg-5">
+                                        <div class="col-lg-5" style="height:500px" >
 
-                                                         <div id='calendar'></div>
-
-                                                 
-
-                                                        <div id="myModal" class="modal">
-                                                <div class="modal-content">
-
-                                                    <div class="modal-body">
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <label for="title">Title:</label></td>
-                                                                <td>
-                                                                    <input type="text" id="txtTitle" /></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <label for="endDate">Date:</label></td>
-                                                                <td>
-                                                                    <input type="text" id="txtEndDate" /></td>
-                                                                <%--<td><label for="mandatoryField" id="endDateMandatory" style="color:red;">*yyyy-mm-dd</label></td>--%>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <label for="startTime">Start Time:</label></td>
-                                                                <td>
-                                                                    <input type="text" id="txtstartTime" name="time" /></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <label for="endTime">End Time:</label></td>
-                                                                <td>
-                                                                    <input type="text" id="txtEndTime" name="time" /></td>
-                                                            </tr>
-                                                        </table>
-
-                                                    </div>
-                                                    <br />
-                                                    <div class="modal-footer">
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <button class="btnOkay" id="btnOk">OK</button>
-                                                                </td>
-                                                                <td>
-                                                                    <button class="btnCncl" id="btnCancel">Cancel</button></td>
-
-                                                            </tr>
-                                                        </table>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                             <div id='calendar' ></div>
                                              <div class="loader" style="float:left"></div>
                                         </div>
 
@@ -397,9 +363,9 @@ margin-left:50px;
                                                           <tr>  <th colspan="2" style="background-color: #dae4f1!important;color:black">Add Schedule</th></tr>
                                                         
                                                       </thead>
-                                                      <tbody>
+                                                      <tbody >
                                                           <tr>
-                                                              <td>Date</td>
+                                                              <td style="width:30%">Date</td>
                                                               <td>
                                                                  
 
@@ -410,7 +376,7 @@ margin-left:50px;
                                                           </tr>
                                                           <tr>
                                                               <td>Time</td>
-                                                              <td>
+                                                              <td style="min-height:31px;">
                                                                   <table id="tblTimes">
                                                                       
                                                                   </table>
@@ -419,6 +385,23 @@ margin-left:50px;
                                                               </td>
 
                                                           </tr>
+                                                          <tr>
+                                                              <td >
+                                                                   <div class="col-lg-12" style="padding-left:0px!important;padding-right:0px!important;">
+                                                                 
+                                                                        <div class="col-lg-6"  style="padding-left:0px!important;padding-right:0px!important;" >
+                                                                   <input   type="text" placeholder="Start Time" id="txtStartTime" />
+                                                                      </div>
+                                                                        
+                                                                       <div class="col-lg-6" style="padding-left:0px!important;padding-right:0px!important;">
+                                                                  <input   type="text" placeholder="End Time" id="txtEndTime"/>
+                                                                      </div>
+                                                                     </div> 
+                                                              </td>
+                                                              <td><input class="" name="MaxAppoinmnt" type="text" placeholder="maximum appoinments " id="txtMaxAppoinments"/></td>
+                                                              
+                                                          </tr>
+
                                                           
                                                       </tbody>
 
@@ -459,7 +442,7 @@ margin-left:50px;
 
                                               </div>
                                           </div>
-
+                                        </div>
                                     </div>
                                 </div>
 
@@ -475,9 +458,6 @@ margin-left:50px;
                 
 
             </div>
-        </div>
-
-
-
+       
 
 </asp:Content>

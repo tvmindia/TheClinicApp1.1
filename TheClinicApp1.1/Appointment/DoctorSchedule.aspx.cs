@@ -228,7 +228,7 @@ namespace TheClinicApp1._1.Appointment
                 {
                     if (UA.ClinicID.ToString() != "")
                     {
-
+                        DocObj.ClinicID = UA.ClinicID.ToString();
                         DocObj.CreatedBy = UA.userName;
                         DocObj.status = DocObj.InsertDoctorSchedule().ToString();
                     }
