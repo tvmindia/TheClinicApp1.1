@@ -42,6 +42,12 @@ namespace TheClinicApp1._1.Appointment
             public string start { get; set; }
             public string end { get; set; }
 
+            public string patientName
+            {
+                get;
+                set;
+            }
+
         }
         #endregion Event Properties
         #region Methods
@@ -55,6 +61,7 @@ namespace TheClinicApp1._1.Appointment
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            AppointObj.ClinicID =Convert.ToString(UA.ClinicID);
             JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
             try
             {
@@ -133,9 +140,9 @@ namespace TheClinicApp1._1.Appointment
 
         #region GetAllPatientAppointmentDetailsByClinicID
         [System.Web.Services.WebMethod]
-        public static string GetAllPatientAppointmentDetailsByClinicID()
+        public static string GetAllPatientAppointmentDetailsByClinicID(TheClinicApp1._1.ClinicDAL.Doctor docObj)
         {
-            Appointments AppointObj = new Appointments();
+            
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -144,8 +151,9 @@ namespace TheClinicApp1._1.Appointment
             DataSet ds = new DataSet();
             if (UA != null)
             {
-                AppointObj.ClinicID = Convert.ToString(UA.ClinicID);
-                ds = AppointObj.GetAllPatientAppointmentDetailsByClinicID();
+                docObj.ClinicID = Convert.ToString(UA.ClinicID);
+                
+                ds = docObj.GetAllScheduleDetailsByDoctorID();
                 int count = ds.Tables[0].Rows.Count;
                 for (int i = 0; i <= count - 1; i++)
                 {
@@ -319,6 +327,78 @@ namespace TheClinicApp1._1.Appointment
 
         }
         #endregion BindDataAutocomplete 
+
+        #region GetAppointedPatientDetails
+        [System.Web.Services.WebMethod]
+        public static string GetAppointedPatientDetails(Appointments AppointObj)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            AppointObj.ClinicID =Convert.ToString(UA.ClinicID);
+            List<Event> events = new List<Event>();
+            if (UA != null)
+            {
+                DataSet ds = null;
+                ds = AppointObj.GetAppointedPatientDetails();
+               // ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
+                int count = ds.Tables[0].Rows.Count;
+                //Converting to Json
+            
+             
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    for (int i = 0; i <= count - 1; i++)
+                    {
+                        events.Add(new Event()
+                        {
+                            id = ds.Tables[0].Rows[i]["ScheduleID"].ToString(),
+                            end = ds.Tables[0].Rows[i]["name"].ToString()
+                        });
+                    }
+                }
+                return jsSerializer.Serialize(events);
+            }
+            return jsSerializer.Serialize("");
+        }
+        #endregion GetAppointedPatientDetails
+
+        #region GetAppointedPatientDetailsByScheduleID
+        [System.Web.Services.WebMethod]
+        public static string GetAppointedPatientDetailsByScheduleID(Appointments AppointObj)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            AppointObj.ClinicID = Convert.ToString(UA.ClinicID);
+            List<Event> events = new List<Event>();
+            if (UA != null)
+            {
+                DataSet ds = null;
+              //  ds = AppointObj.GetAppointedPatientDetails();
+                 ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
+                int count = ds.Tables[0].Rows.Count;
+                //Converting to Json
+
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    for (int i = 0; i <= count - 1; i++)
+                    {
+                        events.Add(new Event()
+                        {
+                            id = ds.Tables[0].Rows[i]["ScheduleID"].ToString(),
+                            title = ds.Tables[0].Rows[i]["name"].ToString()
+                        });
+                    }
+                }
+                return jsSerializer.Serialize(events);
+            }
+            return jsSerializer.Serialize("");
+        }
+        #endregion GetAppointedPatientDetailsByScheduleID
         #endregion Methods
 
         #region Events
@@ -368,10 +448,10 @@ namespace TheClinicApp1._1.Appointment
                     DateTime date = DateTime.Now;
                     int year = date.Year;
                     Guid PatientID = PatientObj.PatientID;
-                    txtPatientName.Text = PatientObj.Name;
-                    string Gender = PatientObj.Gender;
-                    txtPatientMobile.Text = PatientObj.Phone;
-                    txtPatientPlace.Text = PatientObj.Occupation;
+                    //txtPatientName.Text = PatientObj.Name;
+                    //string Gender = PatientObj.Gender;
+                    //txtPatientMobile.Text = PatientObj.Phone;
+                    //txtPatientPlace.Text = PatientObj.Occupation;
                     
                 }
                 else
@@ -398,6 +478,13 @@ namespace TheClinicApp1._1.Appointment
         protected void btnSave_Click(object sender, EventArgs e)
         {
 
+        }
+
+       
+        protected void ddlDoctor_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            hdfddlDoctorID.Value = ddlDoctor.SelectedValue;
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "GetDoctorID()", true);
         }
 
     }

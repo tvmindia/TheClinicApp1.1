@@ -219,6 +219,11 @@ border:none !important;
 {
     width:200px;
 }
+.wrapper {
+    border:none;
+    display:inline-block;
+    position:relative;
+}
  .ddl
         {
             border:2px solid #7d6754;
@@ -246,6 +251,27 @@ border:none!important;
 border-top-right-radius: 0px;
 border-bottom-right-radius: 0px;
  }
+         .searchPatient {
+             position: absolute;
+             top: 0;
+             right: -5px;
+             bottom: 0;
+             margin: auto;
+           
+             color: #fff;
+             font-family: 'caviardreams-regular';
+             height: 26px;
+             padding: 0;
+             text-align: center;
+             line-height: 26px;
+             font-size: 14px;
+             border: 0;
+             width: 50px;
+            border-radius:100%;
+             background-image: url("../images/searchPanel.png");
+             background-repeat:no-repeat;
+           background-position: 20px center;
+         }
  .header {
     height: 40px;
  text-align:center;
@@ -288,6 +314,11 @@ border-bottom-right-radius: 0px;
     max-height: 388px;
     overflow: auto;
     background-color: #edf2f8;
+ }
+ .txtBox
+ {
+     width:250px;
+     background-color:#ffffff;
  }
     </style>
     <script>
@@ -343,18 +374,22 @@ border-bottom-right-radius: 0px;
 
             };
             $(".save").click(function () {
+                debugger;
                 var appointmentDate=$("#txtAppointmentDate").val();
                 var name=$("#txtPatientName").val();
                 var mobile=$("#txtPatientMobile").val();
                 var place=$("#txtPatientPlace").val();
-
+                var scheduleID=$("#hdfScheduleID").val();
                 var Appointments=new Object();
 
                 Appointments.AppointmentDate=appointmentDate;
                 Appointments.Name=name;
                 Appointments.Mobile=mobile;
                 Appointments.Location=place;
-                InsertPatientAppointment(Appointments);
+                Appointments.ScheduleID=scheduleID;
+                var ds={};
+                ds=InsertPatientAppointment(Appointments);
+
             });
         });
         //end of document.ready
@@ -365,12 +400,19 @@ border-bottom-right-radius: 0px;
             var ds = {};
             var table = {};
            
-            var data = "{'AppointObj':" + JSON.stringify(MailSending) + "}";
-            ds = getJsonData(data, "../Appointment/Appointment.aspx/InsertPatientAppointment");
+            var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+             ds=getJsonData(data, "../Appointment/Appointment.aspx/InsertPatientAppointment");
                 table = JSON.parse(ds.d);
             
        
             return table;
+        }
+        function GetDoctorID()
+        {
+            debugger;
+            var docID=  $('#<%=hdfddlDoctorID.ClientID%>').val();
+            var calID= $("#hdfDoctorID").val(docID);
+            BindCalendar(calID);
         }
         function bindPatient() {
            
@@ -397,9 +439,9 @@ border-bottom-right-radius: 0px;
         function BindPatient(Records)
         {
            
-            $("#<%=txtPatientName.ClientID %>").val(Records.Name);
-            $("#<%=txtPatientMobile.ClientID %>").val(Records.Phone);
-            $("#<%=txtPatientPlace.ClientID %>").val(Records.Address);
+            $("#txtPatientName").val(Records.Name);
+            $("#txtPatientMobile").val(Records.Phone);
+            $("#txtPatientPlace").val(Records.Address);
      
                
         }
@@ -442,6 +484,7 @@ border-bottom-right-radius: 0px;
             </div>
 
             <div class="right_part">
+
                 <div class="tagline">
                     <a class="nav_menu">nav</a>
                     Appoinments<ul class="top_right_links">
@@ -469,11 +512,21 @@ border-bottom-right-radius: 0px;
                         
                     </ul>
                     <!-- Tab panes -->
+                    <div id="Errorbox" style="display: none;" runat="server">
+                            <a class="alert_close">X</a>
+                            <div>
+                                <strong>
+                                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
+                                </strong>
+                                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
+                            </div>
+                        </div>                        
+                  
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" >
                             <div class="grey_sec">
                                 <div class="search_div">
-                                    <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" CssClass="ddl"></asp:DropDownList>
+                                    <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" CssClass="ddl" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged1" AutoPostBack="true"></asp:DropDownList>
                                 </div>
                                 <ul class="top_right_links" >
                                     <li><a class="save" href="#"><span></span>Save</a></li>
@@ -542,7 +595,7 @@ border-bottom-right-radius: 0px;
                                                               <asp:Label ID="lblAppointmentDate" runat="server" Text="Date:"></asp:Label>
                                                           </td>
                                                           <td>
-                                                               <input class="" name="Date" id="txtAppointmentDate" type="text" disabled="disabled"/>
+                                                               <input class="txtBox" name="Date" id="txtAppointmentDate" type="text" disabled="disabled"/>
                                                              <%-- <asp:TextBox ID="txtAppointmentDate" runat="server"></asp:TextBox>--%>
                                                               <br />
                                                           </td>
@@ -550,12 +603,14 @@ border-bottom-right-radius: 0px;
                                                       <tr>
                                                           <td> <asp:Label ID="lblPatient" runat="server" Text="Patient:"></asp:Label></td>
                                                           <td>
-                                                               <div class="search_div">
+                                                               <div class="wrapper">
 
-                        <input class="field" type="search" id="txtSearch" onblur="bindPatient()" name="txtSearch" placeholder="Search patient..." />
-                        <input class="searchBtn" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" disabled />
+                        <input class="txtBox" type="search" id="txtSearch" onblur="bindPatient()" name="txtSearch" placeholder="Search patient..." />
+                        <input class="searchPatient" type="button" id="btnSearch" runat="server" onserverclick="btnSearch_ServerClick" disabled />
                     </div>
                                                               <br />
+                                                              <br />
+                                                            
                                                           </td>
                                                           
                                                       </tr>
@@ -564,7 +619,8 @@ border-bottom-right-radius: 0px;
                                                               <asp:Label ID="lblPatientName" runat="server" Text="Name:"></asp:Label>
                                                           </td>
                                                           <td>
-                                                              <asp:TextBox ID="txtPatientName" runat="server"></asp:TextBox>
+                                                              <input type="text" id="txtPatientName" class="txtBox" />
+                                                             <%-- <asp:TextBox ID="txtPatientName" runat="server"></asp:TextBox>--%>
                                                               <br />
                                                           </td>
 
@@ -575,7 +631,8 @@ border-bottom-right-radius: 0px;
                                                               <asp:Label ID="lblPatientMobile" runat="server" Text="Mobile:"></asp:Label>
                                                           </td>
                                                           <td>
-                                                              <asp:TextBox ID="txtPatientMobile" runat="server"></asp:TextBox>
+                                                              <input type="text" id="txtPatientMobile" class="txtBox"/>
+                                                              <%--<asp:TextBox ID="txtPatientMobile" runat="server"></asp:TextBox>--%>
                                                               <br />
                                                           </td>
                                                       </tr>
@@ -585,7 +642,8 @@ border-bottom-right-radius: 0px;
                                                               <asp:Label ID="lblPatientPlace" runat="server" Text="Place:"></asp:Label>
                                                           </td>
                                                           <td>
-                                                              <asp:TextBox ID="txtPatientPlace" runat="server"></asp:TextBox>
+                                                              <input type="text" id="txtPatientPlace" class="txtBox"/>
+                                                              <%--<asp:TextBox ID="txtPatientPlace" runat="server"></asp:TextBox>--%>
                                                           </td>
                                                       </tr>
                                                      
@@ -609,9 +667,10 @@ border-bottom-right-radius: 0px;
                     </div>
                 </div>
             </div>
-                 
-
-                
+                <asp:HiddenField ID="hdfddlDoctorID" runat="server" />
+                <%--  <asp:HiddenField ID="hdfScheduleID" runat="server" />--%>
+                <input type="hidden" id="hdfScheduleID" />
+                 <input type="hidden" id="hdfDoctorID" />
 
             </div>
         </div>

@@ -1,6 +1,7 @@
 ﻿
 var json;
-var title, eventStartDate, eventEndDate;
+var eventStartDate, eventEndDate;
+var title = "";
 var tooltip;
 
 $(document).ready(function ()
@@ -24,7 +25,7 @@ $(document).ready(function ()
       //    }
       //}).prev(".ui-dialog-titlebar").css("background", "#336699");
    
-      GetJSonDataForCalender();
+    //  GetJSonDataForCalender();
     
       setTimeout(function () {
           var initialLangCode = 'en';
@@ -79,16 +80,26 @@ $(document).ready(function ()
                   eventClick: function(calEvent, jsEvent, view) {
                       debugger;
                       document.getElementById("listBody").innerHTML = '';
-                    title=calEvent.title;
+                      var ScheduleID = GetAllNames(calEvent.id);
+                      $("#hdfScheduleID").val(ScheduleID[0].id);
+                      var names = GetAllPatientList(ScheduleID[0].id)
+                      for (index = 0; index < names.length; ++index) {
+                     
+                          title = title + names[index].title + "<br />";
+                      }
+                        
+                   // title=names[0].end;
                     eventStartDate = calEvent.start._i;
                     $("#txtAppointmentDate").val(eventStartDate);
                     var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
                     var newlabel = document.createElement("Label");
                     newlabel.innerHTML = title;
                     parentDiv.appendChild(newlabel);
+                    title = "";
+
                   },
                   eventAfterRender: function (event, element, view) {
-                      debugger;
+                   
                       
                       $(element).removeClass('MaxHght');
                       if (view.name == 'month') {
@@ -129,14 +140,18 @@ $(document).ready(function ()
                   },
 
                   eventMouseout: function (calEvent, jsEvent) {
-                      debugger;
+                     
                       $(this).css('z-index', 8);
                       $('.tooltipevent').remove();
                   },
               
                   eventLimit: true, // allow "more" link when too many events
-                  eventRender:function (event, element, view) { 
- },
+                  eventRender: function (event, element, view) {
+                      debugger;
+                      var dateString = moment(event.start).format('YYYY-MM-DD');
+                      $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#FAA732' });
+                      $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
+                  },
                   events: json,
                   viewDisplay: function getDate(date) {
                       debugger;
@@ -266,14 +281,51 @@ $(document).ready(function ()
 
 //
 /*Web method to get all calendar data from database*/
-function GetJSonDataForCalender()
+    function GetAllNames(id)
+    {
+       
+        var ds = {};
+        var table = {};
+        var Appointments = new Object();
+        Appointments.AppointmentID = id;
+       
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
+        table = JSON.parse(ds.d);
+        return table;
+    }
+    function GetAllPatientList(id) {
+      
+        var ds = {};
+        var table = {};
+        var Appointments = new Object();
+        Appointments.ScheduleID = id;
+
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetailsByScheduleID");
+        table = JSON.parse(ds.d);
+        return table;
+    }
+    function BindCalendar(docID)
+    {
+        
+        var Doctor = new Object();
+        Doctor.DoctorID = docID.val();
+        //var ds = {};
+        //var table = {};
+        var data = "{'docObj':" + JSON.stringify(Doctor) + "}";
+        GetJSonDataForCalender(data, "Appointment.aspx/GetAllPatientAppointmentDetailsByClinicID");
+        //table = JSON.parse(ds.d);
+        //return table;
+    }
+    function GetJSonDataForCalender(data, page)
 {
     debugger;
      $.ajax({
          type: "POST",
          contentType: "application/json",
-         data: "{}",
-         url: "Appointment.aspx/GetAllPatientAppointmentDetailsByClinicID",
+         data: data,
+         url: page,
          dataType: "json",
         success: function (data) {
             //json = $.parseJSON(data.d);

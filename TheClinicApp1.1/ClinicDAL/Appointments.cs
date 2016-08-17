@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
 
 namespace TheClinicApp1._1.ClinicDAL
 {
@@ -43,7 +44,7 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-        public int Mobile
+        public string Mobile
         {
             get;
             set;
@@ -151,11 +152,14 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "InsertPatientAppointment";
-                cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PatientID);
+                if(PatientID!=null)
+                {
+                    cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PatientID);
+                }
                 cmd.Parameters.Add("@ScheduleID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ScheduleID);
                 cmd.Parameters.Add("@AppointmentDate", SqlDbType.DateTime).Value = AppointmentDate;
-                cmd.Parameters.Add("@Mobile", SqlDbType.Int).Value = Mobile;
-                cmd.Parameters.Add("@Name", SqlDbType.Bit).Value = Name;
+                cmd.Parameters.Add("@Mobile", SqlDbType.NVarChar,20).Value =Mobile;
+                cmd.Parameters.Add("@Name", SqlDbType.VarChar,25).Value = Name;
                 cmd.Parameters.Add("@IsRegistered", SqlDbType.Bit).Value = IsRegistered;
                 cmd.Parameters.Add("@appointmentno", SqlDbType.Int).Value = appointmentno;
                 cmd.Parameters.Add("@AllottingTime", SqlDbType.Decimal).Value = AllottingTime;
@@ -170,6 +174,12 @@ namespace TheClinicApp1._1.ClinicDAL
                 OutparameterAppointmentID.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
                 AppointmentID = OutparameterAppointmentID.Value.ToString();
+                status = outParameter.Value.ToString();
+                if(status=="1")
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;
+                    eObj.InsertionSuccessMessage(page);
+                }
             }
             catch (Exception ex)
             {
@@ -188,6 +198,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
             }
             //insert success or failure
+           
             return Int16.Parse(outParameter.Value.ToString());
       
         }
@@ -574,7 +585,57 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion GetAppointedPatientDetails
 
+         #region GetAppointedPatientDetailsByScheudleID
+         public DataSet GetAppointedPatientDetailsByScheudleID()
+         {
+             SqlConnection con = null;
+             DataSet ds = null;
+             SqlDataAdapter sda = null;
+             if (ClinicID == "")
+             {
+                 throw new Exception("ClinicID is Empty!!");
+             }
+             if (ScheduleID == "")
+             {
+                 throw new Exception("AppointmentID is Empty!!");
+             }
+             try
+             {
+                 dbConnection dcon = new dbConnection();
+                 con = dcon.GetDBConnection();
+                 SqlCommand cmd = new SqlCommand();
+                 cmd.Connection = con;
+                 cmd.CommandType = CommandType.StoredProcedure;
+                 cmd.CommandText = "[GetAppointedPatientDetailsByScheudleID]";
+                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                 cmd.Parameters.Add("@ID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ScheduleID);
 
+                 sda = new SqlDataAdapter(cmd);
+                 ds = new DataSet();
+                 sda.Fill(ds);
+             }
+
+             catch (Exception ex)
+             {
+                 UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                 eObj.Description = ex.Message;
+                 eObj.Module = Module;
+                 eObj.UserID = UA.UserID;
+                 eObj.Method = "GetAppointedPatientDetailsByScheudleID";
+                 eObj.InsertError();
+             }
+
+             finally
+             {
+                 if (con != null)
+                 {
+                     con.Dispose();
+                 }
+             }
+             return ds;
+
+         }
+         #endregion GetAppointedPatientDetailsByScheudleID
 
         #endregion Appointment Methods
 
