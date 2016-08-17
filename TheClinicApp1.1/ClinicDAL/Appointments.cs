@@ -131,7 +131,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Appointment Methods
 
         #region InsertPatientAppointment
-        public Int16 InsertPatientAppointment()
+        public Int16 InsertPatientAppointment()  
         {
             dbConnection dcon = null;
             SqlCommand cmd = null;
