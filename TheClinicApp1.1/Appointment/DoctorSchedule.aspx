@@ -342,7 +342,7 @@ margin-left:50px;
                                     <div class="col-lg-12">
 
                                        
-                                        <div class="col-lg-5" style="height:500px" >
+                                        <div class="col-lg-6" style="height:500px" >
 
                                              <div id='calendar' ></div>
                                              <div class="loader" style="float:left"></div>

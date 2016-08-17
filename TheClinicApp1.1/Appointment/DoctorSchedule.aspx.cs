@@ -40,7 +40,8 @@ namespace TheClinicApp1._1.Appointment
             public string title { get; set; }
             public string start { get; set; }
             public string end { get; set; }
-
+            public string StartTime { get; set; }
+            public string EndTime { get; set; }
         }
         #endregion Event Properties
 
@@ -60,6 +61,7 @@ namespace TheClinicApp1._1.Appointment
 
                 DocObj.ClinicID = UA.ClinicID.ToString();
                 ds = DocObj.GetAllDoctorScheduleDetailsByDate();
+
                 //Converting to Json
                 List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
                 Dictionary<string, object> childRow;
@@ -164,10 +166,11 @@ namespace TheClinicApp1._1.Appointment
                     {
                         id = ds.Tables[0].Rows[i]["event_id"].ToString(),
                        // title = ds.Tables[0].Rows[i]["title"].ToString(),
-                       title = "",
+                   //    title = "",
                         start = ds.Tables[0].Rows[i]["event_start"].ToString(),
-                      
-                        end = ds.Tables[0].Rows[i]["event_end"].ToString()
+                        end = ds.Tables[0].Rows[i]["event_end"].ToString(),
+                        StartTime = ds.Tables[0].Rows[i]["Starttime"].ToString(),
+                        EndTime = ds.Tables[0].Rows[i]["Endtime"].ToString()
                     });
                 }
 
@@ -193,6 +196,27 @@ namespace TheClinicApp1._1.Appointment
                 DataSet ds = null;
                 DocObj.ClinicID = UA.ClinicID.ToString();
                 ds = DocObj.GetAllSchedulesByDoctorID();
+
+                //if (dt.Rows.Count > 0)
+                //{
+                //    for (int i = dt.Rows.Count - 1; i >= 0; i--)
+                //    {
+                //        if (i == 0)
+                //        {
+                //            break;
+                //        }
+                //        for (int j = i - 1; j >= 0; j--)
+                //        {
+                //            if (dt.Rows[i]["AvailableDate"].ToString() == dt.Rows[j]["AvailableDate"].ToString())
+                //            {
+                //                dt.Rows[i].Delete();
+                //                break;
+                //            }
+                //        }
+                //    }
+                //    dt.AcceptChanges();
+                //}
+
 
                 List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
                 Dictionary<string, object> childRow;
