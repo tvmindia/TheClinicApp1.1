@@ -5,8 +5,8 @@
     SelectDoctor: "Please Select Doctor",
     AlreadyIssued: "Already issued.Can't be deleted",
     DeletionSuccessFull: "Deleted Successfully",
-    AlreadyUsed: "Already used . Can't be deleted"
-    
+    AlreadyUsed: "Already used . Can't be deleted",
+    InsertionSuccessFull:  "Successfully Inserted"
 }
 
 var Caption = {

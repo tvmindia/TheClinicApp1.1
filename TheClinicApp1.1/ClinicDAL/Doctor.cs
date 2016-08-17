@@ -30,7 +30,7 @@ namespace TheClinicApp1._1.ClinicDAL
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;            
         public string Module = "Doctor";
-
+        common cmn = new common();
 
         #endregion global
 
@@ -375,6 +375,58 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion GetDoctorScheduleDetailsByDoctorID
 
+        #region GetDoctorScheduleDetailsByDoctorID
+        public DataSet GetAllSchedulesByDoctorID()
+        {
+            if (DoctorID == "")
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataSet ds = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetAllSchedulesByDoctorID";
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.DoctorID);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
+                cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateFormatCode;
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetDoctorScheduleDetailsByDoctorID";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return ds;
+        }
+
+        #endregion GetDoctorScheduleDetailsByDoctorID
+
         #region GetAllDoctorsScheduledBetweenDates
         public DataSet GetAllDoctorsScheduledBetweenDates()
         {
@@ -504,6 +556,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "InsertDoctorSchedule";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
                 cmd.Parameters.Add("@AvailableDate", SqlDbType.DateTime).Value = DoctorAvailDate;
                 cmd.Parameters.Add("@PatientLimit", SqlDbType.Int).Value = PatientLimit;
@@ -651,6 +704,62 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion CancelDoctorSchedule
 
+        #region GetDoctorAvailability
+        public DataSet GetDoctorAvailability()
+        {
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (DoctorID == "")
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
+            if (DoctorAvailDate == "")
+            {
+                throw new Exception("DoctorAvailDate is Empty!!");
+            }
+          
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataSet ds = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetDoctorAvailablitydetails]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.DoctorID);
+                cmd.Parameters.Add("@DoctorAvailDate", SqlDbType.Date).Value = DoctorAvailDate;
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetDoctorAvailability";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return ds;
+        }
+        #endregion GetDoctorAvailability
+
         #endregion Doctor Schedule methods
 
         #region Doctor Methods
@@ -778,6 +887,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
                 cmd.Parameters.Add("@SearchDate", SqlDbType.Date).Value = DateTime.Parse(SearchDate);
+              
                 sda = new SqlDataAdapter(cmd);
                 ds = new DataSet();
                 sda.Fill(ds);
