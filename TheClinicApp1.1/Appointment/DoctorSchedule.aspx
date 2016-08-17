@@ -419,15 +419,15 @@ margin-left:50px;
                                                  <table  >
 
                                                       <thead>
-                                                          <tr>  <th colspan="2" style="background-color: #dae4f1!important;color:black">Schedule List</th></tr>
-                                                        
+                                                          <%--<tr>  <th colspan="2" style="background-color: #dae4f1!important;color:black">Schedule List</th></tr>--%>
+                                                         <tr>  <th  style="background-color: #dae4f1!important;color:black">Schedule List</th></tr>
                                                       </thead>
                                                       <tbody>
                                                          
                                                           <tr>
-                                                              <td>Date</td>
+                                                             
                                                               <td>
-                                                                  <table id="tblDates">
+                                                                  <table id="tblDates" >
                                                                       
                                                                   </table>
 

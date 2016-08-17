@@ -229,30 +229,30 @@ function GetScheduleByDrID(drID) {
     jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
     if (jsonDrSchedule != undefined) {
         json = jsonDrSchedule;
-        BindScheduledDates(jsonDrSchedule);
+        BindScheduledDates();
     }
    
 }
 
-function BindScheduledDates(Records)
+function BindScheduledDates()
 {
-  
+    debugger;
 
-    //var Doctor = new Object();
-    //Doctor.DoctorID = drID;
+    var Doctor = new Object();
+    Doctor.DoctorID = DoctorID;
 
-    //var ds = {};
-    //var table = {};
-    //var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
-    //ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetDoctorScheduleDetailsByDoctorID");
-    //Records = JSON.parse(ds.d);
+    var ds = {};
+    var table = {};
+    var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+    ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetAllScheduleDetailsOfDoctor");
+    Records = JSON.parse(ds.d);
 
 
     $("#tblDates tr").remove();
 
     $.each(Records, function (index, Records) {
 
-        var html = '<tr><td>' + Records.start + '</td></tr>';
+        var html = '<tr><td>' +Records.AvailableDate+ '</td></tr>';
         $("#tblDates").append(html);
 
     });
@@ -554,5 +554,24 @@ function RemoveTime(ScheduleID) {
     }
 
 
+    function ConvertJsonToDate(jsonDate) {
+        if (jsonDate != null) {
+            debugger;
 
+
+            var dateString = jsonDate.substr(6);
+            var currentTime = new Date(parseInt(dateString));
+            var month = currentTime.getMonth();
+            var day = currentTime.getDate();
+            var year = currentTime.getFullYear();
+            var monthNames = [
+                          "Jan", "Feb", "Mar",
+                          "Apr", "May", "Jun", "Jul",
+                          "Aug", "Sep", "Oct",
+                          "Nov", "Dec"
+            ];
+            var result = day + '-' + monthNames[month] + '-' + year;
+            return result;
+        }
+    }
 
