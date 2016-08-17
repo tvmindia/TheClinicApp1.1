@@ -41,7 +41,7 @@ namespace TheClinicApp1._1.Appointment
             public string title { get; set; }
             public string start { get; set; }
             public string end { get; set; }
-
+           
             public string patientName
             {
                 get;
@@ -399,6 +399,43 @@ namespace TheClinicApp1._1.Appointment
             return jsSerializer.Serialize("");
         }
         #endregion GetAppointedPatientDetailsByScheduleID
+
+        #region GetDoctorAvailability
+        [System.Web.Services.WebMethod]
+        public static string GetDoctorAvailability(ClinicDAL.Doctor docObj)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+           docObj.ClinicID = Convert.ToString(UA.ClinicID);
+            List<Event> events = new List<Event>();
+            if (UA != null)
+            {
+                DataSet ds = null;
+                ds = docObj.GetDoctorAvailability();
+                // ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
+                int count = ds.Tables[0].Rows.Count;
+                //Converting to Json
+
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    for (int i = 0; i <= count - 1; i++)
+                    {
+                        events.Add(new Event()
+                        {
+                            start = ds.Tables[0].Rows[i]["Starttime"].ToString(),
+                            end = ds.Tables[0].Rows[i]["Endtime"].ToString()
+                        });
+                    }
+                }
+                return jsSerializer.Serialize(events);
+            }
+            return jsSerializer.Serialize("");
+        }
+        #endregion GetDoctorAvailability
+
         #endregion Methods
 
         #region Events

@@ -3,7 +3,7 @@ var json;
 var eventStartDate, eventEndDate;
 var title = "";
 var tooltip;
-
+var start, end = "";
 $(document).ready(function ()
 {
     $("#txtstartTime").timepicki();
@@ -75,10 +75,10 @@ $(document).ready(function ()
                     
                       eventStartDate= date.format();
                       eventEndDate = date.format();
-
+                      $("#txtAppointmentDate").val(eventStartDate);
                   },
                   eventClick: function(calEvent, jsEvent, view) {
-                   
+                      document.getElementById("TimeAvailability").innerHTML = '';
                       document.getElementById("listBody").innerHTML = '';
                       var ScheduleID = GetAllNames(calEvent.id);
                       $("#hdfScheduleID").val(ScheduleID[0].id);
@@ -96,7 +96,20 @@ $(document).ready(function ()
                     newlabel.innerHTML = title;
                     parentDiv.appendChild(newlabel);
                     title = "";
+                    var docId = $("#hdfDoctorID").val();
+                    var timeList = GetAllTimeAvailability(docId, eventStartDate);
+                    var html = "";
+                    for (index = 0; index < timeList.length; ++index) {
 
+                        start = timeList[index].start;
+                        end = timeList[index].end;
+                        var Time = start + "-" + end;
+                      
+                      
+                        html = html + ("<table><tr><td><input id='chk_" + Time + "' type='checkbox' value='" + Time + "' /></td><td><label >" + Time + "</label></td></tr></table><br/>");
+                       
+                    }
+                    $("#TimeAvailability").append(html);
                   },
                   eventAfterRender: function (event, element, view) {
                       
@@ -291,6 +304,19 @@ $(document).ready(function ()
        
         var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
         ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
+        table = JSON.parse(ds.d);
+        return table;
+    }
+    function GetAllTimeAvailability(docID,date)
+    {
+        debugger;
+        var ds = {};
+        var table = {};
+        var Doctor = new Object();
+        Doctor.DoctorID = docID;
+        Doctor.DoctorAvailDate = date;
+        var data = "{'docObj':" + JSON.stringify(Doctor) + "}";
+        ds = getJsonData(data, "Appointment.aspx/GetDoctorAvailability");
         table = JSON.parse(ds.d);
         return table;
     }

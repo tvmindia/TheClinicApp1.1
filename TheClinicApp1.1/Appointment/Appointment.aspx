@@ -597,7 +597,16 @@ border-bottom-right-radius: 0px;
                                                           <td>
                                                                <input class="txtBox" name="Date" id="txtAppointmentDate" type="text" disabled="disabled"/>
                                                              <%-- <asp:TextBox ID="txtAppointmentDate" runat="server"></asp:TextBox>--%>
+                                                             
                                                               <br />
+                                                          
+                                                          </td>
+                                                          
+                                                      </tr>
+                                                      <tr>
+                                                          <td></td>
+                                                          <td>
+                                                               <div id="TimeAvailability"></div>
                                                           </td>
                                                       </tr>
                                                       <tr>
