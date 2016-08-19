@@ -323,7 +323,7 @@ namespace TheClinicApp1._1.ClinicDAL
             return ds;
         }
         #endregion GetDoctorScheduleDetailsByDocScheduleID
-
+      
         #region GetDoctorScheduleDetailsByDoctorID
         public DataSet GetDoctorScheduleDetailsByDoctorID()
         {
