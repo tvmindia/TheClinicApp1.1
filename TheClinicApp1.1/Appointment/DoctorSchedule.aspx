@@ -147,7 +147,7 @@ margin-left:50px;
 .mer_tx {
   width: 100%;
   text-align: center;
-  margin: 10px 0;
+  margin: 10px 10px;
  }
 
 .time,
