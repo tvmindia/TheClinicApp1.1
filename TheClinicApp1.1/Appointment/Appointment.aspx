@@ -663,7 +663,10 @@ border-bottom-right-radius: 0px;
                                               <br />
                                               <div id="AppointmentList" >
                                                   <div class="header">Patient List</div>
-                                                  <div class="mainbody" id="listBody">
+                                                  <div class="mainbody" >
+                                                      <table id="listBody">
+
+                                                      </table>
        
     </div>
                                               </div>

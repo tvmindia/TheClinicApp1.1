@@ -84,17 +84,22 @@ $(document).ready(function ()
                       $("#hdfScheduleID").val(ScheduleID[0].id);
                       var names = GetAllPatientList(ScheduleID[0].id)
                       for (index = 0; index < names.length; ++index) {
-                     
-                          title = title + names[index].title + "<br />";
+                          title = title+ '<tr><td>' + names[index].title + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
+                          var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
+                          //var newlabel = document.createElement("Label");
+                          //newlabel.innerHTML = title;
+                          // parentDiv.appendChild(newlabel);
+                          parentDiv.innerHTML = title;
+                         // title = title + names[index].title + "<br />";
                       }
                         
                    // title=names[0].end;
                     eventStartDate = calEvent.start._i;
                     $("#txtAppointmentDate").val(eventStartDate);
-                    var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
-                    var newlabel = document.createElement("Label");
-                    newlabel.innerHTML = title;
-                    parentDiv.appendChild(newlabel);
+                    //var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
+                    //var newlabel = document.createElement("Label");
+                    //newlabel.innerHTML = title;
+                    //parentDiv.appendChild(newlabel);
                     title = "";
                     var docId = $("#hdfDoctorID").val();
                     var timeList = GetAllTimeAvailability(docId, eventStartDate);
@@ -106,7 +111,7 @@ $(document).ready(function ()
                         var Time = start + "-" + end;
                       
                       
-                        html = html + ("<table><tr><td><input id='chk_" + Time + "' type='checkbox' value='" + Time + "' /></td><td><label >" + Time + "</label></td></tr></table><br/>");
+                        html = html + ("<table><tr><td><input id='chk_" + Time + "' type='checkbox' value='" + Time + "' /></td><td><label >" + Time + "</label></td></tr><table><br/>");
                        
                     }
                     $("#TimeAvailability").append(html);
@@ -134,22 +139,22 @@ $(document).ready(function ()
 
                   eventMouseover: function (calEvent, jsEvent) {
                      
-                      if ((calEvent.end != null) && (calEvent.title) != null && (calEvent.id) != null && (calEvent.start) != null) {
-                          var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;border-style: solid; border-width: 5px;height:150px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center">' + calEvent.title + '</h3><p><b>id:</b>' + calEvent.id + '<br/><p><b>Start:</b>' + calEvent.start._i + '<p><b>End:</b>' + calEvent.end._i + '</p></div>';
-                      }
-                      if (calEvent.end == null)
-                      {
-                          var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;height:110px;border-style: solid; border-width: 5px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center">' + calEvent.title + '</h3><p><b>id:</b>' + calEvent.id + '<br/><p><b>Start:</b>' + calEvent.start._i + '</p></div>';
-                      }
-                      $("body").append(tooltip);
-                      $(this).mouseover(function (e) {
-                          $(this).css('z-index', 10000);
-                          $('.tooltipevent').fadeIn('500');
-                          $('.tooltipevent').fadeTo('10', 1.9);
-                      }).mousemove(function (e) {
-                          $('.tooltipevent').css('top', e.pageY + 10);
-                          $('.tooltipevent').css('left', e.pageX + 20);
-                      });
+                      //if ((calEvent.end != null) && (calEvent.title) != null && (calEvent.id) != null && (calEvent.start) != null) {
+                      //    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;border-style: solid; border-width: 5px;height:150px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center">' + calEvent.title + '</h3><p><b>id:</b>' + calEvent.id + '<br/><p><b>Start:</b>' + calEvent.start._i + '<p><b>End:</b>' + calEvent.end._i + '</p></div>';
+                      //}
+                      //if (calEvent.end == null)
+                      //{
+                      //    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;height:110px;border-style: solid; border-width: 5px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center">' + calEvent.title + '</h3><p><b>id:</b>' + calEvent.id + '<br/><p><b>Start:</b>' + calEvent.start._i + '</p></div>';
+                      //}
+                      //$("body").append(tooltip);
+                      //$(this).mouseover(function (e) {
+                      //    $(this).css('z-index', 10000);
+                      //    $('.tooltipevent').fadeIn('500');
+                      //    $('.tooltipevent').fadeTo('10', 1.9);
+                      //}).mousemove(function (e) {
+                      //    $('.tooltipevent').css('top', e.pageY + 10);
+                      //    $('.tooltipevent').css('left', e.pageX + 20);
+                      //});
                   },
 
                   eventMouseout: function (calEvent, jsEvent) {

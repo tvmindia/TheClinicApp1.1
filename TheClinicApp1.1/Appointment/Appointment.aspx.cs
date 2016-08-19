@@ -41,6 +41,7 @@ namespace TheClinicApp1._1.Appointment
             public string title { get; set; }
             public string start { get; set; }
             public string end { get; set; }
+            public bool isAvailable { get; set; }
            
             public string patientName
             {
