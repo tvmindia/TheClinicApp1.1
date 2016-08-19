@@ -148,7 +148,7 @@ margin-left:50px;
   width: 100%;
   text-align: center;
   margin: 10px 0;
-}
+ }
 
 .time,
 .mins,
@@ -168,7 +168,7 @@ margin-left:50px;
   padding: 18px;
   width: 28%;
   border: 1px solid #ccc;
-  margin: auto;
+ 
   background: url(../images/arrow.png) no-repeat;
   border-radius: 5px;
 }
@@ -186,7 +186,7 @@ margin-left:50px;
   border-radius: 5px;
   z-index: 2;
   display: none;
-  width: 240px;
+  width: 150%;
   box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.35);
   background: #f6f6f6;
   border: 1px solid #ccc;
@@ -228,7 +228,7 @@ margin-left:50px;
           $('.alert_close').click(function () {
               $(this).parent(".alert").hide();
           });
-          debugger;
+        
 
          var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
 
@@ -386,15 +386,21 @@ margin-left:50px;
 
                                                           </tr>
                                                           <tr>
-                                                              <td >
+                                                              <td style="width:60%" >
                                                                    <div class="col-lg-12" style="padding-left:0px!important;padding-right:0px!important;">
                                                                  
                                                                         <div class="col-lg-6"  style="padding-left:0px!important;padding-right:0px!important;" >
-                                                                   <input   type="text" placeholder="Start Time" id="txtStartTime" />
+                                                                  <%-- <input   type="text" placeholder="Start Time" id="txtStartTime" />--%>
+                                                                 <input type="text"  placeholder="Start Time"  class="txtAddNew" id="txtStartTime" name="time" />
+
+
                                                                       </div>
                                                                         
                                                                        <div class="col-lg-6" style="padding-left:0px!important;padding-right:0px!important;">
-                                                                  <input   type="text" placeholder="End Time" id="txtEndTime"/>
+
+                                                                             <input type="text"  placeholder="End Time"  class="txtAddNew" id="txtEndTime" name="time" />
+
+                                                                  <%--<input   type="text" placeholder="End Time" id="txtEndTime"/>--%>
                                                                       </div>
                                                                      </div> 
                                                               </td>

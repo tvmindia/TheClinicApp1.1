@@ -8,6 +8,9 @@ var DoctorID;
 
 $(document).ready(function () {
    
+    $("#txtStartTime").timepicki();
+    $("#txtEndTime").timepicki();
+
   //  GetScheduleByDrID();
 
 
@@ -34,6 +37,8 @@ $(document).ready(function () {
         var initialLangCode = 'en';
 
         $('#calendar').fullCalendar({
+           // timeFormat: 'hh:mm a',
+
             theme: true,
             header: {
                 left: 'prev,next today myCustomButton',
@@ -62,8 +67,19 @@ $(document).ready(function () {
             editable: true,
            
             eventRender: function (event, element, view) {
+                debugger;
+                //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------//  
 
-                element.context.textContent = event.StartTime + "-" + event.EndTime;
+
+                StrtTimeIn12hrFormat =  ConvertTimeFormatFrom24hrTo12hr(event.StartTime);
+
+                //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------// 
+
+                endTimeIn12hrFormat =    ConvertTimeFormatFrom24hrTo12hr(event.EndTime);
+
+             //   element.context.textContent = StrtTimeIn12hrFormat + "-" + endTimeIn12hrFormat;
+
+                element.context.textContent = StrtTimeIn12hrFormat;
 
                 var dateString = moment(event.start).format('YYYY-MM-DD');
 
@@ -91,13 +107,25 @@ $(document).ready(function () {
 
             eventMouseover: function (calEvent, jsEvent) {
 
-                if ((calEvent.end != null) && (calEvent.title) != null && (calEvent.id) != null && (calEvent.start) != null) {
-                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;border-style: solid; border-width: 5px;height:150px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>id:</b>' + calEvent.id + '<br/><p><b>Start:</b>' + calEvent.start._i + '<p><b>End:</b>' + calEvent.end._i + '</p></div>';
+                debugger;
+
+                if ((calEvent.StartTime != null) && (calEvent.EndTime) != null )
+                {
+                    StrtTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(calEvent.StartTime);
+                    endTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(calEvent.EndTime);
+
+                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;border-style: solid; border-width: 5px;height:150px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>Start:</b>' + StrtTimeIn12hrFormat + '<p><b>End:</b>' + endTimeIn12hrFormat + '</p></div>';
                 }
-                if (calEvent.end == null) {
-                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;height:110px;border-style: solid; border-width: 5px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>Start:</b>' + calEvent.start._i + '</p></div>';
-                }
-               // $("body").append(tooltip);
+
+
+
+                //if ((calEvent.end != null) && (calEvent.title) != null && (calEvent.id) != null && (calEvent.start) != null) {
+                //    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;border-style: solid; border-width: 5px;height:150px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>id:</b>' + calEvent.id + '<br/><p><b>Start:</b>' + calEvent.start._i + '<p><b>End:</b>' + calEvent.end._i + '</p></div>';
+                //}
+                //if (calEvent.end == null) {
+                //    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;height:110px;border-style: solid; border-width: 5px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>Start:</b>' + calEvent.start._i + '</p></div>';
+                //}
+               $("body").append(tooltip);
                 $(this).mouseover(function (e) {
                     $(this).css('z-index', 10000);
                     $('.tooltipevent').fadeIn('500');
@@ -179,11 +207,23 @@ $(document).ready(function () {
 });
 
 
+function ConvertTimeFormatFrom24hrTo12hr(Time)
+{
+    debugger;
+
+    var TimeIn24hrFormat = Time;
+    var hourEnd = TimeIn24hrFormat.indexOf(":");
+    var H = +TimeIn24hrFormat.substr(0, hourEnd);
+    var h = H % 12 || 12;
+    var ampm = H < 12 ? "AM" : "PM";
+
+    TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+
+    return TimeIn12hrFormat;
+}
+
+
 /*end of document.ready*/
-
-
-
-
 
 function GetScheduledTimesByDate()
 {
@@ -236,7 +276,7 @@ function GetScheduleByDrID(drID) {
 
 function BindScheduledDates()
 {
-    debugger;
+  
 
     var Doctor = new Object();
     Doctor.DoctorID = DoctorID;
@@ -255,7 +295,7 @@ function BindScheduledDates()
   
     $.each(Records, function (index, Records) {
        
-        debugger;
+      
     
         if (Records.IsAvailable == "True") {
 
@@ -269,7 +309,7 @@ function BindScheduledDates()
    
     $.each(Records, function (index, Records) {
 
-        debugger;
+    
 
         if (Records.IsAvailable == "False") {
 
@@ -362,7 +402,7 @@ function BindTimes(Records) {
 
 function RemoveTime(ScheduleID) {
     
-    debugger;
+   
         var Doctor = new Object();
         Doctor.DocScheduleID = ScheduleID;
 
@@ -515,86 +555,104 @@ function RemoveTime(ScheduleID) {
 
         debugger;
 
-        var JsonNewSchedule = {};
-
-        var Doctor = new Object();
-        Doctor.DoctorID = DoctorID;
-        Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
-        Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
-        Doctor.IsAvailable = true;
-        Doctor.Starttime = document.getElementById('txtStartTime').value;
-        Doctor.Endtime = document.getElementById('txtEndTime').value;
-
-        JsonNewSchedule = AddDrSchedule(Doctor);
-
-        if (JsonNewSchedule != undefined)
-        {
-          //  alert(JsonNewSchedule.status);
-
-
-            if (JsonNewSchedule.status == "1") {
-                //SUCCESS
-
-                var jsonDeatilsByDate = {};
-
-                var Doctor = new Object();
-
-
-                if (DoctorID != null && DoctorID != "") {
-
-                    Doctor.DoctorID = DoctorID;
-                    Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
-
-                    jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
-
-                    if (jsonDeatilsByDate != undefined) {
-
-                        BindTimes(jsonDeatilsByDate);
-
-                        $("#txtStartTime").val("");
-                        $("#txtEndTime").val("");
-                        $("#txtMaxAppoinments").val("");
-
-                         BindScheduledDates();
-
-                     var jsonDrSchedule = {};
-
-        var Doctor = new Object();
-        Doctor.DoctorID = DoctorID;
-
-        jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
-        if (jsonDrSchedule != undefined) {
-
-            $('#calendar').fullCalendar('removeEventSource', json);
-           
-            json = jsonDrSchedule;
-
-            $('#calendar').fullCalendar('addEventSource', json);
-            $('#calendar').fullCalendar('refetchEvents');
+        if (DoctorID == "" || DoctorID == null) {
+            alert("Please select a doctor");
         }
 
+        else {
+    
+        
 
+        if (document.getElementById('txtAppointmentDate').value.trim() != "" && document.getElementById('txtMaxAppoinments').value.trim() != "" && document.getElementById('txtStartTime').value.trim() != "" && document.getElementById('txtEndTime').value.trim() != "") {
+    
+            var JsonNewSchedule = {};
+
+            var Doctor = new Object();
+            Doctor.DoctorID = DoctorID;
+            Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
+            Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
+            Doctor.IsAvailable = true;
+            Doctor.Starttime = document.getElementById('txtStartTime').value;
+            Doctor.Endtime = document.getElementById('txtEndTime').value;
+
+            JsonNewSchedule = AddDrSchedule(Doctor);
+
+            if (JsonNewSchedule != undefined)
+            {
+                //  alert(JsonNewSchedule.status);
+
+
+                if (JsonNewSchedule.status == "1") {
+                    //SUCCESS
+
+                    var jsonDeatilsByDate = {};
+
+                    var Doctor = new Object();
+
+
+                    if (DoctorID != null && DoctorID != "") {
+
+                        Doctor.DoctorID = DoctorID;
+                        Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
+
+                        jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+
+                        if (jsonDeatilsByDate != undefined) {
+
+                            BindTimes(jsonDeatilsByDate);
+
+                            $("#txtStartTime").val("");
+                            $("#txtEndTime").val("");
+                            $("#txtMaxAppoinments").val("");
+
+                            BindScheduledDates();
+
+                            var jsonDrSchedule = {};
+
+                            var Doctor = new Object();
+                            Doctor.DoctorID = DoctorID;
+
+                            jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                            if (jsonDrSchedule != undefined) {
+
+                                $('#calendar').fullCalendar('removeEventSource', json);
+           
+                                json = jsonDrSchedule;
+
+                                $('#calendar').fullCalendar('addEventSource', json);
+                                $('#calendar').fullCalendar('refetchEvents');
+                            }
+
+
+                        }
                     }
+
+
+
+                    //var lblErrorCaption = document.getElementById('lblErrorCaption');
+                    //var lblMsgges = document.getElementById('lblMsgges');
+                    //var Errorbox = document.getElementById('Errorbox');
+
+                    //var lblclass = Alertclasses.sucess;
+                    //var lblmsg = msg.InsertionSuccessFull;
+                    //var lblcaptn = Caption.SuccessMsgCaption;
+
+                    //Errorbox.style.display = "";
+                    //Errorbox.className = lblclass;
+                    //lblErrorCaption.innerHTML = lblcaptn;
+                    //lblMsgges.innerHTML = lblmsg;
+
                 }
 
-
-
-            //var lblErrorCaption = document.getElementById('lblErrorCaption');
-            //var lblMsgges = document.getElementById('lblMsgges');
-            //var Errorbox = document.getElementById('Errorbox');
-
-            //var lblclass = Alertclasses.sucess;
-            //var lblmsg = msg.InsertionSuccessFull;
-            //var lblcaptn = Caption.SuccessMsgCaption;
-
-            //Errorbox.style.display = "";
-            //Errorbox.className = lblclass;
-            //lblErrorCaption.innerHTML = lblcaptn;
-            //lblMsgges.innerHTML = lblmsg;
-
             }
-
         }
+
+        else
+        {
+            alert("Please fill all schedule details");
+        }
+
+    }
 
     }
 

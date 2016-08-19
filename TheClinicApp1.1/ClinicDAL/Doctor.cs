@@ -219,12 +219,12 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
        
-        public decimal StartTime
+        public string StartTime
         {
             get;
             set;
         }
-        public decimal EndTime
+        public string EndTime
         {
             get;
             set;
@@ -533,6 +533,30 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion GetAllDoctorsScheduleDetailsBetweenDates
 
+        #region format start time
+        /// <summary>
+        /// convert start time format into 24 hour format
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns>time</returns>
+        public string correctStartTime(string time)
+        {
+            var ampmLen = 2;
+            var ampm = time.Substring(time.Length - ampmLen, ampmLen);
+            var hourIndex = 0;
+            var hour = time.Split(':')[hourIndex];
+            var minutes = time.Split(':')[1];
+            var h = hour;
+
+            if (ampm.Equals("PM"))
+            {
+                h = (int.Parse(hour) + 12).ToString();
+            }
+            return h + ":" + minutes;
+        }
+        #endregion format start time
+
+
         #region InsertDoctorSchedule
         public Int16 InsertDoctorSchedule()
         {
@@ -561,8 +585,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@AvailableDate", SqlDbType.DateTime).Value = DoctorAvailDate;
                 cmd.Parameters.Add("@PatientLimit", SqlDbType.Int).Value = PatientLimit;
                 cmd.Parameters.Add("@IsAvailable", SqlDbType.Bit).Value = IsAvailable;
-                cmd.Parameters.Add("@Starttime", SqlDbType.Decimal).Value = StartTime;
-                cmd.Parameters.Add("@Endtime", SqlDbType.Decimal).Value = EndTime;
+                cmd.Parameters.Add("@Starttime", SqlDbType.NVarChar, 30).Value =correctStartTime(StartTime);
+                cmd.Parameters.Add("@Endtime", SqlDbType.NVarChar, 30).Value = correctStartTime(EndTime);
+
+                //cmd.Parameters.Add("@Starttime", SqlDbType.NVarChar, 30).Value = StartTime;
+                //cmd.Parameters.Add("@Endtime", SqlDbType.NVarChar, 30).Value = EndTime;
+
+
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar,255).Value = CreatedBy;
                 cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 outParameter = cmd.Parameters.Add("@InsertStatus", SqlDbType.SmallInt);
