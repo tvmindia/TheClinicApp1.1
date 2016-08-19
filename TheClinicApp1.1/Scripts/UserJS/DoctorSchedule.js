@@ -61,15 +61,15 @@ $(document).ready(function () {
 
             editable: true,
            
-            eventRender: function (event, element, view) { 
-                // like that
-                //var dateString = moment(event.start).format('YYYY-MM-DD');
-                //$('#calendar').find('.fc-day-number[data-date="' + dateString + '"]').css('background-color', '#FAA732');
-                //$('#calendar').find('.fc-day-number[data-date="' + dateString + '"]').addClass('fc-today ui-state-highlight');
-               // fc-day-number fc-thu fc-today ui-state-highlight
-              //  fc-day-number fc-tue fc-future
-                 
-            
+            eventRender: function (event, element, view) {
+
+                element.context.textContent = event.StartTime + "-" + event.EndTime;
+
+                var dateString = moment(event.start).format('YYYY-MM-DD');
+
+                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#FAA732' });
+                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
+
             },
 
             dayClick: function (date, jsEvent, view) {
@@ -97,7 +97,7 @@ $(document).ready(function () {
                 if (calEvent.end == null) {
                     var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;height:110px;border-style: solid; border-width: 5px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>Start:</b>' + calEvent.start._i + '</p></div>';
                 }
-                $("body").append(tooltip);
+               // $("body").append(tooltip);
                 $(this).mouseover(function (e) {
                     $(this).css('z-index', 10000);
                     $('.tooltipevent').fadeIn('500');
@@ -249,15 +249,66 @@ function BindScheduledDates()
 
 
     $("#tblDates tr").remove();
-
+    
+    NotAvailableDates = [];
+    AvailableDates = [];
+  
     $.each(Records, function (index, Records) {
+       
+        debugger;
+    
+        if (Records.IsAvailable == "True") {
 
-        var html = '<tr><td>' +Records.AvailableDate+ '</td></tr>';
-        $("#tblDates").append(html);
+            if ($.inArray(Records.AvailableDate, AvailableDates) == -1) { //check if Date not exits than add it
+                AvailableDates.push(Records.AvailableDate); //put object in collection to access it's all values
+            }
+
+        }
 
     });
+   
+    $.each(Records, function (index, Records) {
 
-    
+        debugger;
+
+        if (Records.IsAvailable == "False") {
+
+            if ($.inArray(Records.AvailableDate, NotAvailableDates) == -1) { //check if Date not exits then add it
+              
+                    if ($.inArray(Records.AvailableDate, AvailableDates) == -1) {
+
+                        NotAvailableDates.push(Records.AvailableDate); //put object in collection to access it's all values
+                    }
+
+            }
+
+        }
+    });
+
+
+
+
+
+    if (AvailableDates.length > 0) {
+
+        for (var i = 0; i < AvailableDates.length; i++) {
+            var html = '<tr><td>' + AvailableDates[i] + '</td></tr>';
+            $("#tblDates").append(html);
+        }
+
+    }
+
+   
+    if (NotAvailableDates.length > 0) {
+
+        for (var i = 0; i < NotAvailableDates.length; i++)
+        {
+            var html = '<tr><td><strike>' + NotAvailableDates[i] + '</strike></td></tr>';
+            $("#tblDates").append(html);
+        }
+
+    }
+
    
     if (Records.length == 0) 
 
@@ -328,7 +379,8 @@ function RemoveTime(ScheduleID) {
     }
     else {
         GetScheduledTimesByDate();
-      
+        BindScheduledDates();
+
         var jsonDrSchedule = {};
 
         var Doctor = new Object();
@@ -503,6 +555,8 @@ function RemoveTime(ScheduleID) {
                         $("#txtEndTime").val("");
                         $("#txtMaxAppoinments").val("");
 
+                         BindScheduledDates();
+
                      var jsonDrSchedule = {};
 
         var Doctor = new Object();
@@ -556,9 +610,7 @@ function RemoveTime(ScheduleID) {
 
     function ConvertJsonToDate(jsonDate) {
         if (jsonDate != null) {
-            debugger;
-
-
+           
             var dateString = jsonDate.substr(6);
             var currentTime = new Date(parseInt(dateString));
             var month = currentTime.getMonth();
