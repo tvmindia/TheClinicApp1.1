@@ -179,6 +179,7 @@
     <Content Include="images\admin.png" />
     <Content Include="images\Alert.png" />
     <Content Include="images\animated-overlay.gif" />
+    <Content Include="images\arrow.png" />
     <Content Include="images\AssignUser.png" />
     <Content Include="images\back.png" />
     <Content Include="images\Backgroundnew.png" />
@@ -266,6 +267,7 @@
     <Content Include="images\token-hover.png" />
     <Content Include="images\token.png" />
     <Content Include="images\tokens.png" />
+    <Content Include="images\top_arr.png" />
     <Content Include="images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
     <Content Include="images\ui-bg_flat_15_cd0a0a_40x100.png" />
     <Content Include="images\ui-bg_glass_100_e4f1fb_1x400.png" />
