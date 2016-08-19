@@ -114,7 +114,7 @@ $(document).ready(function () {
                     StrtTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(calEvent.StartTime);
                     endTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(calEvent.EndTime);
 
-                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;border-style: solid; border-width: 5px;height:150px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>Start:</b>' + StrtTimeIn12hrFormat + '<p><b>End:</b>' + endTimeIn12hrFormat + '</p></div>';
+                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:10%;border-style: solid; border-width: 5px;height:10%;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>Start:</b>' + StrtTimeIn12hrFormat + '<p><b>End:</b>' + endTimeIn12hrFormat + '</p></div>';
                 }
 
 
@@ -379,12 +379,23 @@ function BindTimes(Records) {
 
         var ScheduleID = Records.ID;
 
-
         if (Records.Starttime != null && Records.Endtime != null) {
 
-       
-        var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + Records.Starttime + "-" + Records.Endtime + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
-        $("#tblTimes").append(html);
+            strttime = ConvertTimeFormatFrom24hrTo12hr(Records.Starttime);
+            endtime = ConvertTimeFormatFrom24hrTo12hr(Records.Endtime);
+
+            if (Records.IsAvailable == "True")
+            {
+                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
+            }
+            else
+            {
+                var html = '<tr ScheduleID="' + Records.ID + '" ><td><strike>' + strttime + "-" + endtime + '</td></strike></tr>';
+            }
+
+           
+
+            $("#tblTimes").append(html);
         }
 
     });
@@ -402,12 +413,13 @@ function BindTimes(Records) {
 
 function RemoveTime(ScheduleID) {
     
-   
-        var Doctor = new Object();
-        Doctor.DocScheduleID = ScheduleID;
+    var DeletionConfirmation = ConfirmDelete();
+    if (DeletionConfirmation == true) {
+    var Doctor = new Object();
+    Doctor.DocScheduleID = ScheduleID;
 
-        var ds = {};
-        var table = {};
+    var ds = {};
+    var table = {};
 
     var data = "{'DocObj':" +JSON.stringify(Doctor) + "}";
     ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelDoctorSchedule");
@@ -438,8 +450,9 @@ function RemoveTime(ScheduleID) {
         }
 
 
-       // $('#calendar').fullCalendar('refetchEvents');
+        // $('#calendar').fullCalendar('refetchEvents');
     }
+}
 }
 
 
@@ -561,96 +574,103 @@ function RemoveTime(ScheduleID) {
 
         else {
     
-        
-
-        if (document.getElementById('txtAppointmentDate').value.trim() != "" && document.getElementById('txtMaxAppoinments').value.trim() != "" && document.getElementById('txtStartTime').value.trim() != "" && document.getElementById('txtEndTime').value.trim() != "") {
+            if (isNaN(document.getElementById('txtMaxAppoinments').value) == false) {
     
-            var JsonNewSchedule = {};
 
-            var Doctor = new Object();
-            Doctor.DoctorID = DoctorID;
-            Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
-            Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
-            Doctor.IsAvailable = true;
-            Doctor.Starttime = document.getElementById('txtStartTime').value;
-            Doctor.Endtime = document.getElementById('txtEndTime').value;
+            if (document.getElementById('txtAppointmentDate').value.trim() != "" && document.getElementById('txtMaxAppoinments').value.trim() != "" && document.getElementById('txtStartTime').value.trim() != "" && document.getElementById('txtEndTime').value.trim() != "") {
+    
+                var JsonNewSchedule = {};
 
-            JsonNewSchedule = AddDrSchedule(Doctor);
+                var Doctor = new Object();
+                Doctor.DoctorID = DoctorID;
+                Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
+                Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
+                Doctor.IsAvailable = true;
+                Doctor.Starttime = document.getElementById('txtStartTime').value;
+                Doctor.Endtime = document.getElementById('txtEndTime').value;
 
-            if (JsonNewSchedule != undefined)
-            {
-                //  alert(JsonNewSchedule.status);
+                JsonNewSchedule = AddDrSchedule(Doctor);
 
-
-                if (JsonNewSchedule.status == "1") {
-                    //SUCCESS
-
-                    var jsonDeatilsByDate = {};
-
-                    var Doctor = new Object();
+                if (JsonNewSchedule != undefined)
+                {
+                    //  alert(JsonNewSchedule.status);
 
 
-                    if (DoctorID != null && DoctorID != "") {
+                    if (JsonNewSchedule.status == "1") {
+                        //SUCCESS
 
-                        Doctor.DoctorID = DoctorID;
-                        Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
+                        var jsonDeatilsByDate = {};
 
-                        jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+                        var Doctor = new Object();
 
-                        if (jsonDeatilsByDate != undefined) {
 
-                            BindTimes(jsonDeatilsByDate);
+                        if (DoctorID != null && DoctorID != "") {
 
-                            $("#txtStartTime").val("");
-                            $("#txtEndTime").val("");
-                            $("#txtMaxAppoinments").val("");
-
-                            BindScheduledDates();
-
-                            var jsonDrSchedule = {};
-
-                            var Doctor = new Object();
                             Doctor.DoctorID = DoctorID;
+                            Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
 
-                            jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
-                            if (jsonDrSchedule != undefined) {
+                            jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
 
-                                $('#calendar').fullCalendar('removeEventSource', json);
+                            if (jsonDeatilsByDate != undefined) {
+
+                                BindTimes(jsonDeatilsByDate);
+
+                                $("#txtStartTime").val("");
+                                $("#txtEndTime").val("");
+                                $("#txtMaxAppoinments").val("");
+
+                                BindScheduledDates();
+
+                                var jsonDrSchedule = {};
+
+                                var Doctor = new Object();
+                                Doctor.DoctorID = DoctorID;
+
+                                jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                                if (jsonDrSchedule != undefined) {
+
+                                    $('#calendar').fullCalendar('removeEventSource', json);
            
-                                json = jsonDrSchedule;
+                                    json = jsonDrSchedule;
 
-                                $('#calendar').fullCalendar('addEventSource', json);
-                                $('#calendar').fullCalendar('refetchEvents');
+                                    $('#calendar').fullCalendar('addEventSource', json);
+                                    $('#calendar').fullCalendar('refetchEvents');
+                                }
+
+
                             }
-
-
                         }
+
+
+
+                        //var lblErrorCaption = document.getElementById('lblErrorCaption');
+                        //var lblMsgges = document.getElementById('lblMsgges');
+                        //var Errorbox = document.getElementById('Errorbox');
+
+                        //var lblclass = Alertclasses.sucess;
+                        //var lblmsg = msg.InsertionSuccessFull;
+                        //var lblcaptn = Caption.SuccessMsgCaption;
+
+                        //Errorbox.style.display = "";
+                        //Errorbox.className = lblclass;
+                        //lblErrorCaption.innerHTML = lblcaptn;
+                        //lblMsgges.innerHTML = lblmsg;
+
                     }
 
-
-
-                    //var lblErrorCaption = document.getElementById('lblErrorCaption');
-                    //var lblMsgges = document.getElementById('lblMsgges');
-                    //var Errorbox = document.getElementById('Errorbox');
-
-                    //var lblclass = Alertclasses.sucess;
-                    //var lblmsg = msg.InsertionSuccessFull;
-                    //var lblcaptn = Caption.SuccessMsgCaption;
-
-                    //Errorbox.style.display = "";
-                    //Errorbox.className = lblclass;
-                    //lblErrorCaption.innerHTML = lblcaptn;
-                    //lblMsgges.innerHTML = lblmsg;
-
                 }
-
             }
-        }
 
-        else
-        {
-            alert("Please fill all schedule details");
-        }
+            else
+            {
+                alert("Please fill all schedule details");
+            }
+            }
+
+            else {
+                alert("Please enter a valid number");
+            }
+
 
     }
 
@@ -685,3 +705,14 @@ function RemoveTime(ScheduleID) {
         }
     }
 
+
+    function  CheckisNumber(evt)
+    {
+        debugger;
+
+        var IsNumber = isNumber();
+
+        if (IsNumber == false) {
+            alert("Please enter a number");
+        }
+    }

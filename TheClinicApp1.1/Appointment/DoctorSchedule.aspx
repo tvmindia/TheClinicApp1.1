@@ -4,7 +4,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
      <script src="../js/JavaScript_selectnav.js"></script>
-  
+   <script src="../js/DeletionConfirmation.js"></script>
+
   <script src="../js/jquery-1.12.4.js"></script>
     <script src="../js/1.12.0jquery-ui.js"></script> 
     <script src="../js/Dynamicgrid.js"></script>
@@ -206,7 +207,10 @@ margin-left:50px;
   z-index: 3;
 }
 
-
+#imgDelete
+{
+    cursor:pointer;
+}
 
 /*.fc-content
 {
@@ -375,7 +379,7 @@ margin-left:50px;
 
                                                           </tr>
                                                           <tr>
-                                                              <td>Time</td>
+                                                              <td>Scheduled Times </td>
                                                               <td style="min-height:31px;">
                                                                   <table id="tblTimes">
                                                                       
@@ -404,7 +408,8 @@ margin-left:50px;
                                                                       </div>
                                                                      </div> 
                                                               </td>
-                                                              <td><input class="" name="MaxAppoinmnt" type="text" placeholder="maximum appoinments " id="txtMaxAppoinments"/></td>
+                                                              <td><input class="" name="MaxAppoinmnt" type="text" placeholder="maximum appoinments " id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)"
+/></td>
                                                               
                                                           </tr>
 
