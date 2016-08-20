@@ -189,7 +189,6 @@
             color: #2d2e2e;
             font-family: 'arial';
             font-weight: 700;
-          
         }
 
         .prev,
@@ -221,7 +220,7 @@
             border-radius: 5px;
             z-index: 2;
             display: none;
-            width: 50%;
+            width: 100%;
             box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.35);
             background: #f6f6f6;
             border: 1px solid #ccc;
@@ -229,7 +228,7 @@
             position: absolute;
             top: 27px;
             left: 0px;
-           height:145px
+            height: 145px;
         }
 
         .arrow_top {
@@ -253,18 +252,24 @@
 
         #tblTimes td {
             font-size: 17px !important;
-            border:none
+            border: none;
         }
 
-       #tblDates td {
+        #tblDates td {
             font-size: 17px !important;
         }
-       borderclass{
-          border: 1px solid red;
-            
-       }
 
-       /*#tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td { 
+        borderclass {
+            border: 1px solid red;
+        }
+
+        td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
+            background-color: #a8d9f3;
+        }
+
+
+
+        /*#tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td { 
     border: none;
 }*/
 
@@ -280,7 +285,6 @@
 .fc-day-grid-event .fc-time{
     display:none;
 }*/
-
     </style>
 
     <script>
@@ -291,21 +295,21 @@
             });
 
 
-            var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value 
+            var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
 
-          if (DoctorID != "" && DoctorID != null) {
-              GetScheduleByDrID(DoctorID);
-          }
+            if (DoctorID != "" && DoctorID != null) {
+                GetScheduleByDrID(DoctorID);
+            }
 
-          else {
-              $("#tblDates tr").remove();
+            else {
+                $("#tblDates tr").remove();
 
-              var html = '<tr><td><i>' + "No Scheduled Date yet !" + '</i></td></tr>';
-              $("#tblDates").append(html);
+                var html = '<tr><td><i>' + "No Scheduled Date yet !" + '</i></td></tr>';
+                $("#tblDates").append(html);
 
-          }
+            }
 
-      });
+        });
 
 
     </script>
@@ -391,6 +395,7 @@
                             <div class="tab_table">
 
 
+
                                 <div class="row field_row">
                                     <div class="col-lg-12">
 
@@ -402,53 +407,104 @@
 
                                         <div class="col-lg-6" style="height: 100%;">
 
-                                            <div class="token_id_card" style="height:520px;width:100%">
-                                                <div class="name_field" style="background-color: #99c4e0!important;text-transform:none">
-                                                    <asp:Label runat="server" Text="Add Schedule"></asp:Label>
-                                                </div>
+                                            <div class="col-lg-12">
 
-                                                <div class="card_white">
-                                                    <div class="field_label" id="divDate">
-                                                        <label>Date</label>
-                                                        <input  class="" name="Date" id="txtAppointmentDate" type="text" readonly="true"  style="font-weight:Bold;"/>
+                                                <div class="token_id_card" style="width: 100%">
+                                                    <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
+                                                        <asp:Label runat="server" Text="Add Schedule"></asp:Label>
                                                     </div>
 
-                                                    <br />
+                                                    <div class="card_white">
 
-                                                    <div class="field_label">
-                                                        <label>Times</label>
-                                                        <table id="tblTimes"  >
-                                                            <tr >
-                                                                <td  ><i>No Scheduled time yet !</i></td>
-                                                            </tr>
-                                                        </table>
+                                                        <div class="row field_row">
+
+                                                            <div class="col-lg-6">
+
+                                                                <label>Scheduled Date</label>
+                                                                <input class="" name="Date" id="txtAppointmentDate" type="text" readonly="true" style="font-weight: Bold;" />
+
+                                                            </div>
+
+                                                             <div class="col-lg-6 ">
+                                                                    <label style="width: 100%;">Max Appoinments</label>
+
+                                                                    <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)" />
+                                                                </div>
+
+
+                                                        </div>
+
+                                                        <div class="row field_row">
+                                                                <div class="col-lg-6 ">
+                                                                    <label>Start Time</label>
+
+                                                                    <input type="text" class="txtAddNew" id="txtStartTime" name="time" />
+                                                                </div>
+                                                                <div class="col-lg-6 ">
+                                                                    <label>End Time</label>
+
+                                                                    <input type="text" class="txtAddNew" id="txtEndTime" name="time" />
+                                                                </div>
+                                                               
+
+                                                            </div>
+
+                                                        <div class="row field_row">
+                                                                <div class="col-lg-12">
+                                                                    <label>Existing Schedules</label>
+                                                                    <table id="tblTimes">
+                                                                        <tr>
+                                                                            <td><i>No Scheduled time yet !</i></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                     <div class="row field_row">
+
+                                                            <div class="col-lg-6">
+
+                                                                <label></label>
+                                                                  
+                                                               
+                                                            </div>
+
+                                                             <div class="col-lg-6 ">
+                                                                    <label ></label>
+
+                                                                   
+                                                                </div>
+
+
+                                                        </div>
+                                                        <div class="row field_row">
+
+                                                            <div class="col-lg-6">
+
+                                                                <label></label>
+                                                                  
+                                                               
+                                                            </div>
+
+                                                             <div class="col-lg-6 ">
+                                                                    <label ></label>
+
+                                                                   
+                                                                </div>
+
+
+                                                        </div>
 
                                                     </div>
-                                                    <br />
-                                                    <div class="field_label">
-                                                        <label>Start Time</label>
-
-                                                        <input type="text" class="txtAddNew" id="txtStartTime" name="time" />
-                                                    </div>
-                                                    <br />
-                                                    <div class="field_label">
-                                                        <label>End Time</label>
-
-                                                        <input type="text" class="txtAddNew" id="txtEndTime" name="time" />
-                                                    </div>
-                                                    <br />
-                                                    <div class="field_label">
-                                                        <label style="width: 100%;">Max Appoinments</label>
-
-                                                        <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)" />
-                                                    </div>
-
                                                 </div>
                                             </div>
 
-                                            <div class="token_id_card" style="width:100%">
 
-                                                <div class="name_field" style="background-color: #99c4e0!important;text-transform:none">
+                                            <div class="token_id_card" style="width: 100%">
+
+                                                <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
                                                     <asp:Label runat="server" Text="Schedule List"></asp:Label>
                                                 </div>
                                                 <div class="card_white">
@@ -479,5 +535,5 @@
 
 
         </div>
-        </div>
+    </div>
 </asp:Content>
