@@ -6,6 +6,23 @@ var title, eventStartDate, eventEndDate;
 var tooltip;
 var DoctorID;
 
+$(document).mouseup(function (e) {
+    var container = $("#calendar");
+
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+
+        $("#txtAppointmentDate").css({ border: '1px solid #dbdbdb' }).animate({
+            borderWidth: 1
+        }, 500);
+
+    }
+});
+
+
+
+
 $(document).ready(function () {
    
     $("#txtStartTime").timepicki();
@@ -54,6 +71,25 @@ $(document).ready(function () {
            
             select: function (start, end) {
              
+                //$('div img').mouseenter(function () {
+
+                //  $("#txtAppointmentDate").css("border-color", "#3661c7");
+
+                // $("#txtAppointmentDate").toggleClass('borderClass');
+
+                $("#txtAppointmentDate").val(eventStartDate);
+
+
+                $("#txtAppointmentDate").css({ border: '0 solid #3661c7' }).animate({
+                        borderWidth: 2
+                    }, 500);
+                //}).mouseleave(function () {
+                //    $("#txtAppointmentDate").animate({
+                //        borderWidth: 0
+                //    }, 500);
+                //});
+
+
                 //CustomClick();
                 // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
               
@@ -61,7 +97,7 @@ $(document).ready(function () {
 
                 GetScheduledTimesByDate();
             },
-
+     
 
 
             editable: true,
@@ -117,7 +153,7 @@ $(document).ready(function () {
                     StrtTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(calEvent.StartTime);
                     endTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(calEvent.EndTime);
 
-                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:10%;border-style: solid; border-width: 5px;height:10%;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>Start:</b>' + StrtTimeIn12hrFormat + '<p><b>End:</b>' + endTimeIn12hrFormat + '</p></div>';
+                    var tooltip = '<div class="tooltipevent" style="text-align:center;border-style: solid; border-width: 5px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>Start Time:</b>' + StrtTimeIn12hrFormat + '<p><b>End Time:</b>' + endTimeIn12hrFormat + '</p></div>';
                 }
 
 
@@ -142,6 +178,7 @@ $(document).ready(function () {
             eventMouseout: function (calEvent, jsEvent) {
                 $(this).css('z-index', 8);
                 $('.tooltipevent').remove();
+                
             },
 
             eventLimit: true, // allow "more" link when too many events
@@ -252,9 +289,10 @@ function GetScheduledTimesByDate()
 
        // $("#divDate").fadeTo('fast', 0).fadeTo('fast', 1).fadeTo('fast', 0).fadeTo('fast', 1)
        
-        blink('#txtAppointmentDate');
+      //  $("#txtAppointmentDate").css("border-color", "#3661c7");
 
-        $("#txtAppointmentDate").css("border-color", "#3661c7");
+       // $("#txtAppointmentDate").toggleClass('borderClass');
+
         $("#txtAppointmentDate").val(eventStartDate);
 
         Doctor.DoctorID = DoctorID;
@@ -374,7 +412,7 @@ function BindScheduledDates()
     if (Records.length == 0) 
 
     {
-        var html = '<tr><td>' + "No Scheduled Date yet !" + '</td></tr>';
+        var html = '<tr><td><i>' + "No Scheduled Date yet !" + '</i></td></tr>';
         $("#tblDates").append(html);
     }
 
@@ -407,11 +445,11 @@ function BindTimes(Records) {
 
             if (Records.IsAvailable == "True")
             {
-                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
+                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="10" style="margin-right:10px" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
             }
             else
             {
-                var html = '<tr ScheduleID="' + Records.ID + '" ><td><strike>' + strttime + "-" + endtime + '</td></strike></tr>';
+                var html = '<tr ScheduleID="' + Records.ID + '" ><td><strike>' + strttime + "-" + endtime + '</td></strike><td></td></tr>';
             }
 
            
@@ -423,7 +461,7 @@ function BindTimes(Records) {
 
     if (Records.length == 0)
     {
-        var html = '<tr><td>' + "No Scheduled time yet !" + '</td></tr>';
+        var html = '<tr><td><i>' + "No Scheduled time yet !" + '</i></td></tr>';
         $("#tblTimes").append(html);
     }
   

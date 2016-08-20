@@ -221,7 +221,7 @@
             border-radius: 5px;
             z-index: 2;
             display: none;
-            width: 80%;
+            width: 50%;
             box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.35);
             background: #f6f6f6;
             border: 1px solid #ccc;
@@ -251,6 +251,24 @@
         }
 
 
+        #tblTimes td {
+            font-size: 17px !important;
+            border:none
+        }
+
+       #tblDates td {
+            font-size: 17px !important;
+        }
+       borderclass{
+          border: 1px solid red;
+            
+       }
+
+       /*#tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td { 
+    border: none;
+}*/
+
+
         /*.fc-content
 {
     display:none;
@@ -273,7 +291,7 @@
             });
 
 
-            var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
+            var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value 
 
           if (DoctorID != "" && DoctorID != null) {
               GetScheduleByDrID(DoctorID);
@@ -282,7 +300,7 @@
           else {
               $("#tblDates tr").remove();
 
-              var html = '<tr><td>' + "No Scheduled Date yet !" + '</td></tr>';
+              var html = '<tr><td><i>' + "No Scheduled Date yet !" + '</i></td></tr>';
               $("#tblDates").append(html);
 
           }
@@ -384,8 +402,8 @@
 
                                         <div class="col-lg-6" style="height: 100%;">
 
-                                            <div class="token_id_card" style="height:520px">
-                                                <div class="name_field" style="background-color: #8bacd6!important">
+                                            <div class="token_id_card" style="height:520px;width:100%">
+                                                <div class="name_field" style="background-color: #99c4e0!important;text-transform:none">
                                                     <asp:Label runat="server" Text="Add Schedule"></asp:Label>
                                                 </div>
 
@@ -399,9 +417,9 @@
 
                                                     <div class="field_label">
                                                         <label>Times</label>
-                                                        <table id="tblTimes" style="">
+                                                        <table id="tblTimes"  >
                                                             <tr >
-                                                                <td style="height: 50px;font-weight:100" >No Scheduled time yet !</td>
+                                                                <td  ><i>No Scheduled time yet !</i></td>
                                                             </tr>
                                                         </table>
 
@@ -428,9 +446,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="token_id_card">
+                                            <div class="token_id_card" style="width:100%">
 
-                                                <div class="name_field" style="background-color: #8bacd6!important">
+                                                <div class="name_field" style="background-color: #99c4e0!important;text-transform:none">
                                                     <asp:Label runat="server" Text="Schedule List"></asp:Label>
                                                 </div>
                                                 <div class="card_white">
