@@ -4,6 +4,8 @@ var eventStartDate, eventEndDate;
 var title = "";
 var tooltip;
 var start, end = "";
+var finaltime = "";
+var schID = "";
 $(document).ready(function ()
 {
     $("#txtstartTime").timepicki();
@@ -77,14 +79,23 @@ $(document).ready(function ()
                       eventEndDate = date.format();
                       $("#txtAppointmentDate").val(eventStartDate);
                   },
-                  eventClick: function(calEvent, jsEvent, view) {
+                  eventClick: function (calEvent, jsEvent, view) {
+                      debugger;
                       document.getElementById("TimeAvailability").innerHTML = '';
                       document.getElementById("listBody").innerHTML = '';
                       var ScheduleID = GetAllNames(calEvent.id);
+                      schID = ScheduleID;
                       $("#hdfScheduleID").val(ScheduleID[0].id);
                       var names = GetAllPatientList(ScheduleID[0].id)
                       for (index = 0; index < names.length; ++index) {
-                          title = title+ '<tr><td>' + names[index].title + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
+                          if (names[index].isAvailable == "3")
+                          {
+                              title = title + '<tr><td><strike>' + names[index].title + '</strike></td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveFromList(\'' + calEvent.id + '\')"/></td></tr>';
+                          }
+                          else
+                          {
+                              title = title + '<tr><td>' + names[index].title + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveFromList(\'' + calEvent.id + '\')"/></td></tr>';
+                          }
                           var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
                           //var newlabel = document.createElement("Label");
                           //newlabel.innerHTML = title;
@@ -95,7 +106,7 @@ $(document).ready(function ()
                         
                    // title=names[0].end;
                     eventStartDate = calEvent.start._i;
-                    $("#txtAppointmentDate").val(eventStartDate);
+                    $("#txtAppointmentDate").val(eventStartDate.split(' ')[0]);
                     //var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
                     //var newlabel = document.createElement("Label");
                     //newlabel.innerHTML = title;
@@ -105,14 +116,34 @@ $(document).ready(function ()
                     var timeList = GetAllTimeAvailability(docId, eventStartDate);
                     var html = "";
                     for (index = 0; index < timeList.length; ++index) {
+                   
+                            start = timeList[index].start;
+                            end = timeList[index].end;
+                           
+                                function D(J) { return (J < 10 ? '0' : '') + J; };
 
-                        start = timeList[index].start;
-                        end = timeList[index].end;
-                        var Time = start + "-" + end;
-                      
-                      
-                        html = html + ("<table><tr><td><input id='chk_" + Time + "' type='checkbox' value='" + Time + "' /></td><td><label >" + Time + "</label></td></tr><table><br/>");
-                       
+                                if (finaltime != "") {
+                                    var startHour = finaltime.split(':')[0];
+                                    var startMinutes = finaltime.split(':')[1];
+                                    var ampm = startHour >= 12 ? 'PM' : 'AM';
+                                }
+                                else {
+                                    var startHour = start.split(':')[0];
+                                    var startMinutes = start.split(':')[1];
+                                    var ampm = startHour >= 12 ? 'PM' : 'AM';
+                                }
+                                startHour = startHour % 12;
+                                startHour = startHour ? startHour : 12; // the hour '0' should be '12'
+                                var starttime = D(startHour) + " : " + startMinutes + " : " + ampm;
+                                var mins = startHour * 60 + startHour + 30;
+                                var minutes = (mins % (24 * 60) / 60 | 0) + ' : ' + D(mins % 60);
+                                var endtime = minutes + " : " + ampm;
+                                var Time = starttime + "-" + endtime;
+                                finaltime = endtime;
+                                html = html + ("<table><tr><td><input id='chk_" + Time + "' type='checkbox' value='" + Time + "' /></td><td><label >" + Time + "</label></td></tr><table><br/>");
+
+                            
+                            
                     }
                     $("#TimeAvailability").append(html);
                   },
@@ -311,6 +342,46 @@ $(document).ready(function ()
         ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
         table = JSON.parse(ds.d);
         return table;
+    }
+    function RemoveFromList(AppointmentID) {
+
+        debugger;
+        var Appointments = new Object();
+        Appointments.AppointmentID = AppointmentID;
+
+        var ds = {};
+        var table = {};
+
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        ds = getJsonData(data, "../Appointment/Appointment.aspx/CancelAppointment");
+        table = JSON.parse(ds.d);
+
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
+        table = JSON.parse(ds.d);
+        return table;
+      
+            //GetScheduledTimesByDate();
+            //BindScheduledDates();
+
+            //var jsonDrSchedule = {};
+
+            //var Doctor = new Object();
+            //Doctor.DoctorID = DoctorID;
+
+            //jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+            //if (jsonDrSchedule != undefined) {
+
+                //$('#calendar').fullCalendar('removeEventSource', json);
+
+              
+                //$('#calendar').fullCalendar('addEventSource', json);
+                //$('#calendar').fullCalendar('refetchEvents');
+            //}
+
+
+            // $('#calendar').fullCalendar('refetchEvents');
+        
     }
     function GetAllTimeAvailability(docID,date)
     {

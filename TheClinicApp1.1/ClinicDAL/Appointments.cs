@@ -305,7 +305,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value =System.DateTime.Now;
                 outParameter = cmd.Parameters.Add("@UpdateStatus", SqlDbType.SmallInt);
                 outParameter.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
