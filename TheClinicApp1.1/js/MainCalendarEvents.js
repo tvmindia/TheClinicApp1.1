@@ -6,8 +6,11 @@ var tooltip;
 var start, end = "";
 var finaltime = "";
 var schID = "";
+var checkItems = "";
 $(document).ready(function ()
 {
+
+
     $("#txtstartTime").timepicki();
     $("#txtEndTime").timepicki();
       //$("#myModal").dialog({
@@ -80,7 +83,7 @@ $(document).ready(function ()
                       $("#txtAppointmentDate").val(eventStartDate);
                   },
                   eventClick: function (calEvent, jsEvent, view) {
-                      debugger;
+                     
                       document.getElementById("TimeAvailability").innerHTML = '';
                       document.getElementById("listBody").innerHTML = '';
                       var ScheduleID = GetAllNames(calEvent.id);
@@ -110,42 +113,27 @@ $(document).ready(function ()
                     //var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
                     //var newlabel = document.createElement("Label");
                     //newlabel.innerHTML = title;
-                    //parentDiv.appendChild(newlabel);
+                      //parentDiv.appendChild(newlabel);
+                    debugger;
                     title = "";
                     var docId = $("#hdfDoctorID").val();
                     var timeList = GetAllTimeAvailability(docId, eventStartDate);
                     var html = "";
-                    for (index = 0; index < timeList.length; ++index) {
-                   
-                            start = timeList[index].start;
-                            end = timeList[index].end;
-                           
-                                function D(J) { return (J < 10 ? '0' : '') + J; };
-
-                                if (finaltime != "") {
-                                    var startHour = finaltime.split(':')[0];
-                                    var startMinutes = finaltime.split(':')[1];
-                                    var ampm = startHour >= 12 ? 'PM' : 'AM';
-                                }
-                                else {
-                                    var startHour = start.split(':')[0];
-                                    var startMinutes = start.split(':')[1];
-                                    var ampm = startHour >= 12 ? 'PM' : 'AM';
-                                }
-                                startHour = startHour % 12;
-                                startHour = startHour ? startHour : 12; // the hour '0' should be '12'
-                                var starttime = D(startHour) + " : " + startMinutes + " : " + ampm;
-                                var mins = startHour * 60 + startHour + 30;
-                                var minutes = (mins % (24 * 60) / 60 | 0) + ' : ' + D(mins % 60);
-                                var endtime = minutes + " : " + ampm;
-                                var Time = starttime + "-" + endtime;
-                                finaltime = endtime;
-                                html = html + ("<table><tr><td><input id='chk_" + Time + "' type='checkbox' value='" + Time + "' /></td><td><label >" + Time + "</label></td></tr><table><br/>");
-
+                    for (index = 0; index < timeList.length - 1; index++) {
+                        checkItems = timeList.length-1;
+                        var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
+                        startTime = startTime.split(':')[0] +":"+ startTime.split(':')[1] + startTime.split(' ')[1];
+                        var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
+                        endTime = endTime.split(':')[0]+":" + endTime.split(':')[1] + endTime.split(' ')[1];
+                        var StartAndEnd = startTime + "-" + endTime;
+                               // var timeList = GetTimeList();
+                        html = html + ("<table><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+                               
                             
                             
                     }
                     $("#TimeAvailability").append(html);
+                    timeList = "";
                   },
                   eventAfterRender: function (event, element, view) {
                       
@@ -198,7 +186,7 @@ $(document).ready(function ()
                   eventRender: function (event, element, view) {
                       debugger;
                       var dateString = moment(event.start).format('YYYY-MM-DD');
-                      $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#FAA732' });
+                      $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#BAF59F!important' });
                       $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
  },
                   events: json,
@@ -216,7 +204,10 @@ $(document).ready(function ()
                   }
               });
       }, 3600);
-     
+      $('body').on('change', 'input[type="checkbox"]', function () {
+          debugger;
+          selectOnlyThis(this.id);
+      });
       $('.loader').delay(3150).fadeOut('slow');
 
     /*Modal dialog Cancel button click*/
@@ -265,6 +256,19 @@ $(document).ready(function ()
 /*end of document.ready*/
 
 /*Add New Calendar Event */
+
+
+
+function selectOnlyThis(id) {
+  
+    if (id != "") {
+       // for (var i = 0; i <= checkItems; i++) {
+            $('input:checkbox').prop('checked', false);
+          
+       // }
+        document.getElementById(id).checked = true;
+    }
+}
     function AddEvent(CalendarSchedule)
     {
     var data = "{'calendarObj':" + JSON.stringify(CalendarSchedule) + "}";
@@ -385,7 +389,7 @@ $(document).ready(function ()
     }
     function GetAllTimeAvailability(docID,date)
     {
-        debugger;
+      
         var ds = {};
         var table = {};
         var Doctor = new Object();
@@ -394,6 +398,17 @@ $(document).ready(function ()
         var data = "{'docObj':" + JSON.stringify(Doctor) + "}";
         ds = getJsonData(data, "Appointment.aspx/GetDoctorAvailability");
         table = JSON.parse(ds.d);
+        return table;
+    }
+    function GetTimeList()
+    {
+        debugger;
+        var ds = {};
+        var table = {};
+        var Appointments = new Object();
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        ds = getJsonData(data, "Appointment.aspx/GetTimeIntervals");
+       // table = JSON.parse(ds.d);
         return table;
     }
     function GetAllPatientList(id) {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -65,7 +66,7 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
-        public decimal AllottingTime
+        public string AllottingTime
         {
             get;
             set;
@@ -162,7 +163,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Name", SqlDbType.VarChar,25).Value = Name;
                 cmd.Parameters.Add("@IsRegistered", SqlDbType.Bit).Value = IsRegistered;
                 cmd.Parameters.Add("@appointmentno", SqlDbType.Int).Value = appointmentno;
-                cmd.Parameters.Add("@AllottingTime", SqlDbType.Decimal).Value = AllottingTime;
+                cmd.Parameters.Add("@AllottingTime", SqlDbType.NVarChar,10).Value = AllottingTime;
                 cmd.Parameters.Add("@AppointmentStatus", SqlDbType.Int).Value = AppointmentStatus;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@Location", SqlDbType.NVarChar).Value = Location;
