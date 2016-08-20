@@ -1,13 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="DoctorSchedule.aspx.cs" Inherits="TheClinicApp1._1.Appointment.DoctorSchedule" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-     <script src="../js/JavaScript_selectnav.js"></script>
-   <script src="../js/DeletionConfirmation.js"></script>
+    <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../js/DeletionConfirmation.js"></script>
 
-  <script src="../js/jquery-1.12.4.js"></script>
-    <script src="../js/1.12.0jquery-ui.js"></script> 
+    <script src="../js/jquery-1.12.4.js"></script>
+    <script src="../js/1.12.0jquery-ui.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
     <script src="../js/Messages.js"></script>
 
@@ -16,203 +17,241 @@
     <script src="../js/lang-all.js"></script>
     <link href="../css/jquery-ui.min.css" rel="stylesheet" />
     <link href="../css/fullcalendar.css" rel="stylesheet" />
-    <link href="../css/fullcalendar.print.css" rel="stylesheet" media='print' rel='stylesheet'  />
+    <link href="../css/fullcalendar.print.css" rel="stylesheet" media='print' rel='stylesheet' />
     <%--<script src="../js/MainCalendarEvents.js"></script>--%>
     <script src="../Scripts/UserJS/DoctorSchedule.js"></script>
 
     <script src="../js/timepicki.js"></script>
     <link href="../css/timepicki.css" rel="stylesheet" />
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
-   
-   
-     <style>
+
+
+    <style>
         body {
             margin: 40px 10px;
             padding: 0;
             font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
             font-size: 14px;
-           
         }
 
         #calendar {
             max-width: 900px;
             margin: 0 auto;
         }
+
         .loader {
-    border: 10px solid #f3f3f3; /* Light grey */
-    border-top: 10px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    animation: spin 2s linear infinite;
-   margin-top:20%;
-   margin-left:45%;
-}
-        .icon-plus
-        {
-            background-color: #5677a4;
-    border: none;
-    color: white;
-    padding: 5px 12px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 10px;
-    margin: 4px 2px;
-    cursor: pointer;
+            border: 10px solid #f3f3f3; /* Light grey */
+            border-top: 10px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            animation: spin 2s linear infinite;
+            margin-top: 20%;
+            margin-left: 45%;
         }
+
+        .icon-plus {
+            background-color: #5677a4;
+            border: none;
+            color: white;
+            padding: 5px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 10px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
         @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
 
-/* Modal Content */
-.modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    /*border: 1px solid #888;*/
-    width: 100%;
-    height:100%;
-    /*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);*/
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s
-}
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
-/* Add Animation */
-@-webkit-keyframes animatetop {
-    from {top:-300px; opacity:0} 
-    to {top:0; opacity:1}
-}
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
 
-@keyframes animatetop {
-    from {top:-300px; opacity:0}
-    to {top:0; opacity:1}
-}
+        /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            /*border: 1px solid #888;*/
+            width: 100%;
+            height: 100%;
+            /*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);*/
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+        }
 
-.modal-header {
-    padding: 2px 16px;
-    /*background-color: #5cb85c;*/
-    color: white;
-}
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0;
+            }
 
-.modal-body {padding: 2px 16px;
-             text-align:center;
-}
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
 
-.modal-footer {
-    padding: 2px 16px;
-    /*background-color: #5cb85c;*/
-    color: white;
-}
-.btnOkay
-{
-background-color: #336699;
-width:100px;
-height:30px;
-cursor:pointer;
-margin-left:50px;
-}
-.btnCncl
-{
-background-color: #808080;
-width:100px;
-height:30px;
-cursor:pointer;
-margin-left:50px;
-}
-.ti_tx,
-.mi_tx,
-.mer_tx {
-  width: 100%;
-  text-align: center;
-  margin: 10px 10px;
- }
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0;
+            }
 
-.time,
-.mins,
-.meridian {
-  width: 60px;
-  float: left;
-  margin: 0px 10px;
-  font-size: 20px;
-  color: #2d2e2e;
-  font-family: 'arial';
-  font-weight: 700;
-}
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
 
-.prev,
-.next {
-  cursor: pointer;
-  padding: 18px;
-  width: 28%;
-  border: 1px solid #ccc;
- 
-  background: url(../images/arrow.png) no-repeat;
-  border-radius: 5px;
-}
+        .modal-header {
+            padding: 2px 16px;
+            /*background-color: #5cb85c;*/
+            color: white;
+        }
 
-.next { background-position: 50% 150%; }
+        .modal-body {
+            padding: 2px 16px;
+            text-align: center;
+        }
 
-.prev { background-position: 50% -50%; }
+        .modal-footer {
+            padding: 2px 16px;
+            /*background-color: #5cb85c;*/
+            color: white;
+        }
 
-.time_pick { position: relative; }
+        .btnOkay {
+            background-color: #336699;
+            width: 100px;
+            height: 30px;
+            cursor: pointer;
+            margin-left: 50px;
+        }
 
-/*input{ float:left;}*/
+        .btnCncl {
+            background-color: #808080;
+            width: 100px;
+            height: 30px;
+            cursor: pointer;
+            margin-left: 50px;
+        }
 
-.timepicker_wrap {
-  padding: 10px;
-  border-radius: 5px;
-  z-index: 2;
-  display: none;
-  width: 150%;
-  box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.35);
-  background: #f6f6f6;
-  border: 1px solid #ccc;
-  float: left;
-  position: absolute;
-  top: 27px;
-  left: 0px;
-}
+        .ti_tx,
+        .mi_tx,
+        .mer_tx {
+            width: 100%;
+            text-align: center;
+            margin: 10px 10px;
+        }
 
-.arrow_top {
-  position: absolute;
-  top: -10px;
-  left: 20px;
-  background: url(../images/top_arr.png) no-repeat;
-  width: 18px;
-  height: 10px;
-  z-index: 3;
-}
+        .time,
+        .mins,
+        .meridian {
+            width: 60px;
+            float: left;
+            margin: 0px 10px;
+            font-size: 20px;
+            color: #2d2e2e;
+            font-family: 'arial';
+            font-weight: 700;
+          
+        }
 
-#imgDelete
-{
-    cursor:pointer;
-}
+        .prev,
+        .next {
+            cursor: pointer;
+            padding: 18px;
+            width: 28%;
+            border: 1px solid #ccc;
+            background: url(../images/arrow.png) no-repeat;
+            border-radius: 5px;
+        }
 
-/*.fc-content
+        .next {
+            background-position: 50% 150%;
+        }
+
+        .prev {
+            background-position: 50% -50%;
+        }
+
+        .time_pick {
+            position: relative;
+        }
+
+        /*input{ float:left;}*/
+
+        .timepicker_wrap {
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 2;
+            display: none;
+            width: 80%;
+            box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.35);
+            background: #f6f6f6;
+            border: 1px solid #ccc;
+            float: left;
+            position: absolute;
+            top: 27px;
+            left: 0px;
+           height:145px
+        }
+
+        .arrow_top {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: url(../images/top_arr.png) no-repeat;
+            width: 18px;
+            height: 10px;
+            z-index: 3;
+        }
+
+        #imgDelete {
+            cursor: pointer;
+        }
+
+        .card_white .field_label label:after {
+            content: none !important;
+        }
+
+
+        /*.fc-content
 {
     display:none;
 }
@@ -223,252 +262,204 @@ margin-left:50px;
 .fc-day-grid-event .fc-time{
     display:none;
 }*/
+
     </style>
 
     <script>
 
-      $(document).ready(function ()
-      {
-          $('.alert_close').click(function () {
-              $(this).parent(".alert").hide();
-          });
-        
+        $(document).ready(function () {
+            $('.alert_close').click(function () {
+                $(this).parent(".alert").hide();
+            });
 
-         var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
+
+            var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
 
           if (DoctorID != "" && DoctorID != null) {
               GetScheduleByDrID(DoctorID);
           }
 
-          else
-          {
+          else {
               $("#tblDates tr").remove();
 
-                  var html = '<tr><td>' + "No Scheduled Date yet !" + '</td></tr>';
-                  $("#tblDates").append(html);
-             
+              var html = '<tr><td>' + "No Scheduled Date yet !" + '</td></tr>';
+              $("#tblDates").append(html);
+
           }
-          
-        });
 
-     
+      });
+
+
     </script>
-    
-    <div class="main_body" >
-            <div class="left_part">
-                <div class="logo">
-                    <a href="#">
-                        <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
-                </div>
-                <ul class="menu">
-                     <li id="patients" ><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
-                     <li id="Appoinments"  class="active"><a name="hello" onclick="selectTile('Appoinments')"><span class="icon registration"></span><span class="text">Appoinments</span></a></li>
-                    <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
-                    <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
-                    <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
-                    <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-                    <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
-                    <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-                    <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
-                  
-                   
-                </ul>
 
-                <p class="copy">
-                    &copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label>
-                </p>
+    <div class="main_body">
+        <div class="left_part">
+            <div class="logo">
+                <a href="#">
+                    <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
+            </div>
+            <ul class="menu">
+                <li id="patients"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+                <li id="Appoinments" class="active"><a name="hello" onclick="selectTile('Appoinments')"><span class="icon registration"></span><span class="text">Appoinments</span></a></li>
+                <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
+                <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+                <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
+                <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
+                <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+                <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
+                <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+
+            </ul>
+
+            <p class="copy">
+                &copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label>
+            </p>
+        </div>
+
+        <div class="right_part">
+            <div class="tagline">
+                <a class="nav_menu">nav</a>
+                Appoinments<ul class="top_right_links">
+                    <li>
+                        <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"></asp:Label>
+
+                    </li>
+
+                    <li>
+                        <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png" BorderColor="White" runat="server" OnClientClick="redirect();" OnClick="LogoutButton_Click" ToolTip="Logout" formnovalidate />
+
+                    </li>
+
+                </ul>
             </div>
 
-            <div class="right_part">
-                <div class="tagline">
-                    <a class="nav_menu">nav</a>
-                    Appoinments<ul class="top_right_links">
-                        <li>
-                            <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"></asp:Label>
-
-                        </li>
-
-                         <li>
-                            <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png" BorderColor="White" runat="server" OnClientClick="redirect();" OnClick="LogoutButton_Click" ToolTip="Logout" formnovalidate />
-
-                         </li>
-                     
-                    </ul>
-                </div>
-                
-                <div class="right_form tab_right_form">
+            <div class="right_form tab_right_form">
 
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                         <li role="presentation" ><a href="Appointment.aspx">Appoinments</a></li>
+                        <li role="presentation"><a href="Appointment.aspx">Appoinments</a></li>
                         <li role="presentation" class="active"><a href="DoctorSchedule.aspx">Schedule</a></li>
-                       
-                        
+
                     </ul>
 
-                    <div id="Errorbox" style="height: 30%; display: none;" >
-                                <a class="alert_close">X</a>
-                                <div>
-                                    <strong>
-                                      <label id="lblErrorCaption"></label>
-                                      </strong>
-                                      <label id="lblMsgges"></label>
-                                </div>
-                            </div>
-
-
-
-
-
-
+                    <div id="Errorbox" style="height: 30%; display: none;">
+                        <a class="alert_close">X</a>
+                        <div>
+                            <strong>
+                                <label id="lblErrorCaption"></label>
+                            </strong>
+                            <label id="lblMsgges"></label>
+                        </div>
+                    </div>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" >
+                        <div role="tabpanel" class="tab-pane active">
                             <div class="grey_sec">
 
-                                 <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" Font-Names="Andalus" CssClass="ddl"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" Font-Names="Andalus" CssClass="ddl"></asp:DropDownList>
 
-                               <%-- <div class="search_div">
+                                <%-- <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
                                     <input class="button" type="submit" value="Search" disabled/>
                                 </div>--%>
-                                <ul class="top_right_links" >
-                                    <li><a class="save"  onclick=" AddSchedule();"><span></span>Save</a></li>
+                                <ul class="top_right_links">
+                                    <li><a class="save" onclick=" AddSchedule();"><span></span>Save</a></li>
                                     <li><a class="new" href="DoctorSchedule.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
 
                             <div class="tab_table">
-                              
-                                <div class="row field_row"  >
+
+
+                                <div class="row field_row">
                                     <div class="col-lg-12">
 
-                                       
-                                        <div class="col-lg-6" style="height:500px" >
+                                        <div class="col-lg-6">
 
-                                             <div id='calendar' ></div>
-                                             <div class="loader" style="float:left"></div>
+                                            <div id='calendar'></div>
+                                            <div class="loader" style="float: left"></div>
                                         </div>
 
-                                         <%--<div class="col-lg-1"  style="float:left" >
+                                        <div class="col-lg-6" style="height: 100%;">
 
-                                           
+                                            <div class="token_id_card" style="height:520px">
+                                                <div class="name_field" style="background-color: #8bacd6!important">
+                                                    <asp:Label runat="server" Text="Add Schedule"></asp:Label>
+                                                </div>
 
-                                        </div>--%>
-                                          <div class="col-lg-6" >
-                                              
-                                              <div style="height:50%;" class="col-lg-12" >
+                                                <div class="card_white">
+                                                    <div class="field_label" id="divDate">
+                                                        <label>Date</label>
+                                                        <input  class="" name="Date" id="txtAppointmentDate" type="text" readonly="true"  style="font-weight:Bold;"/>
+                                                    </div>
 
-                                                  <table  >
+                                                    <br />
 
-                                                      <thead>
-                                                          <tr>  <th colspan="2" style="background-color: #dae4f1!important;color:black">Add Schedule</th></tr>
-                                                        
-                                                      </thead>
-                                                      <tbody >
-                                                          <tr>
-                                                              <td style="width:30%">Date</td>
-                                                              <td>
-                                                                 
+                                                    <div class="field_label">
+                                                        <label>Times</label>
+                                                        <table id="tblTimes" style="">
+                                                            <tr >
+                                                                <td style="height: 50px;font-weight:100" >No Scheduled time yet !</td>
+                                                            </tr>
+                                                        </table>
 
-                                                                  <input class="" name="Date" id="txtAppointmentDate" type="text" readonly="true"/>
+                                                    </div>
+                                                    <br />
+                                                    <div class="field_label">
+                                                        <label>Start Time</label>
 
-                                                              </td>
+                                                        <input type="text" class="txtAddNew" id="txtStartTime" name="time" />
+                                                    </div>
+                                                    <br />
+                                                    <div class="field_label">
+                                                        <label>End Time</label>
 
-                                                          </tr>
-                                                          <tr>
-                                                              <td>Scheduled Times </td>
-                                                              <td style="min-height:31px;">
-                                                                  <table id="tblTimes">
-                                                                      
-                                                                  </table>
+                                                        <input type="text" class="txtAddNew" id="txtEndTime" name="time" />
+                                                    </div>
+                                                    <br />
+                                                    <div class="field_label">
+                                                        <label style="width: 100%;">Max Appoinments</label>
 
+                                                        <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)" />
+                                                    </div>
 
-                                                              </td>
+                                                </div>
+                                            </div>
 
-                                                          </tr>
-                                                          <tr>
-                                                              <td style="width:60%" >
-                                                                   <div class="col-lg-12" style="padding-left:0px!important;padding-right:0px!important;">
-                                                                 
-                                                                        <div class="col-lg-6"  style="padding-left:0px!important;padding-right:0px!important;" >
-                                                                  <%-- <input   type="text" placeholder="Start Time" id="txtStartTime" />--%>
-                                                                 <input type="text"  placeholder="Start Time"  class="txtAddNew" id="txtStartTime" name="time" />
+                                            <div class="token_id_card">
 
+                                                <div class="name_field" style="background-color: #8bacd6!important">
+                                                    <asp:Label runat="server" Text="Schedule List"></asp:Label>
+                                                </div>
+                                                <div class="card_white">
 
-                                                                      </div>
-                                                                        
-                                                                       <div class="col-lg-6" style="padding-left:0px!important;padding-right:0px!important;">
+                                                    <div class="field_label">
 
-                                                                             <input type="text"  placeholder="End Time"  class="txtAddNew" id="txtEndTime" name="time" />
+                                                        <table id="tblDates">
+                                                        </table>
+                                                    </div>
+                                                </div>
 
-                                                                  <%--<input   type="text" placeholder="End Time" id="txtEndTime"/>--%>
-                                                                      </div>
-                                                                     </div> 
-                                                              </td>
-                                                              <td><input class="" name="MaxAppoinmnt" type="text" placeholder="maximum appoinments " id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)"
-/></td>
-                                                              
-                                                          </tr>
+                                            </div>
 
-                                                          
-                                                      </tbody>
-
-                                                  </table>
-
-
-                                                   
-
-                                              </div>
-
-                                             <div style="height:130px"></div>
-                                          
-                                              <div class="col-lg-12">
-
-                                                 <table  >
-
-                                                      <thead>
-                                                          <%--<tr>  <th colspan="2" style="background-color: #dae4f1!important;color:black">Schedule List</th></tr>--%>
-                                                         <tr>  <th  style="background-color: #dae4f1!important;color:black">Schedule List</th></tr>
-                                                      </thead>
-                                                      <tbody>
-                                                         
-                                                          <tr>
-                                                             
-                                                              <td>
-                                                                  <table id="tblDates" >
-                                                                      
-                                                                  </table>
-
-
-                                                              </td>
-
-                                                          </tr>
-                                                          
-                                                      </tbody>
-
-                                                  </table>
-
-                                              </div>
-                                          </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <asp:HiddenField ID="hdnDoctorID" runat="server" Value="" />
                             </div>
+
+
+                            <asp:HiddenField ID="hdnDoctorID" runat="server" Value="" />
+
                         </div>
                     </div>
                 </div>
             </div>
-                 
 
-                
 
-            </div>
-       
 
+
+        </div>
+        </div>
 </asp:Content>

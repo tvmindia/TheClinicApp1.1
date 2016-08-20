@@ -67,7 +67,7 @@ $(document).ready(function () {
             editable: true,
            
             eventRender: function (event, element, view) {
-                debugger;
+              
                 //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------//  
 
 
@@ -83,8 +83,11 @@ $(document).ready(function () {
 
                 var dateString = moment(event.start).format('YYYY-MM-DD');
 
-                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#FAA732' });
+              //  $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
+
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
+                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
+              
 
             },
 
@@ -107,7 +110,7 @@ $(document).ready(function () {
 
             eventMouseover: function (calEvent, jsEvent) {
 
-                debugger;
+               
 
                 if ((calEvent.StartTime != null) && (calEvent.EndTime) != null )
                 {
@@ -203,13 +206,26 @@ $(document).ready(function () {
         }
     });
 
-    
+
 });
+
+//------------------------Animate Div---------------------------//
+function blink(selector) {
+  
+
+    $(selector).animate({ fontSize: "2.2em" }, 2000, function () {
+        //  $(selector).animate({fontSize: "2em"},2000 )
+        // blink(this);                    
+    });
+}
+//---------------------------------------------------------//
+
+
 
 
 function ConvertTimeFormatFrom24hrTo12hr(Time)
 {
-    debugger;
+    
 
     var TimeIn24hrFormat = Time;
     var hourEnd = TimeIn24hrFormat.indexOf(":");
@@ -234,6 +250,11 @@ function GetScheduledTimesByDate()
 
     if (DoctorID != null && DoctorID != "") {
 
+       // $("#divDate").fadeTo('fast', 0).fadeTo('fast', 1).fadeTo('fast', 0).fadeTo('fast', 1)
+       
+        blink('#txtAppointmentDate');
+
+        $("#txtAppointmentDate").css("border-color", "#3661c7");
         $("#txtAppointmentDate").val(eventStartDate);
 
         Doctor.DoctorID = DoctorID;
@@ -566,7 +587,7 @@ function RemoveTime(ScheduleID) {
 
     function AddSchedule() {
 
-        debugger;
+      
 
         if (DoctorID == "" || DoctorID == null) {
             alert("Please select a doctor");
@@ -708,7 +729,7 @@ function RemoveTime(ScheduleID) {
 
     function  CheckisNumber(evt)
     {
-        debugger;
+       
 
         var IsNumber = isNumber();
 
