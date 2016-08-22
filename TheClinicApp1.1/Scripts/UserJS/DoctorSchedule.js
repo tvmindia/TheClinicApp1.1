@@ -71,11 +71,8 @@ $(document).ready(function () {
            
             select: function (start, end) {
              
-                //$('div img').mouseenter(function () {
 
-                //  $("#txtAppointmentDate").css("border-color", "#3661c7");
-
-                // $("#txtAppointmentDate").toggleClass('borderClass');
+                //background-color: #a8d9f3;
 
                 $("#txtAppointmentDate").val(eventStartDate);
 
@@ -83,23 +80,12 @@ $(document).ready(function () {
                 $("#txtAppointmentDate").css({ border: '0 solid #3baae3' }).animate({
                         borderWidth: 2
                     }, 500);
-                //}).mouseleave(function () {
-                //    $("#txtAppointmentDate").animate({
-                //        borderWidth: 0
-                //    }, 500);
-                //});
-
-
-                //CustomClick();
-                // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-              
+                
                 $('#calendar').fullCalendar('unselect');
 
                 GetScheduledTimesByDate();
             },
      
-
-
             editable: true,
            
             eventRender: function (event, element, view) {
@@ -124,7 +110,6 @@ $(document).ready(function () {
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
               
-
             },
 
             dayClick: function (date, jsEvent, view) {
