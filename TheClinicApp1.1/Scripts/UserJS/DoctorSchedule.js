@@ -6,7 +6,7 @@ var title, eventStartDate, eventEndDate;
 var tooltip;
 var DoctorID;
 
-$(document).mouseup(function (e) {
+    $(document).mouseup(function (e) {
     var container = $("#calendar");
 
     if (!container.is(e.target) // if the target of the click isn't the container...
@@ -20,10 +20,7 @@ $(document).mouseup(function (e) {
     }
 });
 
-
-
-
-$(document).ready(function () {
+    $(document).ready(function () {
    
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
@@ -232,9 +229,8 @@ $(document).ready(function () {
 });
 
 //------------------------Animate Div---------------------------//
-function blink(selector) {
+    function blink(selector) {
   
-
     $(selector).animate({ fontSize: "2.2em" }, 2000, function () {
         //  $(selector).animate({fontSize: "2em"},2000 )
         // blink(this);                    
@@ -242,13 +238,8 @@ function blink(selector) {
 }
 //---------------------------------------------------------//
 
-
-
-
-function ConvertTimeFormatFrom24hrTo12hr(Time)
+    function ConvertTimeFormatFrom24hrTo12hr(Time)
 {
-    
-
     var TimeIn24hrFormat = Time;
     var hourEnd = TimeIn24hrFormat.indexOf(":");
     var H = +TimeIn24hrFormat.substr(0, hourEnd);
@@ -263,7 +254,7 @@ function ConvertTimeFormatFrom24hrTo12hr(Time)
 
 /*end of document.ready*/
 
-function GetScheduledTimesByDate()
+    function GetScheduledTimesByDate()
 {
     var jsonDeatilsByDate = {};
 
@@ -297,12 +288,8 @@ function GetScheduledTimesByDate()
 
 }
 
-
-
-
-function GetScheduleByDrID(drID) {
+    function GetScheduleByDrID(drID) {
   
-
     DoctorID = drID;
 
     var jsonDrSchedule = {};
@@ -318,10 +305,8 @@ function GetScheduleByDrID(drID) {
    
 }
 
-function BindScheduledDates()
+    function BindScheduledDates()
 {
-  
-
     var Doctor = new Object();
     Doctor.DoctorID = DoctorID;
 
@@ -331,7 +316,6 @@ function BindScheduledDates()
     ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetAllScheduleDetailsOfDoctor");
     Records = JSON.parse(ds.d);
 
-
     $("#tblDates tr").remove();
     
     NotAvailableDates = [];
@@ -339,8 +323,6 @@ function BindScheduledDates()
   
     $.each(Records, function (index, Records) {
        
-      
-    
         if (Records.IsAvailable == "True") {
 
             if ($.inArray(Records.AvailableDate, AvailableDates) == -1) { //check if Date not exits than add it
@@ -352,8 +334,6 @@ function BindScheduledDates()
     });
    
     $.each(Records, function (index, Records) {
-
-    
 
         if (Records.IsAvailable == "False") {
 
@@ -369,10 +349,6 @@ function BindScheduledDates()
         }
     });
 
-
-
-
-
     if (AvailableDates.length > 0) {
 
         for (var i = 0; i < AvailableDates.length; i++) {
@@ -382,7 +358,6 @@ function BindScheduledDates()
 
     }
 
-   
     if (NotAvailableDates.length > 0) {
 
         for (var i = 0; i < NotAvailableDates.length; i++)
@@ -403,9 +378,7 @@ function BindScheduledDates()
 
 }
 
-
-
-function GetAllDoctorScheduleDetailsByDate(Doctor)
+    function GetAllDoctorScheduleDetailsByDate(Doctor)
 {
     var ds = {};
     var table = {};
@@ -415,7 +388,7 @@ function GetAllDoctorScheduleDetailsByDate(Doctor)
     return table;
 }
 
-function BindTimes(Records) {
+    function BindTimes(Records) {
 
     $("#tblTimes tr").remove();
   
@@ -450,11 +423,9 @@ function BindTimes(Records) {
         $("#tblTimes").append(html);
     }
   
-
-
 }
 
-function BindSchedule(ScheduleID)
+    function BindSchedule(ScheduleID)
 {
     var Doctor = new Object();
     Doctor.DocScheduleID = ScheduleID;
@@ -470,6 +441,7 @@ function BindSchedule(ScheduleID)
     $.each(Records, function (index, Records) {
 
         var ScheduleID = Records.ID;
+        document.getElementById('hdnScheduleID').value = ScheduleID;
 
         if (Records.Starttime != null && Records.Endtime != null) {
 
@@ -483,11 +455,18 @@ function BindSchedule(ScheduleID)
 
     });
 
-
-
 }
 
-function RemoveTime(ScheduleID) {
+    function UpadteDrSchedule(Doctor) {
+        var ds = {};
+        var table = {};
+        var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+        ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/UpdateDoctorSchedule");
+        table = JSON.parse(ds.d);
+        return table;
+    }
+
+    function RemoveTime(ScheduleID) {
     debugger;
     var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
@@ -639,7 +618,26 @@ function RemoveTime(ScheduleID) {
     }
 
     function AddSchedule() {
+        debugger;
+        var JsonNewSchedule = {};
+       
+        if (document.getElementById('hdnScheduleID').value != null && document.getElementById('hdnScheduleID').value != "") {
+    
+            var JsonUpdatedSchedule = {};
 
+            var Doctor = new Object();
+            Doctor.DocScheduleID = document.getElementById('hdnScheduleID').value;
+            Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
+            Doctor.Starttime = document.getElementById('txtStartTime').value ;
+            Doctor.Endtime = document.getElementById('txtEndTime').value;
+
+            JsonUpdatedSchedule = UpadteDrSchedule(Doctor);
+           
+            JsonNewSchedule = JsonUpdatedSchedule;
+             }
+
+        else {
+  
         if (DoctorID == "" || DoctorID == null) {
             alert("Please select a doctor");
         }
@@ -649,102 +647,96 @@ function RemoveTime(ScheduleID) {
             if (isNaN(document.getElementById('txtMaxAppoinments').value) == false) {
     
 
-            if (document.getElementById('txtAppointmentDate').value.trim() != "" && document.getElementById('txtMaxAppoinments').value.trim() != "" && document.getElementById('txtStartTime').value.trim() != "" && document.getElementById('txtEndTime').value.trim() != "") {
+                if (document.getElementById('txtAppointmentDate').value.trim() != "" && document.getElementById('txtMaxAppoinments').value.trim() != "" && document.getElementById('txtStartTime').value.trim() != "" && document.getElementById('txtEndTime').value.trim() != "") {
     
-                var JsonNewSchedule = {};
+                    var Doctor = new Object();
+                    Doctor.DoctorID = DoctorID;
+                    Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
+                    Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
+                    Doctor.IsAvailable = true;
+                    Doctor.Starttime = document.getElementById('txtStartTime').value;
+                    Doctor.Endtime = document.getElementById('txtEndTime').value;
 
-                var Doctor = new Object();
-                Doctor.DoctorID = DoctorID;
-                Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
-                Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
-                Doctor.IsAvailable = true;
-                Doctor.Starttime = document.getElementById('txtStartTime').value;
-                Doctor.Endtime = document.getElementById('txtEndTime').value;
-
-                JsonNewSchedule = AddDrSchedule(Doctor);
-
-                if (JsonNewSchedule != undefined)
-                {
-                    //  alert(JsonNewSchedule.status);
-
-
-                    if (JsonNewSchedule.status == "1") {
-                        //SUCCESS
-
-                        var jsonDeatilsByDate = {};
-
-                        var Doctor = new Object();
-
-
-                        if (DoctorID != null && DoctorID != "") {
-
-                            Doctor.DoctorID = DoctorID;
-                            Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
-
-                            jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
-
-                            if (jsonDeatilsByDate != undefined) {
-
-                                BindTimes(jsonDeatilsByDate);
-
-                                $("#txtStartTime").val("");
-                                $("#txtEndTime").val("");
-                                $("#txtMaxAppoinments").val("");
-
-                                BindScheduledDates();
-
-                                var jsonDrSchedule = {};
-
-                                var Doctor = new Object();
-                                Doctor.DoctorID = DoctorID;
-
-                                jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
-                                if (jsonDrSchedule != undefined) {
-
-                                    $('#calendar').fullCalendar('removeEventSource', json);
-           
-                                    json = jsonDrSchedule;
-
-                                    $('#calendar').fullCalendar('addEventSource', json);
-                                    $('#calendar').fullCalendar('refetchEvents');
-                                }
-
-
-                            }
-                        }
-
-
-
-                        //var lblErrorCaption = document.getElementById('lblErrorCaption');
-                        //var lblMsgges = document.getElementById('lblMsgges');
-                        //var Errorbox = document.getElementById('Errorbox');
-
-                        //var lblclass = Alertclasses.sucess;
-                        //var lblmsg = msg.InsertionSuccessFull;
-                        //var lblcaptn = Caption.SuccessMsgCaption;
-
-                        //Errorbox.style.display = "";
-                        //Errorbox.className = lblclass;
-                        //lblErrorCaption.innerHTML = lblcaptn;
-                        //lblMsgges.innerHTML = lblmsg;
-
-                    }
+                    JsonNewSchedule = AddDrSchedule(Doctor);
 
                 }
-            }
 
-            else
-            {
-                alert("Please fill all schedule details");
-            }
+                else
+                {
+                    alert("Please fill all schedule details");
+                }
             }
 
             else {
                 alert("Please enter a valid number");
             }
 
+        }
+        }
 
-    }
+        if (JsonNewSchedule != undefined) {
+            //  alert(JsonNewSchedule.status);
+
+            if (JsonNewSchedule.status == "1") {
+                //SUCCESS
+
+                var jsonDeatilsByDate = {};
+
+                var Doctor = new Object();
+
+
+                if (DoctorID != null && DoctorID != "") {
+
+                    Doctor.DoctorID = DoctorID;
+                    Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
+
+                    jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+
+                    if (jsonDeatilsByDate != undefined) {
+
+                        BindTimes(jsonDeatilsByDate);
+
+                        $("#txtStartTime").val("");
+                        $("#txtEndTime").val("");
+                        $("#txtMaxAppoinments").val("");
+
+                        BindScheduledDates();
+
+                        var jsonDrSchedule = {};
+
+                        var Doctor = new Object();
+                        Doctor.DoctorID = DoctorID;
+
+                        jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                        if (jsonDrSchedule != undefined) {
+
+                            $('#calendar').fullCalendar('removeEventSource', json);
+
+                            json = jsonDrSchedule;
+
+                            $('#calendar').fullCalendar('addEventSource', json);
+                            $('#calendar').fullCalendar('refetchEvents');
+                        }
+
+                    }
+                }
+
+                //var lblErrorCaption = document.getElementById('lblErrorCaption');
+                //var lblMsgges = document.getElementById('lblMsgges');
+                //var Errorbox = document.getElementById('Errorbox');
+
+                //var lblclass = Alertclasses.sucess;
+                //var lblmsg = msg.InsertionSuccessFull;
+                //var lblcaptn = Caption.SuccessMsgCaption;
+
+                //Errorbox.style.display = "";
+                //Errorbox.className = lblclass;
+                //lblErrorCaption.innerHTML = lblcaptn;
+                //lblMsgges.innerHTML = lblmsg;
+
+            }
+
+        }
 
     }
 
