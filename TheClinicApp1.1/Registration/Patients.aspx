@@ -92,9 +92,17 @@
                     reader.readAsDataURL(input.files[0]);
                     }           
                 }
-         
+            //function Checkfiles(f){
+            //    debugger;
+            //    f = f.elements;
+            //    if(/.*\.(gif)|(jpeg)|(jpg)|(doc)$/.test(f['filename'].value.toLowerCase()))
+            //        return true;
+            //    alert('Please Upload Gif or Jpg Images, or Doc Files Only.');
+            //    f['filename'].focus();
+            //    return false;
+            //};
                 var validFiles = ["bmp", "gif", "png", "jpg", "jpeg"];
-                function OnUpload() 
+                function OnUpload(f) 
                 {
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
 
@@ -104,13 +112,14 @@
                     for (var i = 0; i < validFiles.length; i++) 
                     {
                         if (validFiles[i] == ext)
+                            
                             break;
                     }
                     if (i >= validFiles.length) 
                     {
                         Alert.render("Format Not Supporting\n\n Try:" + validFiles.join(", "));
                         document.getElementById("<%=FileUpload1.ClientID%>").value = '';
-              }
+                    }
               return true;
           }
           function bindPatient(){                
@@ -186,7 +195,7 @@
                 });
             
             }); 
- //-----------------------------------------------------------------------------------script validation-----------------------------------//       
+ //-----------------------------------------------------------------------------------script validation Author: Thomson Kattingal-----------------------------------//       
             function validate()
             {
                 debugger;
@@ -949,7 +958,7 @@
                                         <div class="upload">
                                             <label class="control-label">Upload Picture</label>
 
-                                            <asp:FileUpload ID="FileUpload1" ForeColor="Red" Font-Size="12px" runat="server" onchange="OnUpload();showpreview(this);" />
+                                            <asp:FileUpload ID="FileUpload1" ForeColor="Red" Font-Size="12px" runat="server" onchange="OnUpload(this);showpreview(this);" />
                                         </div>
                                     </div>
                                     <div class="col-lg-8">
