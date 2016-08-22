@@ -22,6 +22,9 @@ var DoctorID;
 
     $(document).ready(function () {
    
+      //  document.getElementsByClassName('timepicker_wrap').append('<p>ddbb</p>');
+
+       
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
 
@@ -792,17 +795,18 @@ var DoctorID;
 
         date =    $($this).closest('td').prev('td').text();
         var DrAvaildate = moment(date).format('YYYY-MM-DD');
-        var json = {};
+        var JsonCancellAll = {};
         var Doctor = new Object();
         Doctor.DoctorID = DoctorID; 
         Doctor.DoctorAvailDate = DrAvaildate;
-        json = CancelAllSchedulesByDate(Doctor);
-        if (json != undefined)
+        JsonCancellAll = CancelAllSchedulesByDate(Doctor);
+        if (JsonCancellAll != undefined)
         {
+            if (JsonCancellAll.status == "1") {
+
             var jsonDeatilsByDate = {};
 
             var Doctor = new Object();
-
 
             if (DoctorID != null && DoctorID != "") {
 
@@ -839,7 +843,7 @@ var DoctorID;
 
                 }
             }
-
+        }
         }
 
  }

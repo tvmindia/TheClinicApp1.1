@@ -288,6 +288,9 @@
       #tblDates   tr:nth-child(even) {background: #ebf0f3}
 
 
+
+
+
         /*.fc-content
 {
     display:none;
@@ -307,9 +310,9 @@
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
             });
-           // $('.nav_menu').click(function () {
-            //    $(".main_body").toggleClass("active_close");
-           // });
+            $('.nav_menu').click(function () {
+                $(".main_body").toggleClass("active_close");
+            });
 
             var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
 
@@ -331,6 +334,7 @@
     </script>
 
     <div class="main_body">
+       
         <div class="left_part">
             <div class="logo">
                 <a href="#">
