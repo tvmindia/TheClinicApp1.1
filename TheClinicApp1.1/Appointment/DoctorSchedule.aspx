@@ -365,8 +365,8 @@
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation"><a href="Appointment.aspx">Appoinments</a></li>
-                        <li role="presentation" class="active"><a href="DoctorSchedule.aspx">Schedule</a></li>
+                        <li role="presentation"><a href="Appointment.aspx">Patient Appoinments</a></li>
+                        <li role="presentation" class="active"><a href="DoctorSchedule.aspx">Doctor Schedule</a></li>
 
                     </ul>
 
