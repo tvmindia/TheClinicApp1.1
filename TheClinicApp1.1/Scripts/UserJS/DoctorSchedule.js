@@ -71,11 +71,8 @@ $(document).ready(function () {
            
             select: function (start, end) {
              
-                //$('div img').mouseenter(function () {
 
-                //  $("#txtAppointmentDate").css("border-color", "#3661c7");
-
-                // $("#txtAppointmentDate").toggleClass('borderClass');
+                //background-color: #a8d9f3;
 
                 $("#txtAppointmentDate").val(eventStartDate);
 
@@ -83,23 +80,12 @@ $(document).ready(function () {
                 $("#txtAppointmentDate").css({ border: '0 solid #3baae3' }).animate({
                         borderWidth: 2
                     }, 500);
-                //}).mouseleave(function () {
-                //    $("#txtAppointmentDate").animate({
-                //        borderWidth: 0
-                //    }, 500);
-                //});
-
-
-                //CustomClick();
-                // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-              
+                
                 $('#calendar').fullCalendar('unselect');
 
                 GetScheduledTimesByDate();
             },
      
-
-
             editable: true,
            
             eventRender: function (event, element, view) {
@@ -124,7 +110,6 @@ $(document).ready(function () {
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
               
-
             },
 
             dayClick: function (date, jsEvent, view) {
@@ -152,7 +137,7 @@ $(document).ready(function () {
                 {
                     StrtTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(calEvent.StartTime);
                     endTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(calEvent.EndTime);
-                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:200px;border-style: solid; border-width: 5px;height:150px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3baae3 ;color:#ffffff; text-align:center">' + 'Appoinment' + '</h3><p><b>Start Time:</b>' + StrtTimeIn12hrFormat + '<p><b>End Time:</b>' + endTimeIn12hrFormat + '</p></div>';
+                    var tooltip = '<div class="tooltipevent" style="text-align:center;width:150px;border-style: solid; border-width: 1px;height:110px;border-color:#3a87ad;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3baae3 ;margin-top:0;color:#ffffff; text-align:center">' + 'Appoinment' + '</h3><p><b>Start Time: </b>' + StrtTimeIn12hrFormat + '<p><b>End Time: </b>' + endTimeIn12hrFormat + '</p></div>';
                     //var tooltip = '<div class="tooltipevent" style="text-align:center;border-style: solid; border-width: 5px;border-color:#999966;color:#000000;background:#e6e6e6 ;position:absolute;z-index:10001;"><h3 style="background:#3661c7 ;color:#ffffff; text-align:center"></h3><p><b>Start Time:</b>' + StrtTimeIn12hrFormat + '<p><b>End Time:</b>' + endTimeIn12hrFormat + '</p></div>';
                 }
 
@@ -391,7 +376,7 @@ function BindScheduledDates()
     if (AvailableDates.length > 0) {
 
         for (var i = 0; i < AvailableDates.length; i++) {
-            var html = '<tr><td>' + AvailableDates[i] + '</td></tr>';
+            var html = '<tr><td>' + AvailableDates[i] + '</td><td class="center"><img id="imgCancelAll" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" /></td></tr>';
             $("#tblDates").append(html);
         }
 
@@ -402,7 +387,7 @@ function BindScheduledDates()
 
         for (var i = 0; i < NotAvailableDates.length; i++)
         {
-            var html = '<tr><td><strike>' + NotAvailableDates[i] + '</strike></td></tr>';
+            var html = '<tr><td><strike>' + NotAvailableDates[i] + '</strike></td><td></td></tr>';
             $("#tblDates").append(html);
         }
 
@@ -412,7 +397,7 @@ function BindScheduledDates()
     if (Records.length == 0) 
 
     {
-        var html = '<tr><td><i>' + "No Scheduled Date yet !" + '</i></td></tr>';
+        var html = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
         $("#tblDates").append(html);
     }
 
@@ -445,7 +430,7 @@ function BindTimes(Records) {
 
             if (Records.IsAvailable == "True")
             {
-                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="10" style="margin-right:10px" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
+                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" onclick="RemoveTime(\'' + ScheduleID + '\')"/><img id="imgUpdate"  height="18" align="right" src="../images/Editicon1.png" title="Change" /></td></tr>';
             }
             else
             {
@@ -461,7 +446,7 @@ function BindTimes(Records) {
 
     if (Records.length == 0)
     {
-        var html = '<tr><td><i>' + "No Scheduled time yet !" + '</i></td></tr>';
+        var html = '<tr><td><i>' + "No scheduled time!" + '</i></td></tr>';
         $("#tblTimes").append(html);
     }
   
@@ -471,8 +456,8 @@ function BindTimes(Records) {
 
 
 function RemoveTime(ScheduleID) {
-    
-    var DeletionConfirmation = ConfirmDelete();
+    debugger;
+    var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
     var Doctor = new Object();
     Doctor.DocScheduleID = ScheduleID;
@@ -625,8 +610,6 @@ function RemoveTime(ScheduleID) {
 
     function AddSchedule() {
 
-      
-
         if (DoctorID == "" || DoctorID == null) {
             alert("Please select a doctor");
         }
@@ -767,8 +750,6 @@ function RemoveTime(ScheduleID) {
 
     function  CheckisNumber(evt)
     {
-       
-
         var IsNumber = isNumber();
 
         if (IsNumber == false) {

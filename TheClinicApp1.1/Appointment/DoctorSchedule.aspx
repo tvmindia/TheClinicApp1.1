@@ -245,6 +245,14 @@
             cursor: pointer;
         }
 
+         #imgUpdate {
+            cursor: pointer;
+        }
+         
+          #imgCancelAll {
+            cursor: pointer;
+        }
+
         .card_white .field_label label:after {
             content: none !important;
         }
@@ -269,9 +277,15 @@
 
 
 
-        /*#tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td { 
+        #tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td { 
     border: none;
-}*/
+}
+
+       #tblDates, #tblDates tr, #tblDates th, #tblDates td { 
+    border: none;
+} 
+    #tblTimes   tr:nth-child(even) {background: #ebf0f3}
+      #tblDates   tr:nth-child(even) {background: #ebf0f3}
 
 
         /*.fc-content
@@ -293,7 +307,9 @@
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
             });
-
+            $('.nav_menu').click(function () {
+                $(".main_body").toggleClass("active_close");
+            });
 
             var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
 
@@ -304,7 +320,7 @@
             else {
                 $("#tblDates tr").remove();
 
-                var html = '<tr><td><i>' + "No Scheduled Date yet !" + '</i></td></tr>';
+                var html = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
                 $("#tblDates").append(html);
 
             }
@@ -360,8 +376,8 @@
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation"><a href="Appointment.aspx">Appoinments</a></li>
-                        <li role="presentation" class="active"><a href="DoctorSchedule.aspx">Schedule</a></li>
+                        <li role="presentation"><a href="Appointment.aspx">Patient Appoinments</a></li>
+                        <li role="presentation" class="active"><a href="DoctorSchedule.aspx">Doctor Schedule</a></li>
 
                     </ul>
 
@@ -380,7 +396,7 @@
                         <div role="tabpanel" class="tab-pane active">
                             <div class="grey_sec">
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" Font-Names="Andalus" CssClass="ddl"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlDoctor" runat="server"  ForeColor="#7d6754" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" Font-Names="Andalus" ></asp:DropDownList>
 
                                 <%-- <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
@@ -404,7 +420,7 @@
                                             <div id='calendar'></div>
                                             <div class="loader" style="float: left"></div>
                                         </div>
-
+                                        <br />
                                         <div class="col-lg-6" style="height: 100%;">
 
                                             <div class="col-lg-12">
@@ -454,7 +470,7 @@
                                                                     <label>Existing Schedules</label>
                                                                     <table id="tblTimes">
                                                                         <tr>
-                                                                            <td><i>No Scheduled time yet !</i></td>
+                                                                            <td><i>No scheduled time!</i></td>
                                                                         </tr>
                                                                     </table>
                                                                 </div>
