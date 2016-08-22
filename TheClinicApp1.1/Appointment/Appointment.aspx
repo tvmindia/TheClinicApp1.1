@@ -29,7 +29,22 @@
             max-width: 900px;
             margin: 0 auto;
         }
-        .loader {
+        .name_field {background: #3661c7; padding: 10px 20px; text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; text-transform: uppercase; font-family:'roboto-bold'; overflow: hidden; position: relative;}
+       .card_white {padding: 15px; display: block; font-family:'roboto-light';}
+       .card_white .field_label {display: block; clear: both; color: #000; font-size: 15px;}
+.card_white .field_label label {width: 21%; display: inline-block; position: relative; margin: 0 20px 0 0; color: #000; font-size: 15px;}
+.card_white .field_label label:after {position: absolute; top: 0; bottom: 0; right: 0; content: ":";}
+.card_white .field_label a {color: #000;}
+label {
+    color: #666666;
+    display: block;
+    font-family: "raleway-semibold";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    margin: 1px 15px 10px;
+}
+         .loader {
     border: 10px solid #f3f3f3; /* Light grey */
     border-top: 10px solid #3498db; /* Blue */
     border-radius: 50%;
@@ -86,6 +101,16 @@
     min-height:300px!important;
 }
 
+
+/*.ui-state-highlight {
+    border: 1px solid #72fc06 !important;
+    background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
+    color: #363636;
+}*/
+.fc-ltr .fc-basic-view .fc-day-number {
+    border: medium none !important;
+    text-align: right;
+}
 /* Modal Content */
 .modal-content {
     position: relative;
@@ -224,16 +249,7 @@ border:none !important;
     display:inline-block;
     position:relative;
 }
- .ddl
-        {
-            border:2px solid #7d6754;
-            border-radius:5px;
-            padding:3px;
-            -webkit-appearance: none; 
-            text-indent: 0.01px;/*In Firefox*/
-            text-overflow: '';/*In Firefox*/
-            font-size:inherit;
-        }
+ 
  table td
  {
      border:none!important;
@@ -254,7 +270,7 @@ border-bottom-right-radius: 0px;
          .searchPatient {
              position: absolute;
              top: 0;
-             right: -5px;
+             right: 1px;
              bottom: 0;
              margin: auto;
            
@@ -300,25 +316,10 @@ border-bottom-right-radius: 0px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
  }
- .mainbody {
-    margin-top: 0;
-    min-height: 150px;
-    max-height: 388px;
-    overflow: auto;
-    background-color:#ecf2f8;
-    text-align:center;
-}
- .PatientBody
- {
- margin-top: 0;
-    min-height: 150px;
-    max-height: 388px;
-    overflow: auto;
-    background-color: #edf2f8;
- }
+
  .txtBox
  {
-     width:250px;
+     width:350px;
      background-color:#ffffff;
  }
     </style>
@@ -514,8 +515,9 @@ border-bottom-right-radius: 0px;
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                         <li role="presentation" class="active"><a href="Appointment.aspx">Appoinments</a></li>
-                        <li role="presentation" ><a href="DoctorSchedule.aspx">Schedule</a></li>
+                        <li role="presentation"><a href="Appointment.aspx">Patient Appoinments</a></li>
+                        <li role="presentation" class="active"><a href="DoctorSchedule.aspx">Doctor Schedule</a></li> 
+                        
                        
                         
                     </ul>
@@ -534,7 +536,7 @@ border-bottom-right-radius: 0px;
                         <div role="tabpanel" class="tab-pane active" >
                             <div class="grey_sec">
                                 <div class="search_div">
-                                    <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" CssClass="ddl" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged1" AutoPostBack="true"></asp:DropDownList>
+                                    <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged1" AutoPostBack="true"></asp:DropDownList>
                                 </div>
                                 <ul class="top_right_links" >
                                     <li><a class="save" href="#"><span></span>Save</a></li>
@@ -550,14 +552,18 @@ border-bottom-right-radius: 0px;
  <div class="loader" style="float:left"></div>
                                     </div>
                              
-                                          <div class="col-lg-6" >
+                                          <div class="col-lg-6" style="height: 100%;">
                                                <div id="PatientReg">
-                                                   <div class="Patientheader">Add Appointment</div>
-                                                   <div class="PatientBody">
+                                                   <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
+                                                       <asp:Label runat="server" Text="Add Appointment"></asp:Label>
+
+                                                   </div>
+                                                   <div class="card_white">
                                                   <table>
                                                        <tr>
                                                           <td>
-                                                              <asp:Label ID="lblAppointmentDate" runat="server" Text="Date:"></asp:Label>
+                                                              <label>Date</label>
+                                                             <%-- <asp:Label ID="lblAppointmentDate" runat="server" Text="Date:"></asp:Label>--%>
                                                           </td>
                                                           <td>
                                                                <input class="txtBox" name="Date" id="txtAppointmentDate" type="text" disabled="disabled"/>
@@ -575,7 +581,9 @@ border-bottom-right-radius: 0px;
                                                           </td>
                                                       </tr>
                                                       <tr>
-                                                          <td> <asp:Label ID="lblPatient" runat="server" Text="Patient:"></asp:Label></td>
+                                                          <td><%-- <asp:Label ID="lblPatient" runat="server" Text="Patient:"></asp:Label>--%>
+                                                              <label>Patient</label>
+                                                          </td>
                                                           <td>
                                                                <div class="wrapper">
 
@@ -590,7 +598,8 @@ border-bottom-right-radius: 0px;
                                                       </tr>
                                                       <tr>
                                                           <td>
-                                                              <asp:Label ID="lblPatientName" runat="server" Text="Name:"></asp:Label>
+                                                             <%-- <asp:Label ID="lblPatientName" runat="server" Text="Name:"></asp:Label>--%>
+                                                              <label>Name</label>
                                                           </td>
                                                           <td>
                                                               <input type="text" id="txtPatientName" class="txtBox" />
@@ -602,7 +611,8 @@ border-bottom-right-radius: 0px;
                                                      
                                                       <tr>
                                                           <td>
-                                                              <asp:Label ID="lblPatientMobile" runat="server" Text="Mobile:"></asp:Label>
+                                                              <%--<asp:Label ID="lblPatientMobile" runat="server" Text="Mobile:"></asp:Label>--%>
+                                                              <label>Mobile</label>
                                                           </td>
                                                           <td>
                                                               <input type="text" id="txtPatientMobile" class="txtBox"/>
@@ -613,7 +623,8 @@ border-bottom-right-radius: 0px;
                                                       
                                                       <tr>
                                                            <td>
-                                                              <asp:Label ID="lblPatientPlace" runat="server" Text="Place:"></asp:Label>
+                                                             <%-- <asp:Label ID="lblPatientPlace" runat="server" Text="Place:"></asp:Label>--%>
+                                                               <label>Place</label>
                                                           </td>
                                                           <td>
                                                               <input type="text" id="txtPatientPlace" class="txtBox"/>
@@ -627,8 +638,10 @@ border-bottom-right-radius: 0px;
                                               </div>
                                               <br />
                                               <div id="AppointmentList" >
-                                                  <div class="header">Patient List</div>
-                                                  <div class="mainbody" >
+                                                  <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
+                                                        <asp:Label runat="server" Text="Patient List"></asp:Label>
+                                                    </div>
+                                                  <div class="card_white" >
                                                       <table id="listBody">
 
                                                       </table>
