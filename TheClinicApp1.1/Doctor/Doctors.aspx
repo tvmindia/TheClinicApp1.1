@@ -105,7 +105,8 @@
             function FillTextboxUsingXml(){                
                 GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
             RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
-        }
+            }
+//--------------------------------------------------------------------------script validation------------------------------------------------//
             function validate()
             {
                 debugger;
@@ -139,7 +140,7 @@
                     return true;
                 }
             }
-
+//---------------------------------------------------------------------------------------------------------------------------------------------------//
         function reset(){
             $('input[type=text]').val('');  
             $('textarea').val(''); 
