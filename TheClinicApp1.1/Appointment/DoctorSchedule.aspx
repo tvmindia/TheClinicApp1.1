@@ -307,9 +307,9 @@
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
             });
-            $('.nav_menu').click(function () {
-                $(".main_body").toggleClass("active_close");
-            });
+           // $('.nav_menu').click(function () {
+            //    $(".main_body").toggleClass("active_close");
+           // });
 
             var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
 
@@ -551,5 +551,6 @@
 
 
         </div>
+         <input type="hidden" id="hdnScheduleID" value=""/>
     </div>
 </asp:Content>
