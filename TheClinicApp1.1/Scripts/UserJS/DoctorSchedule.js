@@ -625,8 +625,6 @@ function RemoveTime(ScheduleID) {
 
     function AddSchedule() {
 
-      
-
         if (DoctorID == "" || DoctorID == null) {
             alert("Please select a doctor");
         }
@@ -767,8 +765,6 @@ function RemoveTime(ScheduleID) {
 
     function  CheckisNumber(evt)
     {
-       
-
         var IsNumber = isNumber();
 
         if (IsNumber == false) {
