@@ -249,7 +249,7 @@
             cursor: pointer;
         }
          
-          #imgCancelAll {
+          #imgUpdate {
             cursor: pointer;
         }
 

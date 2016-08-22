@@ -430,7 +430,7 @@ function BindTimes(Records) {
 
             if (Records.IsAvailable == "True")
             {
-                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" onclick="RemoveTime(\'' + ScheduleID + '\')"/><img id="imgUpdate"  height="18" align="right" src="../images/Editicon1.png" title="Change" /></td></tr>';
+                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" onclick="RemoveTime(\'' + ScheduleID + '\')"/><img id="imgUpdate"  height="18" align="right" src="../images/Editicon1.png" title="Change" onclick="BindSchedule(\'' + ScheduleID + '\')" /></td></tr>';
             }
             else
             {
@@ -454,6 +454,38 @@ function BindTimes(Records) {
 
 }
 
+function BindSchedule(ScheduleID)
+{
+    var Doctor = new Object();
+    Doctor.DocScheduleID = ScheduleID;
+
+    var ds = {};
+    var table = {};
+
+    var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+    ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetDoctorScheduleDetailsByDocScheduleID");
+    table = JSON.parse(ds.d);
+    Records = table;
+
+    $.each(Records, function (index, Records) {
+
+        var ScheduleID = Records.ID;
+
+        if (Records.Starttime != null && Records.Endtime != null) {
+
+            strttime = ConvertTimeFormatFrom24hrTo12hr(Records.Starttime);
+            endtime = ConvertTimeFormatFrom24hrTo12hr(Records.Endtime);
+
+            $("#txtStartTime").val(strttime);
+            $("#txtEndTime").val(endtime);
+            $("#txtMaxAppoinments").val(Records.PatientLimit);
+         }
+
+    });
+
+
+
+}
 
 function RemoveTime(ScheduleID) {
     debugger;
@@ -499,7 +531,6 @@ function RemoveTime(ScheduleID) {
 }
 }
 
-
     function GetDoctorScheduleDetailsByDoctorID(Doctor) {
         var ds = { };
         var table = { };
@@ -508,7 +539,6 @@ function RemoveTime(ScheduleID) {
         table = JSON.parse(ds.d);
         return table;
 }
-
 
     /*Add New Calendar Event */
     function AddEvent(CalendarSchedule) {
@@ -727,7 +757,6 @@ function RemoveTime(ScheduleID) {
         return table;
     }
 
-
     function ConvertJsonToDate(jsonDate) {
         if (jsonDate != null) {
            
@@ -746,7 +775,6 @@ function RemoveTime(ScheduleID) {
             return result;
         }
     }
-
 
     function  CheckisNumber(evt)
     {
