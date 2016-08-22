@@ -276,7 +276,8 @@
        #tblDates, #tblDates tr, #tblDates th, #tblDates td { 
     border: none;
 } 
-
+    #tblTimes   tr:nth-child(even) {background: #ebf0f3}
+      #tblDates   tr:nth-child(even) {background: #ebf0f3}
 
 
         /*.fc-content
