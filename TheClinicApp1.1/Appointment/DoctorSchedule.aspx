@@ -269,9 +269,14 @@
 
 
 
-        /*#tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td { 
+        #tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td { 
     border: none;
-}*/
+}
+
+       #tblDates, #tblDates tr, #tblDates th, #tblDates td { 
+    border: none;
+} 
+
 
 
         /*.fc-content
