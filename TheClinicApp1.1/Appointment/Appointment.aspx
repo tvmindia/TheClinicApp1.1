@@ -102,11 +102,11 @@ label {
 }
 
 
-/*.ui-state-highlight {
+.ui-state-highlight {
     border: 1px solid #72fc06 !important;
     background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
     color: #363636;
-}*/
+}
 .fc-ltr .fc-basic-view .fc-day-number {
     border: medium none !important;
     text-align: right;
@@ -336,33 +336,33 @@ border-bottom-right-radius: 0px;
                 var name= ac[i].split('🏠');
                 projects.push({  value : name[0], label: name[0], desc: name[1]})   
             }
-        $("#txtSearch").autocomplete({
+            $("#txtSearch").autocomplete({
            
-            maxResults: 10,
-            source: function (request, response) {
+                maxResults: 10,
+                source: function (request, response) {
                
-                //--- Search by name or description(file no , mobile no, address) , by accessing matched results with search term and setting this result to the source for autocomplete
-                var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
-                var matching = $.grep(projects, function (value) {
+                    //--- Search by name or description(file no , mobile no, address) , by accessing matched results with search term and setting this result to the source for autocomplete
+                    var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+                    var matching = $.grep(projects, function (value) {
 
-                    var name = value.value;
-                    var label = value.label;
-                    var desc = value.desc;
+                        var name = value.value;
+                        var label = value.label;
+                        var desc = value.desc;
 
-                    return matcher.test(name) || matcher.test(desc);
-                });
-                var results = matching; // Matched set of result is set to variable 'result'
+                        return matcher.test(name) || matcher.test(desc);
+                    });
+                    var results = matching; // Matched set of result is set to variable 'result'
 
-                response(results.slice(0, this.options.maxResults));
-            },
-            focus: function (event, ui) {
-                $("#txtSearch").val(ui.item.label);
+                    response(results.slice(0, this.options.maxResults));
+                },
+                focus: function (event, ui) {
+                    $("#txtSearch").val(ui.item.label);
 
-                return false;
-            },
-            select: function (event, ui) {
+                    return false;
+                },
+                select: function (event, ui) {
 
-                BindPatientDetails();
+                    BindPatientDetails();
                <%-- document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";--%>
 
 
@@ -401,25 +401,25 @@ border-bottom-right-radius: 0px;
             });
           
         });
-        //end of document.ready
+    //end of document.ready
 
-        function InsertPatientAppointment(Appointments)
-        {
-            debugger;
-            var ds = {};
-            var table = {};
+    function InsertPatientAppointment(Appointments)
+    {
+        debugger;
+        var ds = {};
+        var table = {};
            
-            var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
-             ds=getJsonData(data, "../Appointment/Appointment.aspx/InsertPatientAppointment");
-                table = JSON.parse(ds.d);
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        ds=getJsonData(data, "../Appointment/Appointment.aspx/InsertPatientAppointment");
+        table = JSON.parse(ds.d);
             
        
-            return table;
-        }
-        function GetDoctorID()
-        {
-            debugger;
-            var docID=  $('#<%=hdfddlDoctorID.ClientID%>').val();
+        return table;
+    }
+    function GetDoctorID()
+    {
+        debugger;
+        var docID=  $('#<%=hdfddlDoctorID.ClientID%>').val();
             var calID= $("#hdfDoctorID").val(docID);
             BindCalendar(calID);
         }
@@ -464,8 +464,27 @@ border-bottom-right-radius: 0px;
             table = JSON.parse(ds.d);
             return table;
         }
-   
-
+        function getFormattedDate(input){
+            var pattern=/(.*?)\/(.*?)\/(.*?)$/;
+            var result = input.replace(pattern,function(match,p1,p2,p3){
+                var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                return (p2<10?"0"+p2:p2)+" "+months[(p1-1)]+" "+p3;
+            });
+            return result;
+            
+        }
+        function AppendList(date)
+        {
+            
+            debugger;
+            var FormattedDate=getFormattedDate(date);
+            var appList = "Add Appointment For " + FormattedDate;
+            var list="Patient List For "+FormattedDate;
+            $('#<%=lblAppointment.ClientID%>').text('');
+            $('#<%=lblList.ClientID%>').text('');
+            $('#<%=lblAppointment.ClientID%>').text(appList);
+            $('#<%=lblList.ClientID%>').append(list);
+        }
     </script>
     <div class="main_body">
             <div class="left_part">
@@ -515,8 +534,8 @@ border-bottom-right-radius: 0px;
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation"><a href="Appointment.aspx">Patient Appoinments</a></li>
-                        <li role="presentation" class="active"><a href="DoctorSchedule.aspx">Doctor Schedule</a></li> 
+                        <li role="presentation" class="active"><a href="Appointment.aspx">Patient Appoinments</a></li>
+                        <li role="presentation" ><a href="DoctorSchedule.aspx">Doctor Schedule</a></li> 
                         
                        
                         
@@ -555,7 +574,8 @@ border-bottom-right-radius: 0px;
                                           <div class="col-lg-6" style="height: 100%;">
                                                <div id="PatientReg">
                                                    <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
-                                                       <asp:Label runat="server" Text="Add Appointment"></asp:Label>
+                                                       <asp:Label runat="server" ID="lblAppointment" Text="Add Appointment"></asp:Label>
+                                                     <%--  <label id="lblAppointment">Add Appointment</label>--%>
 
                                                    </div>
                                                    <div class="card_white">
@@ -639,7 +659,7 @@ border-bottom-right-radius: 0px;
                                               <br />
                                               <div id="AppointmentList" >
                                                   <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
-                                                        <asp:Label runat="server" Text="Patient List"></asp:Label>
+                                                        <asp:Label ID="lblList" runat="server" Text="Patient List"></asp:Label>
                                                     </div>
                                                   <div class="card_white" >
                                                       <table id="listBody">

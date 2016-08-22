@@ -94,6 +94,15 @@ namespace TheClinicApp1._1.Appointment {
         protected global::System.Web.UI.WebControls.DropDownList ddlDoctor;
         
         /// <summary>
+        /// lblAppointment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAppointment;
+        
+        /// <summary>
         /// btnSearch control.
         /// </summary>
         /// <remarks>
@@ -101,6 +110,15 @@ namespace TheClinicApp1._1.Appointment {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnSearch;
+        
+        /// <summary>
+        /// lblList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblList;
         
         /// <summary>
         /// hdfddlDoctorID control.
