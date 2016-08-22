@@ -799,7 +799,47 @@ var DoctorID;
         json = CancelAllSchedulesByDate(Doctor);
         if (json != undefined)
         {
-            alert(json.status);
+            var jsonDeatilsByDate = {};
+
+            var Doctor = new Object();
+
+
+            if (DoctorID != null && DoctorID != "") {
+
+                Doctor.DoctorID = DoctorID;
+                Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
+
+                jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+
+                if (jsonDeatilsByDate != undefined) {
+
+                    BindTimes(jsonDeatilsByDate);
+
+                    $("#txtStartTime").val("");
+                    $("#txtEndTime").val("");
+                    $("#txtMaxAppoinments").val("");
+
+                    BindScheduledDates();
+
+                    var jsonDrSchedule = {};
+
+                    var Doctor = new Object();
+                    Doctor.DoctorID = DoctorID;
+
+                    jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                    if (jsonDrSchedule != undefined) {
+
+                        $('#calendar').fullCalendar('removeEventSource', json);
+
+                        json = jsonDrSchedule;
+
+                        $('#calendar').fullCalendar('addEventSource', json);
+                        $('#calendar').fullCalendar('refetchEvents');
+                    }
+
+                }
+            }
+
         }
 
  }
