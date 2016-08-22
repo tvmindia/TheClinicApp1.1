@@ -93,11 +93,11 @@ $(document).ready(function ()
                       for (index = 0; index < names.length; ++index) {
                           if (names[index].isAvailable == "3")
                           {
-                              title = title + '<tr><td><strike>' + names[index].title + '</strike></td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveFromList(\'' + calEvent.id + '\')"/></td></tr>';
+                              title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveFromList(\'' + calEvent.id + '\')"/></td></tr>';
                           }
                           else
                           {
-                              title = title + '<tr><td>' + names[index].title + '</td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveFromList(\'' + calEvent.id + '\')"/></td></tr>';
+                              title = title + '<tr><td><label>' + names[index].title + '</label></td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveFromList(\'' + calEvent.id + '\')"/></td></tr>';
                           }
                           var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
                           //var newlabel = document.createElement("Label");
@@ -186,8 +186,9 @@ $(document).ready(function ()
                   eventRender: function (event, element, view) {
                       debugger;
                       var dateString = moment(event.start).format('YYYY-MM-DD');
-                      $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#BAF59F!important' });
+                      //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#b3d4fc!important' });
                       $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
+                      $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important', 'border': '2px solid red' });
  },
                   events: json,
                   viewDisplay: function getDate(date) {
