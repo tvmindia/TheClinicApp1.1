@@ -245,6 +245,14 @@
             cursor: pointer;
         }
 
+         #imgUpdate {
+            cursor: pointer;
+        }
+         
+          #imgCancelAll {
+            cursor: pointer;
+        }
+
         .card_white .field_label label:after {
             content: none !important;
         }
@@ -312,7 +320,7 @@
             else {
                 $("#tblDates tr").remove();
 
-                var html = '<tr><td><i>' + "No Scheduled Date yet !" + '</i></td></tr>';
+                var html = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
                 $("#tblDates").append(html);
 
             }
@@ -388,7 +396,7 @@
                         <div role="tabpanel" class="tab-pane active">
                             <div class="grey_sec">
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" Font-Names="Andalus" CssClass="ddl"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlDoctor" runat="server"  ForeColor="#7d6754" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" Font-Names="Andalus" ></asp:DropDownList>
 
                                 <%-- <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
@@ -462,7 +470,7 @@
                                                                     <label>Existing Schedules</label>
                                                                     <table id="tblTimes">
                                                                         <tr>
-                                                                            <td><i>No Scheduled time yet !</i></td>
+                                                                            <td><i>No scheduled time!</i></td>
                                                                         </tr>
                                                                     </table>
                                                                 </div>

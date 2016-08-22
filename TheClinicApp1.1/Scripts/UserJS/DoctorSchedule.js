@@ -376,7 +376,7 @@ function BindScheduledDates()
     if (AvailableDates.length > 0) {
 
         for (var i = 0; i < AvailableDates.length; i++) {
-            var html = '<tr><td>' + AvailableDates[i] + '</td></tr>';
+            var html = '<tr><td>' + AvailableDates[i] + '</td><td class="center"><img id="imgCancelAll" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" /></td></tr>';
             $("#tblDates").append(html);
         }
 
@@ -387,7 +387,7 @@ function BindScheduledDates()
 
         for (var i = 0; i < NotAvailableDates.length; i++)
         {
-            var html = '<tr><td><strike>' + NotAvailableDates[i] + '</strike></td></tr>';
+            var html = '<tr><td><strike>' + NotAvailableDates[i] + '</strike></td><td></td></tr>';
             $("#tblDates").append(html);
         }
 
@@ -397,7 +397,7 @@ function BindScheduledDates()
     if (Records.length == 0) 
 
     {
-        var html = '<tr><td><i>' + "No Scheduled Date yet !" + '</i></td></tr>';
+        var html = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
         $("#tblDates").append(html);
     }
 
@@ -430,7 +430,7 @@ function BindTimes(Records) {
 
             if (Records.IsAvailable == "True")
             {
-                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="10" style="margin-right:10px" src="../Images/delete-cross.png" onclick="RemoveTime(\'' + ScheduleID + '\')"/></td></tr>';
+                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" onclick="RemoveTime(\'' + ScheduleID + '\')"/><img id="imgUpdate"  height="18" align="right" src="../images/Editicon1.png" title="Change" /></td></tr>';
             }
             else
             {
@@ -446,7 +446,7 @@ function BindTimes(Records) {
 
     if (Records.length == 0)
     {
-        var html = '<tr><td><i>' + "No Scheduled time yet !" + '</i></td></tr>';
+        var html = '<tr><td><i>' + "No scheduled time!" + '</i></td></tr>';
         $("#tblTimes").append(html);
     }
   
