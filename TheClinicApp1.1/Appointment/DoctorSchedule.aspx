@@ -409,7 +409,7 @@
                                             <div id='calendar'></div>
                                             <div class="loader" style="float: left"></div>
                                         </div>
-
+                                        <br />
                                         <div class="col-lg-6" style="height: 100%;">
 
                                             <div class="col-lg-12">
