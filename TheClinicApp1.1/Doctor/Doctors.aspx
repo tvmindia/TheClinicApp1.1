@@ -96,15 +96,49 @@
 
             function GetTextBoxValuesPresLocal()
             {  
-
                 GetTextBoxValuesPresDoc('<%=hdnTextboxValues.ClientID%>');
+                return validate();
+
+                
             }
                     
             function FillTextboxUsingXml(){                
                 GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
             RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
         }
-
+            function validate()
+            {
+                debugger;
+                var ictrl;
+                var check=0;
+                var regex = /^[a-zA-Z0-9,.;:"'@#$%*+! ]{0,255}$/;
+                var ctrl =[];
+                var domelement = document.querySelectorAll("input[type=text],textarea");
+                var domcount=0;
+                for(domcount;domcount<domelement.length;domcount++)
+                {
+                    ctrl.push(domelement[domcount].value);
+                }
+                              
+                for(ictrl=0;ictrl<ctrl.length;ictrl++)
+                {
+                    if (regex.test(ctrl[ictrl])) 
+                    {
+                        check=1;
+                    }
+                    else {
+                        document.getElementById('<%=Errorbox.ClientID%>').style.display="block";  
+                        document.getElementById('<%=Errorbox.ClientID%>').className="alert alert-danger";
+                        document.getElementById('<%=lblErrorCaption.ClientID%>').innerHTML="Warning!";         
+                        document.getElementById('<%=lblMsgges.ClientID%>').innerHTML="We can't accept brackets or parentheses";
+                        check=0;
+                        return false;
+                    }
+                }
+                if(check==1){
+                    return true;
+                }
+            }
 
         function reset(){
             $('input[type=text]').val('');  
@@ -949,7 +983,7 @@
 
                     <ul class="top_right_links">
                         <li>
-                            <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();"  OnClick="btnSave_Click" /></li>
+                            <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="return GetTextBoxValuesPresLocal();"  OnClick="btnSave_Click" /></li>
                         <li><a class="new" href="#" id="btnNew" runat="server" onclick="reset();" onserverclick="btnNew_ServerClick"><span></span>New</a></li>
                     </ul>
 
@@ -1215,7 +1249,7 @@
 
                     <ul class="top_right_links">
                         <li>
-                            <asp:Button ID="Button2" runat="server" Text="save" CssClass="button1" OnClientClick="GetTextBoxValuesPresLocal();"  OnClick="btnSave_Click" /></li>
+                            <asp:Button ID="Button2" runat="server" Text="save" CssClass="button1" OnClientClick="return GetTextBoxValuesPresLocal();"  OnClick="btnSave_Click" /></li>
                         <li><a class="new" href="#" id="A1" runat="server" onclick="reset();" onserverclick="btnNew_ServerClick"><span></span>New</a></li>
                     </ul>
 

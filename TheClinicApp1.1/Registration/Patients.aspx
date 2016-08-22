@@ -187,20 +187,53 @@
             
             }); 
         
-           
+            function validate()
+            {
+                debugger;
+                var ictrl;
+                var check=0;
+                var regex = /^[a-zA-Z0-9,.;:"'@#$%*+! ]{0,255}$/;
+                var ctrl =[];
+                var domelement = document.querySelectorAll("input[type=text],textarea");
+                var domcount=0;
+                for(domcount;domcount<domelement.length;domcount++)
+                {
+                    ctrl.push(domelement[domcount].value);
+                }
+                              
+                for(ictrl=0;ictrl<ctrl.length;ictrl++)
+                {
+                    if (regex.test(ctrl[ictrl])) 
+                    {
+                        check=1;
+                    }
+                    else {
+                        document.getElementById('<%=Errorbox.ClientID%>').style.display="block";  
+                        document.getElementById('<%=Errorbox.ClientID%>').className="alert alert-danger";
+                        document.getElementById('<%=lblErrorCaption.ClientID%>').innerHTML="Warning!";         
+                        document.getElementById('<%=lblMsgges.ClientID%>').innerHTML="We can't accept brackets or parentheses";
+                        check=0;
+                        return false;
+                    }
+                }
+                if(check==1){
+                    return true;
+                }
+            }
 
         </script>
         <script>
        
             function validation()
-            {                     
+            {    
+                return validate();
                 if( ($('#<%=txtName.ClientID%>').val()=="")||  ($('#<%=txtAge.ClientID%>').val()=="") )
                 {
                     var lblclass = Alertclasses.danger;
                     var lblmsg = msg.Requiredfields;
                     var lblcaptn = Caption.Confirm;
                     ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
-
+                    
                     return false;
                 }
                 else
