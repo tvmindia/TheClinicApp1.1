@@ -471,8 +471,8 @@ function BindTimes(Records) {
 
 
 function RemoveTime(ScheduleID) {
-    
-    var DeletionConfirmation = ConfirmDelete();
+    debugger;
+    var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
     var Doctor = new Object();
     Doctor.DocScheduleID = ScheduleID;
