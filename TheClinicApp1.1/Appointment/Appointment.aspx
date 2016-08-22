@@ -480,6 +480,7 @@ border-bottom-right-radius: 0px;
             var FormattedDate=getFormattedDate(date);
             var appList = "Add Appointment For " + FormattedDate;
             var list="Patient List For "+FormattedDate;
+            $("#txtAppointmentDate").val(FormattedDate);
             $('#<%=lblAppointment.ClientID%>').text('');
             $('#<%=lblList.ClientID%>').text('');
             $('#<%=lblAppointment.ClientID%>').text(appList);

@@ -42,7 +42,8 @@ namespace TheClinicApp1._1.Appointment
             public string start { get; set; }
             public string end { get; set; }
             public string isAvailable { get; set; }
-           
+            public string appointmentID { get; set; }
+
             public string patientName
             {
                 get;
@@ -60,14 +61,14 @@ namespace TheClinicApp1._1.Appointment
 
         #region InsertPatientAppointment
         [System.Web.Services.WebMethod]
-            
+
         public static string InsertPatientAppointment(Appointments AppointObj)
         {
 
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-            AppointObj.ClinicID =Convert.ToString(UA.ClinicID);
+            AppointObj.ClinicID = Convert.ToString(UA.ClinicID);
             JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
             try
             {
@@ -82,10 +83,10 @@ namespace TheClinicApp1._1.Appointment
                 }
                 else
                 {
-                  //redirect to login page
+                    //redirect to login page
 
-                   // return "NullUA";
-                   
+                    // return "NullUA";
+
                 }
             }
             catch (Exception ex)
@@ -148,7 +149,7 @@ namespace TheClinicApp1._1.Appointment
         [System.Web.Services.WebMethod]
         public static string GetAllPatientAppointmentDetailsByClinicID(TheClinicApp1._1.ClinicDAL.Doctor docObj)
         {
-            
+
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -158,7 +159,7 @@ namespace TheClinicApp1._1.Appointment
             if (UA != null)
             {
                 docObj.ClinicID = Convert.ToString(UA.ClinicID);
-                
+
                 ds = docObj.GetAllScheduleDetailsByDoctorID();
                 int count = ds.Tables[0].Rows.Count;
                 for (int i = 0; i <= count - 1; i++)
@@ -175,7 +176,7 @@ namespace TheClinicApp1._1.Appointment
             }
             return JsonConvert.SerializeObject(events);
 
-           
+
             //JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
             //if (UA != null)
             //{
@@ -332,7 +333,7 @@ namespace TheClinicApp1._1.Appointment
             return output.ToString();
 
         }
-        #endregion BindDataAutocomplete 
+        #endregion BindDataAutocomplete
 
         #region GetAppointedPatientDetails
         [System.Web.Services.WebMethod]
@@ -342,17 +343,17 @@ namespace TheClinicApp1._1.Appointment
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-            AppointObj.ClinicID =Convert.ToString(UA.ClinicID);
+            AppointObj.ClinicID = Convert.ToString(UA.ClinicID);
             List<Event> events = new List<Event>();
             if (UA != null)
             {
                 DataSet ds = null;
                 ds = AppointObj.GetAppointedPatientDetails();
-               // ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
+                // ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
                 int count = ds.Tables[0].Rows.Count;
                 //Converting to Json
-            
-             
+
+
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     for (int i = 0; i <= count - 1; i++)
@@ -380,12 +381,12 @@ namespace TheClinicApp1._1.Appointment
             JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
             AppointObj.ClinicID = Convert.ToString(UA.ClinicID);
             List<Event> events = new List<Event>();
-           
+
             if (UA != null)
             {
                 DataSet ds = null;
-              //  ds = AppointObj.GetAppointedPatientDetails();
-                 ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
+                //  ds = AppointObj.GetAppointedPatientDetails();
+                ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
                 int count = ds.Tables[0].Rows.Count;
                 //Converting to Json
 
@@ -398,11 +399,12 @@ namespace TheClinicApp1._1.Appointment
                         {
                             id = ds.Tables[0].Rows[i]["ScheduleID"].ToString(),
                             title = ds.Tables[0].Rows[i]["name"].ToString(),
-                            isAvailable = ds.Tables[0].Rows[i]["AppointmentStatus"].ToString()
+                            isAvailable = ds.Tables[0].Rows[i]["AppointmentStatus"].ToString(),
+                            appointmentID = ds.Tables[0].Rows[i]["ID"].ToString()
                         });
                     }
                 }
-               
+
                 return jsSerializer.Serialize(events);
             }
             return jsSerializer.Serialize("");
@@ -414,17 +416,17 @@ namespace TheClinicApp1._1.Appointment
         public static string GetDoctorAvailability(ClinicDAL.Doctor docObj)
         {
 
-            int starth=0;
-            int startm=0;
-            int endH=0;
-            int endM=0;
+            int starth = 0;
+            int startm = 0;
+            int endH = 0;
+            int endM = 0;
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
             JavaScriptSerializer jsSerializerstr = new JavaScriptSerializer();
-           docObj.ClinicID = Convert.ToString(UA.ClinicID);
-           twolists lists;
+            docObj.ClinicID = Convert.ToString(UA.ClinicID);
+            twolists lists;
             List<Event> events = new List<Event>();
             List<string> str = new List<string>();
             char[] charsToTrim = { ' ', '\t' };
@@ -445,44 +447,44 @@ namespace TheClinicApp1._1.Appointment
                             end = ds.Tables[0].Rows[i]["Endtime"].ToString()
                         });
                         string sTime = ds.Tables[0].Rows[i]["Starttime"].ToString();
-                        sTime = sTime.Replace(" ","");
+                        sTime = sTime.Replace(" ", "");
                         TimeSpan ts = TimeSpan.Parse(sTime);
-                       
-                       int startHours = ts.Hours;
-                       int minutes = ts.Minutes;
-                       starth = startHours;
-                       startm = minutes;
-                       string eTime = ds.Tables[0].Rows[i]["Endtime"].ToString();
-                       eTime=eTime.Replace(" ", "");
-                       TimeSpan endts = TimeSpan.Parse(eTime);
-                       int endHours = endts.Hours;
-                       int endMinutes = endts.Minutes;
-                       endH = endHours;
-                       endM = endMinutes;
+
+                        int startHours = ts.Hours;
+                        int minutes = ts.Minutes;
+                        starth = startHours;
+                        startm = minutes;
+                        string eTime = ds.Tables[0].Rows[i]["Endtime"].ToString();
+                        eTime = eTime.Replace(" ", "");
+                        TimeSpan endts = TimeSpan.Parse(eTime);
+                        int endHours = endts.Hours;
+                        int endMinutes = endts.Minutes;
+                        endH = endHours;
+                        endM = endMinutes;
                     }
                 }
-               
-                
+
+
                 //Converting to Json
                 var clockIn = new DateTime(2011, 5, 25, starth, startm, 00);
                 var clockOut = new DateTime(2011, 5, 25, endH, endM, 00);
-              //  JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+                //  JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
                 var hours = GetWorkingHourIntervals(clockIn, clockOut);
-              //  List<Event> events = new List<Event>();
+                //  List<Event> events = new List<Event>();
 
                 foreach (var h in hours)
                 {
-                    string a =Convert.ToString(h);
+                    string a = Convert.ToString(h);
                     str.Add(a);
-                    
+
                 }
 
-               
-               //lists.events = events;
-               //lists.str = str;
+
+                //lists.events = events;
+                //lists.str = str;
                 return jsSerializer.Serialize(str);
-               
-                          }
+
+            }
             return jsSerializer.Serialize("");
         }
         #endregion GetDoctorAvailability
@@ -491,7 +493,7 @@ namespace TheClinicApp1._1.Appointment
         [System.Web.Services.WebMethod]
         public static string CancelAppointment(Appointments AppointObj)
         {
-          
+
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -504,7 +506,7 @@ namespace TheClinicApp1._1.Appointment
                 DataSet ds = null;
                 //  ds = AppointObj.GetAppointedPatientDetails();
                 AppointObj.status = AppointObj.CancelAppointment().ToString();
-             
+
                 //Converting to Json
                 return jsSerializer.Serialize(AppointObj);
             }
@@ -512,7 +514,7 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion CancelAppointment
 
-      public  static IEnumerable<DateTime> GetWorkingHourIntervals(DateTime clockIn, DateTime clockOut)
+        public static IEnumerable<DateTime> GetWorkingHourIntervals(DateTime clockIn, DateTime clockOut)
         {
             yield return clockIn;
 
@@ -526,21 +528,21 @@ namespace TheClinicApp1._1.Appointment
 
             yield return clockOut;
         }
-      public static void GetTimeIntervals(Appointments AppointObj)
-      {
-          var clockIn = new DateTime(2011, 5, 25, 13, 40, 56);
-          var clockOut = new DateTime(2011, 5, 25, 18, 22, 12);
-          JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-          string hours = GetWorkingHourIntervals(clockIn, clockOut).ToString();
-          List<Event> events = new List<Event>();
-         
-          foreach (var h in hours)
-          {
+        public static void GetTimeIntervals(Appointments AppointObj)
+        {
+            var clockIn = new DateTime(2011, 5, 25, 13, 40, 56);
+            var clockOut = new DateTime(2011, 5, 25, 18, 22, 12);
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            string hours = GetWorkingHourIntervals(clockIn, clockOut).ToString();
+            List<Event> events = new List<Event>();
 
-             
-          }
-          //return jsSerializer.Serialize(events);  
-      }
+            foreach (var h in hours)
+            {
+
+
+            }
+            //return jsSerializer.Serialize(events);  
+        }
         #endregion Methods
 
         #region Events
@@ -559,7 +561,7 @@ namespace TheClinicApp1._1.Appointment
 
         #endregion Page Load
 
-        #region Logout 
+        #region Logout
 
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
@@ -575,12 +577,12 @@ namespace TheClinicApp1._1.Appointment
             Patient PatientObj = new Patient();
             try
             {
-               // lblErrorCaption.Text = string.Empty;
-              //  lblMsgges.Text = string.Empty;
-               // Errorbox.Style["display"] = "none";
-               // lblFileCount.Text = string.Empty;
-               // lblTokencount.Text = string.Empty;
-               // divDisplayNumber.Style["display"] = "none";
+                // lblErrorCaption.Text = string.Empty;
+                //  lblMsgges.Text = string.Empty;
+                // Errorbox.Style["display"] = "none";
+                // lblFileCount.Text = string.Empty;
+                // lblTokencount.Text = string.Empty;
+                // divDisplayNumber.Style["display"] = "none";
 
                 string path = Server.MapPath("~/Content/ProfilePics/").ToString();
                 string Name = Request.Form["txtSearch"];
@@ -594,7 +596,7 @@ namespace TheClinicApp1._1.Appointment
                     //string Gender = PatientObj.Gender;
                     //txtPatientMobile.Text = PatientObj.Phone;
                     //txtPatientPlace.Text = PatientObj.Occupation;
-                    
+
                 }
                 else
                 {
@@ -622,7 +624,7 @@ namespace TheClinicApp1._1.Appointment
 
         }
 
-       
+
         protected void ddlDoctor_SelectedIndexChanged1(object sender, EventArgs e)
         {
             hdfddlDoctorID.Value = ddlDoctor.SelectedValue;

@@ -51,7 +51,7 @@ $(document).ready(function () {
 
                 //CustomClick();
                 // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-                $("#txtAppointmentDate").val(eventStartDate);
+              //  $("#txtAppointmentDate").val(eventStartDate);
                 $('#calendar').fullCalendar('unselect');
             },
             displayEventTime: false,
@@ -79,9 +79,15 @@ $(document).ready(function () {
                 debugger;
                 eventStartDate = date.format();
                 eventEndDate = date.format();
-                AppendList(eventStartDate);
-                var dateFormat = getFormattedDate(eventStartDate);
-                $("#txtAppointmentDate").val(dateFormat);
+               // var dayClickFormat = eventStartDate.replace(/[^a-zA-Z 0-9]+/g, '/');
+                var date = new Date(eventStartDate);
+          
+                    // Months use 0 index.
+                var dayClickFormat = date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+                
+                AppendList(dayClickFormat);
+              
+               // $("#txtAppointmentDate").val(dateFormat);
             },
             eventClick: function (calEvent, jsEvent, view) {
                 debugger;
@@ -111,7 +117,7 @@ $(document).ready(function () {
 
                 // title=names[0].end;
                 eventStartDate = calEvent.start._i;
-                $("#txtAppointmentDate").val(eventStartDate.split(' ')[0]);
+              //  $("#txtAppointmentDate").val(eventStartDate.split(' ')[0]);
                 //var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
                 //var newlabel = document.createElement("Label");
                 //newlabel.innerHTML = title;
