@@ -633,10 +633,10 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 throw new Exception("ClinicID is Empty!!");
             }
-            if (DoctorID == "")
-            {
-                throw new Exception("DoctorID is Empty!!");
-            }
+            //if (DoctorID == "")
+            //{
+            //    throw new Exception("DoctorID is Empty!!");
+            //}
             if (DocScheduleID == "")
             {
                 throw new Exception("DocScheduleID is Empty!!");
@@ -655,8 +655,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@PatientLimit", SqlDbType.Int).Value = PatientLimit;
                 //cmd.Parameters.Add("@IsAvailable", SqlDbType.Bit).Value = IsAvailable;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                cmd.Parameters.Add("@Starttime", SqlDbType.NVarChar, 30).Value = StartTime;
-                cmd.Parameters.Add("@Endtime", SqlDbType.NVarChar, 30).Value = EndTime;
+                cmd.Parameters.Add("@Starttime", SqlDbType.NVarChar, 30).Value = correctStartTime(StartTime);
+                cmd.Parameters.Add("@Endtime", SqlDbType.NVarChar, 30).Value = correctStartTime(EndTime);
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 outParameter = cmd.Parameters.Add("@UpdateStatus", SqlDbType.SmallInt);
