@@ -9,7 +9,7 @@ function ConfirmDelete(IsDelete) {
 
     if (IsDelete == false) //-- Cancelation
     {
-        return confirm(" Are you sure you want to Cancel the schedule? ");
+        return confirm(" Are you sure you want to Cancel this schedule? ");
     }
     else //Deletion
     {
