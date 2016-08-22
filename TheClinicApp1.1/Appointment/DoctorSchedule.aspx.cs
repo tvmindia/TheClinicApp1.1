@@ -410,6 +410,43 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion CancelDoctorSchedule
 
+        #region Cancel ALL Schedules By Available Date
+        [System.Web.Services.WebMethod]
+        public static string CancelAllSchedulesByDate(TheClinicApp1._1.ClinicDAL.Doctor DocObj)
+        {
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            try
+            {
+                if (UA != null)
+                {
+                    if (UA.ClinicID.ToString() != "")
+                    {
+                        DocObj.UpdatedBy = UA.userName;
+                        DocObj.ClinicID = UA.ClinicID.ToString();
+                        DocObj.status = DocObj.CancelAllScheduleByDoctor().ToString();
+
+                    }
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                ErrorHandling eObj = new ErrorHandling();
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = "DoctorSchedule.aspx.cs";
+                eObj.UserID = UA.UserID;
+                eObj.Method = "CancelAllSchedulesByDate";
+                eObj.InsertError();
+            }
+            return jsSerializer.Serialize(DocObj);
+        }
+        #endregion Cancel ALL Schedules By Available Date
+
+
         #endregion Methods
 
         #region Events

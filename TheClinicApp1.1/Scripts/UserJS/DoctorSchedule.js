@@ -22,6 +22,9 @@ var DoctorID;
 
     $(document).ready(function () {
    
+      //  document.getElementsByClassName('timepicker_wrap').append('<p>ddbb</p>');
+
+       
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
 
@@ -39,7 +42,7 @@ var DoctorID;
 
     var today = new Date();
     today.yyyymmdd();
-
+ 
 //----------------------------------------------------------------------//
 
     //$("#txtstartTime").timepicki();
@@ -251,7 +254,6 @@ var DoctorID;
     return TimeIn12hrFormat;
 }
 
-
 /*end of document.ready*/
 
     function GetScheduledTimesByDate()
@@ -352,7 +354,7 @@ var DoctorID;
     if (AvailableDates.length > 0) {
 
         for (var i = 0; i < AvailableDates.length; i++) {
-            var html = '<tr><td>' + AvailableDates[i] + '</td><td class="center"><img id="imgCancelAll" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" /></td></tr>';
+            var html = '<tr><td>' + AvailableDates[i] + '</td><td class="center"><img id="imgCancelAll" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" onclick="CancelAllSchedules(this)"  title="Cancel" /></td></tr>';
             $("#tblDates").append(html);
         }
 
@@ -403,7 +405,7 @@ var DoctorID;
 
             if (Records.IsAvailable == "True")
             {
-                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" onclick="RemoveTime(\'' + ScheduleID + '\')"/><img id="imgUpdate"  height="18" align="right" src="../images/Editicon1.png" title="Change" onclick="BindSchedule(\'' + ScheduleID + '\')" /></td></tr>';
+                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" onclick="RemoveTime(\'' + ScheduleID + '\')"/><img id="imgUpdate"  height="18" align="right" src="../images/Editicon1.png" title="Change" onclick="BindScheduleOnEditClick(\'' + ScheduleID + '\')" /></td></tr>';
             }
             else
             {
@@ -425,7 +427,7 @@ var DoctorID;
   
 }
 
-    function BindSchedule(ScheduleID)
+    function BindScheduleOnEditClick(ScheduleID)
 {
     var Doctor = new Object();
     Doctor.DocScheduleID = ScheduleID;
@@ -776,3 +778,72 @@ var DoctorID;
             alert("Please enter a number");
         }
     }
+
+    function CancelAllSchedulesByDate(Doctor)
+    {
+        var ds = {};
+        var table = {};
+        var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+        ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelAllSchedulesByDate");
+        table = JSON.parse(ds.d);
+        return table;
+    }
+
+    function CancelAllSchedules($this)
+    {
+        debugger;
+
+        date =    $($this).closest('td').prev('td').text();
+        var DrAvaildate = moment(date).format('YYYY-MM-DD');
+        var JsonCancellAll = {};
+        var Doctor = new Object();
+        Doctor.DoctorID = DoctorID; 
+        Doctor.DoctorAvailDate = DrAvaildate;
+        JsonCancellAll = CancelAllSchedulesByDate(Doctor);
+        if (JsonCancellAll != undefined)
+        {
+            if (JsonCancellAll.status == "1") {
+
+            var jsonDeatilsByDate = {};
+
+            var Doctor = new Object();
+
+            if (DoctorID != null && DoctorID != "") {
+
+                Doctor.DoctorID = DoctorID;
+                Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
+
+                jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+
+                if (jsonDeatilsByDate != undefined) {
+
+                    BindTimes(jsonDeatilsByDate);
+
+                    $("#txtStartTime").val("");
+                    $("#txtEndTime").val("");
+                    $("#txtMaxAppoinments").val("");
+
+                    BindScheduledDates();
+
+                    var jsonDrSchedule = {};
+
+                    var Doctor = new Object();
+                    Doctor.DoctorID = DoctorID;
+
+                    jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                    if (jsonDrSchedule != undefined) {
+
+                        $('#calendar').fullCalendar('removeEventSource', json);
+
+                        json = jsonDrSchedule;
+
+                        $('#calendar').fullCalendar('addEventSource', json);
+                        $('#calendar').fullCalendar('refetchEvents');
+                    }
+
+                }
+            }
+        }
+        }
+
+ }

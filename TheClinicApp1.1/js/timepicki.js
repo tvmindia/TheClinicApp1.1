@@ -65,7 +65,7 @@
 						top_arrow_button +
 						"<div class='mer_tx'><input type='text' class='timepicki-input' readonly></div>" +
 						bottom_arrow_button +
-					"</div>");
+					"</div> <img style='padding-top:50px' src='../images/up-arrow.png' />");
 			}
 			if(settings.reset){
 				new_ele.append(
