@@ -71,7 +71,7 @@
 <body class="Semitransparent_1">
      <form id="form1" runat="server">
     <div class="logo" >
-        <img src="../favicon.ico"  style="width:50px"/>        
+        <img src="../Logo.png"  style="width:50px"/>        
     </div>    
     <div class="login">         
         <div class="input-field">
