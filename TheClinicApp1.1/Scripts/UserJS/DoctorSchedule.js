@@ -77,7 +77,7 @@ var DoctorID;
                     //background-color: #a8d9f3;
 
                     $("#txtAppointmentDate").val(moment(eventStartDate).format('DD MMM YYYY'));
-                  //  $("#lblAddSchedule").val(moment(eventStartDate).format('DD MMM YYYY'));
+                    $("#lblAddSchedule").text("Add Schedule For "+moment(eventStartDate).format('DD MMM YYYY'));
 
                     $("#txtAppointmentDate").css({ border: '0 solid #3baae3' }).animate({
                         borderWidth: 2
