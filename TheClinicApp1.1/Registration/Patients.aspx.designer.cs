@@ -85,6 +85,15 @@ namespace TheClinicApp1._1.Registration {
         protected global::System.Web.UI.WebControls.Label lblRegCount;
         
         /// <summary>
+        /// lblAppointmentCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAppointmentCount;
+        
+        /// <summary>
         /// lblTodayRegCount control.
         /// </summary>
         /// <remarks>
@@ -353,5 +362,23 @@ namespace TheClinicApp1._1.Registration {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
+        
+        /// <summary>
+        /// dtgTodaysAppointment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dtgTodaysAppointment;
+        
+        /// <summary>
+        /// HiddenField2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenField2;
     }
 }

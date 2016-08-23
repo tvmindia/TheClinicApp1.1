@@ -904,6 +904,14 @@
                             <span class="tooltiptext1">All Registration</span>
                         </span>
                     </a>
+                    <a class="todays_appointment_link" onclick="openModalAppointment();">
+                        <span class="tooltip1">
+                            <span class="count">
+                                <asp:Label ID="lblAppointmentCount" runat="server" Text="0"></asp:Label></span>
+                            <img src="../images/registerd9724185.png" />
+                            <span class="tooltiptext1">Today's Appointments</span>
+                        </span>
+                    </a>
                     <a class="Todays_registration_link" onclick="OpenModal('2');">
                         <span class="tooltip1">
                             <span class="count">
@@ -1140,6 +1148,60 @@
                 </div>
             </div>
         </div>
+
+
+       <%-- Todays Appointments Modal--%>
+          <div class="modal fade" id="TodaysAppointment" role="dialog">
+            <div class="modal-dialog" style="min-width: 550px;">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="border-color: #3661C7;">
+                        <button type="button" class="close" data-dismiss="modal" id="TodayAppointmentClose">&times;</button>
+                        <h3 class="modal-title">Today's Appointments</h3>
+
+                    </div>
+                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+                        <div class="col-lg-12" style="height: 480px;">
+                            <div class="col-lg-12" style="height: 40px">
+                                <div class="search_div">
+                                    <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchTodayAppointment" />
+                                    <input class="button3" type="button" value="Search" disabled />
+                                </div>
+                            </div>
+                            <div class="col-sm-12" style="height: 400px;">
+                                <asp:GridView ID="dtgTodaysAppointment" runat="server" AutoGenerateColumns="False">
+
+                                    <Columns>
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon1.png" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Deleteicon1.png" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:BoundField DataField="Name" HeaderText="Patient Name"></asp:BoundField>
+                                        <asp:BoundField DataField="Location" HeaderText="Location"></asp:BoundField>
+                                        <asp:BoundField DataField="Mobile" HeaderText="Mobile No"></asp:BoundField>
+                                        <asp:BoundField DataField="AllottingTime" HeaderText="Alloted Time"></asp:BoundField>
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+
+                            <div class="pgrHistory">
+                            </div>
+                        </div>
+                    </div>
+                    <asp:HiddenField ID="HiddenField2" runat="server" />
+                </div>
+            </div>
+        </div>
+
+
+
+
         <!-- Alert Container -->
         <div id="dialogoverlay"></div>
         <div id="dialogbox">
@@ -1179,6 +1241,11 @@
       
         $('#myModal').modal('show');
         
+    }
+
+    function openModalAppointment()
+    {
+        $('#TodaysAppointment').modal('show');
     }
 
     

@@ -791,6 +791,14 @@ namespace TheClinicApp1._1.Registration
             lblTodayRegCount.Text = dtgViewTodaysRegistration.Rows.Count.ToString();
             #endregion GridTodaysRegistration
 
+            #region GridTodaysAppointments
+            //dtgTodaysAppointment.EmptyDataText = "....No Appointments yet....";
+            //Appointments appointObj = new Appointments();
+            //dtgTodaysAppointment.DataSource = appointObj.GetAllTodaysPatientAppointments();
+            //dtgTodaysAppointment.DataBind();
+            //lblTodayRegCount.Text = dtgTodaysAppointment.Rows.Count.ToString();
+            #endregion GridTodaysAppointments
+
         }
         #endregion GridBind
 

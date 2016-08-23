@@ -1054,7 +1054,7 @@ function isNumber(evt) {
 function isnotNumber(evt) {
     evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123)) {
+    if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode ==32)) {
         return true;
     }
     return false;

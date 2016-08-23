@@ -431,6 +431,54 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion GetAllPatientAppointmentDetailsBetweenDates
 
+#region GetAllTodaysPatientAppointments
+        public DataSet GetAllTodaysPatientAppointments()
+        {
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataSet ds = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetAllTodaysPatientAppointments]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
+                cmd.Parameters.Add("@date", SqlDbType.Date).Value = System.DateTime.Now;
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAllTodaysPatientAppointments";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return ds;
+        }
+
+#endregion GetAllTodaysPatientAppointments
+
+
         #region AllotedPatientAbsentUpdate
         public Int16 AllotedPatientAbsentUpdate()
         {
