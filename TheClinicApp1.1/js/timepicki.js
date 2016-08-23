@@ -3,6 +3,15 @@
  * plugin: timepicker
  * website: senthilraj.github.io/Timepicki
  */
+
+
+var TimePicked = false;
+
+function PickTime()
+{
+    TimePicked = true;
+}
+
 (function($) {
 
 	$.fn.timepicki = function(options) {
@@ -65,7 +74,7 @@
 						top_arrow_button +
 						"<div class='mer_tx'><input type='text' class='timepicki-input' readonly></div>" +
 						bottom_arrow_button +
-					"</div> <img style='padding-top:50px' src='../images/up-arrow.png' />");
+					"</div> <img id='imgTimePick' onclick='PickTime()' style='padding-top:50px' src='../images/up-arrow.png' />");
 			}
 			if(settings.reset){
 				new_ele.append(
@@ -101,11 +110,22 @@
 			});
 
 			// open or close time picker when clicking
-			$(document).on("click", function(event) {
-				if (!$(event.target).is(ele_next) && ele_next.css("display")=="block" && !$(event.target).is($('.reset_time'))) {
-					if (!$(event.target).is(ele)) {
+			$(document).on("click", function (event) {
+
+			    debugger;
+
+			    if (TimePicked == true) {
+                     close_timepicki();
+                    
+			        //TimePicked = false;
+			    }
+
+			    if (!$(event.target).is(ele_next) && ele_next.css("display") == "block" && !$(event.target).is($('.reset_time')) ) {
+				    if (!$(event.target).is(ele)) {
+				        TimePicked = false;
 						set_value(event, !is_element_in_timepicki($(event.target)));
-					} else {
+				    } else {
+
 						var ele_lef =  0;
 						
 						ele_next.css({
@@ -202,6 +222,7 @@
 				}
 
 				if (close) {
+				   
 					close_timepicki();
 				}
 			}
@@ -211,7 +232,7 @@
 				ele_next.fadeIn();
 				// focus on the first input and select its contents
 				var first_input = ele_next.find('input:visible').first();
-				first_input.focus();
+			//	first_input.focus();
 				// if the user presses shift+tab while on the first input,
 				// they mean to exit the time picker and go to the previous field
 				var first_input_exit_handler = function(e) {

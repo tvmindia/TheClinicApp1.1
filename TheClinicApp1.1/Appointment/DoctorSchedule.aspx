@@ -431,7 +431,10 @@
 
                                                 <div class="token_id_card" style="width: 100%">
                                                     <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
-                                                        <asp:Label runat="server" Text="Add Schedule"></asp:Label>
+                                                        <%--<asp:Label runat="server"  Text="Add Schedule"></asp:Label>--%>
+                                                        <label id="lblAddSchedule" style="text-align: left;font-size: 18px;line-height: 38px;font-weight: bold;color: #fff;font-family: 'roboto-bold';">Add Schedule</label>
+
+
                                                     </div>
 
                                                     <div class="card_white">
@@ -556,5 +559,6 @@
 
         </div>
          <input type="hidden" id="hdnScheduleID" value=""/>
+          
     </div>
 </asp:Content>

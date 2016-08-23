@@ -72,32 +72,46 @@ var DoctorID;
             select: function (start, end) {
              
 
-                //background-color: #a8d9f3;
+                if (DoctorID != null && DoctorID != "") {
 
-                $("#txtAppointmentDate").val(eventStartDate);
+                    //background-color: #a8d9f3;
 
+                    $("#txtAppointmentDate").val(moment(eventStartDate).format('DD MMM YYYY'));
+                  //  $("#lblAddSchedule").val(moment(eventStartDate).format('DD MMM YYYY'));
 
-                $("#txtAppointmentDate").css({ border: '0 solid #3baae3' }).animate({
+                    $("#txtAppointmentDate").css({ border: '0 solid #3baae3' }).animate({
                         borderWidth: 2
                     }, 500);
-                
-                $('#calendar').fullCalendar('unselect');
 
-                GetScheduledTimesByDate();
+                    $('#calendar').fullCalendar('unselect');
+
+                    GetScheduledTimesByDate();
+                }
+
+
+                else {
+                    alert("Please Select a doctor");
+                }
+
+
+
             },
      
-            editable: true,
+            editable: false,
            
             eventRender: function (event, element, view) {
               
                 //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------//  
 
 
-                StrtTimeIn12hrFormat =  ConvertTimeFormatFrom24hrTo12hr(event.StartTime);
+                StrtTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(event.StartTime);
+               // event.StartTime = StrtTimeIn12hrFormat;
 
                 //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------// 
 
                 endTimeIn12hrFormat =    ConvertTimeFormatFrom24hrTo12hr(event.EndTime);
+               // event.EndTime = endTimeIn12hrFormat;
+
 
              //   element.context.textContent = StrtTimeIn12hrFormat + "-" + endTimeIn12hrFormat;
 
@@ -271,7 +285,7 @@ var DoctorID;
 
        // $("#txtAppointmentDate").toggleClass('borderClass');
 
-        $("#txtAppointmentDate").val(eventStartDate);
+       // $("#txtAppointmentDate").val(eventStartDate);
 
         Doctor.DoctorID = DoctorID;
         Doctor.SearchDate = eventStartDate;
