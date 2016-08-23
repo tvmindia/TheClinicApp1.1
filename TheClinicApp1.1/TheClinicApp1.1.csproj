@@ -203,6 +203,7 @@
     <Content Include="images\first.gif" />
     <Content Include="images\First.png" />
     <Content Include="images\gggg.png" />
+    <Content Include="images\hand.png" />
     <Content Include="images\HerbeInWhite.jpg" />
     <Content Include="images\HerbNew.jpg" />
     <Content Include="images\HideSearch.png" />

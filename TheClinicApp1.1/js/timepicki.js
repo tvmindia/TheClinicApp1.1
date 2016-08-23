@@ -74,7 +74,7 @@ function PickTime()
 						top_arrow_button +
 						"<div class='mer_tx'><input type='text' class='timepicki-input' readonly></div>" +
 						bottom_arrow_button +
-					"</div> <img id='imgTimePick' onclick='PickTime()' style='padding-top:50px' src='../images/up-arrow.png' />");
+					"</div> <img id='imgTimePick' onclick='PickTime()' style='padding-top:50px' src='../images/hand.png' />");
 			}
 			if(settings.reset){
 				new_ele.append(
