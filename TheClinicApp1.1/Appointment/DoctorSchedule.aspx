@@ -472,9 +472,14 @@
 
                                                             </div>
 
+                                                        
+
                                                         <div class="row field_row">
                                                                 <div class="col-lg-12">
                                                                     <label>Existing Schedules</label>
+
+                                                                    <hr style="background-color:#99c4e0" />
+
                                                                     <table id="tblTimes">
                                                                         <tr>
                                                                             <td><i>No scheduled time!</i></td>
