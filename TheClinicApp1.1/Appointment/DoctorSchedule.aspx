@@ -400,7 +400,7 @@
                         <div role="tabpanel" class="tab-pane active">
                             <div class="grey_sec">
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server"  ForeColor="#7d6754" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" Font-Names="Andalus" ></asp:DropDownList>
+                                <asp:DropDownList ID="ddlDoctor" runat="server"  Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" ></asp:DropDownList>
 
                                 <%-- <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
