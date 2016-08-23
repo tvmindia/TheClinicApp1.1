@@ -29,6 +29,27 @@
             max-width: 900px;
             margin: 0 auto;
         }
+        td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
+            background-color: #a8d9f3;
+        } 
+        .foo {
+  float: left;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.Count {
+  background: rgb(222, 237, 247);
+}
+
+.Dates {
+  background:#256db7;
+}
+
+.Today {
+  background: #a8d9f3;
+}
         .name_field {background: #3661c7; padding: 10px 20px; text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; text-transform: uppercase; font-family:'roboto-bold'; overflow: hidden; position: relative;}
        .card_white {padding: 15px; display: block; font-family:'roboto-light';}
        .card_white .field_label {display: block; clear: both; color: #000; font-size: 15px;}
@@ -103,7 +124,7 @@ label {
 
 
 .ui-state-highlight {
-    border: 1px solid #72fc06 !important;
+    border: 1px solid #06adfc !important;
     background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
     color: #363636;
 }
@@ -289,6 +310,14 @@ border-bottom-right-radius: 0px;
            background-position: 20px center;
            background-color:white;
          }
+        .fc-event[href], .fc-event.fc-draggable {
+    cursor: pointer;
+    width: 15px!important;
+}
+         .fc-day-grid-event .fc-content {
+             background-color:#256db7;
+             text-align:center;
+         }
  .header {
     height: 40px;
  text-align:center;
@@ -321,6 +350,10 @@ border-bottom-right-radius: 0px;
  {
      width:350px;
      background-color:#ffffff;
+ }
+ .Formatdate
+ {
+   font-size:22px!important;
  }
     </style>
     <script>
@@ -376,7 +409,7 @@ border-bottom-right-radius: 0px;
 
             };
             $(".save").click(function () {
-                debugger;
+              
                 var appointmentDate=$("#txtAppointmentDate").val();
                 var name=$("#txtPatientName").val();
                 var mobile=$("#txtPatientMobile").val();
@@ -405,7 +438,7 @@ border-bottom-right-radius: 0px;
 
     function InsertPatientAppointment(Appointments)
     {
-        debugger;
+       
         var ds = {};
         var table = {};
            
@@ -418,7 +451,7 @@ border-bottom-right-radius: 0px;
     }
     function GetDoctorID()
     {
-        debugger;
+      
         var docID=  $('#<%=hdfddlDoctorID.ClientID%>').val();
             var calID= $("#hdfDoctorID").val(docID);
             BindCalendar(calID);
@@ -476,15 +509,16 @@ border-bottom-right-radius: 0px;
         function AppendList(date)
         {
             
-            debugger;
+           
             var FormattedDate=getFormattedDate(date);
-            var appList = "Add Appointment For " + FormattedDate;
-            var list="Patient List For "+FormattedDate;
+            var date=('<span class="Formatdate">'+FormattedDate+'</span>');
+            var appList = "Add Appointment For ";
+            var list="Patient List For ";
             $("#txtAppointmentDate").val(FormattedDate);
             $('#<%=lblAppointment.ClientID%>').text('');
             $('#<%=lblList.ClientID%>').text('');
-            $('#<%=lblAppointment.ClientID%>').text(appList);
-            $('#<%=lblList.ClientID%>').append(list);
+            $('#<%=lblAppointment.ClientID%>').text(appList).append(date);
+            $('#<%=lblList.ClientID%>').append(list).append(date);
         }
     </script>
     <div class="main_body">
@@ -570,6 +604,23 @@ border-bottom-right-radius: 0px;
                                 <div class="col-lg-6">
     <div id='calendar'></div>
  <div class="loader" style="float:left"></div>
+                                    <br />
+                                    <div id="colorBox" style="display:none;">
+                                        <ul>
+                                            <li>
+                                                <div class="foo Count"></div>
+                                                <label>Scheduled Dates</label>
+                                            </li>
+                                            <li>
+                                                <div class="foo Dates"></div>
+                                                <label>Appointments Count</label>
+                                            </li>
+                                            <li>
+                                                <div class="foo Today"></div>
+                                                <label>Today</label>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     </div>
                              
                                           <div class="col-lg-6" style="height: 100%;">
@@ -598,7 +649,7 @@ border-bottom-right-radius: 0px;
                                                       <tr>
                                                           <td></td>
                                                           <td>
-                                                               <div id="TimeAvailability"></div>
+                                                               <div id="TimeAvailability" style="max-height:115px;overflow:auto;"></div>
                                                           </td>
                                                       </tr>
                                                       <tr>

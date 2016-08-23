@@ -348,6 +348,8 @@ namespace TheClinicApp1._1.Appointment
             if (UA != null)
             {
                 DataSet ds = null;
+                if (AppointObj.AppointmentID != "")
+                { 
                 ds = AppointObj.GetAppointedPatientDetails();
                 // ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
                 int count = ds.Tables[0].Rows.Count;
@@ -366,6 +368,7 @@ namespace TheClinicApp1._1.Appointment
                     }
                 }
                 return jsSerializer.Serialize(events);
+            }
             }
             return jsSerializer.Serialize("");
         }
@@ -420,6 +423,10 @@ namespace TheClinicApp1._1.Appointment
             int startm = 0;
             int endH = 0;
             int endM = 0;
+            int appointmentMinutes = 0;
+            int patientLimit = 0;
+            string startAppointment ="";
+            string endAppointment = "";
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -439,6 +446,12 @@ namespace TheClinicApp1._1.Appointment
                 // ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
                 if (ds.Tables[0].Rows.Count > 0)
                 {
+                    startAppointment = ds.Tables[0].Rows[0]["Starttime"].ToString();
+                    endAppointment = ds.Tables[0].Rows[0]["Endtime"].ToString();
+                    patientLimit =Convert.ToInt32(ds.Tables[0].Rows[0]["PatientLimit"].ToString());
+                    TimeSpan duration = DateTime.Parse(endAppointment).Subtract(DateTime.Parse(startAppointment));
+                    appointmentMinutes =Convert.ToInt32(duration.TotalMinutes);
+                    appointmentMinutes = appointmentMinutes / patientLimit;
                     for (int i = 0; i <= count - 1; i++)
                     {
                         events.Add(new Event()
@@ -469,7 +482,7 @@ namespace TheClinicApp1._1.Appointment
                 var clockIn = new DateTime(2011, 5, 25, starth, startm, 00);
                 var clockOut = new DateTime(2011, 5, 25, endH, endM, 00);
                 //  JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-                var hours = GetWorkingHourIntervals(clockIn, clockOut);
+                var hours = GetWorkingHourIntervals(clockIn, clockOut, appointmentMinutes);
                 //  List<Event> events = new List<Event>();
 
                 foreach (var h in hours)
@@ -514,35 +527,35 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion CancelAppointment
 
-        public static IEnumerable<DateTime> GetWorkingHourIntervals(DateTime clockIn, DateTime clockOut)
+        public static IEnumerable<DateTime> GetWorkingHourIntervals(DateTime clockIn, DateTime clockOut, int appointmentMinutes)
         {
             yield return clockIn;
 
-            DateTime d = new DateTime(clockIn.Year, clockIn.Month, clockIn.Day, clockIn.Hour, 0, 0, clockIn.Kind).AddHours(1);
+            DateTime d = new DateTime(clockIn.Year, clockIn.Month, clockIn.Day, clockIn.Hour, 0, 0, clockIn.Kind).AddMinutes(appointmentMinutes);
 
             while (d < clockOut)
             {
                 yield return d;
-                d = d.AddHours(1);
+                d = d.AddMinutes(appointmentMinutes);
             }
 
             yield return clockOut;
         }
-        public static void GetTimeIntervals(Appointments AppointObj)
-        {
-            var clockIn = new DateTime(2011, 5, 25, 13, 40, 56);
-            var clockOut = new DateTime(2011, 5, 25, 18, 22, 12);
-            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-            string hours = GetWorkingHourIntervals(clockIn, clockOut).ToString();
-            List<Event> events = new List<Event>();
+        //public static void GetTimeIntervals(Appointments AppointObj)
+        //{
+        //    var clockIn = new DateTime(2011, 5, 25, 13, 40, 56);
+        //    var clockOut = new DateTime(2011, 5, 25, 18, 22, 12);
+        //    JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+        //    string hours = GetWorkingHourIntervals(clockIn, clockOut).ToString();
+        //    List<Event> events = new List<Event>();
 
-            foreach (var h in hours)
-            {
+        //    foreach (var h in hours)
+        //    {
 
 
-            }
-            //return jsSerializer.Serialize(events);  
-        }
+        //    }
+        //    //return jsSerializer.Serialize(events);  
+        //}
         #endregion Methods
 
         #region Events
