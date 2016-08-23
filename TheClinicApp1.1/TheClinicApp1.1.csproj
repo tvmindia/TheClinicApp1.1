@@ -254,6 +254,7 @@
     <Content Include="images\Report-Next.png" />
     <Content Include="images\ReportBlack.png" />
     <Content Include="images\ReportWhite.png" />
+    <Content Include="images\RoundAdd.png" />
     <Content Include="images\save.png" />
     <Content Include="images\Search.png" />
     <Content Include="images\searchPanel.png" />
