@@ -221,8 +221,12 @@ var MonthName='';
             
              MonthName = getMonthName(parseInt(date.getMonth()));
          
-        
-             $("#lblExistingSchedules").html("Schedule List of : " + MonthName);
+
+             if ($("#lblExistingSchedules").text() != "Schedule List of : " + MonthName) {
+                 $("#lblExistingSchedules").html("Schedule List of : " + MonthName);
+                 BindScheduledDates();
+             }
+
         
             //    //var month_int = date.getMonth();
 
@@ -384,76 +388,88 @@ var MonthName='';
 }
 
     function BindScheduledDates()
-{
-    var Doctor = new Object();
-    Doctor.DoctorID = DoctorID;
+    {
+        debugger;
 
-    var ds = {};
-    var table = {};
-    var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
-    ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetAllScheduleDetailsOfDoctor");
-    Records = JSON.parse(ds.d);
+        var Doctor = new Object();
+        Doctor.DoctorID = DoctorID;
 
-    $("#tblDates tr").remove();
-    
-    NotAvailableDates = [];
-    AvailableDates = [];
-  
-    $.each(Records, function (index, Records) {
-       
-        if (Records.IsAvailable == "True") {
-
-            if ($.inArray(Records.AvailableDate, AvailableDates) == -1) { //check if Date not exits than add it
-                AvailableDates.push(Records.AvailableDate); //put object in collection to access it's all values
-            }
-
+        if (MonthName == '') {
+            var todaysDate = new Date();
+            MonthName =getMonthName( parseInt( todaysDate.getMonth()));
         }
 
-    });
+        Doctor.MonthName = MonthName;
+
+
+        if (DoctorID != null && DoctorID != "") {
+
+        var ds = {};
+        var table = {};
+        var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+        ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetAllScheduleDetailsOfDoctor");
+        Records = JSON.parse(ds.d);
+
+        $("#tblDates tr").remove();
+    
+        NotAvailableDates = [];
+        AvailableDates = [];
+  
+        $.each(Records, function (index, Records) {
+       
+            if (Records.IsAvailable == "True") {
+
+                if ($.inArray(Records.AvailableDate, AvailableDates) == -1) { //check if Date not exits than add it
+                    AvailableDates.push(Records.AvailableDate); //put object in collection to access it's all values
+                }
+
+            }
+
+        });
    
-    $.each(Records, function (index, Records) {
+        $.each(Records, function (index, Records) {
 
-        if (Records.IsAvailable == "False") {
+            if (Records.IsAvailable == "False") {
 
-            if ($.inArray(Records.AvailableDate, NotAvailableDates) == -1) { //check if Date not exits then add it
+                if ($.inArray(Records.AvailableDate, NotAvailableDates) == -1) { //check if Date not exits then add it
               
                     if ($.inArray(Records.AvailableDate, AvailableDates) == -1) {
 
                         NotAvailableDates.push(Records.AvailableDate); //put object in collection to access it's all values
                     }
 
+                }
+
+            }
+        });
+
+        if (AvailableDates.length > 0) {
+
+            for (var i = 0; i < AvailableDates.length; i++) {
+                var html = '<tr><td>' + AvailableDates[i] + '</td><td class="center"><img id="imgCancelAll" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" onclick="CancelAllSchedules(this)"  title="Cancel" /></td></tr>';
+                $("#tblDates").append(html);
             }
 
         }
-    });
 
-    if (AvailableDates.length > 0) {
+        if (NotAvailableDates.length > 0) {
 
-        for (var i = 0; i < AvailableDates.length; i++) {
-            var html = '<tr><td>' + AvailableDates[i] + '</td><td class="center"><img id="imgCancelAll" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" onclick="CancelAllSchedules(this)"  title="Cancel" /></td></tr>';
-            $("#tblDates").append(html);
+            for (var i = 0; i < NotAvailableDates.length; i++)
+            {
+                var html = '<tr><td><strike>' + NotAvailableDates[i] + '</strike></td><td></td></tr>';
+                $("#tblDates").append(html);
+            }
+
         }
-
-    }
-
-    if (NotAvailableDates.length > 0) {
-
-        for (var i = 0; i < NotAvailableDates.length; i++)
-        {
-            var html = '<tr><td><strike>' + NotAvailableDates[i] + '</strike></td><td></td></tr>';
-            $("#tblDates").append(html);
-        }
-
-    }
 
    
-    if (Records.length == 0) 
+        if (Records.length == 0) 
 
-    {
-        var html = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
-        $("#tblDates").append(html);
+        {
+            var html = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
+            $("#tblDates").append(html);
+        }
     }
-
 }
 
     function GetAllDoctorScheduleDetailsByDate(Doctor)
