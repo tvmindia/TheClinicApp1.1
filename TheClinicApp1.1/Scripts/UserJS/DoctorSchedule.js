@@ -24,7 +24,6 @@ var DoctorID;
    
       //  document.getElementsByClassName('timepicker_wrap').append('<p>ddbb</p>');
 
-       
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
 
@@ -68,7 +67,9 @@ var DoctorID;
             lang: initialLangCode,
             selectable: true,
             selectHelper: true,
-           
+            //dayRender: function (date, cell) {
+            //    cell.css("background-color", "red");
+            //},
             select: function (start, end) {
              
 
@@ -77,10 +78,10 @@ var DoctorID;
                     //background-color: #a8d9f3;
 
                     $("#txtAppointmentDate").val(moment(eventStartDate).format('DD MMM YYYY'));
-                    $("#lblAddSchedule").text("Add Schedule For "+moment(eventStartDate).format('DD MMM YYYY'));
+                    $("#lblAddSchedule").html("Add Schedule For <strong> "+moment(eventStartDate).format('DD MMM YYYY')+"<strong>");
 
                     $("#txtAppointmentDate").css({ border: '0 solid #3baae3' }).animate({
-                        borderWidth: 2
+                        borderWidth: 3
                     }, 500);
 
                     $('#calendar').fullCalendar('unselect');
@@ -100,22 +101,26 @@ var DoctorID;
             editable: false,
            
             eventRender: function (event, element, view) {
+
+                debugger;
               
                 //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------//  
-
-
+               
                 StrtTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(event.StartTime);
                // event.StartTime = StrtTimeIn12hrFormat;
 
                 //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------// 
 
-                endTimeIn12hrFormat =    ConvertTimeFormatFrom24hrTo12hr(event.EndTime);
+                endTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(event.EndTime);
+               
                // event.EndTime = endTimeIn12hrFormat;
 
 
              //   element.context.textContent = StrtTimeIn12hrFormat + "-" + endTimeIn12hrFormat;
 
-                element.context.textContent = StrtTimeIn12hrFormat;
+               element.context.textContent = StrtTimeIn12hrFormat;
+             //   view.context.textContent = StrtTimeIn12hrFormat;
+
 
                 var dateString = moment(event.start).format('YYYY-MM-DD');
 
@@ -124,25 +129,30 @@ var DoctorID;
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
               
+               
+
+               // element.find('.fc-event-inner').before($("<div class=\"fc-event-icons\"></div>").html("<ul class=\"fc-icons\">" + "<li><img src='../images/hand.png' /></li>"  + "</ul>"));
+
+
             },
-
+         
             dayClick: function (date, jsEvent, view) {
-
-                eventStartDate = date.format();
+              eventStartDate = date.format();
                 eventEndDate = date.format();
 
             },
             eventAfterRender: function (event, element) {
-              
+                
+               
              //  $('.fc-content').remove();
-
+              //  element.append("<img  src='../images/hand.png' />");
 
                 $(element).tooltip({
                    
                     container: "body"
                 });
             },
-
+           
             eventMouseover: function (calEvent, jsEvent) {
 
                
@@ -181,9 +191,11 @@ var DoctorID;
             },
 
             eventLimit: true, // allow "more" link when too many events
-
+          
             events: json,
+           
             viewDisplay: function getDate(date) {
+               
                 var lammCurrentDate = new Date();
                 var lammMinDate = new Date(lammCurrentDate.getFullYear(), lammCurrentDate.getMonth(), 1, 0, 0, 0, 0);
 
@@ -193,6 +205,9 @@ var DoctorID;
                 else {
                     $(".fc-button-prev").css("display", "inline-block");
                 }
+
+
+
             }
         });
     }, 3600);
@@ -241,7 +256,6 @@ var DoctorID;
 
         }
     });
-
 
 });
 
@@ -315,6 +329,9 @@ var DoctorID;
 
     jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
     if (jsonDrSchedule != undefined) {
+
+        debugger;
+
         json = jsonDrSchedule;
         BindScheduledDates();
     }

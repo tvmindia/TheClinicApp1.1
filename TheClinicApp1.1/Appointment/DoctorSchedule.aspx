@@ -27,6 +27,18 @@
 
 
     <style>
+    /*.ui-state-highlight {
+    border: 1px solid #06adfc !important;
+    background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
+    color: #363636;
+} 
+ 
+
+.fc-ltr .fc-basic-view .fc-day-number {
+    border: medium none !important;
+    text-align: right;
+}*/
+
         body {
             margin: 40px 10px;
             padding: 0;
