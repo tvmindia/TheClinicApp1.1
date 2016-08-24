@@ -43,6 +43,7 @@ namespace TheClinicApp1._1.Appointment
             public string end { get; set; }
             public string isAvailable { get; set; }
             public string appointmentID { get; set; }
+            public string allottedTime { get; set; }
 
             public string patientName
             {
@@ -403,7 +404,8 @@ namespace TheClinicApp1._1.Appointment
                             id = ds.Tables[0].Rows[i]["ScheduleID"].ToString(),
                             title = ds.Tables[0].Rows[i]["name"].ToString(),
                             isAvailable = ds.Tables[0].Rows[i]["AppointmentStatus"].ToString(),
-                            appointmentID = ds.Tables[0].Rows[i]["ID"].ToString()
+                            appointmentID = ds.Tables[0].Rows[i]["ID"].ToString(),
+                            allottedTime=ds.Tables[0].Rows[i]["AllottingTime"].ToString()
                         });
                     }
                 }
@@ -532,9 +534,12 @@ namespace TheClinicApp1._1.Appointment
             yield return clockIn;
 
             DateTime d = new DateTime(clockIn.Year, clockIn.Month, clockIn.Day, clockIn.Hour, 0, 0, clockIn.Kind).AddMinutes(appointmentMinutes);
-
+           
             while (d < clockOut)
             {
+                int minute = Convert.ToInt32(Math.Round(d.Minute / 5.0) * 5);
+                TimeSpan ts = new TimeSpan(d.Hour, minute, 0);
+                d = d.Date + ts;
                 yield return d;
                 d = d.AddMinutes(appointmentMinutes);
             }

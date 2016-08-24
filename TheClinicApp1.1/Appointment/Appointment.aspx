@@ -24,18 +24,25 @@
             font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
             font-size: 14px;
         }
-
+        .clscolor
+        {
+display: block; float: left; text-align: center;
+        }
         #calendar {
             max-width: 900px;
             margin: 0 auto;
         }
         td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
             background-color: #a8d9f3;
-        } 
+        }
+         .lblColor {
+             font-size: smaller;
+             line-height: 1;
+         }
         .foo {
   float: left;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   border: 1px solid rgba(0, 0, 0, .2);
 }
 
@@ -353,8 +360,11 @@ border-bottom-right-radius: 0px;
  }
  .Formatdate
  {
-   font-size:22px!important;
+   font-size:20px!important;
+   font-weight:lighter;
  }
+ .tblTimes   tr:nth-child(even) {background: #ebf0f3}
+      .tblDates   tr:nth-child(even) {background: #ebf0f3} 
     </style>
     <script>
         $(document).ready(function () {
@@ -606,20 +616,31 @@ border-bottom-right-radius: 0px;
  <div class="loader" style="float:left"></div>
                                     <br />
                                     <div id="colorBox" style="display:none;">
-                                        <ul>
-                                            <li>
+                                        <%--<ul class="clscolor">
+                                            <li>--%>
+                                       <%-- <div class="clscolor">--%>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    
                                                 <div class="foo Count"></div>
-                                                <label>Scheduled Dates</label>
-                                            </li>
-                                            <li>
-                                                <div class="foo Dates"></div>
-                                                <label>Appointments Count</label>
-                                            </li>
-                                            <li>
-                                                <div class="foo Today"></div>
-                                                <label>Today</label>
-                                            </li>
-                                        </ul>
+                                                <label class="lblColor">Scheduled Dates</label>
+                                                </td>
+                                                <td>
+ <div class="foo Dates"></div>
+                                                <label class="lblColor">Appointments Count</label>
+                                                </td>
+                                                <td>
+                                                     <div class="foo Today"></div>
+                                                <label class="lblColor">Today</label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                                
+                                                
+                                          <%-- </div>--%>
+                                           <%-- </li>
+                                        </ul>--%>
                                     </div>
                                     </div>
                              
@@ -649,7 +670,9 @@ border-bottom-right-radius: 0px;
                                                       <tr>
                                                           <td></td>
                                                           <td>
-                                                               <div id="TimeAvailability" style="max-height:115px;overflow:auto;"></div>
+                                                               <div id="TimeAvailability" style="max-height:115px;overflow:auto;">
+                                                                   
+                                                               </div>
                                                           </td>
                                                       </tr>
                                                       <tr>
@@ -714,7 +737,7 @@ border-bottom-right-radius: 0px;
                                                         <asp:Label ID="lblList" runat="server" Text="Patient List"></asp:Label>
                                                     </div>
                                                   <div class="card_white" >
-                                                      <table id="listBody">
+                                                      <table id="listBody" class="tblTimes">
 
                                                       </table>
        

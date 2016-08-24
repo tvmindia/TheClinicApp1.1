@@ -178,8 +178,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 status = outParameter.Value.ToString();
                 if(status=="1")
                 {
-                    var page = HttpContext.Current.CurrentHandler as Page;
-                    eObj.InsertionSuccessMessage(page);
+                    //var page = HttpContext.Current.CurrentHandler as Page;
+                    //eObj.InsertionSuccessMessage(page);
                 }
             }
             catch (Exception ex)

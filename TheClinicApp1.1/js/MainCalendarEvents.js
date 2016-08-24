@@ -102,10 +102,10 @@ $(document).ready(function () {
                 var names = GetAllPatientList(ScheduleID[0].id)
                 for (index = 0; index < names.length; ++index) {
                     if (names[index].isAvailable == "3") {
-                        title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+                        title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
                     }
                     else {
-                        title = title + '<tr><td><label>' + names[index].title + '</label></td><td class="center"><img id="imgDelete" src="../Images/delete-cross.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+                        title = title + '<tr><td><label>' + names[index].title + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
                     }
                     var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
                     //var newlabel = document.createElement("Label");
@@ -125,20 +125,21 @@ $(document).ready(function () {
                 debugger;
                 title = "";
                 var docId = $("#hdfDoctorID").val();
-                var timeList = GetAllTimeAvailability(docId, eventStartDate);
+                var timeList = GetAllottedTime(docId, eventStartDate, ScheduleID[0].id);
                 var html = "";
                 for (index = 0; index < timeList.length - 1; index++) {
                     checkItems = timeList.length - 1;
                     var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
                     startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
-                    var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
-                    endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
-                    var StartAndEnd = startTime + "-" + endTime;
-                    // var timeList = GetTimeList();
-                    html = html + ("<table><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+                    
+                        
+                            var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
+                            endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
+                            var StartAndEnd = startTime + "-" + endTime;
+                            // var timeList = GetTimeList();
+                            html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
 
-
-
+                        
                 }
                 $("#TimeAvailability").append(html);
                 timeList = "";
@@ -266,7 +267,36 @@ $(document).ready(function () {
 
 /*Add New Calendar Event */
 
-
+function GetAllottedTime(docId, eventStartDate, id) {
+    debugger;
+    var names = GetAllPatientList(id);
+    for (var j = 0; j < names.length; ++j)
+    {
+        if(names[j].isAvailable=="3")
+        {
+            delete names[j];
+            names.splice(j, 1);
+        }
+    }
+    var timeList = GetAllTimeAvailability(docId, eventStartDate);
+    for (index = 0; index < timeList.length - 1; index++) {
+        checkItems = timeList.length - 1;
+        var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
+        startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
+        for (var i = 0; i < names.length; ++i) {
+            var hours = names[i].allottedTime.split(':')[0];
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            var time = names[i].allottedTime + ampm;
+            time = time.replace(/\./g, ':');
+            if (time == startTime) {
+                delete timeList[index];
+                timeList.splice(index, 1);
+                //names[0].allottedTime.includes("9.00");
+            }
+        }
+    }
+    return timeList;
+}
 
 function selectOnlyThis(id) {
 
