@@ -214,6 +214,50 @@ namespace TheClinicApp1._1.Registration
 
         #endregion  Today's patient View Search Paging
 
+        #region Today's patientAppointment view Search Paging
+        [WebMethod]
+        ///This method is called using AJAX For gridview bind , search , paging
+        ///It expects page index and search term which is passed from client side
+        ///Page size is declared and initialized in global variable section
+        public static string ViewAndFilterTodayPatientAppointments(string searchTerm, int pageIndex)
+        {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            Appointments AppointmentObj = new Appointments();
+            AppointmentObj.ClinicID = UA.ClinicID.ToString();
+           
+            var xml = AppointmentObj.ViewAndFilterTodayAppointments(searchTerm, pageIndex, PageSize);
+
+            return xml;
+        }
+
+        #region Bind Today Appointment Dummy Row
+
+        /// <summary>
+        /// To implement search in gridview(on keypress) :Gridview is converted to table and
+        /// Its first row (of table header) is created using this function
+        /// </summary>
+        private void BindTodayAppointmentDummyRow()
+        {
+            DataTable dummy = new DataTable();
+
+            dummy.Columns.Add("Patient Name");
+            dummy.Columns.Add("Location");
+            dummy.Columns.Add("Mobile No");
+            dummy.Columns.Add("Alloted Time");
+            dummy.Columns.Add("AppointmentID");
+            dummy.Rows.Add();
+
+            dtgTodaysAppointment.DataSource = dummy;
+            dtgTodaysAppointment.DataBind();
+        }
+
+        #endregion Bind Today Appointment Dummy Row
+        #endregion Today's patientAppointment view Search Paging
+
         #region Delete Patient
 
         [System.Web.Services.WebMethod]
