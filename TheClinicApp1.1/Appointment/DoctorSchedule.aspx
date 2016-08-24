@@ -241,6 +241,12 @@
             z-index: 3;
         }
 
+        #imgCancelAll
+        {
+             cursor: pointer;
+        }
+
+
         #imgDelete {
             cursor: pointer;
         }
@@ -455,8 +461,6 @@
 
                             <div class="tab_table">
 
-
-
                                 <div class="row field_row">
                                     <div class="col-lg-12">
 
@@ -464,7 +468,8 @@
 
                                             <div id='calendar'></div>
                                             <div class="loader" style="float: left"></div>
-                                            <br />
+
+                                           <br />
 
 
                                             <div id="colorBox" style="display: none">
@@ -613,6 +618,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
 
 
