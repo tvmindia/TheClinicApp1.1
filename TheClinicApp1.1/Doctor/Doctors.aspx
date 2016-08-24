@@ -102,7 +102,8 @@
                 
             }
                     
-            function FillTextboxUsingXml(){                
+            function FillTextboxUsingXml(){   
+                debugger;
                 GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
             RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
             }
@@ -404,7 +405,7 @@
                     //$("#VistImagePreview img:last-child").remove()
 
                    // reset();
-
+                    ResetToNewCase();
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                     
                     if ($(this).text() == "") {
@@ -423,6 +424,7 @@
 
                          var Visit = new Object();
                          Visit.VisitID = VisitID;
+                         Visit.PrescriptionID=PrescriptionID;
 
                          jsonVisit = GetVisitDetailsByvisitID(Visit);
                          if (jsonVisit != undefined) {
@@ -450,6 +452,7 @@
             });
 
             function GetVisitDetailsByvisitID(Visit) {
+                debugger;
                 var ds = {};
                 var table = {};
                 var data = "{'CaseFileObj':" + JSON.stringify(Visit) + "}";
@@ -459,7 +462,7 @@
             }
 
             function GetAttachmentDetailsByvisitID(VisitAttachment) {
-
+                debugger;
                 var ds = {};
                 var table = {};
                 var data = "{'AttachObj':" + JSON.stringify(VisitAttachment) + "}";
@@ -470,6 +473,7 @@
 
             function BindAttachment(Records)
             {
+                debugger;
                 $("#<%=VistImagePreview.ClientID %> img").remove();
                 $('.lblDesc').remove();
 
