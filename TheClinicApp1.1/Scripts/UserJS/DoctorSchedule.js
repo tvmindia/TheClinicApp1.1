@@ -128,7 +128,7 @@ var DoctorID;
 
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
-              
+             
                
 
                // element.find('.fc-event-inner').before($("<div class=\"fc-event-icons\"></div>").html("<ul class=\"fc-icons\">" + "<li><img src='../images/hand.png' /></li>"  + "</ul>"));

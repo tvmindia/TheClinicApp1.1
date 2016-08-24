@@ -27,17 +27,7 @@
 
 
     <style>
-    /*.ui-state-highlight {
-    border: 1px solid #06adfc !important;
-    background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
-    color: #363636;
-} 
- 
-
-.fc-ltr .fc-basic-view .fc-day-number {
-    border: medium none !important;
-    text-align: right;
-}*/
+  
 
         body {
             margin: 40px 10px;
@@ -299,7 +289,18 @@
     #tblTimes   tr:nth-child(even) {background: #ebf0f3}
       #tblDates   tr:nth-child(even) {background: #ebf0f3}
 
+        .ui-state-highlight {
+    border:2px  solid #06adfc !important;
+    background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
+    color: #363636;
+    /*border-width: 2px 2px 2px 2px!important;*/
+} 
+ 
 
+.fc-ltr .fc-basic-view .fc-day-number {
+    border: medium none !important;
+    text-align: right;
+}
 
 
 
