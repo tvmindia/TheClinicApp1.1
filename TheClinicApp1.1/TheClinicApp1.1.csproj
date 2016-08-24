@@ -322,6 +322,7 @@
     <Content Include="Login\Login.aspx" />
     <Content Include="Login\Reset.aspx" />
     <Content Include="Login\Sucess.aspx" />
+    <Content Include="Logo.png" />
     <Content Include="MasterAdd\AddDoctor.aspx" />
     <Content Include="MasterAdd\Categories.aspx" />
     <Content Include="MasterAdd\Medicnes.aspx" />
