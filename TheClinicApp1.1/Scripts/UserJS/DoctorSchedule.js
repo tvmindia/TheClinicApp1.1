@@ -78,7 +78,7 @@ var DoctorID;
                     //background-color: #a8d9f3;
 
                     $("#txtAppointmentDate").val(moment(eventStartDate).format('DD MMM YYYY'));
-                    $("#lblAddSchedule").html("Add Schedule For <strong> "+moment(eventStartDate).format('DD MMM YYYY')+"<strong>");
+                    $("#lblAddSchedule").html("Add Schedule On : "+moment(eventStartDate).format('DD MMM YYYY'));
 
                     $("#txtAppointmentDate").css({ border: '0 solid #3baae3' }).animate({
                         borderWidth: 3
@@ -214,9 +214,13 @@ var DoctorID;
            , dayRender: function (date, element) {
             debugger;
             document.getElementById("colorBox").style.display = "block";
-            //var date = $("#calendar").fullCalendar('getDate');
-            //alert("The current date of the calendar is " + date.format());
+            var date = new Date($("#calendar").fullCalendar('getDate').format());
+            
+        var monthName =    getMonthName(parseInt(date.getMonth()));
 
+       
+        $("#lblExistingSchedules").html("Schedule List of : " + monthName);
+        
 
             //    //var month_int = date.getMonth();
 
@@ -280,6 +284,14 @@ var DoctorID;
     });
 
 });
+
+    getMonthName = function (MonthNo) {
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        return monthNames[MonthNo];
+    }
+
+
+
 
 //------------------------Animate Div---------------------------//
     function blink(selector) {

@@ -595,7 +595,9 @@
                                             <div class="token_id_card" style="width: 100%">
 
                                                 <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
-                                                    <asp:Label runat="server" Text="Schedule List"></asp:Label>
+                                                  
+                                                     <label id="lblExistingSchedules" style="text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; font-family: 'roboto-bold';">Schedule List</label>
+                                                      <%--<asp:Label runat="server"  id="lblExistingSchedules" Text="Schedule List"></asp:Label>--%>
                                                 </div>
                                                 <div class="card_white">
 
