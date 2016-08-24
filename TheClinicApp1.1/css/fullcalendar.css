@@ -509,7 +509,7 @@ temporary rendered events).
 	line-height: 1.3;
 	border-radius: 3px;
 	border: 1px solid #3a87ad; /* default BORDER color */
-	background-color: #3baae3!important; /* default BACKGROUND color */
+	background-color: #256db7!important; /* default BACKGROUND color */
 	font-weight: normal; /* undo jqui's ui-widget-header bold */
 }
 

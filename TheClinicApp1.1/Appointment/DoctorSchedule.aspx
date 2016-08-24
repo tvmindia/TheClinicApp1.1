@@ -302,7 +302,24 @@
     text-align: right;
 }
 
+     .foo {
+  float: left;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(0, 0, 0, .2);
+}
 
+.Count {
+  background: rgb(222, 237, 247);
+}
+
+.Dates {
+  background:#256db7;
+}
+
+.Today {
+  background: #a8d9f3;
+}
 
         /*.fc-content
 {
@@ -436,8 +453,26 @@
 
                                             <div id='calendar'></div>
                                             <div class="loader" style="float: left"></div>
+                                            <br />
+                                            <div id="colorBox" style="display:none">
+                                        <ul>
+                                            <li>
+                                                <div class="foo Count"></div>
+                                                <label>Scheduled Dates</label>
+                                            </li>
+                                            <li>
+                                                <div class="foo Dates"></div>
+                                                <label>Scheduled Times</label>
+                                            </li>
+                                            <li>
+                                                <div class="foo Today"></div>
+                                                <label>Today</label>
+                                            </li>
+                                        </ul>
+                                    </div>
                                         </div>
                                         <br />
+
                                         <div class="col-lg-6" style="height: 100%;">
 
                                             <div class="col-lg-12">
