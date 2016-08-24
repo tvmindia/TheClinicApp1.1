@@ -223,10 +223,10 @@ var DoctorID;
             //    //alert(month_int);
 
 
-            //if ($("#imgSelect").length == 0) {
-            //    $(".fc-day-number").append("<img id='imgSelect' src='../Images/RoundAdd.png' title='Add Schedule' style='float: left;cursor:pointer;height:15px!important' />")
-            //    //  $(".fc-day-number").append("<p id='imgSelect'  title='Add Schedule' style='float: left;cursor:pointer;background-color:black;color:white' >+</p>")
-            //}
+            if ($("#imgSelect").length == 0) {
+                $(".fc-day-number").append("<img id='imgSelect' src='../Images/RoundAdd.png' title='Add Schedule' style='float: left;cursor:pointer;height:13px!important' />")
+                //  $(".fc-day-number").append("<p id='imgSelect'  title='Add Schedule' style='float: left;cursor:pointer;background-color:black;color:white' >+</p>")
+            }
 
         },
 
