@@ -5,6 +5,9 @@
 var title, eventStartDate, eventEndDate;
 var tooltip;
 var DoctorID;
+var MonthName='';
+
+
 
     $(document).mouseup(function (e) {
     var container = $("#calendar");
@@ -78,7 +81,7 @@ var DoctorID;
                     //background-color: #a8d9f3;
 
                     $("#txtAppointmentDate").val(moment(eventStartDate).format('DD MMM YYYY'));
-                    $("#lblAddSchedule").html("Add Schedule For <strong> "+moment(eventStartDate).format('DD MMM YYYY')+"<strong>");
+                    $("#lblAddSchedule").html("Add Schedule On : "+moment(eventStartDate).format('DD MMM YYYY'));
 
                     $("#txtAppointmentDate").css({ border: '0 solid #3baae3' }).animate({
                         borderWidth: 3
@@ -128,7 +131,7 @@ var DoctorID;
 
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
-              
+             
                
 
                // element.find('.fc-event-inner').before($("<div class=\"fc-event-icons\"></div>").html("<ul class=\"fc-icons\">" + "<li><img src='../images/hand.png' /></li>"  + "</ul>"));
@@ -209,6 +212,35 @@ var DoctorID;
 
 
             }
+
+
+           , dayRender: function (date, element) {
+           
+            document.getElementById("colorBox").style.display = "block";
+            var date = new Date($("#calendar").fullCalendar('getDate').format());
+            
+             MonthName = getMonthName(parseInt(date.getMonth()));
+         
+
+             if ($("#lblExistingSchedules").text() != "Schedule List of : " + MonthName) {
+                 $("#lblExistingSchedules").html("Schedule List of : " + MonthName);
+                 BindScheduledDates();
+             }
+
+        
+            //    //var month_int = date.getMonth();
+
+            //    //alert(month_int);
+
+
+            if ($("#imgSelect").length == 0) {
+                $(".fc-day-number").append("<img id='imgSelect' src='../Images/add.png' title='Add Schedule' style='float: left;cursor:pointer;height:10px!important' />")
+                //  $(".fc-day-number").append("<p id='imgSelect'  title='Add Schedule' style='float: left;cursor:pointer;background-color:black;color:white' >+</p>")
+            }
+
+        },
+
+
         });
     }, 3600);
 
@@ -259,6 +291,14 @@ var DoctorID;
 
 });
 
+    getMonthName = function (MonthNo) {
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        return monthNames[MonthNo];
+    }
+
+
+
+
 //------------------------Animate Div---------------------------//
     function blink(selector) {
   
@@ -285,7 +325,7 @@ var DoctorID;
 /*end of document.ready*/
 
     function GetScheduledTimesByDate()
-{
+    {
     var jsonDeatilsByDate = {};
 
     var Doctor = new Object();
@@ -319,14 +359,23 @@ var DoctorID;
 }
 
     function GetScheduleByDrID(drID) {
-  
+        debugger;
+      
+
     DoctorID = drID;
 
     var jsonDrSchedule = {};
 
     var Doctor = new Object();
     Doctor.DoctorID = drID;
+   // var MonthName = document.getElementById('hdnMonthName').value;
+    
+    //if (MonthName == '') {
+    //    var todaysDate = new Date();
+    //    MonthName =getMonthName( parseInt( todaysDate.getMonth()));
+    //}
 
+    //Doctor.MonthName = MonthName;
     jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
     if (jsonDrSchedule != undefined) {
 
@@ -339,76 +388,88 @@ var DoctorID;
 }
 
     function BindScheduledDates()
-{
-    var Doctor = new Object();
-    Doctor.DoctorID = DoctorID;
+    {
+        debugger;
 
-    var ds = {};
-    var table = {};
-    var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
-    ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetAllScheduleDetailsOfDoctor");
-    Records = JSON.parse(ds.d);
+        var Doctor = new Object();
+        Doctor.DoctorID = DoctorID;
 
-    $("#tblDates tr").remove();
-    
-    NotAvailableDates = [];
-    AvailableDates = [];
-  
-    $.each(Records, function (index, Records) {
-       
-        if (Records.IsAvailable == "True") {
-
-            if ($.inArray(Records.AvailableDate, AvailableDates) == -1) { //check if Date not exits than add it
-                AvailableDates.push(Records.AvailableDate); //put object in collection to access it's all values
-            }
-
+        if (MonthName == '') {
+            var todaysDate = new Date();
+            MonthName =getMonthName( parseInt( todaysDate.getMonth()));
         }
 
-    });
+        Doctor.MonthName = MonthName;
+
+
+        if (DoctorID != null && DoctorID != "") {
+
+        var ds = {};
+        var table = {};
+        var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+        ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetAllScheduleDetailsOfDoctor");
+        Records = JSON.parse(ds.d);
+
+        $("#tblDates tr").remove();
+    
+        NotAvailableDates = [];
+        AvailableDates = [];
+  
+        $.each(Records, function (index, Records) {
+       
+            if (Records.IsAvailable == "True") {
+
+                if ($.inArray(Records.AvailableDate, AvailableDates) == -1) { //check if Date not exits than add it
+                    AvailableDates.push(Records.AvailableDate); //put object in collection to access it's all values
+                }
+
+            }
+
+        });
    
-    $.each(Records, function (index, Records) {
+        $.each(Records, function (index, Records) {
 
-        if (Records.IsAvailable == "False") {
+            if (Records.IsAvailable == "False") {
 
-            if ($.inArray(Records.AvailableDate, NotAvailableDates) == -1) { //check if Date not exits then add it
+                if ($.inArray(Records.AvailableDate, NotAvailableDates) == -1) { //check if Date not exits then add it
               
                     if ($.inArray(Records.AvailableDate, AvailableDates) == -1) {
 
                         NotAvailableDates.push(Records.AvailableDate); //put object in collection to access it's all values
                     }
 
+                }
+
+            }
+        });
+
+        if (AvailableDates.length > 0) {
+
+            for (var i = 0; i < AvailableDates.length; i++) {
+                var html = '<tr><td>' + AvailableDates[i] + '</td><td class="center"><img id="imgCancelAll" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" onclick="CancelAllSchedules(this)"  title="Cancel" /></td></tr>';
+                $("#tblDates").append(html);
             }
 
         }
-    });
 
-    if (AvailableDates.length > 0) {
+        if (NotAvailableDates.length > 0) {
 
-        for (var i = 0; i < AvailableDates.length; i++) {
-            var html = '<tr><td>' + AvailableDates[i] + '</td><td class="center"><img id="imgCancelAll" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" onclick="CancelAllSchedules(this)"  title="Cancel" /></td></tr>';
-            $("#tblDates").append(html);
+            for (var i = 0; i < NotAvailableDates.length; i++)
+            {
+                var html = '<tr><td><strike>' + NotAvailableDates[i] + '</strike></td><td></td></tr>';
+                $("#tblDates").append(html);
+            }
+
         }
-
-    }
-
-    if (NotAvailableDates.length > 0) {
-
-        for (var i = 0; i < NotAvailableDates.length; i++)
-        {
-            var html = '<tr><td><strike>' + NotAvailableDates[i] + '</strike></td><td></td></tr>';
-            $("#tblDates").append(html);
-        }
-
-    }
 
    
-    if (Records.length == 0) 
+        if (Records.length == 0) 
 
-    {
-        var html = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
-        $("#tblDates").append(html);
+        {
+            var html = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
+            $("#tblDates").append(html);
+        }
     }
-
 }
 
     function GetAllDoctorScheduleDetailsByDate(Doctor)

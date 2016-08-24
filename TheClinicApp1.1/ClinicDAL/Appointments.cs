@@ -431,31 +431,55 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion GetAllPatientAppointmentDetailsBetweenDates
 
-#region GetAllTodaysPatientAppointments
-        public DataSet GetAllTodaysPatientAppointments()
+        #region Today's Patient: Appointment View Search Paging
+
+        public string ViewAndFilterTodayAppointments(string searchTerm, int pageIndex, int PageSize)
         {
-            if (ClinicID == "")
-            {
-                throw new Exception("ClinicID is Empty!!");
-            }
             dbConnection dcon = null;
-            SqlCommand cmd = null;
-            SqlDataAdapter sda = null;
             DataSet ds = null;
+            SqlDataAdapter sda = null;
+
+            DateTime now = DateTime.Now;
+
+            var xml = string.Empty;
             try
             {
+
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
-                cmd = new SqlCommand();
-                sda = new SqlDataAdapter();
+                SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[GetAllTodaysPatientAppointments]";
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
-                cmd.Parameters.Add("@date", SqlDbType.Date).Value = System.DateTime.Now;
+                cmd.CommandText = "ViewAndFilterTodayPatientAppointments";
+
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                //cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode;
+                cmd.Parameters.Add("@date", SqlDbType.Date).Value = "2016-08-11";//now.ToString("yyyy-MM-dd");
+                cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+                sda = new SqlDataAdapter();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
-                sda.Fill(ds);
+                sda.Fill(ds, "TodayAppointments");
+
+                //-----------Paging Section 
+
+                DataTable dt = new DataTable("Pager");
+                dt.Columns.Add("PageIndex");
+                dt.Columns.Add("PageSize");
+                dt.Columns.Add("RecordCount");
+                dt.Rows.Add();
+                dt.Rows[0]["PageIndex"] = pageIndex;
+                dt.Rows[0]["PageSize"] = PageSize;
+                dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                ds.Tables.Add(dt);
+
+                xml = ds.GetXml();
+
+
             }
             catch (Exception ex)
             {
@@ -463,20 +487,25 @@ namespace TheClinicApp1._1.ClinicDAL
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
                 eObj.UserID = UA.UserID;
-                eObj.Method = "GetAllTodaysPatientAppointments";
+                eObj.Method = "ViewAndFilterTodayAppointments";
                 eObj.InsertError();
             }
+
             finally
             {
                 if (dcon.SQLCon != null)
                 {
                     dcon.DisconectDB();
                 }
+
             }
-            return ds;
+
+            return xml;
         }
 
-#endregion GetAllTodaysPatientAppointments
+        #endregion Today's Patient: Appointment View Search Paging
+
+       
 
 
         #region AllotedPatientAbsentUpdate

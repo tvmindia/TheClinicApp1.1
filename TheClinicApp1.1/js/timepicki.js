@@ -112,7 +112,7 @@ function PickTime()
 			// open or close time picker when clicking
 			$(document).on("click", function (event) {
 
-			    debugger;
+			  
 
 			    if (TimePicked == true) {
                      close_timepicki();

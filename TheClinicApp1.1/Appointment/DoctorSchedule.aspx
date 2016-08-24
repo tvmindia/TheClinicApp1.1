@@ -27,18 +27,6 @@
 
 
     <style>
-    /*.ui-state-highlight {
-    border: 1px solid #06adfc !important;
-    background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
-    color: #363636;
-} 
- 
-
-.fc-ltr .fc-basic-view .fc-day-number {
-    border: medium none !important;
-    text-align: right;
-}*/
-
         body {
             margin: 40px 10px;
             padding: 0;
@@ -257,11 +245,11 @@
             cursor: pointer;
         }
 
-         #imgUpdate {
+        #imgUpdate {
             cursor: pointer;
         }
-         
-          #imgUpdate {
+
+        #imgUpdate {
             cursor: pointer;
         }
 
@@ -289,18 +277,59 @@
 
 
 
-        #tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td { 
-    border: none;
-}
+        #tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td {
+            border: none;
+        }
 
-       #tblDates, #tblDates tr, #tblDates th, #tblDates td { 
-    border: none;
+        #tblDates, #tblDates tr, #tblDates th, #tblDates td {
+            border: none;
+        }
+
+        #tblTimes tr:nth-child(even) {
+            background: #ebf0f3;
+        }
+
+        #tblDates tr:nth-child(even) {
+            background: #ebf0f3;
+        }
+
+        /*.ui-state-highlight {
+    border:2px  solid #06adfc !important;
+    background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
+    color: #363636;
+  
 } 
-    #tblTimes   tr:nth-child(even) {background: #ebf0f3}
-      #tblDates   tr:nth-child(even) {background: #ebf0f3}
+ 
 
+.fc-ltr .fc-basic-view .fc-day-number {
+    border: medium none !important;
+    text-align: right;
+}*/
 
+        .foo {
+            float: left;
+            width: 10px;
+            height: 10px;
+            border: 1px solid rgba(0, 0, 0, .2);
+          
+        }
+       
+        .Count {
+            background: rgb(222, 237, 247);
+        }
 
+        .Dates {
+            background: #256db7;
+        }
+
+        .Today {
+            background: #a8d9f3;
+        }
+
+        .Legend {
+            font-size: smaller;
+            
+        }
 
 
         /*.fc-content
@@ -346,7 +375,7 @@
     </script>
 
     <div class="main_body">
-       
+
         <div class="left_part">
             <div class="logo">
                 <a href="#">
@@ -412,7 +441,7 @@
                         <div role="tabpanel" class="tab-pane active">
                             <div class="grey_sec">
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server"  Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged" ></asp:DropDownList>
+                                <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>
 
                                 <%-- <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
@@ -435,8 +464,29 @@
 
                                             <div id='calendar'></div>
                                             <div class="loader" style="float: left"></div>
+                                            <br />
+
+
+                                            <div id="colorBox" style="display: none">
+                                                <ul>
+                                                    <li >
+                                                        <div class="foo Count"></div>
+                                                    
+                                                        <label class="Legend">Scheduled Dates</label>
+                                                    </li>
+                                                    <li>
+                                                        <div class="foo Dates"></div>
+                                                        <label>Scheduled Times</label>
+                                                    </li>
+                                                    <li>
+                                                        <div class="foo Today"></div>
+                                                        <label>Today</label>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                         <br />
+
                                         <div class="col-lg-6" style="height: 100%;">
 
                                             <div class="col-lg-12">
@@ -444,7 +494,7 @@
                                                 <div class="token_id_card" style="width: 100%">
                                                     <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
                                                         <%--<asp:Label runat="server"  Text="Add Schedule"></asp:Label>--%>
-                                                        <label id="lblAddSchedule" style="text-align: left;font-size: 18px;line-height: 38px;font-weight: bold;color: #fff;font-family: 'roboto-bold';">Add Schedule</label>
+                                                        <label id="lblAddSchedule" style="text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; font-family: 'roboto-bold';">Add Schedule</label>
 
 
                                                     </div>
@@ -460,62 +510,62 @@
 
                                                             </div>
 
-                                                             <div class="col-lg-6 ">
-                                                                    <label style="width: 100%;">Max Appoinments</label>
+                                                            <div class="col-lg-6 ">
+                                                                <label style="width: 100%;">Max Appoinments</label>
 
-                                                                    <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)" />
-                                                                </div>
+                                                                <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)" />
+                                                            </div>
 
 
                                                         </div>
 
                                                         <div class="row field_row">
-                                                                <div class="col-lg-6 ">
-                                                                    <label>Start Time</label>
+                                                            <div class="col-lg-6 ">
+                                                                <label>Start Time</label>
 
-                                                                    <input type="text" class="txtAddNew" id="txtStartTime" name="time" />
-                                                                </div>
-                                                                <div class="col-lg-6 ">
-                                                                    <label>End Time</label>
+                                                                <input type="text" class="txtAddNew" id="txtStartTime" name="time" />
+                                                            </div>
+                                                            <div class="col-lg-6 ">
+                                                                <label>End Time</label>
 
-                                                                    <input type="text" class="txtAddNew" id="txtEndTime" name="time" />
-                                                                </div>
-                                                               
-
+                                                                <input type="text" class="txtAddNew" id="txtEndTime" name="time" />
                                                             </div>
 
-                                                        
+
+                                                        </div>
+
+
 
                                                         <div class="row field_row">
-                                                                <div class="col-lg-12">
-                                                                    <label>Existing Schedules</label>
+                                                            <div class="col-lg-12">
+                                                                <label>Existing Schedules</label>
 
-                                                                    <hr style="background-color:#99c4e0" />
+                                                                <hr style="background-color: #99c4e0" />
 
-                                                                    <table id="tblTimes">
-                                                                        <tr>
-                                                                            <td><i>No scheduled time!</i></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-
+                                                                <table id="tblTimes">
+                                                                    <tr>
+                                                                        <td><i>No scheduled time!</i></td>
+                                                                    </tr>
+                                                                </table>
                                                             </div>
 
+                                                        </div>
 
-                                                     <div class="row field_row">
+
+                                                        <div class="row field_row">
 
                                                             <div class="col-lg-6">
 
                                                                 <label></label>
-                                                                  
-                                                               
+
+
                                                             </div>
 
-                                                             <div class="col-lg-6 ">
-                                                                    <label ></label>
+                                                            <div class="col-lg-6 ">
+                                                                <label></label>
 
-                                                                   
-                                                                </div>
+
+                                                            </div>
 
 
                                                         </div>
@@ -524,15 +574,15 @@
                                                             <div class="col-lg-6">
 
                                                                 <label></label>
-                                                                  
-                                                               
+
+
                                                             </div>
 
-                                                             <div class="col-lg-6 ">
-                                                                    <label ></label>
+                                                            <div class="col-lg-6 ">
+                                                                <label></label>
 
-                                                                   
-                                                                </div>
+
+                                                            </div>
 
 
                                                         </div>
@@ -545,7 +595,9 @@
                                             <div class="token_id_card" style="width: 100%">
 
                                                 <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
-                                                    <asp:Label runat="server" Text="Schedule List"></asp:Label>
+                                                  
+                                                     <label id="lblExistingSchedules" style="text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; font-family: 'roboto-bold';">Schedule List</label>
+                                                      <%--<asp:Label runat="server"  id="lblExistingSchedules" Text="Schedule List"></asp:Label>--%>
                                                 </div>
                                                 <div class="card_white">
 
@@ -575,7 +627,7 @@
 
 
         </div>
-         <input type="hidden" id="hdnScheduleID" value=""/>
-          
+        <input type="hidden" id="hdnScheduleID" value="" />
+         
     </div>
 </asp:Content>

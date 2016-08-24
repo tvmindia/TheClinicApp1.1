@@ -267,6 +267,13 @@
                     $('#TodaysRegistration').modal('show');
                     GetTodayPatients(1);
                 }
+                else if(id==3)
+                {
+                    $('#txtSearchTodayAppointment').val('');
+                    $('#TodaysAppointment').modal('show');
+                    GetTodayPatientAppointments(1);
+                }
+
             }
         </script>
         <script>
@@ -648,10 +655,32 @@
                 });
             }
 
+            function GetTodayPatientAppointments(pageIndex)
+            {
+                $.ajax({
+
+                    type: "POST",
+                    url: "../Registration/Patients.aspx/ViewAndFilterTodayPatientAppointments",
+                    data: '{searchTerm: "' + SearchTermInTodayList() + '", pageIndex: ' + pageIndex + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: TodayAppointmentSuccess,
+                    failure: function (response) {
+
+                        alert(response.d);
+                    },
+                    error: function (response) {
+
+                        alert(response.d);
+                    }
+                });
+            }
+
             $(function () {
                
                 GetAllPatients(1);
                 GetTodayPatients(1);
+                GetTodayPatientAppointments(1);
             });
 
 
@@ -848,6 +877,77 @@
 
             TodayRegRow = null;
 
+
+            //---------------------- * Bind Today's Appointments Gridview *--------------------------------------------------//
+
+            var TodayAppoRow;
+            function TodayAppointmentSuccess(response) {
+                debugger;
+                $(".pgrHistoryAppointment").show();
+               
+                var xmlDoc = $.parseXML(response.d);
+                var xml = $(xmlDoc);
+                var AllAppointments = xml.find("TodayAppointments");
+                if (TodayAppoRow == null) {
+                    TodayAppoRow = $("[id*=dtgTodaysAppointment] tr:last-child").clone(true);
+                }
+                $("[id*=dtgTodaysAppointment] tr").not($("[id*=dtgTodaysAppointment] tr:first-child")).remove();
+                if (AllAppointments.length > 0) {
+                    
+                    $.each(AllAppointments, function () {
+                      
+                        $("td", TodayAppoRow).eq(0).html($('<img />')
+                       .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
+                        $("td", TodayAppoRow).eq(1).html($('<img />')
+                         .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+                        $("td", TodayAppoRow).eq(2).html($(this).find("Name").text());
+                        $("td", TodayAppoRow).eq(3).html($(this).find("Location").text());
+                        $("td", TodayAppoRow).eq(4).html($(this).find("Mobile").text());
+                        $("td", TodayAppoRow).eq(5).html($(this).find("AllottingTime").text());
+                        $("td", TodayAppoRow).eq(6).html($(this).find("AppointmentID").text());
+                        $("[id*=dtgTodaysAppointment]").append(TodayAppoRow);
+                        TodayAppoRow = $("[id*=dtgTodaysAppointment] tr:last-child").clone(true);
+                    });
+                    var pager = xml.find("Pager");
+                    if ($('#txtSearchTodayAppointment').val() == '') {
+                        var GridRowCount = pager.find("RecordCount").text();
+                        $("#<%=lblAppointmentCount.ClientID %>").text(GridRowCount);
+                    }
+
+                    $(".pgrHistory").ASPSnippets_Pager({
+                        ActiveCssClass: "current",
+                        PagerCssClass: "pager",
+                        PageIndex: parseInt(pager.find("PageIndex").text()),
+                        PageSize: parseInt(pager.find("PageSize").text()),
+                        RecordCount: parseInt(pager.find("RecordCount").text())
+                    });
+
+                    $(".Match").each(function () {
+                        var searchPattern = new RegExp('(' + SearchTermInTodayList() + ')', 'ig');
+                        $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTermInTodayList() + "</span>"));
+                    });
+                } else {
+                    var empty_row = TodayAppoRow.clone(true);
+                    $("td:first-child", empty_row).attr("colspan", $("td", TodayAppoRow).length);
+                    $("td:first-child", empty_row).attr("align", "center");
+                    $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
+                    $("td", empty_row).not($("td:first-child", empty_row)).remove();
+                    $("[id*=dtgTodaysAppointment]").append(empty_row);
+
+                    $(".pgrHistory").hide();
+
+                }
+
+                var AppointmentIDColumn = $("[id*=dtgTodaysAppointment] th:contains('AppointmentID')");
+                AppointmentIDColumn.css("display", "none");
+                $("[id*=dtgTodaysAppointment] tr").each(function () {
+                    $(this).find("td").eq(AppointmentIDColumn.index()).css("display", "none");
+                });
+              
+            };
+
+            TodayAppoRow = null;
+
         </script>
 
 
@@ -904,7 +1004,7 @@
                             <span class="tooltiptext1">All Registration</span>
                         </span>
                     </a>
-                    <a class="todays_appointment_link" onclick="openModalAppointment();">
+                    <a class="todays_appointment_link" onclick="OpenModal('3');">
                         <span class="tooltip1">
                             <span class="count">
                                 <asp:Label ID="lblAppointmentCount" runat="server" Text="0"></asp:Label></span>
@@ -1186,11 +1286,12 @@
                                         <asp:BoundField DataField="Location" HeaderText="Location"></asp:BoundField>
                                         <asp:BoundField DataField="Mobile" HeaderText="Mobile No"></asp:BoundField>
                                         <asp:BoundField DataField="AllottingTime" HeaderText="Alloted Time"></asp:BoundField>
+                                          <asp:BoundField DataField="AppointmentID" HeaderText="AppointmentID"></asp:BoundField>
                                     </Columns>
                                 </asp:GridView>
                             </div>
 
-                            <div class="pgrHistory">
+                            <div class="pgrHistoryAppointment">
                             </div>
                         </div>
                     </div>
