@@ -5,6 +5,9 @@
 var title, eventStartDate, eventEndDate;
 var tooltip;
 var DoctorID;
+var MonthName='';
+
+
 
     $(document).mouseup(function (e) {
     var container = $("#calendar");
@@ -212,16 +215,15 @@ var DoctorID;
 
 
            , dayRender: function (date, element) {
-            debugger;
+           
             document.getElementById("colorBox").style.display = "block";
             var date = new Date($("#calendar").fullCalendar('getDate').format());
             
-        var monthName =    getMonthName(parseInt(date.getMonth()));
-
-       
-        $("#lblExistingSchedules").html("Schedule List of : " + monthName);
+             MonthName = getMonthName(parseInt(date.getMonth()));
+         
         
-
+             $("#lblExistingSchedules").html("Schedule List of : " + MonthName);
+        
             //    //var month_int = date.getMonth();
 
             //    //alert(month_int);
@@ -319,7 +321,7 @@ var DoctorID;
 /*end of document.ready*/
 
     function GetScheduledTimesByDate()
-{
+    {
     var jsonDeatilsByDate = {};
 
     var Doctor = new Object();
@@ -353,14 +355,23 @@ var DoctorID;
 }
 
     function GetScheduleByDrID(drID) {
-  
+        debugger;
+      
+
     DoctorID = drID;
 
     var jsonDrSchedule = {};
 
     var Doctor = new Object();
     Doctor.DoctorID = drID;
+   // var MonthName = document.getElementById('hdnMonthName').value;
+    
+    //if (MonthName == '') {
+    //    var todaysDate = new Date();
+    //    MonthName =getMonthName( parseInt( todaysDate.getMonth()));
+    //}
 
+    //Doctor.MonthName = MonthName;
     jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
     if (jsonDrSchedule != undefined) {
 
