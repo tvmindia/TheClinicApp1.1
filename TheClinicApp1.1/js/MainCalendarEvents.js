@@ -197,6 +197,7 @@ $(document).ready(function () {
                 //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#b3d4fc!important' });
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important', 'border': '2px solid red' });
+                document.getElementById("colorBox").style.display = "block";
             },
             events: json,
             viewDisplay: function getDate(date) {
@@ -214,11 +215,10 @@ $(document).ready(function () {
         });
     }, 3600);
     $('body').on('change', 'input[type="checkbox"]', function () {
-        debugger;
         selectOnlyThis(this.id);
     });
     $('.loader').delay(3150).fadeOut('slow');
-
+   
     /*Modal dialog Cancel button click*/
     $('.btnCncl').click(function () {
         $("#txtTitle").val("");
@@ -260,10 +260,6 @@ $(document).ready(function () {
 
 
         }
-    });
-    $("#imgDelete").click(function () {
-        debugger;
-        alert("Hello");
     });
 });
 /*end of document.ready*/
@@ -360,7 +356,7 @@ function GetAllNames(id) {
 }
 function RemoveFromList(AppointmentID) {
 
-    debugger;
+  
     var Appointments = new Object();
     Appointments.AppointmentID = AppointmentID;
 
@@ -411,7 +407,7 @@ function GetAllTimeAvailability(docID, date) {
     return table;
 }
 function GetTimeList() {
-    debugger;
+  
     var ds = {};
     var table = {};
     var Appointments = new Object();
