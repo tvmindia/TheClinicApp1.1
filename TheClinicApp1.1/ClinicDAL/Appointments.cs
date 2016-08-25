@@ -505,7 +505,59 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Today's Patient: Appointment View Search Paging
 
-       
+
+        #region GetPatientAppointmentDetailsByAppointmentID
+        public DataSet GetPatientAppointmentDetailsByAppointmentID()
+        {
+            SqlConnection con = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (AppointmentID == "")
+            {
+                throw new Exception("AppointmentID is Empty!!");
+            }
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetPatientAppointmentDetailsByAppointmentID]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(AppointmentID);
+
+                sda = new SqlDataAdapter(cmd);
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetPatientAppointmentDetailsByAppointmentID";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return ds;
+        }
+        #endregion GetPatientAppointmentDetailsByAppointmentID
+
+
 
 
         #region AllotedPatientAbsentUpdate

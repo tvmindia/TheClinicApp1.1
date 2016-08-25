@@ -244,10 +244,10 @@ namespace TheClinicApp1._1.Registration
         {
             DataTable dummy = new DataTable();
 
-            dummy.Columns.Add("Patient Name");
+            dummy.Columns.Add("Name");
             dummy.Columns.Add("Location");
-            dummy.Columns.Add("Mobile No");
-            dummy.Columns.Add("Alloted Time");
+            dummy.Columns.Add("Mobile");
+            dummy.Columns.Add("AllottingTime");
             dummy.Columns.Add("AppointmentID");
             dummy.Rows.Add();
 
@@ -280,6 +280,8 @@ namespace TheClinicApp1._1.Registration
         }
 
         #endregion Delete Patient
+
+   
 
         #endregion Get Patient Details
 
@@ -373,6 +375,7 @@ namespace TheClinicApp1._1.Registration
 
             BindDummyRow();
             BindTodayregistrationDummyRow();
+            BindTodayAppointmentDummyRow();
             //gridDataBind();
             listFilter = null;
             listFilter = BindName();

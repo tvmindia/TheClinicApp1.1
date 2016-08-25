@@ -374,6 +374,46 @@ namespace TheClinicApp1._1.Appointment
             return jsSerializer.Serialize("");
         }
         #endregion GetAppointedPatientDetails
+        #region GetPatientAppointmentDetailsByAppointmentID
+         [System.Web.Services.WebMethod]
+        public static string GetPatientAppointmentDetailsByAppointmentID(Appointments AppointObj)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            AppointObj.ClinicID = Convert.ToString(UA.ClinicID);
+            List<Event> events = new List<Event>();
+            if (UA != null)
+            {
+                DataSet ds = null;
+                if (AppointObj.AppointmentID != "")
+                {
+                    ds = AppointObj.GetPatientAppointmentDetailsByAppointmentID();
+                    // ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
+                    int count = ds.Tables[0].Rows.Count;
+                    //Converting to Json
+                    List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+                    Dictionary<string, object> childRow;
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        foreach (DataRow row in ds.Tables[0].Rows)
+                        {
+                            childRow = new Dictionary<string, object>();
+                            foreach (DataColumn col in ds.Tables[0].Columns)
+                            {
+                                childRow.Add(col.ColumnName, row[col]);
+                            }
+                            parentRow.Add(childRow);
+                        }
+                    }
+                    return jsSerializer.Serialize(events);
+                }
+            }
+            return jsSerializer.Serialize("");
+        }
+        #endregion GetPatientAppointmentDetailsByAppointmentID
 
         #region GetAppointedPatientDetailsByScheduleID
         [System.Web.Services.WebMethod]
