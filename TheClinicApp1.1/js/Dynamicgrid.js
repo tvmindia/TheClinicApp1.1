@@ -140,10 +140,36 @@ function clickStockAdd(id) {
 
     last = last + 1;
 }
-
+function DocPrescription() {
+    //Check div exist and if then remove
+    if (iCnt > 0)
+    {
+        for (var k = 1; k <= iCnt; k++) {
+            $('#div' + k).remove();
+        }
+    }
+    
+    $('#initPresc').remove();
+    iCnt = 0;
+    //creating prescription section for doctor 
+    $('#PrecsDiv').append('<div id="initPresc"><table class="table" style="width: 100%; border: 0!important;">'
+                                +'<tbody><tr><th>Medicine</th><th>Quantity</th><th>Unit</th><th>Dosage</th><th>Timing</th><th>Days</th></tr>'
+                                    +'<tr><td><input id="txtMedName0" type="text" class="input" onblur="BindMedunitbyMedicneName('+0+')" onfocus="autocompleteonfocus(0)" /></td>'
+                                        +'<td><input id="txtMedQty0" onkeypress="return isNumber(event)" type="text" class="input" /></td>'
+                                        +'<td><input id="txtMedUnit0" class="input" readonly="true" type="text" onfocus="focusplz(0)" /></td>'
+                                        +'<td><input id="txtMedDos0" type="text" class="input" /></td>'
+                                        +'<td><input id="txtMedTime0" type="text" class="input" /></td>'
+                                        +'<td><input id="txtMedDay0" type="text" class="input" /></td>'
+                                        +'<td style="background: #E6E5E5"><input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" accesskey="-" /></td>'
+                                        +'<td style="background: #E6E5E5"><input type="button" id="btAdd" onclick="clickAdd(0);visib(this);" value="+" class="bt1" style="width: 20px" accesskey="+" />'
+                                        +'</td><td style="background-color: transparent"><input id="hdnDetailID0" type="hidden" />'
+                                            +'<input id="hdnQty0" type="hidden" /></td></tr></tbody></table><div id="maindiv"></div></div>');
+}
+//function for Add new row for prescription 
+function visib(f) {
+    f.style.visibility = 'hidden';
+}
 function clickAdd(id) {
-
-    debugger;
     iCnt = iCnt + 1;
     // ADD new row with fields needed.
     $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;">'
@@ -723,7 +749,7 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
         //document.getElementById('<%=txtIssueNO.ClientID %>').readOnly = true;
 
         $.each(Medicines, function () {
-        
+
             if (i > 0) {
                 clickAdd(i);
             }
@@ -744,11 +770,10 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
             var QtyInStock = $(this).find("MedQTY").text();
 
             var PresQty = parseInt(MedicineQuantity);
-            var  stockQty=parseInt(QtyInStock);
+            var stockQty = parseInt(QtyInStock);
 
-            if (stockQty < PresQty)
-            {               
-                document.getElementById('txtMedQty' + i).style.color = "red";                          
+            if (stockQty < PresQty) {
+                document.getElementById('txtMedQty' + i).style.color = "red";
             }
 
             document.getElementById('txtMedName' + i).value = MedicineName;
@@ -784,7 +809,9 @@ function RefillMedicineTextboxesWithXmlData(hdnXmlData) {
 
     }
 
-
+    //else {
+    //    DocPrescription();
+    //}
 }
 
 

@@ -4,7 +4,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>ClinicLite</title>
+   <!-- FAVICON -->
+    <link rel="shortcut icon" href="../Logo.png" type="image/x-icon" />
+    <!-- Css Files -->
     <style type="text/css">
         .auto-style1 {
             width: 203px;
