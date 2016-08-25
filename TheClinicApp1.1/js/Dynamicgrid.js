@@ -152,7 +152,7 @@ function DocPrescription() {
     $('#initPresc').remove();
     iCnt = 0;
     //creating prescription section for doctor 
-    $('#PrecsDiv').append('<div id="initPresc"><table class="table" style="width: 100%; border: 0!important;">'
+    $('#PrecsDiv').append('<div id="initPresc"><table class="table" id="prestab" style="width: 100%; border: 0!important;">'
                                 +'<tbody><tr><th>Medicine</th><th>Quantity</th><th>Unit</th><th>Dosage</th><th>Timing</th><th>Days</th></tr>'
                                     +'<tr><td><input id="txtMedName0" type="text" class="input" onblur="BindMedunitbyMedicneName('+0+')" onfocus="autocompleteonfocus(0)" /></td>'
                                         +'<td><input id="txtMedQty0" onkeypress="return isNumber(event)" type="text" class="input" /></td>'

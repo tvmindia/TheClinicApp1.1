@@ -131,6 +131,7 @@
   <ItemGroup>
     <Content Include="Admin\Admin.aspx" />
     <Content Include="Admin\AssignRoles.aspx" />
+    <Content Include="Admin\SAdmin.aspx" />
     <Content Include="Appointment\Appointment.aspx" />
     <Content Include="Appointment\DoctorSchedule.aspx" />
     <Content Include="Button-Warning-iconedited.png" />
@@ -454,6 +455,13 @@
     </Compile>
     <Compile Include="Admin\AssignRoles.aspx.designer.cs">
       <DependentUpon>AssignRoles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\SAdmin.aspx.cs">
+      <DependentUpon>SAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\SAdmin.aspx.designer.cs">
+      <DependentUpon>SAdmin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Appointment\Appointment.aspx.cs">
       <DependentUpon>Appointment.aspx</DependentUpon>

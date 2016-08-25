@@ -1211,7 +1211,7 @@
                         <h3>Prescription Section</h3>
                         <div id="PrecsDiv">
                            <div id="initPresc">
-                            <%-- <table class="table" style="width: 100%; border: 0!important;">
+                            <table class="table" style="width: 100%; border: 0!important;">
                                 <tbody>
                                     <tr>
                                         <th>Medicine</th>
@@ -1246,7 +1246,7 @@
                                 </tbody>
                             </table>
                             <div id="maindiv">
-                            </div>--%>
+                            </div>
                                 </div>
                         </div>
 
@@ -1477,7 +1477,13 @@
             var test=jQuery.noConflict();
             test(document).ready(function () {
                 debugger;
-               DocPrescription();
+                //$('.myWebsiteTable').find('table').length
+                var flag=$('#initPresc').find('table').length;
+                if(flag===0)
+                {
+                    DocPrescription();
+                }
+               
 
                 $(".imgdelete").live({
                     click: function (e) {// Clear controls
