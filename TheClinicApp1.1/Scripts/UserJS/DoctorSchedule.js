@@ -30,6 +30,9 @@ var Year = '';
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
 
+ 
+   
+
   //  GetScheduleByDrID();
 
 
@@ -355,6 +358,40 @@ var Year = '';
 }
 
 /*end of document.ready*/
+
+    function GetRegularScheduleByDrID() {
+
+        var  strttime = '';
+        var jsonRegularSchedule = {};
+
+        var Doctor = new Object();
+
+        if (DoctorID != null && DoctorID != "") {
+
+            Doctor.DoctorID = DoctorID;
+
+            var ds = {};
+            var table = {};
+            var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+            ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetRegularScheduleOFDoctor");
+            Records = JSON.parse(ds.d);
+
+            $.each(Records, function (index, Records) {
+
+                if (Records.Starttime != null ) {
+                    debugger;
+                    strttime = ConvertTimeFormatFrom24hrTo12hr(Records.Starttime);
+                    
+                }
+
+            })
+
+        }
+
+        return strttime;
+
+    }
+
 
     function GetScheduledTimesByDate(Date)
     {
