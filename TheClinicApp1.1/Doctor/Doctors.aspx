@@ -106,6 +106,7 @@
                 debugger;
                 GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
             RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
+
             }
 //--------------------------------------------------------------------------script validation------------------------------------------------//
             function validate()
@@ -405,7 +406,10 @@
                     //$("#VistImagePreview img:last-child").remove()
 
                    // reset();
-                    ResetToNewCase();
+                 //   ResetToNewCase();
+                    
+                     DocPrescription();
+
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                     
                     if ($(this).text() == "") {
@@ -1205,8 +1209,9 @@
 
                         </div>
                         <h3>Prescription Section</h3>
-                        <div>
-                            <table class="table" style="width: 100%; border: 0!important;">
+                        <div id="PrecsDiv">
+                           <div id="initPresc">
+                            <%-- <table class="table" style="width: 100%; border: 0!important;">
                                 <tbody>
                                     <tr>
                                         <th>Medicine</th>
@@ -1241,8 +1246,8 @@
                                 </tbody>
                             </table>
                             <div id="maindiv">
-                            </div>
-
+                            </div>--%>
+                                </div>
                         </div>
 
                         
@@ -1472,7 +1477,7 @@
             var test=jQuery.noConflict();
             test(document).ready(function () {
                 debugger;
-               
+               DocPrescription();
 
                 $(".imgdelete").live({
                     click: function (e) {// Clear controls

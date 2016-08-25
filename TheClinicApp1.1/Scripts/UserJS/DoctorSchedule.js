@@ -6,7 +6,7 @@ var title, eventStartDate, eventEndDate;
 var tooltip;
 var DoctorID;
 var MonthName='';
-
+var Year = '';
 
 
     $(document).mouseup(function (e) {
@@ -224,7 +224,7 @@ var MonthName='';
             var date = new Date($("#calendar").fullCalendar('getDate').format());
             
              MonthName = getMonthName(parseInt(date.getMonth()));
-         
+             Year  = parseInt(date.getFullYear());
 
              if ($("#lblExistingSchedules").text() != "Schedule List of : " + MonthName) {
                  $("#lblExistingSchedules").html("Schedule List of : " + MonthName);
@@ -437,13 +437,14 @@ var MonthName='';
         var Doctor = new Object();
         Doctor.DoctorID = DoctorID;
 
-        if (MonthName == '') {
+        if (MonthName == '' && Year == '') {
             var todaysDate = new Date();
-            MonthName =getMonthName( parseInt( todaysDate.getMonth()));
+            MonthName = getMonthName(parseInt(todaysDate.getMonth()));
+            Year = parseInt(todaysDate.getFullYear());
         }
 
         Doctor.MonthName = MonthName;
-
+        Doctor.Year = Year;
 
         if (DoctorID != null && DoctorID != "") {
 
