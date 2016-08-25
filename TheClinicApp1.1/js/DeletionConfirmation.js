@@ -11,6 +11,10 @@ function ConfirmDelete(IsDelete) {
     {
         return confirm(" Are you sure you want to Cancel this schedule? ");
     }
+    if(IsDelete == true)//Patient appointement cancel
+    {
+        return confirm(" Are you sure you want to Cancel this Appointment? ");
+    }
     else //Deletion
     {
         return confirm(" Are you sure you want to delete? ");
