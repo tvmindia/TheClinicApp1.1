@@ -30,7 +30,6 @@ var Year = '';
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
 
-    //$("#txtStartTime").val(' 03 : 03 : PM');
   //  GetScheduleByDrID();
 
 
