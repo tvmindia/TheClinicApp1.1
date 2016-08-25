@@ -6,7 +6,7 @@ var title, eventStartDate, eventEndDate;
 var tooltip;
 var DoctorID;
 var MonthName='';
-
+var Year = '';
 
 
     $(document).mouseup(function (e) {
@@ -29,6 +29,9 @@ var MonthName='';
 
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
+
+   
+
 
   //  GetScheduleByDrID();
 
@@ -105,7 +108,7 @@ var MonthName='';
            
             eventRender: function (event, element, view) {
 
-                debugger;
+              
               
                 //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------//  
                
@@ -140,6 +143,7 @@ var MonthName='';
             },
          
             dayClick: function (date, jsEvent, view) {
+              
               eventStartDate = date.format();
                 eventEndDate = date.format();
 
@@ -220,7 +224,7 @@ var MonthName='';
             var date = new Date($("#calendar").fullCalendar('getDate').format());
             
              MonthName = getMonthName(parseInt(date.getMonth()));
-         
+             Year  = parseInt(date.getFullYear());
 
              if ($("#lblExistingSchedules").text() != "Schedule List of : " + MonthName) {
                  $("#lblExistingSchedules").html("Schedule List of : " + MonthName);
@@ -240,7 +244,38 @@ var MonthName='';
 
         },
 
+           eventClick: function (date, jsEvent, view) {
+               debugger;
 
+               //var clickedDate = date;
+
+
+               //alert(clickedDate.start);
+
+               if (DoctorID != null && DoctorID != "") {
+
+                   //background-color: #a8d9f3;
+
+                   $("#txtAppointmentDate").val(moment(date.start).format('DD MMM YYYY'));
+                   $("#lblAddSchedule").html("Add Schedule On : " + moment(date).format('DD MMM YYYY'));
+
+                   $("#txtAppointmentDate").css({ border: '0 solid #3baae3' }).animate({
+                       borderWidth: 3
+                   }, 500);
+
+                   $('#calendar').fullCalendar('unselect');
+
+                   GetScheduledTimesByDate(date.start);
+               }
+
+
+               else {
+                   alert("Please Select a doctor");
+               }
+
+
+
+           }
         });
     }, 3600);
 
@@ -324,7 +359,7 @@ var MonthName='';
 
 /*end of document.ready*/
 
-    function GetScheduledTimesByDate()
+    function GetScheduledTimesByDate(Date)
     {
     var jsonDeatilsByDate = {};
 
@@ -342,7 +377,15 @@ var MonthName='';
        // $("#txtAppointmentDate").val(eventStartDate);
 
         Doctor.DoctorID = DoctorID;
-        Doctor.SearchDate = eventStartDate;
+
+        if (Date != null) {
+            Doctor.SearchDate = Date; 
+        }
+        else
+        {
+            Doctor.SearchDate = eventStartDate;
+        }
+     
 
         jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
 
@@ -359,7 +402,7 @@ var MonthName='';
 }
 
     function GetScheduleByDrID(drID) {
-        debugger;
+      
       
 
     DoctorID = drID;
@@ -379,7 +422,7 @@ var MonthName='';
     jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
     if (jsonDrSchedule != undefined) {
 
-        debugger;
+       
 
         json = jsonDrSchedule;
         BindScheduledDates();
@@ -389,18 +432,19 @@ var MonthName='';
 
     function BindScheduledDates()
     {
-        debugger;
+     
 
         var Doctor = new Object();
         Doctor.DoctorID = DoctorID;
 
-        if (MonthName == '') {
+        if (MonthName == '' && Year == '') {
             var todaysDate = new Date();
-            MonthName =getMonthName( parseInt( todaysDate.getMonth()));
+            MonthName = getMonthName(parseInt(todaysDate.getMonth()));
+            Year = parseInt(todaysDate.getFullYear());
         }
 
         Doctor.MonthName = MonthName;
-
+        Doctor.Year = Year;
 
         if (DoctorID != null && DoctorID != "") {
 
@@ -561,7 +605,7 @@ var MonthName='';
     }
 
     function RemoveTime(ScheduleID) {
-    debugger;
+        debugger;
     var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
     var Doctor = new Object();
@@ -712,7 +756,7 @@ var MonthName='';
     }
 
     function AddSchedule() {
-        debugger;
+       
         var JsonNewSchedule = {};
        
         if (document.getElementById('hdnScheduleID').value != null && document.getElementById('hdnScheduleID').value != "") {
@@ -884,7 +928,8 @@ var MonthName='';
     function CancelAllSchedules($this)
     {
         debugger;
-
+        var DeletionConfirmation = ConfirmDelete(false);
+        if (DeletionConfirmation == true) {
         date =    $($this).closest('td').prev('td').text();
         var DrAvaildate = moment(date).format('YYYY-MM-DD');
         var JsonCancellAll = {};
@@ -896,46 +941,47 @@ var MonthName='';
         {
             if (JsonCancellAll.status == "1") {
 
-            var jsonDeatilsByDate = {};
+                var jsonDeatilsByDate = {};
 
-            var Doctor = new Object();
+                var Doctor = new Object();
 
-            if (DoctorID != null && DoctorID != "") {
+                if (DoctorID != null && DoctorID != "") {
 
-                Doctor.DoctorID = DoctorID;
-                Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
-
-                jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
-
-                if (jsonDeatilsByDate != undefined) {
-
-                    BindTimes(jsonDeatilsByDate);
-
-                    $("#txtStartTime").val("");
-                    $("#txtEndTime").val("");
-                    $("#txtMaxAppoinments").val("");
-
-                    BindScheduledDates();
-
-                    var jsonDrSchedule = {};
-
-                    var Doctor = new Object();
                     Doctor.DoctorID = DoctorID;
+                    //  Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
+                    Doctor.SearchDate = DrAvaildate;
 
-                    jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
-                    if (jsonDrSchedule != undefined) {
+                    jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
 
-                        $('#calendar').fullCalendar('removeEventSource', json);
+                    if (jsonDeatilsByDate != undefined) {
 
-                        json = jsonDrSchedule;
+                        //   BindTimes(jsonDeatilsByDate);
 
-                        $('#calendar').fullCalendar('addEventSource', json);
-                        $('#calendar').fullCalendar('refetchEvents');
+                        $("#txtStartTime").val("");
+                        $("#txtEndTime").val("");
+                        $("#txtMaxAppoinments").val("");
+
+                        BindScheduledDates();
+
+                        var jsonDrSchedule = {};
+
+                        var Doctor = new Object();
+                        Doctor.DoctorID = DoctorID;
+
+                        jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                        if (jsonDrSchedule != undefined) {
+
+                            $('#calendar').fullCalendar('removeEventSource', json);
+
+                            json = jsonDrSchedule;
+
+                            $('#calendar').fullCalendar('addEventSource', json);
+                            $('#calendar').fullCalendar('refetchEvents');
+                        }
+
                     }
-
                 }
             }
         }
-        }
-
+    }
  }

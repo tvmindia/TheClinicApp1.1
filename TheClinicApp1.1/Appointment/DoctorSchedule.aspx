@@ -241,6 +241,12 @@
             z-index: 3;
         }
 
+        #imgCancelAll
+        {
+             cursor: pointer;
+        }
+
+
         #imgDelete {
             cursor: pointer;
         }
@@ -293,6 +299,13 @@
             background: #ebf0f3;
         }
 
+
+         #tblColorCodes, #tblColorCodes tr, #tblColorCodes th, #tblColorCodes td {
+            border: none;
+        }
+
+        
+
         /*.ui-state-highlight {
     border:2px  solid #06adfc !important;
     background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
@@ -305,12 +318,16 @@
     border: medium none !important;
     text-align: right;
 }*/
-
+          .lblColor {
+             font-size: smaller;
+             line-height: 1;
+         }
         .foo {
             float: left;
             width: 10px;
             height: 10px;
-            border: 1px solid rgba(0, 0, 0, .2);
+            /*border: 1px solid rgba(0, 0, 0, .2);*/
+            border:none;
           
         }
        
@@ -319,7 +336,7 @@
         }
 
         .Dates {
-            background: #256db7;
+            background: #3baae3;
         }
 
         .Today {
@@ -455,8 +472,6 @@
 
                             <div class="tab_table">
 
-
-
                                 <div class="row field_row">
                                     <div class="col-lg-12">
 
@@ -464,11 +479,33 @@
 
                                             <div id='calendar'></div>
                                             <div class="loader" style="float: left"></div>
-                                            <br />
+
+                                           <br />
 
 
                                             <div id="colorBox" style="display: none">
-                                                <ul>
+
+                                                <table id="tblColorCodes">
+                                            <tr>
+                                                <td>
+                                                    
+                                                <div class="foo Count"></div>
+                                                <label class="lblColor">Scheduled Dates</label>
+                                                </td>
+                                                <td>
+ <div class="foo Dates"></div>
+                                                <label class="lblColor">Scheduled Times</label>
+                                                </td>
+                                                <td>
+                                                     <div class="foo Today"></div>
+                                                <label class="lblColor">Today</label>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+
+                                              <%--  <ul>
                                                     <li >
                                                         <div class="foo Count"></div>
                                                     
@@ -482,7 +519,7 @@
                                                         <div class="foo Today"></div>
                                                         <label>Today</label>
                                                     </li>
-                                                </ul>
+                                                </ul>--%>
                                             </div>
                                         </div>
                                         <br />
@@ -613,6 +650,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
 
 
