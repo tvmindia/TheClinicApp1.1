@@ -24,15 +24,13 @@ var Year = '';
 });
 
     $(document).ready(function () {
-   
+        debugger;
       //  document.getElementsByClassName('timepicker_wrap').append('<p>ddbb</p>');
 
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
 
-   
-
-
+    //$("#txtStartTime").val(' 03 : 03 : PM');
   //  GetScheduleByDrID();
 
 
