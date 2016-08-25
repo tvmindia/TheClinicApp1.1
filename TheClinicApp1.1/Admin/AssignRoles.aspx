@@ -430,7 +430,7 @@ table
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation"><a href="Admin.aspx">Create User</a></li>
                         <li role="presentation" class="active"><a href="AssignRoles.aspx">Assign Roles</a></li>
-                        
+                        <li role="presentation" runat="server" id="liSAdmin"><a href="#">SAdmin</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">

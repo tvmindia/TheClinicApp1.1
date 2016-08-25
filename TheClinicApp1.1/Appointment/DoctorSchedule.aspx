@@ -526,9 +526,9 @@
 
                                         <div class="col-lg-6" style="height: 100%;">
 
-                                            <div class="col-lg-12">
+                                         <%--   <div class="col-lg-12">--%>
 
-                                                <div class="token_id_card" style="width: 100%">
+                                                <div class="token_id_card" style="width: 100%;">
                                                     <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
                                                         <%--<asp:Label runat="server"  Text="Add Schedule"></asp:Label>--%>
                                                         <label id="lblAddSchedule" style="text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; font-family: 'roboto-bold';">Add Schedule</label>
@@ -588,48 +588,12 @@
 
                                                         </div>
 
-
-                                                        <div class="row field_row">
-
-                                                            <div class="col-lg-6">
-
-                                                                <label></label>
-
-
-                                                            </div>
-
-                                                            <div class="col-lg-6 ">
-                                                                <label></label>
-
-
-                                                            </div>
-
-
-                                                        </div>
-                                                        <div class="row field_row">
-
-                                                            <div class="col-lg-6">
-
-                                                                <label></label>
-
-
-                                                            </div>
-
-                                                            <div class="col-lg-6 ">
-                                                                <label></label>
-
-
-                                                            </div>
-
-
-                                                        </div>
-
                                                     </div>
                                                 </div>
-                                            </div>
+                                            <%--</div>--%>
 
 
-                                            <div class="token_id_card" style="width: 100%">
+                                            <div class="token_id_card" style="width: 100%;">
 
                                                 <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
                                                   

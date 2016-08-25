@@ -514,10 +514,11 @@
                         <li role="presentation" class="active"><a href="Admin.aspx">Create User</a></li>
 
                         <li role="presentation"><a href="AssignRoles.aspx">Assign Role</a></li>
+                        <li role="presentation" runat="server" id="liSAdmin"><a href="#">SAdmin</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="stock">
+                        <div role="tabpanel" class="tab-pane active" id="stocks">
                             <div class="grey_sec">
                                 <%--<div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
