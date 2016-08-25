@@ -130,15 +130,15 @@ label {
 }
 
 
-.ui-state-highlight {
+/*.ui-state-highlight {
     border: 1px solid #06adfc !important;
     background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
     color: #363636;
-}
-.fc-ltr .fc-basic-view .fc-day-number {
+}*/
+/*.fc-ltr .fc-basic-view .fc-day-number {
     border: medium none !important;
     text-align: right;
-}
+}*/
 /* Modal Content */
 .modal-content {
     position: relative;
@@ -321,10 +321,10 @@ border-bottom-right-radius: 0px;
     cursor: pointer;
     width: 15px!important;
 }
-         .fc-day-grid-event .fc-content {
+         /*.fc-day-grid-event .fc-content {
              background-color:#256db7;
              text-align:center;
-         }
+         }*/
  .header {
     height: 40px;
  text-align:center;
