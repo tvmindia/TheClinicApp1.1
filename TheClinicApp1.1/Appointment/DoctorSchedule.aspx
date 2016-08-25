@@ -494,7 +494,7 @@
                                                 </td>
                                                 <td>
  <div class="foo Dates"></div>
-                                                <label class="lblColor">Scheduled Times</label>
+                                                <label class="lblColor">Schedules</label>
                                                 </td>
                                                 <td>
                                                      <div class="foo Today"></div>
