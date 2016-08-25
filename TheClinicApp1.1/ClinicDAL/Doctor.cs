@@ -278,6 +278,12 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
         }
 
+        public string Year
+        {
+            get;
+            set;
+        }
+
         #endregion Doctor Schedule properties
 
         #region Doctor Schedule methods
@@ -411,6 +417,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
                 cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateFormatCode;
                 cmd.Parameters.Add("@MonthName", SqlDbType.NVarChar, 30).Value = MonthName;
+                cmd.Parameters.Add("@Year", SqlDbType.NVarChar, 30).Value = Year;
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds);
