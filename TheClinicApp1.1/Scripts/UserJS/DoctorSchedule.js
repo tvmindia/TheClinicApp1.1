@@ -24,14 +24,14 @@ var Year = '';
 });
 
     $(document).ready(function () {
-   
+        debugger;
       //  document.getElementsByClassName('timepicker_wrap').append('<p>ddbb</p>');
 
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
 
+ 
    
-
 
   //  GetScheduleByDrID();
 
@@ -345,7 +345,7 @@ var Year = '';
 //---------------------------------------------------------//
 
     function ConvertTimeFormatFrom24hrTo12hr(Time)
-{
+    {
     var TimeIn24hrFormat = Time;
     var hourEnd = TimeIn24hrFormat.indexOf(":");
     var H = +TimeIn24hrFormat.substr(0, hourEnd);
@@ -358,6 +358,43 @@ var Year = '';
 }
 
 /*end of document.ready*/
+
+    function GetRegularScheduleByDrID() {
+        debugger;
+        var strttime = '';
+        var endtime = '';
+        var jsonRegularSchedule = {};
+
+        var Doctor = new Object();
+
+        if (DoctorID != null && DoctorID != "") {
+
+            Doctor.DoctorID = DoctorID;
+
+            var ds = {};
+            var table = {};
+            var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+            ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetRegularScheduleOFDoctor");
+            Records = JSON.parse(ds.d);
+
+            $.each(Records, function (index, Records) {
+
+                if (Records.Starttime != null && Records.Endtime != null) {
+                    debugger;
+                    strttime = Records.Starttime;
+                    endtime = Records.Endtime;
+                }
+
+            })
+
+        }
+
+
+        Time = strttime + ',' + endtime;
+        return Time;
+        //return strttime;
+    }
+
 
     function GetScheduledTimesByDate(Date)
     {

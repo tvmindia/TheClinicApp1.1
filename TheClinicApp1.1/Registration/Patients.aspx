@@ -317,7 +317,17 @@
                 var ds = {};
                 var table = {};
                 var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
-                ds = getJsonData(data, "../Registration/Patients.aspx/BindPatientDetailsOnEditClick");
+                ds = getJsonData(data, "../Registration/Patients.aspx/GetAppointedPatientDetails");
+                table = JSON.parse(ds.d);
+                return table;
+            }
+            function GetPatientAppointment(Appointments)
+            {
+                var ds = {};
+                var table = {};
+                var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+                ds = getJsonData(data, "../Appointment/Appointment.aspx/GetPatientAppointmentDetailsByAppointmentID");
+                
                 table = JSON.parse(ds.d);
                 return table;
             }
@@ -444,6 +454,26 @@
 
             }
 
+
+
+            function BindControlsWithPatientAppointmentDetails(Records) 
+            {
+                $.each(Records, function (index, Records) {
+                   
+                    $("#<%=txtName.ClientID %>").val(Records.Name);
+                   
+                    $("#<%=txtAddress.ClientID %>").val(Records.Location);
+                    $("#<%=txtMobile.ClientID %>").val(Records.Mobile);
+                   
+                 
+                    $("#<%=HiddenField1.ClientID %>").val(Records.AppointmentID);
+           
+                });
+
+                $("#TodayAppointmentClose").click();
+
+            }
+
              
         </script>
 
@@ -459,6 +489,16 @@
                 var table = {};
                 var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
                 ds = getJsonData(data, "../Registration/Patients.aspx/DeletePatient");
+                table = JSON.parse(ds.d);
+                return table;
+            }
+
+            function CancelAppointment(Appointments)
+            {
+                var ds = {};
+                var table = {};
+                var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+                ds = getJsonData(data, "../Appointment/Appointment.aspx/CancelAppointment");
                 table = JSON.parse(ds.d);
                 return table;
             }
@@ -496,6 +536,38 @@
                     }
                 }
             }
+            //Appointment Cancel from grid
+            function CancelTodayAppointementByID(AppointmentID) {  //Cancel Today's Registration
+
+                if (AppointmentID != "") {
+
+                    var Appointments = new Object();
+                    Appointments.AppointmentID = AppointmentID;
+                    var  response =    CancelAppointment(Appointments);
+
+                    if (response.status == 0) {
+
+                        $("#TodayAppointmentClose").click();
+
+                        var lblclass = Alertclasses.danger;
+                        var lblmsg = msg.AlreadyUsed;
+                        var lblcaptn = Caption.FailureMsgCaption;
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                       }
+                        else {
+                        var PageIndx = parseInt(1);
+
+                        if ($(".pgrHistoryAppointment span")[0] != null && $(".Pager span")[0].innerText != '') {
+
+                            PageIndx = parseInt($(".pgrHistoryAppointment span")[0].innerText);
+                        }
+
+                        GetTodayPatientAppointments(PageIndx);
+    
+                    }
+                }
+            }
+
 
 
             function DeletePatientByID(PatientID) { //Deletion In All Registration
@@ -584,6 +656,28 @@
             });
 
 
+            //------------------------------- * Today's Appointment Edit Click * -------------------------------//
+
+            $(function () {
+                $("[id*=dtgTodaysAppointment] td:eq(0)").click(function () { 
+                    debugger;
+                   var AppointmentID = $(this).closest('tr').find('td:eq(6)').text();
+                       
+                    document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+                    
+                    var jsonResult = {};
+                    var Appointments = new Object();
+                    Appointments.AppointmentID = AppointmentID;
+                    jsonResult = GetPatientAppointment(Appointments);
+                    if (jsonResult != undefined) {
+                          
+                        BindControlsWithPatientAppointmentDetails(jsonResult);
+                    }
+                    $("#TodayAppointmentClose").click();
+                });
+
+            });
+
             //------------------------------- * All Registration Delete Click * -------------------------------//
 
             $(function () {
@@ -618,6 +712,22 @@
             });
 
 
+            //------------------------------- * Today Appointment Cancel Click * -------------------------------//
+            
+            $(function () {
+                $("[id*=dtgTodaysAppointment] td:eq(1)").click(function () {
+                  
+                       if ($(this).text() == "") {
+                        var CancelConfirmation = ConfirmDelete(true);
+                        if (CancelConfirmation == true) {
+                         var AppointmentID = $(this).closest('tr').find('td:eq(6)').text();
+                         CancelTodayAppointementByID(AppointmentID);
+                        }
+                    }
+                });
+            });
+
+
             //------------------------------- * Search In All Registration Gridview * -------------------------------//
 
             $("[id*=txtSearchTodayPatient]").live("keyup", function () {
@@ -632,6 +742,9 @@
 
             function SearchTermInTodayList() {
                 return jQuery.trim($("[id*=txtSearchTodayPatient]").val());
+            };
+            function SearchTermInTodayAppointmentList() {
+                return jQuery.trim($("[id*=txtSearchTodayAppointment]").val());
             };
 
             function GetTodayPatients(pageIndex) {
@@ -895,7 +1008,7 @@
                 if (AllAppointments.length > 0) {
                     
                     $.each(AllAppointments, function () {
-                      
+                        debugger;
                         $("td", TodayAppoRow).eq(0).html($('<img />')
                        .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
                         $("td", TodayAppoRow).eq(1).html($('<img />')
@@ -914,7 +1027,7 @@
                         $("#<%=lblAppointmentCount.ClientID %>").text(GridRowCount);
                     }
 
-                    $(".pgrHistory").ASPSnippets_Pager({
+                    $(".pgrHistoryAppointment").ASPSnippets_Pager({
                         ActiveCssClass: "current",
                         PagerCssClass: "pager",
                         PageIndex: parseInt(pager.find("PageIndex").text()),
@@ -926,7 +1039,7 @@
                         var searchPattern = new RegExp('(' + SearchTermInTodayList() + ')', 'ig');
                         $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTermInTodayList() + "</span>"));
                     });
-                } else {
+                    } else {
                     var empty_row = TodayAppoRow.clone(true);
                     $("td:first-child", empty_row).attr("colspan", $("td", TodayAppoRow).length);
                     $("td:first-child", empty_row).attr("align", "center");
@@ -934,7 +1047,7 @@
                     $("td", empty_row).not($("td:first-child", empty_row)).remove();
                     $("[id*=dtgTodaysAppointment]").append(empty_row);
 
-                    $(".pgrHistory").hide();
+                    $(".pgrHistoryAppointment").hide();
 
                 }
 
@@ -1268,6 +1381,7 @@
                                     <input class="button3" type="button" value="Search" disabled />
                                 </div>
                             </div>
+                           
                             <div class="col-sm-12" style="height: 400px;">
                                 <asp:GridView ID="dtgTodaysAppointment" runat="server" AutoGenerateColumns="False">
 
@@ -1290,7 +1404,7 @@
                                     </Columns>
                                 </asp:GridView>
                             </div>
-
+                            
                             <div class="pgrHistoryAppointment">
                             </div>
                         </div>

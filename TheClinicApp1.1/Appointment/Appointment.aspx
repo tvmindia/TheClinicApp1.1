@@ -455,8 +455,6 @@ border-bottom-right-radius: 0px;
         var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
         ds=getJsonData(data, "../Appointment/Appointment.aspx/InsertPatientAppointment");
         table = JSON.parse(ds.d);
-            
-       
         return table;
     }
     function GetDoctorID()
