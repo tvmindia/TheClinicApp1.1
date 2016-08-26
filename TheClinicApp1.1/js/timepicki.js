@@ -144,7 +144,12 @@ function PickTime()
 			inputs.on('focus', function () {
 			    debugger;
 			   
-			    defultTime =  SetDefaultTime();
+			  //  if ($(this).attr("id") == 'txtStartTime') {
+
+			    var inputID = $(this).attr("id");
+
+
+			    defultTime = SetDefaultTime(inputID);
 
 			    if (defultTime != null ) {
 
@@ -161,6 +166,7 @@ function PickTime()
 				if (!input.is(ele)) {
 					input.select();
 				}
+			   
 			});
 
 			// allow user to increase and decrease numbers using arrow keys

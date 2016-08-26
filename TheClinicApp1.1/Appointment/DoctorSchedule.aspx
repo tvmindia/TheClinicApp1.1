@@ -382,24 +382,7 @@
             if (DoctorID != "" && DoctorID != null) {
                 GetScheduleByDrID(DoctorID);
 
-                var time = GetRegularScheduleByDrID();
-
-                var timeParts = time.split(',');
-
-                var starttime = timeParts[0];
-                var endtime = timeParts[1];
-
-                //TimeIn24hrFormat = time;
-
-                TimeIn24hrFormat = starttime;
-                var hourEnd = TimeIn24hrFormat.indexOf(":");
-                var H = +TimeIn24hrFormat.substr(0, hourEnd);
-                var h = H % 12 || 12;
-                var ampm = H < 12 ? "AM" : "PM";
-
-                timStart = h;
-                minsStart = TimeIn24hrFormat.substr(hourEnd, 4).replace(':', '').trim();
-                merStart = ampm;
+               
 
                 debugger;
 
@@ -417,8 +400,39 @@
 
         });
 
-        function SetDefaultTime()
+        function SetDefaultTime(inputID)
         {
+            var time = GetRegularScheduleByDrID();
+
+            var timeParts = time.split(',');
+
+            if (inputID == 'txtStartTime')
+            {
+                time = timeParts[0];
+            }
+
+            if (inputID == 'txtEndTime') {
+                time = timeParts[1];
+            }
+
+
+            //var starttime = timeParts[0];
+            //var endtime = timeParts[1];
+
+            //TimeIn24hrFormat = time;
+
+            TimeIn24hrFormat = time;
+            var hourEnd = TimeIn24hrFormat.indexOf(":");
+            var H = +TimeIn24hrFormat.substr(0, hourEnd);
+            var h = H % 12 || 12;
+            var ampm = H < 12 ? "AM" : "PM";
+
+            timStart = h;
+            minsStart = TimeIn24hrFormat.substr(hourEnd, 4).replace(':', '').trim();
+            merStart = ampm;
+
+
+
             if (timStart != '' && minsStart != '' && merStart != '') {
                 defultTime = timStart + ',' + minsStart + ',' + merStart;
             }
