@@ -345,7 +345,7 @@ var Year = '';
 //---------------------------------------------------------//
 
     function ConvertTimeFormatFrom24hrTo12hr(Time)
-{
+    {
     var TimeIn24hrFormat = Time;
     var hourEnd = TimeIn24hrFormat.indexOf(":");
     var H = +TimeIn24hrFormat.substr(0, hourEnd);

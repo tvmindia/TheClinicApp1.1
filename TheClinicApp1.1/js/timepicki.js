@@ -141,7 +141,18 @@ function PickTime()
 			ele.on('focus', open_timepicki);
 
 			// select all text in input when user focuses on it
-			inputs.on('focus', function() {
+			inputs.on('focus', function () {
+			    defultTime =  SetDefaultTime();
+
+			    if (defultTime != null) {
+
+			    var timeParts = defultTime.split(',');
+
+			    ele.attr('data-timepicki-tim', timeParts[0]);
+			    ele.attr('data-timepicki-mini', timeParts[1]);
+			    ele.attr('data-timepicki-meri', timeParts[2]);
+
+			    }
 				var input = $(this);
 				if (!input.is(ele)) {
 					input.select();
@@ -193,6 +204,9 @@ function PickTime()
 			}
 
 			function set_value(event, close) {
+
+			    debugger;
+
 				// use input values to set the time
 				var tim = ele_next.find(".ti_tx input").val();
 				var mini = ele_next.find(".mi_tx input").val();
@@ -201,9 +215,10 @@ function PickTime()
 					meri = ele_next.find(".mer_tx input").val();
 				}
 				
-				if (tim.length !== 0 && mini.length !== 0 && (!settings.show_meridian || meri.length !== 0)) {
+				if ((tim.length !== 0 && mini.length !== 0 && (!settings.show_meridian || meri.length !== 0)) ) {
 					// store the value so we can set the initial value
-					// next time the picker is opened
+				    // next time the picker is opened
+
 					ele.attr('data-timepicki-tim', tim);
 					ele.attr('data-timepicki-mini', mini);
 					

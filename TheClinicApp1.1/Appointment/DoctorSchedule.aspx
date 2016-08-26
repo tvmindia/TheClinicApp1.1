@@ -364,6 +364,11 @@
 
     <script>
 
+        tim = '';
+        mins = '';
+        mer = '';
+
+
         $(document).ready(function () {
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
@@ -379,17 +384,38 @@
 
                 var time = GetRegularScheduleByDrID();
 
+                TimeIn24hrFormat = time;
+                var hourEnd = TimeIn24hrFormat.indexOf(":");
+                var H = +TimeIn24hrFormat.substr(0, hourEnd);
+                var h = H % 12 || 12;
+                var ampm = H < 12 ? "AM" : "PM";
+
+                 tim = h;
+                 mins= TimeIn24hrFormat.substr(hourEnd, 4).replace(':', '').trim();
+                 mer = ampm;
+
+                debugger;
+
+                //ele.attr('data-timepicki-tim', tim);
+                //ele.attr('data-timepicki-mini', mini);
             }
 
             else {
                 $("#tblDates tr").remove();
-
+              
                 var html = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
                 $("#tblDates").append(html);
 
             }
 
         });
+
+        function SetDefaultTime()
+        {
+            defultTime = tim + ',' + mins + ',' + mer;
+            return defultTime;
+        }
+
 
 
     </script>
