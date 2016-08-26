@@ -841,7 +841,7 @@ namespace TheClinicApp1._1.Admin
         }
 
         #endregion Logout
-
+       
         //#region Paging
         //protected void dtgViewAllUsers_PreRender(object sender, EventArgs e)
         //{

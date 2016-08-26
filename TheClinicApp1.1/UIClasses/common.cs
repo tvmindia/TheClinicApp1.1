@@ -134,7 +134,20 @@ namespace TheClinicApp1._1.UIClasses
                 return "Categories.aspx";
             }
         }
-
+        public string AdminPageUrl
+        {
+            get
+            {
+                return "/Admin/Admin.aspx";
+            }
+        }
+        public string AssRolePage
+        {
+            get
+            {
+                return "/Admin/AssignRoles.aspx";
+            }
+        }
         public string Patient
         {
             get
@@ -203,6 +216,13 @@ namespace TheClinicApp1._1.UIClasses
             get
             {
                 return "Administrator";
+            }
+        }
+        public string RoleSadmin
+        {
+            get
+            {
+                return "SuperAdmin";
             }
         }
 

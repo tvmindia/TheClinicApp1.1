@@ -514,7 +514,7 @@
                         <li role="presentation" class="active"><a href="Admin.aspx">Create User</a></li>
 
                         <li role="presentation"><a href="AssignRoles.aspx">Assign Role</a></li>
-                        <li role="presentation" runat="server" id="liSAdmin"><a href="#">SAdmin</a></li>
+                        <li role="presentation" runat="server" id="liSAdmin" visible="false"><a href="SAdmin.aspx">SAdmin</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">

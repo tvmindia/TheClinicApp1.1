@@ -59,6 +59,17 @@ namespace TheClinicApp1._1.Masters
                 if(master!=null)
                 master.Visible = true;
             }
+            //*Check Roles Assigned and Giving Visibility For SAdmin Tab
+            if (RoleName.Contains(Const.RoleSadmin))
+            {
+                string currentPag = HttpContext.Current.Request.Url.AbsolutePath;
+                if ((currentPag == Const.AssRolePage) || (currentPag == Const.AdminPageUrl))
+                {
+                    System.Web.UI.HtmlControls.HtmlGenericControl sadmin = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("liSAdmin");
+                    sadmin.Visible = true;
+                }
+
+            }
         }
     }
 }

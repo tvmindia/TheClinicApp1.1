@@ -40,6 +40,7 @@ namespace TheClinicApp1._1.Masters
             System.Web.UI.HtmlControls.HtmlGenericControl admin = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("admin");
             System.Web.UI.HtmlControls.HtmlGenericControl master = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("master");
             System.Web.UI.HtmlControls.HtmlGenericControl logout = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("log");
+            
             if (logout != null)
             {
                 logout.Visible = false;
@@ -51,12 +52,17 @@ namespace TheClinicApp1._1.Masters
                        
             lblUser.Text = "👤 " + Login + " ";
             RoleName= UA.GetRoleName1(Login);           
-            //*Check Roles Assigned and Giving Visibility For Admin Tab
-            //if (RoleName.Contains(Const.RoleAdministrator))
-            //{
-            //    admin.Visible = true;
-            //    master.Visible = true;               
-            //}
+            //*Check Roles Assigned and Giving Visibility For SAdmin Tab
+            if (RoleName.Contains(Const.RoleSadmin))
+            {
+                string currentPag=HttpContext.Current.Request.Url.AbsolutePath;
+                if ((currentPag == Const.AssRolePage) || (currentPag == Const.AdminPageUrl))
+                {
+                    System.Web.UI.HtmlControls.HtmlGenericControl sadmin = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("liSAdmin");
+                    sadmin.Visible = true;
+                }
+                              
+            }
         }
 
 
@@ -71,69 +77,76 @@ namespace TheClinicApp1._1.Masters
                 string currPage = Const.GetCurrentPageName(Request);
                 string From = "?From=";
                 string redirectURL = "";
-
-                if (currRole.Count==0) { Response.Redirect(Const.AccessDeniedURL); }
-
-                if (currPage != Const.AccessDenied)
+                if(!currRole.Contains(Const.RoleSadmin))
                 {
-                    if (currPage == Const.PatientPage) { }
-                    if (currPage == Const.TokenPage) { }
-                    if (currPage == Const.DoctorPage) { 
-                        if (!currRole.Contains(Const.RoleDoctor)) {
-                            From = From + Const.Doctor;
-                            redirectURL = Const.AccessDeniedURL + From;
-                        } 
-                    }
-                    if (currPage == Const.PharmacyPage) { }
-                    if (currPage == Const.StockPage) { }
+                    if (currRole.Count == 0) { Response.Redirect(Const.AccessDeniedURL); }
 
-                    if (currPage == Const.AdminPage) {
-                        if (!currRole.Contains(Const.RoleAdministrator))
-                        {
-                            From = From + Const.Admin;
-                            redirectURL = Const.AccessDeniedURL + From;
-                        } 
-                    }
-
-//-----------Checking access of report tab ,user with only pharmacist role is not allowed to get report ------------
-                    if (currPage == Const.ReportPageURL)
+                    if (currPage != Const.AccessDenied)
                     {
-                        if (currRole.Count == 1 && currRole.Contains(Const.RolePharmacist))
+                        if (currPage == Const.PatientPage) { }
+                        if (currPage == Const.TokenPage) { }
+                        if (currPage == Const.DoctorPage)
                         {
-                            From = From + Const.RolePharmacist;
-                            redirectURL = Const.AccessDeniedURL + From;
+                            if (!currRole.Contains(Const.RoleDoctor))
+                            {
+                                From = From + Const.Doctor;
+                                redirectURL = Const.AccessDeniedURL + From;
+                            }
+                        }
+                        if (currPage == Const.PharmacyPage) { }
+                        if (currPage == Const.StockPage) { }
+
+                        if (currPage == Const.AdminPage)
+                        {
+                            if (!currRole.Contains(Const.RoleAdministrator))
+                            {
+                                From = From + Const.Admin;
+                                redirectURL = Const.AccessDeniedURL + From;
+                            }
+                        }
+
+                        //-----------Checking access of report tab ,user with only pharmacist role is not allowed to get report ------------
+                        if (currPage == Const.ReportPageURL)
+                        {
+                            if (currRole.Count == 1 && currRole.Contains(Const.RolePharmacist))
+                            {
+                                From = From + Const.RolePharmacist;
+                                redirectURL = Const.AccessDeniedURL + From;
+                            }
+
+
+
+                            //if (currRole.Contains(Const.Patient) || currRole.Contains(Const.Token) || currRole.Contains(Const.Token) || currRole.Contains(Const.Doctor) || currRole.Contains(Const.Stock) || currRole.Contains(Const.Admin) || currRole.Contains(Const.RoleAdministrator)) 
+                            //{
+
+                            //}
+                            //else
+                            //{
+                            //    From = From + Const.RolePharmacist;
+                            //    redirectURL = Const.AccessDeniedURL + From;
+                            //}
                         }
 
 
-
-                        //if (currRole.Contains(Const.Patient) || currRole.Contains(Const.Token) || currRole.Contains(Const.Token) || currRole.Contains(Const.Doctor) || currRole.Contains(Const.Stock) || currRole.Contains(Const.Admin) || currRole.Contains(Const.RoleAdministrator)) 
-                        //{
-                           
-                        //}
-                        //else
-                        //{
-                        //    From = From + Const.RolePharmacist;
-                        //    redirectURL = Const.AccessDeniedURL + From;
-                        //}
-                    }
-
-
-                    if (currPage == Const.MasterPage)
-                    {
-                        if (!(currRole.Contains(Const.RoleAdministrator)))
+                        if (currPage == Const.MasterPage)
                         {
-                            From = From + Const.Admin;
-                            redirectURL = Const.AccessDeniedURL + From;
+                            if (!(currRole.Contains(Const.RoleAdministrator)))
+                            {
+                                From = From + Const.Admin;
+                                redirectURL = Const.AccessDeniedURL + From;
+                            }
                         }
+                        if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+
+
+
                     }
-
-
-
-                    if (redirectURL != "") { Response.Redirect(redirectURL, true); }
-                   
-
-
                 }
+                
+
+
+
+                    
 
             }
             catch (Exception)

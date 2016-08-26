@@ -106,6 +106,16 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+        public string Createdby
+        {
+            get;
+            set;
+        }
+        public string Updatedby
+        {
+            get;
+            set;
+        }
 
         #endregion ClinicProperty
 
@@ -183,10 +193,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@GroupID", SqlDbType.UniqueIdentifier).Value = GroupID;
                 pud.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = GroupName;
                 pud.Parameters.Add("@Logo", SqlDbType.Image, 0).Value = Logo;
-                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
-                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = Createdby;
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
@@ -253,9 +260,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@Location", SqlDbType.NVarChar, 255).Value = ClinicLocation;
                 pud.Parameters.Add("@Address", SqlDbType.NVarChar, 255).Value = ClinicAddress;
                 pud.Parameters.Add("@Phone", SqlDbType.NVarChar, 50).Value = ClinicPhone;
-                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
+                pud.Parameters.Add("@Logo", SqlDbType.Image, 0).Value = Logo;
+                pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = Createdby;
                 pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
-                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
+                pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = Createdby;
                 pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
