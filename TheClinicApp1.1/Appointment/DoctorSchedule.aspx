@@ -364,9 +364,9 @@
 
     <script>
 
-        tim = '';
-        mins = '';
-        mer = '';
+        timStart = '';
+        minsStart = '';
+        merStart = '';
 
 
         $(document).ready(function () {
@@ -384,15 +384,22 @@
 
                 var time = GetRegularScheduleByDrID();
 
-                TimeIn24hrFormat = time;
+                var timeParts = time.split(',');
+
+                var starttime = timeParts[0];
+                var endtime = timeParts[1];
+
+                //TimeIn24hrFormat = time;
+
+                TimeIn24hrFormat = starttime;
                 var hourEnd = TimeIn24hrFormat.indexOf(":");
                 var H = +TimeIn24hrFormat.substr(0, hourEnd);
                 var h = H % 12 || 12;
                 var ampm = H < 12 ? "AM" : "PM";
 
-                 tim = h;
-                 mins= TimeIn24hrFormat.substr(hourEnd, 4).replace(':', '').trim();
-                 mer = ampm;
+                timStart = h;
+                minsStart = TimeIn24hrFormat.substr(hourEnd, 4).replace(':', '').trim();
+                merStart = ampm;
 
                 debugger;
 
@@ -412,7 +419,10 @@
 
         function SetDefaultTime()
         {
-            defultTime = tim + ',' + mins + ',' + mer;
+            if (timStart != '' && minsStart != '' && merStart != '') {
+                defultTime = timStart + ',' + minsStart + ',' + merStart;
+            }
+
             return defultTime;
         }
 

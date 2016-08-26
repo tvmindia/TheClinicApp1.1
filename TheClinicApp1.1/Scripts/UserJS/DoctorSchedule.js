@@ -360,8 +360,9 @@ var Year = '';
 /*end of document.ready*/
 
     function GetRegularScheduleByDrID() {
-
-        var  strttime = '';
+        debugger;
+        var strttime = '';
+        var endtime = '';
         var jsonRegularSchedule = {};
 
         var Doctor = new Object();
@@ -378,18 +379,20 @@ var Year = '';
 
             $.each(Records, function (index, Records) {
 
-                if (Records.Starttime != null ) {
+                if (Records.Starttime != null && Records.Endtime != null) {
                     debugger;
-                    strttime = ConvertTimeFormatFrom24hrTo12hr(Records.Starttime);
-                    
+                    strttime = Records.Starttime;
+                    endtime = Records.Endtime;
                 }
 
             })
 
         }
 
-        return strttime;
 
+        Time = strttime + ',' + endtime;
+        return Time;
+        //return strttime;
     }
 
 
