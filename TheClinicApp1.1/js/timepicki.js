@@ -297,6 +297,7 @@ function PickTime()
 				} else {
 					d = new Date();
 					ti = d.getHours();
+
 					mi = d.getMinutes();
 					mer = "AM";
 					if (12 < ti  && settings.show_meridian) {
