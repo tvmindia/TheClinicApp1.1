@@ -270,7 +270,7 @@ $(document).ready(function () {
 function GetAllottedTime(docId, eventStartDate, id) {
     debugger;
     var names = GetAllPatientList(id);
-    for (var j = 0; j < names.length; ++j)
+    for (var j = 0; j < names.length; j++)
     {
         if(names[j].isAvailable=="3")
         {
@@ -489,6 +489,7 @@ function GetJSonDataForCalender(data, page) {
                 editable: true,
                 events: json//data.d
             });
+
             //$("div[id=loading]").hide();
             //$("div[id=fullcal]").show();
 
