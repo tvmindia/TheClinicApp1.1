@@ -148,19 +148,20 @@ function PickTime()
 
 			    var inputID = $(this).attr("id");
 
+			    if (inputID == 'txtStartTime' || inputID == 'txtEndTime') {
 
-			    defultTime = SetDefaultTime(inputID);
+			        defultTime = SetDefaultTime(inputID);
 
-			    if (defultTime != null ) {
+			        if (defultTime != null) {
 
-			        var timeParts = defultTime.split(',');
+			            var timeParts = defultTime.split(',');
 
-			        ele.attr('data-timepicki-tim', timeParts[0]);
-			        ele.attr('data-timepicki-mini', timeParts[1]);
-			        ele.attr('data-timepicki-meri', timeParts[2]);
-			        
+			            ele.attr('data-timepicki-tim', timeParts[0]);
+			            ele.attr('data-timepicki-mini', timeParts[1]);
+			            ele.attr('data-timepicki-meri', timeParts[2]);
+
+			        }
 			    }
-			
 
 				var input = $(this);
 				if (!input.is(ele)) {

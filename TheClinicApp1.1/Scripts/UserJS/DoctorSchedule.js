@@ -368,8 +368,10 @@ var AllotedStartTimes = [];
     var H = +TimeIn24hrFormat.substr(0, hourEnd);
     var h = H % 12 || 12;
     var ampm = H < 12 ? "AM" : "PM";
+    //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+    TimeIn12hrFormat = moment(Time, ["h:mm A"]).format("hh:mm") + ampm;
 
-    TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+    
 
     return TimeIn12hrFormat;
 }
@@ -387,6 +389,7 @@ var AllotedStartTimes = [];
         if (DoctorID != null && DoctorID != "") {
 
             Doctor.DoctorID = DoctorID;
+            Doctor.ScheduleOrder = parseInt( $("#tblTimes tr").length+1);
 
             var ds = {};
             var table = {};
