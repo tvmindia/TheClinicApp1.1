@@ -855,60 +855,66 @@ var AllotedStartTimes = [];
                     var InputStartTimeIn24hrFormat = moment(StartimeInput, ["h:mm A"]).format("HH:mm"); //INPUT start time in 24hr format
                     var InputEndTimeIn24hrFormat = moment(endtimeInput, ["h:mm A"]).format("HH:mm");
 
-                    for (var i in AllotedEndTimes) {
+                    for (var i in AllotedEndTimes)
+                    {
 
-                        var AlreadyAllotedEndTime = AllotedEndTimes[i].replace(/ /g, '');
-                        var AlreadyAllotedStartTime = AllotedStartTimes[i].replace(/ /g, '');
+                        //var AlreadyAllotedEndTime = AllotedEndTimes[i].replace(/ /g, '');
+                        //var AlreadyAllotedStartTime = AllotedStartTimes[i].replace(/ /g, '');
 
-                        if (InputStartTimeIn24hrFormat < AlreadyAllotedEndTime || InputEndTimeIn24hrFormat <= InputStartTimeIn24hrFormat)
+                        var AlreadyAllotedEndTime = moment(AllotedEndTimes[i], ["h:mm A"]).format("HH:mm");
+                        var AlreadyAllotedStartTime = moment(AllotedStartTimes[i], ["h:mm A"]).format("HH:mm");
+                     
+
+                        if (InputStartTimeIn24hrFormat >= AllotedEndTimes)
                         {
 
-                            if (InputStartTimeIn24hrFormat < AlreadyAllotedEndTime)
+                            if (InputEndTimeIn24hrFormat > InputStartTimeIn24hrFormat)
                             {
-                                var IsbetweenCase = false;
-
-                                if ((InputEndTimeIn24hrFormat <= AlreadyAllotedStartTime)  && (InputEndTimeIn24hrFormat > InputStartTimeIn24hrFormat)) {
-                                   
-                                    if (AllotedEndTimes[i - 1] != null)
-                                    {
-                                        var previousEndtime = AllotedEndTimes[i - 1].replace(/ /g, '');
-
-                                        if(InputStartTimeIn24hrFormat <= previousEndtime)
-                                        {
-                                            IsbetweenCase = true;
-                                        }
-
-                                    }
-
-                                    else
-                                    {
-                                        IsbetweenCase = true;
-                                    }
-
-                                    //&& (InputStartTimeIn24hrFormat <= previousEndtime)
-
-                                }
-
-                                if (IsbetweenCase == false)
-                                {
-                                    Isalloted = true;
-                                    alert("Already alloted");
-                                    break;
-                                }
-                                
-                                   
+                                Isalloted = false;
                             }
-
-
-                            if (InputEndTimeIn24hrFormat <= InputStartTimeIn24hrFormat)
+                            else
                             {
                                 Isalloted = true;
-                                alert("Already alloted");
+                                alert("Please enter a valid time");
                                 break;
                             }
 
-                           
-                           
+                        }
+
+                        else
+                        {
+                            if (InputStartTimeIn24hrFormat <= AllotedEndTimes)
+                            {
+                                if ( (InputStartTimeIn24hrFormat < AlreadyAllotedStartTime) && (InputEndTimeIn24hrFormat <= AlreadyAllotedStartTime) )
+                                {
+                                    Isalloted = false;
+                                }
+
+                                else {
+                                    Isalloted = true;
+                                    alert("Sorry,This time has been already alloted.");
+                                    break;
+                                }
+
+                                if (InputStartTimeIn24hrFormat < InputEndTimeIn24hrFormat)
+                                {
+                                    Isalloted = false;
+                                }
+                                else
+                                {
+                                    Isalloted = true;
+                                    alert("Please enter a valid time");
+                                    break;
+                                }
+
+
+                            }
+
+                            else {
+                                Isalloted = true;
+                                alert("Sorry,This time has been already alloted.");
+                                break;
+                            }
                         }
 
                     }
