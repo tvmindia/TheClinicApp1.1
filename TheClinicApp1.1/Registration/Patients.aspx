@@ -1404,7 +1404,7 @@
                                        
                                         <asp:TemplateField>
                                             <ItemTemplate>
-                                                <asp:ImageButton  ID="ImgBtnUpdate1" Style="border: none!important" runat="server" ImageUrl="../images/NonregisteredUSer.png" HeaderText="Details" />
+                                                <%--<asp:ImageButton  ID="ImgBtnUpdate1" Style="border: none!important" runat="server" ImageUrl="../images/NonregisteredUSer.png" HeaderText="Details" />--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
