@@ -119,12 +119,23 @@ namespace TheClinicApp1._1.Admin
         {
             roleObj.ClinicID = UA.ClinicID;
             DataTable dtRoles = roleObj.GetDetailsOfAllRoles();
+            DataTable dtgRoles = dtRoles.Copy();
+            //foreach(DataRow dr in dtgRoles.Rows)
+            for (int i = 0; i < dtRoles.Rows.Count;i++)
+            {
 
-
+                if (dtRoles.Rows[i]["RoleName"].ToString() == Const.RoleSadmin)
+                {
+                    dtgRoles.Rows.Remove(dtgRoles.Rows[i]);
+                    dtgRoles.AcceptChanges();
+                   
+                }
+            }
             chklstRoles.DataTextField = "RoleName";
             chklstRoles.DataValueField = "RoleID";
-            chklstRoles.DataSource = dtRoles;
+            chklstRoles.DataSource = dtgRoles;
             chklstRoles.DataBind();
+            
 
             //chklstRoles.Items.Insert(0, "--Select--");
 

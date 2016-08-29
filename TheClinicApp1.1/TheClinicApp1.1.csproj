@@ -136,6 +136,7 @@
     <Content Include="Appointment\DoctorSchedule.aspx" />
     <Content Include="Button-Warning-iconedited.png" />
     <Content Include="common\test page.txt" />
+    <Content Include="css\bootstrap-multiselect.css" />
     <Content Include="css\bootstrap-spinner.css" />
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.css" />
@@ -296,6 +297,7 @@
     <Content Include="images\whitefinal.png" />
     <Content Include="js\1.12.0jquery-ui.js" />
     <Content Include="js\ASPSnippets_Pager.min.js" />
+    <Content Include="js\bootstrap-multiselect.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\DeletionConfirmation.js" />
     <Content Include="js\Dynamicgrid.js" />

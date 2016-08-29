@@ -60,6 +60,8 @@ namespace TheClinicApp1._1.Masters
                 {
                     System.Web.UI.HtmlControls.HtmlGenericControl sadmin = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("liSAdmin");
                     sadmin.Visible = true;
+                    System.Web.UI.HtmlControls.HtmlGenericControl ClinicDiv = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("dropdivclinic");
+                    ClinicDiv.Visible = true;
                 }
                               
             }

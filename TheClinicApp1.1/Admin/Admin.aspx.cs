@@ -42,8 +42,10 @@ namespace TheClinicApp1._1.Admin
         ClinicDAL.User userObj = new ClinicDAL.User();
         ClinicDAL.Master mstrObj = new ClinicDAL.Master();
         ClinicDAL.RoleAssign roleObj = new RoleAssign();
+        ClinicDAL.Clinic ClinicObj = new Clinic();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
+        ClinicDAL.Master MasterObj = new ClinicDAL.Master();
         ErrorHandling eObj = new ErrorHandling();
 
         #endregion Global Variables
@@ -60,13 +62,13 @@ namespace TheClinicApp1._1.Admin
         {
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
-
+            
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-
-            User usrObj = new User();
-            usrObj.ClinicID = UA.ClinicID;
-            var xml = usrObj.ViewAndFilterUsers(searchTerm, pageIndex, PageSize);
-            return xml;
+                User usrObj = new User();
+                usrObj.ClinicID = UA.ClinicID;
+                var xml = usrObj.ViewAndFilterUsers(searchTerm, pageIndex, PageSize);
+                return xml;
+                        
 
         }
 
@@ -136,8 +138,15 @@ namespace TheClinicApp1._1.Admin
                     userObj.isActive = false;
                 }
             }
-            userObj.ClinicID = UA.ClinicID;
-             userObj.createdBy = UA.userName;
+            if(dropdivclinic.Visible==true)
+            {
+                userObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
+            }
+            else if(dropdivclinic.Visible==false)
+            {
+                userObj.ClinicID = UA.ClinicID;
+            }
+            userObj.createdBy = UA.userName;
             userObj.updatedBy = UA.userName;
             userObj.passWord = CryptObj.Encrypt(txtPassword.Value);
             userObj.Email = txtEmail.Value;
@@ -312,8 +321,15 @@ namespace TheClinicApp1._1.Admin
         UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
         mstrObj.loginName = txtLoginName.Value.TrimStart();
-
+        if (dropdivclinic.Visible == true)
+        {
+            mstrObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
+        }
+        else if (dropdivclinic.Visible == false)
+        {
             mstrObj.ClinicID = UA.ClinicID;
+        }
+            //mstrObj.ClinicID = UA.ClinicID;
             mstrObj.DoctorName = txtFirstName.Value.TrimStart();
             mstrObj.DoctorPhone = txtPhoneNumber.Value;
             mstrObj.DoctorEmail = txtEmail.Value;
@@ -324,7 +340,15 @@ namespace TheClinicApp1._1.Admin
                 {
 
                     mstrObj.UsrID = Guid.Parse(hdnUserID.Value);
-                    mstrObj.ClinicID = UA.ClinicID;
+                    if (dropdivclinic.Visible == true)
+                    {
+                        mstrObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
+                    }
+                    else if (dropdivclinic.Visible == false)
+                    {
+                        mstrObj.ClinicID = UA.ClinicID;
+                    }
+                    //mstrObj.ClinicID = UA.ClinicID;
                     DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
 
                     if (dtDoctor.Rows.Count > 0) //Checking whether user is already a doctor 
@@ -447,16 +471,30 @@ namespace TheClinicApp1._1.Admin
         public void AddUserRole()
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
-            roleObj.ClinicID = UA.ClinicID;
+            if (dropdivclinic.Visible == true)
+            {
+                roleObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
+            }
+            else if (dropdivclinic.Visible == false)
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+            //roleObj.ClinicID = UA.ClinicID;
 
             string roleid = GetRoleIDOFDoctor();
 
             roleObj.RoleID = Guid.Parse(roleid);
             roleObj.CreatedBy = UA.userName;
             roleObj.UserID = Guid.Parse(hdnUserID.Value);
-
-            roleObj.ClinicID = UA.ClinicID;
+            if (dropdivclinic.Visible == true)
+            {
+                roleObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
+            }
+            else if (dropdivclinic.Visible == false)
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+            //roleObj.ClinicID = UA.ClinicID;
 
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
@@ -741,7 +779,11 @@ namespace TheClinicApp1._1.Admin
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
-
+            if (!IsPostBack)
+            {
+                BindDropDownGroupforDoc();
+            }
+            
         }
 
         #endregion Page Load
@@ -966,6 +1008,34 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Bind Gridview
 
-        
+        public void BindDropDownGroupforDoc()
+        {
+
+            DataTable dt = new DataTable();
+            dt = MasterObj.GetAllClinics();
+            ddlGroup.DataSource = dt;
+            ddlGroup.DataTextField = "Name";
+            ddlGroup.DataValueField = "ClinicID";
+            ddlGroup.DataBind();
+            ddlGroup.Items.Insert(0, new ListItem("--Select Clinic--", "-1"));
+        }
+
+        protected void ddlGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataSet ds;
+            string ClinicID = ddlGroup.SelectedValue;
+            ds=ClinicObj.ViewClinic(ClinicID);
+           
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow dr = ds.Tables[0].Rows[0];
+                string Clinic_Name = dr["Name"].ToString();               
+                ClinicDAL.UserAuthendication UA_Changed = new ClinicDAL.UserAuthendication(UA.userName, ClinicID, Clinic_Name);
+                if (UA_Changed.ValidUser)
+                {
+                    Session[Const.LoginSession] = UA_Changed;
+                }
+            }
+        }
     }
 }

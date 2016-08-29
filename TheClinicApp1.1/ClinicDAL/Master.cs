@@ -17,6 +17,7 @@ namespace TheClinicApp1._1.ClinicDAL
             GroupID = Guid.NewGuid();
             ClinicID = Guid.NewGuid();
             DoctorID = Guid.NewGuid();
+            RoleID=Guid.NewGuid();
         }
         #endregion Constructors
 
@@ -118,6 +119,19 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion ClinicProperty
+        #region RolesProperty
+
+        public Guid RoleID
+        {
+            get;
+            set;
+        }
+        public string RoleName
+        {
+            get;
+            set;
+        }
+        #endregion RolesProperty
 
         #region DoctorProperty
         public Guid DoctorID
@@ -1757,7 +1771,89 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion  View All Units
 
         //----------------------------------------* Unit : End *--------------------------------------------//
+        #region AddRoles
+        public void InsertRole()
+        {
+            SqlConnection con = null;
+            try
+            {
 
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand pud = new SqlCommand();
+                pud.Connection = con;
+                pud.CommandType = System.Data.CommandType.StoredProcedure;
+                pud.CommandText = "[InsertRoles]";
+
+                //UnitID = Guid.NewGuid();
+
+                //pud.Parameters.Add("@RoleID", SqlDbType.UniqueIdentifier).Value = RoleID;
+                pud.Parameters.Add("@RoleName", SqlDbType.NVarChar, 255).Value = RoleName;
+                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                pud.Parameters.Add("@Createdby", SqlDbType.NVarChar, 255).Value = createdBy;
+                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@Updatedby", SqlDbType.NVarChar, 255).Value = createdBy;
+
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                pud.Parameters.Add(Output);
+                pud.ExecuteNonQuery();
+
+                if (Output.Value.ToString() == "")
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;   //not successfull   
+                    eObj.SavingFailureMessage(page);
+
+                }
+                else
+                {
+                    int rslt = Convert.ToInt32(Output.Value.ToString());
+
+                    if (rslt == 1)
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;  //successfull
+                        eObj.SavedSuccessMessage(page);
+                    }
+
+                    else
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        eObj.AlreadyExistsMessage(page);
+
+                    }
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "InsertUnits";
+
+                eObj.InsertError();
+
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+
+        }
+        #endregion AddRoles
         #endregion Methods
     }
 }

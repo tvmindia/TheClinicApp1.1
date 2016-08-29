@@ -39,40 +39,62 @@ namespace TheClinicApp1._1.Admin
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
-        {
-           if(hdnGroupselect.Value=="New")
-           {
-               MasterObj.GroupName = txtGroupName.Value;
-               if(fluplogo.HasFile)
-               {
-                   byte[] ImageByteArray = null;
-                   ImageByteArray = ConvertImageToByteArray(fluplogo);
-                   MasterObj.Logo = ImageByteArray;
-                   
-               }
+         {
+            //string message = "";
+             try
+             {
+                 if (hdnGroupselect.Value == "New")
+                 {
+                     MasterObj.GroupName = txtGroupName.Value;
+                     if (fluplogo.HasFile)
+                     {
+                         byte[] ImageByteArray = null;
+                         ImageByteArray = ConvertImageToByteArray(fluplogo);
+                         MasterObj.Logo = ImageByteArray;
 
-               MasterObj.Createdby = UA.userName;
-               MasterObj.InsertGroups();
-           }
-           if (hdnGroupselect.Value == "Exist")
-           {
-               MasterObj.GroupID = Guid.Parse(ddlGroup.SelectedValue);
-           }
-            
-            MasterObj.ClinicName = txtClinicName.Value;
-            MasterObj.ClinicAddress = txtAddress.Value;
-            MasterObj.ClinicLocation = txtLocation.Value;
-            MasterObj.ClinicPhone = txtPhone.Value;
-            MasterObj.Createdby = UA.userName;
-            if (fluplogo.HasFile)
-            {
-                byte[] ImageByteArray = null;
-                ImageByteArray = ConvertImageToByteArray(fluplogo);
-                MasterObj.Logo = ImageByteArray;
+                     }
 
-            }
-            MasterObj.InsertClinics();
-            BindDropDownGroupforDoc();
+                     MasterObj.Createdby = UA.userName;
+                     MasterObj.InsertGroups();
+                 }
+                 if (hdnGroupselect.Value == "Exist")
+                 {
+                     MasterObj.GroupID = Guid.Parse(ddlGroup.SelectedValue);
+                 }
+
+                 MasterObj.ClinicName = txtClinicName.Value;
+                 MasterObj.ClinicAddress = txtAddress.Value;
+                 MasterObj.ClinicLocation = txtLocation.Value;
+                 MasterObj.ClinicPhone = txtPhone.Value;
+                 MasterObj.Createdby = UA.userName;
+                 if (fluplogo.HasFile)
+                 {
+                     byte[] ImageByteArray = null;
+                     ImageByteArray = ConvertImageToByteArray(fluplogo);
+                     MasterObj.Logo = ImageByteArray;
+
+                 }
+                 MasterObj.InsertClinics();
+                 foreach (ListItem item in lstFruits.Items)
+                 {
+                     if (item.Selected)
+                     {
+                         //message += item.Text;
+                         MasterObj.RoleName = item.Text;
+                         MasterObj.createdBy = UA.userName;
+                         MasterObj.InsertRole();
+                     }
+                 }
+
+
+                 BindDropDownGroupforDoc();
+
+             }
+             catch
+             {
+
+             }
+           
 
         }
 

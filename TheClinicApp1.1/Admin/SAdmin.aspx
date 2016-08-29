@@ -2,6 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="../js/jquery-1.9.1.min.js"></script>
     <script src="../js/JavaScript_selectnav.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <link href="../css/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="../js/bootstrap-multiselect.js"></script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div class="main_body">   
@@ -108,6 +112,15 @@
                                      <div style="margin-bottom:1%">
                                      <label for="phone">Clinic Phone</label><input id="txtPhone" runat="server" type="text" name="name"/>
                                  </div>
+                                     <div style="margin-bottom:1%">
+                                         <label for="phone">Select Roles</label>
+                                         <asp:ListBox ID="lstFruits" runat="server" SelectionMode="Multiple">
+                                            <asp:ListItem Text="Administrator" Value="1" />
+                                             <asp:ListItem Text="Pharmacist" Value="2" />
+                                               <asp:ListItem Text="Doctor" Value="3" />
+                                                  <asp:ListItem Text="Receptionist" Value="4" />
+                                        </asp:ListBox>
+                                         </div>
                                  </div>    
                                 
                                 <div class="col-lg-3" style="margin:4% 4% 4% 4%">
@@ -128,7 +141,11 @@
          </div>
        
          <script>
-   
+             $(function () {
+                 $('[id*=lstFruits]').multiselect({
+                     includeSelectAllOption: true
+                 });
+             });
     function hello(num) {
         debugger;
         if(num==1)

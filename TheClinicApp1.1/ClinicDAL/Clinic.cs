@@ -285,7 +285,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[ViewClinic]";
 
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value =ClinicID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value =Guid.Parse(ClinicID);
 
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();

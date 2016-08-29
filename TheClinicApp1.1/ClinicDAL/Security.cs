@@ -130,6 +130,14 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
         #endregion Properties
+        
+       #region UserAuthendication default constructor
+      public UserAuthendication()
+      {
+
+      }
+     #endregion UserAuthendication default constructor
+
 
         #region User Authentication
         public UserAuthendication(String userName, String password)
@@ -166,6 +174,14 @@ namespace TheClinicApp1._1.ClinicDAL
             }
            
         }
+
+         public UserAuthendication(String UserName,String ClinicID, String CliName)
+         {
+                     isValidUser = true;
+                     userN = UserName;
+                     ClinicName = CliName;
+                     Clinic_ID = new Guid(ClinicID);
+         }
 
         #endregion  User Authentication
 
