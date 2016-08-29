@@ -389,7 +389,25 @@ var AllotedStartTimes = [];
         if (DoctorID != null && DoctorID != "") {
 
             Doctor.DoctorID = DoctorID;
-            Doctor.ScheduleOrder = parseInt( $("#tblTimes tr").length+1);
+
+            if ($("#tblTimes tr").length == 1)
+            {
+                var firstTd = $("#tblTimes tr td").text();
+
+                if (firstTd == "No scheduled time!")
+                {
+                    Doctor.ScheduleOrder = parseInt(1);
+                }
+                else
+                {
+                    Doctor.ScheduleOrder = parseInt($("#tblTimes tr").length + 1);
+                }
+            } 
+            else
+            {
+                Doctor.ScheduleOrder = parseInt($("#tblTimes tr").length + 1);
+            }
+           
 
             var ds = {};
             var table = {};
