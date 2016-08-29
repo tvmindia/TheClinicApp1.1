@@ -7,7 +7,8 @@ var tooltip;
 var DoctorID;
 var MonthName='';
 var Year = '';
-
+var AllotedEndTimes = [];
+var AllotedStartTimes = [];
 
     $(document).mouseup(function (e) {
     var container = $("#calendar");
@@ -77,7 +78,7 @@ var Year = '';
             //    cell.css("background-color", "red");
             //},
             select: function (start, end) {
-             
+                debugger;
 
                 if (DoctorID != null && DoctorID != "") {
 
@@ -93,6 +94,22 @@ var Year = '';
                     $('#calendar').fullCalendar('unselect');
 
                     GetScheduledTimesByDate();
+
+                    //$('#tblTimes tr').each(function (i, el) {
+
+                    //    debugger;
+
+                    //    var $tds = $(this).find('td'),
+                    //        content = $tds.eq(i).text()
+
+                    //    alert($(this).eq(i).text());
+
+                    //    //    product = $tds.eq(1).text(),
+                    //    //    Quantity = $tds.eq(2).text();
+                    //    // do something with productId, product, Quantity
+                    //});
+
+
                 }
 
 
@@ -351,8 +368,10 @@ var Year = '';
     var H = +TimeIn24hrFormat.substr(0, hourEnd);
     var h = H % 12 || 12;
     var ampm = H < 12 ? "AM" : "PM";
+    //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+    TimeIn12hrFormat = moment(Time, ["h:mm A"]).format("hh:mm") + ampm;
 
-    TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+    
 
     return TimeIn12hrFormat;
 }
@@ -370,6 +389,25 @@ var Year = '';
         if (DoctorID != null && DoctorID != "") {
 
             Doctor.DoctorID = DoctorID;
+
+            if ($("#tblTimes tr").length == 1)
+            {
+                var firstTd = $("#tblTimes tr td").text();
+
+                if (firstTd == "No scheduled time!")
+                {
+                    Doctor.ScheduleOrder = parseInt(1);
+                }
+                else
+                {
+                    Doctor.ScheduleOrder = parseInt($("#tblTimes tr").length + 1);
+                }
+            } 
+            else
+            {
+                Doctor.ScheduleOrder = parseInt($("#tblTimes tr").length + 1);
+            }
+           
 
             var ds = {};
             var table = {};
@@ -394,7 +432,6 @@ var Year = '';
         return Time;
         //return strttime;
     }
-
 
     function GetScheduledTimesByDate(Date)
     {
@@ -579,6 +616,8 @@ var Year = '';
             if (Records.IsAvailable == "True")
             {
                 var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" onclick="RemoveTime(\'' + ScheduleID + '\')"/><img id="imgUpdate"  height="18" align="right" src="../images/Editicon1.png" title="Change" onclick="BindScheduleOnEditClick(\'' + ScheduleID + '\')" /></td></tr>';
+                AllotedEndTimes.push(Records.Endtime);
+                AllotedStartTimes.push(Records.Starttime);
             }
             else
             {
@@ -798,6 +837,9 @@ var Year = '';
        
         if (document.getElementById('hdnScheduleID').value != null && document.getElementById('hdnScheduleID').value != "") {
     
+            //------------ * UPDATE CASE * ----------------//
+
+
             var JsonUpdatedSchedule = {};
 
             var Doctor = new Object();
@@ -824,15 +866,95 @@ var Year = '';
 
                 if (document.getElementById('txtAppointmentDate').value.trim() != "" && document.getElementById('txtMaxAppoinments').value.trim() != "" && document.getElementById('txtStartTime').value.trim() != "" && document.getElementById('txtEndTime').value.trim() != "") {
     
-                    var Doctor = new Object();
-                    Doctor.DoctorID = DoctorID;
-                    Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
-                    Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
-                    Doctor.IsAvailable = true;
-                    Doctor.Starttime = document.getElementById('txtStartTime').value;
-                    Doctor.Endtime = document.getElementById('txtEndTime').value;
+                    //------------ * INSERT CASE * ----------------//
+                    debugger;
+                    var Isalloted = false;
 
-                    JsonNewSchedule = AddDrSchedule(Doctor);
+                    var StartimeInput = document.getElementById('txtStartTime').value;
+                    var endtimeInput = document.getElementById('txtEndTime').value;
+
+                    var InputStartTimeIn24hrFormat = moment(StartimeInput, ["h:mm A"]).format("HH:mm"); //INPUT start time in 24hr format
+                    var InputEndTimeIn24hrFormat = moment(endtimeInput, ["h:mm A"]).format("HH:mm");
+
+                    for (var i in AllotedEndTimes)
+                    {
+
+                        //var AlreadyAllotedEndTime = AllotedEndTimes[i].replace(/ /g, '');
+                        //var AlreadyAllotedStartTime = AllotedStartTimes[i].replace(/ /g, '');
+
+                        var AlreadyAllotedEndTime = moment(AllotedEndTimes[i], ["h:mm A"]).format("HH:mm");
+                        var AlreadyAllotedStartTime = moment(AllotedStartTimes[i], ["h:mm A"]).format("HH:mm");
+                     
+
+                        if (InputStartTimeIn24hrFormat >= AllotedEndTimes)
+                        {
+
+                            if (InputEndTimeIn24hrFormat > InputStartTimeIn24hrFormat)
+                            {
+                                Isalloted = false;
+                            }
+                            else
+                            {
+                                Isalloted = true;
+                                alert("Please enter a valid time");
+                                break;
+                            }
+
+                        }
+
+                        else
+                        {
+                            if (InputStartTimeIn24hrFormat <= AllotedEndTimes)
+                            {
+                                if ( (InputStartTimeIn24hrFormat < AlreadyAllotedStartTime) && (InputEndTimeIn24hrFormat <= AlreadyAllotedStartTime) )
+                                {
+                                    Isalloted = false;
+                                }
+
+                                else {
+                                    Isalloted = true;
+                                    alert("Sorry,This time has been already alloted.");
+                                    break;
+                                }
+
+                                if (InputStartTimeIn24hrFormat < InputEndTimeIn24hrFormat)
+                                {
+                                    Isalloted = false;
+                                }
+                                else
+                                {
+                                    Isalloted = true;
+                                    alert("Please enter a valid time");
+                                    break;
+                                }
+
+
+                            }
+
+                            else {
+                                Isalloted = true;
+                                alert("Sorry,This time has been already alloted.");
+                                break;
+                            }
+                        }
+
+                    }
+
+                    if (Isalloted == false  )
+                    {
+
+                        var Doctor = new Object();
+                        Doctor.DoctorID = DoctorID;
+                        Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
+                        Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
+                        Doctor.IsAvailable = true;
+                        Doctor.Starttime = document.getElementById('txtStartTime').value;
+                        Doctor.Endtime = document.getElementById('txtEndTime').value;
+
+                        JsonNewSchedule = AddDrSchedule(Doctor);
+
+
+                    }
 
                 }
 
@@ -976,6 +1098,11 @@ var Year = '';
         JsonCancellAll = CancelAllSchedulesByDate(Doctor);
         if (JsonCancellAll != undefined)
         {
+            if (JsonCancellAll.status == "0")
+            {
+                alert(" Sorry, Already scheduled an appointment!")
+            }
+
             if (JsonCancellAll.status == "1") {
 
                 var jsonDeatilsByDate = {};

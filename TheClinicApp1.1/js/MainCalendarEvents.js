@@ -101,11 +101,20 @@ $(document).ready(function () {
                 $("#hdfScheduleID").val(ScheduleID[0].id);
                 var names = GetAllPatientList(ScheduleID[0].id)
                 for (index = 0; index < names.length; ++index) {
+                    var hours = names[index].allottedTime.split('.')[0];
+                    var minute = names[index].allottedTime.split('.')[1];
+                    if (minute == undefined||minute=="")
+                    {
+                        minute = names[index].allottedTime.split(':')[1];
+                    }
+                    var ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12 || 12;
+                    var time = hours + '.' + minute + ampm;
                     if (names[index].isAvailable == "3") {
                         title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
                     }
                     else {
-                        title = title + '<tr><td><label>' + names[index].title + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+                        title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + ',' + ScheduleID[0].id + '\')"/></td></tr>';
                     }
                     var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
                     //var newlabel = document.createElement("Label");
@@ -270,7 +279,7 @@ $(document).ready(function () {
 function GetAllottedTime(docId, eventStartDate, id) {
     debugger;
     var names = GetAllPatientList(id);
-    for (var j = 0; j < names.length; ++j)
+    for (var j = 0; j < names.length; j++)
     {
         if(names[j].isAvailable=="3")
         {
@@ -384,7 +393,7 @@ function GetAllNames(id) {
     table = JSON.parse(ds.d);
     return table;
 }
-function RemoveFromList(AppointmentID) {
+function RemoveFromList(AppointmentID,ScheduleID) {
 
   
     var Appointments = new Object();
@@ -401,7 +410,7 @@ function RemoveFromList(AppointmentID) {
     ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
     table = JSON.parse(ds.d);
     return table;
-
+    GetAllPatientList(ScheduleID);
     //GetScheduledTimesByDate();
     //BindScheduledDates();
 
@@ -489,6 +498,7 @@ function GetJSonDataForCalender(data, page) {
                 editable: true,
                 events: json//data.d
             });
+
             //$("div[id=loading]").hide();
             //$("div[id=fullcal]").show();
 
