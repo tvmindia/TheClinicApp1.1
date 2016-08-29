@@ -408,7 +408,7 @@ namespace TheClinicApp1._1.Appointment
                             parentRow.Add(childRow);
                         }
                     }
-                    return jsSerializer.Serialize(events);
+                    return jsSerializer.Serialize(parentRow);
                 }
             }
             return jsSerializer.Serialize("");

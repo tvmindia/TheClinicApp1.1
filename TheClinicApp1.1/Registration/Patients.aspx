@@ -66,6 +66,7 @@
                     font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
                     font-size: 16px;
                 }
+            
         </style>
         <!-- Script Files -->
         <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -133,7 +134,6 @@
         <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
         <script type="text/javascript">
             $(document).ready( function (){
-               
                 var ac=null;
                 ac = <%=listFilter %>;
 
@@ -198,7 +198,7 @@
  //-----------------------------------------------------------------------------------script validation Author: Thomson Kattingal-----------------------------------//       
             function validate()
             {
-                debugger;
+             
                 var ictrl;
                 var check=0;
                 var regex = /^[a-zA-Z0-9,.;:"'@#$%*+! ]{0,255}$/;
@@ -327,7 +327,6 @@
                 var table = {};
                 var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
                 ds = getJsonData(data, "../Appointment/Appointment.aspx/GetPatientAppointmentDetailsByAppointmentID");
-                
                 table = JSON.parse(ds.d);
                 return table;
             }
@@ -456,7 +455,7 @@
 
 
 
-            function BindControlsWithPatientAppointmentDetails(Records) 
+            function BindControlsWithPatientAppointmentDetails(Records) //KK
             {
                 $.each(Records, function (index, Records) {
                    
@@ -466,7 +465,7 @@
                     $("#<%=txtMobile.ClientID %>").val(Records.Mobile);
                    
                  
-                    $("#<%=HiddenField1.ClientID %>").val(Records.AppointmentID);
+                    $("#<%=hdfAppointmentID.ClientID %>").val(Records.AppointmentID);
            
                 });
 
@@ -715,7 +714,7 @@
             //------------------------------- * Today Appointment Cancel Click * -------------------------------//
             
             $(function () {
-                $("[id*=dtgTodaysAppointment] td:eq(1)").click(function () {
+                $("[id*=dtgTodaysAppointment] td:eq(2)").click(function () {
                   
                        if ($(this).text() == "") {
                         var CancelConfirmation = ConfirmDelete(true);
@@ -748,9 +747,7 @@
             };
 
             function GetTodayPatients(pageIndex) {
-
                 $.ajax({
-
                     type: "POST",
                     url: "../Registration/Patients.aspx/ViewAndFilterTodayPatients",
                     data: '{searchTerm: "' + SearchTermInTodayList() + '", pageIndex: ' + pageIndex + '}',
@@ -771,7 +768,6 @@
             function GetTodayPatientAppointments(pageIndex)
             {
                 $.ajax({
-
                     type: "POST",
                     url: "../Registration/Patients.aspx/ViewAndFilterTodayPatientAppointments",
                     data: '{searchTerm: "' + SearchTermInTodayList() + '", pageIndex: ' + pageIndex + '}',
@@ -1006,18 +1002,30 @@
                 }
                 $("[id*=dtgTodaysAppointment] tr").not($("[id*=dtgTodaysAppointment] tr:first-child")).remove();
                 if (AllAppointments.length > 0) {
-                    
+                   // var tempdd='<select name="hall" id="hall" value="3"><option>Present</option> <option>Cancel</option></select>';
                     $.each(AllAppointments, function () {
-                        debugger;
-                        $("td", TodayAppoRow).eq(0).html($('<img />')
-                       .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
-                        $("td", TodayAppoRow).eq(1).html($('<img />')
-                         .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+                       
+                       
+                       
+                        //$("td", TodayAppoRow).eq(1).html($('<img />')
+                        // .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+
                         $("td", TodayAppoRow).eq(2).html($(this).find("Name").text());
                         $("td", TodayAppoRow).eq(3).html($(this).find("Location").text());
                         $("td", TodayAppoRow).eq(4).html($(this).find("Mobile").text());
                         $("td", TodayAppoRow).eq(5).html($(this).find("AllottingTime").text());
                         $("td", TodayAppoRow).eq(6).html($(this).find("AppointmentID").text());
+                        if($(this).find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
+                        {
+                            $("td", TodayAppoRow).eq(0).html($('<img />')
+                       .attr('src', "" + '../images/NonregisteredUSer.png' + "")).addClass('CursorShow');
+                        }
+                        else
+                        {
+                            $("td", TodayAppoRow).eq(0).html($('<img />')
+                       .attr('src', "" + '../images/Nonregistere.png' + "")).addClass('CursorShow');
+                        }
+                        $("td", TodayAppoRow).eq(7).html($(this).find("PatientID").text());
                         $("[id*=dtgTodaysAppointment]").append(TodayAppoRow);
                         TodayAppoRow = $("[id*=dtgTodaysAppointment] tr:last-child").clone(true);
                     });
@@ -1055,6 +1063,11 @@
                 AppointmentIDColumn.css("display", "none");
                 $("[id*=dtgTodaysAppointment] tr").each(function () {
                     $(this).find("td").eq(AppointmentIDColumn.index()).css("display", "none");
+                });
+                var PatientIDColumn = $("[id*=dtgTodaysAppointment] th:contains('PatientID')");
+                PatientIDColumn.css("display", "none");
+                $("[id*=dtgTodaysAppointment] tr").each(function () {
+                    $(this).find("td").eq(PatientIDColumn.index()).css("display", "none");
                 });
               
             };
@@ -1358,6 +1371,8 @@
                         </div>
                     </div>
                     <asp:HiddenField ID="HiddenField1" runat="server" />
+                  
+
                 </div>
             </div>
         </div>
@@ -1386,21 +1401,25 @@
                                 <asp:GridView ID="dtgTodaysAppointment" runat="server" AutoGenerateColumns="False">
 
                                     <Columns>
+                                       
                                         <asp:TemplateField>
                                             <ItemTemplate>
-                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnUpdate1" runat="server" ImageUrl="~/Images/Editicon1.png" />
+                                                <asp:ImageButton  ID="ImgBtnUpdate1" Style="border: none!important" runat="server" ImageUrl="../images/NonregisteredUSer.png" HeaderText="Details" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
                                             <ItemTemplate>
-                                                <asp:ImageButton Style="border: none!important" ID="ImgBtnDelete1" runat="server" ImageUrl="~/Images/Deleteicon1.png" />
+                                               <%-- <asp:ImageButton  ID="ImgBtnDelete1" Style="border: none!important" runat="server" ImageUrl="~/Images/Deleteicon1.png" HeaderText="Action" />--%>
+                                               <%-- <asp:DropDownList ID="iddropdownAction" runat="server"></asp:DropDownList>--%>
+                                                <select name="Action"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Cancel</option></select>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField DataField="Name" HeaderText="Patient Name"></asp:BoundField>
+                                        <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>
                                         <asp:BoundField DataField="Location" HeaderText="Location"></asp:BoundField>
                                         <asp:BoundField DataField="Mobile" HeaderText="Mobile No"></asp:BoundField>
-                                        <asp:BoundField DataField="AllottingTime" HeaderText="Alloted Time"></asp:BoundField>
-                                          <asp:BoundField DataField="AppointmentID" HeaderText="AppointmentID"></asp:BoundField>
+                                        <asp:BoundField DataField="AllottingTime" HeaderText="Time"></asp:BoundField>
+                                        <asp:BoundField DataField="AppointmentID" HeaderText="AppointmentID"></asp:BoundField>
+                                        <asp:BoundField DataField="PatientID" HeaderText="PatientID"></asp:BoundField>
                                     </Columns>
                                 </asp:GridView>
                             </div>
@@ -1409,7 +1428,7 @@
                             </div>
                         </div>
                     </div>
-                    <asp:HiddenField ID="HiddenField2" runat="server" />
+                    <asp:HiddenField ID="hdfAppointmentID" runat="server" />
                 </div>
             </div>
         </div>

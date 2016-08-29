@@ -373,12 +373,12 @@ namespace TheClinicApp1._1.Registration {
         protected global::System.Web.UI.WebControls.GridView dtgTodaysAppointment;
         
         /// <summary>
-        /// HiddenField2 control.
+        /// hdfAppointmentID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenField2;
+        protected global::System.Web.UI.WebControls.HiddenField hdfAppointmentID;
     }
 }

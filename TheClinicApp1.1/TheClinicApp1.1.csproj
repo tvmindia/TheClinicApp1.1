@@ -236,6 +236,7 @@
     <Content Include="images\newTick copy.png" />
     <Content Include="images\next.gif" />
     <Content Include="images\Next.png" />
+    <Content Include="images\NonregisteredUSer.png" />
     <Content Include="images\OutOfStock%281%29.png" />
     <Content Include="images\package_icon13.png" />
     <Content Include="images\paper.png" />

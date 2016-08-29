@@ -53,12 +53,9 @@ namespace TheClinicApp1._1.Registration
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-
             Patient PatientObj = new Patient();
             PatientObj.ClinicID = UA.ClinicID;
-
             var xml = PatientObj.ViewAndFilterAllPatients(searchTerm, pageIndex, PageSize);
-
             return xml;
         }
 
@@ -230,7 +227,6 @@ namespace TheClinicApp1._1.Registration
             AppointmentObj.ClinicID = UA.ClinicID.ToString();
            
             var xml = AppointmentObj.ViewAndFilterTodayAppointments(searchTerm, pageIndex, PageSize);
-
             return xml;
         }
 
@@ -243,14 +239,13 @@ namespace TheClinicApp1._1.Registration
         private void BindTodayAppointmentDummyRow()
         {
             DataTable dummy = new DataTable();
-
             dummy.Columns.Add("Name");
             dummy.Columns.Add("Location");
             dummy.Columns.Add("Mobile");
             dummy.Columns.Add("AllottingTime");
             dummy.Columns.Add("AppointmentID");
+            dummy.Columns.Add("PatientID");
             dummy.Rows.Add();
-
             dtgTodaysAppointment.DataSource = dummy;
             dtgTodaysAppointment.DataBind();
         }
