@@ -1098,6 +1098,11 @@ var AllotedStartTimes = [];
         JsonCancellAll = CancelAllSchedulesByDate(Doctor);
         if (JsonCancellAll != undefined)
         {
+            if (JsonCancellAll.status == "0")
+            {
+                alert(" Sorry, Already scheduled an appointment!")
+            }
+
             if (JsonCancellAll.status == "1") {
 
                 var jsonDeatilsByDate = {};
