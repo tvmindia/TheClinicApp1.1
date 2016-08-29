@@ -283,7 +283,11 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-
+        public string AppointmentDate
+        {
+            get;
+            set;
+        }
         #endregion Doctor Schedule properties
 
         #region Doctor Schedule methods
@@ -1182,6 +1186,57 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion GetAllPatientDetails
 
+        #region GetAllPatientDetailsByAppointedDate
+        public DataSet GetAllPatientDetailsByAppointedDate()
+        {
+            SqlConnection con = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (AppointmentDate == null)
+            {
+                throw new Exception("AppointmentDate is Empty!!");
+            }
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetAllPatientDetailsByAppointmentDate";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@AppointmentDate", SqlDbType.Date).Value = DateTime.Parse(AppointmentDate);
+
+                sda = new SqlDataAdapter(cmd);
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAllPatientDetailsByScheduleID";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return ds;
+
+        }
+        #endregion GetAllPatientDetailsByAppointedDate
         #endregion Doctor Methods
 
 
