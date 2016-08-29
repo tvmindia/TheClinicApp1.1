@@ -892,7 +892,7 @@ var AllotedStartTimes = [];
 
                                 else {
                                     Isalloted = true;
-                                    alert("Sorry,This time is already alloted.");
+                                    alert("Sorry,This time has been already alloted.");
                                     break;
                                 }
 
@@ -912,7 +912,7 @@ var AllotedStartTimes = [];
 
                             else {
                                 Isalloted = true;
-                                alert("Sorry,This time is already alloted.");
+                                alert("Sorry,This time has been already alloted.");
                                 break;
                             }
                         }
