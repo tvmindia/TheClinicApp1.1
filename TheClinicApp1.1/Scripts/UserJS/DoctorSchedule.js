@@ -42,11 +42,11 @@ var EndTimeOnEdit = '';
         draggable: false,
         height: 300,
         width: 500,
-        hide: { effect: "explode", duration: 1000 },
+       // hide: { effect: "explode", duration: 1000 },
         //modal: true,
         resizable: false,
         show: { effect: "blind", duration: 800 },
-        title: "New Event",
+        title: "Appoiments",
         dialogClass: 'no-close success-dialog',
         open: function (event, ui) {
             $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
@@ -91,7 +91,7 @@ var EndTimeOnEdit = '';
             defaultDate: today,
             businessHours: true, // display business hours
             lang: initialLangCode,
-            selectable: true,
+            //selectable: true,
             selectHelper: true,
             //dayRender: function (date, cell) {
             //    cell.css("background-color", "red");
@@ -734,14 +734,9 @@ var EndTimeOnEdit = '';
     var data = "{'DocObj':" +JSON.stringify(Doctor) + "}";
     ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelDoctorSchedule");
     table = JSON.parse(ds.d);
-
-    if (table.status == 0)
-    {
-        OpenModal();
-
-        //alert(" Sorry, Already scheduled an appointment!")
-    }
-    else {
+    var s = table.status;
+    debugger;
+    if (table.status == 1) {
         GetScheduledTimesByDate();
         BindScheduledDates();
 
@@ -764,6 +759,13 @@ var EndTimeOnEdit = '';
 
         // $('#calendar').fullCalendar('refetchEvents');
     }
+
+  else {
+        OpenModal();
+
+        //alert(" Sorry, Already scheduled an appointment!")
+    }
+
 }
 }
 
