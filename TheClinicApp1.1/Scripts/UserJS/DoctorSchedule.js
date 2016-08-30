@@ -1,7 +1,7 @@
 ﻿
-
-
-        var json;
+var AvailableCount = '';
+var ScheduleNo = 0;
+var json;
 var title, eventStartDate, eventEndDate;
 var tooltip;
 var DoctorID;
@@ -100,7 +100,10 @@ var EndTimeOnEdit = '';
                 debugger;
                // CustomClick();
 
-
+                $("#txtStartTime").val('');
+                $("#txtEndTime").val('');
+                $("#txtMaxAppoinments").val('');
+                
                 if (DoctorID != null && DoctorID != "") {
 
                     //background-color: #a8d9f3;
@@ -369,9 +372,6 @@ var EndTimeOnEdit = '';
         return monthNames[MonthNo];
     }
 
-
-
-
 //------------------------Animate Div---------------------------//
     function blink(selector) {
   
@@ -407,27 +407,34 @@ var EndTimeOnEdit = '';
 
         var Doctor = new Object();
 
-        if (DoctorID != null && DoctorID != "") {
+        if (DoctorID != null && DoctorID != "" ) {
 
             Doctor.DoctorID = DoctorID;
-
-            if ($("#tblTimes tr").length == 1)
-            {
-                var firstTd = $("#tblTimes tr td").text();
-
-                if (firstTd == "No scheduled time!")
-                {
-                    Doctor.ScheduleOrder = parseInt(1);
-                }
-                else
-                {
-                    Doctor.ScheduleOrder = parseInt($("#tblTimes tr").length + 1);
-                }
-            } 
-            else
-            {
-                Doctor.ScheduleOrder = parseInt($("#tblTimes tr").length + 1);
+          
+            if (AvailableCount == 0 || ScheduleNo>0) {
+                Doctor.ScheduleOrder = parseInt(ScheduleNo + 1);
             }
+            
+           
+            
+
+            //if ($("#tblTimes tr").length == 1)
+            //{
+            //    var firstTd = $("#tblTimes tr td").text();
+
+            //    if (firstTd == "No scheduled time!")
+            //    {
+            //        Doctor.ScheduleOrder = parseInt(1);
+            //    }
+            //    else
+            //    {
+            //        Doctor.ScheduleOrder = parseInt($("#tblTimes tr").length + 1);
+            //    }
+            //} 
+            //else
+            //{
+            //    Doctor.ScheduleOrder = parseInt($("#tblTimes tr").length + 1);
+            //}
            
 
             var ds = {};
@@ -626,10 +633,15 @@ var EndTimeOnEdit = '';
     $("#tblTimes tr").remove();
     AllotedEndTimes = [];
     AllotedStartTimes = [];
+    ScheduleNo = 0;
+    
+    if (Records.length == 0) {
+        AvailableCount = 0;
+    }
 
 
     $.each(Records, function (index, Records) {
-
+        debugger;
         var ScheduleID = Records.ID;
 
         if (Records.Starttime != null && Records.Endtime != null) {
@@ -642,6 +654,7 @@ var EndTimeOnEdit = '';
                 var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" onclick="RemoveTime(\'' + ScheduleID + '\')"/><img id="imgUpdate"  height="18" align="right" src="../images/Editicon1.png" title="Change" onclick="BindScheduleOnEditClick(\'' + ScheduleID + '\')" /></td></tr>';
                 AllotedEndTimes.push(Records.Endtime);
                 AllotedStartTimes.push(Records.Starttime);
+                ScheduleNo = parseInt( ScheduleNo + 1);
             }
             else
             {
@@ -876,13 +889,15 @@ var EndTimeOnEdit = '';
     function AddSchedule() {
         debugger;
         var JsonNewSchedule = {};
-       
+        var Isalloted = false;
+
+
         if (document.getElementById('hdnScheduleID').value != null && document.getElementById('hdnScheduleID').value != "")
         {
     
             //------------ * UPDATE CASE * ----------------//
 
-
+            debugger;
             var JsonUpdatedSchedule = {};
 
             var Doctor = new Object();
@@ -998,8 +1013,23 @@ var EndTimeOnEdit = '';
                     }
                     if (Isalloted == false && document.getElementById('hdnScheduleID').value != "")
                     {
+                        debugger;
+
                         //------------ * UPDATE CASE * ----------------//
 
+                        
+                      
+                        if ((StartTimeOnEdit.replace(/ /g, ''))==(moment(document.getElementById('txtStartTime').value, ["h:mm A"]).format("HH:mm")) ) {
+                            
+                            Doctor.Starttime = StartTimeOnEdit;
+                         
+                        }
+
+                        if ((EndTimeOnEdit.replace(/ /g, '')) == (moment(document.getElementById('txtEndTime').value, ["h:mm A"]).format("HH:mm"))) {
+
+                            Doctor.Endtime = EndTimeOnEdit;
+
+                        }
                         JsonUpdatedSchedule = UpadteDrSchedule(Doctor);
 
                         JsonNewSchedule = JsonUpdatedSchedule;
