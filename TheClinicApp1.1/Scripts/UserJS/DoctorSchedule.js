@@ -30,9 +30,24 @@ var AllotedStartTimes = [];
 
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
-
+    
  
-   
+    $("#myModal").dialog({
+        autoOpen: false,
+        closeOnEscape: false,
+        draggable: false,
+        height: 300,
+        width: 500,
+        hide: { effect: "explode", duration: 1000 },
+        //modal: true,
+        resizable: false,
+        show: { effect: "blind", duration: 800 },
+        title: "New Event",
+        dialogClass: 'no-close success-dialog',
+        open: function (event, ui) {
+            $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+        }
+    }).prev(".ui-dialog-titlebar").css("background", "#336699");;
 
   //  GetScheduleByDrID();
 
@@ -79,6 +94,8 @@ var AllotedStartTimes = [];
             //},
             select: function (start, end) {
                 debugger;
+               // CustomClick();
+
 
                 if (DoctorID != null && DoctorID != "") {
 
@@ -682,6 +699,9 @@ var AllotedStartTimes = [];
 
     function RemoveTime(ScheduleID) {
         debugger;
+
+        OpenModal();
+
     var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
     var Doctor = new Object();
@@ -876,38 +896,39 @@ var AllotedStartTimes = [];
                     var InputStartTimeIn24hrFormat = moment(StartimeInput, ["h:mm A"]).format("HH:mm"); //INPUT start time in 24hr format
                     var InputEndTimeIn24hrFormat = moment(endtimeInput, ["h:mm A"]).format("HH:mm");
 
-                    for (var i in AllotedEndTimes)
+                    if (InputStartTimeIn24hrFormat < InputEndTimeIn24hrFormat)
                     {
 
-                        //var AlreadyAllotedEndTime = AllotedEndTimes[i].replace(/ /g, '');
-                        //var AlreadyAllotedStartTime = AllotedStartTimes[i].replace(/ /g, '');
+                    var ItemCount = AllotedEndTimes.length;
 
-                        var AlreadyAllotedEndTime = moment(AllotedEndTimes[i], ["h:mm A"]).format("HH:mm");
-                        var AlreadyAllotedStartTime = moment(AllotedStartTimes[i], ["h:mm A"]).format("HH:mm");
-                     
-
-                        if (InputStartTimeIn24hrFormat >= AllotedEndTimes)
+                    if (ItemCount > 0)  //---* if no alloted schedule, no checking is needed *---//
+                    {
+                        for (var i in AllotedEndTimes)
                         {
+                            var AlreadyAllotedEndTime = moment(AllotedEndTimes[i], ["h:mm A"]).format("HH:mm");
+                            var AlreadyAllotedStartTime = moment(AllotedStartTimes[i], ["h:mm A"]).format("HH:mm");
+                     
+                            var FirstItem = moment(AllotedStartTimes[0], ["h:mm A"]).format("HH:mm");
 
-                            if (InputEndTimeIn24hrFormat > InputStartTimeIn24hrFormat)
+                            //-----* Item Has to be added to the FIRST position *-----//
+                            if (InputEndTimeIn24hrFormat <= FirstItem )
                             {
-                                Isalloted = false;
-                            }
-                            else
-                            {
-                                Isalloted = true;
-                                alert("Please enter a valid time");
+                                Isalloted == false;
                                 break;
                             }
 
-                        }
-
-                        else
-                        {
-                            if (InputStartTimeIn24hrFormat <= AllotedEndTimes)
+                            //-----* Item Has to be added to the LAST position *-----//
+                            if (InputStartTimeIn24hrFormat >= AlreadyAllotedEndTime)
                             {
-                                if ( (InputStartTimeIn24hrFormat < AlreadyAllotedStartTime) && (InputEndTimeIn24hrFormat <= AlreadyAllotedStartTime) )
-                                {
+                                Isalloted == false;
+                            }
+                            else
+                            {
+                                //-----* Item Has to be added IN BETWEEN *-----//
+
+                                var ItemJustAbove = moment(AllotedEndTimes[i-1], ["h:mm A"]).format("HH:mm");
+
+                                if ((InputEndTimeIn24hrFormat <= AlreadyAllotedStartTime) && (InputStartTimeIn24hrFormat >= ItemJustAbove)) {
                                     Isalloted = false;
                                 }
 
@@ -917,28 +938,18 @@ var AllotedStartTimes = [];
                                     break;
                                 }
 
-                                if (InputStartTimeIn24hrFormat < InputEndTimeIn24hrFormat)
-                                {
-                                    Isalloted = false;
-                                }
-                                else
-                                {
-                                    Isalloted = true;
-                                    alert("Please enter a valid time");
-                                    break;
-                                }
-
-
-                            }
-
-                            else {
-                                Isalloted = true;
-                                alert("Sorry,This time has been already alloted.");
-                                break;
                             }
                         }
-
                     }
+                    }
+
+                    else
+                    {
+                        Isalloted = true;
+                        alert("Please enter a valid time");
+                       
+                    }
+
 
                     if (Isalloted == false  )
                     {

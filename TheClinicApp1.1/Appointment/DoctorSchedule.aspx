@@ -440,7 +440,10 @@
             return defultTime;
         }
 
-
+        function OpenModal() {
+            debugger;
+            $("#myModal").dialog('open');
+        }
 
     </script>
 
@@ -532,7 +535,46 @@
 
                                             <div id='calendar'></div>
                                             <div class="loader" style="float: left"></div>
+                                            <div id="myModal" class="modal">
 
+  <!-- Modal content -->
+  <div class="modal-content">
+   
+    <div class="modal-body">
+    <table><tr>
+        <td> <label for="title">Title:</label></td>
+        <td><input type="text" id="txtTitle" /></td>
+           </tr>
+        <tr>
+            <td> <label for="endDate">Date:</label></td>
+            <td> <input type="text" id="txtEndDate" /></td>
+            <%--<td><label for="mandatoryField" id="endDateMandatory" style="color:red;">*yyyy-mm-dd</label></td>--%>
+        </tr>
+        <tr>
+            <td><label for="startTime">Start Time:</label></td>
+            
+        </tr>
+        <tr>
+            <td><label for="endTime">End Time:</label></td>
+            
+        </tr>
+    </table>
+         
+    </div>
+      <br />
+    <div class="modal-footer">
+       <table><tr>
+           <td>
+               <button class="btnOkay" id="btnOk">OK</button>
+           </td><td> <button class="btnCncl" id="btnCancel">Cancel</button></td>
+
+              </tr></table>
+  
+       
+    </div>
+  </div>
+
+</div>
                                             <br />
 
 
