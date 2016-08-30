@@ -10,6 +10,10 @@ var Year = '';
 var AllotedEndTimes = [];
 var AllotedStartTimes = [];
 
+var StartTimeOnEdit = '';
+var EndTimeOnEdit = '';
+
+
     $(document).mouseup(function (e) {
     var container = $("#calendar");
 
@@ -620,7 +624,10 @@ var AllotedStartTimes = [];
     function BindTimes(Records) {
 
     $("#tblTimes tr").remove();
-  
+    AllotedEndTimes = [];
+    AllotedStartTimes = [];
+
+
     $.each(Records, function (index, Records) {
 
         var ScheduleID = Records.ID;
@@ -678,6 +685,9 @@ var AllotedStartTimes = [];
 
             strttime = ConvertTimeFormatFrom24hrTo12hr(Records.Starttime);
             endtime = ConvertTimeFormatFrom24hrTo12hr(Records.Endtime);
+
+            StartTimeOnEdit = Records.Starttime;
+            EndTimeOnEdit = Records.Endtime;
 
             $("#txtStartTime").val(strttime);
             $("#txtEndTime").val(endtime);
@@ -851,11 +861,24 @@ var AllotedStartTimes = [];
 
     }
 
+    Array.prototype.remove = function () {
+        var what, a = arguments, L = a.length, ax;
+        while (L && this.length) {
+            what = a[--L];
+            while ((ax = this.indexOf(what)) !== -1) {
+                this.splice(ax, 1);
+            }
+        }
+        return this;
+    };
+
+
     function AddSchedule() {
         debugger;
         var JsonNewSchedule = {};
        
-        if (document.getElementById('hdnScheduleID').value != null && document.getElementById('hdnScheduleID').value != "") {
+        if (document.getElementById('hdnScheduleID').value != null && document.getElementById('hdnScheduleID').value != "")
+        {
     
             //------------ * UPDATE CASE * ----------------//
 
@@ -868,9 +891,15 @@ var AllotedStartTimes = [];
             Doctor.Starttime = document.getElementById('txtStartTime').value ;
             Doctor.Endtime = document.getElementById('txtEndTime').value;
 
+
+            AllotedStartTimes.remove(StartTimeOnEdit);
+            AllotedEndTimes.remove(EndTimeOnEdit);
+
+            
+             
              }
 
-        else {
+        //else {
   
         if (DoctorID == "" || DoctorID == null) {
             alert("Please select a doctor");
@@ -880,64 +909,68 @@ var AllotedStartTimes = [];
     
             if (isNaN(document.getElementById('txtMaxAppoinments').value) == false) {
     
-
-                if (document.getElementById('txtAppointmentDate').value.trim() != "" && document.getElementById('txtMaxAppoinments').value.trim() != "" && document.getElementById('txtStartTime').value.trim() != "" && document.getElementById('txtEndTime').value.trim() != "") {
-    
-                    //------------ * INSERT CASE * ----------------//
-                    debugger;
-                    var Isalloted = false;
-
+               
+                if (document.getElementById('txtAppointmentDate').value.trim() != "" && document.getElementById('txtMaxAppoinments').value.trim() != "" && document.getElementById('txtStartTime').value.trim() != "" && document.getElementById('txtEndTime').value.trim() != "")
+                {
+                    
+                    
                     var StartimeInput = document.getElementById('txtStartTime').value;
                     var endtimeInput = document.getElementById('txtEndTime').value;
 
                     var InputStartTimeIn24hrFormat = moment(StartimeInput, ["h:mm A"]).format("HH:mm"); //INPUT start time in 24hr format
                     var InputEndTimeIn24hrFormat = moment(endtimeInput, ["h:mm A"]).format("HH:mm");
 
+                    
+
                     if (InputStartTimeIn24hrFormat < InputEndTimeIn24hrFormat)
                     {
 
-                    var ItemCount = AllotedEndTimes.length;
+                        var ItemCount = AllotedEndTimes.length;
 
-                    if (ItemCount > 0)  //---* if no alloted schedule, no checking is needed *---//
-                    {
-                        for (var i in AllotedEndTimes)
+                        if (ItemCount > 0)  //---* if no alloted schedule, no checking is needed *---//
                         {
-                            var AlreadyAllotedEndTime = moment(AllotedEndTimes[i], ["h:mm A"]).format("HH:mm");
-                            var AlreadyAllotedStartTime = moment(AllotedStartTimes[i], ["h:mm A"]).format("HH:mm");
+                            for (var i in AllotedEndTimes)
+                            {
+                                var AlreadyAllotedEndTime = moment(AllotedEndTimes[i], ["h:mm A"]).format("HH:mm");
+                                var AlreadyAllotedStartTime = moment(AllotedStartTimes[i], ["h:mm A"]).format("HH:mm");
                      
-                            var FirstItem = moment(AllotedStartTimes[0], ["h:mm A"]).format("HH:mm");
+                                var FirstItem = moment(AllotedStartTimes[0], ["h:mm A"]).format("HH:mm");
 
-                            //-----* Item Has to be added to the FIRST position *-----//
-                            if (InputEndTimeIn24hrFormat <= FirstItem )
-                            {
-                                Isalloted == false;
-                                break;
-                            }
-
-                            //-----* Item Has to be added to the LAST position *-----//
-                            if (InputStartTimeIn24hrFormat >= AlreadyAllotedEndTime)
-                            {
-                                Isalloted == false;
-                            }
-                            else
-                            {
-                                //-----* Item Has to be added IN BETWEEN *-----//
-
-                                var ItemJustAbove = moment(AllotedEndTimes[i-1], ["h:mm A"]).format("HH:mm");
-
-                                if ((InputEndTimeIn24hrFormat <= AlreadyAllotedStartTime) && (InputStartTimeIn24hrFormat >= ItemJustAbove)) {
-                                    Isalloted = false;
-                                }
-
-                                else {
-                                    Isalloted = true;
-                                    alert("Sorry,This time has been already alloted.");
+                                //-----* Item Has to be added to the FIRST position *-----//
+                                if (InputEndTimeIn24hrFormat <= FirstItem )
+                                {
+                                    Isalloted == false;
                                     break;
                                 }
 
+                                else {
+                                      
+
+                                //-----* Item Has to be added to the LAST position *-----//
+                                if (InputStartTimeIn24hrFormat >= AlreadyAllotedEndTime)
+                                {
+                                    Isalloted == false;
+                                }
+                                else
+                                {
+                                    //-----* Item Has to be added IN BETWEEN *-----//
+
+                                    var ItemJustAbove = moment(AllotedEndTimes[i-1], ["h:mm A"]).format("HH:mm");
+
+                                    if ((InputEndTimeIn24hrFormat <= AlreadyAllotedStartTime) && (InputStartTimeIn24hrFormat >= ItemJustAbove)) {
+                                        Isalloted = false;
+                                    }
+
+                                    else {
+                                        Isalloted = true;
+                                        alert("Sorry,This time has been already alloted.");
+                                        break;
+                                    }
+
+                                }
+                                }
                             }
                         }
-                    }
                     }
 
                     else
@@ -946,11 +979,11 @@ var AllotedStartTimes = [];
                         alert("Please enter a valid time");
                        
                     }
-
+                    //}
 
                     if (Isalloted == false &&  document.getElementById('hdnScheduleID').value == "" )
                     {
-
+                        //------------ * INSERT CASE * ----------------//
                         var Doctor = new Object();
                         Doctor.DoctorID = DoctorID;
                         Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
@@ -965,14 +998,17 @@ var AllotedStartTimes = [];
                     }
                     if (Isalloted == false && document.getElementById('hdnScheduleID').value != "")
                     {
+                        //------------ * UPDATE CASE * ----------------//
+
                         JsonUpdatedSchedule = UpadteDrSchedule(Doctor);
 
                         JsonNewSchedule = JsonUpdatedSchedule;
 
+                        document.getElementById('hdnScheduleID').value = "";
                     }
 
 
-
+                
 
                 }
 
@@ -987,7 +1023,7 @@ var AllotedStartTimes = [];
             }
 
         }
-        }
+       
 
         if (JsonNewSchedule != undefined) {
             //  alert(JsonNewSchedule.status);
