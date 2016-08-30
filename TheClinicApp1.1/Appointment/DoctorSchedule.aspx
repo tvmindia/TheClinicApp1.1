@@ -241,9 +241,8 @@
             z-index: 3;
         }
 
-        #imgCancelAll
-        {
-             cursor: pointer;
+        #imgCancelAll {
+            cursor: pointer;
         }
 
 
@@ -300,11 +299,11 @@
         }
 
 
-         #tblColorCodes, #tblColorCodes tr, #tblColorCodes th, #tblColorCodes td {
+        #tblColorCodes, #tblColorCodes tr, #tblColorCodes th, #tblColorCodes td {
             border: none;
         }
 
-        
+
 
         /*.ui-state-highlight {
     border:2px  solid #06adfc !important;
@@ -318,19 +317,19 @@
     border: medium none !important;
     text-align: right;
 }*/
-          .lblColor {
-             font-size: smaller;
-             line-height: 1;
-         }
+        .lblColor {
+            font-size: smaller;
+            line-height: 1;
+        }
+
         .foo {
             float: left;
             width: 10px;
             height: 10px;
             /*border: 1px solid rgba(0, 0, 0, .2);*/
-            border:none;
-          
+            border: none;
         }
-       
+
         .Count {
             background: rgb(222, 237, 247);
         }
@@ -345,7 +344,6 @@
 
         .Legend {
             font-size: smaller;
-            
         }
 
 
@@ -382,7 +380,7 @@
             if (DoctorID != "" && DoctorID != null) {
                 GetScheduleByDrID(DoctorID);
 
-               
+
 
                 debugger;
 
@@ -392,7 +390,7 @@
 
             else {
                 $("#tblDates tr").remove();
-              
+
                 var html = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
                 $("#tblDates").append(html);
 
@@ -400,14 +398,12 @@
 
         });
 
-        function SetDefaultTime(inputID)
-        {
+        function SetDefaultTime(inputID) {
             var time = GetRegularScheduleByDrID();
 
             var timeParts = time.split(',');
 
-            if (inputID == 'txtStartTime')
-            {
+            if (inputID == 'txtStartTime') {
                 time = timeParts[0];
             }
 
@@ -537,44 +533,44 @@
                                             <div class="loader" style="float: left"></div>
                                             <div id="myModal" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-   
-    <div class="modal-body">
-    <table><tr>
-        <td> <label for="title">Title:</label></td>
-        <td><input type="text" id="txtTitle" /></td>
-           </tr>
-        <tr>
-            <td> <label for="endDate">Date:</label></td>
-            <td> <input type="text" id="txtEndDate" /></td>
-            <%--<td><label for="mandatoryField" id="endDateMandatory" style="color:red;">*yyyy-mm-dd</label></td>--%>
-        </tr>
-        <tr>
-            <td><label for="startTime">Start Time:</label></td>
-            
-        </tr>
-        <tr>
-            <td><label for="endTime">End Time:</label></td>
-            
-        </tr>
-    </table>
-         
-    </div>
-      <br />
-    <div class="modal-footer">
-       <table><tr>
-           <td>
-               <button class="btnOkay" id="btnOk">OK</button>
-           </td><td> <button class="btnCncl" id="btnCancel">Cancel</button></td>
+                                                <!-- Modal content -->
+                                                <div class="modal-content">
 
-              </tr></table>
-  
-       
-    </div>
-  </div>
+                                                    <div class="modal-body">
+                                                        <table id="tblPatients">
 
-</div>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th ></th>
+                                                                    <th ></th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody id="PatientRows">
+                                                            </tbody>
+
+
+                                                        </table>
+
+                                                    </div>
+                                                    <br />
+                                                    <div class="modal-footer">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <button class="btnOkay" id="btnOk">OK</button>
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btnCncl" id="btnCancel">Cancel</button></td>
+
+                                                            </tr>
+                                                        </table>
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                             <br />
 
 

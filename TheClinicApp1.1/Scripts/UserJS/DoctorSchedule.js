@@ -700,8 +700,6 @@ var AllotedStartTimes = [];
     function RemoveTime(ScheduleID) {
         debugger;
 
-        OpenModal();
-
     var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
     var Doctor = new Object();
@@ -716,7 +714,9 @@ var AllotedStartTimes = [];
 
     if (table.status == 0)
     {
-        alert(" Sorry, Already scheduled an appointment!")
+        OpenModal();
+
+        //alert(" Sorry, Already scheduled an appointment!")
     }
     else {
         GetScheduledTimesByDate();
@@ -852,7 +852,7 @@ var AllotedStartTimes = [];
     }
 
     function AddSchedule() {
-       
+        debugger;
         var JsonNewSchedule = {};
        
         if (document.getElementById('hdnScheduleID').value != null && document.getElementById('hdnScheduleID').value != "") {
@@ -868,9 +868,6 @@ var AllotedStartTimes = [];
             Doctor.Starttime = document.getElementById('txtStartTime').value ;
             Doctor.Endtime = document.getElementById('txtEndTime').value;
 
-            JsonUpdatedSchedule = UpadteDrSchedule(Doctor);
-           
-            JsonNewSchedule = JsonUpdatedSchedule;
              }
 
         else {
@@ -951,7 +948,7 @@ var AllotedStartTimes = [];
                     }
 
 
-                    if (Isalloted == false  )
+                    if (Isalloted == false &&  document.getElementById('hdnScheduleID').value == "" )
                     {
 
                         var Doctor = new Object();
@@ -966,6 +963,16 @@ var AllotedStartTimes = [];
 
 
                     }
+                    if (Isalloted == false && document.getElementById('hdnScheduleID').value != "")
+                    {
+                        JsonUpdatedSchedule = UpadteDrSchedule(Doctor);
+
+                        JsonNewSchedule = JsonUpdatedSchedule;
+
+                    }
+
+
+
 
                 }
 
