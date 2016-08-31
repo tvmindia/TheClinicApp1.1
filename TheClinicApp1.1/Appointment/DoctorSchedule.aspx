@@ -346,7 +346,10 @@
             font-size: smaller;
         }
 
-
+        .ui-dialog-title
+        {
+            color:white!important;
+        }
         /*.fc-content
 {
     display:none;
@@ -542,18 +545,16 @@
                                                 <div class="modal-content">
 
                                                     <div class="modal-body">
-                                                        <table id="tblPatients">
+                                                        <table id="tblPatients" style="width:100%!important;" >
 
-                                                            <thead>
+                                                        <%--    <thead>
                                                                 <tr>
                                                                     <th ></th>
                                                                     <th ></th>
                                                                 </tr>
-                                                            </thead>
+                                                            </thead>--%>
 
-                                                            <tbody id="PatientRows">
-                                                            </tbody>
-
+                                                          
 
                                                         </table>
 

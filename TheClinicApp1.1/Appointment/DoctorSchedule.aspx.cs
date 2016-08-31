@@ -240,7 +240,7 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion GetDoctorScheduleDetailsByDoctorID
 
-        #region GetDoctorScheduleDetailsByDoctorID (All :Including cancelled events)
+        #region GetRegularScheduleOFDoctor
 
         [System.Web.Services.WebMethod]
         public static string GetRegularScheduleOFDoctor(TheClinicApp1._1.ClinicDAL.Doctor DocObj)

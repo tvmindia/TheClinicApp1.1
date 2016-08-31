@@ -42,11 +42,11 @@ var EndTimeOnEdit = '';
         draggable: false,
         height: 300,
         width: 500,
-       // hide: { effect: "explode", duration: 1000 },
+        // hide: { effect: "explode", duration: 1000 },
         //modal: true,
         resizable: false,
         show: { effect: "blind", duration: 800 },
-        title: "Appoiments",
+        title: "Appoinments",
         dialogClass: 'no-close success-dialog',
         open: function (event, ui) {
             $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
@@ -765,7 +765,7 @@ var EndTimeOnEdit = '';
     var data = "{'DocObj':" +JSON.stringify(Doctor) + "}";
     ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelDoctorSchedule");
     table = JSON.parse(ds.d);
-    var s = table.status;
+   
     debugger;
     if (table.status == 1) {
         GetScheduledTimesByDate();
@@ -793,6 +793,25 @@ var EndTimeOnEdit = '';
 
   else {
         OpenModal();
+        $("#tblPatients tr").remove();
+
+
+        Records = table;
+
+        $.each(Records, function (index, Records) {
+
+           
+            var html = '<tr><td>' +Records.Name + '</td></tr>';
+
+                $("#tblPatients").append(html);
+            
+
+        })
+
+
+
+  
+
 
         //alert(" Sorry, Already scheduled an appointment!")
     }
