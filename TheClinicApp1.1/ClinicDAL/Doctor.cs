@@ -455,7 +455,60 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion GetDoctorScheduleDetailsByDoctorID
 
-        #region GetDoctorScheduleDetailsByDoctorID
+        #region GetDoctorScheduleDetailsByDoctorIDforMobile
+        public DataSet GetDoctorScheduleDetailsByDoctorIDforMobile()
+        {
+            if (DoctorID == "")
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataSet ds = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetDoctorScheduleDetailsByDoctorIDforMobile";
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.DoctorID);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
+                //   cmd.Parameters.Add("@MonthName", SqlDbType.NVarChar,30).Value = MonthName;
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetDoctorScheduleDetailsByDoctorIDforMobile";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return ds;
+        }
+
+        #endregion GetDoctorScheduleDetailsByDoctorIDforMobile
+
+        #region GetAllSchedulesByDoctorID
+
         public DataSet GetAllSchedulesByDoctorID()
         {
             if (DoctorID == "")
@@ -494,7 +547,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
                 eObj.UserID = UA.UserID;
-                eObj.Method = "GetDoctorScheduleDetailsByDoctorID";
+                eObj.Method = "GetAllScheduleDetailsByDoctorID";
                 eObj.InsertError();
             }
             finally
@@ -507,7 +560,7 @@ namespace TheClinicApp1._1.ClinicDAL
             return ds;
         }
 
-        #endregion GetDoctorScheduleDetailsByDoctorID
+        #endregion GetAllSchedulesByDoctorID
 
         #region GetAllDoctorsScheduledBetweenDates
         public DataSet GetAllDoctorsScheduledBetweenDates()
