@@ -163,10 +163,10 @@ function PickTime()
 			        }
 			    }
 
-				var input = $(this);
-				if (!input.is(ele)) {
-					input.select();
-				}
+				//var input = $(this);
+				//if (!input.is(ele)) {
+				//	input.select();
+				//}
 			   
 			});
 
