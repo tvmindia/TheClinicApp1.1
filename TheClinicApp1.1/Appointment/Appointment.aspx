@@ -533,7 +533,7 @@ border-bottom-right-radius: 0px;
             <div class="left_part">
                 <div class="logo">
                     <a href="#">
-                        <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
+                        <img class="big" id="biglogo" runat="server" src="../images/logo.png" /><img class="small" id="smalllogo" runat="server" src="../images/logo-small.png" /></a>
                 </div>
                 <ul class="menu">
                      <li id="patients" ><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
