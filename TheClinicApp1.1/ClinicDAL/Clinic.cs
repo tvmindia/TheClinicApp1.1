@@ -12,6 +12,9 @@ namespace TheClinicApp1._1.ClinicDAL
     {
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
+        UIClasses.Const Const = new UIClasses.Const();
+        ClinicDAL.UserAuthendication UA;
+        public string Module = "Clinic";
         #endregion Global Variables
 
         #region constructor
@@ -315,6 +318,52 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion ViewClinic
+        #region GetLogo
+         public byte[] GetClinicLogo()
+        {
+
+
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataReader rd = null;
+            byte[] imageproduct = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[SelectLogoByClinicID]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                rd = cmd.ExecuteReader();
+                if ((rd.Read()) && (rd.HasRows) && (rd["Logo"] != DBNull.Value))
+                {
+                    imageproduct = (byte[])rd["Logo"];
+                }
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "SelectLogoByClinicID";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    rd.Close();
+                    dcon.DisconectDB();
+                }
+            }
+            return imageproduct;
+
+        }
+        #endregion GetLogo
 
 
         #endregion Method
