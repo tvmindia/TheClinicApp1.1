@@ -217,15 +217,21 @@ function PickTime()
 
 			// select all text in input when user focuses on it
 			inputs.on('focus', function () {
-			   
+
+			    //alert($('#txtStartTime').val());
 			  //  if ($(this).attr("id") == 'txtStartTime') {
 			    $(".ti_tx").css("color", "#505050");
 			    $(".mi_tx").css("color", "#505050");
 
 			    var inputID = $(this).attr("id");
 			  
-			    if (inputID == 'txtStartTime'  || inputID == 'txtEndTime' ) {
-			        
+//-----------* Binding timepiki with regular schedules *---------------------//
+
+			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() == "") || (inputID == 'txtEndTime' && $('#txtStartTime').val() == "")) {
+			        debugger;
+
+			    //if ((inputID == 'txtStartTime') || (inputID == 'txtEndTime' )) {
+
 			        defultTime = SetDefaultTime(inputID);
                     
 			        if (defultTime != null) {
@@ -238,6 +244,31 @@ function PickTime()
 
 			        }
 			    }
+                
+ //-----------* Binding timepiki with start time(Edit Click) *---------------------//
+			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() != ""))
+			    {
+			        strttime = $('#txtStartTime').val().replace(/ /g, '');
+
+			        var timeParts = strttime.split(':');
+
+			        ele.attr('data-timepicki-tim', timeParts[0]);
+			        ele.attr('data-timepicki-mini', timeParts[1]);
+			        ele.attr('data-timepicki-meri', timeParts[2]);
+			    }
+
+ //-----------* Binding timepiki with end time(Edit Click) *---------------------//
+			    if ((inputID == 'txtEndTime' && $('#txtEndTime').val() != "")) {
+			        endtime = $('#txtEndTime').val().replace(/ /g, '');
+
+			        var timeParts = endtime.split(':');
+
+			        ele.attr('data-timepicki-tim', timeParts[0]);
+			        ele.attr('data-timepicki-mini', timeParts[1]);
+			        ele.attr('data-timepicki-meri', timeParts[2]);
+			    }
+
+
 
 				//var input = $(this);
 				//if (!input.is(ele)) {
