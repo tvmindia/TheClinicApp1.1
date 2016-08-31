@@ -333,7 +333,7 @@ namespace TheClinicApp1._1.Webservices
                 docobj.ClinicID = clinicid;
                 docobj.DoctorID = doctorid;
 
-                ds = docobj.GetDoctorScheduleDetailsByDoctorID();
+                ds = docobj.GetDoctorScheduleDetailsByDoctorIDforMobile();
                 dt = ds.Tables[0];
                 if (dt.Rows.Count == 0) { throw new Exception(constants.NoItems); }
             }
