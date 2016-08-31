@@ -706,8 +706,7 @@ var EndTimeOnEdit = '';
             //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
             TimeIn12hrFormat = moment(Records.Starttime, ["h:mm A"]).format("hh : mm : ") + ampm;
             strttime = TimeIn12hrFormat;
-
-
+           
             TimeIn24hrFormat = Records.Endtime;
              hourEnd = TimeIn24hrFormat.indexOf(":");
              H = +TimeIn24hrFormat.substr(0, hourEnd);
@@ -719,10 +718,16 @@ var EndTimeOnEdit = '';
 
             StartTimeOnEdit = Records.Starttime;
             EndTimeOnEdit = Records.Endtime;
-
+           
             $("#txtStartTime").val(strttime);
             $("#txtEndTime").val(endtime);
             $("#txtMaxAppoinments").val(Records.PatientLimit);
+
+            strttime =  moment(strttime, ["h:mm A"]).format("hh:mm");
+            endtime = moment(endtime, ["h:mm A"]).format("hh:mm");
+
+            //SetDefaultTime('txtStartTime', strttime+","+endtime);
+            //SetDefaultTime('txtEndTime', strttime + "," + endtime);
          }
 
     });
@@ -1120,6 +1125,7 @@ var EndTimeOnEdit = '';
                         $("#txtStartTime").val("");
                         $("#txtEndTime").val("");
                         $("#txtMaxAppoinments").val("");
+
 
                         BindScheduledDates();
 

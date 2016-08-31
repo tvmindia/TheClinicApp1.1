@@ -398,8 +398,13 @@
 
         });
 
-        function SetDefaultTime(inputID) {
-            var time = GetRegularScheduleByDrID();
+        function SetDefaultTime(inputID, time) {
+
+            debugger;
+            if (time == null)
+            {
+                time = GetRegularScheduleByDrID();
+            }
 
             var timeParts = time.split(',');
 
@@ -723,6 +728,6 @@
 
         </div>
         <input type="hidden" id="hdnScheduleID" value="" />
-
+          <%--<input type="hidden" id="hdn" value="" />--%>
     </div>
 </asp:Content>
