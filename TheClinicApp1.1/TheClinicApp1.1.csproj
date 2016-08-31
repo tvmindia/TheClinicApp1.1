@@ -217,6 +217,8 @@
     <Content Include="images\Last.png" />
     <Content Include="images\logo-small.png" />
     <Content Include="images\logo.png" />
+    <Content Include="images\logosmallThri.png" />
+    <Content Include="images\logoThri.png" />
     <Content Include="images\Logout.png" />
     <Content Include="images\LogoutWhite.png" />
     <Content Include="images\magnifier-tool.png" />
