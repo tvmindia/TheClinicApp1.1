@@ -14,6 +14,7 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI;
+using System.Text.RegularExpressions;
 #endregion Included Namespaces
 
 namespace TheClinicApp1._1.ClinicDAL
@@ -687,7 +688,13 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 h = (int.Parse(hour) + 12).ToString();
             }
-            return h + ":" + minutes;
+
+            var TimeIn24HrFormat =    h + ":" + minutes;
+
+          TimeIn24HrFormat=  Regex.Replace(TimeIn24HrFormat, @"\s+", "");
+
+
+          return TimeIn24HrFormat;
         }
         #endregion format start time
 

@@ -142,7 +142,6 @@ function PickTime()
 
 			// select all text in input when user focuses on it
 			inputs.on('focus', function () {
-			    debugger;
 			   
 			  //  if ($(this).attr("id") == 'txtStartTime') {
 
@@ -216,11 +215,47 @@ function PickTime()
 
 			function set_value(event, close) {
 
-			    debugger;
-
+			  
 				// use input values to set the time
 				var tim = ele_next.find(".ti_tx input").val();
 				var mini = ele_next.find(".mi_tx input").val();
+
+//----------- * Correct time to exact format if user types the time instead of using previous or next arrow keys *-------------//
+
+			
+				if (tim > 12 || mini >= 60) {
+
+				    debugger;
+
+				    d = new Date();
+				    tim = d.getHours();
+
+				    mini = d.getMinutes();
+				    mer = "AM";
+
+				    if (tim == 12 && settings.show_meridian) {
+				        mer = "PM";
+				        ele_next.find(".mer_tx input").val(mer);
+				    }
+
+				    if (12 < tim && settings.show_meridian) {
+				        tim -= 12;
+				        mer = "PM";
+				    }
+				}
+
+				if (tim < 10 && tim.length == 1) {
+				    ele_next.find(".ti_tx input").val("0" + tim);
+				} else {
+				    ele_next.find(".ti_tx input").val(tim);
+				}
+				if (mini < 10 && mini.length == 1) {
+				    ele_next.find(".mi_tx input").val("0" + mini);
+				} else {
+				    ele_next.find(".mi_tx input").val(mini);
+				}
+
+
 				var meri = "";
 				if(settings.show_meridian){
 					meri = ele_next.find(".mer_tx input").val();
@@ -278,9 +313,9 @@ function PickTime()
 			}
 
 			function set_date(start_time) {
-				var d, ti, mi, mer;
+			    var d, ti, mi, mer;
 
-				// if a value was already picked we will remember that value
+			// if a value was already picked we will remember that value
 				if (ele.is('[data-timepicki-tim]')) {
 					ti = Number(ele.attr('data-timepicki-tim'));
 					mi = Number(ele.attr('data-timepicki-mini'));
@@ -301,6 +336,11 @@ function PickTime()
 
 					mi = d.getMinutes();
 					mer = "AM";
+
+					//if (tim == 12) {
+					//    mer = "PM";
+					//}
+
 					if (12 < ti  && settings.show_meridian) {
 						ti -= 12;
 						mer = "PM";
@@ -324,6 +364,15 @@ function PickTime()
 						ele_next.find(".mer_tx input").val(mer);
 					}
 				}
+
+                // making noon 12 , 12pm , Initailly it showed 12am
+
+				if (ti == 12 && settings.show_meridian) {
+				    mer = "PM";
+				    ele_next.find(".mer_tx input").val(mer);
+				}
+
+
 			}
 
 			function change_time(cur_ele, direction) {

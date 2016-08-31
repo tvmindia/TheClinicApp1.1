@@ -696,8 +696,26 @@ var EndTimeOnEdit = '';
 
         if (Records.Starttime != null && Records.Endtime != null) {
 
-            strttime = ConvertTimeFormatFrom24hrTo12hr(Records.Starttime);
-            endtime = ConvertTimeFormatFrom24hrTo12hr(Records.Endtime);
+            debugger;
+
+            var TimeIn24hrFormat = Records.Starttime;
+            var hourEnd = TimeIn24hrFormat.indexOf(":");
+            var H = +TimeIn24hrFormat.substr(0, hourEnd);
+            var h = H % 12 || 12;
+            var ampm = H < 12 ? "AM" : "PM";
+            //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+            TimeIn12hrFormat = moment(Records.Starttime, ["h:mm A"]).format("hh : mm : ") + ampm;
+            strttime = TimeIn12hrFormat;
+
+
+            TimeIn24hrFormat = Records.Endtime;
+             hourEnd = TimeIn24hrFormat.indexOf(":");
+             H = +TimeIn24hrFormat.substr(0, hourEnd);
+             h = H % 12 || 12;
+             ampm = H < 12 ? "AM" : "PM";
+            //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+             TimeIn12hrFormat = moment(Records.Endtime, ["h:mm A"]).format("hh : mm : ") + ampm;
+            endtime = TimeIn12hrFormat;
 
             StartTimeOnEdit = Records.Starttime;
             EndTimeOnEdit = Records.Endtime;
@@ -905,8 +923,8 @@ var EndTimeOnEdit = '';
             var Doctor = new Object();
             Doctor.DocScheduleID = document.getElementById('hdnScheduleID').value;
             Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
-            Doctor.Starttime = document.getElementById('txtStartTime').value ;
-            Doctor.Endtime = document.getElementById('txtEndTime').value;
+            Doctor.Starttime = document.getElementById('txtStartTime').value.replace(/ /g, '');
+            Doctor.Endtime = document.getElementById('txtEndTime').value.replace(/ /g, '');
 
 
             AllotedStartTimes.remove(StartTimeOnEdit);
@@ -937,7 +955,7 @@ var EndTimeOnEdit = '';
                     var InputStartTimeIn24hrFormat = moment(StartimeInput, ["h:mm A"]).format("HH:mm"); //INPUT start time in 24hr format
                     var InputEndTimeIn24hrFormat = moment(endtimeInput, ["h:mm A"]).format("HH:mm");
 
-                    InputStartTimeIn24hrFormat = InputStartTimeIn24hrFormat.isValid() ? InputStartTimeIn24hrFormat.format("L") : "";
+                  //  InputStartTimeIn24hrFormat = InputStartTimeIn24hrFormat.isValid() ? InputStartTimeIn24hrFormat.format("L") : "";
 
                     if (InputStartTimeIn24hrFormat < InputEndTimeIn24hrFormat)
                     {
@@ -976,6 +994,7 @@ var EndTimeOnEdit = '';
 
                                     if ((InputEndTimeIn24hrFormat <= AlreadyAllotedStartTime) && (InputStartTimeIn24hrFormat >= ItemJustAbove)) {
                                         Isalloted = false;
+                                        break;
                                     }
 
                                     else {
@@ -1006,8 +1025,8 @@ var EndTimeOnEdit = '';
                         Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
                         Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
                         Doctor.IsAvailable = true;
-                        Doctor.Starttime = document.getElementById('txtStartTime').value;
-                        Doctor.Endtime = document.getElementById('txtEndTime').value;
+                        Doctor.Starttime = document.getElementById('txtStartTime').value.replace(/ /g, '');
+                        Doctor.Endtime = document.getElementById('txtEndTime').value.replace(/ /g, '');
 
                         JsonNewSchedule = AddDrSchedule(Doctor);
 
@@ -1021,17 +1040,17 @@ var EndTimeOnEdit = '';
 
                         
                       
-                        if ((StartTimeOnEdit.replace(/ /g, ''))==(moment(document.getElementById('txtStartTime').value, ["h:mm A"]).format("HH:mm")) ) {
+                        //if ((StartTimeOnEdit.replace(/ /g, ''))==(moment(document.getElementById('txtStartTime').value, ["h:mm A"]).format("HH:mm")) ) {
                             
-                            Doctor.Starttime = StartTimeOnEdit;
+                        //    Doctor.Starttime = StartTimeOnEdit;
                          
-                        }
+                        //}
 
-                        if ((EndTimeOnEdit.replace(/ /g, '')) == (moment(document.getElementById('txtEndTime').value, ["h:mm A"]).format("HH:mm"))) {
+                        //if ((EndTimeOnEdit.replace(/ /g, '')) == (moment(document.getElementById('txtEndTime').value, ["h:mm A"]).format("HH:mm"))) {
 
-                            Doctor.Endtime = EndTimeOnEdit;
+                        //    Doctor.Endtime = EndTimeOnEdit;
 
-                        }
+                        //}
                         JsonUpdatedSchedule = UpadteDrSchedule(Doctor);
 
                         JsonNewSchedule = JsonUpdatedSchedule;
