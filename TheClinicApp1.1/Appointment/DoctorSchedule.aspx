@@ -448,7 +448,7 @@
         <div class="left_part">
             <div class="logo">
                 <a href="#">
-                    <img class="big" src="../images/logo.png" /><img class="small" src="../images/logo-small.png" /></a>
+                    <img class="biglogo" src="../images/logo.png" /><img class="smalllogo" runat="server" src="../images/logo-small.png" /></a>
             </div>
             <ul class="menu">
                 <li id="patients"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
