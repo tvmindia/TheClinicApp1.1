@@ -91,7 +91,7 @@ var EndTimeOnEdit = '';
             defaultDate: today,
             businessHours: true, // display business hours
             lang: initialLangCode,
-            //selectable: true,
+            selectable: true,
             selectHelper: true,
             //dayRender: function (date, cell) {
             //    cell.css("background-color", "red");
