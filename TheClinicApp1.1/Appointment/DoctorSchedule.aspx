@@ -728,6 +728,6 @@
 
         </div>
         <input type="hidden" id="hdnScheduleID" value="" />
-          <%--<input type="hidden" id="hdn" value="" />--%>
+          <input type="hidden" id="hdnIsErrorTime" value="" />
     </div>
 </asp:Content>

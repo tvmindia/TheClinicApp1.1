@@ -155,10 +155,12 @@ function PickTime()
 
 			    if (tim > 12 || mini >= 60) {
 			        IserrorTime = true;
+			        $("#hdnIsErrorTime").val(IserrorTime);
 			    }
 
 			    if (tim <= 12 && mini < 60) {
 			        IserrorTime = false;
+			        $("#hdnIsErrorTime").val(IserrorTime);
 			    }
 
 
@@ -335,11 +337,13 @@ function PickTime()
 //----------- * Correct time to exact format if user types the time instead of using previous or next arrow keys *-------------//
 
 				if (tim > 12 || mini >= 60) {
-                    IserrorTime = true;
+				    IserrorTime = true;
+				    $("#hdnIsErrorTime").val(IserrorTime);
 				}
 
 				if (tim <= 12 && mini < 60) {
 				    IserrorTime = false;
+				    $("#hdnIsErrorTime").val(IserrorTime);
 				}
 
 			
@@ -451,7 +455,7 @@ function PickTime()
 
 			function close_timepicki() {
 			  
-			    if (IserrorTime == false) {
+			    if (IserrorTime == false ) {
 			        ele_next.fadeOut();
 			    }
 
