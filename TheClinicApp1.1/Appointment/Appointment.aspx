@@ -440,6 +440,15 @@ border-bottom-right-radius: 0px;
                 Appointments.AllottingTime=Time;
                 var ds={};
                 ds=InsertPatientAppointment(Appointments);
+                refreshList();
+                //$('#calendar').fullCalendar('removeEventSource', json);
+                //var calID = $("#hdfDoctorID").val();
+    
+                //json = RebindCalendar(calID);
+
+                //$('#calendar').fullCalendar('addEventSource', json);
+
+                //$('#calendar').fullCalendar('refetchEvents');
 
             });
           
@@ -448,7 +457,7 @@ border-bottom-right-radius: 0px;
 
     function InsertPatientAppointment(Appointments)
     {
-       
+     
         var ds = {};
         var table = {};
            
