@@ -93,6 +93,7 @@ $(document).ready(function () {
                 debugger;
                 document.getElementById("TimeAvailability").innerHTML = '';
                 document.getElementById("listBody").innerHTML = '';
+                title = '';
                 AppendList(calEvent._start._i.split(' ')[0]);
                 // var date = $("#txtAppointmentDate").val();
 
@@ -107,8 +108,15 @@ $(document).ready(function () {
                     {
                         minute = names[index].allottedTime.split(':')[1];
                     }
+                    hours = names[index].allottedTime[0] + names[index].allottedTime[1];
                     var ampm = hours >= 12 ? 'PM' : 'AM';
-                    hours = hours % 12 || 12;
+                    var hh = hours;
+                    var ampm = hours >= 12 ? 'PM' : 'AM';
+                    if (hours >= 12) {
+                        hours = hh - 12;
+                        ampm = "PM";
+                    }
+                   
                     var time = hours + '.' + minute + ampm;
                     if (names[index].isAvailable == "3") {
                         title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
@@ -235,7 +243,9 @@ $(document).ready(function () {
 /*Add New Calendar Event */
 function refreshList()
 {
+    debugger;
     document.getElementById("listBody").innerHTML = '';
+    title = '';
     var scheduleID = $("#hdfScheduleID").val();   
     var names = GetAllPatientList(scheduleID);
     for (index = 0; index < names.length; ++index) {
@@ -244,8 +254,13 @@ function refreshList()
         if (minute == undefined || minute == "") {
             minute = names[index].allottedTime.split(':')[1];
         }
+        hours = names[index].allottedTime[0] + names[index].allottedTime[1];
+        var hh = hours;
         var ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12 || 12;
+        if (hours >= 12) {
+            hours = hh - 12;
+            ampm = "PM";
+        }
         var time = hours + '.' + minute + ampm;
         if (names[index].isAvailable == "3") {
             title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
@@ -338,40 +353,6 @@ function getJsonData(data, page) {
     });
     return jsonResult;
 }
-/*open modal dialog*/
-//function CustomClick()
-//    {
-//    debugger;
-//    $("#myModal").dialog('open');
-//    function D(J) { return (J < 10 ? '0' : '') + J; };
-//    var dt = new Date();
-//    var hours = dt.getHours();
-//    var ampm = hours >= 12 ? 'PM' : 'AM';
-//    hours = hours % 12;
-//    hours = hours ? hours : 12; // the hour '0' should be '12'
-//    var starttime = D(dt.getHours()) + " : " + dt.getMinutes()+" : " + ampm;
-//    $("#txtstartTime").val(starttime);
-
-//    var mins = hours * 60 + dt.getMinutes() + 30;
-
-
-//    var minutes = (mins % (24 * 60) / 60 | 0) + ' : ' + D(mins % 60);
-
-
-//    var endtime =  minutes +" : "+ ampm;
-//    $("#txtEndTime").val(endtime);
-//    $("#txtEndDate").val(eventEndDate);
-//}
-//function GetAllPatientAppointmentData()
-//{
-//    debugger;
-//    var Appointments = new Object();
-//    var data = "{'AppObj':" + JSON.stringify(Appointments) + "}";
-//    var page = "../Appointment/Appointment.aspx/GetAllPatientAppointmentDetailsByClinicID";
-//    GetJSonDataForCalender();
-
-//}
-
 
 //
 /*Web method to get all calendar data from database*/
@@ -482,9 +463,9 @@ function RebindCalendar(docID)
         Doctor.DoctorID = docID;
        
         var data = "{'docObj':" + JSON.stringify(Doctor) + "}";
-        ds=GetJSonDataForCalender(data, "Appointment.aspx/GetAllPatientAppointmentDetailsByClinicID");
-      //  table = JSON.parse(ds.d);
-        return ds;
+        ds = getJsonData(data, "Appointment.aspx/GetAllPatientAppointmentDetailsByClinicID");
+        table = JSON.parse(ds.d);
+        return table;
     
 }
 function GetJSonDataForCalender(data, page) {
@@ -524,5 +505,5 @@ function GetJSonDataForCalender(data, page) {
         }
 
     });
-    return json;
+ //   return json;
 }
