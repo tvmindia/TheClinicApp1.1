@@ -419,7 +419,7 @@ border-bottom-right-radius: 0px;
 
             };
             $(".save").click(function () {
-              
+                debugger;
                 var appointmentDate=$("#txtAppointmentDate").val();
                 var name=$("#txtPatientName").val();
                 var mobile=$("#txtPatientMobile").val();

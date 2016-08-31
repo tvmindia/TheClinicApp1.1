@@ -114,7 +114,7 @@ $(document).ready(function () {
                         title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
                     }
                     else {
-                        title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + ',' + ScheduleID[0].id + '\')"/></td></tr>';
+                        title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
                     }
                     var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
                     //var newlabel = document.createElement("Label");
@@ -208,6 +208,7 @@ $(document).ready(function () {
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important', 'border': '2px solid red' });
                 document.getElementById("colorBox").style.display = "block";
+             
             },
             events: json,
             viewDisplay: function getDate(date) {
@@ -228,54 +229,47 @@ $(document).ready(function () {
         selectOnlyThis(this.id);
     });
     $('.loader').delay(3150).fadeOut('slow');
-   
-    /*Modal dialog Cancel button click*/
-    $('.btnCncl').click(function () {
-        $("#txtTitle").val("");
-        $("#txtEndDate").val("");
-        $("#txtstartTime").val("");
-        $("#txtEndTime").val("");
-        $("#myModal").dialog("close");
-    });
-
-    /*Modal dialog OK button click*/
-    $('.btnOkay').click(function () {
-        var CalendarSchedule = new Object();
-
-        title = $("#txtTitle").val();
-        //   eventEndDate = $("#txtEndDate").val();
-        CalendarSchedule.title = title;
-        CalendarSchedule.event_start = eventStartDate;
-        CalendarSchedule.event_end = eventEndDate;
-        CalendarSchedule.startTime = $("#txtstartTime").val();
-        CalendarSchedule.endTime = $("#txtEndTime").val();
-
-        if (title != null) {
-
-            var result = AddEvent(CalendarSchedule);
-            if (result.status == "1") {
-                alert("Sucessfull..!!!")
-                $("#txtTitle").val("");
-                $("#txtEndDate").val("");
-                $("#txtstartTime").val("");
-                $("#txtEndTime").val("");
-                $("#myModal").dialog("close");
-                $('#calendar').fullCalendar('removeEvents');
-                $('#calendar').fullCalendar('addEventSource', json);
-                $('#calendar').fullCalendar('rerenderEvents');
-            }
-            else {
-                alert("Error..!!!");
-            }
-
-
-        }
-    });
 });
 /*end of document.ready*/
 
 /*Add New Calendar Event */
+function refreshList()
+{
+    document.getElementById("listBody").innerHTML = '';
+    var scheduleID = $("#hdfScheduleID").val();   
+    var names = GetAllPatientList(scheduleID);
+    for (index = 0; index < names.length; ++index) {
+        var hours = names[index].allottedTime.split('.')[0];
+        var minute = names[index].allottedTime.split('.')[1];
+        if (minute == undefined || minute == "") {
+            minute = names[index].allottedTime.split(':')[1];
+        }
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12;
+        var time = hours + '.' + minute + ampm;
+        if (names[index].isAvailable == "3") {
+            title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
+        }
+        else {
+            title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+        }
+        var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
+        //var newlabel = document.createElement("Label");
+        //newlabel.innerHTML = title;
+        // parentDiv.appendChild(newlabel);
+        parentDiv.innerHTML = title;
+        // title = title + names[index].title + "<br />";
+    }
+    debugger;
+    $('#calendar').fullCalendar('removeEventSource', json);
+    var calID = $("#hdfDoctorID").val();
+    
+    json = RebindCalendar(calID);
 
+    $('#calendar').fullCalendar('addEventSource', json);
+
+    $('#calendar').fullCalendar('refetchEvents');
+}
 function GetAllottedTime(docId, eventStartDate, id) {
     debugger;
     var names = GetAllPatientList(id);
@@ -393,9 +387,9 @@ function GetAllNames(id) {
     table = JSON.parse(ds.d);
     return table;
 }
-function RemoveFromList(AppointmentID,ScheduleID) {
+function RemoveFromList(AppointmentID) {
 
-  
+    debugger;
     var Appointments = new Object();
     Appointments.AppointmentID = AppointmentID;
 
@@ -409,8 +403,9 @@ function RemoveFromList(AppointmentID,ScheduleID) {
     var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
     ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
     table = JSON.parse(ds.d);
+    refreshList();
     return table;
-    GetAllPatientList(ScheduleID);
+   
     //GetScheduledTimesByDate();
     //BindScheduledDates();
 
@@ -478,6 +473,20 @@ function BindCalendar(docID) {
     //table = JSON.parse(ds.d);
     //return table;
 }
+function RebindCalendar(docID)
+{
+    debugger;
+    var ds = {};
+    var table = {};
+        var Doctor = new Object();
+        Doctor.DoctorID = docID;
+       
+        var data = "{'docObj':" + JSON.stringify(Doctor) + "}";
+        ds=GetJSonDataForCalender(data, "Appointment.aspx/GetAllPatientAppointmentDetailsByClinicID");
+      //  table = JSON.parse(ds.d);
+        return ds;
+    
+}
 function GetJSonDataForCalender(data, page) {
 
     $.ajax({
@@ -508,10 +517,12 @@ function GetJSonDataForCalender(data, page) {
             //  $("div[id=fullcal]").show();
             //  json = $.parseJSON(data.d);
             //json = JSON.parse(json);
-            // return json;
+           
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert("error");
         }
+
     });
+    return json;
 }
