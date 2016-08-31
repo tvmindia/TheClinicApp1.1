@@ -214,7 +214,7 @@ function PickTime()
 			}
 
 			function set_value(event, close) {
-
+			    debugger;
 			  
 				// use input values to set the time
 				var tim = ele_next.find(".ti_tx input").val();
@@ -244,18 +244,19 @@ function PickTime()
 				    }
 				}
 
-				if (tim < 10 && tim.length == 1) {
-				    ele_next.find(".ti_tx input").val("0" + tim);
-				} else {
-				    ele_next.find(".ti_tx input").val(tim);
-				}
-				if (mini < 10 && mini.length == 1) {
-				    ele_next.find(".mi_tx input").val("0" + mini);
-				} else {
-				    ele_next.find(".mi_tx input").val(mini);
+				if (tim < 10 && tim.length == 1)
+				{
+                     tim = "0" + tim;
 				}
 
+				ele_next.find(".ti_tx input").val(tim);
 
+				if (mini < 10 && mini.length == 1)
+				{
+				    mini = "0" + mini;
+				} 
+				ele_next.find(".mi_tx input").val(mini);
+				
 				var meri = "";
 				if(settings.show_meridian){
 					meri = ele_next.find(".mer_tx input").val();
