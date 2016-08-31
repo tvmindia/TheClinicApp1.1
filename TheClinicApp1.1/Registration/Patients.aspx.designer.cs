@@ -13,6 +13,24 @@ namespace TheClinicApp1._1.Registration {
     public partial class Patients {
         
         /// <summary>
+        /// biglogo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage biglogo;
+        
+        /// <summary>
+        /// smalllogo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage smalllogo;
+        
+        /// <summary>
         /// admin control.
         /// </summary>
         /// <remarks>
