@@ -43,14 +43,14 @@ namespace TheClinicApp1._1.Masters
             System.Web.UI.HtmlControls.HtmlImage BigLogo = (System.Web.UI.HtmlControls.HtmlImage)ContentPlaceHolder1.FindControl("biglogo");
             System.Web.UI.HtmlControls.HtmlImage SmallLogo = (System.Web.UI.HtmlControls.HtmlImage)ContentPlaceHolder1.FindControl("smalllogo");
             BigLogo.Src = "../Handler/ImageHandler.ashx?ClinicLogoID=" + UA.ClinicID;
-            SmallLogo.Src = "../images/logosmallThri.png";
+            SmallLogo.Src = "../Handler/ImageHandler.ashx?ClinicLogosmallID=" + UA.ClinicID;
             if (logout != null)
             {
                 logout.Visible = false;
             }
             if(lblClinic!=null)
             {
-                lblClinic.Text = UA.Clinic;
+                lblClinic.Text = "ClinicLite";
             }
                        
             lblUser.Text = "👤 " + Login + " ";

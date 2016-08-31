@@ -94,6 +94,15 @@ namespace TheClinicApp1._1.Admin {
         protected global::System.Web.UI.WebControls.ImageButton LogoutButton;
         
         /// <summary>
+        /// lblClinicCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblClinicCount;
+        
+        /// <summary>
         /// liSAdmin control.
         /// </summary>
         /// <remarks>
@@ -245,5 +254,32 @@ namespace TheClinicApp1._1.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fluplogo;
+        
+        /// <summary>
+        /// LogsmallPic control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage LogsmallPic;
+        
+        /// <summary>
+        /// fluplogosmall control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fluplogosmall;
+        
+        /// <summary>
+        /// dtgViewAllClinics control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dtgViewAllClinics;
     }
 }
