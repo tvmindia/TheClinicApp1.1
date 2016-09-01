@@ -346,7 +346,10 @@
             font-size: smaller;
         }
 
-
+        .ui-dialog-title
+        {
+            color:white!important;
+        }
         /*.fc-content
 {
     display:none;
@@ -398,8 +401,13 @@
 
         });
 
-        function SetDefaultTime(inputID) {
-            var time = GetRegularScheduleByDrID();
+        function SetDefaultTime(inputID, time) {
+
+            debugger;
+            if (time == null)
+            {
+                time = GetRegularScheduleByDrID();
+            }
 
             var timeParts = time.split(',');
 
@@ -537,18 +545,16 @@
                                                 <div class="modal-content">
 
                                                     <div class="modal-body">
-                                                        <table id="tblPatients">
+                                                        <table id="tblPatients" style="width:100%!important;" >
 
-                                                            <thead>
+                                                        <%--    <thead>
                                                                 <tr>
                                                                     <th ></th>
                                                                     <th ></th>
                                                                 </tr>
-                                                            </thead>
+                                                            </thead>--%>
 
-                                                            <tbody id="PatientRows">
-                                                            </tbody>
-
+                                                          
 
                                                         </table>
 
@@ -723,6 +729,6 @@
 
         </div>
         <input type="hidden" id="hdnScheduleID" value="" />
-
+          <input type="hidden" id="hdnIsErrorTime" value="" />
     </div>
 </asp:Content>

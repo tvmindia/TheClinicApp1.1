@@ -81,6 +81,27 @@ namespace TheClinicApp.Handler
                     }
 
                 }
+                if ((context.Request.QueryString["ClinicLogosmallID"] != null) && (context.Request.QueryString["ClinicLogosmallID"] != ""))
+                {
+                    TheClinicApp1._1.ClinicDAL.Clinic ClinicObj = new TheClinicApp1._1.ClinicDAL.Clinic();
+                    //DAL.Boutiques BouObj = new DAL.Boutiques();
+                    ClinicObj.ClinicID = Guid.Parse(context.Request.QueryString["ClinicLogosmallID"]);
+                    byte[] productimg = ClinicObj.GetClinicLogosmall();
+                    if (productimg != null)
+                    {
+                        MemoryStream memoryStream = new MemoryStream(productimg, false);
+                        memoryStream.Position = 0;
+                        Image proimg = Image.FromStream(memoryStream);
+                        proimg.Save(context.Response.OutputStream, ImageFormat.Jpeg);
+                    }
+                    else
+                    {
+                        context.Response.ContentType = "image/png";
+                        context.Response.WriteFile("../images/logoThri.png");
+                    }
+
+                }
+                
             }
             catch
             {

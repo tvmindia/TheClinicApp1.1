@@ -6,10 +6,17 @@
 
 
 var TimePicked = false;
+var IserrorTime = false;
 
 function PickTime()
 {
-    TimePicked = true;
+
+    debugger;
+    if (IserrorTime == false) {
+        TimePicked = true;
+    }
+
+ 
 }
 
 (function($) {
@@ -41,7 +48,8 @@ function PickTime()
 
 		return this.each(function() {
 
-			var ele = $(this);
+		    var ele = $(this);
+
 			var ele_hei = ele.outerHeight();
 			ele_hei += 10;
 			$(ele).wrap("<div class='time_pick'>");
@@ -112,8 +120,6 @@ function PickTime()
 			// open or close time picker when clicking
 			$(document).on("click", function (event) {
 
-			  
-
 			    if (TimePicked == true) {
                      close_timepicki();
                     
@@ -140,17 +146,96 @@ function PickTime()
 			// open the modal when the user focuses on the input
 			ele.on('focus', open_timepicki);
 
+
+			inputs.on('blur', function () {
+			    var tim = ele_next.find(".ti_tx input").val();
+			    var mini = ele_next.find(".mi_tx input").val();
+
+			    //----------- * Correct time to exact format if user types the time instead of using previous or next arrow keys *-------------//
+
+			    if (tim > 12 || mini >= 60) {
+			        IserrorTime = true;
+			        $("#hdnIsErrorTime").val(IserrorTime);
+			    }
+
+			    if (tim <= 12 && mini < 60) {
+			        IserrorTime = false;
+			        $("#hdnIsErrorTime").val(IserrorTime);
+			    }
+
+
+			    if (tim > 12) {
+
+			        debugger;
+
+			        $(".ti_tx").css("color", "red");
+
+			        // IserrorTime = true;
+			        //d = new Date();
+			        //tim = d.getHours();
+
+			        //mini = d.getMinutes();
+			        //mer = "AM";
+
+			        //if (tim == 12 && settings.show_meridian) {
+			        //    mer = "PM";
+			        //    ele_next.find(".mer_tx input").val(mer);
+			        //}
+
+			        //if (12 < tim && settings.show_meridian) {
+			        //    tim -= 12;
+			        //    mer = "PM";
+			        //}
+			    }
+
+			    else {
+			        $(".ti_tx").css("color", "#505050");
+
+			        //IserrorTime = false;
+			    }
+
+			    if (mini >= 60) {
+			        $(".mi_tx").css("color", "red");
+
+
+			    }
+			    else {
+			        $(".mi_tx").css("color", "#505050");
+			        //IserrorTime = false;
+			    }
+
+
+			    if (tim < 10 && tim.length == 1) {
+			        tim = "0" + tim;
+			    }
+
+			    ele_next.find(".ti_tx input").val(tim);
+
+			    if (mini < 10 && mini.length == 1) {
+			        mini = "0" + mini;
+			    }
+			    ele_next.find(".mi_tx input").val(mini);
+			});
+
 			// select all text in input when user focuses on it
 			inputs.on('focus', function () {
-			   
+
+			    //alert($('#txtStartTime').val());
 			  //  if ($(this).attr("id") == 'txtStartTime') {
+			    $(".ti_tx").css("color", "#505050");
+			    $(".mi_tx").css("color", "#505050");
 
 			    var inputID = $(this).attr("id");
+			  
+//-----------* Binding timepiki with regular schedules *---------------------//
 
-			    if (inputID == 'txtStartTime' || inputID == 'txtEndTime') {
+			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() == "") || (inputID == 'txtEndTime' && $('#txtStartTime').val() == "")) {
+			        debugger;
+
+			    //if ((inputID == 'txtStartTime') || (inputID == 'txtEndTime' )) {
 
 			        defultTime = SetDefaultTime(inputID);
-
+                    
 			        if (defultTime != null) {
 
 			            var timeParts = defultTime.split(',');
@@ -161,6 +246,31 @@ function PickTime()
 
 			        }
 			    }
+                
+ //-----------* Binding timepiki with start time(Edit Click) *---------------------//
+			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() != ""))
+			    {
+			        strttime = $('#txtStartTime').val().replace(/ /g, '');
+
+			        var timeParts = strttime.split(':');
+
+			        ele.attr('data-timepicki-tim', timeParts[0]);
+			        ele.attr('data-timepicki-mini', timeParts[1]);
+			        ele.attr('data-timepicki-meri', timeParts[2]);
+			    }
+
+ //-----------* Binding timepiki with end time(Edit Click) *---------------------//
+			    if ((inputID == 'txtEndTime' && $('#txtEndTime').val() != "")) {
+			        endtime = $('#txtEndTime').val().replace(/ /g, '');
+
+			        var timeParts = endtime.split(':');
+
+			        ele.attr('data-timepicki-tim', timeParts[0]);
+			        ele.attr('data-timepicki-mini', timeParts[1]);
+			        ele.attr('data-timepicki-meri', timeParts[2]);
+			    }
+
+
 
 				//var input = $(this);
 				//if (!input.is(ele)) {
@@ -203,8 +313,12 @@ function PickTime()
 				setTimeout(function() {
 					var focused_element = $(document.activeElement);
 					if (focused_element.is(':input') && !is_element_in_timepicki(focused_element)) {
-						set_value();
-						close_timepicki();
+					    set_value();
+					 
+					        close_timepicki();
+					    
+
+						
 					}
 				}, 0);
 			});
@@ -222,27 +336,57 @@ function PickTime()
 
 //----------- * Correct time to exact format if user types the time instead of using previous or next arrow keys *-------------//
 
-			
 				if (tim > 12 || mini >= 60) {
+				    IserrorTime = true;
+				    $("#hdnIsErrorTime").val(IserrorTime);
+				}
+
+				if (tim <= 12 && mini < 60) {
+				    IserrorTime = false;
+				    $("#hdnIsErrorTime").val(IserrorTime);
+				}
+
+			
+				if (tim > 12 ) {
 
 				    debugger;
 
-				    d = new Date();
-				    tim = d.getHours();
+				    $(".ti_tx").css("color", "red");
+				  
+				   // IserrorTime = true;
+				    //d = new Date();
+				    //tim = d.getHours();
 
-				    mini = d.getMinutes();
-				    mer = "AM";
+				    //mini = d.getMinutes();
+				    //mer = "AM";
 
-				    if (tim == 12 && settings.show_meridian) {
-				        mer = "PM";
-				        ele_next.find(".mer_tx input").val(mer);
-				    }
+				    //if (tim == 12 && settings.show_meridian) {
+				    //    mer = "PM";
+				    //    ele_next.find(".mer_tx input").val(mer);
+				    //}
 
-				    if (12 < tim && settings.show_meridian) {
-				        tim -= 12;
-				        mer = "PM";
-				    }
+				    //if (12 < tim && settings.show_meridian) {
+				    //    tim -= 12;
+				    //    mer = "PM";
+				    //}
 				}
+
+				else {
+				    $(".ti_tx").css("color", "#505050");
+				   
+				    //IserrorTime = false;
+				}
+
+				if (mini >= 60) {
+				    $(".mi_tx").css("color", "red");
+
+				  
+				}
+				else {
+				    $(".mi_tx").css("color", "#505050");
+				    //IserrorTime = false;
+				}
+
 
 				if (tim < 10 && tim.length == 1)
 				{
@@ -310,7 +454,11 @@ function PickTime()
 			}
 
 			function close_timepicki() {
-				ele_next.fadeOut();
+			  
+			    if (IserrorTime == false ) {
+			        ele_next.fadeOut();
+			    }
+
 			}
 
 			function set_date(start_time) {
