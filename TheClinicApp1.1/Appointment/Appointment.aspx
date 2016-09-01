@@ -234,8 +234,37 @@ margin-left:50px;
 .prev { background-position: 50% -50%; }
 
 .time_pick { position: relative; }
-
+.ui-state-highlight {
+    border: 1px solid #faf523 !important;
+    background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
+    color: #363636;
+}
+.fc-ltr .fc-basic-view .fc-day-number {
+    border: medium none !important;
+    text-align: right;
+}
 /*input{ float:left;}*/
+ td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
+            background-color: #a8d9f3;
+        }
+ #tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td {
+            border: none;
+        }
+  #tblDates, #tblDates tr, #tblDates th, #tblDates td {
+            border: none;
+        }
+   #tblTimes tr:nth-child(even) {
+            background: #ebf0f3;
+        }
+
+        #tblDates tr:nth-child(even) {
+            background: #ebf0f3;
+        }
+
+
+        #tblColorCodes, #tblColorCodes tr, #tblColorCodes th, #tblColorCodes td {
+            border: none;
+        }
 
 .timepicker_wrap {
   padding: 10px;
@@ -675,10 +704,12 @@ border-bottom-right-radius: 0px;
                                                           
                                                       </tr>
                                                       <tr>
-                                                          <td></td>
                                                           <td>
-                                                               <div id="TimeAvailability" style="max-height:115px;overflow:auto;">
-                                                                   
+                                                             <label id="availableSlot" style="display:none">Available Slots</label>
+                                                          </td>
+                                                          <td>
+                                                               <div id="TimeAvailability" style="max-height:115px;overflow:auto;border:1px solid #a8d9f3;display:none; padding-left: 10px;">
+                                                                 
                                                                </div>
                                                           </td>
                                                       </tr>

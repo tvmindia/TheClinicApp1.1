@@ -30,7 +30,7 @@ $(document).ready(function () {
     //}).prev(".ui-dialog-titlebar").css("background", "#336699");
 
     //  GetJSonDataForCalender();
-
+   
     setTimeout(function () {
         var initialLangCode = 'en';
 
@@ -42,7 +42,7 @@ $(document).ready(function () {
                 right: 'month,agendaWeek,agendaDay'
             },
 
-            defaultDate: '2016-08-12',
+          
             businessHours: true, // display business hours
             lang: initialLangCode,
             selectable: true,
@@ -61,6 +61,7 @@ $(document).ready(function () {
                 var add_url = '<a class="tip add-task" title="" href="#"\n\
         data-original-title="Dodaj zadanie" onClick="CustomClick();" style="height:25px;margin-left:100px;margin-top:50px;"><img src="../img/add.png" width="25px;"/></a>';
                 $(".fc-more-cell").prepend(add_url);
+                
             },
             eventDrop: function (event, delta, revertFunc) {
 
@@ -77,6 +78,10 @@ $(document).ready(function () {
             },
             dayClick: function (date, jsEvent, view) {
                 debugger;
+                clearTextBoxes();
+                document.getElementById("TimeAvailability").innerHTML = '';
+                document.getElementById("listBody").innerHTML = '';
+                document.getElementById("availableSlot").style.display = "none";
                 eventStartDate = date.format();
                 eventEndDate = date.format();
                // var dayClickFormat = eventStartDate.replace(/[^a-zA-Z 0-9]+/g, '/');
@@ -91,16 +96,19 @@ $(document).ready(function () {
             },
             eventClick: function (calEvent, jsEvent, view) {
                 debugger;
+                clearTextBoxes();
                 document.getElementById("TimeAvailability").innerHTML = '';
                 document.getElementById("listBody").innerHTML = '';
                 title = '';
+                document.getElementById("availableSlot").style.display = "block";
+                document.getElementById("TimeAvailability").style.display = "block";
                 AppendList(calEvent._start._i.split(' ')[0]);
                 // var date = $("#txtAppointmentDate").val();
 
-                var ScheduleID = GetAllNames(calEvent.id);
-                schID = ScheduleID;
-                $("#hdfScheduleID").val(ScheduleID[0].id);
-                var names = GetAllPatientList(ScheduleID[0].id)
+              //  var ScheduleID = GetAllNames(calEvent.id);
+               // schID = ScheduleID;
+                $("#hdfScheduleID").val(calEvent.id);
+                var names = GetAllPatientList(calEvent.id)
                 for (index = 0; index < names.length; ++index) {
                     var hours = names[index].allottedTime.split('.')[0];
                     var minute = names[index].allottedTime.split('.')[1];
@@ -142,7 +150,7 @@ $(document).ready(function () {
                 debugger;
                 title = "";
                 var docId = $("#hdfDoctorID").val();
-                var timeList = GetAllottedTime(docId, eventStartDate, ScheduleID[0].id);
+                var timeList = GetAllottedTime(docId, eventStartDate, calEvent.id);
                 var html = "";
                 for (index = 0; index < timeList.length - 1; index++) {
                     checkItems = timeList.length - 1;
@@ -158,8 +166,17 @@ $(document).ready(function () {
 
                         
                 }
+                //$("#TimeAvailability").append("<label>Available Slots</label>");
                 $("#TimeAvailability").append(html);
                 timeList = "";
+            },
+            dayRender: function (date, element) {
+               
+                document.getElementById("colorBox").style.display = "block";
+                
+                //if ($("#imgSelect").length == 0) {
+                //    $('#calendar').find('.fc-day[data-date="' + date + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
+                //}
             },
             eventAfterRender: function (event, element, view) {
 
@@ -179,7 +196,7 @@ $(document).ready(function () {
 
                     }
                 }
-
+               
             },
 
             eventMouseover: function (calEvent, jsEvent) {
@@ -214,9 +231,14 @@ $(document).ready(function () {
                 var dateString = moment(event.start).format('YYYY-MM-DD');
                 //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#b3d4fc!important' });
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
-                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important', 'border': '2px solid red' });
-                document.getElementById("colorBox").style.display = "block";
-             
+                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
+                //if ($("#imgSelect").length == 0) {
+                //    $(".fc-day-number").append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
+                //}
+                //if ($("#imgSelect").length == 0) {
+                //    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
+                //}
+                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
             },
             events: json,
             viewDisplay: function getDate(date) {
@@ -230,17 +252,46 @@ $(document).ready(function () {
                 else {
                     $(".fc-button-prev").css("display", "inline-block");
                 }
+               
             }
+            
         });
     }, 3600);
     $('body').on('change', 'input[type="checkbox"]', function () {
         selectOnlyThis(this.id);
     });
     $('.loader').delay(3150).fadeOut('slow');
+  
 });
 /*end of document.ready*/
 
 /*Add New Calendar Event */
+function refreshTime()
+{
+    debugger;
+    document.getElementById("TimeAvailability").innerHTML = '';
+    var docId = $("#hdfDoctorID").val();
+    var scheduleID = $("#hdfScheduleID").val();
+    var timeList = GetAllottedTime(docId, eventStartDate, scheduleID);
+    var html = "";
+    for (index = 0; index < timeList.length - 1; index++) {
+        checkItems = timeList.length - 1;
+        var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
+        startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
+
+
+        var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
+        endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
+        var StartAndEnd = startTime + "-" + endTime;
+        // var timeList = GetTimeList();
+        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+
+
+    }
+    $("#TimeAvailability").append(html);
+    timeList = "";
+}
+
 function refreshList()
 {
     debugger;
@@ -275,6 +326,7 @@ function refreshList()
         parentDiv.innerHTML = title;
         // title = title + names[index].title + "<br />";
     }
+    
     debugger;
     $('#calendar').fullCalendar('removeEventSource', json);
     var calID = $("#hdfDoctorID").val();
@@ -292,10 +344,17 @@ function GetAllottedTime(docId, eventStartDate, id) {
     {
         if(names[j].isAvailable=="3")
         {
-            delete names[j];
-            names.splice(j, 1);
+            //delete names[j];
+            //names.splice(j, 0);
+            names[j] = '';
         }
+        //if(names[j]==undefined)
+        //{
+          //  names[j] = '';
+          //  names=names.filter(Boolean);
+       // }
     }
+    names = names.filter(Boolean);
     var timeList = GetAllTimeAvailability(docId, eventStartDate);
     for (index = 0; index < timeList.length - 1; index++) {
         checkItems = timeList.length - 1;
@@ -367,6 +426,13 @@ function GetAllNames(id) {
     ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
     table = JSON.parse(ds.d);
     return table;
+}
+function clearTextBoxes()
+{
+    $("#txtPatientName").val("");
+    $("#txtPatientMobile").val("");
+    $("#txtPatientPlace").val("");
+    $("#txtSearch").val("");
 }
 function RemoveFromList(AppointmentID) {
 
