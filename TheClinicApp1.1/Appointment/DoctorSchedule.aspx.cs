@@ -509,7 +509,26 @@ namespace TheClinicApp1._1.Appointment
                         }
                         else
                         {
-                            DocObj.status = "0"; //Already Used
+                            //DocObj.status = "0"; //Already Used
+
+                            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+                            Dictionary<string, object> childRow;
+                            if (dsAppointedpatients.Tables[0].Rows.Count > 0)
+                            {
+                                foreach (DataRow row in dsAppointedpatients.Tables[0].Rows)
+                                {
+                                    childRow = new Dictionary<string, object>();
+                                    foreach (DataColumn col in dsAppointedpatients.Tables[0].Columns)
+                                    {
+                                        childRow.Add(col.ColumnName, row[col].ToString());
+                                    }
+                                    parentRow.Add(childRow);
+                                }
+                            }
+
+                            return jsSerializer.Serialize(parentRow);
+
+
                         }
                     }
                 }

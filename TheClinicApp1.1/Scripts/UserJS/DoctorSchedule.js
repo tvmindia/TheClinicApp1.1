@@ -40,7 +40,7 @@ var EndTimeOnEdit = '';
         autoOpen: false,
         closeOnEscape: false,
         draggable: false,
-        height: 420,
+        height: 470,
         width: 500,
         // hide: { effect: "explode", duration: 1000 },
         //modal: true,
@@ -943,7 +943,7 @@ var EndTimeOnEdit = '';
     function AddSchedule() {
         debugger;
 
-        if (  $("#hdnIsErrorTime").val()== false) {
+        if (  $("#hdnIsErrorTime").val()== "false") {
     
         var JsonNewSchedule = {};
         var Isalloted = false;
@@ -1147,7 +1147,7 @@ var EndTimeOnEdit = '';
 
                     Doctor.DoctorID = DoctorID;
                     Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
-
+                    debugger;
                     jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
 
                     if (jsonDeatilsByDate != undefined) {
@@ -1316,6 +1316,26 @@ var EndTimeOnEdit = '';
                     }
                 }
             }
+
+            else {
+                OpenModal();
+                //$("#tblPatients tr").remove();
+                $('#tblPatients tr:not(:first)').remove();
+
+                Records = JsonCancellAll;
+
+                $.each(Records, function (index, Records) {
+
+                    var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
+
+                    $("#tblPatients").append(html);
+
+                })
+
+            }
+
+
+
         }
     }
  }
