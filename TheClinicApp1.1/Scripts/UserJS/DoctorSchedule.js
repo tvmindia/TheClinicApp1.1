@@ -40,7 +40,7 @@ var EndTimeOnEdit = '';
         autoOpen: false,
         closeOnEscape: false,
         draggable: false,
-        height: 470,
+        height: 300,
         width: 500,
         // hide: { effect: "explode", duration: 1000 },
         //modal: true,
@@ -51,7 +51,7 @@ var EndTimeOnEdit = '';
         open: function (event, ui) {
             $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
         }
-    }).prev(".ui-dialog-titlebar").css("background", "#3baae3");;
+    }).prev(".ui-dialog-titlebar").css("background", "#336699");;
 
   //  GetScheduleByDrID();
 
@@ -166,7 +166,7 @@ var EndTimeOnEdit = '';
 
              //   element.context.textContent = StrtTimeIn12hrFormat + "-" + endTimeIn12hrFormat;
 
-               element.context.textContent = StrtTimeIn12hrFormat+" ..";
+               element.context.textContent = StrtTimeIn12hrFormat;
              //   view.context.textContent = StrtTimeIn12hrFormat;
 
 
@@ -331,7 +331,7 @@ var EndTimeOnEdit = '';
     $('.loader').delay(3150).fadeOut('slow');
 
     /*Modal dialog Cancel button click*/
-    $('#Cancel').click(function () {
+    $('.btnCncl').click(function () {
         $("#txtTitle").val("");
         $("#txtEndDate").val("");
         $("#txtstartTime").val("");
@@ -793,21 +793,19 @@ var EndTimeOnEdit = '';
 
   else {
         OpenModal();
-        //$("#tblPatients tr").remove();
-        $('#tblPatients tr:not(:first)').remove();
+        $("#tblPatients tr").remove();
+
 
         Records = table;
-
-      
 
         $.each(Records, function (index, Records) {
 
            
-            var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
+            var html = '<tr><td>' +Records.Name + '</td></tr>';
 
                 $("#tblPatients").append(html);
             
-                
+
         })
 
 
@@ -943,7 +941,7 @@ var EndTimeOnEdit = '';
     function AddSchedule() {
         debugger;
 
-        if (  $("#hdnIsErrorTime").val()== "false") {
+        if (  $("#hdnIsErrorTime").val()== false) {
     
         var JsonNewSchedule = {};
         var Isalloted = false;
@@ -1147,7 +1145,7 @@ var EndTimeOnEdit = '';
 
                     Doctor.DoctorID = DoctorID;
                     Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
-                    debugger;
+
                     jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
 
                     if (jsonDeatilsByDate != undefined) {
@@ -1316,26 +1314,6 @@ var EndTimeOnEdit = '';
                     }
                 }
             }
-
-            else {
-                OpenModal();
-                //$("#tblPatients tr").remove();
-                $('#tblPatients tr:not(:first)').remove();
-
-                Records = JsonCancellAll;
-
-                $.each(Records, function (index, Records) {
-
-                    var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
-
-                    $("#tblPatients").append(html);
-
-                })
-
-            }
-
-
-
         }
     }
  }

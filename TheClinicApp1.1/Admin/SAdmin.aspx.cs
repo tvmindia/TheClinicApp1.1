@@ -47,9 +47,14 @@ namespace TheClinicApp1._1.Admin
             //string message = "";
              try
              {
-                 if (hdnGroupselect.Value == "New")
+                 if (hdnGroupselect.Value == "Update")
                  {
-                     MasterObj.GroupName = txtGroupName.Value;
+                     MasterObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+                     MasterObj.ClinicName = txtClinicName.Value;
+                     MasterObj.ClinicLocation = txtLocation.Value;
+                     MasterObj.ClinicPhone = txtPhone.Value;
+                     MasterObj.ClinicAddress = txtAddress.Value;
+                     MasterObj.updatedBy = UA.userName;
                      if (fluplogo.HasFile)
                      {
                          byte[] ImageByteArray = null;
@@ -57,41 +62,68 @@ namespace TheClinicApp1._1.Admin
                          MasterObj.Logo = ImageByteArray;
 
                      }
-
-                     MasterObj.Createdby = UA.userName;
-                     MasterObj.InsertGroups();
-                 }
-                 if (hdnGroupselect.Value == "Exist")
-                 {
-                     MasterObj.GroupID = Guid.Parse(ddlGroup.SelectedValue);
-                 }
-
-                 MasterObj.ClinicName = txtClinicName.Value;
-                 MasterObj.ClinicAddress = txtAddress.Value;
-                 MasterObj.ClinicLocation = txtLocation.Value;
-                 MasterObj.ClinicPhone = txtPhone.Value;
-                 MasterObj.Createdby = UA.userName;
-                 if (fluplogo.HasFile)
-                 {
-                     byte[] ImageByteArray = null;
-                     ImageByteArray = ConvertImageToByteArray(fluplogo);
-                     MasterObj.Logo = ImageByteArray;
-
-                 }
-                 MasterObj.InsertClinics();
-                 foreach (ListItem item in lstFruits.Items)
-                 {
-                     if (item.Selected)
+                     if (fluplogosmall.HasFile)
                      {
-                         //message += item.Text;
-                         MasterObj.RoleName = item.Text;
-                         MasterObj.createdBy = UA.userName;
-                         MasterObj.InsertRole();
+                         byte[] ImageByteArray = null;
+                         ImageByteArray = ConvertImageToByteArray(fluplogosmall);
+                         MasterObj.Logosmall = ImageByteArray;
+
                      }
+                     MasterObj.UpdateClinic();
+
                  }
+                 else
+                 {
+                     if (hdnGroupselect.Value == "New")
+                     {
+                         MasterObj.GroupName = txtGroupName.Value;
+                         if (fluplogo.HasFile)
+                         {
+                             byte[] ImageByteArray = null;
+                             ImageByteArray = ConvertImageToByteArray(fluplogo);
+                             MasterObj.Logo = ImageByteArray;
+
+                         }
+
+                         MasterObj.Createdby = UA.userName;
+                         MasterObj.InsertGroups();
+                     }
+                     if (hdnGroupselect.Value == "Exist")
+                     {
+                         MasterObj.GroupID = Guid.Parse(ddlGroup.SelectedValue);
+                     }
+
+                     MasterObj.ClinicName = txtClinicName.Value;
+                     MasterObj.ClinicAddress = txtAddress.Value;
+                     MasterObj.ClinicLocation = txtLocation.Value;
+                     MasterObj.ClinicPhone = txtPhone.Value;
+                     MasterObj.Createdby = UA.userName;
+                     if (fluplogo.HasFile)
+                     {
+                         byte[] ImageByteArray = null;
+                         ImageByteArray = ConvertImageToByteArray(fluplogo);
+                         MasterObj.Logo = ImageByteArray;
+
+                     }
+                     MasterObj.InsertClinics();
+                     hdnClinicID.Value = MasterObj.ClinicID.ToString();
+                     foreach (ListItem item in lstFruits.Items)
+                     {
+                         if (item.Selected)
+                         {
+                             //message += item.Text;
+                             MasterObj.RoleName = item.Text;
+                             MasterObj.createdBy = UA.userName;
+                             MasterObj.InsertRole();
+                             
+                         }
+                     }
+                     BindDropDownGroupforDoc();
+                 }
+                 
 
 
-                 BindDropDownGroupforDoc();
+                 
 
              }
              catch

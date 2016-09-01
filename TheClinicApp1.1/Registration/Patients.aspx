@@ -1017,15 +1017,13 @@
                         $("td", TodayAppoRow).eq(6).html($(this).find("AppointmentID").text());
                         if($(this).find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
                         {
-                            $("td", TodayAppoRow).eq(1).html();
                             $("td", TodayAppoRow).eq(0).html($('<img />')
                        .attr('src', "" + '../images/NonregisteredUSer.png' + "")).addClass('CursorShow');
                         }
-                        if($(this).find("PatientID").text()!='00000000-0000-0000-0000-000000000000')
+                        else
                         {
-                            $("td", TodayAppoRow).eq(0).html($('<img />'));
-                       //     $("td", TodayAppoRow).eq(0).html($('<img />')
-                       //.attr('src', "" + '../images/Nonregistere.png' + "")).addClass('CursorShow');
+                            $("td", TodayAppoRow).eq(0).html($('<img />')
+                       .attr('src', "" + '../images/Nonregistere.png' + "")).addClass('CursorShow');
                         }
                         $("td", TodayAppoRow).eq(7).html($(this).find("PatientID").text());
                         $("[id*=dtgTodaysAppointment]").append(TodayAppoRow);
@@ -1075,9 +1073,6 @@
             };
 
             TodayAppoRow = null;
-
-
-
 
         </script>
 
@@ -1139,7 +1134,7 @@
                         <span class="tooltip1">
                             <span class="count">
                                 <asp:Label ID="lblAppointmentCount" runat="server" Text="0"></asp:Label></span>
-                                <img src="../images/Appoinments.png" />
+                            <img src="../images/registerd9724185.png" />
                             <span class="tooltiptext1">Today's Appointments</span>
                         </span>
                     </a>
@@ -1416,7 +1411,7 @@
                                             <ItemTemplate>
                                                <%-- <asp:ImageButton  ID="ImgBtnDelete1" Style="border: none!important" runat="server" ImageUrl="~/Images/Deleteicon1.png" HeaderText="Action" />--%>
                                                <%-- <asp:DropDownList ID="iddropdownAction" runat="server"></asp:DropDownList>--%>
-                                                <select name="Action" onchange="jsFunction(this.value);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Cancel</option></select>
+                                                <select name="Action"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Cancel</option></select>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>
@@ -1487,11 +1482,6 @@
         $('#TodaysAppointment').modal('show');
     }
 
-
-    function jsFunction(value)
-    {
-        alert(value);
-    }
     
         </script>
 

@@ -79,6 +79,11 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+        public object Logosmall
+        {
+            get;
+            set;
+        }
         #endregion Groupproperty
 
         #region ClinicProperty
@@ -327,6 +332,78 @@ namespace TheClinicApp1._1.ClinicDAL
 
         }
         #endregion AddClinics
+
+        #region Update Clinic
+
+        public void UpdateClinic()
+        {
+            dbConnection dcon = new dbConnection();
+
+            try
+            {
+
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "[UpdateClinics]";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+
+                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = ClinicName;
+                cmd.Parameters.Add("@Location", SqlDbType.NVarChar, 255).Value = ClinicLocation;
+                cmd.Parameters.Add("@Address", SqlDbType.VarChar, 255).Value = ClinicAddress;
+                cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 255).Value = ClinicPhone;
+                cmd.Parameters.Add("@Logo", SqlDbType.VarBinary).Value = Logo;
+                cmd.Parameters.Add("@Logosmall", SqlDbType.VarBinary).Value = Logosmall;
+                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value=DateTime.Now;
+                cmd.Parameters.Add("@Status", SqlDbType.Int);
+                cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                int Outputval = (int)cmd.Parameters["@Status"].Value;
+
+                if (Outputval == 1)
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;  //Success
+                    eObj.SavedSuccessMessage(page);
+
+                }
+                else
+                {
+                   
+                        var page = HttpContext.Current.CurrentHandler as Page;   //TROUBLE UPDATE!
+                        eObj.UpdationNotSuccessMessage(page);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "UpdateUnits";
+
+                eObj.InsertError();
+
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+        }
+
+
+        #endregion Update Clinic
 
         #region BindGroupName
         public DataTable BindGroupName()

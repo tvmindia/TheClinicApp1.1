@@ -41,7 +41,7 @@
                          <span class="tooltip1">
                              <span class="count" style="background:#bb33d4;"><asp:Label ID="lblClinicCount" runat="server" Text="0"></asp:Label>
                              </span>
-                             <img src="../images/clinic.jpg" />
+                             <img src="../images/ClinicEdit.png" />
                              <span class="tooltiptext1">View Clinics</span>
                          </span>           
                    </a>
@@ -143,7 +143,7 @@
                                     </div>
                                     
                                  </div>
-                                    
+                                <asp:HiddenField ID="hdnClinicID" runat="server" /> 
                                  </div>
                                </div>
                         </div>
@@ -308,7 +308,7 @@
                 ClinicID = $(this).closest('tr').find('td:eq(4)').text();
                 var Clinic = new Object();
                 Clinic.ClinicID = ClinicID;
-                jsonResult = GetUserDetailsByUserID(Clinic);
+                jsonResult = GetUserDetailsByClinicID(Clinic);
                 if (jsonResult != undefined) {
 
                     BindUserControls(jsonResult);
@@ -318,7 +318,7 @@
     });
 
 
-        function GetUserDetailsByUserID(Clinic) {
+             function GetUserDetailsByClinicID(Clinic) {
                  debugger;
         var ds = {};
         var table = {};
@@ -333,6 +333,7 @@
         $.each(Records, function (index, Records) {
             $('#<%=txtGroupName.ClientID%>').val(Records.Name1)
             $("#<%=txtClinicName.ClientID %>").val(Records.Name);
+            $('#<%=hdnClinicID.ClientID%>').val(Records.ClinicID)
             $("#<%=txtAddress.ClientID %>").val(Records.Address);
             $("#<%=txtLocation.ClientID%>").val(Records.Location);
             $("#<%=txtPhone.ClientID %>").val(Records.Phone);
