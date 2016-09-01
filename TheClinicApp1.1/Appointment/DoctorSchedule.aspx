@@ -277,7 +277,7 @@
         }
 
         td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
-            background-color: #a8d9f3;
+            background-color: #ffd19a;
         }
 
 
@@ -339,7 +339,7 @@
         }
 
         .Today {
-            background: #a8d9f3;
+            background: #ffd19a;
         }
 
         .Legend {
