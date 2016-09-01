@@ -390,14 +390,20 @@
 }*/
     </style>
 
+     <%--var isPostBack = <%=Convert.ToString(Page.IsPostBack).ToLower()%>;--%>
+
     <script>
 
         timStart = '';
         minsStart = '';
         merStart = '';
-
+        var DoctorID = '';
 
         $(document).ready(function () {
+
+
+          
+
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
             });
@@ -405,7 +411,7 @@
                 $(".main_body").toggleClass("active_close");
             });
 
-            var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
+           // var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
 
             if (DoctorID != "" && DoctorID != null) {
                 GetScheduleByDrID(DoctorID);
@@ -475,7 +481,34 @@
             debugger;
             $("#myModal").dialog('open');
         }
+        function SetDropdown(e)
+        {
+            debugger;
 
+            DoctorID = e.value;
+           
+            var jsonDrSchedule = {};
+
+            var Doctor = new Object();
+            Doctor.DoctorID = DoctorID;
+          
+            jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+            if (jsonDrSchedule != undefined) {
+
+                json = jsonDrSchedule;
+
+                BindScheduledDates();
+
+                $('#calendar').fullCalendar('removeEvents');
+                $('#calendar').fullCalendar('addEventSource', json);
+                $('#calendar').fullCalendar('rerenderEvents');
+
+
+            }
+
+
+        }
+      
     </script>
 
     <div class="main_body">
@@ -545,7 +578,12 @@
                         <div role="tabpanel" class="tab-pane active">
                             <div class="grey_sec">
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>
+                                <%--<asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>--%>
+
+                                <asp:DropDownList ID="ddlDoctor" runat="server"  onchange="SetDropdown(this)"  Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" ></asp:DropDownList>
+
+                              
+
 
                                 <%-- <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
@@ -795,5 +833,6 @@
         </div>
         <input type="hidden" id="hdnScheduleID" value="" />
           <input type="hidden" id="hdnIsErrorTime" value="" />
+       
     </div>
 </asp:Content>

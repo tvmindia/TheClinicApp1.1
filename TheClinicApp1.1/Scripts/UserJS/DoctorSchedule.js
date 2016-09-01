@@ -30,6 +30,9 @@ var EndTimeOnEdit = '';
 
     $(document).ready(function () {
         debugger;
+
+
+
       //  document.getElementsByClassName('timepicker_wrap').append('<p>ddbb</p>');
 
     $("#txtStartTime").timepicki();
@@ -74,7 +77,7 @@ var EndTimeOnEdit = '';
     //          $("#txtEndTime").timepicki();
             
     //GetAllCalendarData();
-
+   
     setTimeout(function () {
         var initialLangCode = 'en';
 
@@ -327,6 +330,8 @@ var EndTimeOnEdit = '';
            }
         });
     }, 3600);
+   
+
 
     $('.loader').delay(3150).fadeOut('slow');
 
@@ -514,7 +519,7 @@ var EndTimeOnEdit = '';
     function GetScheduleByDrID(drID) {
       
       
-
+        debugger;
     DoctorID = drID;
 
     var jsonDrSchedule = {};
@@ -536,6 +541,7 @@ var EndTimeOnEdit = '';
 
         json = jsonDrSchedule;
         BindScheduledDates();
+
     }
    
 }
