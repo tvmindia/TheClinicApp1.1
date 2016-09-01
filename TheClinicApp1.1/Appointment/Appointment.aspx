@@ -561,16 +561,37 @@ border-bottom-right-radius: 0px;
             return result;
             
         }
+        function clearDropDown()
+        {
+            var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
+            ddl.innerHTML="";
+        }
+
         function hideDropDown()
         {
             var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
             ddl.style.display='none';
+            document.getElementById("br1").style.display='none';
+            document.getElementById("br2").style.display='none';
+            document.getElementById("timeSlot").style.display='none';
+        }
+        function showDropDown()
+        {
+            var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
+            ddl.style.display='block';
+            document.getElementById("br1").style.display='block';
+            document.getElementById("br2").style.display='block';
+            document.getElementById("timeSlot").style.display='block';
         }
         function BindSlotDropDown(title)
         {
             debugger;
             var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
-            ddl.prepend('<option selected="selected" value="0">'+title+'</option>');
+            var option = document.createElement("option");
+            option.text = title;
+            option.value="0";
+            ddl.add(option);
+        
         }
         function AppendList(date)
         {
@@ -718,17 +739,17 @@ border-bottom-right-radius: 0px;
                                                                <input class="txtBox" name="Date" id="txtAppointmentDate" type="text" disabled="disabled"/>
                                                              <%-- <asp:TextBox ID="txtAppointmentDate" runat="server"></asp:TextBox>--%>
                                                              
-                                                              <br />
+                                                             <br />
                                                           
                                                           </td>
                                                           
                                                       </tr>
                                                       <tr>
                                                           <td> <label id="timeSlot" style="display:none">Select Time Slots</label></td>
-                                                          <td>  <asp:DropDownList ID="ddltimeSlot" CssClass="drop" runat="server" AutoPostBack="true" Width="350px" Height="31px">
+                                                          <td>  <asp:DropDownList ID="ddltimeSlot" CssClass="drop" runat="server" AutoPostBack="true" Width="350px" Height="31px" style="display:none;">
                                                              
                                                 </asp:DropDownList>
-                                                             
+                                                             <label id="br2" style="display:none;"><br /></label>
                                                           </td>
                                                       </tr>
                                                       <tr>
@@ -736,10 +757,10 @@ border-bottom-right-radius: 0px;
                                                              <label id="availableSlot" style="display:none">Available Slots</label>
                                                           </td>
                                                           <td>
-                                                               <div id="TimeAvailability" style="max-height:115px;overflow:auto;border:1px solid #a8d9f3;display:none; padding-left: 10px;">
+                                                               <div id="TimeAvailability" style="max-height:115px;width:350px;overflow:auto;border:1px solid #a8d9f3;display:none; padding-left: 10px;">
                                                                  
                                                                </div>
-                                                              <br />
+                                                             <label id="br1" style="display:none;"><br /></label>
                                                           </td>
                                                       </tr>
                                                       <tr>
