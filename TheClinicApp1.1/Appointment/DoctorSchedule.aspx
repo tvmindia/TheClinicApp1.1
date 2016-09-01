@@ -105,7 +105,7 @@
             padding: 0;
             /*border: 1px solid #888;*/
             width: 100%;
-            height: 100%;
+            /*height: 100%;*/
             /*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);*/
             -webkit-animation-name: animatetop;
             -webkit-animation-duration: 0.4s;
@@ -350,6 +350,24 @@
         {
             color:white!important;
         }
+
+        .modal table
+        {
+            width:100%!important;
+            height:100%!important;
+        }
+
+        .modal table th{
+            background-color:#99c4e0!important;
+        }
+      
+        .success-dialog
+        {
+            border:2px solid #3baae3;
+        }
+
+       
+
         /*.fc-content
 {
     display:none;
@@ -539,20 +557,33 @@
 
                                             <div id='calendar'></div>
                                             <div class="loader" style="float: left"></div>
-                                            <div id="myModal" class="modal">
+                                            <div id="myModal" class="modal" >
 
                                                 <!-- Modal content -->
-                                                <div class="modal-content">
+                                                <div class="modal-content" >
 
-                                                    <div class="modal-body">
-                                                        <table id="tblPatients" style="width:100%!important;" >
+                                                    <div class="modal-body" >
 
-                                                        <%--    <thead>
+                                                      <%--    <div class="token_id_card">
+                            <div class="name_field1">Would You still like to cancel the schedule..<span></span> ?</div>
+                            <div class="light_grey">
+                            </div>
+                            <div class="card_white">
+                                <asp:Label Text="Select Your Doctor " Font-Size="Large" Font-Bold="true" runat="server"></asp:Label>
+                                <asp:DropDownList ID="ddlDoctorName" Height="70%" AppendDataBoundItems="true" Width="100%" runat="server"></asp:DropDownList>
+                            </div>
+                        </div>--%>
+
+
+
+                                                        <table id="tblPatients" style="width:100%!important;height:100%!important" >
+
+                                                            <thead  >
                                                                 <tr>
-                                                                    <th ></th>
-                                                                    <th ></th>
+                                                                    <th >Patient</th>
+                                                                    <th >Appoinment Time</th>
                                                                 </tr>
-                                                            </thead>--%>
+                                                            </thead>
 
                                                           
 
@@ -561,7 +592,22 @@
                                                     </div>
                                                     <br />
                                                     <div class="modal-footer">
-                                                        <table>
+
+                                                              <%-- <div class="token_id_card">
+                            <div class="name_field1">Would You still like to cancel the schedule..<span></span> ?</div>
+                            <div class="light_grey">
+                            </div>
+                            <div class="card_white">
+                                <asp:Label Text="Select Your Doctor " Font-Size="Large" Font-Bold="true" runat="server"></asp:Label>
+                                <asp:DropDownList ID="ddlDoctorName" Height="70%" AppendDataBoundItems="true" Width="100%" runat="server"></asp:DropDownList>
+                            </div>
+                        </div>--%>
+
+                                                      <%--  <div class="token_id_card">
+                                                          <div class="name_field1">Would You still like to cancel the schedule..<span></span> ?</div>
+                                                            </div>--%>
+                                                     <%--   <table>
+                                                           
                                                             <tr>
                                                                 <td>
                                                                     <button class="btnOkay" id="btnOk">OK</button>
@@ -570,7 +616,17 @@
                                                                     <button class="btnCncl" id="btnCancel">Cancel</button></td>
 
                                                             </tr>
-                                                        </table>
+                                                        </table>--%>
+
+
+                                                        <div class="grey_sec">
+                                                          Would You still like to cancel this schedule..?
+                              
+                                <ul class="top_right_links">
+                                    <li><a class="save" ><span></span>Yes</a></li>
+                                    <li><a class="new" id="Cancel" ><span></span>No</a></li>
+                                </ul>
+                            </div>
 
 
                                                     </div>
