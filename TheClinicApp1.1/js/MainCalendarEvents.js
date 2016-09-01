@@ -100,6 +100,8 @@ $(document).ready(function () {
             eventClick: function (calEvent, jsEvent, view) {
                 debugger;
                 clearTextBoxes();
+                clearDropDown();
+                showDropDown();
                 var titles = "";
                 document.getElementById("TimeAvailability").innerHTML = '';
                 document.getElementById("listBody").innerHTML = '';

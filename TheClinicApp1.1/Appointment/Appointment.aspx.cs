@@ -569,6 +569,31 @@ namespace TheClinicApp1._1.Appointment
         //}
         //#endregion CancelAppointment
 
+        #region AbsentPatientAppointment
+        [System.Web.Services.WebMethod]
+        public static string AbsentPatientAppointment(Appointments AppointObj)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            AppointObj.ClinicID = Convert.ToString(UA.ClinicID);
+            AppointObj.UpdatedBy = Convert.ToString(UA.userName);
+
+            if (UA != null)
+            {
+
+                AppointObj.status = AppointObj.PatientAbsent().ToString();
+
+                //Converting to Json
+                return jsSerializer.Serialize(AppointObj);
+            }
+            return jsSerializer.Serialize("");
+        }
+
+
+        #endregion AbsentPatientAppointment
+
 
         #region CancelAppointment
         [System.Web.Services.WebMethod]
