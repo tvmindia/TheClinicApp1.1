@@ -39,6 +39,12 @@ display: block; float: left; text-align: center;
              font-size: smaller;
              line-height: 1;
          }
+         .drop
+   {
+        border-radius:5px;
+        border-color:lightgray;
+        
+    }
         .foo {
   float: left;
   width: 10px;
@@ -51,11 +57,11 @@ display: block; float: left; text-align: center;
 }
 
 .Dates {
-  background:#256db7;
+  background:#3baae3;
 }
 
 .Today {
-  background: #a8d9f3;
+  background: #ffd19a;
 }
         .name_field {background: #3661c7; padding: 10px 20px; text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; text-transform: uppercase; font-family:'roboto-bold'; overflow: hidden; position: relative;}
        .card_white {padding: 15px; display: block; font-family:'roboto-light';}
@@ -306,7 +312,10 @@ border:none !important;
     display:inline-block;
     position:relative;
 }
- 
+  td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
+            background-color: #ffd19a;
+          
+        }
  table td
  {
      border:none!important;
@@ -552,6 +561,17 @@ border-bottom-right-radius: 0px;
             return result;
             
         }
+        function hideDropDown()
+        {
+            var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
+            ddl.style.display='none';
+        }
+        function BindSlotDropDown(title)
+        {
+            debugger;
+            var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
+            ddl.prepend('<option selected="selected" value="0">'+title+'</option>');
+        }
         function AppendList(date)
         {
             
@@ -704,6 +724,14 @@ border-bottom-right-radius: 0px;
                                                           
                                                       </tr>
                                                       <tr>
+                                                          <td> <label id="timeSlot" style="display:none">Select Time Slots</label></td>
+                                                          <td>  <asp:DropDownList ID="ddltimeSlot" CssClass="drop" runat="server" AutoPostBack="true" Width="350px" Height="31px">
+                                                             
+                                                </asp:DropDownList>
+                                                             
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
                                                           <td>
                                                              <label id="availableSlot" style="display:none">Available Slots</label>
                                                           </td>
@@ -711,6 +739,7 @@ border-bottom-right-radius: 0px;
                                                                <div id="TimeAvailability" style="max-height:115px;overflow:auto;border:1px solid #a8d9f3;display:none; padding-left: 10px;">
                                                                  
                                                                </div>
+                                                              <br />
                                                           </td>
                                                       </tr>
                                                       <tr>

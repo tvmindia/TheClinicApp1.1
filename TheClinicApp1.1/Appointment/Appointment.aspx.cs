@@ -544,6 +544,32 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion GetDoctorAvailability
 
+        //#region CancelAppointment
+        //[System.Web.Services.WebMethod]
+        //public static string CancelAppointment(Appointments AppointObj)
+        //{
+
+        //    ClinicDAL.UserAuthendication UA;
+        //    UIClasses.Const Const = new UIClasses.Const();
+        //    UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+        //    JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+        //    AppointObj.ClinicID = Convert.ToString(UA.ClinicID);
+        //    AppointObj.UpdatedBy = Convert.ToString(UA.userName);
+        //    List<Event> events = new List<Event>();
+        //    if (UA != null)
+        //    {
+        //        DataSet ds = null;
+        //        //  ds = AppointObj.GetAppointedPatientDetails();
+        //        AppointObj.status = AppointObj.CancelAppointment().ToString();
+
+        //        //Converting to Json
+        //        return jsSerializer.Serialize(AppointObj);
+        //    }
+        //    return jsSerializer.Serialize("");
+        //}
+        //#endregion CancelAppointment
+
+
         #region CancelAppointment
         [System.Web.Services.WebMethod]
         public static string CancelAppointment(Appointments AppointObj)
@@ -555,11 +581,9 @@ namespace TheClinicApp1._1.Appointment
             JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
             AppointObj.ClinicID = Convert.ToString(UA.ClinicID);
             AppointObj.UpdatedBy = Convert.ToString(UA.userName);
-            List<Event> events = new List<Event>();
+
             if (UA != null)
             {
-                DataSet ds = null;
-                //  ds = AppointObj.GetAppointedPatientDetails();
                 AppointObj.status = AppointObj.CancelAppointment().ToString();
 
                 //Converting to Json
@@ -568,6 +592,30 @@ namespace TheClinicApp1._1.Appointment
             return jsSerializer.Serialize("");
         }
         #endregion CancelAppointment
+
+        #region PresentPatientAppointment
+        [System.Web.Services.WebMethod]
+        public static string PresentPatientAppointment(Appointments AppointObj)
+        {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            AppointObj.ClinicID = Convert.ToString(UA.ClinicID);
+            AppointObj.UpdatedBy = Convert.ToString(UA.userName);
+
+            if (UA != null)
+            {
+
+                AppointObj.status = AppointObj.CancelAppointment().ToString();
+
+                //Converting to Json
+                return jsSerializer.Serialize(AppointObj);
+            }
+            return jsSerializer.Serialize("");
+        }
+
+        #endregion PresentPatientAppointment
 
         public static IEnumerable<DateTime> GetWorkingHourIntervals(DateTime clockIn, DateTime clockOut, int appointmentMinutes)
         {

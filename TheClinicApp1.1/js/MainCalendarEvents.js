@@ -82,6 +82,9 @@ $(document).ready(function () {
                 document.getElementById("TimeAvailability").innerHTML = '';
                 document.getElementById("listBody").innerHTML = '';
                 document.getElementById("availableSlot").style.display = "none";
+                document.getElementById("TimeAvailability").style.display = "none";
+                document.getElementById("timeSlot").style.display = "none";
+                hideDropDown();
                 eventStartDate = date.format();
                 eventEndDate = date.format();
                // var dayClickFormat = eventStartDate.replace(/[^a-zA-Z 0-9]+/g, '/');
@@ -97,11 +100,15 @@ $(document).ready(function () {
             eventClick: function (calEvent, jsEvent, view) {
                 debugger;
                 clearTextBoxes();
+                var titles = "";
                 document.getElementById("TimeAvailability").innerHTML = '';
                 document.getElementById("listBody").innerHTML = '';
                 title = '';
-                document.getElementById("availableSlot").style.display = "block";
-                document.getElementById("TimeAvailability").style.display = "block";
+                if (calEvent.title != "")
+                {
+                    titles = calEvent.title;
+                    BindSlotDropDown(titles);
+                }
                 AppendList(calEvent._start._i.split(' ')[0]);
                 // var date = $("#txtAppointmentDate").val();
 
@@ -167,6 +174,8 @@ $(document).ready(function () {
                         
                 }
                 //$("#TimeAvailability").append("<label>Available Slots</label>");
+                document.getElementById("availableSlot").style.display = "block";
+                document.getElementById("TimeAvailability").style.display = "block";
                 $("#TimeAvailability").append(html);
                 timeList = "";
             },
