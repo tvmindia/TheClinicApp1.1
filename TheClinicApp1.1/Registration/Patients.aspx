@@ -496,15 +496,7 @@
                 return table;
             }
 
-            function CancelAppointment(Appointments)
-            {
-                var ds = {};
-                var table = {};
-                var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
-                ds = getJsonData(data, "../Appointment/Appointment.aspx/CancelAppointment");
-                table = JSON.parse(ds.d);
-                return table;
-            }
+           
 
             function DeleteTodayPatientByID(PatientID) {  //Deletion In Today's Registration
 
@@ -993,7 +985,7 @@
             TodayRegRow = null;
 
 
-            //---------------------- * Bind Today's Appointments Gridview *--------------------------------------------------//
+           //------------------------------------------------* Bind Today's Appointments Gridview *--------------------------------------------------//
 
             var TodayAppoRow;
             function TodayAppointmentSuccess(response) 
@@ -1022,19 +1014,21 @@
                         $("td", TodayAppoRow).eq(4).html($(this).find("Mobile").text());
                         $("td", TodayAppoRow).eq(5).html($(this).find("AllottingTime").text());
                         $("td", TodayAppoRow).eq(6).html($(this).find("AppointmentID").text());
+                        var appointid=$(this).find("AppointmentID").text();
                         var currntrowobj=$(this);
                         if(currntrowobj.find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
                         {
+  
                             $("td", TodayAppoRow).removeClass("reged");
                             $("td", TodayAppoRow).eq(0).html($('<img />')
                             .attr('src', "" + '../images/NonregisteredUSer.png' + ""));
-                            $("td", TodayAppoRow).eq(1).html('<select name="Action" onchange="DDAction(this.value);"><option value="-1">--Select--</option><option value="0">Cancel</option></select>');
+                            $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="0">Absent</option></select>');
                         }
                         if(currntrowobj.find("PatientID").text()!='00000000-0000-0000-0000-000000000000')
                         {
                             $("td", TodayAppoRow).addClass("reged");
                             $("td", TodayAppoRow).eq(0).html($('<img />'));
-                            $("td", TodayAppoRow).eq(1).html('<select name="Action" onchange="DDAction(this.value);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Cancel</option></select>');
+                            $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Absent</option></select>');
                         }
                         $("td", TodayAppoRow).eq(7).html(currntrowobj.find("PatientID").text());
                         $("[id*=dtgTodaysAppointment]").append(TodayAppoRow);
@@ -1086,11 +1080,70 @@
             TodayAppoRow = null;
 
 
-            function DDAction(ddobj,currntrowobj)
+
+
+
+
+    function DDAction(ddobj)
             {
-                debugger;
-                alert(ddobj);
+             if(ddobj.value==0)//cancel apppointment
+             {
+                var Appointments=new Object();
+                Appointments.AppointmentID=ddobj.id;
+                AppointmentIsAbsent(Appointments);
+                GetTodayPatientAppointments(1);
+             }
+            if(ddobj.value==1)//patient present
+            {
+                var Appointments=new Object();
+                Appointments.AppointmentID=ddobj.id;
+                AppointmentIsPresent(Appointments);
+                GetTodayPatientAppointments(1);
             }
+            }
+ function CancelAppointment(Appointments)
+            {
+                var ds = {};
+                var table = {};
+                var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+                ds = getJsonData(data, "../Appointment/Appointment.aspx/CancelAppointment");
+                table = JSON.parse(ds.d);
+                return table;
+            }
+
+function AppointmentIsPresent(Appointments)
+{
+   debugger;
+    try
+    {
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        jsonResult = getJsonData(data, "../Appointment/Appointment.aspx/PresentPatientAppointment");
+         var table = {};
+        table = JSON.parse(jsonResult.d);
+    }
+    catch(e)
+    {
+      
+    }
+    return table;
+}
+
+function AppointmentIsAbsent(Appointments)
+{
+    debugger;
+    try
+    {
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        jsonResult = getJsonData(data, "../Appointment/Appointment.aspx/AbsentPatientAppointment");
+        var table = {};
+        table = JSON.parse(jsonResult.d);
+    }
+    catch(e)
+    {
+      
+    }
+    return table;
+}
 
         </script>
 
