@@ -367,7 +367,15 @@
             border:2px solid #3baae3;
         }
 
-    
+    label {
+    color: #666666;
+    display: block;
+    font-family: "raleway-semibold";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    margin: 1px 15px 10px;
+}
 
         /*.fc-content
 {
