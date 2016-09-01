@@ -66,6 +66,10 @@
                     font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
                     font-size: 16px;
                 }
+                 .reged{background-color: gray!important;} 
+
+                .even{background-color: white;} 
+
             
         </style>
         <!-- Script Files -->
@@ -659,20 +663,22 @@
 
             $(function () {
                 $("[id*=dtgTodaysAppointment] td:eq(0)").click(function () { 
-                    debugger;
-                   var AppointmentID = $(this).closest('tr').find('td:eq(6)').text();
-                       
-                    document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
-                    
-                    var jsonResult = {};
-                    var Appointments = new Object();
-                    Appointments.AppointmentID = AppointmentID;
-                    jsonResult = GetPatientAppointment(Appointments);
-                    if (jsonResult != undefined) {
+                   
+                    if($(this).closest('tr').find('td:eq(7)').text()=='00000000-0000-0000-0000-000000000000')//patientid
+                    {
+                        debugger;
+                        var AppointmentID = $(this).closest('tr').find('td:eq(6)').text();
+                        document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+                        var jsonResult = {};
+                        var Appointments = new Object();
+                        Appointments.AppointmentID = AppointmentID;
+                        jsonResult = GetPatientAppointment(Appointments);
+                        if (jsonResult != undefined) {
                           
-                        BindControlsWithPatientAppointmentDetails(jsonResult);
+                            BindControlsWithPatientAppointmentDetails(jsonResult);
+                        }
+                        $("#TodayAppointmentClose").click();
                     }
-                    $("#TodayAppointmentClose").click();
                 });
 
             });
@@ -990,7 +996,8 @@
             //---------------------- * Bind Today's Appointments Gridview *--------------------------------------------------//
 
             var TodayAppoRow;
-            function TodayAppointmentSuccess(response) {
+            function TodayAppointmentSuccess(response) 
+            {
                 debugger;
                 $(".pgrHistoryAppointment").show();
                
@@ -1005,7 +1012,7 @@
                    // var tempdd='<select name="hall" id="hall" value="3"><option>Present</option> <option>Cancel</option></select>';
                     $.each(AllAppointments, function () {
                        
-                       
+                        debugger;
                        
                         //$("td", TodayAppoRow).eq(1).html($('<img />')
                         // .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
@@ -1015,17 +1022,21 @@
                         $("td", TodayAppoRow).eq(4).html($(this).find("Mobile").text());
                         $("td", TodayAppoRow).eq(5).html($(this).find("AllottingTime").text());
                         $("td", TodayAppoRow).eq(6).html($(this).find("AppointmentID").text());
-                        if($(this).find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
+                        var currntrowobj=$(this);
+                        if(currntrowobj.find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
                         {
+                            $("td", TodayAppoRow).removeClass("reged");
                             $("td", TodayAppoRow).eq(0).html($('<img />')
-                       .attr('src', "" + '../images/NonregisteredUSer.png' + "")).addClass('CursorShow');
+                            .attr('src', "" + '../images/NonregisteredUSer.png' + ""));
+                            $("td", TodayAppoRow).eq(1).html('<select name="Action" onchange="DDAction(this.value);"><option value="-1">--Select--</option><option value="0">Cancel</option></select>');
                         }
-                        else
+                        if(currntrowobj.find("PatientID").text()!='00000000-0000-0000-0000-000000000000')
                         {
-                            $("td", TodayAppoRow).eq(0).html($('<img />')
-                       .attr('src', "" + '../images/Nonregistere.png' + "")).addClass('CursorShow');
+                            $("td", TodayAppoRow).addClass("reged");
+                            $("td", TodayAppoRow).eq(0).html($('<img />'));
+                            $("td", TodayAppoRow).eq(1).html('<select name="Action" onchange="DDAction(this.value);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Cancel</option></select>');
                         }
-                        $("td", TodayAppoRow).eq(7).html($(this).find("PatientID").text());
+                        $("td", TodayAppoRow).eq(7).html(currntrowobj.find("PatientID").text());
                         $("[id*=dtgTodaysAppointment]").append(TodayAppoRow);
                         TodayAppoRow = $("[id*=dtgTodaysAppointment] tr:last-child").clone(true);
                     });
@@ -1073,6 +1084,13 @@
             };
 
             TodayAppoRow = null;
+
+
+            function DDAction(ddobj,currntrowobj)
+            {
+                debugger;
+                alert(ddobj);
+            }
 
         </script>
 
@@ -1134,7 +1152,7 @@
                         <span class="tooltip1">
                             <span class="count">
                                 <asp:Label ID="lblAppointmentCount" runat="server" Text="0"></asp:Label></span>
-                            <img src="../images/registerd9724185.png" />
+                                <img src="../images/Appoinments.png" />
                             <span class="tooltiptext1">Today's Appointments</span>
                         </span>
                     </a>
@@ -1411,7 +1429,7 @@
                                             <ItemTemplate>
                                                <%-- <asp:ImageButton  ID="ImgBtnDelete1" Style="border: none!important" runat="server" ImageUrl="~/Images/Deleteicon1.png" HeaderText="Action" />--%>
                                                <%-- <asp:DropDownList ID="iddropdownAction" runat="server"></asp:DropDownList>--%>
-                                                <select name="Action"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Cancel</option></select>
+                                               <%-- <select name="Action" onchange="jsFunction(this.value);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Cancel</option></select>--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField DataField="Name" HeaderText="Name"></asp:BoundField>
@@ -1482,6 +1500,8 @@
         $('#TodaysAppointment').modal('show');
     }
 
+
+  
     
         </script>
 
