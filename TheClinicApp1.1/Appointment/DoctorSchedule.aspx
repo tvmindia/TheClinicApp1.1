@@ -278,7 +278,7 @@
 
         td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
             background-color: #ffd19a;
-          
+          border-color:orange;
         }
 
 
