@@ -632,7 +632,7 @@ namespace TheClinicApp1._1.Appointment
             if (UA != null)
             {
 
-                AppointObj.status = AppointObj.CancelAppointment().ToString();
+                AppointObj.status = AppointObj.PatientPresent().ToString();
 
                 //Converting to Json
                 return jsSerializer.Serialize(AppointObj);
