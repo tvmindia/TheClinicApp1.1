@@ -34,6 +34,8 @@ namespace TheClinicApp1._1.Registration
         UIClasses.Const Const = new UIClasses.Const();    
         ClinicDAL.UserAuthendication UA;
         Patient PatientObj = new Patient();
+        Appointments AppointObj =new Appointments();
+
         TokensBooking tok = new TokensBooking();
         ErrorHandling eObj = new ErrorHandling();
         public string listFilter = null;
@@ -452,6 +454,11 @@ namespace TheClinicApp1._1.Registration
                 PatientObj.Address = (txtAddress.Value != "") ? txtAddress.Value.ToString() : null;
                 PatientObj.Phone = (txtMobile.Value != "") ? txtMobile.Value.ToString() : null;
                 PatientObj.Email = (txtEmail.Value != "") ? txtEmail.Value.ToString() : null;
+                PatientObj.AppointmentID = (hdfAppointmentID.Value != "") ? hdfAppointmentID.Value.ToString() : null;
+
+                AppointObj.AppointmentID = PatientObj.AppointmentID;
+               
+             
                 if (rdoMale.Checked == true)
                 {
                     PatientObj.Gender = "Male";
@@ -494,8 +501,17 @@ namespace TheClinicApp1._1.Registration
 
                         //*Insert New Patient and Case File 
 
-                        PatientObj.AddPatientDetails();
-                        PatientObj.AddFile();
+                        if(PatientObj.AddPatientDetails()==1)
+                        {
+                         AppointObj.ClinicID = PatientObj.ClinicID.ToString();
+                         AppointObj.AppointmentStatus = 1;//patientpresent status
+                         AppointObj.UpdatedBy = UA.userName;
+                         AppointObj.PatientAppointmentStatusUpdate();
+
+                         PatientObj.AddFile();
+                        }
+
+                      
                         if (FileUpload1.HasFile)
                         {
                             ProfilePic.Src = "../Handler/ImageHandler.ashx?PatientID=" + g.ToString();
@@ -544,13 +560,12 @@ namespace TheClinicApp1._1.Registration
                 }
                 //gridDataBind();
                 lblFileCount.Text = PatientObj.FileNumber;
-                if (HiddenField1.Value == "")
+                if((HiddenField1.Value == "")&&(hdfAppointmentID.Value == ""))
                 {
                     HiddenField1.Value = PatientObj.PatientID.ToString();
                     if ((PatientObj.Name != null) && (parsedValue != 0))
                     {
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "openModal();", true);
-
                     }
                 }
             }

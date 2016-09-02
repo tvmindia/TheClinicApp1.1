@@ -66,9 +66,11 @@
                     font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
                     font-size: 16px;
                 }
-                 .reged{background-color: gray!important;} 
+                 .reged{background-color: #ECFCEA!important;} 
 
                 .even{background-color: white;} 
+
+                .todays_appointment_link{z-index:25!important;}
 
             
         </style>
@@ -1088,17 +1090,24 @@
             {
              if(ddobj.value==0)//cancel apppointment
              {
-                var Appointments=new Object();
-                Appointments.AppointmentID=ddobj.id;
-                AppointmentIsAbsent(Appointments);
-                GetTodayPatientAppointments(1);
+                 if(confirm("Are You Sure?"))
+                 {
+                     var Appointments=new Object();
+                     Appointments.AppointmentID=ddobj.id;
+                     AppointmentIsAbsent(Appointments);
+                     GetTodayPatientAppointments(1);
+                 }
              }
             if(ddobj.value==1)//patient present
             {
-                var Appointments=new Object();
-                Appointments.AppointmentID=ddobj.id;
-                AppointmentIsPresent(Appointments);
-                GetTodayPatientAppointments(1);
+                if(confirm("Are You Sure?"))
+                {
+                    var Appointments=new Object();
+                    Appointments.AppointmentID=ddobj.id;
+                    AppointmentIsPresent(Appointments);
+                    GetTodayPatientAppointments(1);
+                }
+               
             }
             }
  function CancelAppointment(Appointments)
@@ -1203,7 +1212,7 @@ function AppointmentIsAbsent(Appointments)
                     </a>
                     <a class="todays_appointment_link" onclick="OpenModal('3');">
                         <span class="tooltip1">
-                            <span class="count">
+                            <span class="count" style="background-color:#e05d46!important;">
                                 <asp:Label ID="lblAppointmentCount" runat="server" Text="0"></asp:Label></span>
                                 <img src="../images/Appoinments.png" />
                             <span class="tooltiptext1">Today's Appointments</span>

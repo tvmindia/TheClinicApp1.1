@@ -276,8 +276,10 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion UpdatePatientAppointment
 
-        #region CancelAppointment
-        public Int16 CancelAppointment()
+      
+
+        #region PatientAppointmentStatusUpdate
+        public Int16 PatientAppointmentStatusUpdate()
         {
 
             dbConnection dcon = null;
@@ -291,8 +293,8 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 throw new Exception("AppointmentID is Empty!!");
             }
-          
-           
+
+
             try
             {
                 dcon = new dbConnection();
@@ -300,13 +302,12 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[CancelPatientAppointment]";
+                cmd.CommandText = "[UpdatePatientAppointmentStatus]";
                 cmd.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(AppointmentID);
-              
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-               
+                cmd.Parameters.Add("@AppointStatus", SqlDbType.TinyInt).Value = AppointmentStatus;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value =System.DateTime.Now;
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = System.DateTime.Now;
                 outParameter = cmd.Parameters.Add("@UpdateStatus", SqlDbType.SmallInt);
                 outParameter.Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
@@ -318,7 +319,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 eObj.Description = ex.Message;
                 eObj.Module = Module;
                 eObj.UserID = UA.UserID;
-                eObj.Method = "CancelAppointment";
+                eObj.Method = "PatientAppointmentStatusUpdate";
                 eObj.InsertError();
             }
             finally
@@ -331,7 +332,7 @@ namespace TheClinicApp1._1.ClinicDAL
             //insert success or failure
             return Int16.Parse(outParameter.Value.ToString());
         }
-        #endregion CancelAppointment
+        #endregion PatientAppointmentStatusUpdate
 
 
 
@@ -827,119 +828,7 @@ namespace TheClinicApp1._1.ClinicDAL
          }
          #endregion GetAppointedPatientDetailsByScheudleID
 
-    
-
-
-         #region PatientAbsent
-         public Int16 PatientAbsent()
-         {
-
-             dbConnection dcon = null;
-             SqlCommand cmd = null;
-             SqlParameter outParameter = null;
-             if (ClinicID == "")
-             {
-                 throw new Exception("ClinicID is Empty!!");
-             }
-             if (AppointmentID == "")
-             {
-                 throw new Exception("AppointmentID is Empty!!");
-             }
-             try
-             {
-                 dcon = new dbConnection();
-                 dcon.GetDBConnection();
-                 cmd = new SqlCommand();
-                 cmd.Connection = dcon.SQLCon;
-                 cmd.CommandType = CommandType.StoredProcedure;
-                 cmd.CommandText = "[PatientAbsentAppointment]";
-                 cmd.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(AppointmentID);
-                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                 cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = System.DateTime.Now;
-                 outParameter = cmd.Parameters.Add("@UpdateStatus", SqlDbType.SmallInt);
-                 outParameter.Direction = ParameterDirection.Output;
-                 cmd.ExecuteNonQuery();
-             }
-             catch (Exception ex)
-             {
-                 UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-                 eObj.Description = ex.Message;
-                 eObj.Module = Module;
-                 eObj.UserID = UA.UserID;
-                 eObj.Method = "PatientAbsent";
-                 eObj.InsertError();
-             }
-             finally
-             {
-                 if (dcon.SQLCon != null)
-                 {
-                     dcon.DisconectDB();
-                 }
-             }
-             return Int16.Parse(outParameter.Value.ToString());
-         }
-
-
-         #endregion PatientAbsent
-
-
-         #region PatientAbsent
-         public Int16 PatientPresent()
-         {
-
-             dbConnection dcon = null;
-             SqlCommand cmd = null;
-             SqlParameter outParameter = null;
-             if (ClinicID == "")
-             {
-                 throw new Exception("ClinicID is Empty!!");
-             }
-             if (AppointmentID == "")
-             {
-                 throw new Exception("AppointmentID is Empty!!");
-             }
-             try
-             {
-                 dcon = new dbConnection();
-                 dcon.GetDBConnection();
-                 cmd = new SqlCommand();
-                 cmd.Connection = dcon.SQLCon;
-                 cmd.CommandType = CommandType.StoredProcedure;
-                 cmd.CommandText = "[PatientPresentAppointment]";
-                 cmd.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(AppointmentID);
-                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                 cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = System.DateTime.Now;
-                 outParameter = cmd.Parameters.Add("@UpdateStatus", SqlDbType.SmallInt);
-                 outParameter.Direction = ParameterDirection.Output;
-                 cmd.ExecuteNonQuery();
-             }
-             catch (Exception ex)
-             {
-                 UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-                 eObj.Description = ex.Message;
-                 eObj.Module = Module;
-                 eObj.UserID = UA.UserID;
-                 eObj.Method = "PatientPresent";
-                 eObj.InsertError();
-             }
-             finally
-             {
-                 if (dcon.SQLCon != null)
-                 {
-                     dcon.DisconectDB();
-                 }
-             }
-             return Int16.Parse(outParameter.Value.ToString());
-         }
-
-
-         #endregion PatientAbsent
-     
-
-
-        #endregion Appointment Methods
+            #endregion Appointment Methods
 
 
 
