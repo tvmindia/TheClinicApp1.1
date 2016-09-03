@@ -682,7 +682,7 @@
                                                           Would You still like to cancel this schedule..?
                               
                                 <ul class="top_right_links">
-                                    <li><a class="save" ><span></span>Yes</a></li>
+                                    <li><a class="save" id="Okay" ><span></span>Yes</a></li>
                                     <li><a class="new" id="Cancel" ><span></span>No</a></li>
                                 </ul>
                             </div>

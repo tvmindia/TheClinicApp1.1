@@ -549,6 +549,43 @@ namespace TheClinicApp1._1.Appointment
         #endregion Cancel ALL Schedules By Available Date
 
 
+        #region CancelAllAppoinments
+        [System.Web.Services.WebMethod]
+        public static string CancelAllAppoinments(Appointments AppointObj)
+        {
+           
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            try
+            {
+                if (UA != null)
+                {
+                    if (UA.ClinicID.ToString() != "")
+                    {
+                        AppointObj.UpdatedBy = UA.userName;
+                        AppointObj.ClinicID = UA.ClinicID.ToString();
+                       AppointObj.status =  AppointObj.CancelAllAppoinments().ToString();
+               
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ErrorHandling eObj = new ErrorHandling();
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = "DoctorSchedule.aspx.cs";
+                eObj.UserID = UA.UserID;
+                eObj.Method = "CancelAllAppoinments";
+                eObj.InsertError();
+            }
+            return jsSerializer.Serialize(AppointObj);
+        }
+        #endregion CancelAllAppoinments
+
         #endregion Methods
 
         #region Events

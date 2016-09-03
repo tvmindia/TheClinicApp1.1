@@ -277,7 +277,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Cancel all appoinments by date
 
-        public Int16 CancelAllAppoinmentsByDate()
+        public Int16 CancelAllAppoinments()
         {
             dbConnection dcon = null;
             SqlCommand cmd = null;
@@ -291,10 +291,10 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 throw new Exception("ScheduleID is Empty!!");
             }
-            if (AppointmentDate == "")
-            {
-                throw new Exception("AppointmentDate is Empty!!");
-            }
+            //if (AppointmentDate == "")
+            //{
+            //    throw new Exception("AppointmentDate is Empty!!");
+            //}
             try
             {
                 dcon = new dbConnection();
@@ -302,10 +302,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "[CancelAllAppoinmentsByDate]";
+                cmd.CommandText = "[CancelAllAppoinmentsByScheduleID]";
                 cmd.Parameters.Add("@ScheduleID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ScheduleID);
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                cmd.Parameters.Add("@Date", SqlDbType.Date).Value = AppointmentDate;
+                //cmd.Parameters.Add("@Date", SqlDbType.Date).Value = AppointmentDate;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 outParameter = cmd.Parameters.Add("@UpdateStatus", SqlDbType.SmallInt);

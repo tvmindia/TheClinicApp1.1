@@ -386,6 +386,59 @@ var EndTimeOnEdit = '';
         $("#myModal").dialog("close");
     });
 
+
+    $('#Okay').click(function () {
+        debugger;
+
+        var Appointments = new Object();
+        ScheduleID = document.getElementById('hdnScheduleID').value;
+        
+        Appointments.ScheduleID = ScheduleID;
+
+        var ds = {};
+        var table = {};
+
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelAllAppoinments");
+        table = JSON.parse(ds.d);
+
+       
+        if (table.status == 1) {
+
+
+
+
+
+            GetScheduledTimesByDate();
+            BindScheduledDates();
+
+            var jsonDrSchedule = {};
+
+            var Doctor = new Object();
+            Doctor.DoctorID = DoctorID;
+
+            jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+            if (jsonDrSchedule != undefined) {
+
+                $('#calendar').fullCalendar('removeEventSource', json);
+
+                json = jsonDrSchedule;
+
+                $('#calendar').fullCalendar('addEventSource', json);
+                $('#calendar').fullCalendar('refetchEvents');
+            }
+
+
+            // $('#calendar').fullCalendar('refetchEvents');
+        }
+
+
+
+
+        $("#myModal").dialog("close");
+        });
+
+
     /*Modal dialog OK button click*/
     $('.btnOkay').click(function () {
         var CalendarSchedule = new Object();
@@ -802,6 +855,7 @@ var EndTimeOnEdit = '';
 
     function RemoveTime(ScheduleID) {
         debugger;
+        document.getElementById('hdnScheduleID').value = ScheduleID;
 
     var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
@@ -990,7 +1044,7 @@ var EndTimeOnEdit = '';
     function AddSchedule() {
         debugger;
 
-        if (  $("#hdnIsErrorTime").val()== false) {
+        if (  $("#hdnIsErrorTime").val()== "false") {
     
         var JsonNewSchedule = {};
         var Isalloted = false;
