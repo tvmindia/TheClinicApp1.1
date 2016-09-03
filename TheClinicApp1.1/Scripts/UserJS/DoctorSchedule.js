@@ -10,6 +10,8 @@ var Year = '';
 var AllotedEndTimes = [];
 var AllotedStartTimes = [];
 
+var allEvents = [];
+
 var StartTimeOnEdit = '';
 var EndTimeOnEdit = '';
 
@@ -31,6 +33,7 @@ var EndTimeOnEdit = '';
     $(document).ready(function () {
         debugger;
 
+     
 
 
       //  document.getElementsByClassName('timepicker_wrap').append('<p>ddbb</p>');
@@ -148,39 +151,47 @@ var EndTimeOnEdit = '';
 
 
             },
-     
+          
             editable: false,
            
-            eventRender: function (event, element, view) {
+             eventRender: function (event, element, view) {
+                 debugger;
+               
+                
+                 var dateString = moment(event.start).format('YYYY-MM-DD');
 
-              
-              
+                 //var array = $('#calendar').fullCalendar('clientEvents', function (event) {
+                 //    if (event.start == dateString) 
+                 //    {
+                 //        alert(1);
+                 //    }
+                 //})
+
+               
+
                 //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------//  
                
                 StrtTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(event.StartTime);
-               // event.StartTime = StrtTimeIn12hrFormat;
-
+               
                 //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------// 
 
                 endTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(event.EndTime);
                
-               // event.EndTime = endTimeIn12hrFormat;
-
-
-             //   element.context.textContent = StrtTimeIn12hrFormat + "-" + endTimeIn12hrFormat;
-
                element.context.textContent = StrtTimeIn12hrFormat;
-             //   view.context.textContent = StrtTimeIn12hrFormat;
+             
+              
 
-
-                var dateString = moment(event.start).format('YYYY-MM-DD');
-
-              //  $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
+                //--------------------- * Applying bg-Color for event dates * --------------------// 
 
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
              
-               
+
+                 //--------------------- * Removing bg-Color  * --------------------//
+
+                 $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
+                 $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
+
 
                // element.find('.fc-event-inner').before($("<div class=\"fc-event-icons\"></div>").html("<ul class=\"fc-icons\">" + "<li><img src='../images/hand.png' /></li>"  + "</ul>"));
 
@@ -194,8 +205,7 @@ var EndTimeOnEdit = '';
 
             },
             eventAfterRender: function (event, element) {
-                
-               
+              
              //  $('.fc-content').remove();
               //  element.append("<img  src='../images/hand.png' />");
 
@@ -247,7 +257,7 @@ var EndTimeOnEdit = '';
             events: json,
            
             viewDisplay: function getDate(date) {
-               
+              
                 var lammCurrentDate = new Date();
                 var lammMinDate = new Date(lammCurrentDate.getFullYear(), lammCurrentDate.getMonth(), 1, 0, 0, 0, 0);
 
@@ -262,9 +272,15 @@ var EndTimeOnEdit = '';
 
             }
 
-
+         
            , dayRender: function (date, element) {
-           
+              
+               //var dateString = moment(date).format('YYYY-MM-DD');
+               //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').removeClass('ui-state-highlight');
+               //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').removeAttr('background-color');
+
+
+
             document.getElementById("colorBox").style.display = "block";
             var date = new Date($("#calendar").fullCalendar('getDate').format());
             
@@ -288,7 +304,7 @@ var EndTimeOnEdit = '';
             }
 
         },
-
+          
            eventClick: function (date, jsEvent, view) {
                debugger;
 
@@ -331,7 +347,14 @@ var EndTimeOnEdit = '';
         });
     }, 3600);
    
-
+    function IsDateHasEvent(date) {
+        var allEvents = [];
+        allEvents = $('#calendar').fullCalendar('clientEvents');
+        var event = $.grep(allEvents, function (v) {
+            return +v.start === +date;
+        });
+        return event.length > 0;
+    }
 
     $('.loader').delay(3150).fadeOut('slow');
 
@@ -379,6 +402,7 @@ var EndTimeOnEdit = '';
     });
 
 });
+
 
     getMonthName = function (MonthNo) {
         var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
