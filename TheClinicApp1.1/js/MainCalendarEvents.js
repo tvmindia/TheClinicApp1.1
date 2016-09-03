@@ -42,7 +42,6 @@ $(document).ready(function () {
                 right: 'month,agendaWeek,agendaDay'
             },
 
-          
             businessHours: true, // display business hours
             lang: initialLangCode,
             selectable: true,
@@ -249,8 +248,12 @@ $(document).ready(function () {
                 //if ($("#imgSelect").length == 0) {
                 //    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
                 //}
-                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
-            },
+
+                if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length == 0) {
+                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
+                }
+                
+                },
             events: json,
             viewDisplay: function getDate(date) {
 
