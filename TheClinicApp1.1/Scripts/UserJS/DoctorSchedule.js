@@ -1419,6 +1419,36 @@ var ClickedDate = '';
                     }
                 }
             }
+
+            else {
+                OpenModal();
+
+                debugger;
+                //  $("#tblPatients tr").remove();
+                $('tblPatients tr:not(:first)').remove();
+                debugger;
+                Records = JsonCancellAll;
+
+                $.each(Records, function (index, Records) {
+
+
+                    var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
+
+                    $("#tblPatients").append(html);
+
+
+                })
+
+
+
+
+
+
+                //alert(" Sorry, Already scheduled an appointment!")
+            }
+
+
+
         }
     }
  }
