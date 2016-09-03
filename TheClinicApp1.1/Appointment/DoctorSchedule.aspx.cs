@@ -551,9 +551,9 @@ namespace TheClinicApp1._1.Appointment
 
         #region CancelAllAppoinments
         [System.Web.Services.WebMethod]
-        public static string CancelAllAppoinments(Appointments AppointObj)
+        public static string CancelAppoinmentsByScheduleID(Appointments AppointObj)
         {
-           
+            TheClinicApp1._1.ClinicDAL.Doctor DocObj = new ClinicDAL.Doctor();
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -564,10 +564,26 @@ namespace TheClinicApp1._1.Appointment
                 {
                     if (UA.ClinicID.ToString() != "")
                     {
+                       
+                        DocObj.DocScheduleID = AppointObj.ScheduleID;
+
+
                         AppointObj.UpdatedBy = UA.userName;
                         AppointObj.ClinicID = UA.ClinicID.ToString();
-                       AppointObj.status =  AppointObj.CancelAllAppoinments().ToString();
-               
+                       AppointObj.status =  AppointObj.CancelAppoinmentsByScheuleID().ToString();
+
+
+                       if ( AppointObj.status == "1")
+                       {
+                           DocObj.UpdatedBy = UA.userName;
+                           DocObj.ClinicID = UA.ClinicID.ToString();
+                           DocObj.status = DocObj.CancelDoctorSchedule().ToString();
+                          
+                       }
+                       else
+                       {
+                           DocObj.status = "0";
+                       }
                     }
                 }
 
@@ -582,7 +598,9 @@ namespace TheClinicApp1._1.Appointment
                 eObj.Method = "CancelAllAppoinments";
                 eObj.InsertError();
             }
-            return jsSerializer.Serialize(AppointObj);
+
+            return jsSerializer.Serialize(DocObj);
+            //return jsSerializer.Serialize(AppointObj);
         }
         #endregion CancelAllAppoinments
 

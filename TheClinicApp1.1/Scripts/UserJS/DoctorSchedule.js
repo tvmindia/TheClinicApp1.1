@@ -15,7 +15,7 @@ var allEvents = [];
 var StartTimeOnEdit = '';
 var EndTimeOnEdit = '';
 
-
+var ClickedDate = '';
 
     $(document).mouseup(function (e) {
     var container = $("#calendar");
@@ -357,6 +357,8 @@ var EndTimeOnEdit = '';
                    $('#calendar').fullCalendar('unselect');
 
                    GetScheduledTimesByDate(date.start);
+
+                   ClickedDate = date.start;
                }
 
 
@@ -403,17 +405,13 @@ var EndTimeOnEdit = '';
         var table = {};
 
         var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
-        ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelAllAppoinments");
+        ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelAppoinmentsByScheduleID");
         table = JSON.parse(ds.d);
 
        
         if (table.status == 1) {
 
-
-
-
-
-            GetScheduledTimesByDate();
+            GetScheduledTimesByDate(ClickedDate);
             BindScheduledDates();
 
             var jsonDrSchedule = {};
@@ -875,7 +873,7 @@ var EndTimeOnEdit = '';
    
     debugger;
     if (table.status == 1) {
-        GetScheduledTimesByDate();
+        GetScheduledTimesByDate(ClickedDate);
         BindScheduledDates();
 
         var jsonDrSchedule = {};

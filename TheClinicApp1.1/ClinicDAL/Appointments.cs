@@ -277,7 +277,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Cancel all appoinments by date
 
-        public Int16 CancelAllAppoinments()
+        public Int16 CancelAppoinmentsByScheuleID()
         {
             dbConnection dcon = null;
             SqlCommand cmd = null;
