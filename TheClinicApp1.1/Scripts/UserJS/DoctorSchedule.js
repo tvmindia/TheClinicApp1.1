@@ -165,25 +165,20 @@ var EndTimeOnEdit = '';
              eventRender: function (event, element, view) {
                  debugger;
                  
-                 if ($('#hdnIsDrChanged').val() == "Yes") {
+
+                 //--1. All events are stored to allEvents array 
+                 //--2. When changing doctor, allevents array will be cleared by monitoring value of hiddenfield which is, hdnIsDrChanged
+                 //-- 3. By retrieving values from array , bg color is appied
+                 //-- 4.Color fr TODAY date will reapplied , as it loses its background color
+
+
+                 if ($('#hdnIsDrChanged').val() == "Yes") { //Checking doctor dropdown value changed , then allevents array is cleared, 
                      allEvents = [];
-                     $('#hdnIsDrChanged').val("");
+                     $('#hdnIsDrChanged').val(""); // -- this assignment is to ensure that allevents array is cleared onlt once after changing doctor dropdown
 
                  }
 
-
-
-
                  var dateString = moment(event.start).format('YYYY-MM-DD');
-
-                 //var array = $('#calendar').fullCalendar('clientEvents', function (event) {
-                 //    if (event.start == dateString) 
-                 //    {
-                 //        alert(1);
-                 //    }
-                 //})
-
-               
 
                 //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------//  
                
@@ -193,58 +188,12 @@ var EndTimeOnEdit = '';
 
                 endTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(event.EndTime);
                
-               element.context.textContent = StrtTimeIn12hrFormat;
+               element.context.textContent = StrtTimeIn12hrFormat+'..'; //Event data 
              
               
-               allEvents.push(dateString);
+               allEvents.push(dateString); //-- Event dates are pushed to array
           
-
-
-                 //if ($.inArray(dateString, allEvents) != -1) { 
-                 //    debugger;
-                 //    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
-                 //    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
-
-
-                 //}
-
-               
-                 //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
-                 //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
-
-               
-
-
-
-
                $('#hdnAllEvents').val(JSON.stringify(allEvents));
-
-                ////--------------------- * Applying bg-Color for event dates * --------------------// 
-
-                //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
-                //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
-             
-
-                //// //--------------------- * Removing bg-Color  * --------------------//
-
-
-                //$('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
-                //$('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
-
-
-
-                //var TodayDate= moment(today).format('YYYY-MM-DD')
-
-
-
-                //     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').addClass('ui-state-highlight')
-                //     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').css({ 'background-color': '#ffd19a!important' });
-
-                 
-
-
-
-               // element.find('.fc-event-inner').before($("<div class=\"fc-event-icons\"></div>").html("<ul class=\"fc-icons\">" + "<li><img src='../images/hand.png' /></li>"  + "</ul>"));
 
 
             },
@@ -257,34 +206,24 @@ var EndTimeOnEdit = '';
             },
             eventAfterRender: function (event, element) {
               
-             
-                var dateString = moment(event.start).format('YYYY-MM-DD');
-                //debugger;
+                //----* here BG color for evnts are applied by retrieving events from allevents array *-----//
 
-           
+                var dateString = moment(event.start).format('YYYY-MM-DD');
+                
+                ////--------------------- * Applying bg-Color for event dates * --------------------// 
                 if ($.inArray(dateString, allEvents) != -1) { 
                     debugger;
                     $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                     $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
 
-
                 }
 
-                var TodayDate= moment(today).format('YYYY-MM-DD')
-
-
+                ////--------------------- * Applying bg-Color for Today * --------------------// 
+                      var TodayDate= moment(today).format('YYYY-MM-DD')
 
                      $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').addClass('ui-state-highlight')
                      $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').css({ 'background-color': '#ffd19a!important' });
 
-
-
-                //if ($.inArray(dateString, allEvents) == -1) {
-
-                //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
-                //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
-                //}
-                
                 
              //  $('.fc-content').remove();
               //  element.append("<img  src='../images/hand.png' />");
