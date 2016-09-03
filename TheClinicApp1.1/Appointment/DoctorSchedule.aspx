@@ -530,6 +530,8 @@
 
         function ClearControls()
         {
+
+            $("#txtAppointmentDate").val("");
             $("#txtStartTime").val("");
             $("#txtEndTime").val("");
             $("#txtMaxAppoinments").val("");
@@ -538,7 +540,19 @@
             $("#hdnIsErrorTime").val("");
             $("#hdnIsDrChanged").val("No");
         
+            $("#tblDates tr").remove();
 
+            var dates = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
+            $("#tblDates").append(dates);
+
+
+            $("#tblTimes tr").remove();
+
+            var times = '<tr><td><i>' + "No scheduled time!" + '</i></td></tr>';
+            $("#tblTimes").append(times);
+
+
+          
         }
       
     </script>
