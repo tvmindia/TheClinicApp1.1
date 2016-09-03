@@ -491,7 +491,9 @@
 
             var Doctor = new Object();
             Doctor.DoctorID = DoctorID;
-          
+            
+            $('#hdnIsDrChanged').val("Yes");
+
             jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
             if (jsonDrSchedule != undefined) {
 
@@ -500,7 +502,57 @@
                 BindScheduledDates();
 
                 $('#calendar').fullCalendar('removeEvents');
+              
+                //alert($('#hdnAllEvents').length);
+              
+                var value = $('#hdnAllEvents').val(); //retrieve array
+                value = JSON.parse(value);
+
+                for (var i = 0; i <value.length; i++) {
+                    
+                    $('#calendar').find('.fc-day[data-date="' + value[i] + '"]').removeClass('ui-state-highlight');
+                    $('#calendar').find('.fc-day[data-date="' + value[i] + '"]').removeAttr('background-color');
+                  
+                }
+
+                //$('#calendar').fullCalendar('removeEvents', function (event) {
+                //    alert(1);
+                //});
+              
+
                 $('#calendar').fullCalendar('addEventSource', json);
+
+                //$('#calendar').fullCalendar('addEventSource', function (event) {
+
+                //    debugger;
+                //    if (  $('#hdnIsDrChanged').val() == "Yes" ) {
+
+                   
+
+                //    var dateString = moment(event.start).format('YYYY-MM-DD');
+
+                //    //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
+                //    //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
+
+                //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
+                //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
+
+
+                //    //var today = new Date();
+                //    //var TodayDate= moment(today).format('YYYY-MM-DD')
+                //    }
+
+
+                //    //     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').addClass('ui-state-highlight')
+                //    //     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').css({ 'background-color': '#ffd19a!important' });
+
+
+
+
+                //});
+
+
+
                 $('#calendar').fullCalendar('rerenderEvents');
 
 
@@ -833,6 +885,8 @@
         </div>
         <input type="hidden" id="hdnScheduleID" value="" />
           <input type="hidden" id="hdnIsErrorTime" value="" />
-       
+           <input type="hidden" id="hdnIsDrChanged" value="No" />
+        <input type="hidden" id="hdnAllEvents" value="" />
+        
     </div>
 </asp:Content>

@@ -16,6 +16,7 @@ var StartTimeOnEdit = '';
 var EndTimeOnEdit = '';
 
 
+
     $(document).mouseup(function (e) {
     var container = $("#calendar");
 
@@ -32,8 +33,15 @@ var EndTimeOnEdit = '';
 
     $(document).ready(function () {
         debugger;
+      
+        //$('body').on('click', 'button.fc-prev-button', function () {
+        //    $('#hdnIsDrChanged').val("");
+        //});
 
-     
+        //$('body').on('click', 'button.fc-next-button', function () {
+        //    $('#hdnIsDrChanged').val("");
+        //});
+      
 
 
       //  document.getElementsByClassName('timepicker_wrap').append('<p>ddbb</p>');
@@ -156,8 +164,16 @@ var EndTimeOnEdit = '';
            
              eventRender: function (event, element, view) {
                  debugger;
-               
-                
+                 
+                 if ($('#hdnIsDrChanged').val() == "Yes") {
+                     allEvents = [];
+                     $('#hdnIsDrChanged').val("");
+
+                 }
+
+
+
+
                  var dateString = moment(event.start).format('YYYY-MM-DD');
 
                  //var array = $('#calendar').fullCalendar('clientEvents', function (event) {
@@ -180,17 +196,52 @@ var EndTimeOnEdit = '';
                element.context.textContent = StrtTimeIn12hrFormat;
              
               
+               allEvents.push(dateString);
+          
 
-                //--------------------- * Applying bg-Color for event dates * --------------------// 
 
-                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
-                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
+                 //if ($.inArray(dateString, allEvents) != -1) { 
+                 //    debugger;
+                 //    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
+                 //    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
+
+
+                 //}
+
+               
+                 //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
+                 //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
+
+               
+
+
+
+
+               $('#hdnAllEvents').val(JSON.stringify(allEvents));
+
+                ////--------------------- * Applying bg-Color for event dates * --------------------// 
+
+                //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
+                //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
              
 
-                 //--------------------- * Removing bg-Color  * --------------------//
+                //// //--------------------- * Removing bg-Color  * --------------------//
 
-                 $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
-                 $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
+
+                //$('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
+                //$('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
+
+
+
+                //var TodayDate= moment(today).format('YYYY-MM-DD')
+
+
+
+                //     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').addClass('ui-state-highlight')
+                //     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').css({ 'background-color': '#ffd19a!important' });
+
+                 
+
 
 
                // element.find('.fc-event-inner').before($("<div class=\"fc-event-icons\"></div>").html("<ul class=\"fc-icons\">" + "<li><img src='../images/hand.png' /></li>"  + "</ul>"));
@@ -206,6 +257,35 @@ var EndTimeOnEdit = '';
             },
             eventAfterRender: function (event, element) {
               
+             
+                var dateString = moment(event.start).format('YYYY-MM-DD');
+                //debugger;
+
+           
+                if ($.inArray(dateString, allEvents) != -1) { 
+                    debugger;
+                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
+                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
+
+
+                }
+
+                var TodayDate= moment(today).format('YYYY-MM-DD')
+
+
+
+                     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').addClass('ui-state-highlight')
+                     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').css({ 'background-color': '#ffd19a!important' });
+
+
+
+                //if ($.inArray(dateString, allEvents) == -1) {
+
+                //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
+                //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
+                //}
+                
+                
              //  $('.fc-content').remove();
               //  element.append("<img  src='../images/hand.png' />");
 
@@ -347,14 +427,14 @@ var EndTimeOnEdit = '';
         });
     }, 3600);
    
-    function IsDateHasEvent(date) {
-        var allEvents = [];
-        allEvents = $('#calendar').fullCalendar('clientEvents');
-        var event = $.grep(allEvents, function (v) {
-            return +v.start === +date;
-        });
-        return event.length > 0;
-    }
+    //function IsDateHasEvent(date) {
+    //    var allEvents = [];
+    //    allEvents = $('#calendar').fullCalendar('clientEvents');
+    //    var event = $.grep(allEvents, function (v) {
+    //        return +v.start === +date;
+    //    });
+    //    return event.length > 0;
+    //}
 
     $('.loader').delay(3150).fadeOut('slow');
 
