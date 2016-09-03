@@ -107,8 +107,18 @@ $(document).ready(function () {
                 title = '';
                 if (calEvent.title != "")
                 {
-                    titles = calEvent.title;
-                    BindSlotDropDown(titles);
+                    debugger;
+                    var ds = {};
+                    var Doctor = new Object();
+                    Doctor.DoctorID = $("#hdfDoctorID").val();
+                    Doctor.SearchDate = calEvent.start._i;
+                    ds = GetAllDoctorScheduleDetailsByDate(Doctor);
+                    if (ds != undefined) {
+
+                        BindTimes(ds);
+                    }
+                    //titles = calEvent.title;
+                   // BindSlotDropDown(titles);
                 }
                 AppendList(calEvent._start._i.split(' ')[0]);
                 // var date = $("#txtAppointmentDate").val();
@@ -278,8 +288,64 @@ $(document).ready(function () {
   
 });
 /*end of document.ready*/
+function ConvertTimeFormatFrom24hrTo12hr(Time) {
+    var TimeIn24hrFormat = Time;
+    var hourEnd = TimeIn24hrFormat.indexOf(":");
+    var H = +TimeIn24hrFormat.substr(0, hourEnd);
+    var h = H % 12 || 12;
+    var ampm = H < 12 ? "AM" : "PM";
+    //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+    TimeIn12hrFormat = moment(Time, ["h:mm A"]).format("hh:mm") + ampm;
 
+
+
+    return TimeIn12hrFormat;
+}
 /*Add New Calendar Event */
+function BindTimes(Records) {
+
+   // $("#tblTimes tr").remove();
+    AllotedEndTimes = [];
+    AllotedStartTimes = [];
+    ScheduleNo = 0;
+
+    if (Records.length == 0) {
+        AvailableCount = 0;
+    }
+
+
+    $.each(Records, function (index, Records) {
+        debugger;
+        var ScheduleID = Records.ID;
+
+        if (Records.Starttime != null && Records.Endtime != null) {
+
+            strttime = ConvertTimeFormatFrom24hrTo12hr(Records.Starttime);
+            endtime = ConvertTimeFormatFrom24hrTo12hr(Records.Endtime);
+
+            if (Records.IsAvailable == "True") {
+                var html = '<tr ScheduleID="' + Records.ID + '" ><td>' + strttime + "-" + endtime + '</td><td class="center"><img id="imgDelete" align="right" height="20" style="margin-right:10px" src="../images/Deleteicon1.png" title="Cancel" onclick="RemoveTime(\'' + ScheduleID + '\')"/><img id="imgUpdate"  height="18" align="right" src="../images/Editicon1.png" title="Change" onclick="BindScheduleOnEditClick(\'' + ScheduleID + '\')" /></td></tr>';
+                AllotedEndTimes.push(Records.Endtime);
+                AllotedStartTimes.push(Records.ID + "=" + strttime + "-" + endtime);
+                ScheduleNo = parseInt(ScheduleNo + 1);
+            }
+            else {
+                var html = '<tr ScheduleID="' + Records.ID + '" ><td><strike>' + strttime + "-" + endtime + '</td></strike><td></td></tr>';
+            }
+
+           
+
+            //$("#tblTimes").append(html);
+        }
+
+    });
+    BindSlotDropDown(AllotedStartTimes);
+    if (Records.length == 0) {
+      //  var html = '<tr><td><i>' + "No scheduled time!" + '</i></td></tr>';
+       // $("#tblTimes").append(html);
+    }
+
+}
 function refreshTime()
 {
     debugger;
@@ -341,7 +407,7 @@ function refreshList()
         // title = title + names[index].title + "<br />";
     }
     
-    debugger;
+  
     $('#calendar').fullCalendar('removeEventSource', json);
     var calID = $("#hdfDoctorID").val();
     
@@ -488,6 +554,25 @@ function RemoveFromList(AppointmentID) {
 
     // $('#calendar').fullCalendar('refetchEvents');
 
+}
+function GetAllScheduleDetails(scheduleID)
+{
+    var ds = {};
+    var table = {};
+    var Doctor = new Object();
+    Doctor.DocScheduleID = scheduleID;
+    var data = "{'docObj':" + JSON.stringify(Doctor) + "}";
+    ds = getJsonData(data, "Appointment.aspx/GetAllScheduleDetails");
+    table = JSON.parse(ds.d);
+    return table;
+}
+function GetAllDoctorScheduleDetailsByDate(Doctor) {
+    var ds = {};
+    var table = {};
+    var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
+    ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetAllDoctorScheduleDetailsByDate");
+    table = JSON.parse(ds.d);
+    return table;
 }
 function GetAllTimeAvailability(docID, date) {
 

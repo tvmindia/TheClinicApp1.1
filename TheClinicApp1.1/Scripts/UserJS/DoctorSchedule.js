@@ -117,7 +117,10 @@ var EndTimeOnEdit = '';
                 $("#txtStartTime").val('');
                 $("#txtEndTime").val('');
                 $("#txtMaxAppoinments").val('');
-                
+                $("#hdnScheduleID").val("");
+                $("#hdnIsErrorTime").val("");
+                $("#hdnIsDrChanged").val("No");
+
 
                 if (DoctorID != null && DoctorID != "") {
 
@@ -165,25 +168,20 @@ var EndTimeOnEdit = '';
              eventRender: function (event, element, view) {
                  debugger;
                  
-                 if ($('#hdnIsDrChanged').val() == "Yes") {
+
+                 //--1. All events are stored to allEvents array 
+                 //--2. When changing doctor, allevents array will be cleared by monitoring value of hiddenfield which is, hdnIsDrChanged
+                 //-- 3. By retrieving values from array , bg color is appied
+                 //-- 4.Color fr TODAY date will reapplied , as it loses its background color
+
+
+                 if ($('#hdnIsDrChanged').val() == "Yes") { //Checking doctor dropdown value changed , then allevents array is cleared, 
                      allEvents = [];
-                     $('#hdnIsDrChanged').val("");
+                     $('#hdnIsDrChanged').val(""); // -- this assignment is to ensure that allevents array is cleared onlt once after changing doctor dropdown
 
                  }
 
-
-
-
                  var dateString = moment(event.start).format('YYYY-MM-DD');
-
-                 //var array = $('#calendar').fullCalendar('clientEvents', function (event) {
-                 //    if (event.start == dateString) 
-                 //    {
-                 //        alert(1);
-                 //    }
-                 //})
-
-               
 
                 //--------------------- * Converting Start time from 24 hr Format to 12hr format * --------------------//  
                
@@ -193,58 +191,12 @@ var EndTimeOnEdit = '';
 
                 endTimeIn12hrFormat = ConvertTimeFormatFrom24hrTo12hr(event.EndTime);
                
-               element.context.textContent = StrtTimeIn12hrFormat;
+               element.context.textContent = StrtTimeIn12hrFormat+'..'; //Event data 
              
               
-               allEvents.push(dateString);
+               allEvents.push(dateString); //-- Event dates are pushed to array
           
-
-
-                 //if ($.inArray(dateString, allEvents) != -1) { 
-                 //    debugger;
-                 //    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
-                 //    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
-
-
-                 //}
-
-               
-                 //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
-                 //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
-
-               
-
-
-
-
                $('#hdnAllEvents').val(JSON.stringify(allEvents));
-
-                ////--------------------- * Applying bg-Color for event dates * --------------------// 
-
-                //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
-                //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
-             
-
-                //// //--------------------- * Removing bg-Color  * --------------------//
-
-
-                //$('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
-                //$('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
-
-
-
-                //var TodayDate= moment(today).format('YYYY-MM-DD')
-
-
-
-                //     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').addClass('ui-state-highlight')
-                //     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').css({ 'background-color': '#ffd19a!important' });
-
-                 
-
-
-
-               // element.find('.fc-event-inner').before($("<div class=\"fc-event-icons\"></div>").html("<ul class=\"fc-icons\">" + "<li><img src='../images/hand.png' /></li>"  + "</ul>"));
 
 
             },
@@ -257,34 +209,24 @@ var EndTimeOnEdit = '';
             },
             eventAfterRender: function (event, element) {
               
-             
-                var dateString = moment(event.start).format('YYYY-MM-DD');
-                //debugger;
+                //----* here BG color for evnts are applied by retrieving events from allevents array *-----//
 
-           
+                var dateString = moment(event.start).format('YYYY-MM-DD');
+                
+                ////--------------------- * Applying bg-Color for event dates * --------------------// 
                 if ($.inArray(dateString, allEvents) != -1) { 
                     debugger;
                     $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                     $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
 
-
                 }
 
-                var TodayDate= moment(today).format('YYYY-MM-DD')
-
-
+                ////--------------------- * Applying bg-Color for Today * --------------------// 
+                      var TodayDate= moment(today).format('YYYY-MM-DD')
 
                      $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').addClass('ui-state-highlight')
                      $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').css({ 'background-color': '#ffd19a!important' });
 
-
-
-                //if ($.inArray(dateString, allEvents) == -1) {
-
-                //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
-                //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
-                //}
-                
                 
              //  $('.fc-content').remove();
               //  element.append("<img  src='../images/hand.png' />");
@@ -388,11 +330,12 @@ var EndTimeOnEdit = '';
            eventClick: function (date, jsEvent, view) {
                debugger;
 
-
-               $("#txtStartTime").val('');
-               $("#txtEndTime").val('');
-               $("#txtMaxAppoinments").val('');
-
+                $("#txtStartTime").val('');
+                $("#txtEndTime").val('');
+                $("#txtMaxAppoinments").val('');
+                $("#hdnScheduleID").val("");
+                $("#hdnIsErrorTime").val("");
+                $("#hdnIsDrChanged").val("No");
 
 
                //var clickedDate = date;
@@ -439,13 +382,66 @@ var EndTimeOnEdit = '';
     $('.loader').delay(3150).fadeOut('slow');
 
     /*Modal dialog Cancel button click*/
-    $('.btnCncl').click(function () {
+    $('#Cancel').click(function () {
         $("#txtTitle").val("");
         $("#txtEndDate").val("");
         $("#txtstartTime").val("");
         $("#txtEndTime").val("");
         $("#myModal").dialog("close");
     });
+
+
+    $('#Okay').click(function () {
+        debugger;
+
+        var Appointments = new Object();
+        ScheduleID = document.getElementById('hdnScheduleID').value;
+        
+        Appointments.ScheduleID = ScheduleID;
+
+        var ds = {};
+        var table = {};
+
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelAllAppoinments");
+        table = JSON.parse(ds.d);
+
+       
+        if (table.status == 1) {
+
+
+
+
+
+            GetScheduledTimesByDate();
+            BindScheduledDates();
+
+            var jsonDrSchedule = {};
+
+            var Doctor = new Object();
+            Doctor.DoctorID = DoctorID;
+
+            jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+            if (jsonDrSchedule != undefined) {
+
+                $('#calendar').fullCalendar('removeEventSource', json);
+
+                json = jsonDrSchedule;
+
+                $('#calendar').fullCalendar('addEventSource', json);
+                $('#calendar').fullCalendar('refetchEvents');
+            }
+
+
+            // $('#calendar').fullCalendar('refetchEvents');
+        }
+
+
+
+
+        $("#myModal").dialog("close");
+        });
+
 
     /*Modal dialog OK button click*/
     $('.btnOkay').click(function () {
@@ -863,6 +859,7 @@ var EndTimeOnEdit = '';
 
     function RemoveTime(ScheduleID) {
         debugger;
+        document.getElementById('hdnScheduleID').value = ScheduleID;
 
     var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
@@ -903,15 +900,15 @@ var EndTimeOnEdit = '';
 
   else {
         OpenModal();
-        $("#tblPatients tr").remove();
-
-
+       //  $("#tblPatients tr").remove();
+        $('tblPatients tr:not(:first)').remove();
+        debugger;
         Records = table;
 
         $.each(Records, function (index, Records) {
 
-           
-            var html = '<tr><td>' +Records.Name + '</td></tr>';
+        
+            var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
                 $("#tblPatients").append(html);
             
@@ -1051,7 +1048,7 @@ var EndTimeOnEdit = '';
     function AddSchedule() {
         debugger;
 
-        if (  $("#hdnIsErrorTime").val()== false) {
+        if (  $("#hdnIsErrorTime").val()== "false") {
     
         var JsonNewSchedule = {};
         var Isalloted = false;

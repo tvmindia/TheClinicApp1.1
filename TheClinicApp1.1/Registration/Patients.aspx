@@ -1214,7 +1214,7 @@ function AppointmentIsAbsent(Appointments)
                         <span class="tooltip1">
                             <span class="count" style="background-color:#e05d46!important;">
                                 <asp:Label ID="lblAppointmentCount" runat="server" Text="0"></asp:Label></span>
-                                <img src="../images/Appoinments.png" />
+                                <img src="../images/Appoinments.jpg" />
                             <span class="tooltiptext1">Today's Appointments</span>
                         </span>
                     </a>

@@ -168,7 +168,7 @@ namespace TheClinicApp1._1.Appointment
                     events.Add(new Event()
                     {
                         id = ds.Tables[0].Rows[i]["event_id"].ToString(),
-                        title = ds.Tables[0].Rows[i]["title"].ToString(),
+                        title = ds.Tables[0].Rows[i]["title"].ToString() + " out of " + ds.Tables[0].Rows[i]["PatientLimit"].ToString(),
                         start = ds.Tables[0].Rows[i]["event_start"].ToString(),
                         end = ds.Tables[0].Rows[i]["event_end"].ToString()
                     });
@@ -648,6 +648,29 @@ namespace TheClinicApp1._1.Appointment
         }
 
         #endregion PresentPatientAppointment
+
+        #region GetAllScheduleDetails
+        [System.Web.Services.WebMethod]
+        public static string GetAllScheduleDetails(ClinicDAL.Doctor docObj)
+        {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            docObj.ClinicID = Convert.ToString(UA.ClinicID);
+           
+            if (UA != null)
+            {
+
+                docObj.GetScheduleDetailsByScheduleID();
+
+                //Converting to Json
+                return jsSerializer.Serialize(docObj);
+            }
+            return jsSerializer.Serialize("");
+        }
+        #endregion GetAllScheduleDetails
 
         public static IEnumerable<DateTime> GetWorkingHourIntervals(DateTime clockIn, DateTime clockOut, int appointmentMinutes)
         {

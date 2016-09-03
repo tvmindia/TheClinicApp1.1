@@ -508,6 +508,59 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion GetDoctorScheduleDetailsByDoctorIDforMobile
 
+
+       
+        #region  GetReminderScheduleDetailsforMobile
+        public DataSet GetReminderScheduleDetailsforMobile()
+        {
+            if (DoctorID == "")
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataSet ds = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetReminderScheduleDetailsforMobile";
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.DoctorID);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);               
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = " GetReminderScheduleDetailsforMobile";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return ds;
+        }
+
+        #endregion  GetReminderScheduleDetailsforMobile
+
         #region GetAllSchedulesByDoctorID
 
         public DataSet GetAllSchedulesByDoctorID()
