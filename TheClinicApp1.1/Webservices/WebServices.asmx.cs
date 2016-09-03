@@ -313,7 +313,7 @@ namespace TheClinicApp1._1.Webservices
 
         #endregion
 
-        #region SchedulesTiles
+        #region Schedules_Reminder_Tiles
 
         #region GetDoctorScheduleDetails
         /// <summary>
@@ -356,9 +356,46 @@ namespace TheClinicApp1._1.Webservices
         }
         #endregion  GetAppointmentsDateandCount
 
-   
+        #region GetReminderScheduleDetails
+        /// <summary>
+        ///  GET APPOINTMENT DATES AND COUNT OF PATIENTS FOR MOBILE APP 
+        /// </summary>
+        /// <returns>JSON of list of visit search</returns>
+        [WebMethod]
+        public string GetReminderScheduleDetails(string doctorid, string clinicid)
+        {  //return msg data initialization
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
 
+            try
+            {   //Retrieving details
 
+                ClinicDAL.Doctor docobj = new ClinicDAL.Doctor();
+                docobj.ClinicID = clinicid;
+                docobj.DoctorID = doctorid;
+
+                ds = docobj.GetReminderScheduleDetailsforMobile();
+                dt = ds.Tables[0];
+                if (dt.Rows.Count == 0) { throw new Exception(constants.NoItems); }
+            }
+            catch (Exception ex)
+            {
+                //Return error message
+                DataTable ErrorMsg = new DataTable();
+                ErrorMsg.Columns.Add("Flag", typeof(Boolean));
+                ErrorMsg.Columns.Add("Message", typeof(String));
+                DataRow dr = ErrorMsg.NewRow();
+                dr["Flag"] = false;
+                dr["Message"] = ex.Message;
+                ErrorMsg.Rows.Add(dr);
+                dt = ErrorMsg;
+            }
+            finally
+            {
+            }
+            return getDbDataAsJSON(dt);
+        }
+        #endregion  GetAppointmentsDateandCount
 
         #endregion
 

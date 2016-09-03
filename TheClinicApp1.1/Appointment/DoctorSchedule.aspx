@@ -416,10 +416,6 @@
             if (DoctorID != "" && DoctorID != null) {
                 GetScheduleByDrID(DoctorID);
 
-
-
-                debugger;
-
                 //ele.attr('data-timepicki-tim', tim);
                 //ele.attr('data-timepicki-mini', mini);
             }
@@ -436,7 +432,7 @@
 
         function SetDefaultTime(inputID, time) {
 
-            debugger;
+         
             if (time == null)
             {
                 time = GetRegularScheduleByDrID();
@@ -478,13 +474,12 @@
         }
 
         function OpenModal() {
-            debugger;
+           
             $("#myModal").dialog('open');
         }
         function SetDropdown(e)
         {
-            debugger;
-
+            
             DoctorID = e.value;
            
             var jsonDrSchedule = {};
@@ -501,60 +496,25 @@
 
                 BindScheduledDates();
 
+                //---------------* Refreshing calender(By removing current json and adding the new one) *------------------//
+
                 $('#calendar').fullCalendar('removeEvents');
               
-                //alert($('#hdnAllEvents').length);
-              
-                var value = $('#hdnAllEvents').val(); //retrieve array
-                value = JSON.parse(value);
+                // --- 1.previous events are retreived from  hiddenfield hdnAllEvents
+                //---- 2.then event bg color is removed
 
-                for (var i = 0; i <value.length; i++) {
+                var Events = $('#hdnAllEvents').val(); //retrieve array
+                EventsToBeRemoved = JSON.parse(Events);
+
+                for (var i = 0; i < EventsToBeRemoved.length; i++) {
                     
-                    $('#calendar').find('.fc-day[data-date="' + value[i] + '"]').removeClass('ui-state-highlight');
-                    $('#calendar').find('.fc-day[data-date="' + value[i] + '"]').removeAttr('background-color');
+                    $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeClass('ui-state-highlight');
+                    $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeAttr('background-color');
                   
                 }
 
-                //$('#calendar').fullCalendar('removeEvents', function (event) {
-                //    alert(1);
-                //});
-              
-
                 $('#calendar').fullCalendar('addEventSource', json);
-
-                //$('#calendar').fullCalendar('addEventSource', function (event) {
-
-                //    debugger;
-                //    if (  $('#hdnIsDrChanged').val() == "Yes" ) {
-
-                   
-
-                //    var dateString = moment(event.start).format('YYYY-MM-DD');
-
-                //    //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
-                //    //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
-
-                //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeClass('ui-state-highlight');
-                //    $('#calendar').find('.fc-day[data-date!="' + dateString + '"]').removeAttr('background-color');
-
-
-                //    //var today = new Date();
-                //    //var TodayDate= moment(today).format('YYYY-MM-DD')
-                //    }
-
-
-                //    //     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').addClass('ui-state-highlight')
-                //    //     $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').css({ 'background-color': '#ffd19a!important' });
-
-
-
-
-                //});
-
-
-
                 $('#calendar').fullCalendar('rerenderEvents');
-
 
             }
 
