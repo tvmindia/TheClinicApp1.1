@@ -479,7 +479,8 @@
         }
         function SetDropdown(e)
         {
-            
+            debugger;
+            ClearControls();
             DoctorID = e.value;
            
             var jsonDrSchedule = {};
@@ -504,20 +505,39 @@
                 //---- 2.then event bg color is removed
 
                 var Events = $('#hdnAllEvents').val(); //retrieve array
-                EventsToBeRemoved = JSON.parse(Events);
 
-                for (var i = 0; i < EventsToBeRemoved.length; i++) {
-                    
-                    $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeClass('ui-state-highlight');
-                    $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeAttr('background-color');
-                  
+                if (Events != null && Events != "" )
+                {
+                    EventsToBeRemoved = JSON.parse(Events);
+
+                    for (var i = 0; i < EventsToBeRemoved.length; i++) {
+
+                        $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeClass('ui-state-highlight');
+                        $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeAttr('background-color');
+
+                    }
+
                 }
 
+              
                 $('#calendar').fullCalendar('addEventSource', json);
                 $('#calendar').fullCalendar('rerenderEvents');
 
             }
 
+
+        }
+
+        function ClearControls()
+        {
+            $("#txtStartTime").val("");
+            $("#txtEndTime").val("");
+            $("#txtMaxAppoinments").val("");
+
+            $("#hdnScheduleID").val("");
+            $("#hdnIsErrorTime").val("");
+            $("#hdnIsDrChanged").val("No");
+        
 
         }
       
