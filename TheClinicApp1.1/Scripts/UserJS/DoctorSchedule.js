@@ -117,7 +117,10 @@ var EndTimeOnEdit = '';
                 $("#txtStartTime").val('');
                 $("#txtEndTime").val('');
                 $("#txtMaxAppoinments").val('');
-                
+                $("#hdnScheduleID").val("");
+                $("#hdnIsErrorTime").val("");
+                $("#hdnIsDrChanged").val("No");
+
 
                 if (DoctorID != null && DoctorID != "") {
 
@@ -327,11 +330,12 @@ var EndTimeOnEdit = '';
            eventClick: function (date, jsEvent, view) {
                debugger;
 
-
-               $("#txtStartTime").val('');
-               $("#txtEndTime").val('');
-               $("#txtMaxAppoinments").val('');
-
+                $("#txtStartTime").val('');
+                $("#txtEndTime").val('');
+                $("#txtMaxAppoinments").val('');
+                $("#hdnScheduleID").val("");
+                $("#hdnIsErrorTime").val("");
+                $("#hdnIsDrChanged").val("No");
 
 
                //var clickedDate = date;
