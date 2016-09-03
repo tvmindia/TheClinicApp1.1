@@ -378,7 +378,7 @@ var EndTimeOnEdit = '';
     $('.loader').delay(3150).fadeOut('slow');
 
     /*Modal dialog Cancel button click*/
-    $('.btnCncl').click(function () {
+    $('#Cancel').click(function () {
         $("#txtTitle").val("");
         $("#txtEndDate").val("");
         $("#txtstartTime").val("");
@@ -842,15 +842,15 @@ var EndTimeOnEdit = '';
 
   else {
         OpenModal();
-        $("#tblPatients tr").remove();
-
-
+       //  $("#tblPatients tr").remove();
+        $('tblPatients tr:not(:first)').remove();
+        debugger;
         Records = table;
 
         $.each(Records, function (index, Records) {
 
-           
-            var html = '<tr><td>' +Records.Name + '</td></tr>';
+        
+            var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
                 $("#tblPatients").append(html);
             
