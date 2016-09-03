@@ -1109,8 +1109,7 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 throw new Exception("ScheduleID is Empty!!");
             }
-          
-            try
+             try
             {
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
@@ -1119,13 +1118,11 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetScheduleDetailsByScheduleID]";
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-                cmd.Parameters.Add("@ScheduleID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DocScheduleID);
-              
+                cmd.Parameters.Add("@ScheduleID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DocScheduleID);         
                 sda = new SqlDataAdapter(cmd);
                 ds = new DataSet();
                 sda.Fill(ds);
             }
-
             catch (Exception ex)
             {
                 UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];

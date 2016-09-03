@@ -453,11 +453,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "ViewAndFilterTodayPatientAppointments";
-
-
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 //cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode;
-                cmd.Parameters.Add("@date", SqlDbType.Date).Value = "2016-08-11";//now.ToString("yyyy-MM-dd");
+                cmd.Parameters.Add("@date", SqlDbType.Date).Value = now.ToString("yyyy-MM-dd");
                 cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
                 cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
                 cmd.Parameters.AddWithValue("@PageSize", PageSize);
