@@ -357,7 +357,7 @@ border-bottom-right-radius: 0px;
          }
         .fc-event[href], .fc-event.fc-draggable {
     cursor: pointer;
-    width: 15px!important;
+    /*width: 15px!important;*/
 }
          /*.fc-day-grid-event .fc-content {
              background-color:#256db7;
@@ -583,11 +583,13 @@ border-bottom-right-radius: 0px;
         {
             debugger;
             var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
+ $.each(title, function (index, Records) {
             var option = document.createElement("option");
-            option.text = title;
-            option.value="0";
+            option.text = title[index].split("=")[1];
+            option.value=title[index].split("=")[0];;
             ddl.add(option);
-        
+});
+      
         }
         function AppendList(date)
         {
@@ -741,7 +743,7 @@ border-bottom-right-radius: 0px;
                                                           
                                                       </tr>
                                                       <tr>
-                                                          <td> <label id="timeSlot" style="display:none">Select Time Slots</label></td>
+                                                          <td> <label id="timeSlot" style="display:none">Time Slots</label></td>
                                                           <td>  <asp:DropDownList ID="ddltimeSlot" CssClass="drop" runat="server" AutoPostBack="true" Width="350px" Height="31px" style="display:none;">
                                                              
                                                 </asp:DropDownList>
