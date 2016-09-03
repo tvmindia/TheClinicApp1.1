@@ -26,7 +26,7 @@ namespace TheClinicApp1._1.Admin
            if(!IsPostBack)
            {
                BindDropDownGroupforDoc();
-           }
+           } 
             
         }
 

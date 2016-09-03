@@ -726,7 +726,7 @@ namespace TheClinicApp1._1.Admin
          /// <returns></returns>
          [System.Web.Services.WebMethod]
          public static string BindUserDetailsOnEditClick(User userObj)
-         {
+         { 
 
              ClinicDAL.UserAuthendication UA;
              UIClasses.Const Const = new UIClasses.Const();

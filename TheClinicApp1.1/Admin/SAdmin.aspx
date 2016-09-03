@@ -28,7 +28,7 @@
          </ul>
          <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
          </div>
-         
+          
          <!-- Right Main Section -->
          <div class="right_part" style="background-color:white;">
          <div class="tagline">
