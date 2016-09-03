@@ -7,9 +7,10 @@ var start, end = "";
 var finaltime = "";
 var schID = "";
 var checkItems = "";
+var scheduleId = "";
 $(document).ready(function () {
 
-
+   
     $("#txtstartTime").timepicki();
     $("#txtEndTime").timepicki();
     //$("#myModal").dialog({
@@ -120,13 +121,14 @@ $(document).ready(function () {
                     //titles = calEvent.title;
                    // BindSlotDropDown(titles);
                 }
+                scheduleId = $("#hdfScheduleID").val();
                 AppendList(calEvent._start._i.split(' ')[0]);
                 // var date = $("#txtAppointmentDate").val();
 
               //  var ScheduleID = GetAllNames(calEvent.id);
                // schID = ScheduleID;
-                $("#hdfScheduleID").val(calEvent.id);
-                var names = GetAllPatientList(calEvent.id)
+              
+               var names = GetAllPatientList(scheduleId)
                 for (index = 0; index < names.length; ++index) {
                     var hours = names[index].allottedTime.split('.')[0];
                     var minute = names[index].allottedTime.split('.')[1];
@@ -168,7 +170,7 @@ $(document).ready(function () {
                 debugger;
                 title = "";
                 var docId = $("#hdfDoctorID").val();
-                var timeList = GetAllottedTime(docId, eventStartDate, calEvent.id);
+                var timeList = GetAllottedTime(docId, eventStartDate, scheduleId);
                 var html = "";
                 for (index = 0; index < timeList.length - 1; index++) {
                     checkItems = timeList.length - 1;
@@ -300,6 +302,77 @@ function ConvertTimeFormatFrom24hrTo12hr(Time) {
 
 
     return TimeIn12hrFormat;
+}
+function fillPatientDetails() {
+    debugger;
+    clearTextBoxes();
+    clearDropDown();
+    showDropDown();
+    var titles = "";
+    document.getElementById("TimeAvailability").innerHTML = '';
+    document.getElementById("listBody").innerHTML = '';
+    title = '';
+    scheduleId = $("#hdfScheduleID").val();
+    AppendList(eventStartDate.split(' ')[0]);
+    // var date = $("#txtAppointmentDate").val();
+
+    //  var ScheduleID = GetAllNames(calEvent.id);
+    // schID = ScheduleID;
+
+    var names = GetAllPatientList(scheduleId)
+    for (index = 0; index < names.length; ++index) {
+        var hours = names[index].allottedTime.split('.')[0];
+        var minute = names[index].allottedTime.split('.')[1];
+        if (minute == undefined || minute == "") {
+            minute = names[index].allottedTime.split(':')[1];
+        }
+        hours = names[index].allottedTime[0] + names[index].allottedTime[1];
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        var hh = hours;
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        if (hours >= 12) {
+            hours = hh - 12;
+            ampm = "PM";
+        }
+
+        var time = hours + '.' + minute + ampm;
+        if (names[index].isAvailable == "3") {
+            title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
+        }
+        else {
+            title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+        }
+        var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
+        //var newlabel = document.createElement("Label");
+        //newlabel.innerHTML = title;
+        // parentDiv.appendChild(newlabel);
+        parentDiv.innerHTML = title;
+        // title = title + names[index].title + "<br />";
+    }
+    debugger;
+    title = "";
+    var docId = $("#hdfDoctorID").val();
+    var timeList = GetAllottedTime(docId, eventStartDate, scheduleId);
+    var html = "";
+    for (index = 0; index < timeList.length - 1; index++) {
+        checkItems = timeList.length - 1;
+        var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
+        startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
+
+
+        var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
+        endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
+        var StartAndEnd = startTime + "-" + endTime;
+        // var timeList = GetTimeList();
+        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime'  id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+
+
+    }
+    debugger;
+    document.getElementById("availableSlot").style.display = "block";
+    document.getElementById("TimeAvailability").style.display = "block";
+    $("#TimeAvailability").append(html);
+    timeList = "";
 }
 /*Add New Calendar Event */
 function BindTimes(Records) {

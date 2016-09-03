@@ -406,7 +406,10 @@ border-bottom-right-radius: 0px;
     </style>
     <script>
         $(document).ready(function () {
-           
+            var bindTitle="";
+            $('#ddltimeSlot').change(function() {
+                alert( "Handler for .change() called." );
+            });
             var ac=null;
             ac = <%=listFilter %>;
 
@@ -582,11 +585,17 @@ border-bottom-right-radius: 0px;
         function BindSlotDropDown(title)
         {
             debugger;
+            bindTitle=title;
             var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
  $.each(title, function (index, Records) {
             var option = document.createElement("option");
             option.text = title[index].split("=")[1];
-            option.value=title[index].split("=")[0];;
+            option.value=title[index].split("=")[0];
+            if(title[0])
+            {
+                $("#ddltimeSlot option:selected").text=title[index].split("=")[1];
+                $("#hdfScheduleID").val(title[index].split("=")[0]);
+            }
             ddl.add(option);
 });
       
@@ -604,6 +613,15 @@ border-bottom-right-radius: 0px;
             $('#<%=lblList.ClientID%>').text('');
             $('#<%=lblAppointment.ClientID%>').text(appList).append(date);
             $('#<%=lblList.ClientID%>').append(list).append(date);
+        }
+        function TimelistOnchange(i)
+        {
+            debugger;
+            // var i=  $("#ddltimeSlot option:selected").text(); 
+            var scheduleId=i.value;
+            $("#hdfScheduleID").val(scheduleId);
+            fillPatientDetails();
+            BindSlotDropDown(bindTitle)
         }
     </script>
     <div class="main_body">
@@ -744,9 +762,12 @@ border-bottom-right-radius: 0px;
                                                       </tr>
                                                       <tr>
                                                           <td> <label id="timeSlot" style="display:none">Time Slots</label></td>
-                                                          <td>  <asp:DropDownList ID="ddltimeSlot" CssClass="drop" runat="server" AutoPostBack="true" Width="350px" Height="31px" style="display:none;">
+                                                          <td>  
+                                                            
+                                                              <asp:DropDownList ID="ddltimeSlot" onchange="TimelistOnchange(this); return true;" CssClass="drop" runat="server" AutoPostBack="true" Width="350px" Height="31px" style="display:none;">
                                                              
                                                 </asp:DropDownList>
+                                                
                                                              <label id="br2" style="display:none;"><br /></label>
                                                           </td>
                                                       </tr>

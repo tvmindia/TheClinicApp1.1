@@ -792,5 +792,15 @@ namespace TheClinicApp1._1.Appointment
             Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "GetDoctorID()", true);
         }
 
+        //protected void ddltimeSlot_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    string i = ddltimeSlot.SelectedValue;
+        //}
+
+        //protected void ddltimeSlot_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //  string i=ddltimeSlot.SelectedValue;
+        //}
+
     }
 }
