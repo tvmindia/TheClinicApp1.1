@@ -39,7 +39,7 @@ namespace TheClinicApp1._1.Masters
             System.Web.UI.HtmlControls.HtmlGenericControl logout = (System.Web.UI.HtmlControls.HtmlGenericControl)ContentPlaceHolder1.FindControl("log");
             System.Web.UI.HtmlControls.HtmlImage BigLogo = (System.Web.UI.HtmlControls.HtmlImage)ContentPlaceHolder1.FindControl("biglogo");
             System.Web.UI.HtmlControls.HtmlImage SmallLogo = (System.Web.UI.HtmlControls.HtmlImage)ContentPlaceHolder1.FindControl("smalllogo");
-            if (BigLogo != null)
+             if (BigLogo != null)
             {
                 BigLogo.Src = "../Handler/ImageHandler.ashx?ClinicLogoID=" + UA.ClinicID;
                 SmallLogo.Src = "../Handler/ImageHandler.ashx?ClinicLogosmallID=" + UA.ClinicID;
