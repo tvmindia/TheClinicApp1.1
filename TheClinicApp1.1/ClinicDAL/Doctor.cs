@@ -1093,6 +1093,61 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion GetAllScheduleDetailsByDoctorID
 
+        #region GetScheduleDetailsByScheduleID
+
+
+        public DataSet GetScheduleDetailsByScheduleID()
+         {
+            SqlConnection con = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (DocScheduleID == "")
+            {
+                throw new Exception("ScheduleID is Empty!!");
+            }
+          
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetScheduleDetailsByScheduleID]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@ScheduleID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DocScheduleID);
+              
+                sda = new SqlDataAdapter(cmd);
+                ds = new DataSet();
+                sda.Fill(ds);
+            }
+
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetScheduleDetailsByScheduleID";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return ds;
+
+        }
+        #endregion GetScheduleDetailsByScheduleID
+
 
         #region GetAllDoctorScheduleDetailsByDate
         public DataSet GetAllDoctorScheduleDetailsByDate()

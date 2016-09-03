@@ -582,9 +582,10 @@ namespace TheClinicApp1._1.Appointment
 
             if (UA != null)
             {
-
-                AppointObj.status = AppointObj.PatientAbsent().ToString();
-
+                AppointObj.AppointmentStatus = 2;//absent
+                AppointObj.UpdatedBy = UA.userName;
+                AppointObj.ClinicID = UA.ClinicID.ToString();
+                AppointObj.status = AppointObj.PatientAppointmentStatusUpdate().ToString();
                 //Converting to Json
                 return jsSerializer.Serialize(AppointObj);
             }
@@ -609,7 +610,10 @@ namespace TheClinicApp1._1.Appointment
 
             if (UA != null)
             {
-                AppointObj.status = AppointObj.CancelAppointment().ToString();
+                AppointObj.AppointmentStatus = 3;
+                AppointObj.UpdatedBy = UA.userName;
+                AppointObj.ClinicID = UA.ClinicID.ToString();
+                AppointObj.status = AppointObj.PatientAppointmentStatusUpdate().ToString();
 
                 //Converting to Json
                 return jsSerializer.Serialize(AppointObj);
@@ -631,8 +635,11 @@ namespace TheClinicApp1._1.Appointment
 
             if (UA != null)
             {
-
-                AppointObj.status = AppointObj.CancelAppointment().ToString();
+                AppointObj.AppointmentStatus = 1;
+                AppointObj.UpdatedBy = UA.userName;
+                AppointObj.ClinicID = UA.ClinicID.ToString();
+                AppointObj.status = AppointObj.PatientAppointmentStatusUpdate().ToString();
+              
 
                 //Converting to Json
                 return jsSerializer.Serialize(AppointObj);

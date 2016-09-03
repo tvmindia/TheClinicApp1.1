@@ -533,18 +533,14 @@ border-bottom-right-radius: 0px;
             }
 
         }
-        function BindPatient(Records)
-        {
-           
-            $("#txtPatientName").val(Records.Name);
-            $("#txtPatientMobile").val(Records.Phone);
-            $("#txtPatientPlace").val(Records.Address);
-     
-               
-        }
+       function BindPatient(Records)
+       {
+        $("#txtPatientName").val(Records.Name);
+        $("#txtPatientMobile").val(Records.Phone);
+        $("#txtPatientPlace").val(Records.Address);
+       }
 
         function GetPatientDetails(Patient) {
-         
             var ds = {};
             var table = {};
             var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";

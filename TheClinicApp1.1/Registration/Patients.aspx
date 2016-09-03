@@ -66,9 +66,11 @@
                     font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
                     font-size: 16px;
                 }
-                 .reged{background-color: gray!important;} 
+                 .reged{background-color: #ECFCEA!important;} 
 
                 .even{background-color: white;} 
+
+                .todays_appointment_link{z-index:25!important;}
 
             
         </style>
@@ -496,15 +498,7 @@
                 return table;
             }
 
-            function CancelAppointment(Appointments)
-            {
-                var ds = {};
-                var table = {};
-                var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
-                ds = getJsonData(data, "../Appointment/Appointment.aspx/CancelAppointment");
-                table = JSON.parse(ds.d);
-                return table;
-            }
+           
 
             function DeleteTodayPatientByID(PatientID) {  //Deletion In Today's Registration
 
@@ -993,7 +987,7 @@
             TodayRegRow = null;
 
 
-            //---------------------- * Bind Today's Appointments Gridview *--------------------------------------------------//
+           //------------------------------------------------* Bind Today's Appointments Gridview *--------------------------------------------------//
 
             var TodayAppoRow;
             function TodayAppointmentSuccess(response) 
@@ -1022,19 +1016,21 @@
                         $("td", TodayAppoRow).eq(4).html($(this).find("Mobile").text());
                         $("td", TodayAppoRow).eq(5).html($(this).find("AllottingTime").text());
                         $("td", TodayAppoRow).eq(6).html($(this).find("AppointmentID").text());
+                        var appointid=$(this).find("AppointmentID").text();
                         var currntrowobj=$(this);
                         if(currntrowobj.find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
                         {
+  
                             $("td", TodayAppoRow).removeClass("reged");
                             $("td", TodayAppoRow).eq(0).html($('<img />')
                             .attr('src', "" + '../images/NonregisteredUSer.png' + ""));
-                            $("td", TodayAppoRow).eq(1).html('<select name="Action" onchange="DDAction(this.value);"><option value="-1">--Select--</option><option value="0">Cancel</option></select>');
+                            $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="0">Absent</option></select>');
                         }
                         if(currntrowobj.find("PatientID").text()!='00000000-0000-0000-0000-000000000000')
                         {
                             $("td", TodayAppoRow).addClass("reged");
                             $("td", TodayAppoRow).eq(0).html($('<img />'));
-                            $("td", TodayAppoRow).eq(1).html('<select name="Action" onchange="DDAction(this.value);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Cancel</option></select>');
+                            $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Absent</option></select>');
                         }
                         $("td", TodayAppoRow).eq(7).html(currntrowobj.find("PatientID").text());
                         $("[id*=dtgTodaysAppointment]").append(TodayAppoRow);
@@ -1086,11 +1082,77 @@
             TodayAppoRow = null;
 
 
-            function DDAction(ddobj,currntrowobj)
+
+
+
+
+    function DDAction(ddobj)
             {
-                debugger;
-                alert(ddobj);
+             if(ddobj.value==0)//cancel apppointment
+             {
+                 if(confirm("Are You Sure?"))
+                 {
+                     var Appointments=new Object();
+                     Appointments.AppointmentID=ddobj.id;
+                     AppointmentIsAbsent(Appointments);
+                     GetTodayPatientAppointments(1);
+                 }
+             }
+            if(ddobj.value==1)//patient present
+            {
+                if(confirm("Are You Sure?"))
+                {
+                    var Appointments=new Object();
+                    Appointments.AppointmentID=ddobj.id;
+                    AppointmentIsPresent(Appointments);
+                    GetTodayPatientAppointments(1);
+                }
+               
             }
+            }
+ function CancelAppointment(Appointments)
+            {
+                var ds = {};
+                var table = {};
+                var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+                ds = getJsonData(data, "../Appointment/Appointment.aspx/CancelAppointment");
+                table = JSON.parse(ds.d);
+                return table;
+            }
+
+function AppointmentIsPresent(Appointments)
+{
+   debugger;
+    try
+    {
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        jsonResult = getJsonData(data, "../Appointment/Appointment.aspx/PresentPatientAppointment");
+         var table = {};
+        table = JSON.parse(jsonResult.d);
+    }
+    catch(e)
+    {
+      
+    }
+    return table;
+}
+
+function AppointmentIsAbsent(Appointments)
+{
+    debugger;
+    try
+    {
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        jsonResult = getJsonData(data, "../Appointment/Appointment.aspx/AbsentPatientAppointment");
+        var table = {};
+        table = JSON.parse(jsonResult.d);
+    }
+    catch(e)
+    {
+      
+    }
+    return table;
+}
 
         </script>
 
@@ -1150,7 +1212,7 @@
                     </a>
                     <a class="todays_appointment_link" onclick="OpenModal('3');">
                         <span class="tooltip1">
-                            <span class="count">
+                            <span class="count" style="background-color:#e05d46!important;">
                                 <asp:Label ID="lblAppointmentCount" runat="server" Text="0"></asp:Label></span>
                                 <img src="../images/Appoinments.png" />
                             <span class="tooltiptext1">Today's Appointments</span>

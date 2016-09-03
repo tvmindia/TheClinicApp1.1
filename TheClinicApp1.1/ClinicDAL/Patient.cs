@@ -143,6 +143,18 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+
+        public string AppointmentID
+        {
+            get;
+            set;
+        }
+        public Boolean IsAppointed
+        {
+            get;
+            set;
+        }
+        
         #endregion FileProperty
         #endregion Properties
 
@@ -351,10 +363,11 @@ namespace TheClinicApp1._1.ClinicDAL
         /// <summary>
         /// Insert Patients On save Click
         /// </summary>
-        public void AddPatientDetails()
+        public int AddPatientDetails()
         {
 
             SqlConnection con = null;
+            SqlParameter Output = null;
             try
             {
                 
@@ -379,20 +392,22 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 pud.Parameters.Add("@image", SqlDbType.Image, 0).Value = Picupload;
-                pud.Parameters.Add("@ImageType", SqlDbType.NVarChar, 6).Value = ImageType;               
-                SqlParameter Output = new SqlParameter();
+                pud.Parameters.Add("@ImageType", SqlDbType.NVarChar, 6).Value = ImageType;
+                pud.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = (AppointmentID!=null)?Guid.Parse(AppointmentID):Guid.Empty;
+                Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
                 Output.Direction = ParameterDirection.Output;
                 pud.Parameters.Add(Output);              
                 pud.ExecuteNonQuery();
 
-                if (Output.Value.ToString() == "")
+                if (Output.Value.ToString() == "0")
                 {
                     //not successfull   
 
                     var page = HttpContext.Current.CurrentHandler as Page;
                     eObj.InsertionNotSuccessMessage(page);
+                    return 0;
 
                 }
                 else
@@ -401,12 +416,13 @@ namespace TheClinicApp1._1.ClinicDAL
                     string msg = Messages.PatInsertionSuccessFull;
                     var page = HttpContext.Current.CurrentHandler as Page;
                     eObj.InsertionSuccessMessage1(page,msg);
+                   
 
 
                 }
-
-
-            }
+                
+                
+                }
             catch (Exception ex)
             {
                 eObj.Description = ex.Message;
@@ -425,6 +441,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+            return int.Parse(Output.Value.ToString());
             
         }
         #endregion AddPatientDetails
@@ -456,6 +473,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@Occupation", SqlDbType.NVarChar, 255).Value = Occupation;
                 pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+
+              
+                
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
