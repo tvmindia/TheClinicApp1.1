@@ -183,7 +183,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
                 sda = new SqlDataAdapter();
-                cmd.ExecuteNonQuery();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds,"DoctorTokens");
