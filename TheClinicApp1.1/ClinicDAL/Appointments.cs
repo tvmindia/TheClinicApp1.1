@@ -28,7 +28,6 @@ namespace TheClinicApp1._1.ClinicDAL
         {
             get;
             set;
-
         }
         public string ScheduleID
         {
@@ -65,7 +64,6 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-
         public string AllottingTime
         {
             get;
@@ -724,7 +722,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion MobileMethods
 
-          #region GetAppointedPatientDetails
+        #region GetAppointedPatientDetails
          public DataSet GetAppointedPatientDetails()
         {
             SqlConnection con = null;
@@ -776,7 +774,7 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion GetAppointedPatientDetails
 
-         #region GetAppointedPatientDetailsByScheudleID
+        #region GetAppointedPatientDetailsByScheudleID
          public DataSet GetAppointedPatientDetailsByScheudleID()
          {
              SqlConnection con = null;
