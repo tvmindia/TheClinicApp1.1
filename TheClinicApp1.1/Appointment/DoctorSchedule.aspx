@@ -401,9 +401,6 @@
 
         $(document).ready(function () {
 
-
-          
-
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
             });
@@ -430,9 +427,12 @@
 
         });
 
+
+        //-- To set time picker with regular time 
+        //-- Schedule order is passed to the function
+        //-- At time of edit click ,we know the time to be binded , so it will also passed , and this time willo get binded to timepicker
         function SetDefaultTime(inputID, time) {
 
-         
             if (time == null)
             {
                 time = GetRegularScheduleByDrID();
@@ -448,12 +448,6 @@
                 time = timeParts[1];
             }
 
-
-            //var starttime = timeParts[0];
-            //var endtime = timeParts[1];
-
-            //TimeIn24hrFormat = time;
-
             TimeIn24hrFormat = time;
             var hourEnd = TimeIn24hrFormat.indexOf(":");
             var H = +TimeIn24hrFormat.substr(0, hourEnd);
@@ -463,8 +457,6 @@
             timStart = h;
             minsStart = TimeIn24hrFormat.substr(hourEnd, 4).replace(':', '').trim();
             merStart = ampm;
-
-
 
             if (timStart != '' && minsStart != '' && merStart != '') {
                 defultTime = timStart + ',' + minsStart + ',' + merStart;
@@ -477,9 +469,10 @@
            
             $("#myModal").dialog('open');
         }
+
+        //-- This method is invoked while changing doctor
         function SetDropdown(e)
         {
-            debugger;
             ClearControls();
             DoctorID = e.value;
            
@@ -519,7 +512,6 @@
 
                 }
 
-              
                 $('#calendar').fullCalendar('addEventSource', json);
                 $('#calendar').fullCalendar('rerenderEvents');
 
@@ -551,8 +543,6 @@
             var times = '<tr><td><i>' + "No scheduled time!" + '</i></td></tr>';
             $("#tblTimes").append(times);
 
-
-          
         }
       
     </script>

@@ -106,6 +106,7 @@ $(document).ready(function () {
                 document.getElementById("TimeAvailability").innerHTML = '';
                 document.getElementById("listBody").innerHTML = '';
                 title = '';
+                $("#hdEventDate").val(calEvent.start._i);
                 if (calEvent.title != "")
                 {
                     debugger;
@@ -116,7 +117,7 @@ $(document).ready(function () {
                     ds = GetAllDoctorScheduleDetailsByDate(Doctor);
                     if (ds != undefined) {
 
-                        BindTimes(ds);
+                        BindTimes(ds, calEvent.start._i);
                     }
                     //titles = calEvent.title;
                    // BindSlotDropDown(titles);
@@ -306,7 +307,7 @@ function ConvertTimeFormatFrom24hrTo12hr(Time) {
 function fillPatientDetails() {
     debugger;
     clearTextBoxes();
-    clearDropDown();
+   // clearDropDown();
     showDropDown();
     var titles = "";
     document.getElementById("TimeAvailability").innerHTML = '';
@@ -375,7 +376,7 @@ function fillPatientDetails() {
     timeList = "";
 }
 /*Add New Calendar Event */
-function BindTimes(Records) {
+function BindTimes(Records,eventDate) {
 
    // $("#tblTimes tr").remove();
     AllotedEndTimes = [];
@@ -412,7 +413,7 @@ function BindTimes(Records) {
         }
 
     });
-    BindSlotDropDown(AllotedStartTimes);
+    BindSlotDropDown(AllotedStartTimes, eventDate);
     if (Records.length == 0) {
       //  var html = '<tr><td><i>' + "No scheduled time!" + '</i></td></tr>';
        // $("#tblTimes").append(html);
