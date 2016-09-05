@@ -1004,6 +1004,10 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 throw new Exception("DoctorAvailDate is Empty!!");
             }
+            if(DocScheduleID == "")
+            {
+                throw new Exception("ScheduleID is Empty!!");
+            }
           
             dbConnection dcon = null;
             SqlCommand cmd = null;
@@ -1019,6 +1023,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetDoctorAvailablitydetails]";
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
+                cmd.Parameters.Add("@ScheduleID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.DocScheduleID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.DoctorID);
                 cmd.Parameters.Add("@DoctorAvailDate", SqlDbType.Date).Value = DoctorAvailDate;
                 sda.SelectCommand = cmd;
