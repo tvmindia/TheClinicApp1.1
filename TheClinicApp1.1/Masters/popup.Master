@@ -6,20 +6,20 @@
 <head runat="server">
     <title>popup-page</title>
     <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-       
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- FAVICON -->
-<link rel="shortcut icon" href="favicon.ico" type="../image/x-icon"  />
-       <%-- <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="favicon.ico" type="../image/x-icon" />
+    <%-- <link href="../css/bootstrap.min.css" rel="stylesheet" />
         <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
         <link href="../css/bootstrap-spinner.css" rel="stylesheet" />
         <link href="../css/jquery-ui.css" rel="stylesheet" />
         <link href="../css/normalize.min.css" rel="stylesheet" />
         <link href="../css/main.css" rel="stylesheet" />--%>
 
-      <!-- Css Files -->
+    <!-- Css Files -->
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
     <link href="../css/fileinput.css" rel="stylesheet" />
@@ -30,19 +30,35 @@
     <link href="../css/jquery-ui.css" rel="stylesheet" />
     <!------Other Styles----->
     <link href="../css/ClinicappMaster.css" rel="stylesheet" />
-   
-     
+    <script src="../js/DeletionConfirmation.js"></script>
+    <script>
+
+        function redirect() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            var LogoutConfirmation = ConfirmLogout();
+
+
+            if (LogoutConfirmation) {
+                confirm_value.value = true;
+                window.location.href = "../Default.aspx?sessionclear=logout";
+            } else {
+                confirm_value.value = false;
+            }
+            document.forms[0].appendChild(confirm_value);
+
+        }
+    </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
-        
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-        
-        </asp:ContentPlaceHolder>
-    </div>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
     </form>
 </body>
 </html>
