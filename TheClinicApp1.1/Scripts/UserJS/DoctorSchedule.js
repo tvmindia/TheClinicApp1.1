@@ -461,28 +461,6 @@ $(document).mouseup(function (e) {
                 Doctor.ScheduleOrder = parseInt(ScheduleNo + 1);
             }
             
-           
-            
-
-            //if ($("#tblTimes tr").length == 1)
-            //{
-            //    var firstTd = $("#tblTimes tr td").text();
-
-            //    if (firstTd == "No scheduled time!")
-            //    {
-            //        Doctor.ScheduleOrder = parseInt(1);
-            //    }
-            //    else
-            //    {
-            //        Doctor.ScheduleOrder = parseInt($("#tblTimes tr").length + 1);
-            //    }
-            //} 
-            //else
-            //{
-            //    Doctor.ScheduleOrder = parseInt($("#tblTimes tr").length + 1);
-            //}
-           
-
             var ds = {};
             var table = {};
             var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
@@ -492,7 +470,7 @@ $(document).mouseup(function (e) {
             $.each(Records, function (index, Records) {
 
                 if (Records.Starttime != null && Records.Endtime != null) {
-                    debugger;
+                    
                     strttime = Records.Starttime;
                     endtime = Records.Endtime;
                 }
@@ -500,7 +478,6 @@ $(document).mouseup(function (e) {
             })
 
         }
-
 
         Time = strttime + ',' + endtime;
         return Time;
