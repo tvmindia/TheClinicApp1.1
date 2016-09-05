@@ -27,7 +27,7 @@
     <link href="../css/mui.css" rel="stylesheet" />
     <link href="../css/jquery-ui.css" rel="stylesheet" />
     <link href="../css/ClinicappMaster.css" rel="stylesheet" />
-         
+    <script src="../js/DeletionConfirmation.js"></script>
     <script>
         function CustomAlert() {
             this.render = function (dialog) {
@@ -51,6 +51,7 @@
         }
         var Alert = new CustomAlert();
         function redirect() {
+            
             var confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
             confirm_value.name = "confirm_value";
