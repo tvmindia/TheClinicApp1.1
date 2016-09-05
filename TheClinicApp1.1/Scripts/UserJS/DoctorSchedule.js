@@ -51,22 +51,22 @@ $(document).mouseup(function (e) {
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
     
-    $("#myModal").dialog({
-        autoOpen: false,
-        closeOnEscape: false,
-        draggable: false,
-        height: 300,
-        width: 500,
-        // hide: { effect: "explode", duration: 1000 },
-        //modal: true,
-        resizable: false,
-        show: { effect: "blind", duration: 800 },
-        title: "Appoinments",
-        dialogClass: 'no-close success-dialog',
-        open: function (event, ui) {
-            $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-        }
-    }).prev(".ui-dialog-titlebar").css("background", "#336699");;
+    //$("#myModal").dialog({
+    //    autoOpen: false,
+    //    closeOnEscape: false,
+    //    draggable: false,
+    //    height: 300,
+    //    width: 500,
+    //    // hide: { effect: "explode", duration: 1000 },
+    //    //modal: true,
+    //    resizable: false,
+    //    show: { effect: "blind", duration: 800 },
+    //    title: "Appoinments",
+    //    dialogClass: 'no-close success-dialog',
+    //    open: function (event, ui) {
+    //        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+    //    }
+    //}).prev(".ui-dialog-titlebar").css("background", "#336699");;
 
  
     // ---- Get date in yyyy mm dd format , to set default date----- //
@@ -858,7 +858,10 @@ $(document).mouseup(function (e) {
   else {
         OpenModal();
        //  $("#tblPatients tr").remove();
-        $('tblPatients tr:not(:first)').remove();
+        //$('tblPatients tr:not(:first)').remove();
+
+        $("#tbodyPatients tr").remove();
+
         debugger;
         Records = table;
 
@@ -867,7 +870,7 @@ $(document).mouseup(function (e) {
         
             var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
-                $("#tblPatients").append(html);
+            $("#tbodyPatients").append(html);
             
 
         })
@@ -1385,7 +1388,10 @@ $(document).mouseup(function (e) {
                 $('#hdnIsDeletionByDate').val(true);
                 debugger;
                 //  $("#tblPatients tr").remove();
-                $('tblPatients tr:not(:first)').remove();
+
+                $("#tbodyPatients tr").remove();
+
+                //$('tblPatients tr:not(:first)').remove();
                 debugger;
                 Records = JsonCancellAll;
 
@@ -1394,7 +1400,7 @@ $(document).mouseup(function (e) {
 
                     var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
-                    $("#tblPatients").append(html);
+                    $("#tbodyPatients").append(html);
 
 
                 })

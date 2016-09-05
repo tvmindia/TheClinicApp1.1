@@ -4,6 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+ 
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
 
@@ -24,9 +25,11 @@
     <script src="../js/timepicki.js"></script>
     <link href="../css/timepicki.css" rel="stylesheet" />
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
+    
+   <%--<script src="../js/jquery-1.9.1.min.js"></script>--%> 
+     <script src="../js/bootstrap.min.js"></script>
 
-
-    <style>
+       <style>
 
         #circle {
     /*display: block;*/
@@ -100,36 +103,7 @@
                 transform: rotate(360deg);
             }
         }
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
 
-        /* Modal Content */
-        .modal-content {
-            position: relative;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 0;
-            /*border: 1px solid #888;*/
-            width: 100%;
-            /*height: 100%;*/
-            /*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);*/
-            -webkit-animation-name: animatetop;
-            -webkit-animation-duration: 0.4s;
-            animation-name: animatetop;
-            animation-duration: 0.4s;
-        }
 
         /* Add Animation */
         @-webkit-keyframes animatetop {
@@ -156,22 +130,7 @@
             }
         }
 
-        .modal-header {
-            padding: 2px 16px;
-            /*background-color: #5cb85c;*/
-            color: white;
-        }
-
-        .modal-body {
-            padding: 2px 16px;
-            text-align: center;
-        }
-
-        .modal-footer {
-            padding: 2px 16px;
-            /*background-color: #5cb85c;*/
-            color: white;
-        }
+      
 
         .btnOkay {
             background-color: #336699;
@@ -370,7 +329,7 @@
             color:white!important;
         }
 
-        .modal table
+        /*.modal table
         {
             width:100%!important;
             height:100%!important;
@@ -378,7 +337,7 @@
 
         .modal table th{
             background-color:#99c4e0!important;
-        }
+        }*/
       
         .success-dialog
         {
@@ -418,6 +377,9 @@
         var DoctorID = '';
 
         $(document).ready(function () {
+
+            debugger;
+          
 
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
@@ -485,7 +447,9 @@
 
         function OpenModal() {
            
-            $("#myModal").dialog('open');
+            $('#myModal').modal('show');
+
+           
         }
 
         //-- This method is invoked while changing doctor
@@ -648,7 +612,7 @@
                                     <li><a class="new" href="DoctorSchedule.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
-
+                        
                             <div class="tab_table">
 
                                 <div class="row field_row">
@@ -658,26 +622,25 @@
 
                                             <div id='calendar'></div>
                                             <div class="loader" style="float: left"></div>
-                                            <div id="myModal" class="modal" >
-
-                                                <!-- Modal content -->
-                                                <div class="modal-content" >
-
-                                                    <div class="modal-body" >
-
-                                                      <%--    <div class="token_id_card">
-                            <div class="name_field1">Would You still like to cancel the schedule..<span></span> ?</div>
-                            <div class="light_grey">
-                            </div>
-                            <div class="card_white">
-                                <asp:Label Text="Select Your Doctor " Font-Size="Large" Font-Bold="true" runat="server"></asp:Label>
-                                <asp:DropDownList ID="ddlDoctorName" Height="70%" AppendDataBoundItems="true" Width="100%" runat="server"></asp:DropDownList>
-                            </div>
-                        </div>--%>
 
 
+                                            <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="min-width: 550px;">
 
-                                                        <table id="tblPatients" style="width:100%!important;height:100%!important" >
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="border-color: #3661C7;">
+                    <button type="button" class="close" data-dismiss="modal" id="UserClose">&times;</button>
+                    <h3 class="modal-title">Existing Appoinments</h3>
+                </div>
+
+                <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+                    <div class="col-lg-12" style="height: 480px;">
+                        <div class="col-lg-12" style="height: 10px">
+                            
+                        </div>
+                        <div class="col-sm-12" style="height: 400px;">
+                          <table id="tblPatients" style="width:100%!important;height:100%!important" >
 
                                                             <thead  >
                                                                 <tr>
@@ -685,42 +648,20 @@
                                                                     <th >Appoinment Time</th>
                                                                 </tr>
                                                             </thead>
+                              <tbody id="tbodyPatients">
 
+                              </tbody>
                                                           
 
                                                         </table>
+                        </div>
+                      
+                        </div>
+                   
+                </div>
 
-                                                    </div>
-                                                    <br />
-                                                    <div class="modal-footer">
-
-                                                              <%-- <div class="token_id_card">
-                            <div class="name_field1">Would You still like to cancel the schedule..<span></span> ?</div>
-                            <div class="light_grey">
-                            </div>
-                            <div class="card_white">
-                                <asp:Label Text="Select Your Doctor " Font-Size="Large" Font-Bold="true" runat="server"></asp:Label>
-                                <asp:DropDownList ID="ddlDoctorName" Height="70%" AppendDataBoundItems="true" Width="100%" runat="server"></asp:DropDownList>
-                            </div>
-                        </div>--%>
-
-                                                      <%--  <div class="token_id_card">
-                                                          <div class="name_field1">Would You still like to cancel the schedule..<span></span> ?</div>
-                                                            </div>--%>
-                                                     <%--   <table>
-                                                           
-                                                            <tr>
-                                                                <td>
-                                                                    <button class="btnOkay" id="btnOk">OK</button>
-                                                                </td>
-                                                                <td>
-                                                                    <button class="btnCncl" id="btnCancel">Cancel</button></td>
-
-                                                            </tr>
-                                                        </table>--%>
-
-
-                                                        <div class="grey_sec">
+                 <div class="modal-footer">
+              <div class="grey_sec">
                                                           Would You still like to cancel this schedule..?
                               
                                 <ul class="top_right_links">
@@ -728,12 +669,23 @@
                                     <li><a class="new" id="Cancel" ><span></span>No</a></li>
                                 </ul>
                             </div>
+        </div>
 
 
-                                                    </div>
-                                                </div>
+            </div>
+        </div>
+    </div>
 
-                                            </div>
+
+
+
+
+
+
+
+                                            
+
+                                            
                                             <br />
 
 
