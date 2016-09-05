@@ -431,6 +431,8 @@ namespace TheClinicApp1._1.Doctor
             dummy.Columns.Add("Name");
             dummy.Columns.Add("DateTime");
             dummy.Columns.Add("IsProcessed");
+
+            dummy.Columns.Add("appointmentno");
             //dummy.Columns.Add("DoctorID");
             dummy.Columns.Add("PatientID");
 

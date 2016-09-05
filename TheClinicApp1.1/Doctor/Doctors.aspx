@@ -839,27 +839,28 @@
                     $.each(DoctorTokens, function () {
                        
                         $("td", row).eq(1).html($(this).find("TokenNo").text());
-                        $("td", row).eq(2).html($(this).find("Name").text());
+                        $("td", row).eq(2).html($(this).find("appointmentno").text());
+                        $("td", row).eq(3).html($(this).find("Name").text());
 
 
-                        $("td", row).eq(3).html($(this).find("DateTime").text());
+                        $("td", row).eq(4).html($(this).find("DateTime").text());
                       
-                         $("td", row).eq(5).html($(this).find("PatientID").text());
+                         $("td", row).eq(6).html($(this).find("PatientID").text());
 
 
-                        if ($(this).find("IsProcessed").text()=="true") {
+                         if (($(this).find("IsProcessed").text()=="true")|| ($(this).find("IsProcessed").text()=="4")){
                             $("td", row).addClass("selected_row");
 
-                            $("td", row).eq(4).html("Yes");
+                            $("td", row).eq(5).html("Yes");
 
                             $("td", row).eq(0).html($('<img />')
                          .attr('src', "" + '../images/paper.png' + "")).removeClass('CursorShow');
 
                         }
-                        if ($(this).find("IsProcessed").text() == "false") {
+                         if (($(this).find("IsProcessed").text() == "false")|| ($(this).find("IsProcessed").text()=="1")) {
                             $("td", row).removeClass("selected_row");
 
-                            $("td", row).eq(4).html("No");
+                            $("td", row).eq(5).html("No");
 
                             $("td", row).eq(0).html($('<img />')
                        .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
@@ -1385,11 +1386,12 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:BoundField HeaderText="Token No" DataField="TokenNo" ItemStyle-CssClass="Match"  />
-                                    <asp:BoundField HeaderText="Patient Name" DataField="Name" ItemStyle-CssClass="Match" />
-                                    <asp:BoundField HeaderText="Time" DataField="DateTime" ItemStyle-CssClass="Match" />
-                                    <asp:BoundField HeaderText="Consulted" DataField="IsProcessed" ItemStyle-CssClass="Match" />
-                                   <asp:BoundField HeaderText="PatientID" DataField="PatientID" />  
+                                    <asp:BoundField HeaderText="Tok#" DataField="TokenNo" ItemStyle-CssClass="Match"/>
+                                    <asp:BoundField HeaderText="Apoint#" DataField="appointmentno" ItemStyle-CssClass="Match"/>
+                                    <asp:BoundField HeaderText="Patient Name" DataField="Name" ItemStyle-CssClass="Match"/>
+                                    <asp:BoundField HeaderText="Time" DataField="DateTime" ItemStyle-CssClass="Match"/>
+                                    <asp:BoundField HeaderText="Consulted" DataField="IsProcessed" ItemStyle-CssClass="Match"/>
+                                    <asp:BoundField HeaderText="PatientID" DataField="PatientID"/>
                                 </Columns>
                             </asp:GridView>
 
@@ -1493,24 +1495,14 @@
 
                         var DeletionConfirmation = ConfirmDelete();
                         if (DeletionConfirmation == true) {
-
                             var DeleteImgID = $(this).attr('id');
                             document.getElementById(DeleteImgID).remove();   
-
                             MainImgID =   DeleteImgID.split("#")[1];
                             document.getElementById(MainImgID).remove(); 
-
-
                             var DescID = "Desc"+MainImgID;
                             document.getElementById(DescID).remove();  
-
-                            
                             PageMethods.DeleteAttachment(MainImgID);       
-                          
-                      
-                        
-                         
-                        }
+                      }
                     }
                 })
 

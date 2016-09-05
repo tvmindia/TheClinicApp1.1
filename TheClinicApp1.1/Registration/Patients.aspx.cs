@@ -396,22 +396,17 @@ namespace TheClinicApp1._1.Registration
             if (ddlDoctorName.SelectedValue != "--Select--")
             {
             //btnnew.Visible = true;
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            tok.DoctorID = ddlDoctorName.SelectedValue;
+            
+            string patid="";
             if (HiddenField1.Value == "")
             {
-                tok.PatientID = HdnFirstInsertID.Value;
+               patid = HdnFirstInsertID.Value;
             }
             else
             {
-                tok.PatientID = HiddenField1.Value;
+               patid= HiddenField1.Value;
             }
-
-            tok.ClinicID = UA.ClinicID.ToString();
-            tok.CreateDate = DateTime.Now;
-            tok.DateTime = DateTime.Now;
-            tok.CreatedBy = UA.userName;
-            int tokenNo = tok.InsertToken();
+            int tokenNo = NewToken(ddlDoctorName.SelectedValue, patid);
             lblTokencount.Text = ":" + tokenNo.ToString();
             //lblToken.Visible = true;
             divDisplayNumber.Visible = true;
@@ -419,6 +414,20 @@ namespace TheClinicApp1._1.Registration
                  }
         }
         #endregion BookingToken
+
+        #region NewToken
+        public int NewToken(string doctorid,string patientid)
+        {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            tok.PatientID = patientid;
+            tok.DoctorID = doctorid;
+            tok.ClinicID = UA.ClinicID.ToString();
+            tok.CreateDate = DateTime.Now;
+            tok.DateTime = DateTime.Now;
+            tok.CreatedBy = UA.userName;
+            return tok.InsertToken();
+        }
+        #endregion NewToken
 
         #region MainButton
         /// <summary>
@@ -503,12 +512,18 @@ namespace TheClinicApp1._1.Registration
 
                         if(PatientObj.AddPatientDetails()==1)
                         {
-                         AppointObj.ClinicID = PatientObj.ClinicID.ToString();
-                         AppointObj.AppointmentStatus = 1;//patientpresent status
-                         AppointObj.UpdatedBy = UA.userName;
-                         AppointObj.PatientAppointmentStatusUpdate();
+                         if (AppointObj.AppointmentID!=null)
+                         {
+                             AppointObj.ClinicID = PatientObj.ClinicID.ToString();
+                             AppointObj.AppointmentStatus = 1;//patientpresent status
+                             AppointObj.UpdatedBy = UA.userName;
+                             AppointObj.PatientAppointmentStatusUpdate();
+                         }
+                        
 
                          PatientObj.AddFile();
+
+                         
                         }
 
                       
