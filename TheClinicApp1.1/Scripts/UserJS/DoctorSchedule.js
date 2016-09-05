@@ -1,23 +1,38 @@
 ﻿
-var AvailableCount = '';
-var ScheduleNo = 0;
-var json;
-var title, eventStartDate, eventEndDate;
-var tooltip;
-var DoctorID;
-var MonthName='';
-var Year = '';
-var AllotedEndTimes = [];
-var AllotedStartTimes = [];
+//-------------------------------------* GLOBAL VARIABLES *---------------------------------//
 
-var allEvents = [];
+var ScheduleNo = 0;                         //-- Holds the value of schedule order ,to fill time picker with previous values
 
-var StartTimeOnEdit = '';
-var EndTimeOnEdit = '';
+var json;                                   //-- Calender events are stored to this
 
-var ClickedDate = '';
+var title, eventStartDate, eventEndDate;    //-- Parameters of an event in full calender
 
-    $(document).mouseup(function (e) {
+var tooltip;                                //-- Holds the value of tooltip of each an event
+
+var DoctorID;                               //-- DoctorID ,of chosen doctor from dropdown        
+
+var MonthName = '';                         //-- Evnets are shown on basis of month, 
+
+var Year = '';                              //-- Year
+
+var AllotedEndTimes = [];                   //-- For preventing time conflict, already alloted times are stored arrays, Event end times are stored to AllotedEndTimes
+
+var AllotedStartTimes = [];                 //-- similarly Event start times are stored to AllotedStartTimes
+
+var allEvents = [];                         //-- Stroes evnts of particular doctor , it will be claered when chanfging doctor
+
+var StartTimeOnEdit = '';                   //-- Holds the value of start time at the time of edit click
+
+var EndTimeOnEdit = '';                     //-- Holds the value of end time at the time of edit click
+
+var ClickedDate = '';                       //-- Holds the value of Date at the time of edit click
+
+var AvailableCount = '';                    //-- regular time binding behaves weird when there is no regular time , so if record count is zero , this value sets to zero , and at time of binding we will ensure its value is 0
+
+$(document).mouseup(function (e) {
+
+    //while selecting a date we give a border around date textbox , this event clears that border to previous form
+
     var container = $("#calendar");
 
     if (!container.is(e.target) // if the target of the click isn't the container...
@@ -32,24 +47,10 @@ var ClickedDate = '';
 });
 
     $(document).ready(function () {
-        debugger;
-      
-        //$('body').on('click', 'button.fc-prev-button', function () {
-        //    $('#hdnIsDrChanged').val("");
-        //});
-
-        //$('body').on('click', 'button.fc-next-button', function () {
-        //    $('#hdnIsDrChanged').val("");
-        //});
-      
-
-
-      //  document.getElementsByClassName('timepicker_wrap').append('<p>ddbb</p>');
-
+        
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
     
- 
     $("#myModal").dialog({
         autoOpen: false,
         closeOnEscape: false,
@@ -67,9 +68,7 @@ var ClickedDate = '';
         }
     }).prev(".ui-dialog-titlebar").css("background", "#336699");;
 
-  //  GetScheduleByDrID();
-
-
+ 
     // ---- Get date in yyyy mm dd format , to set default date----- //
 
     Date.prototype.yyyymmdd = function () {
@@ -84,11 +83,6 @@ var ClickedDate = '';
  
 //----------------------------------------------------------------------//
 
-    //$("#txtstartTime").timepicki();
-    //          $("#txtEndTime").timepicki();
-            
-    //GetAllCalendarData();
-   
     setTimeout(function () {
         var initialLangCode = 'en';
 
@@ -113,6 +107,8 @@ var ClickedDate = '';
             select: function (start, end) {
                 debugger;
                // CustomClick();
+
+                //$(this).css("blink");
 
                 $("#txtStartTime").val('');
                 $("#txtEndTime").val('');
@@ -297,12 +293,6 @@ var ClickedDate = '';
          
            , dayRender: function (date, element) {
               
-               //var dateString = moment(date).format('YYYY-MM-DD');
-               //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').removeClass('ui-state-highlight');
-               //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').removeAttr('background-color');
-
-
-
             document.getElementById("colorBox").style.display = "block";
             var date = new Date($("#calendar").fullCalendar('getDate').format());
             
@@ -314,11 +304,7 @@ var ClickedDate = '';
                  BindScheduledDates();
              }
 
-        
-            //    //var month_int = date.getMonth();
-
-            //    //alert(month_int);
-
+               //----------------------- * Image of ADD SCHEDULE is added from here *------------------//
 
             if ($("#imgSelect").length == 0) {
                 $(".fc-day-number").append("<img id='imgSelect' src='../Images/add.png' title='Add Schedule' style='float: left;cursor:pointer;height:10px!important' />")
@@ -337,9 +323,7 @@ var ClickedDate = '';
                 $("#hdnIsErrorTime").val("");
                 $("#hdnIsDrChanged").val("No");
 
-
                //var clickedDate = date;
-
 
                //alert(clickedDate.start);
 
@@ -366,21 +350,10 @@ var ClickedDate = '';
                    alert("Please Select a doctor");
                }
 
-
-
            }
         });
     }, 3600);
    
-    //function IsDateHasEvent(date) {
-    //    var allEvents = [];
-    //    allEvents = $('#calendar').fullCalendar('clientEvents');
-    //    var event = $.grep(allEvents, function (v) {
-    //        return +v.start === +date;
-    //    });
-    //    return event.length > 0;
-    //}
-
     $('.loader').delay(3150).fadeOut('slow');
 
     /*Modal dialog Cancel button click*/
@@ -392,7 +365,7 @@ var ClickedDate = '';
         $("#myModal").dialog("close");
     });
 
-
+    /*Modal dialog OK button click*/
     $('#Okay').click(function () {
         debugger;
 
@@ -440,43 +413,9 @@ var ClickedDate = '';
         $("#myModal").dialog("close");
         });
 
-
-    /*Modal dialog OK button click*/
-    $('.btnOkay').click(function () {
-        var CalendarSchedule = new Object();
-
-        title = $("#txtTitle").val();
-        //   eventEndDate = $("#txtEndDate").val();
-        CalendarSchedule.title = title;
-        CalendarSchedule.event_start = eventStartDate;
-        CalendarSchedule.event_end = eventEndDate;
-        CalendarSchedule.startTime = $("#txtstartTime").val();
-        CalendarSchedule.endTime = $("#txtEndTime").val();
-
-        if (title != null) {
-          
-            var result = AddEvent(CalendarSchedule);
-            if (result.status == "1") {
-                alert("Sucessfull..!!!")
-                $("#txtTitle").val("");
-                $("#txtEndDate").val("");
-                $("#txtstartTime").val("");
-                $("#txtEndTime").val("");
-                $("#myModal").dialog("close");
-                $('#calendar').fullCalendar('removeEvents');
-                $('#calendar').fullCalendar('addEventSource', json);
-                $('#calendar').fullCalendar('rerenderEvents');
-            }
-            else {
-                alert("Error..!!!");
-            }
-
-
-        }
-    });
-
 });
 
+/*end of document.ready*/
 
     getMonthName = function (MonthNo) {
         var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -503,12 +442,8 @@ var ClickedDate = '';
     //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
     TimeIn12hrFormat = moment(Time, ["h:mm A"]).format("hh:mm") + ampm;
 
-    
-
     return TimeIn12hrFormat;
 }
-
-/*end of document.ready*/
 
     function GetRegularScheduleByDrID() {
         debugger;
@@ -1041,7 +976,6 @@ var ClickedDate = '';
         }
         return this;
     };
-
 
     function AddSchedule() {
         debugger;
