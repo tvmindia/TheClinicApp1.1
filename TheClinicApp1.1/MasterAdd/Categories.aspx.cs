@@ -274,9 +274,13 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
+             string LogoutConfirmation = Request.Form["confirm_value"];
 
-            Session.Remove(Const.LoginSession);
-            Response.Redirect("../Default.aspx");
+             if (LogoutConfirmation == "true")
+             {
+                 Session.Remove(Const.LoginSession);
+                 Response.Redirect("../Default.aspx");
+             }
         }
 
         #endregion Logout Click
