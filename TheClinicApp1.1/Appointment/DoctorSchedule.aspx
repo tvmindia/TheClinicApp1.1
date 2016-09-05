@@ -28,7 +28,7 @@
     
    <%--<script src="../js/jquery-1.9.1.min.js"></script>--%> 
      <script src="../js/bootstrap.min.js"></script>
-
+  
        <style>
 
         #circle {
@@ -640,7 +640,7 @@
                             
                         </div>
                         <div class="col-sm-12" style="height: 400px;">
-                          <table id="tblPatients" style="width:100%!important;height:100%!important" >
+                          <table id="tblPatients" style="width:100%!important;" >
 
                                                             <thead  >
                                                                 <tr>
