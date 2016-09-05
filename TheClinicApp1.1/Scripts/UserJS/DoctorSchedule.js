@@ -131,6 +131,9 @@ $(document).mouseup(function (e) {
 
                     $('#calendar').fullCalendar('unselect');
 
+                    ClickedDate = moment(eventStartDate).format('DD MMM YYYY');
+
+
                     GetScheduledTimesByDate();
 
                     //$('#tblTimes tr').each(function (i, el) {
@@ -368,6 +371,8 @@ $(document).mouseup(function (e) {
     /*Modal dialog OK button click*/
     $('#Okay').click(function () {
         debugger;
+       
+        if ($('#hdnIsDeletionByDate').val() != "true") {
 
         var Appointments = new Object();
         ScheduleID = document.getElementById('hdnScheduleID').value;
@@ -406,13 +411,54 @@ $(document).mouseup(function (e) {
 
             // $('#calendar').fullCalendar('refetchEvents');
         }
+        }
+
+        else //--- Cancel By date
+        {
+            var Appointments = new Object();
+            Appointments.AppointmentDate = ClickedDate;
+            Appointments.DoctorID = DoctorID;
+           
+            var ds = {};
+            var table = {};
+
+            var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+            ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelAllAppoinmentsByDate");
+            table = JSON.parse(ds.d);
 
 
+            if (table.status == 1) {
+
+              //  GetScheduledTimesByDate(ClickedDate);
+                BindScheduledDates();
+
+                var jsonDrSchedule = {};
+
+                var Doctor = new Object();
+                Doctor.DoctorID = DoctorID;
+
+                jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                if (jsonDrSchedule != undefined) {
+
+                    $('#calendar').fullCalendar('removeEventSource', json);
+
+                    json = jsonDrSchedule;
+
+                    $('#calendar').fullCalendar('addEventSource', json);
+                    $('#calendar').fullCalendar('refetchEvents');
+                }
 
 
+                // $('#calendar').fullCalendar('refetchEvents');
+            }
+
+        }
+
+        ClickedDate = '';
+        $('#hdnIsDeletionByDate').val('');
         $("#myModal").dialog("close");
         });
-
+   
 });
 
 /*end of document.ready*/
@@ -773,9 +819,10 @@ $(document).mouseup(function (e) {
 
     var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
+       
     var Doctor = new Object();
     Doctor.DocScheduleID = ScheduleID;
-
+    Doctor.DoctorID = DoctorID;
     var ds = {};
     var table = {};
 
@@ -1334,6 +1381,8 @@ $(document).mouseup(function (e) {
             else {
                 OpenModal();
 
+                ClickedDate = DrAvaildate;
+                $('#hdnIsDeletionByDate').val(true);
                 debugger;
                 //  $("#tblPatients tr").remove();
                 $('tblPatients tr:not(:first)').remove();
@@ -1349,11 +1398,6 @@ $(document).mouseup(function (e) {
 
 
                 })
-
-
-
-
-
 
                 //alert(" Sorry, Already scheduled an appointment!")
             }

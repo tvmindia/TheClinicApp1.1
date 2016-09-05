@@ -548,8 +548,7 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion Cancel ALL Schedules By Available Date
 
-
-        #region CancelAllAppoinments
+        #region Cancel Appoinments By ScheduleID
         [System.Web.Services.WebMethod]
         public static string CancelAppoinmentsByScheduleID(Appointments AppointObj)
         {
@@ -570,7 +569,7 @@ namespace TheClinicApp1._1.Appointment
 
                         AppointObj.UpdatedBy = UA.userName;
                         AppointObj.ClinicID = UA.ClinicID.ToString();
-                       AppointObj.status =  AppointObj.CancelAppoinmentsByScheuleID().ToString();
+                        AppointObj.status =  AppointObj.CancelAppoinmentsByScheuleID().ToString();
 
 
                        if ( AppointObj.status == "1")
@@ -603,6 +602,56 @@ namespace TheClinicApp1._1.Appointment
             //return jsSerializer.Serialize(AppointObj);
         }
         #endregion CancelAllAppoinments
+
+        #region Cancel ALL Appoinments By Available Date
+        [System.Web.Services.WebMethod]
+        public static string CancelAllAppoinmentsByDate(Appointments AppointObj)
+        {
+            TheClinicApp1._1.ClinicDAL.Doctor DocObj = new ClinicDAL.Doctor();
+            UIClasses.Const Const = new UIClasses.Const();
+            ClinicDAL.UserAuthendication UA;
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            try
+            {
+                if (UA != null)
+                {
+                    if (UA.ClinicID.ToString() != "")
+                    {
+                        AppointObj.UpdatedBy = UA.userName;
+                        AppointObj.ClinicID = UA.ClinicID.ToString();
+                        AppointObj.status = AppointObj.CancelAllAppoinmentsByDate().ToString();
+
+                        if ( AppointObj.status == "1")
+                        {
+                             DocObj.UpdatedBy = UA.userName;
+                             DocObj.ClinicID = UA.ClinicID.ToString();
+                             DocObj.DoctorID = AppointObj.DoctorID;
+                             DocObj.DoctorAvailDate = AppointObj.AppointmentDate;
+                             DocObj.status = DocObj.CancelAllScheduleByDoctor().ToString();
+                        
+                        }
+
+                        
+                     }
+                       
+                    }
+                
+
+            }
+            catch (Exception ex)
+            {
+                ErrorHandling eObj = new ErrorHandling();
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = "DoctorSchedule.aspx.cs";
+                eObj.UserID = UA.UserID;
+                eObj.Method = "CancelAllAppoinmentsByDate";
+                eObj.InsertError();
+            }
+            return jsSerializer.Serialize(DocObj);
+        }
+        #endregion Cancel ALL Appoinments By Available Date
 
         #endregion Methods
 
