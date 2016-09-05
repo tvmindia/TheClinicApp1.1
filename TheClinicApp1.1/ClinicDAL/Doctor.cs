@@ -1377,6 +1377,10 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 throw new Exception("AppointmentDate is Empty!!");
             }
+            if (DoctorID == "" || DoctorID == null)
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
             try
             {
                 dbConnection dcon = new dbConnection();
@@ -1387,7 +1391,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandText = "GetAllPatientDetailsByAppointmentDate";
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@AppointmentDate", SqlDbType.Date).Value = DoctorAvailDate;
-
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
                 sda = new SqlDataAdapter(cmd);
                 ds = new DataSet();
                 sda.Fill(ds);

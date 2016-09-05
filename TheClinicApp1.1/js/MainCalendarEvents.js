@@ -356,6 +356,7 @@ function fillPatientDetails() {
     var timeList = GetAllottedTime(docId, eventStartDate, scheduleId);
     var html = "";
     for (index = 0; index < timeList.length - 1; index++) {
+        debugger;
         checkItems = timeList.length - 1;
         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
         startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
@@ -376,6 +377,36 @@ function fillPatientDetails() {
     timeList = "";
 }
 /*Add New Calendar Event */
+function RereshTimeCheckBox()
+{
+    debugger;
+    scheduleId = $("#hdfScheduleID").val();
+    debugger;
+    title = "";
+    var docId = $("#hdfDoctorID").val();
+    var timeList = GetAllottedTime(docId, eventStartDate, scheduleId);
+    var html = "";
+    for (index = 0; index < timeList.length - 1; index++) {
+        debugger;
+        checkItems = timeList.length - 1;
+        var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
+        startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
+
+
+        var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
+        endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
+        var StartAndEnd = startTime + "-" + endTime;
+        // var timeList = GetTimeList();
+        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime'  id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+
+
+    }
+    debugger;
+    document.getElementById("availableSlot").style.display = "block";
+    document.getElementById("TimeAvailability").style.display = "block";
+    $("#TimeAvailability").append(html);
+    timeList = "";
+}
 function BindTimes(Records,eventDate) {
 
    // $("#tblTimes tr").remove();
@@ -520,12 +551,14 @@ function GetAllottedTime(docId, eventStartDate, id) {
             var time = names[i].allottedTime + ampm;
             time = time.replace(/\./g, ':');
             if (time == startTime) {
-                delete timeList[index];
-                timeList.splice(index, 1);
+                timeList[index]='';
+                //timeList.splice(index, 1);
                 //names[0].allottedTime.includes("9.00");
             }
         }
     }
+    timeList = timeList.filter(Boolean);
+    debugger;
     return timeList;
 }
 
@@ -605,6 +638,7 @@ function RemoveFromList(AppointmentID) {
     ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
     table = JSON.parse(ds.d);
     refreshList();
+    fillPatientDetails();
     return table;
    
     //GetScheduledTimesByDate();

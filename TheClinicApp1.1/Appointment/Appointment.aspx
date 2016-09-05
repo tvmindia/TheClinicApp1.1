@@ -409,8 +409,10 @@ border-bottom-right-radius: 0px;
       .tblDates   tr:nth-child(even) {background: #ebf0f3} 
     </style>
     <script>
+     
         $(document).ready(function () {
             var bindTitle="";
+          
             $('#ddltimeSlot').change(function() {
                 alert( "Handler for .change() called." );
             });
@@ -486,6 +488,9 @@ border-bottom-right-radius: 0px;
                 var ds={};
                 ds=InsertPatientAppointment(Appointments);
                 refreshList();
+                fillPatientDetails();
+               // RereshTimeCheckBox();
+               // fillPatientDetails();
                 //$('#calendar').fullCalendar('removeEventSource', json);
                 //var calID = $("#hdfDoctorID").val();
     
@@ -600,6 +605,7 @@ border-bottom-right-radius: 0px;
                     {
                         $("#ddltimeSlot option:selected").text=title[0].split("=")[1];
                         $("#hdfScheduleID").val(title[0].split("=")[0]);
+                        $("#hdfTime").val(title[0].split("=")[1]);
                     }
                     ddl.add(option);
                 });
@@ -622,24 +628,29 @@ border-bottom-right-radius: 0px;
                         $("#ddltimeSlot option:selected").text=title[index].split("=")[1];
                         $("#hdfScheduleID").val(title[index].split("=")[0]);
                     }
+                   //ddl.options[ddl.selectedIndex].text;
+                  
                     ddl.add(option);
                 });
             }
-      
+            var docTime=ddl.options[ddl.selectedIndex].text;
+            $("#hdfTime").val(docTime);
+            AppendList(eventDate.split(' ')[0]);
         }
         function AppendList(date)
         {
-            
+            debugger;
            
             var FormattedDate=getFormattedDate(date);
             var date=('<span class="Formatdate">'+FormattedDate+'</span>');
             var appList = "Add Appointment For ";
             var list="Patient List For ";
+            var time=" at "+$("#hdfTime").val();
             $("#txtAppointmentDate").val(FormattedDate);
             $('#<%=lblAppointment.ClientID%>').text('');
             $('#<%=lblList.ClientID%>').text('');
-            $('#<%=lblAppointment.ClientID%>').text(appList).append(date);
-            $('#<%=lblList.ClientID%>').append(list).append(date);
+            $('#<%=lblAppointment.ClientID%>').text(appList).append(date).append(time);
+            $('#<%=lblList.ClientID%>').append(list).append(date).append(time);
         }
         function TimelistOnchange(i)
         {
@@ -891,7 +902,7 @@ border-bottom-right-radius: 0px;
                 <input type="hidden" id="hdfScheduleID" />
                  <input type="hidden" id="hdfDoctorID" />
                 <input type="hidden" id="hdEventDate" />
-
+                <input type="hidden" id="hdfTime" />
             </div>
         </div>
 

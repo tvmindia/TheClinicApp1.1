@@ -27,7 +27,7 @@
     <link href="../css/mui.css" rel="stylesheet" />
     <link href="../css/jquery-ui.css" rel="stylesheet" />
     <link href="../css/ClinicappMaster.css" rel="stylesheet" />
-         
+    <script src="../js/DeletionConfirmation.js"></script>
     <script>
         function CustomAlert() {
             this.render = function (dialog) {
@@ -52,7 +52,20 @@
         var Alert = new CustomAlert();
         function redirect() {
             
-            window.location.href = "../Default.aspx?sessionclear=logout";
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+var LogoutConfirmation = ConfirmLogout();
+
+
+            if (LogoutConfirmation) {
+                confirm_value.value = true;
+   window.location.href = "../Default.aspx?sessionclear=logout";
+            } else {
+                confirm_value.value = false;
+            }
+            document.forms[0].appendChild(confirm_value);
+         
         }
         function focusplz(id) {
            

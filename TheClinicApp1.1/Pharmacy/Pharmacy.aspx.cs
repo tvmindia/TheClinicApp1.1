@@ -389,9 +389,13 @@ namespace TheClinicApp1._1.Pharmacy
             Response.Redirect("../Default.aspx");
         }
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
+        {  string LogoutConfirmation = Request.Form["confirm_value"];
+
+        if (LogoutConfirmation == "true")
         {
             Session.Remove(Const.LoginSession);
             Response.Redirect("../Default.aspx");
+        }
         }
 
         #endregion LogOuT

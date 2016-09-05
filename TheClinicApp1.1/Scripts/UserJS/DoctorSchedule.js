@@ -51,22 +51,22 @@ $(document).mouseup(function (e) {
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
     
-    $("#myModal").dialog({
-        autoOpen: false,
-        closeOnEscape: false,
-        draggable: false,
-        height: 300,
-        width: 500,
-        // hide: { effect: "explode", duration: 1000 },
-        //modal: true,
-        resizable: false,
-        show: { effect: "blind", duration: 800 },
-        title: "Appoinments",
-        dialogClass: 'no-close success-dialog',
-        open: function (event, ui) {
-            $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-        }
-    }).prev(".ui-dialog-titlebar").css("background", "#336699");;
+    //$("#myModal").dialog({
+    //    autoOpen: false,
+    //    closeOnEscape: false,
+    //    draggable: false,
+    //    height: 300,
+    //    width: 500,
+    //    // hide: { effect: "explode", duration: 1000 },
+    //    //modal: true,
+    //    resizable: false,
+    //    show: { effect: "blind", duration: 800 },
+    //    title: "Appoinments",
+    //    dialogClass: 'no-close success-dialog',
+    //    open: function (event, ui) {
+    //        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+    //    }
+    //}).prev(".ui-dialog-titlebar").css("background", "#336699");;
 
  
     // ---- Get date in yyyy mm dd format , to set default date----- //
@@ -88,7 +88,7 @@ $(document).mouseup(function (e) {
 
         $('#calendar').fullCalendar({
            // timeFormat: 'hh:mm a',
-
+            timezone: 'local',//--- otherwise date shows wrong by one day
             theme: true,
             header: {
                 left: 'prev,next today myCustomButton',
@@ -130,6 +130,9 @@ $(document).mouseup(function (e) {
                     }, 500);
 
                     $('#calendar').fullCalendar('unselect');
+
+                    ClickedDate = moment(eventStartDate).format('DD MMM YYYY');
+
 
                     GetScheduledTimesByDate();
 
@@ -362,12 +365,14 @@ $(document).mouseup(function (e) {
         $("#txtEndDate").val("");
         $("#txtstartTime").val("");
         $("#txtEndTime").val("");
-        $("#myModal").dialog("close");
+        $('#myModal').modal('hide');
     });
 
     /*Modal dialog OK button click*/
     $('#Okay').click(function () {
         debugger;
+       
+        if ($('#hdnIsDeletionByDate').val() != "true") {
 
         var Appointments = new Object();
         ScheduleID = document.getElementById('hdnScheduleID').value;
@@ -406,16 +411,71 @@ $(document).mouseup(function (e) {
 
             // $('#calendar').fullCalendar('refetchEvents');
         }
+        }
+
+        else //--- Cancel By date
+        {
+            var Appointments = new Object();
+            Appointments.AppointmentDate = ClickedDate;
+            Appointments.DoctorID = DoctorID;
+           
+            var ds = {};
+            var table = {};
+
+            var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+            ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelAllAppoinmentsByDate");
+            table = JSON.parse(ds.d);
 
 
+            if (table.status == 1) {
+
+              //  GetScheduledTimesByDate(ClickedDate);
+                BindScheduledDates();
+
+                var jsonDrSchedule = {};
+
+                var Doctor = new Object();
+                Doctor.DoctorID = DoctorID;
+
+                jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                if (jsonDrSchedule != undefined) {
+
+                    $('#calendar').fullCalendar('removeEventSource', json);
+
+                    json = jsonDrSchedule;
+
+                    $('#calendar').fullCalendar('addEventSource', json);
+                    $('#calendar').fullCalendar('refetchEvents');
+                }
 
 
-        $("#myModal").dialog("close");
+                // $('#calendar').fullCalendar('refetchEvents');
+            }
+
+        }
+
+        ClickedDate = '';
+        $('#hdnIsDeletionByDate').val('');
+        $('#myModal').modal('hide');
         });
-
+   
 });
 
 /*end of document.ready*/
+
+
+    function ModalCancelClick()
+    {
+        $("#txtTitle").val("");
+        $("#txtEndDate").val("");
+        $("#txtstartTime").val("");
+        $("#txtEndTime").val("");
+     
+    }
+
+    function ModalOKClick() {
+
+    }
 
     getMonthName = function (MonthNo) {
         var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -773,9 +833,10 @@ $(document).mouseup(function (e) {
 
     var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
+       
     var Doctor = new Object();
     Doctor.DocScheduleID = ScheduleID;
-
+    Doctor.DoctorID = DoctorID;
     var ds = {};
     var table = {};
 
@@ -811,7 +872,10 @@ $(document).mouseup(function (e) {
   else {
         OpenModal();
        //  $("#tblPatients tr").remove();
-        $('tblPatients tr:not(:first)').remove();
+        //$('tblPatients tr:not(:first)').remove();
+
+        $("#tbodyPatients tr").remove();
+
         debugger;
         Records = table;
 
@@ -820,7 +884,7 @@ $(document).mouseup(function (e) {
         
             var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
-                $("#tblPatients").append(html);
+            $("#tbodyPatients").append(html);
             
 
         })
@@ -1334,9 +1398,14 @@ $(document).mouseup(function (e) {
             else {
                 OpenModal();
 
+                ClickedDate = DrAvaildate;
+                $('#hdnIsDeletionByDate').val(true);
                 debugger;
                 //  $("#tblPatients tr").remove();
-                $('tblPatients tr:not(:first)').remove();
+
+                $("#tbodyPatients tr").remove();
+
+                //$('tblPatients tr:not(:first)').remove();
                 debugger;
                 Records = JsonCancellAll;
 
@@ -1345,15 +1414,10 @@ $(document).mouseup(function (e) {
 
                     var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
-                    $("#tblPatients").append(html);
+                    $("#tbodyPatients").append(html);
 
 
                 })
-
-
-
-
-
 
                 //alert(" Sorry, Already scheduled an appointment!")
             }

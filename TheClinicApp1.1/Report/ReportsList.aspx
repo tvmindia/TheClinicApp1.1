@@ -172,7 +172,7 @@ table td{
          <a class="nav_menu">Menu</a>
          Reports <ul class="top_right_links"><li>
          <asp:Label ID="lblUserName" CssClass="label" runat="server" Text="UserName" ForeColor="#d8bb22"></asp:Label></li><li>         
-         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click"  ToolTip="Logout" formnovalidate /></li></ul>
+         <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png"  BorderColor="White" runat="server" OnClick="LogoutButton_Click" OnClientClick="redirect();"  ToolTip="Logout" formnovalidate /></li></ul>
          </div>
              
             
