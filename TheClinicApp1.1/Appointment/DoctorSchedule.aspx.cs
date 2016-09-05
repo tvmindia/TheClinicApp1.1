@@ -673,9 +673,14 @@ namespace TheClinicApp1._1.Appointment
         #region Logout
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         {
+            string LogoutConfirmation = Request.Form["confirm_value"];
+
+            if (LogoutConfirmation == "true")
+            {
             Session.Remove(Const.LoginSession);
             Session.Clear();
             Response.Redirect("../Default.aspx");
+            }
         }
 
          #endregion Logout

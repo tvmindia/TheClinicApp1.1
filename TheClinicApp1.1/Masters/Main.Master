@@ -51,8 +51,20 @@
         }
         var Alert = new CustomAlert();
         function redirect() {
-            
-            window.location.href = "../Default.aspx?sessionclear=logout";
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+var LogoutConfirmation = ConfirmLogout();
+
+
+            if (LogoutConfirmation) {
+                confirm_value.value = true;
+   window.location.href = "../Default.aspx?sessionclear=logout";
+            } else {
+                confirm_value.value = false;
+            }
+            document.forms[0].appendChild(confirm_value);
+         
         }
         function focusplz(id) {
            
