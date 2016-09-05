@@ -88,7 +88,7 @@ $(document).mouseup(function (e) {
 
         $('#calendar').fullCalendar({
            // timeFormat: 'hh:mm a',
-
+            timezone: 'local',//--- otherwise date shows wrong by one day
             theme: true,
             header: {
                 left: 'prev,next today myCustomButton',
