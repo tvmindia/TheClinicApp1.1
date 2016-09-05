@@ -168,7 +168,7 @@ namespace TheClinicApp1._1.Appointment
                     events.Add(new Event()
                     {
                         id = ds.Tables[0].Rows[i]["event_id"].ToString(),
-                        title = ds.Tables[0].Rows[i]["title"].ToString() + " out of " + ds.Tables[0].Rows[i]["PatientLimit"].ToString(),
+                        title ="Appointments "+ ds.Tables[0].Rows[i]["title"].ToString() + "/" + ds.Tables[0].Rows[i]["PatientLimit"].ToString(),
                         start = ds.Tables[0].Rows[i]["event_start"].ToString(),
                         end = ds.Tables[0].Rows[i]["event_end"].ToString()
                     });

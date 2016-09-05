@@ -509,7 +509,7 @@ function GetAllottedTime(docId, eventStartDate, id) {
        // }
     }
     names = names.filter(Boolean);
-    var timeList = GetAllTimeAvailability(docId, eventStartDate);
+    var timeList = GetAllTimeAvailability(docId, eventStartDate, id);
     for (index = 0; index < timeList.length - 1; index++) {
         checkItems = timeList.length - 1;
         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
@@ -648,13 +648,14 @@ function GetAllDoctorScheduleDetailsByDate(Doctor) {
     table = JSON.parse(ds.d);
     return table;
 }
-function GetAllTimeAvailability(docID, date) {
+function GetAllTimeAvailability(docID, date,schId) {
 
     var ds = {};
     var table = {};
     var Doctor = new Object();
     Doctor.DoctorID = docID;
     Doctor.DoctorAvailDate = date;
+    Doctor.DocScheduleID = schId;
     var data = "{'docObj':" + JSON.stringify(Doctor) + "}";
     ds = getJsonData(data, "Appointment.aspx/GetDoctorAvailability");
     table = JSON.parse(ds.d);

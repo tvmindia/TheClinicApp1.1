@@ -355,9 +355,13 @@ border-bottom-right-radius: 0px;
            background-position: 20px center;
            background-color:white;
          }
+         .fc-day-grid-event > .fc-content {
+    white-space: normal;
+}
         .fc-event[href], .fc-event.fc-draggable {
     cursor: pointer;
-    /*width: 15px!important;*/
+    /*width: 50px!important;
+    height:25px;*/
 }
          /*.fc-day-grid-event .fc-content {
              background-color:#256db7;
@@ -594,8 +598,8 @@ border-bottom-right-radius: 0px;
                     option.value=title[index].split("=")[0];
                     if(title[0])
                     {
-                        $("#ddltimeSlot option:selected").text=title[index].split("=")[1];
-                        $("#hdfScheduleID").val(title[index].split("=")[0]);
+                        $("#ddltimeSlot option:selected").text=title[0].split("=")[1];
+                        $("#hdfScheduleID").val(title[0].split("=")[0]);
                     }
                     ddl.add(option);
                 });
