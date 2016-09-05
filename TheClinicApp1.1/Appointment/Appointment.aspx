@@ -582,22 +582,45 @@ border-bottom-right-radius: 0px;
             document.getElementById("br2").style.display='block';
             document.getElementById("timeSlot").style.display='block';
         }
-        function BindSlotDropDown(title)
+        function BindSlotDropDown(title,eventDate)
         {
             debugger;
             bindTitle=title;
             var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
- $.each(title, function (index, Records) {
-            var option = document.createElement("option");
-            option.text = title[index].split("=")[1];
-            option.value=title[index].split("=")[0];
-            if(title[0])
+            
+                $.each(title, function (index, Records) {
+                    var option = document.createElement("option");
+                    option.text = title[index].split("=")[1];
+                    option.value=title[index].split("=")[0];
+                    if(title[0])
+                    {
+                        $("#ddltimeSlot option:selected").text=title[index].split("=")[1];
+                        $("#hdfScheduleID").val(title[index].split("=")[0]);
+                    }
+                    ddl.add(option);
+                });
+            
+      
+        }
+        function SlotDropDownOnchange(title,eventDate)
+        {
+            debugger;
+            bindTitle=title;
+            var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
+            if(eventDate!=$("#hdEventDate").val())
             {
-                $("#ddltimeSlot option:selected").text=title[index].split("=")[1];
-                $("#hdfScheduleID").val(title[index].split("=")[0]);
+                $.each(title, function (index, Records) {
+                    var option = document.createElement("option");
+                    option.text = title[index].split("=")[1];
+                    option.value=title[index].split("=")[0];
+                    if(title[0])
+                    {
+                        $("#ddltimeSlot option:selected").text=title[index].split("=")[1];
+                        $("#hdfScheduleID").val(title[index].split("=")[0]);
+                    }
+                    ddl.add(option);
+                });
             }
-            ddl.add(option);
-});
       
         }
         function AppendList(date)
@@ -621,7 +644,7 @@ border-bottom-right-radius: 0px;
             var scheduleId=i.value;
             $("#hdfScheduleID").val(scheduleId);
             fillPatientDetails();
-            BindSlotDropDown(bindTitle)
+            SlotDropDownOnchange(bindTitle,$("#hdEventDate").val())
         }
     </script>
     <div class="main_body">
@@ -863,6 +886,7 @@ border-bottom-right-radius: 0px;
                 <%--  <asp:HiddenField ID="hdfScheduleID" runat="server" />--%>
                 <input type="hidden" id="hdfScheduleID" />
                  <input type="hidden" id="hdfDoctorID" />
+                <input type="hidden" id="hdEventDate" />
 
             </div>
         </div>
