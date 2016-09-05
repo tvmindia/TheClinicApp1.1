@@ -21,3 +21,9 @@ function ConfirmDelete(IsDelete) {
     }
 
 }
+
+
+function ConfirmLogout()
+{
+    return confirm(" Are you sure you want to Logout? ");
+}
