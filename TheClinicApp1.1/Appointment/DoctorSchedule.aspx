@@ -4,7 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-
+      <link href="../css/main.css" rel="stylesheet" />  
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
 
@@ -12,7 +13,7 @@
     <script src="../js/1.12.0jquery-ui.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
     <script src="../js/Messages.js"></script>
-
+    <script src="../Scripts/Common/Common.js"></script>
     <script src="../js/moment.min.js"></script>
     <script src="../js/fullcalendar.min.js"></script>
     <script src="../js/lang-all.js"></script>
@@ -576,16 +577,6 @@
 
                     </ul>
 
-                    <div id="Errorbox" style="height: 30%; display: none;">
-                        <a class="alert_close">X</a>
-                        <div>
-                            <strong>
-                                <label id="lblErrorCaption"></label>
-                            </strong>
-                            <label id="lblMsgges"></label>
-                        </div>
-                    </div>
-
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active">
@@ -607,7 +598,17 @@
                                     <li><a class="new" href="DoctorSchedule.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
-
+                            
+                    <div id="Errorbox" style="height: 30%; display: none;">
+                        <a class="alert_close">X</a>
+                        <div>
+                            <strong>
+                                <span id="lblErrorCaption"></span>
+                              
+                            </strong>
+                            <span id="lblMsgges"></span>
+                        </div>
+                    </div>
                             <div class="tab_table">
 
                                 <div class="row field_row">

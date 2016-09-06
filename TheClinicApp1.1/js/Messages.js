@@ -6,7 +6,10 @@
     AlreadyIssued: "Already issued.Can't be deleted",
     DeletionSuccessFull: "Deleted Successfully",
     AlreadyUsed: "Already used . Can't be deleted",
-    InsertionSuccessFull:  "Successfully Inserted"
+    InsertionSuccessFull: "Successfully Inserted",
+    ScheduleSaveSuccessFull: "Schedule added Successfully",
+    ScheduleCancelSuccessFull: "Schedule Cancelled Successfully"
+   
 }
 
 var Caption = {
@@ -25,7 +28,3 @@ var Alertclasses = {
     
 
 }
-
-var AppoinmentCancellationMessage = '<p>' + "Dear" + '<strong>' + " %PATIENT NAME%," + '</strong>' + '<br /><br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp' + "Your Appoinment with Dr." + '<strong>' + "%DOCTOR NAME%" + '</strong>' + "On" + '<strong>' + " %DATE%" + '</strong>' + "  At " + '<strong>' + " %TIME%" + '</strong>' + "  has been cancelled due to" + '<strong>' + " %REASON% " + '</strong>' + ". Please contact our office to schedule a new appoinment." + '<br /><br />' + "<b><i>" + "This sms will be send to the contacts given below " + "</i></b>" + '</p>';
- 
-var CancelReason = "Some inconvenience";

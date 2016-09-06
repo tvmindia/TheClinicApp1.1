@@ -912,6 +912,11 @@ $(document).mouseup(function (e) {
             $('#calendar').fullCalendar('refetchEvents');
         }
 
+        var lblclass = Alertclasses.sucess;
+        var lblmsg = msg.ScheduleCancelSuccessFull;
+        var lblcaptn = Caption.SuccessMsgCaption;
+
+        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
 
         // $('#calendar').fullCalendar('refetchEvents');
     }
@@ -1299,18 +1304,13 @@ $(document).mouseup(function (e) {
                     }
                 }
 
-                //var lblErrorCaption = document.getElementById('lblErrorCaption');
-                //var lblMsgges = document.getElementById('lblMsgges');
-                //var Errorbox = document.getElementById('Errorbox');
 
-                //var lblclass = Alertclasses.sucess;
-                //var lblmsg = msg.InsertionSuccessFull;
-                //var lblcaptn = Caption.SuccessMsgCaption;
+                var lblclass = Alertclasses.sucess;
+                var lblmsg = msg.ScheduleSaveSuccessFull;
+                var lblcaptn = Caption.SuccessMsgCaption;
 
-                //Errorbox.style.display = "";
-                //Errorbox.className = lblclass;
-                //lblErrorCaption.innerHTML = lblcaptn;
-                //lblMsgges.innerHTML = lblmsg;
+                DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+               
 
             }
 
@@ -1434,6 +1434,13 @@ $(document).mouseup(function (e) {
 
                     }
                 }
+
+                var lblclass = Alertclasses.sucess;
+                var lblmsg = msg.ScheduleCancelSuccessFull;
+                var lblcaptn = Caption.SuccessMsgCaption;
+
+                DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+
             }
 
             else {
@@ -1467,4 +1474,6 @@ $(document).mouseup(function (e) {
 
         }
     }
- }
+    }
+
+ 
