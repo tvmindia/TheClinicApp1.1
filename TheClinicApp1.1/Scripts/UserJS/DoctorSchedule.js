@@ -377,7 +377,12 @@ $(document).mouseup(function (e) {
         var CancelMsg = AppoinmentCancellationMessage;
         var html = '';
         var DoctorName = $('#hdnDoctorName').val();
+       
         $.each(Records, function (index, Records) {
+            debugger;
+            var tableContent = '<tr><td>' + Records.Name + '</td><td>' + Records.Mobile + '</td></tr>';
+
+            $("#tbodySms").append(tableContent);
 
             //var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
@@ -385,18 +390,16 @@ $(document).mouseup(function (e) {
             html = html.replace('%DOCTOR NAME%', DoctorName);
             html = html.replace('%DATE%', ClickedDate);
             html = html.replace('%TIME%', Records.AllottingTime);
-            html = html.replace('%REASON%', "Some inconvenience");
-            $('#divCancellationMsg').append(html);
+            html = html.replace('%REASON%', CancelReason);
+            //$('#divCancellationMsg').append(html);
         })
 
-
-
-        //$('#myModal').modal('hide');
-        //$('#divCancellationMsg').hide();
-        //$('#MsgFooter').hide();
-        //$('#tblPatients').show();
-        //$('#TableFooter').show();
-        //ClickedDate = '';
+        $('#myModal').modal('hide');
+        $('#divCancellationMsg').hide();
+        $('#MsgFooter').hide();
+        $('#tblPatients').show();
+        $('#TableFooter').show();
+        ClickedDate = '';
     });
 
       /*Appoinment msg Cancel Click*/
@@ -501,6 +504,17 @@ $(document).mouseup(function (e) {
         $('#tblPatients').hide();
         $('#TableFooter').hide();
         $('#divMsg').append(html);
+
+        $("#tbodySms tr").remove();
+        Records = PatientDetails;
+
+        $.each(Records, function (index, Records) {
+            debugger;
+            var tableContent = '<tr><td>' + Records.Name + '</td><td>' + Records.Mobile + '</td></tr>';
+
+            $("#tbodySms").append(tableContent);
+
+        })
 
         $('#hdnIsDeletionByDate').val('');
         //$('#myModal').modal('hide');

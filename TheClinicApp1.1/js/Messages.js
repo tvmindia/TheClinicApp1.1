@@ -26,4 +26,6 @@ var Alertclasses = {
 
 }
 
-var AppoinmentCancellationMessage = '<p>' + "Dear %PATIENT NAME%," + '<br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp' + "Your Appoinment with Dr.%DOCTOR NAME% On %DATE% At %TIME%  has been cancelled due to %REASON%. Please contact our office to schedule a new appoinment." + '</p>';
+var AppoinmentCancellationMessage = '<p>' + "Dear" + '<strong>' + " %PATIENT NAME%," + '</strong>' + '<br /><br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp' + "Your Appoinment with Dr." + '<strong>' + "%DOCTOR NAME%" + '</strong>' + "On" + '<strong>' + " %DATE%" + '</strong>' + "  At " + '<strong>' + " %TIME%" + '</strong>' + "  has been cancelled due to" + '<strong>' + " %REASON% " + '</strong>' + ". Please contact our office to schedule a new appoinment." + '<br /><br />' + "<b><i>" + "This sms will be send to the contacts given below " + "</i></b>" + '</p>';
+ 
+var CancelReason = "Some inconvenience";

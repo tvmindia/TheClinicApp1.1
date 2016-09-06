@@ -451,10 +451,10 @@
 
             debugger;
             $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
-             
+
             ClearControls();
             DoctorID = e.value;
-         
+
             var jsonDrSchedule = {};
 
             var Doctor = new Object();
@@ -631,55 +631,89 @@
 
                                                         <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
                                                             <div class="col-lg-12" style="height: 480px;">
-                                                                <div id="divCancellationMsg" class="col-lg-12" style="display: none;font-size: 16px; font-weight: bold;font-family: 'roboto-bold';"  >
-                                                                    <div class="col-lg-12" id="divMsg"></div>
-
-                                                            </div>
-                                                        
-                                                            <div class="col-sm-12" style="height: 400px;">
-                                                                <table id="tblPatients" style="width: 100%!important;">
-
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Patient</th>
-                                                                            <th>Appoinment Time</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody id="tbodyPatients">
-                                                                    </tbody>
+                                                                <div id="divCancellationMsg" class="col-lg-12" style="display: none">
 
 
-                                                                </table>
+                                                                    <fieldset style="border-radius: 15px!important; border: 2px solid #3661C7!important;">
+
+                                                                        <legend style="font-family: caviardreams-regular; color: #3661C7; width: 25%; margin-left: 2%">Regret SMS</legend>
+
+                                                                        <div class="col-lg-12">
+
+                                                                            <div class="row field_row">
+                                                                                <div class="col-lg-12" id="divMsg"></div>
+                                                                               <div class="col-lg-12"> <table id="tblSms" style="width:100%!important" >
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th style="width:50%">Name</th>
+                                                                                            <th style="width:50%">Mobile No</th>
+                                                                                        </tr>
+                                                                                    </thead>
+
+                                                                                    <tbody id="tbodySms">
+                                                                                    </tbody>
+
+
+                                                                                </table></div>
+                                                                            </div>
+
+                                                                        </div>
+
+
+
+
+                                                                    </fieldset>
+
+
+
+                                                                </div>
+
+                                                                <div class="col-sm-12" style="height: 400px;">
+                                                                    <table id="tblPatients" style="width: 100%!important;">
+
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Patient</th>
+                                                                                <th>Appoinment Time</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="tbodyPatients">
+                                                                        </tbody>
+
+
+                                                                    </table>
+                                                                </div>
+
                                                             </div>
 
                                                         </div>
 
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <div class="grey_sec" id="TableFooter">
-                                                            Would You still like to cancel this schedule..?
+                                                        <div class="modal-footer">
+                                                            <div class="grey_sec" id="TableFooter">
+                                                                Would You still like to cancel this schedule..?
                               
                                 <ul class="top_right_links">
                                     <li><a class="save" id="Okay"><span></span>Yes</a></li>
                                     <li><a class="new" id="Cancel"><span></span>No</a></li>
                                 </ul>
-                                                        </div>
+                                                            </div>
 
-                                                         <div class="grey_sec" id="MsgFooter" style="display:none">
-                                                                        <ul class="top_right_links">
-                                                                            <li><a class="save" id="Skip"><span></span>Skip</a></li>
-                                                                            <li><a class="new" id="Ok"><span></span>Ok</a></li>
-                                                                        </ul>
-                                                                    </div>
+                                                            <div class="grey_sec" id="MsgFooter" style="display: none">
+                                                                <ul class="top_right_links">
+
+                                                                    <li><a class="save" id="Ok"><span></span>Send SMS</a></li>
+                                                                    <li><a class="new" id="Skip"><span></span>Skip</a></li>
+
+                                                                </ul>
+                                                            </div>
+
+
+                                                        </div>
 
 
                                                     </div>
-
-
                                                 </div>
                                             </div>
-                                        </div>
 
 
 
@@ -691,32 +725,32 @@
 
 
 
-                                        <br />
+                                            <br />
 
 
-                                        <div id="colorBox" style="display: none">
+                                            <div id="colorBox" style="display: none">
 
-                                            <table id="tblColorCodes">
-                                                <tr>
-                                                    <td>
+                                                <table id="tblColorCodes">
+                                                    <tr>
+                                                        <td>
 
-                                                        <div class="foo Count"></div>
-                                                        <label class="lblColor">Scheduled Dates</label>
-                                                    </td>
-                                                    <td>
-                                                        <div class="foo Dates"></div>
-                                                        <label class="lblColor">Schedules</label>
-                                                    </td>
-                                                    <td>
-                                                        <div class="foo Today"></div>
-                                                        <label class="lblColor">Today</label>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                                            <div class="foo Count"></div>
+                                                            <label class="lblColor">Scheduled Dates</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="foo Dates"></div>
+                                                            <label class="lblColor">Schedules</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="foo Today"></div>
+                                                            <label class="lblColor">Today</label>
+                                                        </td>
+                                                    </tr>
+                                                </table>
 
 
 
-                                            <%--  <ul>
+                                                <%--  <ul>
                                                     <li >
                                                         <div class="foo Count"></div>
                                                     
@@ -731,122 +765,122 @@
                                                         <label>Today</label>
                                                     </li>
                                                 </ul>--%>
-                                        </div>
-                                    </div>
-                                    <br />
-
-                                    <div class="col-lg-6" style="height: 100%;">
-
-                                        <%--   <div class="col-lg-12">--%>
-
-                                        <div class="token_id_card" style="width: 100%;">
-                                            <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
-                                                <%--<asp:Label runat="server"  Text="Add Schedule"></asp:Label>--%>
-                                                <label id="lblAddSchedule" style="text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; font-family: 'roboto-bold';">Add Schedule</label>
-
-
                                             </div>
+                                        </div>
+                                        <br />
 
-                                            <div class="card_white">
+                                        <div class="col-lg-6" style="height: 100%;">
 
-                                                <div class="row field_row">
+                                            <%--   <div class="col-lg-12">--%>
 
-                                                    <div class="col-lg-6">
-
-                                                        <label>Scheduled Date</label>
-                                                        <input class="" name="Date" id="txtAppointmentDate" type="text" readonly="true" style="font-weight: Bold;" />
-
-                                                    </div>
-
-                                                    <div class="col-lg-6 ">
-                                                        <label style="width: 100%;">Max Appoinments</label>
-
-                                                        <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)" />
-                                                    </div>
+                                            <div class="token_id_card" style="width: 100%;">
+                                                <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
+                                                    <%--<asp:Label runat="server"  Text="Add Schedule"></asp:Label>--%>
+                                                    <label id="lblAddSchedule" style="text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; font-family: 'roboto-bold';">Add Schedule</label>
 
 
                                                 </div>
 
-                                                <div class="row field_row">
-                                                    <div class="col-lg-6 ">
-                                                        <label>Start Time</label>
+                                                <div class="card_white">
 
-                                                        <input type="text" class="txtAddNew" id="txtStartTime" name="time" />
+                                                    <div class="row field_row">
+
+                                                        <div class="col-lg-6">
+
+                                                            <label>Scheduled Date</label>
+                                                            <input class="" name="Date" id="txtAppointmentDate" type="text" readonly="true" style="font-weight: Bold;" />
+
+                                                        </div>
+
+                                                        <div class="col-lg-6 ">
+                                                            <label style="width: 100%;">Max Appoinments</label>
+
+                                                            <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)" />
+                                                        </div>
+
+
                                                     </div>
-                                                    <div class="col-lg-6 ">
-                                                        <label>End Time</label>
 
-                                                        <input type="text" class="txtAddNew" id="txtEndTime" name="time" />
+                                                    <div class="row field_row">
+                                                        <div class="col-lg-6 ">
+                                                            <label>Start Time</label>
+
+                                                            <input type="text" class="txtAddNew" id="txtStartTime" name="time" />
+                                                        </div>
+                                                        <div class="col-lg-6 ">
+                                                            <label>End Time</label>
+
+                                                            <input type="text" class="txtAddNew" id="txtEndTime" name="time" />
+                                                        </div>
+
+
                                                     </div>
 
+
+
+                                                    <div class="row field_row">
+                                                        <div class="col-lg-12">
+                                                            <label>Existing Schedules</label>
+
+                                                            <hr style="background-color: #99c4e0" />
+
+                                                            <table id="tblTimes">
+                                                                <tr>
+                                                                    <td><i>No scheduled time!</i></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div style="height: 30px"></div>
 
                                                 </div>
+                                            </div>
+                                            <%--</div>--%>
 
 
+                                            <div class="token_id_card" style="width: 100%;">
 
-                                                <div class="row field_row">
-                                                    <div class="col-lg-12">
-                                                        <label>Existing Schedules</label>
+                                                <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
 
-                                                        <hr style="background-color: #99c4e0" />
+                                                    <label id="lblExistingSchedules" style="text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; font-family: 'roboto-bold';">Schedule List</label>
+                                                    <%--<asp:Label runat="server"  id="lblExistingSchedules" Text="Schedule List"></asp:Label>--%>
+                                                </div>
+                                                <div class="card_white">
 
-                                                        <table id="tblTimes">
-                                                            <tr>
-                                                                <td><i>No scheduled time!</i></td>
-                                                            </tr>
+                                                    <div class="field_label">
+
+                                                        <table id="tblDates">
                                                         </table>
                                                     </div>
-
                                                 </div>
 
-                                                <div style="height: 30px"></div>
-
-                                            </div>
-                                        </div>
-                                        <%--</div>--%>
-
-
-                                        <div class="token_id_card" style="width: 100%;">
-
-                                            <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
-
-                                                <label id="lblExistingSchedules" style="text-align: left; font-size: 18px; line-height: 38px; font-weight: bold; color: #fff; font-family: 'roboto-bold';">Schedule List</label>
-                                                <%--<asp:Label runat="server"  id="lblExistingSchedules" Text="Schedule List"></asp:Label>--%>
-                                            </div>
-                                            <div class="card_white">
-
-                                                <div class="field_label">
-
-                                                    <table id="tblDates">
-                                                    </table>
-                                                </div>
                                             </div>
 
                                         </div>
-
                                     </div>
                                 </div>
+
                             </div>
 
+
+                            <asp:HiddenField ID="hdnDoctorID" runat="server" Value="" />
+
                         </div>
-
-
-                        <asp:HiddenField ID="hdnDoctorID" runat="server" Value="" />
-
                     </div>
                 </div>
             </div>
+
+
+
+
         </div>
-
-
-
-
-    </div>
-    <input type="hidden" id="hdnScheduleID" value="" />
-    <input type="hidden" id="hdnIsErrorTime" value="" />
-    <input type="hidden" id="hdnIsDrChanged" value="No" />
-    <input type="hidden" id="hdnAllEvents" value="" />
-    <input type="hidden" id="hdnIsDeletionByDate" value="" />
-    <input type="hidden" id="hdnDoctorName" value="" />
+        <input type="hidden" id="hdnScheduleID" value="" />
+        <input type="hidden" id="hdnIsErrorTime" value="" />
+        <input type="hidden" id="hdnIsDrChanged" value="No" />
+        <input type="hidden" id="hdnAllEvents" value="" />
+        <input type="hidden" id="hdnIsDeletionByDate" value="" />
+        <input type="hidden" id="hdnDoctorName" value="" />
     </div>
 </asp:Content>
