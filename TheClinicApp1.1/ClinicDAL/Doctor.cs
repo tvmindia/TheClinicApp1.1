@@ -736,13 +736,30 @@ namespace TheClinicApp1._1.ClinicDAL
             var hour = time.Split(':')[hourIndex];
             var minutes = time.Split(':')[1];
             var h = hour;
-
+            if (ampm.Equals("AM"))
+            {
+                if (h == "12")
+                {
+                    h = "00";
+                }
+            }
             if (ampm.Equals("PM"))
             {
-                h = (int.Parse(hour) + 12).ToString();
+                if (h != "12")
+                {
+                    h = (int.Parse(hour) + 12).ToString();
+                }
+                   
+               
             }
 
+
+
+
             var TimeIn24HrFormat =    h + ":" + minutes;
+
+
+
 
           TimeIn24HrFormat=  Regex.Replace(TimeIn24HrFormat, @"\s+", "");
 
