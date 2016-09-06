@@ -463,20 +463,6 @@ $(document).mouseup(function (e) {
 
 /*end of document.ready*/
 
-
-    function ModalCancelClick()
-    {
-        $("#txtTitle").val("");
-        $("#txtEndDate").val("");
-        $("#txtstartTime").val("");
-        $("#txtEndTime").val("");
-     
-    }
-
-    function ModalOKClick() {
-
-    }
-
     getMonthName = function (MonthNo) {
         var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         return monthNames[MonthNo];
