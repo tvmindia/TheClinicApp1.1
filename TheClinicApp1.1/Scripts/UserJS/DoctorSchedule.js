@@ -385,6 +385,7 @@ $(document).mouseup(function (e) {
             html = html.replace('%DOCTOR NAME%', DoctorName);
             html = html.replace('%DATE%', ClickedDate);
             html = html.replace('%TIME%', Records.AllottingTime);
+            html = html.replace('%REASON%', "Some inconvenience");
             $('#divCancellationMsg').append(html);
         })
 
