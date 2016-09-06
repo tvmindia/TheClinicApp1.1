@@ -368,6 +368,23 @@ $(document).mouseup(function (e) {
         $('#myModal').modal('hide');
     });
 
+    $('#Ok').click(function () {
+
+        $('#myModal').modal('hide');
+        $('#divCancellationMsg').hide();
+        $('#MsgFooter').hide();
+        $('#tblPatients').show();
+        $('#TableFooter').show();
+
+    });
+    $('#Skip').click(function () {
+        $('#myModal').modal('hide');
+        $('#divCancellationMsg').hide();
+        $('#MsgFooter').hide();
+        $('#tblPatients').show();
+        $('#TableFooter').show();
+
+    });
     /*Modal dialog OK button click*/
     $('#Okay').click(function () {
         debugger;
@@ -454,9 +471,19 @@ $(document).mouseup(function (e) {
 
         }
 
+        var html = '<p>' + AppoinmentCancellationMessage + '</p>';
+        $('#divCancellationMsg').show();
+        $('#MsgFooter').show();
+        $('#tblPatients').hide();
+        $('#TableFooter').hide();
+        $('#divMsg').append(html);
+
+         
+
+
         ClickedDate = '';
         $('#hdnIsDeletionByDate').val('');
-        $('#myModal').modal('hide');
+        //$('#myModal').modal('hide');
         });
    
 });
