@@ -370,8 +370,8 @@ $(document).mouseup(function (e) {
         $('#myModal').modal('hide');
     });
 
-    /*Appoinment msg ok Click*/
-    $('#Ok').click(function () {
+    /*Appoinment msg -send sms Click*/
+    $('#SendSms').click(function () {
         debugger;
         Records = PatientDetails;
         var CancelMsg = AppoinmentCancellationMessage;

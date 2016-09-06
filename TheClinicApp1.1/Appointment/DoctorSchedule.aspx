@@ -701,7 +701,7 @@
                                                             <div class="grey_sec" id="MsgFooter" style="display: none">
                                                                 <ul class="top_right_links">
 
-                                                                    <li><a class="save" id="Ok"><span></span>Send SMS</a></li>
+                                                                    <li><a class="save" id="SendSms"><span></span>Send SMS</a></li>
                                                                     <li><a class="new" id="Skip"><span></span>Skip</a></li>
 
                                                                 </ul>
