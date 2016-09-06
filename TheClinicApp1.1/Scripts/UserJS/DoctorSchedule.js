@@ -29,6 +29,8 @@ var ClickedDate = '';                       //-- Holds the value of Date at the 
 
 var AvailableCount = '';                    //-- regular time binding behaves weird when there is no regular time , so if record count is zero , this value sets to zero , and at time of binding we will ensure its value is 0
 
+var PatientDetails = {};
+
 $(document).mouseup(function (e) {
 
     //while selecting a date we give a border around date textbox , this event clears that border to previous form
@@ -368,15 +370,35 @@ $(document).mouseup(function (e) {
         $('#myModal').modal('hide');
     });
 
+    /*Appoinment msg ok Click*/
     $('#Ok').click(function () {
+        debugger;
+        Records = PatientDetails;
+        var CancelMsg = AppoinmentCancellationMessage;
+        var html = '';
+        var DoctorName = $('#hdnDoctorName').val();
+        $.each(Records, function (index, Records) {
 
-        $('#myModal').modal('hide');
-        $('#divCancellationMsg').hide();
-        $('#MsgFooter').hide();
-        $('#tblPatients').show();
-        $('#TableFooter').show();
+            //var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
+            html = CancelMsg.replace('%PATIENT NAME%', Records.Name);
+            html = html.replace('%DOCTOR NAME%', DoctorName);
+            html = html.replace('%DATE%', ClickedDate);
+            html = html.replace('%TIME%', Records.AllottingTime);
+            $('#divCancellationMsg').append(html);
+        })
+
+
+
+        //$('#myModal').modal('hide');
+        //$('#divCancellationMsg').hide();
+        //$('#MsgFooter').hide();
+        //$('#tblPatients').show();
+        //$('#TableFooter').show();
+        //ClickedDate = '';
     });
+
+      /*Appoinment msg Cancel Click*/
     $('#Skip').click(function () {
         $('#myModal').modal('hide');
         $('#divCancellationMsg').hide();
@@ -385,6 +407,7 @@ $(document).mouseup(function (e) {
         $('#TableFooter').show();
 
     });
+
     /*Modal dialog OK button click*/
     $('#Okay').click(function () {
         debugger;
@@ -478,10 +501,6 @@ $(document).mouseup(function (e) {
         $('#TableFooter').hide();
         $('#divMsg').append(html);
 
-         
-
-
-        ClickedDate = '';
         $('#hdnIsDeletionByDate').val('');
         //$('#myModal').modal('hide');
         });
@@ -891,21 +910,15 @@ $(document).mouseup(function (e) {
 
         debugger;
         Records = table;
-
+        PatientDetails = Records;
         $.each(Records, function (index, Records) {
 
         
             var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
             $("#tbodyPatients").append(html);
-            
-
+           
         })
-
-
-
-  
-
 
         //alert(" Sorry, Already scheduled an appointment!")
     }
@@ -1421,7 +1434,7 @@ $(document).mouseup(function (e) {
                 //$('tblPatients tr:not(:first)').remove();
                 debugger;
                 Records = JsonCancellAll;
-
+                PatientDetails = Records;
                 $.each(Records, function (index, Records) {
 
 

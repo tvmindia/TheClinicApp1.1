@@ -448,9 +448,13 @@
 
         //-- This method is invoked while changing doctor
         function SetDropdown(e) {
+
+            debugger;
+            $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
+             
             ClearControls();
             DoctorID = e.value;
-
+         
             var jsonDrSchedule = {};
 
             var Doctor = new Object();
@@ -843,6 +847,6 @@
     <input type="hidden" id="hdnIsDrChanged" value="No" />
     <input type="hidden" id="hdnAllEvents" value="" />
     <input type="hidden" id="hdnIsDeletionByDate" value="" />
-
+    <input type="hidden" id="hdnDoctorName" value="" />
     </div>
 </asp:Content>
