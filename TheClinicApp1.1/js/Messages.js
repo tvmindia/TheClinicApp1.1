@@ -6,7 +6,10 @@
     AlreadyIssued: "Already issued.Can't be deleted",
     DeletionSuccessFull: "Deleted Successfully",
     AlreadyUsed: "Already used . Can't be deleted",
-    InsertionSuccessFull:  "Successfully Inserted"
+    InsertionSuccessFull: "Successfully Inserted",
+    ScheduleSaveSuccessFull: "Schedule added Successfully",
+    ScheduleCancelSuccessFull: "Schedule Cancelled Successfully"
+   
 }
 
 var Caption = {

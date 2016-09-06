@@ -9,11 +9,15 @@ namespace TheClinicApp1._1.ClinicDAL
 {
     public class common
     {
-        #region Property
+
+        #region Global Variables
 
         public int DateFormatCode = 106;
         public int DateTimeFormatCode = 113;
+        
+        #endregion  Global Variables
 
+        #region Public Properties
 
         public string ErrorID
         {
@@ -81,10 +85,8 @@ namespace TheClinicApp1._1.ClinicDAL
             set;
 
         }
-         
 
-         
-        #endregion Property
+        #endregion Public Properties
 
         #region Methods
 

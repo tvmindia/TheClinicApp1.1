@@ -4,7 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
- 
+      <link href="../css/main.css" rel="stylesheet" />  
+    <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
 
@@ -12,7 +13,7 @@
     <script src="../js/1.12.0jquery-ui.js"></script>
     <script src="../js/Dynamicgrid.js"></script>
     <script src="../js/Messages.js"></script>
-
+    <script src="../Scripts/Common/Common.js"></script>
     <script src="../js/moment.min.js"></script>
     <script src="../js/fullcalendar.min.js"></script>
     <script src="../js/lang-all.js"></script>
@@ -25,27 +26,24 @@
     <script src="../js/timepicki.js"></script>
     <link href="../css/timepicki.css" rel="stylesheet" />
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
-    
-   <%--<script src="../js/jquery-1.9.1.min.js"></script>--%> 
-     <script src="../js/bootstrap.min.js"></script>
-  
-       <style>
 
+    <%--<script src="../js/jquery-1.9.1.min.js"></script>--%>
+    <script src="../js/bootstrap.min.js"></script>
+
+    <style>
         #circle {
-    /*display: block;*/
- cursor:pointer;
-    height: 60px;
-    width: 60px;
-    line-height: 120px;
-
-    -moz-border-radius: 30px; /* or 50% */
-    border-radius: 30px; /* or 50% */
-
-    background-color: black;
-    color: white;
-    text-align: center;
-    font-size: 2em;
-}
+            /*display: block;*/
+            cursor: pointer;
+            height: 60px;
+            width: 60px;
+            line-height: 120px;
+            -moz-border-radius: 30px; /* or 50% */
+            border-radius: 30px; /* or 50% */
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 2em;
+        }
 
 
         body {
@@ -130,7 +128,7 @@
             }
         }
 
-      
+
 
         .btnOkay {
             background-color: #336699;
@@ -255,7 +253,7 @@
 
         td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
             background-color: #ffd19a;
-          border-color:orange;
+            border-color: orange;
         }
 
 
@@ -324,9 +322,8 @@
             font-size: smaller;
         }
 
-        .ui-dialog-title
-        {
-            color:white!important;
+        .ui-dialog-title {
+            color: white !important;
         }
 
         /*.modal table
@@ -338,21 +335,20 @@
         .modal table th{
             background-color:#99c4e0!important;
         }*/
-      
-        .success-dialog
-        {
-            border:2px solid #3baae3;
+
+        .success-dialog {
+            border: 2px solid #3baae3;
         }
 
-    label {
-    color: #666666;
-    display: block;
-    font-family: "raleway-semibold";
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 14px;
-    margin: 1px 15px 10px;
-}
+        label {
+            color: #666666;
+            display: block;
+            font-family: "raleway-semibold";
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 14px;
+            margin: 1px 15px 10px;
+        }
 
         /*.fc-content
 {
@@ -367,7 +363,7 @@
 }*/
     </style>
 
-     <%--var isPostBack = <%=Convert.ToString(Page.IsPostBack).ToLower()%>;--%>
+    <%--var isPostBack = <%=Convert.ToString(Page.IsPostBack).ToLower()%>;--%>
 
     <script>
 
@@ -379,7 +375,7 @@
         $(document).ready(function () {
 
             debugger;
-          
+
 
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
@@ -388,7 +384,7 @@
                 $(".main_body").toggleClass("active_close");
             });
 
-           // var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
+            // var DoctorID = document.getElementById('<%=hdnDoctorID.ClientID%>').value
 
             if (DoctorID != "" && DoctorID != null) {
                 GetScheduleByDrID(DoctorID);
@@ -413,8 +409,7 @@
         //-- At time of edit click ,we know the time to be binded , so it will also passed , and this time willo get binded to timepicker
         function SetDefaultTime(inputID, time) {
 
-            if (time == null)
-            {
+            if (time == null) {
                 time = GetRegularScheduleByDrID();
             }
 
@@ -446,23 +441,26 @@
         }
 
         function OpenModal() {
-           
+
             $('#myModal').modal('show');
 
-           
+
         }
 
         //-- This method is invoked while changing doctor
-        function SetDropdown(e)
-        {
+        function SetDropdown(e) {
+
+            debugger;
+            $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
+
             ClearControls();
             DoctorID = e.value;
-           
+
             var jsonDrSchedule = {};
 
             var Doctor = new Object();
             Doctor.DoctorID = DoctorID;
-            
+
             $('#hdnIsDrChanged').val("Yes");
 
             jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
@@ -475,14 +473,13 @@
                 //---------------* Refreshing calender(By removing current json and adding the new one) *------------------//
 
                 $('#calendar').fullCalendar('removeEvents');
-              
+
                 // --- 1.previous events are retreived from  hiddenfield hdnAllEvents
                 //---- 2.then event bg color is removed
 
                 var Events = $('#hdnAllEvents').val(); //retrieve array
 
-                if (Events != null && Events != "" )
-                {
+                if (Events != null && Events != "") {
                     EventsToBeRemoved = JSON.parse(Events);
 
                     for (var i = 0; i < EventsToBeRemoved.length; i++) {
@@ -502,8 +499,7 @@
 
         }
 
-        function ClearControls()
-        {
+        function ClearControls() {
 
             $("#txtAppointmentDate").val("");
             $("#txtStartTime").val("");
@@ -513,7 +509,7 @@
             $("#hdnScheduleID").val("");
             $("#hdnIsErrorTime").val("");
             $("#hdnIsDrChanged").val("No");
-        
+
             $("#tblDates tr").remove();
 
             var dates = '<tr><td><i>' + "No scheduled date!" + '</i></td></tr>';
@@ -526,7 +522,7 @@
             $("#tblTimes").append(times);
 
         }
-      
+
     </script>
 
     <div class="main_body">
@@ -581,16 +577,6 @@
 
                     </ul>
 
-                    <div id="Errorbox" style="height: 30%; display: none;">
-                        <a class="alert_close">X</a>
-                        <div>
-                            <strong>
-                                <label id="lblErrorCaption"></label>
-                            </strong>
-                            <label id="lblMsgges"></label>
-                        </div>
-                    </div>
-
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active">
@@ -598,9 +584,9 @@
 
                                 <%--<asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>--%>
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server"  onchange="SetDropdown(this)"  Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" ></asp:DropDownList>
+                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus"></asp:DropDownList>
 
-                              
+
 
 
                                 <%-- <div class="search_div">
@@ -612,7 +598,17 @@
                                     <li><a class="new" href="DoctorSchedule.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
-                        
+                            
+                    <div id="Errorbox" style="height: 30%; display: none;">
+                        <a class="alert_close">X</a>
+                        <div>
+                            <strong>
+                                <span id="lblErrorCaption"></span>
+                              
+                            </strong>
+                            <span id="lblMsgges"></span>
+                        </div>
+                    </div>
                             <div class="tab_table">
 
                                 <div class="row field_row">
@@ -625,56 +621,100 @@
 
 
                                             <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="min-width: 550px;">
+                                                <div class="modal-dialog" style="min-width: 550px;">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header" style="border-color: #3661C7;">
-                    <button type="button" class="close" data-dismiss="modal" id="UserClose">&times;</button>
-                    <h3 class="modal-title">Existing Appoinments</h3>
-                </div>
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="border-color: #3661C7;">
+                                                            <button type="button" class="close" data-dismiss="modal" id="UserClose">&times;</button>
+                                                            <h3 class="modal-title">Existing Appoinments</h3>
+                                                        </div>
 
-                <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
-                    <div class="col-lg-12" style="height: 480px;">
-                        <div class="col-lg-12" style="height: 10px">
-                            
-                        </div>
-                        <div class="col-sm-12" style="height: 400px;">
-                          <table id="tblPatients" style="width:100%!important;" >
+                                                        <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+                                                            <div class="col-lg-12" style="height: 480px;">
+                                                                <div id="divCancellationMsg" class="col-lg-12" style="display: none">
 
-                                                            <thead  >
-                                                                <tr>
-                                                                    <th >Patient</th>
-                                                                    <th >Appoinment Time</th>
-                                                                </tr>
-                                                            </thead>
-                              <tbody id="tbodyPatients">
 
-                              </tbody>
-                                                          
+                                                                    <fieldset style="border-radius: 15px!important; border: 2px solid #3661C7!important;">
 
-                                                        </table>
-                        </div>
-                      
-                        </div>
-                   
-                </div>
+                                                                        <legend style="font-family: caviardreams-regular; color: #3661C7; width: 25%; margin-left: 2%">Regret SMS</legend>
 
-                 <div class="modal-footer">
-              <div class="grey_sec">
-                                                          Would You still like to cancel this schedule..?
+                                                                        <div class="col-lg-12">
+
+                                                                            <div class="row field_row">
+                                                                                <div class="col-lg-12" id="divMsg"></div>
+                                                                               <div class="col-lg-12"> <table id="tblSms" style="width:100%!important" >
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th style="width:50%">Name</th>
+                                                                                            <th style="width:50%">Mobile No</th>
+                                                                                        </tr>
+                                                                                    </thead>
+
+                                                                                    <tbody id="tbodySms">
+                                                                                    </tbody>
+
+
+                                                                                </table></div>
+                                                                            </div>
+
+                                                                        </div>
+
+
+
+
+                                                                    </fieldset>
+
+
+
+                                                                </div>
+
+                                                                <div class="col-sm-12" style="height: 400px;">
+                                                                    <table id="tblPatients" style="width: 100%!important;">
+
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Patient</th>
+                                                                                <th>Appoinment Time</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="tbodyPatients">
+                                                                        </tbody>
+
+
+                                                                    </table>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <div class="grey_sec" id="TableFooter">
+                                                                Would You still like to cancel this schedule..?
                               
                                 <ul class="top_right_links">
-                                    <li><a class="save" id="Okay"  ><span></span>Yes</a></li>
-                                    <li><a class="new" id="Cancel" ><span></span>No</a></li>
+                                    <li><a class="save" id="Okay"><span></span>Yes</a></li>
+                                    <li><a class="new" id="Cancel"><span></span>No</a></li>
                                 </ul>
-                            </div>
-        </div>
+                                                            </div>
+
+                                                            <div class="grey_sec" id="MsgFooter" style="display: none">
+                                                                <ul class="top_right_links">
+
+                                                                    <li><a class="save" id="SendSms"><span></span>Send SMS</a></li>
+                                                                    <li><a class="new" id="Skip"><span></span>Skip</a></li>
+
+                                                                </ul>
+                                                            </div>
 
 
-            </div>
-        </div>
-    </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
 
 
 
@@ -683,9 +723,9 @@
 
 
 
-                                            
 
-                                            
+
+
                                             <br />
 
 
@@ -838,10 +878,10 @@
 
         </div>
         <input type="hidden" id="hdnScheduleID" value="" />
-          <input type="hidden" id="hdnIsErrorTime" value="" />
-           <input type="hidden" id="hdnIsDrChanged" value="No" />
+        <input type="hidden" id="hdnIsErrorTime" value="" />
+        <input type="hidden" id="hdnIsDrChanged" value="No" />
         <input type="hidden" id="hdnAllEvents" value="" />
-         <input type="hidden" id="hdnIsDeletionByDate" value="" />
-        
+        <input type="hidden" id="hdnIsDeletionByDate" value="" />
+        <input type="hidden" id="hdnDoctorName" value="" />
     </div>
 </asp:Content>

@@ -29,6 +29,8 @@ var ClickedDate = '';                       //-- Holds the value of Date at the 
 
 var AvailableCount = '';                    //-- regular time binding behaves weird when there is no regular time , so if record count is zero , this value sets to zero , and at time of binding we will ensure its value is 0
 
+var PatientDetails = {};
+
 $(document).mouseup(function (e) {
 
     //while selecting a date we give a border around date textbox , this event clears that border to previous form
@@ -368,6 +370,48 @@ $(document).mouseup(function (e) {
         $('#myModal').modal('hide');
     });
 
+    /*Appoinment msg -send sms Click*/
+    $('#SendSms').click(function () {
+        debugger;
+        Records = PatientDetails;
+        var CancelMsg = AppoinmentCancellationMessage;
+        var html = '';
+        var DoctorName = $('#hdnDoctorName').val();
+       
+        $.each(Records, function (index, Records) {
+            debugger;
+            var tableContent = '<tr><td>' + Records.Name + '</td><td>' + Records.Mobile + '</td></tr>';
+
+            $("#tbodySms").append(tableContent);
+
+            //var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
+
+            html = CancelMsg.replace('%PATIENT NAME%', Records.Name);
+            html = html.replace('%DOCTOR NAME%', DoctorName);
+            html = html.replace('%DATE%', ClickedDate);
+            html = html.replace('%TIME%', Records.AllottingTime);
+            html = html.replace('%REASON%', CancelReason);
+            //$('#divCancellationMsg').append(html);
+        })
+
+        $('#myModal').modal('hide');
+        $('#divCancellationMsg').hide();
+        $('#MsgFooter').hide();
+        $('#tblPatients').show();
+        $('#TableFooter').show();
+        ClickedDate = '';
+    });
+
+      /*Appoinment msg Cancel Click*/
+    $('#Skip').click(function () {
+        $('#myModal').modal('hide');
+        $('#divCancellationMsg').hide();
+        $('#MsgFooter').hide();
+        $('#tblPatients').show();
+        $('#TableFooter').show();
+
+    });
+
     /*Modal dialog OK button click*/
     $('#Okay').click(function () {
         debugger;
@@ -454,28 +498,31 @@ $(document).mouseup(function (e) {
 
         }
 
-        ClickedDate = '';
+        var html = '<p>' + AppoinmentCancellationMessage + '</p>';
+        $('#divCancellationMsg').show();
+        $('#MsgFooter').show();
+        $('#tblPatients').hide();
+        $('#TableFooter').hide();
+        $('#divMsg').append(html);
+
+        $("#tbodySms tr").remove();
+        Records = PatientDetails;
+
+        $.each(Records, function (index, Records) {
+            debugger;
+            var tableContent = '<tr><td>' + Records.Name + '</td><td>' + Records.Mobile + '</td></tr>';
+
+            $("#tbodySms").append(tableContent);
+
+        })
+
         $('#hdnIsDeletionByDate').val('');
-        $('#myModal').modal('hide');
+        //$('#myModal').modal('hide');
         });
    
 });
 
 /*end of document.ready*/
-
-
-    function ModalCancelClick()
-    {
-        $("#txtTitle").val("");
-        $("#txtEndDate").val("");
-        $("#txtstartTime").val("");
-        $("#txtEndTime").val("");
-     
-    }
-
-    function ModalOKClick() {
-
-    }
 
     getMonthName = function (MonthNo) {
         var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -865,6 +912,11 @@ $(document).mouseup(function (e) {
             $('#calendar').fullCalendar('refetchEvents');
         }
 
+        var lblclass = Alertclasses.sucess;
+        var lblmsg = msg.ScheduleCancelSuccessFull;
+        var lblcaptn = Caption.SuccessMsgCaption;
+
+        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
 
         // $('#calendar').fullCalendar('refetchEvents');
     }
@@ -878,21 +930,15 @@ $(document).mouseup(function (e) {
 
         debugger;
         Records = table;
-
+        PatientDetails = Records;
         $.each(Records, function (index, Records) {
 
         
             var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
             $("#tbodyPatients").append(html);
-            
-
+           
         })
-
-
-
-  
-
 
         //alert(" Sorry, Already scheduled an appointment!")
     }
@@ -1258,18 +1304,13 @@ $(document).mouseup(function (e) {
                     }
                 }
 
-                //var lblErrorCaption = document.getElementById('lblErrorCaption');
-                //var lblMsgges = document.getElementById('lblMsgges');
-                //var Errorbox = document.getElementById('Errorbox');
 
-                //var lblclass = Alertclasses.sucess;
-                //var lblmsg = msg.InsertionSuccessFull;
-                //var lblcaptn = Caption.SuccessMsgCaption;
+                var lblclass = Alertclasses.sucess;
+                var lblmsg = msg.ScheduleSaveSuccessFull;
+                var lblcaptn = Caption.SuccessMsgCaption;
 
-                //Errorbox.style.display = "";
-                //Errorbox.className = lblclass;
-                //lblErrorCaption.innerHTML = lblcaptn;
-                //lblMsgges.innerHTML = lblmsg;
+                DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+               
 
             }
 
@@ -1393,6 +1434,13 @@ $(document).mouseup(function (e) {
 
                     }
                 }
+
+                var lblclass = Alertclasses.sucess;
+                var lblmsg = msg.ScheduleCancelSuccessFull;
+                var lblcaptn = Caption.SuccessMsgCaption;
+
+                DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+
             }
 
             else {
@@ -1408,7 +1456,7 @@ $(document).mouseup(function (e) {
                 //$('tblPatients tr:not(:first)').remove();
                 debugger;
                 Records = JsonCancellAll;
-
+                PatientDetails = Records;
                 $.each(Records, function (index, Records) {
 
 
@@ -1426,4 +1474,6 @@ $(document).mouseup(function (e) {
 
         }
     }
- }
+    }
+
+ 
