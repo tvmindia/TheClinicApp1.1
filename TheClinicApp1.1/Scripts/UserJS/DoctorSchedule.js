@@ -827,7 +827,7 @@ $(document).mouseup(function (e) {
     ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/GetDoctorScheduleDetailsByDocScheduleID");
     table = JSON.parse(ds.d);
     Records = table;
-
+    $("#hdnIsErrorTime").val("false");
     $.each(Records, function (index, Records) {
 
         var ScheduleID = Records.ID;
@@ -836,24 +836,38 @@ $(document).mouseup(function (e) {
         if (Records.Starttime != null && Records.Endtime != null) {
 
             debugger;
-
+            
             var TimeIn24hrFormat = Records.Starttime;
-            var hourEnd = TimeIn24hrFormat.indexOf(":");
+             var hourEnd = TimeIn24hrFormat.indexOf(":");
             var H = +TimeIn24hrFormat.substr(0, hourEnd);
             var h = H % 12 || 12;
-            var ampm = H < 12 ? "AM" : "PM";
+            var ampm = parseInt(H) < 12 ? "AM" : "PM";
             //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+            if (parseInt(H) == 0) {
+
+                ampm = "AM";
+            }
+
+
             TimeIn12hrFormat = moment(Records.Starttime, ["h:mm A"]).format("hh : mm : ") + ampm;
             strttime = TimeIn12hrFormat;
            
-            TimeIn24hrFormat = Records.Endtime;
-             hourEnd = TimeIn24hrFormat.indexOf(":");
-             H = +TimeIn24hrFormat.substr(0, hourEnd);
-             h = H % 12 || 12;
-             ampm = H < 12 ? "AM" : "PM";
+             TimeIn24hrFormat = Records.Endtime;
+
+             var hourEnd = TimeIn24hrFormat.indexOf(":");
+             var H = +TimeIn24hrFormat.substr(0, hourEnd);
+             var h = H % 12 || 12;
+             var ampm = parseInt(H) < 12 ? "AM" : "PM";
             //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+             if (parseInt(H) == 0) {
+
+                 ampm = "AM";
+             }
+
+
              TimeIn12hrFormat = moment(Records.Endtime, ["h:mm A"]).format("hh : mm : ") + ampm;
-            endtime = TimeIn12hrFormat;
+
+           endtime = TimeIn12hrFormat;
 
             StartTimeOnEdit = Records.Starttime;
             EndTimeOnEdit = Records.Endtime;
