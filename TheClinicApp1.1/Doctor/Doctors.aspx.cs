@@ -58,9 +58,13 @@ namespace TheClinicApp1._1.Doctor
         #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
         {
-            BindDummyRow();
-            BindHistoryDummyRow();
+            //if (!IsPostBack)
+            //{
+                BindDummyRow();
+                BindHistoryDummyRow();
 
+            //}
+          
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string Login = UA.userName;
             PrescriptionObj.ClinicID = UA.ClinicID.ToString();
@@ -428,11 +432,12 @@ namespace TheClinicApp1._1.Doctor
             //dummy.Columns.Add("Edit");
             dummy.Columns.Add(" ");
             dummy.Columns.Add("TokenNo");
+            dummy.Columns.Add("appointmentno");
             dummy.Columns.Add("Name");
             dummy.Columns.Add("DateTime");
             dummy.Columns.Add("IsProcessed");
 
-            dummy.Columns.Add("appointmentno");
+           
             //dummy.Columns.Add("DoctorID");
             dummy.Columns.Add("PatientID");
 

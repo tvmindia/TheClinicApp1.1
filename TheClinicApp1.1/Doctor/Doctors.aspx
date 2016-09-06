@@ -304,7 +304,7 @@
                 $("[id*=GridViewTokenlist] td:eq(0)").click(function () { 
                     
 
-                    PatientID = $(this).closest('tr').find('td:eq(5)').text();
+                    PatientID = $(this).closest('tr').find('td:eq(6)').text();
 
                    
 
@@ -347,7 +347,7 @@
             function BindControlsWithPatientDetails(Records) {
                 $.each(Records, function (index, Records) {
                    
-                    $("#<%=lblPatientName.ClientID %>").text(Records.Name) ;
+                    $("#<%=lblPatientName.ClientID %>").text(Records.Name);
                     $("#<%=lblDoctor.ClientID %>").text(Records.DOCNAME);
                     $("#<%=lblFileNum.ClientID %>").text(Records.FileNumber);
                     $("#<%=lblGenderDis.ClientID %>").text(Records.Gender);
@@ -824,52 +824,84 @@
                     }
                 });
             }
-            var row;
+            var rowDoctor;
             function OnSuccess(response) {
+                debugger;
+
                 $(".Pager").show();
                 var xmlDoc = $.parseXML(response.d);
                 var xml = $(xmlDoc);
                 var DoctorTokens = xml.find("DoctorTokens");
-                if (row == null) {
-                    row = $("[id*=GridViewTokenlist] tr:last-child").clone(true);
+               
+                if (rowDoctor == null)
+                {
+                    rowDoctor = $("[id*=GridViewTokenlist] tr:last-child").clone(true);
                 }
                 $("[id*=GridViewTokenlist] tr").not($("[id*=GridViewTokenlist] tr:first-child")).remove();
                 if (DoctorTokens.length > 0) {
 
                     $.each(DoctorTokens, function () {
+                        debugger;
+
+                        $("td", rowDoctor).eq(0).html($('<img />')
+                      .attr('src', "" + '../images/paper.png' + "")).removeClass('CursorShow');
+
+
+                        if($(this).find("TokenNo").text()=="")
+                        {
+                            $("td", rowDoctor).eq(1).html('-').attr("style","text-align:center!important");
+                        }
+                        else
+                        {
+                            $("td", rowDoctor).eq(1).html($(this).find("TokenNo").text());
+                        }
+
+
+
+                        if($(this).find("appointmentno").text()=="")
+                        {
+                            $("td", rowDoctor).eq(2).html('-').attr("style","text-align:center!important");
+                        }
+                        else
+                        {
+                            $("td", rowDoctor).eq(2).html($(this).find("appointmentno").text());
+                        }
                        
-                        $("td", row).eq(1).html($(this).find("TokenNo").text());
-                        $("td", row).eq(2).html($(this).find("appointmentno").text());
-                        $("td", row).eq(3).html($(this).find("Name").text());
 
 
-                        $("td", row).eq(4).html($(this).find("DateTime").text());
+                        $("td", rowDoctor).eq(3).html($(this).find("Name").text());
+
+
+                        $("td", rowDoctor).eq(4).html($(this).find("DateTime").text());
                       
-                         $("td", row).eq(6).html($(this).find("PatientID").text());
 
+                        if (($(this).find("IsProcessed").text()=="true")|| ($(this).find("IsProcessed").text()=="4")){
+                            $("td", rowDoctor).addClass("selected_row");
 
-                         if (($(this).find("IsProcessed").text()=="true")|| ($(this).find("IsProcessed").text()=="4")){
-                            $("td", row).addClass("selected_row");
+                            $("td", rowDoctor).eq(5).html("Yes");
 
-                            $("td", row).eq(5).html("Yes");
-
-                            $("td", row).eq(0).html($('<img />')
-                         .attr('src', "" + '../images/paper.png' + "")).removeClass('CursorShow');
-
+                          
                         }
-                         if (($(this).find("IsProcessed").text() == "false")|| ($(this).find("IsProcessed").text()=="1")) {
-                            $("td", row).removeClass("selected_row");
+                        if (($(this).find("IsProcessed").text() == "false")|| ($(this).find("IsProcessed").text()=="1")) {
+                            $("td", rowDoctor).removeClass("selected_row");
 
-                            $("td", row).eq(5).html("No");
+                            $("td", rowDoctor).eq(5).html("No");
 
-                            $("td", row).eq(0).html($('<img />')
-                       .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
+                            $("td", rowDoctor).eq(0).html($('<img />')
+                      .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
 
                         }
 
 
-                        $("[id*=GridViewTokenlist]").append(row);
-                        row = $("[id*=GridViewTokenlist] tr:last-child").clone(true);
+                        $("td", rowDoctor).eq(6).html($(this).find("PatientID").text());
+
+                        
+                     
+
+                         $("[id*=GridViewTokenlist]").append(rowDoctor);
+                      
+                         rowDoctor = $("[id*=GridViewTokenlist] tr:last-child").clone(true);
+                       
                     });
                     var pager = xml.find("Pager");
 
@@ -892,8 +924,8 @@
                         $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
                     });
                 } else {
-                    var empty_row = row.clone(true);
-                    $("td:first-child", empty_row).attr("colspan", $("td", row).length);
+                    var empty_row = rowDoctor.clone(true);
+                    $("td:first-child", empty_row).attr("colspan", $("td", rowDoctor).length);
                     $("td:first-child", empty_row).attr("align", "center");
                     $("td:first-child", empty_row).html("No records found.").removeClass('CursorShow');
                     $("td", empty_row).not($("td:first-child", empty_row)).remove();
@@ -911,7 +943,7 @@
              
 
             };
-            row= null;
+            rowDoctor= null;
 
 
             //------ * Function To open modal popup * -----//
