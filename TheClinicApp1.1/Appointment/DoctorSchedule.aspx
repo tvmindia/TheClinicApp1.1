@@ -627,7 +627,7 @@
 
                                                         <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
                                                             <div class="col-lg-12" style="height: 480px;">
-                                                                <div id="divCancellationMsg" class="col-lg-12" style="display: none">
+                                                                <div id="divCancellationMsg" class="col-lg-12" style="display: none;font-size: 16px; font-weight: bold;font-family: 'roboto-bold';"  >
                                                                     <div class="col-lg-12" id="divMsg"></div>
 
                                                             </div>
