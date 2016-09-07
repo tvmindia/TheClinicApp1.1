@@ -1218,12 +1218,13 @@ $(document).mouseup(function (e) {
                                 else
                                 {
                                     Isalloted = true;
+                                    $("#hdnIsErrorTime").val('true');
                                     alert(AlertMsgs.ValidTime);
                        
                                 }
                                 //}
 
-                                if (Isalloted == false &&  document.getElementById('hdnScheduleID').value == "" )
+                                if (Isalloted == false && document.getElementById('hdnScheduleID').value == "" && $("#hdnIsErrorTime").val() == "false")
                                 {
                                     //------------ * INSERT CASE * ----------------//
                                     var Doctor = new Object();
@@ -1238,7 +1239,7 @@ $(document).mouseup(function (e) {
 
 
                                 }
-                                if (Isalloted == false && document.getElementById('hdnScheduleID').value != "")
+                                if (Isalloted == false && document.getElementById('hdnScheduleID').value != "" && $("#hdnIsErrorTime").val() == "false")
                                 {
                                     debugger;
 
@@ -1265,7 +1266,7 @@ $(document).mouseup(function (e) {
                                 }
 
 
-                                if (JsonNewSchedule != undefined) {
+                                if (JsonNewSchedule != undefined && $("#hdnIsErrorTime").val() == "false") {
                                     //  alert(JsonNewSchedule.status);
 
                                     if (JsonNewSchedule.status == "1") {

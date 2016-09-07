@@ -6,8 +6,8 @@
 
       <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" ></asp:ScriptManager>
 
-      <link href="../css/main.css" rel="stylesheet" />  
-    <link href="../css/TheClinicApp.css" rel="stylesheet" />
+      <%--<link href="../css/main.css" rel="stylesheet" />--%>  
+    <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
 
@@ -352,7 +352,10 @@
             line-height: 14px;
             margin: 1px 15px 10px;
         }
-
+        select
+        {
+            color:black;
+        }
         /*.fc-content
 {
     display:none;
@@ -594,7 +597,7 @@
                                 <%--<asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>--%>
 
                                 <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" CssClass="drop" Width="180px" style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
-
+                                <%--CssClass="drop"--%> 
 
 
 

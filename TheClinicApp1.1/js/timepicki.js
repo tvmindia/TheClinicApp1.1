@@ -154,7 +154,7 @@ function PickTime()
 
 
 			inputs.on('blur', function () {
-			   
+			    debugger;
 			    var tim = ele_next.find(".ti_tx input").val();
 			    var mini = ele_next.find(".mi_tx input").val();
 			    //var mer = ele_next.find(".mer_tx input").val();
