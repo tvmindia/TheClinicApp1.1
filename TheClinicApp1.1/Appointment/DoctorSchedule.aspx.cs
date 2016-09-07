@@ -657,23 +657,28 @@ namespace TheClinicApp1._1.Appointment
 
         #region Send Message
 
+        /// <summary>
+        /// Message content and mobile Numbers are passed as method parameters
+        /// message is seperated by | symbol , so individual msgs are retrieved by splitting it by this symbol
+        /// MobileNos is seperated by | symbol , so individual numbers are retrieved by splitting it by this symbol
+        /// </summary>
+        /// <param name="Msg"></param>
+        /// <param name="MobileNos"></param>
+
          [System.Web.Services.WebMethod]
         public static void SendMessage(string Msg, string MobileNos)
         {
             string[] IndividualMsgs = Msg.Split('|');
             string[] IndividualMobileNos = MobileNos.Split('|');
-            foreach (var msg in IndividualMsgs)
+            foreach (var msg in IndividualMsgs) //msg is individual message
             {
-                foreach (var Num in IndividualMobileNos)
+                foreach (var Num in IndividualMobileNos) //Num is individual Number
                 {
                     if (Num != string.Empty)
                     {
                         if (msg != string.Empty)
                         {
-
                             string strUrl = "http://api.mVaayoo.com/mvaayooapi/MessageCompose?user=shamilatps5@gmail.com:123456&senderID=TEST SMS&receipientno=" + Num + "&msgtxt=" + msg + "&state=4";
-
-                                //8547576924&msgtxt=This is a test from mVaayoo API&state=4";
                             WebRequest request = HttpWebRequest.Create(strUrl);
                             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                             Stream s = (Stream)response.GetResponseStream();
