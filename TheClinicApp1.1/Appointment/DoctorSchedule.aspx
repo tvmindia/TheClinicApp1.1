@@ -593,7 +593,7 @@
 
                                 <%--<asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>--%>
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" CssClass="drop" Width="180px" style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
 
 
 
