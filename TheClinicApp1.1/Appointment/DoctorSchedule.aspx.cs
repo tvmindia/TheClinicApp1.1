@@ -653,6 +653,24 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion Cancel ALL Appoinments By Available Date
 
+        #region Send Message
+
+         [System.Web.Services.WebMethod]
+        public static void SendMessage(string Msg)
+        {
+            string[] IndividualMsgs = Msg.Split('|');
+            foreach (var msg in IndividualMsgs)
+            {
+                if (msg != string.Empty)
+                {
+                   
+                }
+            }
+        }
+
+
+        #endregion  Send Message
+
         #endregion Methods
 
         #region Events

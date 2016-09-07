@@ -374,15 +374,16 @@ $(document).mouseup(function (e) {
     $('#SendSms').click(function () {
         debugger;
         Records = PatientDetails;
-        var CancelMsg = AppoinmentCancellationMessage;
+        var CancelMsg = AppoinmentCancellationMessageWithoutHtml;
         var html = '';
+        var Msg = '';
         var DoctorName = $('#hdnDoctorName').val();
        
         $.each(Records, function (index, Records) {
             debugger;
-            var tableContent = '<tr><td>' + Records.Name + '</td><td>' + Records.Mobile + '</td></tr>';
+            //var tableContent = '<tr><td>' + Records.Name + '</td><td>' + Records.Mobile + '</td></tr>';
 
-            $("#tbodySms").append(tableContent);
+            //$("#tbodySms").append(tableContent);
 
             //var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
 
@@ -391,8 +392,24 @@ $(document).mouseup(function (e) {
             html = html.replace('%DATE%', ClickedDate);
             html = html.replace('%TIME%', Records.AllottingTime);
             html = html.replace('%REASON%', CancelReason);
+
+            Msg = Msg +"|" +html;
             //$('#divCancellationMsg').append(html);
         })
+        debugger;
+        if (Msg != '')
+        {
+            PageMethods.SendMessage(Msg, OnSuccess, onError);
+
+            function OnSuccess(response, userContext, methodName) {
+            }
+            function onError(response, userContext, methodName) {
+
+            }
+
+        }
+
+        
 
         $('#myModal').modal('hide');
         $('#divCancellationMsg').hide();
@@ -498,7 +515,7 @@ $(document).mouseup(function (e) {
 
         }
 
-        var html = '<p>' + AppoinmentCancellationMessage + '</p>';
+        var html = '<p>' + AppoinmentCancellationMessage + "<b><i>" + "This sms will be send to the contacts given below " + "</i></b></p>";
         $('#divCancellationMsg').show();
         $('#MsgFooter').show();
         $('#tblPatients').hide();

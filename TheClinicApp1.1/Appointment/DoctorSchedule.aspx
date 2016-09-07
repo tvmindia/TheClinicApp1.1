@@ -4,6 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+      <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" ></asp:ScriptManager>
+
       <link href="../css/main.css" rel="stylesheet" />  
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <script src="../js/JavaScript_selectnav.js"></script>
@@ -774,6 +776,9 @@
                                                     </li>
                                                 </ul>--%>
                                             </div>
+
+                                            
+
                                         </div>
                                         <br />
 
