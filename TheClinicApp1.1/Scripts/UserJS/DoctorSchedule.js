@@ -1205,7 +1205,7 @@ $(document).mouseup(function (e) {
 
                                                     else {
                                                         Isalloted = true;
-                                                        alert("Sorry,This time has been already alloted.");
+                                                        alert(AlertMsgs.AlreadyAlloted);
                                                         break;
                                                     }
 
@@ -1218,7 +1218,7 @@ $(document).mouseup(function (e) {
                                 else
                                 {
                                     Isalloted = true;
-                                    alert("Please enter a valid time");
+                                    alert(AlertMsgs.ValidTime);
                        
                                 }
                                 //}
@@ -1263,113 +1263,116 @@ $(document).mouseup(function (e) {
 
                                     document.getElementById('hdnScheduleID').value = "";
                                 }
+
+
+                                if (JsonNewSchedule != undefined) {
+                                    //  alert(JsonNewSchedule.status);
+
+                                    if (JsonNewSchedule.status == "1") {
+                                        //SUCCESS
+
+                                        var jsonDeatilsByDate = {};
+
+                                        var Doctor = new Object();
+
+
+                                        if (DoctorID != null && DoctorID != "") {
+
+                                            Doctor.DoctorID = DoctorID;
+                                            Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
+
+                                            jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+
+                                            if (jsonDeatilsByDate != undefined) {
+
+                                                BindTimes(jsonDeatilsByDate);
+
+                                                $("#txtStartTime").val("");
+                                                $("#txtEndTime").val("");
+                                                $("#txtMaxAppoinments").val("");
+
+
+                                                BindScheduledDates();
+
+                                                var jsonDrSchedule = {};
+
+                                                var Doctor = new Object();
+                                                Doctor.DoctorID = DoctorID;
+
+                                                jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                                                if (jsonDrSchedule != undefined) {
+
+                                                    $('#calendar').fullCalendar('removeEventSource', json);
+
+                                                    json = jsonDrSchedule;
+
+                                                    $('#calendar').fullCalendar('addEventSource', json);
+                                                    $('#calendar').fullCalendar('refetchEvents');
+                                                }
+
+                                            }
+                                        }
+
+
+                                        var lblclass = Alertclasses.sucess;
+                                        var lblmsg = msg.ScheduleSaveSuccessFull;
+                                        var lblcaptn = Caption.SuccessMsgCaption;
+
+                                        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+
+
+                                    }
+
+                                    else {
+                                        var lblclass = Alertclasses.danger;
+                                        var lblmsg = msg.ScheduleSaveFailure;
+                                        var lblcaptn = Caption.FailureMsgCaption;
+
+                                        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+
+                                    }
+
+                                }
+
                             }
 
                             else {
-                                alert("Please enter end time");
+                                alert(AlertMsgs.EndTimeRequired);
                             }
 
 
                         }
                         else {
-                            alert("Please enter start time");
+                            alert(AlertMsgs.StartTimeRequired);
                         }
                 
                     }
                     else
                     {
-                        alert("Please enter maximum appoinments");
+                        alert(AlertMsgs.MaxAppoinmentRequired);
                     }
 
                 }
 
                 else
                 {
-                    alert("Please select a date");
+                    alert(AlertMsgs.DateRequired);
                 }
             }
 
             else {
-                alert("Please enter a valid number");
+                alert(AlertMsgs.validNumber);
             }
 
         }
        
 
-        if (JsonNewSchedule != undefined) {
-            //  alert(JsonNewSchedule.status);
 
-            if (JsonNewSchedule.status == "1") {
-                //SUCCESS
-
-                var jsonDeatilsByDate = {};
-
-                var Doctor = new Object();
-
-
-                if (DoctorID != null && DoctorID != "") {
-
-                    Doctor.DoctorID = DoctorID;
-                    Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
-
-                    jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
-
-                    if (jsonDeatilsByDate != undefined) {
-
-                        BindTimes(jsonDeatilsByDate);
-
-                        $("#txtStartTime").val("");
-                        $("#txtEndTime").val("");
-                        $("#txtMaxAppoinments").val("");
-
-
-                        BindScheduledDates();
-
-                        var jsonDrSchedule = {};
-
-                        var Doctor = new Object();
-                        Doctor.DoctorID = DoctorID;
-
-                        jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
-                        if (jsonDrSchedule != undefined) {
-
-                            $('#calendar').fullCalendar('removeEventSource', json);
-
-                            json = jsonDrSchedule;
-
-                            $('#calendar').fullCalendar('addEventSource', json);
-                            $('#calendar').fullCalendar('refetchEvents');
-                        }
-
-                    }
-                }
-
-
-                var lblclass = Alertclasses.sucess;
-                var lblmsg = msg.ScheduleSaveSuccessFull;
-                var lblcaptn = Caption.SuccessMsgCaption;
-
-                DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
-               
-
-            }
-
-            else
-            {
-                var lblclass = Alertclasses.danger;
-                var lblmsg = msg.ScheduleSaveFailure;
-                var lblcaptn = Caption.FailureMsgCaption;
-
-                DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
-
-            }
-
-        }
         }
 
         else
         {
-            alert("Please enter a valid time");
+            alert(AlertMsgs.ValidTime);
         }
 
 

@@ -890,7 +890,7 @@
 
         </div>
         <input type="hidden" id="hdnScheduleID" value="" />
-        <input type="hidden" id="hdnIsErrorTime" value="" />
+        <input type="hidden" id="hdnIsErrorTime" value="false" />
         <input type="hidden" id="hdnIsDrChanged" value="No" />
         <input type="hidden" id="hdnAllEvents" value="" />
         <input type="hidden" id="hdnIsDeletionByDate" value="" />

@@ -29,3 +29,14 @@ var Alertclasses = {
     
 
 }
+
+var AlertMsgs =
+    {
+        AlreadyAlloted : "Sorry,This time has been already alloted.",
+        ValidTime: "Please enter a valid time",
+        EndTimeRequired: "Please enter end time",
+        StartTimeRequired: "Please enter start time",
+        MaxAppoinmentRequired: "Please enter maximum appoinments",
+        DateRequired: "Please select a date",
+        validNumber: "Please enter a valid number"
+    }
