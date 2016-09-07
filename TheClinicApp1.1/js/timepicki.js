@@ -8,6 +8,7 @@
 var TimePicked = false;
 var IserrorTime = false;
 
+
 function PickTime()
 {
 
@@ -24,9 +25,13 @@ function PickTime()
 	$.fn.timepicki = function(options) {
 
 		var defaults = {
-			format_output: function(tim, mini, meri) {
-				if(settings.show_meridian){
-					return tim + " : " + mini + " : " + meri;
+		    format_output: function (tim, mini, meri) {
+		       
+		        if (settings.show_meridian) {
+		          
+		                return tim + " : " + mini + " : " + meri;
+		            
+					
 				}else{
 					return tim + " : " + mini;
 				}
@@ -149,9 +154,10 @@ function PickTime()
 
 
 			inputs.on('blur', function () {
+			   
 			    var tim = ele_next.find(".ti_tx input").val();
 			    var mini = ele_next.find(".mi_tx input").val();
-
+			    //var mer = ele_next.find(".mer_tx input").val();
 			    //----------- * Correct time to exact format if user types the time instead of using previous or next arrow keys *-------------//
 
 			    if (tim > 12 || mini >= 60) {
@@ -216,6 +222,7 @@ function PickTime()
 			        mini = "0" + mini;
 			    }
 			    ele_next.find(".mi_tx input").val(mini);
+			    //ele_next.find(".mer_tx input").val(mer); 
 			});
 
 			// select all text in input when user focuses on it
@@ -231,8 +238,8 @@ function PickTime()
 //-----------* Binding timepiki with regular schedules *---------------------//
 
 			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() == "") || (inputID == 'txtEndTime' && $('#txtStartTime').val() == "")) {
-			        debugger;
-
+			       
+			       
 			    //if ((inputID == 'txtStartTime') || (inputID == 'txtEndTime' )) {
 
 			        defultTime = SetDefaultTime(inputID);
@@ -251,6 +258,8 @@ function PickTime()
  //-----------* Binding timepiki with start time(Edit Click) *---------------------//
 			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() != ""))
 			    {
+			       
+			        debugger;
 			        strttime = $('#txtStartTime').val().replace(/ /g, '');
 
 			        var timeParts = strttime.split(':');
@@ -258,10 +267,14 @@ function PickTime()
 			        ele.attr('data-timepicki-tim', timeParts[0]);
 			        ele.attr('data-timepicki-mini', timeParts[1]);
 			        ele.attr('data-timepicki-meri', timeParts[2]);
+
+			        //set_date(timeParts);
+
 			    }
 
  //-----------* Binding timepiki with end time(Edit Click) *---------------------//
 			    if ((inputID == 'txtEndTime' && $('#txtEndTime').val() != "")) {
+
 			        endtime = $('#txtEndTime').val().replace(/ /g, '');
 
 			        var timeParts = endtime.split(':');
@@ -271,7 +284,7 @@ function PickTime()
 			        ele.attr('data-timepicki-meri', timeParts[2]);
 			    }
 
-
+			 
 
 				//var input = $(this);
 				//if (!input.is(ele)) {
@@ -464,7 +477,7 @@ function PickTime()
 
 			function set_date(start_time) {
 			    var d, ti, mi, mer;
-
+			   
 			// if a value was already picked we will remember that value
 				if (ele.is('[data-timepicki-tim]')) {
 					ti = Number(ele.attr('data-timepicki-tim'));
@@ -517,10 +530,10 @@ function PickTime()
 
                 // making noon 12 , 12pm , Initailly it showed 12am
 
-				if (ti == 12 && settings.show_meridian) {
-				    mer = "PM";
-				    ele_next.find(".mer_tx input").val(mer);
-				}
+				//if (ti == 12 && settings.show_meridian ) {
+				//    mer = "PM";
+				//    ele_next.find(".mer_tx input").val(mer);
+				//}
 
 
 			}
@@ -605,6 +618,7 @@ function PickTime()
 			}
 
 			function change_meri(cur_ele, direction) {
+
 				var cur_cli = "meridian";
 				var ele_st = 0;
 				var ele_en = 1;

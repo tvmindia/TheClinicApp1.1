@@ -837,6 +837,7 @@ $(document).mouseup(function (e) {
 
             debugger;
             
+
             var TimeIn24hrFormat = Records.Starttime;
              var hourEnd = TimeIn24hrFormat.indexOf(":");
             var H = +TimeIn24hrFormat.substr(0, hourEnd);

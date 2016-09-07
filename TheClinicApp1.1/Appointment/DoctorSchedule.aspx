@@ -408,7 +408,7 @@
         //-- Schedule order is passed to the function
         //-- At time of edit click ,we know the time to be binded , so it will also passed , and this time willo get binded to timepicker
         function SetDefaultTime(inputID, time) {
-
+        
             if (time == null) {
                 time = GetRegularScheduleByDrID();
             }
@@ -428,6 +428,12 @@
             var H = +TimeIn24hrFormat.substr(0, hourEnd);
             var h = H % 12 || 12;
             var ampm = H < 12 ? "AM" : "PM";
+
+            if (parseInt(H) == 0) {
+
+                ampm = "AM";
+            }
+
 
             timStart = h;
             minsStart = TimeIn24hrFormat.substr(hourEnd, 4).replace(':', '').trim();
