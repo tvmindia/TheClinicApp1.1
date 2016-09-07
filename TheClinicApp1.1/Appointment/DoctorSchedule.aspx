@@ -38,11 +38,12 @@
             width: 60px;
             line-height: 120px;
             -moz-border-radius: 30px; /* or 50% */
-            border-radius: 30px; /* or 50% */
+            border-radius: 3px; /* or 50% */
             background-color: black;
             color: white;
             text-align: center;
             font-size: 2em;
+            
         }
 
 
