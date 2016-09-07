@@ -8,6 +8,7 @@
     AlreadyUsed: "Already used . Can't be deleted",
     InsertionSuccessFull: "Successfully Inserted",
     ScheduleSaveSuccessFull: "Schedule added Successfully",
+    ScheduleSaveFailure: "Schedule not added.Please Try Again",
     ScheduleCancelSuccessFull: "Schedule Cancelled Successfully"
    
 }
