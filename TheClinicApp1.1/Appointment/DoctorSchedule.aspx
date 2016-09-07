@@ -808,7 +808,7 @@
                                                         <div class="col-lg-6 ">
                                                             <label style="width: 100%;">Max Appoinments</label>
 
-                                                            <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)" />
+                                                            <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return isNumber(event)" />
                                                         </div>
 
 
