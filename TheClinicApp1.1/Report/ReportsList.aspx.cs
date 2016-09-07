@@ -36,7 +36,10 @@ namespace TheClinicApp1._1
           
         #endregion Public Properties
 
+        #region Events
 
+        #region Page Load
+      
         protected void Page_Load(object sender, EventArgs e)
          {
              ReprtObj.DisplaySerailNo = true ;
@@ -192,6 +195,9 @@ namespace TheClinicApp1._1
                }
             }
 
+        #endregion Page Load
+
+        #region Logout Click
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)
         { string LogoutConfirmation = Request.Form["confirm_value"];
 
@@ -202,10 +208,11 @@ namespace TheClinicApp1._1
         }
         }
 
-     
+        #endregion  Logout Click
 
-       
+        #endregion Events
 
-        }
+
+    }
     
 }
