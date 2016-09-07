@@ -393,6 +393,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
                 pud.Parameters.Add("@image", SqlDbType.Image, 0).Value = Picupload;
                 pud.Parameters.Add("@ImageType", SqlDbType.NVarChar, 6).Value = ImageType;
+                //@AppointmentID enables the appointed patient to become  registered patient
                 pud.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = (AppointmentID!=null)?Guid.Parse(AppointmentID):Guid.Empty;
                 Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
