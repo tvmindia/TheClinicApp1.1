@@ -4,6 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+      <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" ></asp:ScriptManager>
+
       <link href="../css/main.css" rel="stylesheet" />  
     <link href="../css/TheClinicApp.css" rel="stylesheet" />
     <script src="../js/JavaScript_selectnav.js"></script>
@@ -38,11 +40,12 @@
             width: 60px;
             line-height: 120px;
             -moz-border-radius: 30px; /* or 50% */
-            border-radius: 30px; /* or 50% */
+            border-radius: 3px; /* or 50% */
             background-color: black;
             color: white;
             text-align: center;
             font-size: 2em;
+            
         }
 
 
@@ -408,7 +411,7 @@
         //-- Schedule order is passed to the function
         //-- At time of edit click ,we know the time to be binded , so it will also passed , and this time willo get binded to timepicker
         function SetDefaultTime(inputID, time) {
-
+        
             if (time == null) {
                 time = GetRegularScheduleByDrID();
             }
@@ -428,6 +431,12 @@
             var H = +TimeIn24hrFormat.substr(0, hourEnd);
             var h = H % 12 || 12;
             var ampm = H < 12 ? "AM" : "PM";
+
+            if (parseInt(H) == 0) {
+
+                ampm = "AM";
+            }
+
 
             timStart = h;
             minsStart = TimeIn24hrFormat.substr(hourEnd, 4).replace(':', '').trim();
@@ -584,7 +593,7 @@
 
                                 <%--<asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>--%>
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" CssClass="drop" Width="180px" style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
 
 
 
@@ -767,6 +776,9 @@
                                                     </li>
                                                 </ul>--%>
                                             </div>
+
+                                            
+
                                         </div>
                                         <br />
 
@@ -796,7 +808,7 @@
                                                         <div class="col-lg-6 ">
                                                             <label style="width: 100%;">Max Appoinments</label>
 
-                                                            <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return CheckisNumber(event)" />
+                                                            <input class="" name="MaxAppoinmnt" type="text" id="txtMaxAppoinments" onkeypress="return isNumber(event)" />
                                                         </div>
 
 
@@ -878,7 +890,7 @@
 
         </div>
         <input type="hidden" id="hdnScheduleID" value="" />
-        <input type="hidden" id="hdnIsErrorTime" value="" />
+        <input type="hidden" id="hdnIsErrorTime" value="false" />
         <input type="hidden" id="hdnIsDrChanged" value="No" />
         <input type="hidden" id="hdnAllEvents" value="" />
         <input type="hidden" id="hdnIsDeletionByDate" value="" />

@@ -453,6 +453,13 @@
             }--%>
         }
 
+        function SetDropdown(e)
+        {
+            document.getElementById("<%=txtvalue.ClientID %>").value = "";
+
+        }
+
+
     </script>
 
 
@@ -525,7 +532,7 @@
                     <div class="row field_row">
                         <div class="col-lg-5 ">
                             <label for="name">Search Column</label>
-                            <asp:DropDownList ID="ddlColumns" runat="server" Width="100%" Height="31px" CssClass="drop"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlColumns" runat="server" Width="100%" Height="31px" CssClass="drop" onchange="SetDropdown(this)"></asp:DropDownList>
                         </div>
                         <div class="col-lg-5 ">
                             <label for="name">Value</label>
