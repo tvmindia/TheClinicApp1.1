@@ -12,7 +12,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
@@ -656,15 +658,35 @@ namespace TheClinicApp1._1.Appointment
         #region Send Message
 
          [System.Web.Services.WebMethod]
-        public static void SendMessage(string Msg)
+        public static void SendMessage(string Msg, string MobileNos)
         {
             string[] IndividualMsgs = Msg.Split('|');
+            string[] IndividualMobileNos = MobileNos.Split('|');
             foreach (var msg in IndividualMsgs)
             {
-                if (msg != string.Empty)
+                foreach (var Num in IndividualMobileNos)
                 {
-                   
+                    if (Num != string.Empty)
+                    {
+                        if (msg != string.Empty)
+                        {
+
+                            string strUrl = "http://api.mVaayoo.com/mvaayooapi/MessageCompose?user=shamilatps5@gmail.com:123456&senderID=TEST SMS&receipientno=" + Num + "&msgtxt=" + msg + "&state=4";
+
+                                //8547576924&msgtxt=This is a test from mVaayoo API&state=4";
+                            WebRequest request = HttpWebRequest.Create(strUrl);
+                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                            Stream s = (Stream)response.GetResponseStream();
+                            StreamReader readStream = new StreamReader(s);
+                            string dataString = readStream.ReadToEnd();
+                            response.Close();
+                            s.Close();
+                            readStream.Close();
+
+                        } 
+                    }
                 }
+
             }
         }
 

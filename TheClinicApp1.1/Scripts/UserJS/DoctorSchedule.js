@@ -378,11 +378,13 @@ $(document).mouseup(function (e) {
         var html = '';
         var Msg = '';
         var DoctorName = $('#hdnDoctorName').val();
+        var MobileNos = '';
        
         $.each(Records, function (index, Records) {
             debugger;
             //var tableContent = '<tr><td>' + Records.Name + '</td><td>' + Records.Mobile + '</td></tr>';
-
+            MobileNos =MobileNos +'|'+ Records.Mobile;
+           
             //$("#tbodySms").append(tableContent);
 
             //var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
@@ -399,7 +401,7 @@ $(document).mouseup(function (e) {
         debugger;
         if (Msg != '')
         {
-            PageMethods.SendMessage(Msg, OnSuccess, onError);
+            PageMethods.SendMessage(Msg,MobileNos, OnSuccess, onError);
 
             function OnSuccess(response, userContext, methodName) {
             }
