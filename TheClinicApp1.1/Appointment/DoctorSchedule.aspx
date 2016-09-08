@@ -356,6 +356,12 @@
         {
             color:black;
         }
+
+          #tblReason, #tblReason tr, #tblReason th, #tblReason td {
+            border: none;
+        }
+
+
         /*.fc-content
 {
     display:none;
@@ -380,7 +386,7 @@
 
         $(document).ready(function () {
 
-            debugger;
+        
 
 
             $('.alert_close').click(function () {
@@ -453,16 +459,16 @@
         }
 
         function OpenModal() {
-
+           
             $('#myModal').modal('show');
-
-
+          
+            
         }
 
         //-- This method is invoked while changing doctor
         function SetDropdown(e) {
 
-            debugger;
+           
             $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
 
             ClearControls();
@@ -645,6 +651,15 @@
                                                         <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
                                                             <div class="col-lg-12" style="height: 480px;">
                                                                 <div id="divCancellationMsg" class="col-lg-12" style="display: none">
+
+                                                                     
+                                   <table id="tblReason" style="width:100%;font-weight:600;font-size:16px">
+                                       <tr><td style="width:35%">Reason for cancellation</td>
+                                           <td style="width:65%"><input id="txtReason"   type="text" name="name" style="border-color:#aab0d4;"  /></td>
+                                       </tr>
+                                   </table>
+                                   
+                           
 
 
                                                                     <fieldset style="border-radius: 15px!important; border: 2px solid #3661C7!important;">
