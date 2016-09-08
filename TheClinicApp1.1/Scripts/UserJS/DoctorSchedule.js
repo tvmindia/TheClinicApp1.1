@@ -1138,7 +1138,8 @@ $(document).mouseup(function (e) {
         //else {
   
         if (DoctorID == "" || DoctorID == null) {
-            alert("Please select a doctor");
+
+            validation(AlertMsgs.DrRequired);
         }
 
         else {
@@ -1205,7 +1206,10 @@ $(document).mouseup(function (e) {
 
                                                         else {
                                                             Isalloted = true;
-                                                            alert(AlertMsgs.AlreadyAlloted);
+                                                            $("#hdnIsErrorTime").val('true');
+
+                                                            validation(AlertMsgs.AlreadyAlloted);
+                                                           
                                                             break;
                                                         }
 
@@ -1218,7 +1222,9 @@ $(document).mouseup(function (e) {
                                     else {
                                         Isalloted = true;
                                         $("#hdnIsErrorTime").val('true');
-                                        alert(AlertMsgs.ValidTime);
+
+                                        validation(AlertMsgs.ValidTime);
+                                       
 
                                     }
                                     //}
@@ -1327,30 +1333,36 @@ $(document).mouseup(function (e) {
                                             var lblcaptn = Caption.FailureMsgCaption;
 
                                             DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
-
+                                           
                                         }
 
                                     }
 
                                 }
                                 else {
-                                    alert(AlertMsgs.ValidTime);
+
+                                    validation(AlertMsgs.ValidTime);
+                                   
                                 }
                             }
                             else {
-                                alert(AlertMsgs.EndTimeRequired);
+                                validation(AlertMsgs.EndTimeRequired);
+
                             }
 
 
                         }
                         else {
-                            alert(AlertMsgs.StartTimeRequired);
+
+                            validation(AlertMsgs.StartTimeRequired);
+                           
                         }
                 
                     }
                     else
                     {
-                        alert(AlertMsgs.MaxAppoinmentRequired);
+
+                        validation(AlertMsgs.MaxAppoinmentRequired);
                     }
                 
 
@@ -1359,23 +1371,32 @@ $(document).mouseup(function (e) {
 
                 else
                 {
-                    alert(AlertMsgs.DateRequired);
+                    validation(AlertMsgs.DateRequired);
+
                 }
             }
 
             else {
-                alert(AlertMsgs.validNumber);
+                validation(AlertMsgs.validNumber);
+              
+
             }
 
         }
        
 
+    }
 
-       
+    function validation(ErrorMsg)
+    {
+        var lblclass = Alertclasses.danger;
+        var lblmsg = ErrorMsg;
+        var lblcaptn = Caption.FailureMsgCaption;
 
-
+        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
 
     }
+
 
     function AddDrSchedule(Doctor) {
         var ds = {};
