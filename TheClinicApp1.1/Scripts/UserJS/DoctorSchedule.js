@@ -386,17 +386,26 @@ $(document).mouseup(function (e) {
         //--4. Mobile number of each patient is passed to code behind by passing mobileNo(using varaiable MobileNos) by seperating it by | symbols
 
         $.each(Records, function (index, Records) {
-          
-            MobileNos =MobileNos +'|'+ Records.Mobile;
-           
-            html = CancelMsg.replace('%PATIENT NAME%', Records.Name);
-            html = html.replace('%DOCTOR NAME%', DoctorName);
-            html = html.replace('%DATE%', ClickedDate);
-            html = html.replace('%TIME%', Records.AllottingTime);
-            html = html.replace('%REASON%', CancelReason);
+            debugger;
+            //PhoneNoRegex = /^\d{10}$/;
 
-            Msg = Msg +"|" +html;
-           
+            var PhoneNoRegex = /^[0-9\-\+]{9,15}$/;  //-- Allows + symbol and digits
+
+            //var PhoneNoRegex = /^\+?d$/;
+            var MobileNo = Records.Mobile;
+            if ((MobileNo.match(PhoneNoRegex))) {   //-- Mobile no validation
+
+
+                MobileNos = MobileNos + '|' + Records.Mobile;
+
+                html = CancelMsg.replace('%PATIENT NAME%', Records.Name);
+                html = html.replace('%DOCTOR NAME%', DoctorName);
+                html = html.replace('%DATE%', ClickedDate);
+                html = html.replace('%TIME%', Records.AllottingTime);
+                html = html.replace('%REASON%', CancelReason);
+
+                Msg = Msg + "|" + html;
+            }
         })
       
         if (Msg != '')
@@ -555,7 +564,7 @@ $(document).mouseup(function (e) {
     });
 }
 //---------------------------------------------------------//
-
+   
     function ConvertTimeFormatFrom24hrTo12hr(Time)
     {
         debugger;
