@@ -6,6 +6,7 @@
     <link href="../css/bootstrap-multiselect.css" rel="stylesheet" />
     <script src="../js/bootstrap-multiselect.js"></script>
     <script src="../js/ASPSnippets_Pager.min.js"></script>
+    <script src="../js/Messages.js"></script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -114,7 +115,7 @@
                                      <label for="phone">Clinic Phone</label><input id="txtPhone" runat="server" type="text" name="name"/>
                                  </div>
                                      <div style="margin-bottom:1%" id="DivMultiRoles">
-                                         <label for="phone">Select Roles</label>
+                                         <label for="phone">Select Required Roles</label>
                                          <asp:ListBox ID="lstFruits" runat="server" SelectionMode="Multiple">
                                             <asp:ListItem Text="Administrator" Value="1" />
                                              <asp:ListItem Text="Pharmacist" Value="2" />
@@ -261,11 +262,14 @@
             $('#ExistingGroup').hide();
             $('#NewGroup').show();
             $('#hdnGroupselect').val('New');
+            $('#<%=lstFruits.ClientID%>').multiselect('select', ['1', '2', '3']);
         }
         if (num == 2) {
+            debugger;
             $('#NewGroup').hide();
             $('#ExistingGroup').show();
             $('#hdnGroupselect').val('Exist');
+            $('#<%=lstFruits.ClientID%>').multiselect('deselect', ['1', '2', '3']);
             
         }
     }
@@ -364,7 +368,7 @@
         GetClinic(1);
     });
     $("[id*=txtSearch]").click("keyup", function () {
-
+        debugger;
         GetClinic(parseInt(1));
     });
     $(".Pager .page").live("click", function () {
@@ -385,11 +389,11 @@
             success: OnSuccess,
             failure: function (response) {
 
-                alert(response.d);
+                //alert(response.d);
             },
             error: function (response) {
 
-                alert(response.d);
+                //alert(response.d);
             }
         });
     }

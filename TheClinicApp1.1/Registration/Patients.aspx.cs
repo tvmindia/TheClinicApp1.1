@@ -517,7 +517,8 @@ namespace TheClinicApp1._1.Registration
                              AppointObj.ClinicID = PatientObj.ClinicID.ToString();
                              AppointObj.AppointmentStatus = 1;//patientpresent status
                              AppointObj.UpdatedBy = UA.userName;
-                             AppointObj.PatientAppointmentStatusUpdate();
+                             AppointObj.PatientAppointmentStatusUpdate();//change status of appointment
+                             AppointObj.PatientAppointmentNumberAllotByAppointmentID();//appointment no
                          }
                         
 
