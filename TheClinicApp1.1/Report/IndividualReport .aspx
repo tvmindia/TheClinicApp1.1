@@ -30,6 +30,10 @@
 
 
     <style>
+        body
+        {
+            overflow-x:hidden;
+        }
         table {
             border-collapse: collapse;
             border: 1px solid black;
