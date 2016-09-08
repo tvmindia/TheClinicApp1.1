@@ -733,7 +733,7 @@ namespace TheClinicApp1._1.Appointment
         #region Doctor Dropdown Selected Index Changed
         protected void ddlDoctor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlDoctor.SelectedItem.Text !=  "--Select--")
+            if (ddlDoctor.SelectedItem.Text !=  "--Select Doctor--")
             {
                 hdnDoctorID.Value = ddlDoctor.SelectedValue;     
             }
