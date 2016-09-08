@@ -172,16 +172,11 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
                 cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
-
                 cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode;
-
                 cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
                 cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
                 cmd.Parameters.AddWithValue("@PageSize", PageSize);
                 cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-
-
                 sda = new SqlDataAdapter();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
