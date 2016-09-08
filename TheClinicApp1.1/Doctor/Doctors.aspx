@@ -303,10 +303,11 @@
             $(function () {
                 $("[id*=GridViewTokenlist] td:eq(0)").click(function () { 
                     
-
+                  
                     PatientID = $(this).closest('tr').find('td:eq(6)').text();
 
-                   
+                    var UniqueID  = $(this).closest('tr').find('td:eq(7)').text();
+                    $("#HdfUniqueID").val(UniqueID);
 
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                     
@@ -896,7 +897,7 @@
                         $("td", rowDoctor).eq(6).html($(this).find("PatientID").text());
 
                         
-                     
+                        $("td", rowDoctor).eq(7).html($(this).find("UniqueID").text());
 
                          $("[id*=GridViewTokenlist]").append(rowDoctor);
                       
@@ -939,7 +940,11 @@
                 $("[id*=GridViewTokenlist] tr").each(function () {
                     $(this).find("td").eq(PatientIDColumn.index()).css("display", "none");
                 });
-
+                var UniqueIDColumn = $("[id*=GridViewTokenlist] th:contains('Tok/AppID')");
+                UniqueIDColumn.css("display", "none");
+                $("[id*=GridViewTokenlist] tr").each(function () {
+                    $(this).find("td").eq(UniqueIDColumn.index()).css("display", "none");
+                });
              
 
             };
@@ -1424,6 +1429,7 @@
                                     <asp:BoundField HeaderText="Time" DataField="DateTime" ItemStyle-CssClass="Match"/>
                                     <asp:BoundField HeaderText="Consulted" DataField="IsProcessed" ItemStyle-CssClass="Match"/>
                                     <asp:BoundField HeaderText="PatientID" DataField="PatientID"/>
+                                    <asp:BoundField HeaderText="Tok/AppID" DataField="UniqueID" />
                                 </Columns>
                             </asp:GridView>
 
@@ -1729,6 +1735,7 @@
 
     </asp:Panel>
 
-  
+  <asp:HiddenField ID="HdfUniqueID" ClientIDMode="Static" runat="server" />
+
 
 </asp:Content>
