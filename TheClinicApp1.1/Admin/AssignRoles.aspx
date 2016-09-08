@@ -296,6 +296,9 @@ table
         }
         var row;
         function OnSuccess(response) {
+
+
+            debugger;
             $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
@@ -307,7 +310,7 @@ table
             if (AssignedRoles.length > 0) {
                 $.each(AssignedRoles, function () {
                     
-
+                    debugger;
                     //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
                    
 
@@ -317,11 +320,11 @@ table
 
                    
 
-                    $("td", row).eq(0).html($(this).find("Name").text());
+                    $("td", row).eq(0).html($(this).find("FirstName").text());
 
-                    $("td", row).eq(1).html($(this).find("Role").text());
+                    $("td", row).eq(1).html($(this).find("RoleNames").text());
                    
-                    $("td", row).eq(2).html($(this).find("UniqueID").text());
+                    $("td", row).eq(2).html($(this).find("UserID").text());
                   
 
                     $("[id*=dtgViewAllUserInRoles]").append(row);
@@ -358,7 +361,7 @@ table
 
 
 
-            var th = $("[id*=dtgViewAllUserInRoles] th:contains('UniqueID')");
+            var th = $("[id*=dtgViewAllUserInRoles] th:contains('UserID')");
             th.css("display", "none");
             $("[id*=dtgViewAllUserInRoles] tr").each(function () {
                 $(this).find("td").eq(th.index()).css("display", "none");
@@ -566,7 +569,7 @@ table
                                 <asp:BoundField DataField="Role" HeaderText="Assigned Role">                                   
                                 </asp:BoundField>                           
                                    
-                                   <asp:BoundField DataField="UniqueID" HeaderText="UniqueID">   
+                                   <asp:BoundField DataField="UserID" HeaderText="UserID">   
                                 </asp:BoundField>
                             </Columns>     
                         </asp:GridView>
