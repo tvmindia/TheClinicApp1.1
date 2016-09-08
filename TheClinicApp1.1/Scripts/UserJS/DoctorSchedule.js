@@ -107,7 +107,7 @@ $(document).mouseup(function (e) {
             //    cell.css("background-color", "red");
             //},
             select: function (start, end) {
-                debugger;
+               
                // CustomClick();
 
                 //$(this).css("blink");
@@ -167,7 +167,7 @@ $(document).mouseup(function (e) {
             editable: false,
            
              eventRender: function (event, element, view) {
-                 debugger;
+                 
                  
 
                  //--1. All events are stored to allEvents array 
@@ -216,7 +216,7 @@ $(document).mouseup(function (e) {
                 
                 ////--------------------- * Applying bg-Color for event dates * --------------------// 
                 if ($.inArray(dateString, allEvents) != -1) { 
-                    debugger;
+                 
                     $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                     $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
 
@@ -319,8 +319,7 @@ $(document).mouseup(function (e) {
         },
           
            eventClick: function (date, jsEvent, view) {
-               debugger;
-
+              
                 $("#txtStartTime").val('');
                 $("#txtEndTime").val('');
                 $("#txtMaxAppoinments").val('');
@@ -372,7 +371,7 @@ $(document).mouseup(function (e) {
 
     /*Appoinment msg -send sms Click*/
     $('#SendSms').click(function () {
-        debugger;
+      
         Records = PatientDetails;
         var CancelMsg = AppoinmentCancellationMessageWithoutHtml;
         var html = '';
@@ -386,7 +385,7 @@ $(document).mouseup(function (e) {
         //--4. Mobile number of each patient is passed to code behind by passing mobileNo(using varaiable MobileNos) by seperating it by | symbols
 
         $.each(Records, function (index, Records) {
-            debugger;
+           
             //PhoneNoRegex = /^\d{10}$/;
 
             var PhoneNoRegex = /^[0-9\-\+]{9,15}$/;  //-- Allows + symbol and digits
@@ -440,8 +439,10 @@ $(document).mouseup(function (e) {
 
     /*Modal dialog OK button click*/
     $('#Okay').click(function () {
+
         debugger;
-       
+
+      
         if ($('#hdnIsDeletionByDate').val() != "true") {
 
         var Appointments = new Object();
@@ -524,8 +525,19 @@ $(document).mouseup(function (e) {
 
         }
 
+        var DoctorName = $('#hdnDoctorName').val();
+
+
+        AppoinmentCancellationMessage = AppoinmentCancellationMessage.replace('%DOCTOR NAME%', DoctorName);
+        AppoinmentCancellationMessage = AppoinmentCancellationMessage.replace('%DATE%', ClickedDate);
+        AppoinmentCancellationMessage = AppoinmentCancellationMessage.replace('%REASON%', CancelReason);
+
         var html = '<p>' + AppoinmentCancellationMessage + "<b><i>" + "This sms will be send to the contacts given below " + "</i></b></p>";
         $('#divCancellationMsg').show();
+
+        document.getElementById("txtReason").focus();
+        document.getElementById("txtReason").placeholder = CancelReason;
+
         $('#MsgFooter').show();
         $('#tblPatients').hide();
         $('#TableFooter').hide();
@@ -535,7 +547,7 @@ $(document).mouseup(function (e) {
         Records = PatientDetails;
 
         $.each(Records, function (index, Records) {
-            debugger;
+          
             var tableContent = '<tr><td>' + Records.Name + '</td><td>' + Records.Mobile + '</td></tr>';
 
             $("#tbodySms").append(tableContent);
@@ -546,6 +558,19 @@ $(document).mouseup(function (e) {
         //$('#myModal').modal('hide');
         });
    
+
+    $(function () {
+        $('#txtReason').keyup(function () {
+
+            $('#divMsg').html = '';
+            var reason = $(this).val();
+
+            AppoinmentCancellationMessage = AppoinmentCancellationMessage.replace('%REASON%', reason);
+
+        });
+    });
+
+
 });
 
 /*end of document.ready*/
@@ -567,7 +592,7 @@ $(document).mouseup(function (e) {
    
     function ConvertTimeFormatFrom24hrTo12hr(Time)
     {
-        debugger;
+       
 
     var TimeIn24hrFormat = Time;
     var hourEnd = TimeIn24hrFormat.indexOf(":");
@@ -587,7 +612,7 @@ $(document).mouseup(function (e) {
 }
 
     function GetRegularScheduleByDrID() {
-        debugger;
+       
         var strttime = '';
         var endtime = '';
         var jsonRegularSchedule = {};
@@ -669,8 +694,7 @@ $(document).mouseup(function (e) {
 
     function GetScheduleByDrID(drID) {
       
-      
-        debugger;
+    
     DoctorID = drID;
 
     var jsonDrSchedule = {};
@@ -806,7 +830,7 @@ $(document).mouseup(function (e) {
 
 
     $.each(Records, function (index, Records) {
-        debugger;
+       
         var ScheduleID = Records.ID;
 
         if (Records.Starttime != null && Records.Endtime != null) {
@@ -861,7 +885,7 @@ $(document).mouseup(function (e) {
 
         if (Records.Starttime != null && Records.Endtime != null) {
 
-            debugger;
+         
             
 
             var TimeIn24hrFormat = Records.Starttime;
@@ -924,7 +948,7 @@ $(document).mouseup(function (e) {
     }
 
     function RemoveTime(ScheduleID) {
-        debugger;
+       
         document.getElementById('hdnScheduleID').value = ScheduleID;
 
     var DeletionConfirmation = ConfirmDelete(false);
@@ -940,7 +964,7 @@ $(document).mouseup(function (e) {
     ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelDoctorSchedule");
     table = JSON.parse(ds.d);
    
-    debugger;
+   
     if (table.status == 1) {
         GetScheduledTimesByDate(ClickedDate);
         BindScheduledDates();
@@ -977,7 +1001,7 @@ $(document).mouseup(function (e) {
 
         $("#tbodyPatients tr").remove();
 
-        debugger;
+       
         Records = table;
         PatientDetails = Records;
         $.each(Records, function (index, Records) {
@@ -1114,7 +1138,7 @@ $(document).mouseup(function (e) {
     };
 
     function AddSchedule() {
-        debugger;
+    
 
       
     
@@ -1127,7 +1151,6 @@ $(document).mouseup(function (e) {
     
             //------------ * UPDATE CASE * ----------------//
 
-            debugger;
             var JsonUpdatedSchedule = {};
 
             var Doctor = new Object();
@@ -1253,7 +1276,7 @@ $(document).mouseup(function (e) {
 
                                     }
                                     if (Isalloted == false && document.getElementById('hdnScheduleID').value != "" && $("#hdnIsErrorTime").val() == "false") {
-                                        debugger;
+                                       
 
                                         //------------ * UPDATE CASE * ----------------//
 
@@ -1456,7 +1479,7 @@ $(document).mouseup(function (e) {
 
     function CancelAllSchedules($this)
     {
-        debugger;
+     
         var DeletionConfirmation = ConfirmDelete(false);
         if (DeletionConfirmation == true) {
         date =    $($this).closest('td').prev('td').text();
@@ -1529,13 +1552,13 @@ $(document).mouseup(function (e) {
 
                 ClickedDate = DrAvaildate;
                 $('#hdnIsDeletionByDate').val(true);
-                debugger;
+              
                 //  $("#tblPatients tr").remove();
 
                 $("#tbodyPatients tr").remove();
 
                 //$('tblPatients tr:not(:first)').remove();
-                debugger;
+              
                 Records = JsonCancellAll;
                 PatientDetails = Records;
                 $.each(Records, function (index, Records) {
