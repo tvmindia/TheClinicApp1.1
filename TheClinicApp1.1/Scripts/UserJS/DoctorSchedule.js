@@ -1107,7 +1107,7 @@ $(document).mouseup(function (e) {
     function AddSchedule() {
         debugger;
 
-        if (  $("#hdnIsErrorTime").val()== "false") {
+      
     
         var JsonNewSchedule = {};
         var Isalloted = false;
@@ -1148,195 +1148,195 @@ $(document).mouseup(function (e) {
                
                 if (document.getElementById('txtAppointmentDate').value.trim() != "" )
                 {
+                    
+
                     if (document.getElementById('txtMaxAppoinments').value.trim() != "") {
     
                         if (document.getElementById('txtStartTime').value.trim() != "") {
                             if (document.getElementById('txtEndTime').value.trim() != "") {
 
-                                //&&  &&  && document.getElementById('txtEndTime').value.trim() != "")
-                    
-                                var StartimeInput = document.getElementById('txtStartTime').value;
-                                var endtimeInput = document.getElementById('txtEndTime').value;
+                                if ($("#hdnIsErrorTime").val() == "false") {
 
-                                var InputStartTimeIn24hrFormat = moment(StartimeInput, ["h:mm A"]).format("HH:mm"); //INPUT start time in 24hr format
-                                var InputEndTimeIn24hrFormat = moment(endtimeInput, ["h:mm A"]).format("HH:mm");
 
-                                //  InputStartTimeIn24hrFormat = InputStartTimeIn24hrFormat.isValid() ? InputStartTimeIn24hrFormat.format("L") : "";
+                                    //&&  &&  && document.getElementById('txtEndTime').value.trim() != "")
 
-                                if (InputStartTimeIn24hrFormat < InputEndTimeIn24hrFormat)
-                                {
+                                    var StartimeInput = document.getElementById('txtStartTime').value;
+                                    var endtimeInput = document.getElementById('txtEndTime').value;
 
-                                    var ItemCount = AllotedEndTimes.length;
+                                    var InputStartTimeIn24hrFormat = moment(StartimeInput, ["h:mm A"]).format("HH:mm"); //INPUT start time in 24hr format
+                                    var InputEndTimeIn24hrFormat = moment(endtimeInput, ["h:mm A"]).format("HH:mm");
 
-                                    if (ItemCount > 0)  //---* if no alloted schedule, no checking is needed *---//
-                                    {
-                                        for (var i in AllotedEndTimes)
+                                    //  InputStartTimeIn24hrFormat = InputStartTimeIn24hrFormat.isValid() ? InputStartTimeIn24hrFormat.format("L") : "";
+
+                                    if (InputStartTimeIn24hrFormat < InputEndTimeIn24hrFormat) {
+
+                                        var ItemCount = AllotedEndTimes.length;
+
+                                        if (ItemCount > 0)  //---* if no alloted schedule, no checking is needed *---//
                                         {
-                                            var AlreadyAllotedEndTime = moment(AllotedEndTimes[i], ["h:mm A"]).format("HH:mm");
-                                            var AlreadyAllotedStartTime = moment(AllotedStartTimes[i], ["h:mm A"]).format("HH:mm");
-                     
-                                            var FirstItem = moment(AllotedStartTimes[0], ["h:mm A"]).format("HH:mm");
+                                            for (var i in AllotedEndTimes) {
+                                                var AlreadyAllotedEndTime = moment(AllotedEndTimes[i], ["h:mm A"]).format("HH:mm");
+                                                var AlreadyAllotedStartTime = moment(AllotedStartTimes[i], ["h:mm A"]).format("HH:mm");
 
-                                            //-----* Item Has to be added to the FIRST position *-----//
-                                            if (InputEndTimeIn24hrFormat <= FirstItem )
-                                            {
-                                                Isalloted == false;
-                                                break;
-                                            }
+                                                var FirstItem = moment(AllotedStartTimes[0], ["h:mm A"]).format("HH:mm");
 
-                                            else {
-                                      
-
-                                                //-----* Item Has to be added to the LAST position *-----//
-                                                if (InputStartTimeIn24hrFormat >= AlreadyAllotedEndTime)
-                                                {
+                                                //-----* Item Has to be added to the FIRST position *-----//
+                                                if (InputEndTimeIn24hrFormat <= FirstItem) {
                                                     Isalloted == false;
+                                                    break;
                                                 }
-                                                else
-                                                {
-                                                    //-----* Item Has to be added IN BETWEEN *-----//
 
-                                                    var ItemJustAbove = moment(AllotedEndTimes[i-1], ["h:mm A"]).format("HH:mm");
+                                                else {
 
-                                                    if ((InputEndTimeIn24hrFormat <= AlreadyAllotedStartTime) && (InputStartTimeIn24hrFormat >= ItemJustAbove)) {
-                                                        Isalloted = false;
-                                                        break;
+
+                                                    //-----* Item Has to be added to the LAST position *-----//
+                                                    if (InputStartTimeIn24hrFormat >= AlreadyAllotedEndTime) {
+                                                        Isalloted == false;
                                                     }
-
                                                     else {
-                                                        Isalloted = true;
-                                                        alert(AlertMsgs.AlreadyAlloted);
-                                                        break;
+                                                        //-----* Item Has to be added IN BETWEEN *-----//
+
+                                                        var ItemJustAbove = moment(AllotedEndTimes[i - 1], ["h:mm A"]).format("HH:mm");
+
+                                                        if ((InputEndTimeIn24hrFormat <= AlreadyAllotedStartTime) && (InputStartTimeIn24hrFormat >= ItemJustAbove)) {
+                                                            Isalloted = false;
+                                                            break;
+                                                        }
+
+                                                        else {
+                                                            Isalloted = true;
+                                                            alert(AlertMsgs.AlreadyAlloted);
+                                                            break;
+                                                        }
+
                                                     }
-
                                                 }
                                             }
                                         }
-                                    }
-                                }
-
-                                else
-                                {
-                                    Isalloted = true;
-                                    $("#hdnIsErrorTime").val('true');
-                                    alert(AlertMsgs.ValidTime);
-                       
-                                }
-                                //}
-
-                                if (Isalloted == false && document.getElementById('hdnScheduleID').value == "" && $("#hdnIsErrorTime").val() == "false")
-                                {
-                                    //------------ * INSERT CASE * ----------------//
-                                    var Doctor = new Object();
-                                    Doctor.DoctorID = DoctorID;
-                                    Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
-                                    Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
-                                    Doctor.IsAvailable = true;
-                                    Doctor.Starttime = document.getElementById('txtStartTime').value.replace(/ /g, '');
-                                    Doctor.Endtime = document.getElementById('txtEndTime').value.replace(/ /g, '');
-
-                                    JsonNewSchedule = AddDrSchedule(Doctor);
-
-
-                                }
-                                if (Isalloted == false && document.getElementById('hdnScheduleID').value != "" && $("#hdnIsErrorTime").val() == "false")
-                                {
-                                    debugger;
-
-                                    //------------ * UPDATE CASE * ----------------//
-
-                        
-                      
-                                    //if ((StartTimeOnEdit.replace(/ /g, ''))==(moment(document.getElementById('txtStartTime').value, ["h:mm A"]).format("HH:mm")) ) {
-                            
-                                    //    Doctor.Starttime = StartTimeOnEdit;
-                         
-                                    //}
-
-                                    //if ((EndTimeOnEdit.replace(/ /g, '')) == (moment(document.getElementById('txtEndTime').value, ["h:mm A"]).format("HH:mm"))) {
-
-                                    //    Doctor.Endtime = EndTimeOnEdit;
-
-                                    //}
-                                    JsonUpdatedSchedule = UpadteDrSchedule(Doctor);
-
-                                    JsonNewSchedule = JsonUpdatedSchedule;
-
-                                    document.getElementById('hdnScheduleID').value = "";
-                                }
-
-
-                                if (JsonNewSchedule != undefined && $("#hdnIsErrorTime").val() == "false") {
-                                    //  alert(JsonNewSchedule.status);
-
-                                    if (JsonNewSchedule.status == "1") {
-                                        //SUCCESS
-
-                                        var jsonDeatilsByDate = {};
-
-                                        var Doctor = new Object();
-
-
-                                        if (DoctorID != null && DoctorID != "") {
-
-                                            Doctor.DoctorID = DoctorID;
-                                            Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
-
-                                            jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
-
-                                            if (jsonDeatilsByDate != undefined) {
-
-                                                BindTimes(jsonDeatilsByDate);
-
-                                                $("#txtStartTime").val("");
-                                                $("#txtEndTime").val("");
-                                                $("#txtMaxAppoinments").val("");
-
-
-                                                BindScheduledDates();
-
-                                                var jsonDrSchedule = {};
-
-                                                var Doctor = new Object();
-                                                Doctor.DoctorID = DoctorID;
-
-                                                jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
-                                                if (jsonDrSchedule != undefined) {
-
-                                                    $('#calendar').fullCalendar('removeEventSource', json);
-
-                                                    json = jsonDrSchedule;
-
-                                                    $('#calendar').fullCalendar('addEventSource', json);
-                                                    $('#calendar').fullCalendar('refetchEvents');
-                                                }
-
-                                            }
-                                        }
-
-
-                                        var lblclass = Alertclasses.sucess;
-                                        var lblmsg = msg.ScheduleSaveSuccessFull;
-                                        var lblcaptn = Caption.SuccessMsgCaption;
-
-                                        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
-
-
                                     }
 
                                     else {
-                                        var lblclass = Alertclasses.danger;
-                                        var lblmsg = msg.ScheduleSaveFailure;
-                                        var lblcaptn = Caption.FailureMsgCaption;
+                                        Isalloted = true;
+                                        $("#hdnIsErrorTime").val('true');
+                                        alert(AlertMsgs.ValidTime);
 
-                                        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                                    }
+                                    //}
+
+                                    if (Isalloted == false && document.getElementById('hdnScheduleID').value == "" && $("#hdnIsErrorTime").val() == "false") {
+                                        //------------ * INSERT CASE * ----------------//
+                                        var Doctor = new Object();
+                                        Doctor.DoctorID = DoctorID;
+                                        Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value;
+                                        Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
+                                        Doctor.IsAvailable = true;
+                                        Doctor.Starttime = document.getElementById('txtStartTime').value.replace(/ /g, '');
+                                        Doctor.Endtime = document.getElementById('txtEndTime').value.replace(/ /g, '');
+
+                                        JsonNewSchedule = AddDrSchedule(Doctor);
+
+
+                                    }
+                                    if (Isalloted == false && document.getElementById('hdnScheduleID').value != "" && $("#hdnIsErrorTime").val() == "false") {
+                                        debugger;
+
+                                        //------------ * UPDATE CASE * ----------------//
+
+
+
+                                        //if ((StartTimeOnEdit.replace(/ /g, ''))==(moment(document.getElementById('txtStartTime').value, ["h:mm A"]).format("HH:mm")) ) {
+
+                                        //    Doctor.Starttime = StartTimeOnEdit;
+
+                                        //}
+
+                                        //if ((EndTimeOnEdit.replace(/ /g, '')) == (moment(document.getElementById('txtEndTime').value, ["h:mm A"]).format("HH:mm"))) {
+
+                                        //    Doctor.Endtime = EndTimeOnEdit;
+
+                                        //}
+                                        JsonUpdatedSchedule = UpadteDrSchedule(Doctor);
+
+                                        JsonNewSchedule = JsonUpdatedSchedule;
+
+                                        document.getElementById('hdnScheduleID').value = "";
+                                    }
+
+
+                                    if (JsonNewSchedule != undefined && $("#hdnIsErrorTime").val() == "false") {
+                                        //  alert(JsonNewSchedule.status);
+
+                                        if (JsonNewSchedule.status == "1") {
+                                            //SUCCESS
+
+                                            var jsonDeatilsByDate = {};
+
+                                            var Doctor = new Object();
+
+
+                                            if (DoctorID != null && DoctorID != "") {
+
+                                                Doctor.DoctorID = DoctorID;
+                                                Doctor.SearchDate = document.getElementById('txtAppointmentDate').value;
+
+                                                jsonDeatilsByDate = GetAllDoctorScheduleDetailsByDate(Doctor);
+
+                                                if (jsonDeatilsByDate != undefined) {
+
+                                                    BindTimes(jsonDeatilsByDate);
+
+                                                    $("#txtStartTime").val("");
+                                                    $("#txtEndTime").val("");
+                                                    $("#txtMaxAppoinments").val("");
+
+
+                                                    BindScheduledDates();
+
+                                                    var jsonDrSchedule = {};
+
+                                                    var Doctor = new Object();
+                                                    Doctor.DoctorID = DoctorID;
+
+                                                    jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                                                    if (jsonDrSchedule != undefined) {
+
+                                                        $('#calendar').fullCalendar('removeEventSource', json);
+
+                                                        json = jsonDrSchedule;
+
+                                                        $('#calendar').fullCalendar('addEventSource', json);
+                                                        $('#calendar').fullCalendar('refetchEvents');
+                                                    }
+
+                                                }
+                                            }
+
+
+                                            var lblclass = Alertclasses.sucess;
+                                            var lblmsg = msg.ScheduleSaveSuccessFull;
+                                            var lblcaptn = Caption.SuccessMsgCaption;
+
+                                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+
+
+                                        }
+
+                                        else {
+                                            var lblclass = Alertclasses.danger;
+                                            var lblmsg = msg.ScheduleSaveFailure;
+                                            var lblcaptn = Caption.FailureMsgCaption;
+
+                                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+
+                                        }
 
                                     }
 
                                 }
-
+                                else {
+                                    alert(AlertMsgs.ValidTime);
+                                }
                             }
-
                             else {
                                 alert(AlertMsgs.EndTimeRequired);
                             }
@@ -1352,7 +1352,9 @@ $(document).mouseup(function (e) {
                     {
                         alert(AlertMsgs.MaxAppoinmentRequired);
                     }
+                
 
+               
                 }
 
                 else
@@ -1369,12 +1371,7 @@ $(document).mouseup(function (e) {
        
 
 
-        }
-
-        else
-        {
-            alert(AlertMsgs.ValidTime);
-        }
+       
 
 
 
