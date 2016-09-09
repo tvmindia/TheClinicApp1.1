@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 
@@ -129,6 +130,53 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Appointment Methods
 
+        #region format time
+        /// <summary>
+        /// convert start time format into 24 hour format
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns>time</returns>
+        public string correctTime(string time)
+        {
+            var ampmLen = 2;
+            var ampm = time.Substring(time.Length - ampmLen, ampmLen);
+            var hourIndex = 0;
+            var hour = time.Split(':')[hourIndex];
+            var minutes = time.Split(':')[1];
+            var h = hour;
+            if (ampm.Equals("AM"))
+            {
+                if (h == "12")
+                {
+                    h = "00";
+                }
+            }
+            if (ampm.Equals("PM"))
+            {
+                if (h != "12")
+                {
+                    h = (int.Parse(hour) + 12).ToString();
+                }
+
+
+            }
+
+
+
+
+            var TimeIn24HrFormat = h + ":" + minutes;
+
+
+
+
+            TimeIn24HrFormat = Regex.Replace(TimeIn24HrFormat, @"\s+", "");
+
+            TimeIn24HrFormat = TimeIn24HrFormat.Replace("AM","");
+            TimeIn24HrFormat = TimeIn24HrFormat.Replace("PM","");
+            return TimeIn24HrFormat;
+        }
+        #endregion format start time
+
         #region InsertPatientAppointment
         public Int16 InsertPatientAppointment()  
         {
@@ -151,7 +199,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "InsertPatientAppointment";
-                if(PatientID!=null)
+                if (PatientID!=string.Empty)
                 {
                     cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PatientID);
                 }
@@ -161,7 +209,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Name", SqlDbType.VarChar,25).Value = Name;
                 cmd.Parameters.Add("@IsRegistered", SqlDbType.Bit).Value = IsRegistered;
                 cmd.Parameters.Add("@appointmentno", SqlDbType.Int).Value = appointmentno;
-                cmd.Parameters.Add("@AllottingTime", SqlDbType.NVarChar,10).Value = AllottingTime;
+                cmd.Parameters.Add("@AllottingTime", SqlDbType.NVarChar, 10).Value = correctTime(AllottingTime);
                 cmd.Parameters.Add("@AppointmentStatus", SqlDbType.Int).Value = AppointmentStatus;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@Location", SqlDbType.NVarChar).Value = Location;
