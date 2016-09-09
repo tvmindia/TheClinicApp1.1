@@ -7,6 +7,8 @@
      <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.4.js"></script>
     <script src="../js/1.12.0jquery-ui.js"></script>
+     <script src="../js/Messages.js"></script>
+    <script src="../Scripts/Common/Common.js"></script>
   <script src='../js/moment.min.js'></script>
   <script src='../js/fullcalendar.min.js'></script>
   <script src='../js/lang-all.js'></script>
@@ -412,7 +414,9 @@ border-bottom-right-radius: 0px;
         var DoctorID="";
         $(document).ready(function () {
             var bindTitle="";
-          
+            $('.alert_close').click(function () {
+                $(this).parent(".alert").hide();
+            }); 
             $('#ddltimeSlot').change(function() {
                 alert( "Handler for .change() called." );
             });
@@ -487,6 +491,7 @@ border-bottom-right-radius: 0px;
                 var place=$("#txtPatientPlace").val();
                 var scheduleID=$("#hdfScheduleID").val();       
                 var Time=$( "input:checked" ).val();
+                var patientID=$("#hdfPatientID").val();
                 var regEx = /^[+-]?\d+$/;
                 if(mobile.match(regEx)&&mobile.length>=10)
                 {
@@ -548,17 +553,35 @@ border-bottom-right-radius: 0px;
                   
                     }
                     var Appointments=new Object();
-                
+                    debugger;
                     Appointments.AppointmentDate=appointmentDate;
                     Appointments.Name=name;
                     Appointments.Mobile=mobile;
                     Appointments.Location=place;
                     Appointments.ScheduleID=scheduleID;
                     Appointments.AllottingTime=Time;
+                    Appointments.PatientID=patientID;
+                    
                     var ds={};
                     ds=InsertPatientAppointment(Appointments);
-                    refreshList();
-                    fillPatientDetails();
+                    if(ds.status=="1")
+                    {
+                        refreshList();
+                        fillPatientDetails();
+                        var lblclass = Alertclasses.sucess;
+                        var lblmsg = msg.AppointmentSaveSuccessFull;
+                        var lblcaptn = Caption.SuccessMsgCaption;
+
+                        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                    }
+                    else
+                    {
+                        var lblclass = Alertclasses.sucess;
+                        var lblmsg = msg.AppointmentSaveFailure;
+                        var lblcaptn = Caption.FailureMsgCaption;
+
+                        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                    }
                 }
                 else
                 {
@@ -621,10 +644,12 @@ border-bottom-right-radius: 0px;
 
         }
        function BindPatient(Records)
-       {
+        {
+           debugger;
         $("#txtPatientName").val(Records.Name);
         $("#txtPatientMobile").val(Records.Phone);
         $("#txtPatientPlace").val(Records.Address);
+        $("#hdfPatientID").val(Records.PatientID);
        }
 
         function GetPatientDetails(Patient) {
@@ -877,15 +902,7 @@ border-bottom-right-radius: 0px;
                         
                     </ul>
                     <!-- Tab panes -->
-                    <div id="Errorbox" style="display: none;" runat="server">
-                            <a class="alert_close">X</a>
-                            <div>
-                                <strong>
-                                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
-                                </strong>
-                                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
-                            </div>
-                        </div>                        
+                                  
                   
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" >
@@ -898,7 +915,16 @@ border-bottom-right-radius: 0px;
                                     <li><a class="new" href="#"><span></span>New</a></li>
                                 </ul>
                             </div>
-
+                                    <div id="Errorbox" style="height: 30%; display: none;">
+                        <a class="alert_close">X</a>
+                        <div>
+                            <strong>
+                                <span id="lblErrorCaption"></span>
+                              
+                            </strong>
+                            <span id="lblMsgges"></span>
+                        </div>
+                    </div>
                             <div class="tab_table">
                           <div class="row field_row" >
                                     <div class="col-lg-12">
@@ -1070,6 +1096,7 @@ border-bottom-right-radius: 0px;
                 <input type="hidden" id="hdfLastAppointedTime" />
                 <input type="hidden" id="hdfStartTime" />
                 <input type="hidden" id="hdfEndTime" />
+                <input type="hidden" id="hdfPatientID" />
             </div>
         </div>
 

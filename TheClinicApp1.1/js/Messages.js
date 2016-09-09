@@ -9,7 +9,11 @@
     InsertionSuccessFull: "Successfully Inserted",
     ScheduleSaveSuccessFull: "Schedule added Successfully",
     ScheduleSaveFailure: "Schedule not added.Please Try Again",
-    ScheduleCancelSuccessFull: "Schedule Cancelled Successfully"
+    ScheduleCancelSuccessFull: "Schedule Cancelled Successfully",
+    AppointmentSaveSuccessFull: "Appointment Added Successfully",
+    AppointmentSaveFailure: "Appointment not added.Please Try Again",
+    AppointmentCancelSuccessFull: "Appointment Cancelled Successfully",
+    AppointmentCancelFailure: "Appointment not cancelled.Please Try Again"
    
 }
 
