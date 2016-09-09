@@ -315,6 +315,7 @@ namespace TheClinicApp1._1.Webservices
 
         #region Schedules_Reminder_Tiles
 
+        //not used removed after confirmation
         #region GetDoctorScheduleDetails
         /// <summary>
         ///  GET APPOINTMENT DATES AND COUNT OF PATIENTS FOR MOBILE APP 
@@ -334,6 +335,52 @@ namespace TheClinicApp1._1.Webservices
                 docobj.DoctorID = doctorid;
 
                 ds = docobj.GetDoctorScheduleDetailsByDoctorIDforMobile();
+                dt = ds.Tables[0];
+                if (dt.Rows.Count == 0) { throw new Exception(constants.NoItems); }
+            }
+            catch (Exception ex)
+            {
+                //Return error message
+                DataTable ErrorMsg = new DataTable();
+                ErrorMsg.Columns.Add("Flag", typeof(Boolean));
+                ErrorMsg.Columns.Add("Message", typeof(String));
+                DataRow dr = ErrorMsg.NewRow();
+                dr["Flag"] = false;
+                dr["Message"] = ex.Message;
+                ErrorMsg.Rows.Add(dr);
+                dt = ErrorMsg;
+            }
+            finally
+            {
+            }
+            return getDbDataAsJSON(dt);
+        }
+        #endregion  GetAppointmentsDateandCount
+
+
+        //Second one GetDoctorScheduleDetailsforMobile()
+
+        #region GetDoctorScheduleDetailsfromMobile
+        /// <summary>
+        ///  GET APPOINTMENT DATES AND COUNT OF PATIENTS FOR MOBILE APP 
+        /// </summary>
+        /// <returns>JSON of list of visit search</returns>
+        [WebMethod]
+        public string GetDoctorScheduleDetailsbymonth(string doctorid, string clinicid,string month,string year)
+        {  //return msg data initialization
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+
+            try
+            {   //Retrieving details
+
+                ClinicDAL.Doctor docobj = new ClinicDAL.Doctor();
+                docobj.ClinicID = clinicid;
+                docobj.DoctorID = doctorid;
+                docobj.MonthName = month;
+                docobj.Year = year;
+
+                ds = docobj.GetDoctorScheduleDetailsforMobile();
                 dt = ds.Tables[0];
                 if (dt.Rows.Count == 0) { throw new Exception(constants.NoItems); }
             }
