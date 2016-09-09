@@ -248,7 +248,6 @@
                     var lblmsg = msg.Requiredfields;
                     var lblcaptn = Caption.Confirm;
                     ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
-                    
                     return false;
                 }
                 else
@@ -660,7 +659,6 @@
                    
                     if($(this).closest('tr').find('td:eq(7)').text()=='00000000-0000-0000-0000-000000000000')//patientid
                     {
-                        debugger;
                         var AppointmentID = $(this).closest('tr').find('td:eq(6)').text();
                         document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                         var jsonResult = {};
@@ -1016,9 +1014,11 @@
                         $("td", TodayAppoRow).eq(4).html($(this).find("Mobile").text());
                         $("td", TodayAppoRow).eq(5).html($(this).find("AllottingTime").text());
                         $("td", TodayAppoRow).eq(6).html($(this).find("AppointmentID").text());
+                       
                         var appointid=$(this).find("AppointmentID").text();
                         var currntrowobj=$(this);
-                        if(currntrowobj.find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
+                        ///  if(currntrowobj.find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
+                        if(currntrowobj.find("AppointmentStatus").text()=='0')//appointed:0
                         {
   
                             $("td", TodayAppoRow).removeClass("reged");
@@ -1026,13 +1026,22 @@
                             .attr('src', "" + '../images/NonregisteredUSer.png' + ""));
                             $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="0">Absent</option></select>');
                         }
-                        if(currntrowobj.find("PatientID").text()!='00000000-0000-0000-0000-000000000000')
+                        //  if(currntrowobj.find("PatientID").text()!='00000000-0000-0000-0000-000000000000')
+                        if(currntrowobj.find("AppointmentStatus").text()=='1')//present:1
                         {
                             $("td", TodayAppoRow).addClass("reged");
                             $("td", TodayAppoRow).eq(0).html($('<img />'));
                             $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Absent</option></select>');
                         }
+                        if(currntrowobj.find("AppointmentStatus").text()=='4')//consulted:4
+                        {
+                            $("td", TodayAppoRow).addClass("reged");
+                            $("td", TodayAppoRow).eq(0).html($('<img />'));
+                           // $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option></select>');
+                            $("td", TodayAppoRow).eq(1).html('Consulted');
+                        }
                         $("td", TodayAppoRow).eq(7).html(currntrowobj.find("PatientID").text());
+                        $("td", TodayAppoRow).eq(8).html($(this).find("AppointmentStatus").text());
                         $("[id*=dtgTodaysAppointment]").append(TodayAppoRow);
                         TodayAppoRow = $("[id*=dtgTodaysAppointment] tr:last-child").clone(true);
                     });
@@ -1076,6 +1085,12 @@
                 $("[id*=dtgTodaysAppointment] tr").each(function () {
                     $(this).find("td").eq(PatientIDColumn.index()).css("display", "none");
                 });
+                var AppointStatusColumn = $("[id*=dtgTodaysAppointment] th:contains('AppointmentStatus')");
+                AppointStatusColumn.css("display", "none");
+                $("[id*=dtgTodaysAppointment] tr").each(function () {
+                    $(this).find("td").eq(AppointStatusColumn.index()).css("display", "none");
+                });
+
               
             };
 
@@ -1500,6 +1515,8 @@ function AppointmentIsAbsent(Appointments)
                                         <asp:BoundField DataField="AllottingTime" HeaderText="Time"></asp:BoundField>
                                         <asp:BoundField DataField="AppointmentID" HeaderText="AppointmentID"></asp:BoundField>
                                         <asp:BoundField DataField="PatientID" HeaderText="PatientID"></asp:BoundField>
+                                        <asp:BoundField DataField="AppointmentStatus" HeaderText="AppointmentStatus"></asp:BoundField>
+
                                     </Columns>
                                 </asp:GridView>
                             </div>
