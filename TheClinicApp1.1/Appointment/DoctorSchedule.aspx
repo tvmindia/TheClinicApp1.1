@@ -93,14 +93,20 @@
         //-- Schedule order is passed to the function
         //-- At time of edit click ,we know the time to be binded , so it will also passed , and this time willo get binded to timepicker
         function SetDefaultTime(inputID, time) {
-        
+         
             if (time == null) {
+
+                debugger;
+
                 time = GetRegularScheduleByDrID();
             }
 
             var timeParts = time.split(',');
 
             if (inputID == 'txtStartTime') {
+                debugger;
+
+
                 time = timeParts[0];
             }
 

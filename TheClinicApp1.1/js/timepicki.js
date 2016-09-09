@@ -236,13 +236,13 @@ function PickTime()
 
 			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() == "") || (inputID == 'txtEndTime' && $('#txtStartTime').val() == "")) {
 			       
-			       
+			        debugger;
 			    //if ((inputID == 'txtStartTime') || (inputID == 'txtEndTime' )) {
 
 			        defultTime = SetDefaultTime(inputID);
-                    
+			        debugger;
 			        if (defultTime != null) {
-
+			            debugger;
 			            var timeParts = defultTime.split(',');
 
 			            ele.attr('data-timepicki-tim', timeParts[0]);

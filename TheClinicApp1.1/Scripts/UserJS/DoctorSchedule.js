@@ -651,7 +651,7 @@ $(document).mouseup(function (e) {
         var Doctor = new Object();
 
         if (DoctorID != null && DoctorID != "" ) {
-
+           
             Doctor.DoctorID = DoctorID;
           
             if (AvailableCount == 0 || ScheduleNo>0) {
@@ -1010,6 +1010,23 @@ $(document).mouseup(function (e) {
            
             $('#calendar').fullCalendar('removeEventSource', json);
           
+            Events = json;
+
+            if (Events != null && Events != "") {
+
+
+                Records = Events;
+                $.each(Records, function (index, Records) {
+                   
+                    var dateString = moment(Records.start).format('YYYY-MM-DD');
+                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').removeClass('ui-state-highlight');
+                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').removeAttr('background-color');
+
+                })
+            }
+
+
+
             json = jsonDrSchedule;
 
             $('#calendar').fullCalendar('addEventSource', json);
@@ -1560,6 +1577,41 @@ $(document).mouseup(function (e) {
                         if (jsonDrSchedule != undefined) {
 
                             $('#calendar').fullCalendar('removeEventSource', json);
+
+                           
+                            var Events = json;
+
+                            if (Events != null && Events != "") {
+
+
+                                Records = Events;
+                                $.each(Records, function (index, Records) {
+                                 
+                                    var dateString = moment(Records.start).format('YYYY-MM-DD');
+                                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').removeClass('ui-state-highlight');
+                                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').removeAttr('background-color');
+
+                                })
+                            }
+                                //$.each(Events, function (index, Events) {
+
+
+                                //    $('#calendar').find('.fc-day[data-date="' + Events[i] + '"]').removeClass('ui-state-highlight');
+                                //    $('#calendar').find('.fc-day[data-date="' + Events[i] + '"]').removeAttr('background-color');
+
+
+                                //})
+
+
+                                
+
+                           
+
+
+
+
+
+
 
                             json = jsonDrSchedule;
 
