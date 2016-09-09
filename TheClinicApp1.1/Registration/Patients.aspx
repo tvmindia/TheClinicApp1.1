@@ -1017,8 +1017,8 @@
                        
                         var appointid=$(this).find("AppointmentID").text();
                         var currntrowobj=$(this);
-                        ///  if(currntrowobj.find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
-                        if(currntrowobj.find("AppointmentStatus").text()=='0')//appointed:0
+                        if(currntrowobj.find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
+                        //if(currntrowobj.find("AppointmentStatus").text()=='0')//appointed:0
                         {
   
                             $("td", TodayAppoRow).removeClass("reged");
@@ -1036,8 +1036,7 @@
                         if(currntrowobj.find("AppointmentStatus").text()=='4')//consulted:4
                         {
                             $("td", TodayAppoRow).addClass("reged");
-                            $("td", TodayAppoRow).eq(0).html($('<img />'));
-                           // $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option></select>');
+                            $("td", TodayAppoRow).eq(0).html($('<img />')); 
                             $("td", TodayAppoRow).eq(1).html('Consulted');
                         }
                         $("td", TodayAppoRow).eq(7).html(currntrowobj.find("PatientID").text());
