@@ -499,8 +499,8 @@ border-bottom-right-radius: 0px;
                     {
                         Time=Time.split('-')[0];
                    
-                        Time=Time.replace('AM','');
-                        Time=Time.replace('PM','');
+                        //Time=Time.replace('AM','');
+                        //Time=Time.replace('PM','');
                     }
                     else
                     {
@@ -650,6 +650,8 @@ border-bottom-right-radius: 0px;
         $("#txtPatientMobile").val(Records.Phone);
         $("#txtPatientPlace").val(Records.Address);
         $("#hdfPatientID").val(Records.PatientID);
+        document.getElementById("txtPatientName").disabled='true';
+        document.getElementById("txtPatientPlace").disabled='true';
        }
 
         function GetPatientDetails(Patient) {

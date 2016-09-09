@@ -44,7 +44,7 @@ $(document).ready(function () {
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay'
             },
-
+            timezone: 'local',//--- otherwise date shows wrong by one day
             businessHours: true, // display business hours
             lang: initialLangCode,
             selectable: true,
@@ -152,7 +152,11 @@ $(document).ready(function () {
                         hours = hh - 12;
                         ampm = "PM";
                     }
-                   
+                    if (hours == 00)
+                    {
+                        hours = 12;
+                        ampm = "AM";
+                    }
                     var time = hours + '.' + minute + ampm;
 
                     if (time.split('.')[0].length == 1) {
@@ -312,12 +316,7 @@ $(document).ready(function () {
                 //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#b3d4fc!important' });
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
-                //if ($("#imgSelect").length == 0) {
-                //    $(".fc-day-number").append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
-                //}
-                //if ($("#imgSelect").length == 0) {
-                //    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
-                //}
+               
 
                 if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length == 0) {
                     $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
@@ -396,7 +395,10 @@ function fillPatientDetails() {
             hours = hh - 12;
             ampm = "PM";
         }
-
+        if (hours == 00) {
+            hours = 12;
+            ampm = "AM";
+        }
         var time = hours + '.' + minute + ampm;
         if (time.split('.')[0].length == 1) {
             var d = time.split('.')[0];
@@ -648,6 +650,11 @@ function GetAllottedTime(docId, eventStartDate, id) {
             var ampm = hours >= 12 ? 'PM' : 'AM';
             var time = names[i].allottedTime + ampm;
             time = time.replace(/\./g, ':');
+            if (time.split(':')[0] == 00) {
+                var d = time.split(':')[0];
+                d = "12";
+                time = d + ":" + time.split(':')[1];
+            }
             if (time == startTime) {
                 timeList[index]='';
                 //timeList.splice(index, 1);
@@ -720,6 +727,8 @@ function clearTextBoxes()
     $("#txtSearch").val("");
     $("#txtAppointmentDate").val("");
     $("#hdfPatientID").val("");
+    document.getElementById("txtPatientName").disabled = '';
+    document.getElementById("txtPatientPlace").disabled = '';
 }
 function RemoveFromList(AppointmentID) {
 
