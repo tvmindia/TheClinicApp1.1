@@ -493,7 +493,7 @@ border-bottom-right-radius: 0px;
                 var Time=$( "input:checked" ).val();
                 var patientID=$("#hdfPatientID").val();
                 var regEx = /^[+-]?\d+$/;
-                if(mobile.match(regEx)&&mobile.length>=10)
+                if(mobile.match(regEx)&&mobile.length>=5)
                 {
                     if($( "input:checked" ).val()!=undefined)
                     {
