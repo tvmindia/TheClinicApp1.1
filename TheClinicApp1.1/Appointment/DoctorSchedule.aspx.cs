@@ -667,7 +667,7 @@ namespace TheClinicApp1._1.Appointment
 
          [System.Web.Services.WebMethod]
         public static void SendMessage(string Msg, string MobileNos)
-        {
+         {
             string[] IndividualMsgs = Msg.Split('|');
             string[] IndividualMobileNos = MobileNos.Split('|');
             foreach (var msg in IndividualMsgs) //msg is individual message

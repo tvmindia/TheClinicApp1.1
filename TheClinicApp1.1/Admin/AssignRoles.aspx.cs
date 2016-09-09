@@ -63,7 +63,9 @@ namespace TheClinicApp1._1.Admin
             dummy.Columns.Add("Role");
             dummy.Columns.Add("Name");
 
-            dummy.Columns.Add("UniqueID");
+            //dummy.Columns.Add("UniqueID");
+            dummy.Columns.Add("UserID");
+            
 
             dummy.Rows.Add();
             dtgViewAllUserInRoles.DataSource = dummy;

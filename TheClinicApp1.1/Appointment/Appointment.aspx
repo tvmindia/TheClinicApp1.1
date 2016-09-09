@@ -7,6 +7,8 @@
      <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/jquery-1.12.4.js"></script>
     <script src="../js/1.12.0jquery-ui.js"></script>
+     <script src="../js/Messages.js"></script>
+    <script src="../Scripts/Common/Common.js"></script>
   <script src='../js/moment.min.js'></script>
   <script src='../js/fullcalendar.min.js'></script>
   <script src='../js/lang-all.js'></script>
@@ -41,8 +43,8 @@ display: block; float: left; text-align: center;
          }
          .drop
    {
-        border-radius:5px;
-        border-color:lightgray;
+        border-radius:5px !important;
+        border-color:lightgray !important;
         
     }
         .foo {
@@ -409,10 +411,12 @@ border-bottom-right-radius: 0px;
       .tblDates   tr:nth-child(even) {background: #ebf0f3} 
     </style>
     <script>
-     
+        var DoctorID="";
         $(document).ready(function () {
             var bindTitle="";
-          
+            $('.alert_close').click(function () {
+                $(this).parent(".alert").hide();
+            }); 
             $('#ddltimeSlot').change(function() {
                 alert( "Handler for .change() called." );
             });
@@ -465,30 +469,124 @@ border-bottom-right-radius: 0px;
                   .appendTo(ul);
 
             };
+            $(".new").click(function () {
+                clearDropDown();
+                hideDropDown();
+                clearTextBoxes();
+                document.getElementById("TimeAvailability").innerHTML = '';
+                document.getElementById("TimeAvailability").style.display='none';
+                document.getElementById("listBody").innerHTML = '';
+                document.getElementById("availableSlot").style.display='none';
+                $('#<%=lblAppointment.ClientID%>').text("Add Appointment");
+                $('#<%=lblList.ClientID%>').text("Patient List");
+                document.getElementById("NoSlots").style.display = 'none';
+            });
             $(".save").click(function () {
                 debugger;
+                var start="";
+                var end="";
                 var appointmentDate=$("#txtAppointmentDate").val();
                 var name=$("#txtPatientName").val();
                 var mobile=$("#txtPatientMobile").val();
                 var place=$("#txtPatientPlace").val();
                 var scheduleID=$("#hdfScheduleID").val();       
                 var Time=$( "input:checked" ).val();
-               
-                Time=Time.split('-')[0];
-                Time=Time.replace('AM','');
-                Time=Time.replace('PM','');
-                var Appointments=new Object();
-                
-                Appointments.AppointmentDate=appointmentDate;
-                Appointments.Name=name;
-                Appointments.Mobile=mobile;
-                Appointments.Location=place;
-                Appointments.ScheduleID=scheduleID;
-                Appointments.AllottingTime=Time;
-                var ds={};
-                ds=InsertPatientAppointment(Appointments);
-                refreshList();
-                fillPatientDetails();
+                var patientID=$("#hdfPatientID").val();
+                var regEx = /^[+-]?\d+$/;
+                if(mobile.match(regEx)&&mobile.length>=10)
+                {
+                    if($( "input:checked" ).val()!=undefined)
+                    {
+                        Time=Time.split('-')[0];
+                   
+                        Time=Time.replace('AM','');
+                        Time=Time.replace('PM','');
+                    }
+                    else
+                    {
+                        // var alottingTime
+                        start=$("#hdfStartTime").val();
+                        start=parseFloat(start);
+                        end=$("#hdfEndTime").val();
+                        end=parseFloat(end);
+                        start = end-start;
+                        var duration=start.toString();
+                        var d1=parseInt(duration.split('.')[0]);
+                        var d2=parseInt(duration.split('.')[1]);
+                        var a = $("#hdfLastAppointedTime").val();
+                        var hours=a.split('.')[0];
+                        var minute=a.split('.')[1];
+                        hours=parseInt(hours);
+                        if (a.includes('PM') && hours < 12) {
+                            hours = parseInt(hours) + 12;
+                            a = hours + '.' + minute;
+                        }
+                        var alot1=parseInt(a.split('.')[0]);
+                        var alot2=parseInt(a.split('.')[1]);
+                        var hourTotal=d1+alot1;
+                        var minTotal=d2+alot2;
+                        var remainingminuteTotal=null;
+                        if(minTotal>60)
+                        {
+                            remainingminuteTotal=60-minTotal;
+                            hourTotal=hourTotal+1;
+                            minTotal=remainingminuteTotal;
+                            minTotal=minTotal.toString();
+                            minTotal=minTotal.replace('-','');
+                        }
+                        a=hourTotal+":"+minTotal;
+                        //a=a+start;
+                        a=a.toString();
+                        var j = parseInt(a.split(':')[0]);
+                   
+                 
+                        if(a.split(':')[1].length==1)
+                        {
+                            var d= a.split('.')[1];
+                            d="0"+d;
+                            Time=a.split('.')[0]+":"+d;
+                        }
+                        else
+                        {
+                            Time=a;
+                        }
+                  
+                    }
+                    var Appointments=new Object();
+                    debugger;
+                    Appointments.AppointmentDate=appointmentDate;
+                    Appointments.Name=name;
+                    Appointments.Mobile=mobile;
+                    Appointments.Location=place;
+                    Appointments.ScheduleID=scheduleID;
+                    Appointments.AllottingTime=Time;
+                    Appointments.PatientID=patientID;
+                    
+                    var ds={};
+                    ds=InsertPatientAppointment(Appointments);
+                    if(ds.status=="1")
+                    {
+                        refreshList();
+                        fillPatientDetails();
+                        var lblclass = Alertclasses.sucess;
+                        var lblmsg = msg.AppointmentSaveSuccessFull;
+                        var lblcaptn = Caption.SuccessMsgCaption;
+
+                        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                    }
+                    else
+                    {
+                        var lblclass = Alertclasses.sucess;
+                        var lblmsg = msg.AppointmentSaveFailure;
+                        var lblcaptn = Caption.FailureMsgCaption;
+
+                        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                    }
+                }
+                else
+                {
+                    alert("Please enter a valid mobile number");
+                }
                // RereshTimeCheckBox();
                // fillPatientDetails();
                 //$('#calendar').fullCalendar('removeEventSource', json);
@@ -546,10 +644,12 @@ border-bottom-right-radius: 0px;
 
         }
        function BindPatient(Records)
-       {
+        {
+           debugger;
         $("#txtPatientName").val(Records.Name);
         $("#txtPatientMobile").val(Records.Phone);
         $("#txtPatientPlace").val(Records.Address);
+        $("#hdfPatientID").val(Records.PatientID);
        }
 
         function GetPatientDetails(Patient) {
@@ -582,6 +682,7 @@ border-bottom-right-radius: 0px;
             document.getElementById("br1").style.display='none';
             document.getElementById("br2").style.display='none';
             document.getElementById("timeSlot").style.display='none';
+            document.getElementById("NoSlots").style.display = 'none';
         }
         function showDropDown()
         {
@@ -652,6 +753,19 @@ border-bottom-right-radius: 0px;
             $('#<%=lblAppointment.ClientID%>').text(appList).append(date).append(time);
             $('#<%=lblList.ClientID%>').append(list).append(date).append(time);
         }
+        function AppendListForDayClick(date)
+        {
+            var FormattedDate=getFormattedDate(date);
+            var date=('<span class="Formatdate">'+FormattedDate+'</span>');
+            var appList = "Add Appointment For ";
+            var list="Patient List For ";
+            $("#txtAppointmentDate").val(FormattedDate);
+            $('#<%=lblAppointment.ClientID%>').text('');
+            $('#<%=lblList.ClientID%>').text('');
+            $('#<%=lblAppointment.ClientID%>').text(appList).append(date);
+            $('#<%=lblList.ClientID%>').append(list).append(date);
+            document.getElementById("NoSlots").style.display = 'none';
+        }
         function TimelistOnchange(i)
         {
             debugger;
@@ -661,6 +775,77 @@ border-bottom-right-radius: 0px;
             fillPatientDetails();
             SlotDropDownOnchange(bindTitle,$("#hdEventDate").val())
         }
+        //-- This method is invoked while changing doctor
+        function SetDropdown(e) {
+
+            debugger;
+            //  $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
+
+            clearDropDown();
+            hideDropDown();
+            clearTextBoxes();
+            document.getElementById("TimeAvailability").innerHTML = '';
+            document.getElementById("TimeAvailability").style.display='none';
+            document.getElementById("listBody").innerHTML = '';
+            document.getElementById("availableSlot").style.display='none';
+            document.getElementById("NoSlots").style.display = 'none';
+            $('#<%=lblAppointment.ClientID%>').text("Add Appointment");
+            $('#<%=lblList.ClientID%>').text("Patient List");
+            var imgLen=$('#calendar').find("#imgSelect").length;
+            for(var i=0;i<=imgLen;i++)
+            {
+                $('#calendar').find("#imgSelect").remove();
+            }
+            
+            DoctorID = e.value;
+            $("#hdfDoctorID").val(DoctorID);
+            BindCalendar(DoctorID);
+            var jsonDrSchedule = {};
+
+            ////var Doctor = new Object();
+            ////Doctor.DoctorID = DoctorID;
+
+            $('#hdnIsDrChanged').val("Yes");
+
+            jsonDrSchedule = BindFullCalendarEvents(DoctorID);
+            if (jsonDrSchedule != undefined) {
+
+                json = jsonDrSchedule;
+
+                ////BindScheduledDates();
+
+                //---------------* Refreshing calender(By removing current json and adding the new one) *------------------//
+                //if ($('#calendar').find("#imgSelect").length != 0)
+                //{
+              
+               // }
+                $('#calendar').fullCalendar('removeEvents');
+
+                // --- 1.previous events are retreived from  hiddenfield hdnAllEvents
+                //---- 2.then event bg color is removed
+
+                var Events = $('#hdnAllEvents').val(); //retrieve array
+
+                if (Events != null && Events != "") {
+                    EventsToBeRemoved = JSON.parse(Events);
+
+                    for (var i = 0; i < EventsToBeRemoved.length; i++) {
+
+                        $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeClass('ui-state-highlight');
+                        $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeAttr('background-color');
+
+                    }
+
+                }
+
+                $('#calendar').fullCalendar('addEventSource', json);
+                $('#calendar').fullCalendar('rerenderEvents');
+
+            }
+
+        }
+        
+
     </script>
     <div class="main_body">
             <div class="left_part">
@@ -698,7 +883,7 @@ border-bottom-right-radius: 0px;
                         </li>
 
                          <li>
-                            <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png" BorderColor="White" runat="server" OnClientClick="redirect();" OnClick="LogoutButton_Click" ToolTip="Logout" formnovalidate />
+                            <asp:ImageButton ID="LogoutButton" ImageUrl="~/images/LogoutWhite.png" CssClass="drop" BorderColor="White" runat="server" OnClientClick="redirect();" OnClick="LogoutButton_Click" ToolTip="Logout" formnovalidate />
 
                          </li>
                      
@@ -717,28 +902,29 @@ border-bottom-right-radius: 0px;
                         
                     </ul>
                     <!-- Tab panes -->
-                    <div id="Errorbox" style="display: none;" runat="server">
-                            <a class="alert_close">X</a>
-                            <div>
-                                <strong>
-                                    <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label>
-                                </strong>
-                                <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
-                            </div>
-                        </div>                        
+                                  
                   
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" >
                             <div class="grey_sec">
                                 <div class="search_div">
-                                    <asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged1" AutoPostBack="true"></asp:DropDownList>
+                                     <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus"></asp:DropDownList>
                                 </div>
                                 <ul class="top_right_links" >
                                     <li><a class="save" href="#"><span></span>Save</a></li>
                                     <li><a class="new" href="#"><span></span>New</a></li>
                                 </ul>
                             </div>
-
+                                    <div id="Errorbox" style="height: 30%; display: none;">
+                        <a class="alert_close">X</a>
+                        <div>
+                            <strong>
+                                <span id="lblErrorCaption"></span>
+                              
+                            </strong>
+                            <span id="lblMsgges"></span>
+                        </div>
+                    </div>
                             <div class="tab_table">
                           <div class="row field_row" >
                                     <div class="col-lg-12">
@@ -805,7 +991,7 @@ border-bottom-right-radius: 0px;
                                                               <asp:DropDownList ID="ddltimeSlot" onchange="TimelistOnchange(this); return true;" CssClass="drop" runat="server" AutoPostBack="true" Width="350px" Height="31px" style="display:none;">
                                                              
                                                 </asp:DropDownList>
-                                                
+                                               
                                                              <label id="br2" style="display:none;"><br /></label>
                                                           </td>
                                                       </tr>
@@ -814,6 +1000,7 @@ border-bottom-right-radius: 0px;
                                                              <label id="availableSlot" style="display:none">Available Slots</label>
                                                           </td>
                                                           <td>
+                                                               <label id="NoSlots" style="display:none;">No TimeSlots Available..!!!</label>
                                                                <div id="TimeAvailability" style="max-height:115px;width:350px;overflow:auto;border:1px solid #a8d9f3;display:none; padding-left: 10px;">
                                                                  
                                                                </div>
@@ -898,11 +1085,18 @@ border-bottom-right-radius: 0px;
                 </div>
             </div>
                 <asp:HiddenField ID="hdfddlDoctorID" runat="server" />
+                <asp:HiddenField ID="hdfDuration" runat="server" />
                 <%--  <asp:HiddenField ID="hdfScheduleID" runat="server" />--%>
                 <input type="hidden" id="hdfScheduleID" />
                  <input type="hidden" id="hdfDoctorID" />
                 <input type="hidden" id="hdEventDate" />
                 <input type="hidden" id="hdfTime" />
+                 <input type="hidden" id="hdnIsDrChanged" value="No" />
+        <input type="hidden" id="hdnAllEvents" value="" />
+                <input type="hidden" id="hdfLastAppointedTime" />
+                <input type="hidden" id="hdfStartTime" />
+                <input type="hidden" id="hdfEndTime" />
+                <input type="hidden" id="hdfPatientID" />
             </div>
         </div>
 
