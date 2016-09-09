@@ -377,8 +377,8 @@ namespace TheClinicApp1._1.Webservices
                 ClinicDAL.Doctor docobj = new ClinicDAL.Doctor();
                 docobj.ClinicID = clinicid;
                 docobj.DoctorID = doctorid;
-                docobj.MonthName = month;
-                docobj.Year = year;
+                docobj.MonthName = Month;
+                docobj.Year = Year;
 
                 ds = docobj.GetDoctorScheduleDetailsforMobile();
                 dt = ds.Tables[0];
