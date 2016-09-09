@@ -1,0 +1,267 @@
+﻿body {
+}
+        #circle {
+            /*display: block;*/
+            cursor: pointer;
+            height: 20%;
+            width: 20%;
+            line-height:120px;
+            -moz-border-radius: 5px; /* or 50% */
+            border-radius: 5px; /* or 50% */
+            background-color: lightgray;
+            border:2px solid gray;
+            color: black;
+            text-shadow:20px 12px 12px 2px black;
+            text-align: center;
+            font-size: 16px!important;
+            padding:5px;
+            font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+            
+        }
+
+
+        body {
+            margin: 40px 10px;
+            padding: 0;
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            font-size: 14px;
+        }
+
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .loader {
+            border: 10px solid #f3f3f3; /* Light grey */
+            border-top: 10px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            animation: spin 2s linear infinite;
+            margin-top: 20%;
+            margin-left: 45%;
+        }
+
+        .icon-plus {
+            background-color: #5677a4;
+            border: none;
+            color: white;
+            padding: 5px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 10px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0;
+            }
+
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0;
+            }
+
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
+
+
+
+        .btnOkay {
+            background-color: #336699;
+            width: 100px;
+            height: 30px;
+            cursor: pointer;
+            margin-left: 50px;
+        }
+
+        .btnCncl {
+            background-color: #808080;
+            width: 100px;
+            height: 30px;
+            cursor: pointer;
+            margin-left: 50px;
+        }
+
+      
+        /*input{ float:left;}*/
+
+       
+        #imgCancelAll {
+            cursor: pointer;
+        }
+
+
+        #imgDelete {
+            cursor: pointer;
+        }
+
+        #imgUpdate {
+            cursor: pointer;
+        }
+
+        #imgUpdate {
+            cursor: pointer;
+        }
+
+        .card_white .field_label label:after {
+            content: none !important;
+        }
+
+
+        #tblTimes td {
+            font-size: 17px !important;
+            border: none;
+        }
+
+        #tblDates td {
+            font-size: 17px !important;
+        }
+
+        borderclass {
+            border: 1px solid red;
+        }
+
+        td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
+            background-color: #ffd19a;
+            border-color: orange;
+        }
+
+
+
+        #tblTimes, #tblTimes tr, #tblTimes th, #tblTimes td {
+            border: none;
+        }
+
+        #tblDates, #tblDates tr, #tblDates th, #tblDates td {
+            border: none;
+        }
+
+        #tblTimes tr:nth-child(even) {
+            background: #ebf0f3;
+        }
+
+        #tblDates tr:nth-child(even) {
+            background: #ebf0f3;
+        }
+
+
+        #tblColorCodes, #tblColorCodes tr, #tblColorCodes th, #tblColorCodes td {
+            border: none;
+        }
+
+
+
+        /*.ui-state-highlight {
+    border:2px  solid #06adfc !important;
+    background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
+    color: #363636;
+  
+} 
+ 
+
+.fc-ltr .fc-basic-view .fc-day-number {
+    border: medium none !important;
+    text-align: right;
+}*/
+        .lblColor {
+            font-size: smaller;
+            line-height: 1;
+        }
+
+        .foo {
+            float: left;
+            width: 10px;
+            height: 10px;
+            /*border: 1px solid rgba(0, 0, 0, .2);*/
+            border: none;
+        }
+
+        .Count {
+            background: rgb(222, 237, 247);
+        }
+
+        .Dates {
+            background: #3baae3;
+        }
+
+        .Today {
+            background: #ffd19a;
+        }
+
+        .Legend {
+            font-size: smaller;
+        }
+
+        .ui-dialog-title {
+            color: white !important;
+        }
+
+        /*.modal table
+        {
+            width:100%!important;
+            height:100%!important;
+        }
+
+        .modal table th{
+            background-color:#99c4e0!important;
+        }*/
+
+        .success-dialog {
+            border: 2px solid #3baae3;
+        }
+
+        label {
+            color: #666666;
+            display: block;
+            font-family: "raleway-semibold";
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 14px;
+            margin: 1px 15px 10px;
+        }
+        select
+        {
+            color:black;
+        }
+
+          #tblReason, #tblReason tr, #tblReason th, #tblReason td {
+            border: none;
+        }
