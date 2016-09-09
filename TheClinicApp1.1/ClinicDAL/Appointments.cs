@@ -174,11 +174,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.ExecuteNonQuery();
                 AppointmentID = OutparameterAppointmentID.Value.ToString();
                 status = outParameter.Value.ToString();
-                if(status=="1")
-                {
-                    //Page page1 = HttpContext.Current.Handler as Page;
-                    //eObj.InsertionSuccessMessage(page1);
-                }
+                
             }
             catch (Exception ex)
             {

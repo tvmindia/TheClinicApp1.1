@@ -31,7 +31,9 @@ $(document).ready(function () {
     //}).prev(".ui-dialog-titlebar").css("background", "#336699");
 
     //  GetJSonDataForCalender();
-   
+    $('.alert_close').click(function () {
+        $(this).parent(".alert").hide();
+    });
     setTimeout(function () {
         var initialLangCode = 'en';
 
@@ -717,6 +719,7 @@ function clearTextBoxes()
     $("#txtPatientPlace").val("");
     $("#txtSearch").val("");
     $("#txtAppointmentDate").val("");
+    $("#hdfPatientID").val("");
 }
 function RemoveFromList(AppointmentID) {
 
@@ -731,35 +734,48 @@ function RemoveFromList(AppointmentID) {
         var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
         ds = getJsonData(data, "../Appointment/Appointment.aspx/CancelAppointment");
         table = JSON.parse(ds.d);
+        if (table.status == "1") {
+            var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+            ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
+            table = JSON.parse(ds.d);
+            refreshList();
+            fillPatientDetails();
+            var lblclass = Alertclasses.sucess;
+            var lblmsg = msg.AppointmentCancelSuccessFull;
+            var lblcaptn = Caption.SuccessMsgCaption;
 
-        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
-        ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
-        table = JSON.parse(ds.d);
-        refreshList();
-        fillPatientDetails();
-        return table;
+            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+            return table;
+        }
+        else {
+            var lblclass = Alertclasses.sucess;
+            var lblmsg = msg.AppointmentCancelSuccessFull;
+            var lblcaptn = Caption.FailureMsgCaption;
+
+            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+        }
+        //GetScheduledTimesByDate();
+        //BindScheduledDates();
+
+        //var jsonDrSchedule = {};
+
+        //var Doctor = new Object();
+        //Doctor.DoctorID = DoctorID;
+
+        //jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+        //if (jsonDrSchedule != undefined) {
+
+        //$('#calendar').fullCalendar('removeEventSource', json);
+
+
+        //$('#calendar').fullCalendar('addEventSource', json);
+        //$('#calendar').fullCalendar('refetchEvents');
+        //}
+
+
+        // $('#calendar').fullCalendar('refetchEvents');
+
     }
-    //GetScheduledTimesByDate();
-    //BindScheduledDates();
-
-    //var jsonDrSchedule = {};
-
-    //var Doctor = new Object();
-    //Doctor.DoctorID = DoctorID;
-
-    //jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
-    //if (jsonDrSchedule != undefined) {
-
-    //$('#calendar').fullCalendar('removeEventSource', json);
-
-
-    //$('#calendar').fullCalendar('addEventSource', json);
-    //$('#calendar').fullCalendar('refetchEvents');
-    //}
-
-
-    // $('#calendar').fullCalendar('refetchEvents');
-
 }
 function GetAllScheduleDetails(scheduleID)
 {
