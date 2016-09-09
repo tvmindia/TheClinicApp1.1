@@ -400,7 +400,7 @@ $(document).mouseup(function (e) {
                 html = CancelMsg.replace('%PATIENT NAME%', Records.Name);
                 html = html.replace('%DOCTOR NAME%', DoctorName);
                 html = html.replace('%DATE%', ClickedDate);
-                html = html.replace('%TIME%', Records.AllottingTime);
+                html = html.replace('%TIME%',ConvertTimeFormatFrom24hrTo12hr(Records.AllottingTime));
                 html = html.replace('%REASON%', CancelReason);
 
                 Msg = Msg + "|" + html;
