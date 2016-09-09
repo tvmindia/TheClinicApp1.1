@@ -55,7 +55,7 @@ $(document).ready(function () {
                 $('#calendar').fullCalendar('unselect');
             },
             displayEventTime: false,
-            editable: true,
+            editable: false,
             viewRender: function (view, element) {
 
                 var add_url = '<a class="tip add-task" title="" href="#"\n\
@@ -93,7 +93,7 @@ $(document).ready(function () {
                     // Months use 0 index.
                 var dayClickFormat = date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
                 
-                AppendList(dayClickFormat);
+                AppendListForDayClick(dayClickFormat);
               
                // $("#txtAppointmentDate").val(dateFormat);
             },
@@ -130,28 +130,59 @@ $(document).ready(function () {
                // schID = ScheduleID;
               
                var names = GetAllPatientList(scheduleId)
-                for (index = 0; index < names.length; ++index) {
+               for (index = 0; index < names.length; ++index) {
+                   debugger;
                     var hours = names[index].allottedTime.split('.')[0];
                     var minute = names[index].allottedTime.split('.')[1];
                     if (minute == undefined||minute=="")
                     {
                         minute = names[index].allottedTime.split(':')[1];
+                        minute = minute.replace(':', '');
                     }
+                    minute = minute.replace('PM', '');
+                    minute = minute.replace('AM', '');
                     hours = names[index].allottedTime[0] + names[index].allottedTime[1];
+                    hours = hours.replace(':', '');
                     var ampm = hours >= 12 ? 'PM' : 'AM';
                     var hh = hours;
                     var ampm = hours >= 12 ? 'PM' : 'AM';
-                    if (hours >= 12) {
+                    if (hours >= 13) {
                         hours = hh - 12;
                         ampm = "PM";
                     }
                    
                     var time = hours + '.' + minute + ampm;
+
+                    if (time.split('.')[0].length == 1) {
+                        var d = time.split('.')[0];
+                        d = "0" + d;
+                        time = d + "." + minute + ampm;
+                    }
+                    if (minute.length == 1)
+                    {
+                        var d = minute;
+                        d = "0" + d;
+                        time = hours + "." + d + ampm;
+                    }
+                    if ((time.split('.')[0].length == 1) && (minute.length == 1)) {
+                        var h = time.split('.')[0];
+                        h = "0" + h;
+                        var m = minute;
+                        m = "0" + m;
+                        time = h + "." + m + ampm;
+                    }
+                    var s = parseFloat(names[0].allottedTime.replace(':', '.'));
+                    $("#hdfStartTime").val(s);
+                    if (names[1] != undefined) {
+                        var e = parseFloat(names[1].allottedTime.replace(':', '.'));
+                        $("#hdfEndTime").val(e);
+                    }
                     if (names[index].isAvailable == "3") {
                         title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
                     }
                     else {
                         title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+                        $("#hdfLastAppointedTime").val(time);
                     }
                     var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
                     //var newlabel = document.createElement("Label");
@@ -169,9 +200,23 @@ $(document).ready(function () {
                 //newlabel.innerHTML = title;
                 //parentDiv.appendChild(newlabel);
                 debugger;
+                document.getElementById("availableSlot").style.display = "block";
+                document.getElementById("TimeAvailability").style.display = "block";
                 title = "";
                 var docId = $("#hdfDoctorID").val();
                 var timeList = GetAllottedTime(docId, eventStartDate, scheduleId);
+                var timeCount = timeList.length - 1;
+                if (timeCount == 0)
+                {
+                    document.getElementById("TimeAvailability").innerHTML = '';
+                    document.getElementById("TimeAvailability").style.display = 'none';
+                    document.getElementById("NoSlots").style.display = 'block';
+                }
+                else
+                {
+                    document.getElementById("NoSlots").style.display = 'none';
+                }
+                debugger;
                 var html = "";
                 for (index = 0; index < timeList.length - 1; index++) {
                     checkItems = timeList.length - 1;
@@ -181,6 +226,7 @@ $(document).ready(function () {
                         
                             var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
                             endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
+                          
                             var StartAndEnd = startTime + "-" + endTime;
                             // var timeList = GetTimeList();
                             html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
@@ -188,8 +234,7 @@ $(document).ready(function () {
                         
                 }
                 //$("#TimeAvailability").append("<label>Available Slots</label>");
-                document.getElementById("availableSlot").style.display = "block";
-                document.getElementById("TimeAvailability").style.display = "block";
+                
                 $("#TimeAvailability").append(html);
                 timeList = "";
             },
@@ -219,7 +264,7 @@ $(document).ready(function () {
 
                     }
                 }
-               
+              
             },
 
             eventMouseover: function (calEvent, jsEvent) {
@@ -251,7 +296,17 @@ $(document).ready(function () {
             eventLimit: true, // allow "more" link when too many events
             eventRender: function (event, element, view) {
                 debugger;
+                
+                if ($('#hdnIsDrChanged').val() == "Yes") { //Checking doctor dropdown value changed , then allevents array is cleared, 
+                    allEvents = [];
+                    $('#hdnIsDrChanged').val(""); // -- this assignment is to ensure that allevents array is cleared onlt once after changing doctor dropdown
+
+                }
+
                 var dateString = moment(event.start).format('YYYY-MM-DD');
+                allEvents.push(dateString); //-- Event dates are pushed to array
+
+                $('#hdnAllEvents').val(JSON.stringify(allEvents));
                 //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#b3d4fc!important' });
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
@@ -322,26 +377,57 @@ function fillPatientDetails() {
 
     var names = GetAllPatientList(scheduleId)
     for (index = 0; index < names.length; ++index) {
+        debugger;
         var hours = names[index].allottedTime.split('.')[0];
         var minute = names[index].allottedTime.split('.')[1];
         if (minute == undefined || minute == "") {
             minute = names[index].allottedTime.split(':')[1];
+          
         }
+        minute = minute.replace('PM', '');
+        minute = minute.replace('AM', '');
         hours = names[index].allottedTime[0] + names[index].allottedTime[1];
         var ampm = hours >= 12 ? 'PM' : 'AM';
         var hh = hours;
         var ampm = hours >= 12 ? 'PM' : 'AM';
-        if (hours >= 12) {
+        if (hours >= 13) {
             hours = hh - 12;
             ampm = "PM";
         }
 
         var time = hours + '.' + minute + ampm;
+        if (time.split('.')[0].length == 1) {
+            var d = time.split('.')[0];
+            d = "0" + d;
+            time = d + "." + minute + ampm;
+        }
+        if (minute.length == 1) {
+            var d = minute;
+            d = "0" + d;
+            time = hours + "." + d + ampm;
+        }
+        if ((time.split('.')[0].length == 1) && (minute.length == 1))
+        {
+            var h = time.split('.')[0];
+            h = "0" + h;
+            var m = minute;
+            m = "0" + m;
+            time = h + "." + m + ampm;
+        }
+        var s = parseFloat(names[0].allottedTime.replace(':', '.'));
+        $("#hdfStartTime").val(s);
+        if (names[1] != undefined) {
+            var e = parseFloat(names[1].allottedTime.replace(':', '.'));
+            $("#hdfEndTime").val(e);
+        }
+       
+        
         if (names[index].isAvailable == "3") {
             title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
         }
         else {
             title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+            $("#hdfLastAppointedTime").val(time);
         }
         var parentDiv = document.getElementById("listBody");//  $("#AppointmentList");
         //var newlabel = document.createElement("Label");
@@ -351,9 +437,20 @@ function fillPatientDetails() {
         // title = title + names[index].title + "<br />";
     }
     debugger;
+    document.getElementById("availableSlot").style.display = "block";
+    document.getElementById("TimeAvailability").style.display = "block";
     title = "";
     var docId = $("#hdfDoctorID").val();
     var timeList = GetAllottedTime(docId, eventStartDate, scheduleId);
+    var timeCount = timeList.length - 1;
+    if (timeCount == 0) {
+        document.getElementById("TimeAvailability").innerHTML = '';
+        document.getElementById("TimeAvailability").style.display = 'none';
+        document.getElementById("NoSlots").style.display = 'block';
+    }
+    else {
+        document.getElementById("NoSlots").style.display = 'none';
+    }
     var html = "";
     for (index = 0; index < timeList.length - 1; index++) {
         debugger;
@@ -371,8 +468,7 @@ function fillPatientDetails() {
 
     }
     debugger;
-    document.getElementById("availableSlot").style.display = "block";
-    document.getElementById("TimeAvailability").style.display = "block";
+    
     $("#TimeAvailability").append(html);
     timeList = "";
 }
@@ -493,7 +589,7 @@ function refreshList()
         hours = names[index].allottedTime[0] + names[index].allottedTime[1];
         var hh = hours;
         var ampm = hours >= 12 ? 'PM' : 'AM';
-        if (hours >= 12) {
+        if (hours >= 13) {
             hours = hh - 12;
             ampm = "PM";
         }
@@ -620,27 +716,29 @@ function clearTextBoxes()
     $("#txtPatientMobile").val("");
     $("#txtPatientPlace").val("");
     $("#txtSearch").val("");
+    $("#txtAppointmentDate").val("");
 }
 function RemoveFromList(AppointmentID) {
 
     debugger;
     var Appointments = new Object();
     Appointments.AppointmentID = AppointmentID;
+    var result = confirm("Are you sure?");
+    if (result) {
+        var ds = {};
+        var table = {};
 
-    var ds = {};
-    var table = {};
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        ds = getJsonData(data, "../Appointment/Appointment.aspx/CancelAppointment");
+        table = JSON.parse(ds.d);
 
-    var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
-    ds = getJsonData(data, "../Appointment/Appointment.aspx/CancelAppointment");
-    table = JSON.parse(ds.d);
-
-    var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
-    ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
-    table = JSON.parse(ds.d);
-    refreshList();
-    fillPatientDetails();
-    return table;
-   
+        var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
+        ds = getJsonData(data, "Appointment.aspx/GetAppointedPatientDetails");
+        table = JSON.parse(ds.d);
+        refreshList();
+        fillPatientDetails();
+        return table;
+    }
     //GetScheduledTimesByDate();
     //BindScheduledDates();
 
@@ -720,13 +818,26 @@ function GetAllPatientList(id) {
 function BindCalendar(docID) {
 
     var Doctor = new Object();
-    Doctor.DoctorID = docID.val();
+    Doctor.DoctorID = docID;
     //var ds = {};
     //var table = {};
     var data = "{'docObj':" + JSON.stringify(Doctor) + "}";
     GetJSonDataForCalender(data, "Appointment.aspx/GetAllPatientAppointmentDetailsByClinicID");
     //table = JSON.parse(ds.d);
     //return table;
+}
+function BindFullCalendarEvents(docID)
+{
+    debugger;
+    var ds = {};
+    var table = {};
+    var Doctor = new Object();
+    Doctor.DoctorID = docID;
+    
+    var data = "{'docObj':" + JSON.stringify(Doctor) + "}";
+    ds = getJsonData(data, "Appointment.aspx/GetAllPatientAppointmentDetailsByClinicID");
+    table = JSON.parse(ds.d);
+    return table;
 }
 function RebindCalendar(docID)
 {
