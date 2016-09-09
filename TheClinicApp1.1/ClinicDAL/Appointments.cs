@@ -452,6 +452,111 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion PatientAppointmentStatusUpdate
 
+        #region PatientAppointmentNumberAllotByAppointmentID
+        public Int32 PatientAppointmentNumberAllotByAppointmentID()
+        {
+
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlParameter outParameter = null,Outappointmentno=null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (AppointmentID == "")
+            {
+                throw new Exception("AppointmentID is Empty!!");
+            }
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[PatientAppointmentNumberAllotByAppointmentID]";
+                cmd.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(AppointmentID);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                Outappointmentno = cmd.Parameters.Add("@Appointmentno", SqlDbType.Int);
+                Outappointmentno.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                appointmentno = int.Parse(Outappointmentno.Value.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "PatientAppointmentNumberAllotByAppointmentID";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            //insert success or failure
+            return appointmentno;
+        }
+
+        #endregion PatientAppointmentNumberAllotByAppointmentID
+
+
+        #region AppointedPatientConsultDoctorStatusByAppointmentID
+        public void AppointedPatientConsultDoctorStatusByAppointmentID()
+        {
+
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (AppointmentID == "")
+            {
+                throw new Exception("AppointmentID is Empty!!");
+            }
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[AppointedPatientConsultDoctorStatusByAppointmentID]";
+                cmd.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(AppointmentID);
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = System.DateTime.Now;
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "AppointedPatientConsultDoctorStatusByAppointmentID";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+                     
+        }
+
+        #endregion AppointedPatientConsultDoctorStatusByAppointmentID
+
+
         #region GetAllPatientAppointmentDetailsByClinicID
         public DataSet GetAllPatientAppointmentDetailsByClinicID()
         {

@@ -6,8 +6,8 @@
 
       <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" ></asp:ScriptManager>
 
-      <link href="../css/main.css" rel="stylesheet" />  
-    <link href="../css/TheClinicApp.css" rel="stylesheet" />
+      <%--<link href="../css/main.css" rel="stylesheet" />--%>  
+    <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
 
@@ -352,6 +352,15 @@
             line-height: 14px;
             margin: 1px 15px 10px;
         }
+        select
+        {
+            color:black;
+        }
+
+          #tblReason, #tblReason tr, #tblReason th, #tblReason td {
+            border: none;
+        }
+
 
         /*.fc-content
 {
@@ -377,7 +386,7 @@
 
         $(document).ready(function () {
 
-            debugger;
+        
 
 
             $('.alert_close').click(function () {
@@ -450,16 +459,16 @@
         }
 
         function OpenModal() {
-
+           
             $('#myModal').modal('show');
-
-
+          
+            
         }
 
         //-- This method is invoked while changing doctor
         function SetDropdown(e) {
 
-            debugger;
+           
             $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
 
             ClearControls();
@@ -593,8 +602,8 @@
 
                                 <%--<asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>--%>
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" CssClass="drop" Width="180px" style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
-
+                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" CssClass="drop" Width="210px" style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
+                                <%--CssClass="drop"--%> 
 
 
 
@@ -642,6 +651,15 @@
                                                         <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
                                                             <div class="col-lg-12" style="height: 480px;">
                                                                 <div id="divCancellationMsg" class="col-lg-12" style="display: none">
+
+                                                                     
+                                   <table id="tblReason" style="width:100%;font-weight:600;font-size:16px">
+                                       <tr><td style="width:35%">Reason for cancellation</td>
+                                           <td style="width:65%"><input id="txtReason"   type="text" name="name" style="border-color:#aab0d4;"  /></td>
+                                       </tr>
+                                   </table>
+                                   
+                           
 
 
                                                                     <fieldset style="border-radius: 15px!important; border: 2px solid #3661C7!important;">

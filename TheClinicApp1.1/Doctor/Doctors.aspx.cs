@@ -48,6 +48,7 @@ namespace TheClinicApp1._1.Doctor
         ClinicDAL.PrescriptionHeaderDetails PrescriptionHeadObj = new ClinicDAL.PrescriptionHeaderDetails();
         ClinicDAL.CaseFile.Visit VisitsObj = new ClinicDAL.CaseFile.Visit();
         ClinicDAL.CaseFile.Visit.VisitAttachment AttachObj=new ClinicDAL.CaseFile.Visit.VisitAttachment();
+        Appointments AppointObj = null;
         public string listFilter=null;
         public string RoleName = null;
         public string NameBind = null;
@@ -159,11 +160,19 @@ namespace TheClinicApp1._1.Doctor
                     VisitsObj.RespRate = (resp_rate.Value != "") ? resp_rate.Value.ToString() : null;
                     VisitsObj.Others = (others.Value != "") ? others.Value.ToString() : null;
 
+                    //appointed patient appointment status to 4 ie consulted
+                    AppointObj = new Appointments();
+                    AppointObj.ClinicID = VisitsObj.ClinicID.ToString();
+                    AppointObj.AppointmentID = HdfUniqueID.Value;//unique id may be token id or appointment id
+                    AppointObj.UpdatedBy = UA.userName;
+                    AppointObj.AppointedPatientConsultDoctorStatusByAppointmentID();
 
                     if (HdnForVisitID.Value == "")
                     {
                         if (hdnRemovedIDs.Value.Trim() == string.Empty)
                         {
+
+
                             VisitsObj.AddVisits();
                             PrescriptionHeadObj.PrescID = VisitsObj.PrescriptionID.ToString();
                             PrescriptionHeadObj.VisitID = VisitsObj.VisitID.ToString();
@@ -174,6 +183,8 @@ namespace TheClinicApp1._1.Doctor
                             PrescriptionHeadObj.CreatedDate = DateTime.Now;
                             PrescriptionHeadObj.UpdatedDate = DateTime.Now;
                             PrescriptionHeadObj.InsertPrescriptionHeader();
+
+
                         }
                     }
                     else
@@ -440,7 +451,7 @@ namespace TheClinicApp1._1.Doctor
            
             //dummy.Columns.Add("DoctorID");
             dummy.Columns.Add("PatientID");
-
+            dummy.Columns.Add("UniqueID");
             dummy.Rows.Add();
 
             GridViewTokenlist.DataSource = dummy;
