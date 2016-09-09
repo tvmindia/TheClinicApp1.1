@@ -366,7 +366,7 @@ namespace TheClinicApp1._1.Webservices
         /// </summary>
         /// <returns>JSON of list of visit search</returns>
         [WebMethod]
-        public string GetDoctorScheduleDetailsbymonth(string doctorid, string clinicid,string month,string year)
+        public string GetDoctorScheduleDetailsbymonth(string doctorid, string clinicid,string Month,string Year)
         {  //return msg data initialization
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
