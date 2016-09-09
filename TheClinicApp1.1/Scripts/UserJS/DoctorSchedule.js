@@ -371,7 +371,7 @@ $(document).mouseup(function (e) {
 
     /*Appoinment msg -send sms Click*/
     $('#SendSms').click(function () {
-      
+        debugger;
         Records = PatientDetails;
         var CancelMsg = AppoinmentCancellationMessageWithoutHtml;
         var html = '';
@@ -527,12 +527,13 @@ $(document).mouseup(function (e) {
 
         var DoctorName = $('#hdnDoctorName').val();
 
+        var CancelMessage = AppoinmentCancellationMessage;
 
-        AppoinmentCancellationMessage = AppoinmentCancellationMessage.replace('%DOCTOR NAME%', DoctorName);
-        AppoinmentCancellationMessage = AppoinmentCancellationMessage.replace('%DATE%', ClickedDate);
-        AppoinmentCancellationMessage = AppoinmentCancellationMessage.replace('%REASON%', CancelReason);
+        CancelMessage = CancelMessage.replace('%DOCTOR NAME%', DoctorName);
+        CancelMessage = CancelMessage.replace('%DATE%', ClickedDate);
+        CancelMessage = CancelMessage.replace('%REASON%', CancelReason);
 
-        var html = '<p>' + AppoinmentCancellationMessage + "<b><i>" + "This sms will be send to the contacts given below " + "</i></b></p>";
+        var html = '<p>' + CancelMessage + "<b><i>" + "This sms will be send to the contacts given below " + "</i></b></p>";
         $('#divCancellationMsg').show();
 
         document.getElementById("txtReason").focus();
@@ -559,16 +560,46 @@ $(document).mouseup(function (e) {
         });
    
 
-    $(function () {
-        $('#txtReason').keyup(function () {
+    var DefaultReason = CancelReason;
 
-            $('#divMsg').html = '';
+    var TempReason = DefaultReason;
+
+        $('#txtReason').keyup(function () {
+            debugger;
+
+            $('#divMsg').html('');
             var reason = $(this).val();
 
-            AppoinmentCancellationMessage = AppoinmentCancellationMessage.replace('%REASON%', reason);
+            if (reason.trim() == "")
+            {
+                reason = CancelReason;
 
+            }
+            else
+            {
+                CancelReason = reason;
+            }
+
+
+            var CancelMessage = AppoinmentCancellationMessage;
+
+            CancelMessage = CancelMessage.replace('%DOCTOR NAME%', $('#hdnDoctorName').val());
+            CancelMessage = CancelMessage.replace('%DATE%', ClickedDate);
+            CancelMessage = CancelMessage.replace('%REASON%', reason);
+
+            //AppoinmentCancellationMessage = AppoinmentCancellationMessage.replace(TempReason, '%REASON%');
+
+           
+            //AppoinmentCancellationMessage = AppoinmentCancellationMessage.replace('%REASON%', reason);
+
+            //TempReason = reason;
+
+
+            var html = '<p>' + CancelMessage + "<b><i>" + "This sms will be send to the contacts given below " + "</i></b></p>";
+
+            $('#divMsg').append(html);
         });
-    });
+ 
 
 
 });
