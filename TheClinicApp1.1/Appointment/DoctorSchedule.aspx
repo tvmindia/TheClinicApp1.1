@@ -26,9 +26,9 @@
     <script src="../Scripts/UserJS/DoctorSchedule.js"></script>
 
     <script src="../js/timepicki.js"></script>
-    <link href="../css/timepicki.css" rel="stylesheet" />
+    
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
-
+    <link href="../css/timepicki.css" rel="stylesheet" />
     <%--<script src="../js/jquery-1.9.1.min.js"></script>--%>
     <script src="../js/bootstrap.min.js"></script>
 
@@ -149,76 +149,10 @@
             margin-left: 50px;
         }
 
-        .ti_tx,
-        .mi_tx,
-        .mer_tx {
-            width: 100%;
-            text-align: center;
-            margin: 10px 10px;
-        }
-
-        .time,
-        .mins,
-        .meridian {
-            width: 60px;
-            float: left;
-            margin: 0px 10px;
-            font-size: 20px;
-            color: #2d2e2e;
-            font-family: 'arial';
-            font-weight: 700;
-        }
-
-        .prev,
-        .next {
-            cursor: pointer;
-            padding: 18px;
-            width: 28%;
-            border: 1px solid #ccc;
-            background: url(../images/arrow.png) no-repeat;
-            border-radius: 5px;
-        }
-
-        .next {
-            background-position: 50% 150%;
-        }
-
-        .prev {
-            background-position: 50% -50%;
-        }
-
-        .time_pick {
-            position: relative;
-        }
-
+      
         /*input{ float:left;}*/
 
-        .timepicker_wrap {
-            padding: 10px;
-            border-radius: 5px;
-            z-index: 2;
-            display: none;
-            width: 100%;
-            box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.35);
-            background: #f6f6f6;
-            border: 1px solid #ccc;
-            float: left;
-            position: absolute;
-            top: 27px;
-            left: 0px;
-            height: 145px;
-        }
-
-        .arrow_top {
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background: url(../images/top_arr.png) no-repeat;
-            width: 18px;
-            height: 10px;
-            z-index: 3;
-        }
-
+       
         #imgCancelAll {
             cursor: pointer;
         }

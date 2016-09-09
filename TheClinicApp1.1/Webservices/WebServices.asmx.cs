@@ -366,7 +366,7 @@ namespace TheClinicApp1._1.Webservices
         /// </summary>
         /// <returns>JSON of list of visit search</returns>
         [WebMethod]
-        public string GetDoctorScheduleDetailsbymonth(string doctorid, string clinicid,string month,string year)
+        public string GetDoctorScheduleDetailsbymonth(string doctorid, string clinicid,string Month,string Year)
         {  //return msg data initialization
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -377,8 +377,8 @@ namespace TheClinicApp1._1.Webservices
                 ClinicDAL.Doctor docobj = new ClinicDAL.Doctor();
                 docobj.ClinicID = clinicid;
                 docobj.DoctorID = doctorid;
-                docobj.MonthName = month;
-                docobj.Year = year;
+                docobj.MonthName = Month;
+                docobj.Year = Year;
 
                 ds = docobj.GetDoctorScheduleDetailsforMobile();
                 dt = ds.Tables[0];
