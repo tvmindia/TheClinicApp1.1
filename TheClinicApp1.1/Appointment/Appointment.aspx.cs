@@ -13,8 +13,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
@@ -456,6 +458,8 @@ namespace TheClinicApp1._1.Appointment
         }
         #endregion GetAppointedPatientDetailsByScheduleID
 
+      
+
         #region GetDoctorAvailability
         [System.Web.Services.WebMethod]
         public static string GetDoctorAvailability(ClinicDAL.Doctor docObj)
@@ -469,6 +473,9 @@ namespace TheClinicApp1._1.Appointment
             int patientLimit = 0;
             string startAppointment ="";
             string endAppointment = "";
+            string startDuration = "";
+            string endDuration = "";
+            TimeSpan duration = new TimeSpan();
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -491,9 +498,59 @@ namespace TheClinicApp1._1.Appointment
                     startAppointment = ds.Tables[0].Rows[0]["Starttime"].ToString();
                     endAppointment = ds.Tables[0].Rows[0]["Endtime"].ToString();
                     patientLimit =Convert.ToInt32(ds.Tables[0].Rows[0]["PatientLimit"].ToString());
-                    TimeSpan duration = DateTime.Parse(endAppointment).Subtract(DateTime.Parse(startAppointment));
+                    string endHour = endAppointment.Split(':')[0];
+                    string startHour = startAppointment.Split(':')[0];
+                    if (endHour=="24")
+                    {
+                     
+                        endDuration = "23:59";
+                    }
+                    if (startHour=="24")
+                    {
+                        startDuration = "23:59";
+                    }
+                    if(endDuration!="")
+                    {
+                        duration = DateTime.Parse(endDuration).Subtract(DateTime.Parse(startAppointment));
+                        int endMinute = Convert.ToInt32(endAppointment.Split(':')[1])+1;
+                        int startMinute =Convert.ToInt32(startAppointment.Split(':')[1]);
+                        int totalminute = endMinute - startMinute;
+                        totalminute = Math.Abs(totalminute);
+                        string time = "00:" + totalminute;
+                        TimeSpan ts = TimeSpan.Parse(time);
+                        duration=duration.Add(ts);
+                        
+                    }
+                    else if(startDuration!="")
+                    {
+                        duration = DateTime.Parse(endAppointment).Subtract(DateTime.Parse(startDuration));
+                        int endMinute = Convert.ToInt32(endAppointment.Split(':')[1]) + 1;
+                        int startMinute = Convert.ToInt32(startAppointment.Split(':')[1]);
+                        int totalminute = endMinute - startMinute;
+                        totalminute = Math.Abs(totalminute);
+                        string time = "00:" + totalminute;
+                        TimeSpan ts = TimeSpan.Parse(time);
+                        duration = duration.Add(ts);
+                    }
+                    else if(startDuration!="" && endDuration!="")
+                    {
+                        duration = DateTime.Parse(endDuration).Subtract(DateTime.Parse(startDuration));
+                        int endMinute = Convert.ToInt32(endAppointment.Split(':')[1]) + 1;
+                        int startMinute = Convert.ToInt32(startAppointment.Split(':')[1]);
+                        int totalminute = endMinute - startMinute;
+                        totalminute = Math.Abs(totalminute);
+                        string time = "00:" + totalminute;
+                        TimeSpan ts = TimeSpan.Parse(time);
+                        duration = duration.Add(ts);
+                    }
+                    else
+                    {
+                        duration = DateTime.Parse(endAppointment).Subtract(DateTime.Parse(startAppointment));
+                    }
+                    
                     appointmentMinutes =Convert.ToInt32(duration.TotalMinutes);
                     appointmentMinutes = appointmentMinutes / patientLimit;
+                    
                     for (int i = 0; i <= count - 1; i++)
                     {
                         events.Add(new Event()
@@ -509,20 +566,46 @@ namespace TheClinicApp1._1.Appointment
                         int minutes = ts.Minutes;
                         starth = startHours;
                         startm = minutes;
-                        string eTime = ds.Tables[0].Rows[i]["Endtime"].ToString();
-                        eTime = eTime.Replace(" ", "");
-                        TimeSpan endts = TimeSpan.Parse(eTime);
+                        TimeSpan endts = new TimeSpan();
+                        DateTime dts = new DateTime();
+                        string eTime = endAppointment;
+                        if(endAppointment=="24:00")
+                        {
+                            int endMinute = Convert.ToInt32(endAppointment.Split(':')[1])+ 1;
+                            string time = "00:" + endMinute;
+                            TimeSpan tp = TimeSpan.Parse(time);
+                            dts =DateTime.Parse(endDuration);
+                            dts =dts.Add(tp);
+                            string rs = Convert.ToString(dts);
+                            char[] whitespace = new char[] { ' ', '\t' };
+                            rs = rs.Split(whitespace)[1];
+                            endts = TimeSpan.Parse(rs);
+                        }
+                        else
+                        {
+                            eTime = eTime.Replace(" ", "");
+                            endts = TimeSpan.Parse(eTime);
+                        }
+                        
                         int endHours = endts.Hours;
                         int endMinutes = endts.Minutes;
                         endH = endHours;
                         endM = endMinutes;
                     }
                 }
-
-
+                var clockIn=new DateTime();
+                var clockOut=new DateTime();
                 //Converting to Json
-                var clockIn = new DateTime(2011, 5, 25, starth, startm, 00);
-                var clockOut = new DateTime(2011, 5, 25, endH, endM, 00);
+                //if (endAppointment == "24:00")
+                //{
+                //    clockIn = new DateTime(2011, 5, 25, starth, startm, 00);
+                //    clockOut = new DateTime(2011, 5, 24, endH, endM, 00);
+                //}
+                //else
+                {
+                    clockIn = new DateTime(2011, 5, 25, starth, startm, 00);
+                    clockOut = new DateTime(2011, 5, 25, endH, endM, 00);
+                }
                 //  JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
                 var hours = GetWorkingHourIntervals(clockIn, clockOut, appointmentMinutes);
                 //  List<Event> events = new List<Event>();
@@ -674,6 +757,7 @@ namespace TheClinicApp1._1.Appointment
 
         public static IEnumerable<DateTime> GetWorkingHourIntervals(DateTime clockIn, DateTime clockOut, int appointmentMinutes)
         {
+            
             yield return clockIn;
 
             DateTime d = new DateTime(clockIn.Year, clockIn.Month, clockIn.Day, clockIn.Hour, 0, 0, clockIn.Kind).AddMinutes(appointmentMinutes);
@@ -786,11 +870,11 @@ namespace TheClinicApp1._1.Appointment
         }
 
 
-        protected void ddlDoctor_SelectedIndexChanged1(object sender, EventArgs e)
-        {
-            hdfddlDoctorID.Value = ddlDoctor.SelectedValue;
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "GetDoctorID()", true);
-        }
+        //protected void ddlDoctor_SelectedIndexChanged1(object sender, EventArgs e)
+        //{
+        //    hdfddlDoctorID.Value = ddlDoctor.SelectedValue;
+        //    Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "GetDoctorID()", true);
+        //}
 
         //protected void ddltimeSlot_SelectedIndexChanged(object sender, EventArgs e)
         //{
