@@ -435,8 +435,6 @@ namespace TheClinicApp1._1.Appointment
                 ds = AppointObj.GetAppointedPatientDetailsByScheudleID();
                 int count = ds.Tables[0].Rows.Count;
                 //Converting to Json
-
-
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     for (int i = 0; i <= count - 1; i++)
