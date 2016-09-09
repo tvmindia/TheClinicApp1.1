@@ -36,15 +36,19 @@
         #circle {
             /*display: block;*/
             cursor: pointer;
-            height: 60px;
-            width: 60px;
-            line-height: 120px;
-            -moz-border-radius: 30px; /* or 50% */
-            border-radius: 3px; /* or 50% */
-            background-color: black;
-            color: white;
+            height: 20%;
+            width: 20%;
+            line-height:120px;
+            -moz-border-radius: 5px; /* or 50% */
+            border-radius: 5px; /* or 50% */
+            background-color: lightgray;
+            border:2px solid gray;
+            color: black;
+            text-shadow:20px 12px 12px 2px black;
             text-align: center;
-            font-size: 2em;
+            font-size: 16px!important;
+            padding:5px;
+            font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
             
         }
 

@@ -12,7 +12,7 @@ var IserrorTime = false;
 function PickTime()
 {
 
-    debugger;
+   
     if (IserrorTime == false) {
         TimePicked = true;
     }
@@ -83,10 +83,7 @@ function PickTime()
 					"</div>");
 			if(settings.show_meridian){
 				new_ele.append(
-					"<div class='meridian'>" +
-						top_arrow_button +
-						"<div class='mer_tx'><input type='text' class='timepicki-input' readonly></div>" +
-						bottom_arrow_button +
+					"<div class='meridian'>" + top_arrow_button +	"<div class='mer_tx'><input type='text' class='timepicki-input' readonly></div>" +bottom_arrow_button +
 					"</div><span id='circle' onclick='PickTime()'>OK</span>");
 				//<img id='imgTimePick' onclick='PickTime()' style='padding-top:0px;cursor:pointer;' title='OK' src='../images/hand.png' />
 			}
@@ -154,7 +151,7 @@ function PickTime()
 
 
 			inputs.on('blur', function () {
-			    debugger;
+			  
 			    var tim = ele_next.find(".ti_tx input").val();
 			    var mini = ele_next.find(".mi_tx input").val();
 			    //var mer = ele_next.find(".mer_tx input").val();
@@ -173,7 +170,7 @@ function PickTime()
 
 			    if (tim > 12) {
 
-			        debugger;
+			      
 
 			        $(".ti_tx").css("color", "red");
 
@@ -259,7 +256,7 @@ function PickTime()
 			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() != ""))
 			    {
 			       
-			        debugger;
+			       
 			        strttime = $('#txtStartTime').val().replace(/ /g, '');
 
 			        var timeParts = strttime.split(':');
@@ -342,7 +339,6 @@ function PickTime()
 			}
 
 			function set_value(event, close) {
-			    debugger;
 			  
 				// use input values to set the time
 				var tim = ele_next.find(".ti_tx input").val();
@@ -363,7 +359,7 @@ function PickTime()
 			
 				if (tim > 12 ) {
 
-				    debugger;
+				   
 
 				    $(".ti_tx").css("color", "red");
 				  

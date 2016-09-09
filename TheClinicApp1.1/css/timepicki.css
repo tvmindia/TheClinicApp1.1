@@ -80,7 +80,7 @@ input.timepicki-input {
     	border: 1px solid #CCCCCC;
     	border-radius: 5px 5px 5px 5px;
     	float: none;
-    	margin: 0;
+    	margin: 9px;
     	text-align: center;
     	width: 70%;
 }
@@ -102,5 +102,6 @@ a.reset_time {
 	
     	width: 100%;
         font-size:12px;
+        margin: 5px;
 }
 }
