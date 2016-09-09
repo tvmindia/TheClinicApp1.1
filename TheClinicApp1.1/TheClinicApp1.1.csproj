@@ -142,6 +142,7 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\ClinicappMaster.css" />
+    <Content Include="css\DrSchedule.css" />
     <Content Include="css\fileinput.css" />
     <Content Include="css\fonts\caviardreams_gdi.svg" />
     <Content Include="css\fonts\centurygothic-bold_gdi.svg" />
