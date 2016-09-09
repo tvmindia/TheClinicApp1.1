@@ -89,3 +89,18 @@ a.reset_time {
 	margin-top: 5px;
 	color: #000;
 }
+@media (max-width:1720px)
+{
+    .time,
+    .mins,
+    .meridian {
+	width: 30px;
+	font-size: 12px;
+	
+}
+    input.timepicki-input {
+	
+    	width: 100%;
+        font-size:12px;
+}
+}
