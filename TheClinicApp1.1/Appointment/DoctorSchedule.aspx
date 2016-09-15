@@ -134,6 +134,11 @@
                 defultTime = timStart + ',' + minsStart + ',' + merStart;
             }
 
+            else
+            {
+                defultTime = "";
+            }
+
             return defultTime;
         }
 

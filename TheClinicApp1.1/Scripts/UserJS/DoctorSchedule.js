@@ -643,7 +643,7 @@ $(document).mouseup(function (e) {
 }
 
     function GetRegularScheduleByDrID() {
-       
+        debugger;
         var strttime = '';
         var endtime = '';
         var jsonRegularSchedule = {};
@@ -677,6 +677,7 @@ $(document).mouseup(function (e) {
         }
 
         Time = strttime + ',' + endtime;
+
         return Time;
         //return strttime;
     }

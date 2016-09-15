@@ -241,7 +241,7 @@ function PickTime()
 
 			        defultTime = SetDefaultTime(inputID);
 			        debugger;
-			        if (defultTime != null) {
+			        if (defultTime != null && defultTime!= "") {
 			            debugger;
 			            var timeParts = defultTime.split(',');
 
@@ -250,12 +250,50 @@ function PickTime()
 			            ele.attr('data-timepicki-meri', timeParts[2]);
 
 			        }
+
+			        if (defultTime == "") {
+
+
+			            d = new Date();
+			            ti = d.getHours();
+
+			            mi = d.getMinutes();
+			            mer = "AM";
+
+			            //if (tim == 12) {
+			            //    mer = "PM";
+			            //}
+
+			            if (12 < ti && settings.show_meridian) {
+			                ti -= 12;
+			                mer = "PM";
+			            }
+
+			        }
+
+			        if (ti < 10) {
+			            ele_next.find(".ti_tx input").val("0" + ti);
+			        } else {
+			            ele_next.find(".ti_tx input").val(ti);
+			        }
+			        if (mi < 10) {
+			            ele_next.find(".mi_tx input").val("0" + mi);
+			        } else {
+			            ele_next.find(".mi_tx input").val(mi);
+			        }
+			        if (settings.show_meridian) {
+			            if (mer < 10) {
+			                ele_next.find(".mer_tx input").val("0" + mer);
+			            } else {
+			                ele_next.find(".mer_tx input").val(mer);
+			            }
+			        }
 			    }
                 
  //-----------* Binding timepiki with start time(Edit Click) *---------------------//
 			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() != ""))
 			    {
-			       
+			        debugger;
 			       
 			        strttime = $('#txtStartTime').val().replace(/ /g, '');
 
@@ -271,7 +309,7 @@ function PickTime()
 
  //-----------* Binding timepiki with end time(Edit Click) *---------------------//
 			    if ((inputID == 'txtEndTime' && $('#txtEndTime').val() != "")) {
-
+			        debugger;
 			        endtime = $('#txtEndTime').val().replace(/ /g, '');
 
 			        var timeParts = endtime.split(':');
