@@ -54,7 +54,8 @@ namespace TheClinicApp1._1.Masters
             }
                        
             lblUser.Text = "👤 " + Login + " ";
-            RoleName= UA.GetRoleName1(Login);           
+            RoleName= UA.GetRoleName1(Login);
+           
             //*Check Roles Assigned and Giving Visibility For SAdmin Tab
             if (RoleName.Contains(Const.RoleSadmin))
             {

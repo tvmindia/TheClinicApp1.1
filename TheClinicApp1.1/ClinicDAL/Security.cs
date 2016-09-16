@@ -345,6 +345,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 SqlCommand cmd = new SqlCommand("GetUserandRolesJoineddemo", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.Add("@LoginName", SqlDbType.NVarChar, 50).Value = LoginName;
+                cmd.Parameters.Add("@ClinicId",SqlDbType.UniqueIdentifier).Value=ClinicID;
                 //SqlParameter OutparamId = pud.Parameters.Add("@OutRole", SqlDbType.NVarChar,255);
                 //OutparamId.Direction = ParameterDirection.Output;
                 SqlDataAdapter adapter = new SqlDataAdapter();

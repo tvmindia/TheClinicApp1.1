@@ -87,9 +87,17 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion Public Properties
-
+        string tz = System.Web.Configuration.WebConfigurationManager.AppSettings["TimeZone"];
         #region Methods
-
+        //convertion to Universal time
+        #region ConvertDatenow Tostanderdformat
+        public DateTime ConvertDatenow(DateTime DateNow)
+        {
+            DateNow = DateTime.SpecifyKind(DateNow, DateTimeKind.Local);
+            //string tz = "India Standard Time";
+            return (TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateNow, tz));
+        }
+        #endregion ConvertDatenow Tostanderdformat
         #region InsertErrorLog
 
         public void InsertErrorLog()
@@ -112,7 +120,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
             cmd.Parameters.Add("@ErrorID", SqlDbType.UniqueIdentifier).Value = ErrorID;
             cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
-            cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd"); 
+            cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = ConvertDatenow(now); 
             cmd.Parameters.Add("@Module", SqlDbType.NVarChar, 255).Value = Module;
             cmd.Parameters.Add("@Method", SqlDbType.NVarChar, 255).Value = Method;
             cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UserID);
@@ -165,7 +173,7 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Parameters.Add("@TableName", SqlDbType.NVarChar, 255).Value = Method;
             cmd.Parameters.Add("@ParentKey", SqlDbType.NVarChar, 255).Value = Module;
             cmd.Parameters.Add("@ActionType", SqlDbType.NVarChar, 255).Value = Method;
-            cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd"); 
+            cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = ConvertDatenow(now); 
             cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(UserID);
    
             cmd.ExecuteNonQuery();

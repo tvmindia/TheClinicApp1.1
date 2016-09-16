@@ -48,6 +48,7 @@ namespace TheClinicApp1._1.Doctor
         ClinicDAL.PrescriptionHeaderDetails PrescriptionHeadObj = new ClinicDAL.PrescriptionHeaderDetails();
         ClinicDAL.CaseFile.Visit VisitsObj = new ClinicDAL.CaseFile.Visit();
         ClinicDAL.CaseFile.Visit.VisitAttachment AttachObj=new ClinicDAL.CaseFile.Visit.VisitAttachment();
+        ClinicDAL.common cmnObj = new common();
         Appointments AppointObj = null;
         public string listFilter=null;
         public string RoleName = null;
@@ -180,8 +181,8 @@ namespace TheClinicApp1._1.Doctor
                             PrescriptionHeadObj.ClinicID = UA.ClinicID.ToString();
                             PrescriptionHeadObj.CreatedBy = UA.userName;
                             PrescriptionHeadObj.UpdatedBy = UA.userName;
-                            PrescriptionHeadObj.CreatedDate = DateTime.Now;
-                            PrescriptionHeadObj.UpdatedDate = DateTime.Now;
+                            PrescriptionHeadObj.CreatedDate = cmnObj.ConvertDatenow(DateTime.Now);
+                            PrescriptionHeadObj.UpdatedDate = cmnObj.ConvertDatenow(DateTime.Now);
                             PrescriptionHeadObj.InsertPrescriptionHeader();
 
 
