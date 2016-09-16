@@ -94,15 +94,6 @@ namespace TheClinicApp1._1.Registration {
         protected global::System.Web.UI.WebControls.ImageButton LogoutButton;
         
         /// <summary>
-        /// lblRegCount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRegCount;
-        
-        /// <summary>
         /// lblAppointmentCount control.
         /// </summary>
         /// <remarks>
@@ -110,6 +101,15 @@ namespace TheClinicApp1._1.Registration {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAppointmentCount;
+        
+        /// <summary>
+        /// lblRegCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRegCount;
         
         /// <summary>
         /// lblTodayRegCount control.

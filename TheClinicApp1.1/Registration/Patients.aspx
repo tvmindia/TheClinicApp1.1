@@ -70,8 +70,7 @@
 
                 .even{background-color: white;} 
 
-                .todays_appointment_link{z-index:25!important;}
-
+                
             
         </style>
         <!-- Script Files -->
@@ -832,7 +831,7 @@
 
             var row;
             function OnSuccess(response) {
-
+                debugger;
                 $(".Pager").show();
 
                 var xmlDoc = $.parseXML(response.d);
@@ -869,7 +868,17 @@
                     if ($('#txtSearchPatient').val() == '') {
                         var GridRowCount = pager.find("RecordCount").text();
 
-                        $("#<%=lblRegCount.ClientID %>").text(GridRowCount);
+                        debugger;
+
+                        if(parseInt(GridRowCount,10)>="99")
+                        {
+                            $("#<%=lblRegCount.ClientID %>").text("99+");
+                        }
+                        else
+                        {
+                            $("#<%=lblRegCount.ClientID %>").text(GridRowCount);
+                        }
+                        
                     }
 
                     $(".Pager").ASPSnippets_Pager({
@@ -1215,7 +1224,14 @@ function AppointmentIsAbsent(Appointments)
                 </div>
                 <div class="icon_box">
 
-
+                     <a class="todays_appointment_link" onclick="OpenModal('3');">
+                        <span class="tooltip1">
+                            <span class="count" style="background-color:#e05d46!important;">
+                                <asp:Label ID="lblAppointmentCount" runat="server" Text="0"></asp:Label></span>
+                                <img src="../images/Appoinments.jpg" />
+                            <span class="tooltiptext1">Today's Appointments</span>
+                        </span>
+                    </a>
                     <a class="all_registration_link" onclick="OpenModal('1');">
                         <span class="tooltip1">
                             <span class="count">
@@ -1224,14 +1240,7 @@ function AppointmentIsAbsent(Appointments)
                             <span class="tooltiptext1">All Registration</span>
                         </span>
                     </a>
-                    <a class="todays_appointment_link" onclick="OpenModal('3');">
-                        <span class="tooltip1">
-                            <span class="count" style="background-color:#e05d46!important;">
-                                <asp:Label ID="lblAppointmentCount" runat="server" Text="0"></asp:Label></span>
-                                <img src="../images/Appoinments.jpg" />
-                            <span class="tooltiptext1">Today's Appointments</span>
-                        </span>
-                    </a>
+                   
                     <a class="Todays_registration_link" onclick="OpenModal('2');">
                         <span class="tooltip1">
                             <span class="count">

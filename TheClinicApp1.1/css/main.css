@@ -266,7 +266,7 @@ border-radius: 50%;
 a.tokens_link {position: fixed; top: 428px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 
  
-a.Todays_registration_link {position: fixed; top: 414px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
+a.Todays_registration_link {position: fixed; top: 430px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 a.Todays_registration_link span.count {position: absolute; top: -15px; right: 5px; background: #079ad3; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
 -webkit-border-radius: 50%;
 -moz-border-radius: 50%;
@@ -277,7 +277,7 @@ border-radius: 50%;
     box-shadow:0 0 1px #000;
 }
 
-a.todays_appointment_link {position: fixed; top: 282px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
+a.todays_appointment_link {position: fixed; top: 270px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
 a.todays_appointment_link span.count {position: absolute; top: -15px; right: 5px; background: #079ad3; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
 -webkit-border-radius: 50%;
 -moz-border-radius: 50%;
@@ -289,7 +289,7 @@ border-radius: 50%;
 }
 
 a.all_registration_link {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
-a.all_registration_link span.count {position: absolute; top: -15px; right: 5px; background: #079ad3; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
+a.all_registration_link span.count {font-size:11px;position: absolute; top: -15px; right: 5px; background: #079ad3; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
 -webkit-border-radius: 50%;
 -moz-border-radius: 50%;
 border-radius: 50%;
@@ -1047,6 +1047,9 @@ a.casehistory_link span.count {line-height: 16px; width: 20px; height: 20px; fon
 
 a.tokens_link { position: relative;right: 0; top: auto; width: 50px; height: 50px;}	
 
+a.todays_appointment_link { position: relative; right: 0; top: auto; width: 50px; height: 50px;}	
+a.todays_appointment_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
+
 a.all_registration_link { position: relative; right: 0; top: auto; width: 50px; height: 50px;}	
 a.all_registration_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 
@@ -1197,6 +1200,9 @@ a.casehistory_link {right: 0; top: 361px; width: 60px; height: 60px;}
 a.casehistory_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 
 a.tokens_link {right: 0; top: 422px; width: 60px; height: 60px;}
+
+a.todays_appointment_link {right: 0; top: 239px; width: 60px; height: 60px;}		
+a.todays_appointment_link span.count {line-height: 16px; width: 20px; height: 20px; font-size: 14px;}
 
 
 a.Todays_registration_link {right: 0; top: 361px; width: 60px; height: 60px;}
