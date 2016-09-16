@@ -46,6 +46,9 @@ $(document).mouseup(function (e) {
         }, 500);
 
     }
+
+    document.getElementById("txtStartTime").blur();
+    document.getElementById("txtEndTime").blur();
 });
 
     $(document).ready(function () {
