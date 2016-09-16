@@ -206,6 +206,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 if (PatientID!=string.Empty)
                 {
                     cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PatientID);
+                    IsRegistered = true;
                 }
                 cmd.Parameters.Add("@ScheduleID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ScheduleID);
                 cmd.Parameters.Add("@AppointmentDate", SqlDbType.DateTime).Value = AppointmentDate;
