@@ -178,6 +178,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion format start time
 
         #region InsertPatientAppointment
+        /// <summary>
+        /// Insert patient appointment details
+        /// </summary>
+        /// <returns>success or failure</returns>
         public Int16 InsertPatientAppointment()  
         {
             dbConnection dcon = null;
@@ -248,6 +252,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion InsertPatientAppointment
 
         #region UpdatePatientAppointment
+        /// <summary>
+        /// update patient appointment details
+        /// </summary>
+        /// <returns>success or failure</returns>
         public Int16 UpdatePatientAppointment()
         {
 
@@ -319,7 +327,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion UpdatePatientAppointment
 
         #region Cancel All Appoinments By Date
-
+        /// <summary>
+        /// Cancel patient appointment by date
+        /// </summary>
+        /// <returns>success or failure</returns>
         public Int16 CancelAllAppoinmentsByDate()
         {
             dbConnection dcon = null;
@@ -381,7 +392,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Cancel All Appoinments By Date
 
         #region Cancel Appoinments By ScheduleID
-
+        /// <summary>
+        /// cancel patient appointment by ScheduleId
+        /// </summary>
+        /// <returns>success or failure</returns>
         public Int16 CancelAppoinmentsByScheuleID()
         {
             dbConnection dcon = null;
@@ -441,6 +455,10 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Cancel Appoinments By ScheduleID
 
         #region PatientAppointmentStatusUpdate
+        /// <summary>
+        /// update patient appointment status
+        /// </summary>
+        /// <returns>success or failure</returns>
         public Int16 PatientAppointmentStatusUpdate()
         {
 
@@ -497,6 +515,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion PatientAppointmentStatusUpdate
 
         #region PatientAppointmentNumberAllotByAppointmentID
+      
         public Int32 PatientAppointmentNumberAllotByAppointmentID()
         {
 

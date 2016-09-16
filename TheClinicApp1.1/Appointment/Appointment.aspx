@@ -34,9 +34,9 @@ display: block; float: left; text-align: center;
             max-width: 900px;
             margin: 0 auto;
         }
-        td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
+        /*td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
             background-color: #a8d9f3;
-        }
+        }*/
          .lblColor {
              font-size: smaller;
              line-height: 1;
@@ -121,21 +121,6 @@ label {
   100% { transform: rotate(360deg); }
 }
 /* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    overflow:hidden!important;
-    min-height:300px!important;
-}
 
 
 /*.ui-state-highlight {
@@ -143,25 +128,12 @@ label {
     background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
     color: #363636;
 }*/
-/*.fc-ltr .fc-basic-view .fc-day-number {
-    border: medium none !important;
+.fc-ltr .fc-basic-view .fc-day-number {
+    border: medium none !important;  
     text-align: right;
-}*/
-/* Modal Content */
-.modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    /*border: 1px solid #888;*/
-    width: 100%;
-    height:100%;
-    /*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);*/
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s
 }
+/* Modal Content */
+
 
 /* Add Animation */
 @-webkit-keyframes animatetop {
@@ -174,38 +146,6 @@ label {
     to {top:0; opacity:1}
 }
 
-.modal-header {
-    padding: 2px 16px;
-    /*background-color: #5cb85c;*/
-    color: white;
-}
-
-.modal-body {padding: 2px 16px;
-             text-align:center;
-}
-
-.modal-footer {
-    padding: 2px 16px;
-    /*background-color: #5cb85c;*/
-    color: white;
-    border:none!important;
-}
-.btnOkay
-{
-background-color: #336699;
-width:100px;
-height:30px;
-cursor:pointer;
-margin-left:50px;
-}
-.btnCncl
-{
-background-color: #808080;
-width:100px;
-height:30px;
-cursor:pointer;
-margin-left:50px;
-}
 .ti_tx,
 .mi_tx,
 .mer_tx {
@@ -247,10 +187,10 @@ margin-left:50px;
     background: #ffef8f url("images/ui-bg_highlight-soft_25_ffef8f_1x100.png") 50% top repeat-x ;
     color: #363636;
 }
-.fc-ltr .fc-basic-view .fc-day-number {
+/*.fc-ltr .fc-basic-view .fc-day-number {
     border: medium none !important;
     text-align: right;
-}
+}*/
 /*input{ float:left;}*/
  td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
             background-color: #a8d9f3;
@@ -274,30 +214,7 @@ margin-left:50px;
             border: none;
         }
 
-.timepicker_wrap {
-  padding: 10px;
-  border-radius: 5px;
-  z-index: 2;
-  display: none;
-  width: 240px;
-  box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.35);
-  background: #f6f6f6;
-  border: 1px solid #ccc;
-  float: left;
-  position: absolute;
-  top: 27px;
-  left: 0px;
-}
 
-.arrow_top {
-  position: absolute;
-  top: -10px;
-  left: 20px;
-  background: url(../images/top_arr.png) no-repeat;
-  width: 18px;
-  height: 10px;
-  z-index: 3;
-}
 .txtAddNew{
 width:230px !important;
 }
@@ -498,9 +415,10 @@ border-bottom-right-radius: 0px;
                     if($( "input:checked" ).val()!=undefined)
                     {
                         Time=Time.split('-')[0];
-                   
-                        //Time=Time.replace('AM','');
-                        //Time=Time.replace('PM','');
+                        if(Time.split(':')[0].length==1)
+                        {
+                            Time="0"+Time;
+                        }
                     }
                     else
                     {
@@ -793,7 +711,7 @@ border-bottom-right-radius: 0px;
             document.getElementById("NoSlots").style.display = 'none';
             $('#<%=lblAppointment.ClientID%>').text("Add Appointment");
             $('#<%=lblList.ClientID%>').text("Patient List");
-            var imgLen=$('#calendar').find("#imgSelect").length;
+            var imgLen=$('#calendar').find(".fc-day #imgSelect").length;
             for(var i=0;i<=imgLen;i++)
             {
                 $('#calendar').find("#imgSelect").remove();
