@@ -260,11 +260,11 @@ namespace TheClinicApp1._1.ClinicDAL
                     cmd = new SqlCommand("ReportOutOfStockMedicine", con);
 
                     HtmlReprtObj.Columns.Add("Name", 0);
-                    HtmlReprtObj.Columns.Add("Code", 1);
-                    HtmlReprtObj.Columns.Add("Unit", 0);
+                    HtmlReprtObj.Columns.Add("Code", 10);
+                    HtmlReprtObj.Columns.Add("Unit", 3);
                     HtmlReprtObj.Columns.Add("Qty", 1);
                     HtmlReprtObj.Columns.Add("Category", 0);
-                    HtmlReprtObj.Columns.Add("ReOrderQty", 1);
+                    HtmlReprtObj.Columns.Add("ReOrder Qty", 1);
 
                     SpecifiedColumns = "Name" + "," + "Code" + "," + "Unit" + "," + "Category" ;
 
@@ -276,11 +276,11 @@ namespace TheClinicApp1._1.ClinicDAL
                     cmd = new SqlCommand("ReportMedicines", con);
 
                     HtmlReprtObj.Columns.Add("Name", 0);
-                    HtmlReprtObj.Columns.Add("Code", 2);
-                    HtmlReprtObj.Columns.Add("Unit", 0);
+                    HtmlReprtObj.Columns.Add("Code", 10);
+                    HtmlReprtObj.Columns.Add("Unit", 3);
                     HtmlReprtObj.Columns.Add("Qty", 1);
                     HtmlReprtObj.Columns.Add("Category", 0);
-                    HtmlReprtObj.Columns.Add("ReOrderQty", 1);
+                    HtmlReprtObj.Columns.Add("ReOrder Qty", 1);
 
                     SpecifiedColumns = "Name" + "," + "Code" + "," + "Unit" + "," + "Category";
                 }

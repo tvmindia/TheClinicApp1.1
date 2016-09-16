@@ -74,6 +74,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Methods
 
+    
+
+
         #region Generate Report
 
         /// <summary>
@@ -107,6 +110,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                     foreach (DataColumn column in dt.Columns)
                     {
+
                         if (Columns!= null)
 	                            {
                             if (Columns.Count > 0)            
