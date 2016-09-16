@@ -650,14 +650,21 @@ $(document).mouseup(function (e) {
 
         var Doctor = new Object();
 
-        if (DoctorID != null && DoctorID != "" ) {
+        if (DoctorID != null && DoctorID != "" && document.getElementById('txtAppointmentDate').value != "") {
            
+            
+
+
             Doctor.DoctorID = DoctorID;
-          
+            Doctor.DoctorAvailDate = moment(document.getElementById('txtAppointmentDate').value).format('YYYY-MM-DD');
+           
+
             if (AvailableCount == 0 || ScheduleNo>0) {
                 Doctor.ScheduleOrder = parseInt(ScheduleNo + 1);
             }
             
+           
+    
             var ds = {};
             var table = {};
             var data = "{'DocObj':" + JSON.stringify(Doctor) + "}";
@@ -673,6 +680,8 @@ $(document).mouseup(function (e) {
                 }
 
             })
+
+      
 
         }
 
@@ -1376,6 +1385,35 @@ $(document).mouseup(function (e) {
                                                     $("#txtEndTime").val("");
                                                     $("#txtMaxAppoinments").val("");
 
+
+
+                                                    //d = new Date();
+                                                    //ti = d.getHours();
+
+                                                    //mi = d.getMinutes();
+                                                    //mer = "AM";
+
+                                                    ////if (tim == 12) {
+                                                    ////    mer = "PM";
+                                                    ////}
+
+                                                    //if (12 < ti ) {
+                                                    //    ti -= 12;
+                                                    //    mer = "PM";
+                                                    //}
+
+                                                  
+                                                    //var x = document.getElementsByClassName("txtAddNew");
+                                                    //var i;
+                                                    //for (i = 0; i < x.length; i++) {
+                                                    //    var ele = x[i];
+
+                                                    //    ele.attr('data-timepicki-tim', ti);
+                                                    //    ele.attr('data-timepicki-mini', mi);
+                                                    //    ele.attr('data-timepicki-meri', mer);
+
+
+                                                    //}
 
                                                     BindScheduledDates();
 
