@@ -224,24 +224,26 @@ function PickTime()
 
 			// select all text in input when user focuses on it
 			inputs.on('focus', function () {
-
+			    debugger;
 			    //alert($('#txtStartTime').val());
 			  //  if ($(this).attr("id") == 'txtStartTime') {
 			    $(".ti_tx").css("color", "#505050");
 			    $(".mi_tx").css("color", "#505050");
 
 			    var inputID = $(this).attr("id");
-			  
+			    
+			   
+
 //-----------* Binding timepiki with regular schedules *---------------------//
 
-			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() == "") || (inputID == 'txtEndTime' && $('#txtStartTime').val() == "")) {
+			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() == "") || (inputID == 'txtEndTime' && $('#txtEndTime').val() == "")) {
 			       
 			        debugger;
 			    //if ((inputID == 'txtStartTime') || (inputID == 'txtEndTime' )) {
 
 			        defultTime = SetDefaultTime(inputID);
 			        debugger;
-			        if (defultTime != null && defultTime!= "") {
+			        if (defultTime != null && defultTime != "") {
 			            debugger;
 			            var timeParts = defultTime.split(',');
 
@@ -269,25 +271,28 @@ function PickTime()
 			                mer = "PM";
 			            }
 
+			            if (ti < 10) {
+			                ele_next.find(".ti_tx input").val("0" + ti);
+			            } else {
+			                ele_next.find(".ti_tx input").val(ti);
+			            }
+			            if (mi < 10) {
+			                ele_next.find(".mi_tx input").val("0" + mi);
+			            } else {
+			                ele_next.find(".mi_tx input").val(mi);
+			            }
+			            if (settings.show_meridian) {
+			                if (mer < 10) {
+			                    ele_next.find(".mer_tx input").val("0" + mer);
+			                } else {
+			                    ele_next.find(".mer_tx input").val(mer);
+			                }
+			            }
+
+
 			        }
 
-			        if (ti < 10) {
-			            ele_next.find(".ti_tx input").val("0" + ti);
-			        } else {
-			            ele_next.find(".ti_tx input").val(ti);
-			        }
-			        if (mi < 10) {
-			            ele_next.find(".mi_tx input").val("0" + mi);
-			        } else {
-			            ele_next.find(".mi_tx input").val(mi);
-			        }
-			        if (settings.show_meridian) {
-			            if (mer < 10) {
-			                ele_next.find(".mer_tx input").val("0" + mer);
-			            } else {
-			                ele_next.find(".mer_tx input").val(mer);
-			            }
-			        }
+			       
 			    }
                 
  //-----------* Binding timepiki with start time(Edit Click) *---------------------//
@@ -376,6 +381,7 @@ function PickTime()
 				return $.contains(ele_par[0], jquery_element[0]) || ele_par.is(jquery_element);
 			}
 
+			
 			function set_value(event, close) {
 			  
 				// use input values to set the time

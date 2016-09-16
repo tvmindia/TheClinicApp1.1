@@ -328,6 +328,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.DoctorID);
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(this.ClinicID);
                 cmd.Parameters.Add("@ScheduleNo", SqlDbType.NVarChar, 30).Value = ScheduleOrder;
+
+                cmd.Parameters.Add("@Date", SqlDbType.Date).Value = DateTime.Parse(DoctorAvailDate);
+
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds);
