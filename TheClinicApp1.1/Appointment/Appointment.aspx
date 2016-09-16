@@ -372,11 +372,7 @@ border-bottom-right-radius: 0px;
                     return false;
                 },
                 select: function (event, ui) {
-
-                    BindPatientDetails();
-               <%-- document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";--%>
-
-
+                BindPatientDetails();
                 return false;
             }
         })
@@ -384,8 +380,8 @@ border-bottom-right-radius: 0px;
                 return $("<li>")
                   .append("<a>" + item.label + "<br>" + item.desc + "</a>")
                   .appendTo(ul);
-
             };
+
             $(".new").click(function () {
                 clearDropDown();
                 hideDropDown();
@@ -398,8 +394,8 @@ border-bottom-right-radius: 0px;
                 $('#<%=lblList.ClientID%>').text("Patient List");
                 document.getElementById("NoSlots").style.display = 'none';
             });
+
             $(".save").click(function () {
-                debugger;
                 var start="";
                 var end="";
                 var appointmentDate=$("#txtAppointmentDate").val();
@@ -410,6 +406,8 @@ border-bottom-right-radius: 0px;
                 var Time=$( "input:checked" ).val();
                 var patientID=$("#hdfPatientID").val();
                 var regEx = /^[+-]?\d+$/;
+                debugger;
+                var timeLength= $("#hdfTimeListLength").val();
                 if(mobile.match(regEx)&&mobile.length>=5)
                 {
                     if($( "input:checked" ).val()!=undefined)
@@ -419,10 +417,38 @@ border-bottom-right-radius: 0px;
                         {
                             Time="0"+Time;
                         }
+                        var Appointments=new Object();
+                        Appointments.AppointmentDate=appointmentDate;
+                        Appointments.Name=name;
+                        Appointments.Mobile=mobile;
+                        Appointments.Location=place;
+                        Appointments.ScheduleID=scheduleID;
+                        Appointments.AllottingTime=Time;
+                        Appointments.PatientID=patientID;
+                    
+                        var ds={};
+                        ds=InsertPatientAppointment(Appointments);
+                        if(ds.status=="1")
+                        {
+                            refreshList();
+                            fillPatientDetails();
+                            var lblclass = Alertclasses.sucess;
+                            var lblmsg = msg.AppointmentSaveSuccessFull;
+                            var lblcaptn = Caption.SuccessMsgCaption;
+
+                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                        }
+                        else
+                        {
+                            var lblclass = Alertclasses.sucess;
+                            var lblmsg = msg.AppointmentSaveFailure;
+                            var lblcaptn = Caption.FailureMsgCaption;
+
+                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                        }
                     }
-                    else
+                    else if(timeLength=="2")
                     {
-                        // var alottingTime
                         start=$("#hdfStartTime").val();
                         start=parseFloat(start);
                         end=$("#hdfEndTime").val();
@@ -453,11 +479,8 @@ border-bottom-right-radius: 0px;
                             minTotal=minTotal.replace('-','');
                         }
                         a=hourTotal+":"+minTotal;
-                        //a=a+start;
                         a=a.toString();
-                        var j = parseInt(a.split(':')[0]);
-                   
-                 
+                        var j = parseInt(a.split(':')[0]);                                 
                         if(a.split(':')[1].length==1)
                         {
                             var d= a.split('.')[1];
@@ -468,54 +491,46 @@ border-bottom-right-radius: 0px;
                         {
                             Time=a;
                         }
-                  
-                    }
-                    var Appointments=new Object();
-                    debugger;
-                    Appointments.AppointmentDate=appointmentDate;
-                    Appointments.Name=name;
-                    Appointments.Mobile=mobile;
-                    Appointments.Location=place;
-                    Appointments.ScheduleID=scheduleID;
-                    Appointments.AllottingTime=Time;
-                    Appointments.PatientID=patientID;
+                        var Appointments=new Object();
+                        Appointments.AppointmentDate=appointmentDate;
+                        Appointments.Name=name;
+                        Appointments.Mobile=mobile;
+                        Appointments.Location=place;
+                        Appointments.ScheduleID=scheduleID;
+                        Appointments.AllottingTime=Time;
+                        Appointments.PatientID=patientID;
                     
-                    var ds={};
-                    ds=InsertPatientAppointment(Appointments);
-                    if(ds.status=="1")
-                    {
-                        refreshList();
-                        fillPatientDetails();
-                        var lblclass = Alertclasses.sucess;
-                        var lblmsg = msg.AppointmentSaveSuccessFull;
-                        var lblcaptn = Caption.SuccessMsgCaption;
+                        var ds={};
+                        ds=InsertPatientAppointment(Appointments);
+                        if(ds.status=="1")
+                        {
+                            refreshList();
+                            fillPatientDetails();
+                            var lblclass = Alertclasses.sucess;
+                            var lblmsg = msg.AppointmentSaveSuccessFull;
+                            var lblcaptn = Caption.SuccessMsgCaption;
 
-                        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                        }
+                        else
+                        {
+                            var lblclass = Alertclasses.sucess;
+                            var lblmsg = msg.AppointmentSaveFailure;
+                            var lblcaptn = Caption.FailureMsgCaption;
+
+                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                        }
                     }
                     else
                     {
-                        var lblclass = Alertclasses.sucess;
-                        var lblmsg = msg.AppointmentSaveFailure;
-                        var lblcaptn = Caption.FailureMsgCaption;
-
-                        DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                        alert("Please select a time");             
                     }
+                   
                 }
                 else
                 {
                     alert("Please enter a valid mobile number");
                 }
-               // RereshTimeCheckBox();
-               // fillPatientDetails();
-                //$('#calendar').fullCalendar('removeEventSource', json);
-                //var calID = $("#hdfDoctorID").val();
-    
-                //json = RebindCalendar(calID);
-
-                //$('#calendar').fullCalendar('addEventSource', json);
-
-                //$('#calendar').fullCalendar('refetchEvents');
-
             });
           
         });
@@ -1017,6 +1032,7 @@ border-bottom-right-radius: 0px;
                 <input type="hidden" id="hdfStartTime" />
                 <input type="hidden" id="hdfEndTime" />
                 <input type="hidden" id="hdfPatientID" />
+                <input type="hidden" id="hdfTimeListLength" />
             </div>
         </div>
 
