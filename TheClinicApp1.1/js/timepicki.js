@@ -52,9 +52,9 @@ function PickTime()
 		var settings = $.extend({}, defaults, options);
 
 		return this.each(function() {
-
+		    debugger;
 		    var ele = $(this);
-
+		    
 			var ele_hei = ele.outerHeight();
 			ele_hei += 10;
 			$(ele).wrap("<div class='time_pick'>");
@@ -232,8 +232,6 @@ function PickTime()
 
 			    var inputID = $(this).attr("id");
 			    
-			   
-
 //-----------* Binding timepiki with regular schedules *---------------------//
 
 			    if ((inputID == 'txtStartTime' && $('#txtStartTime').val() == "") || (inputID == 'txtEndTime' && $('#txtEndTime').val() == "")) {
@@ -381,7 +379,7 @@ function PickTime()
 				return $.contains(ele_par[0], jquery_element[0]) || ele_par.is(jquery_element);
 			}
 
-			
+		
 			function set_value(event, close) {
 			  
 				// use input values to set the time

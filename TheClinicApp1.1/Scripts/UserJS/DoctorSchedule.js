@@ -1386,6 +1386,35 @@ $(document).mouseup(function (e) {
                                                     $("#txtMaxAppoinments").val("");
 
 
+
+                                                    //d = new Date();
+                                                    //ti = d.getHours();
+
+                                                    //mi = d.getMinutes();
+                                                    //mer = "AM";
+
+                                                    ////if (tim == 12) {
+                                                    ////    mer = "PM";
+                                                    ////}
+
+                                                    //if (12 < ti ) {
+                                                    //    ti -= 12;
+                                                    //    mer = "PM";
+                                                    //}
+
+                                                  
+                                                    //var x = document.getElementsByClassName("txtAddNew");
+                                                    //var i;
+                                                    //for (i = 0; i < x.length; i++) {
+                                                    //    var ele = x[i];
+
+                                                    //    ele.attr('data-timepicki-tim', ti);
+                                                    //    ele.attr('data-timepicki-mini', mi);
+                                                    //    ele.attr('data-timepicki-meri', mer);
+
+
+                                                    //}
+
                                                     BindScheduledDates();
 
                                                     var jsonDrSchedule = {};
