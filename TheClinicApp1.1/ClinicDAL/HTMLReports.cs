@@ -145,6 +145,30 @@ namespace TheClinicApp1._1.ClinicDAL
 
                     html.Append("</tr>");
 
+                    if (dt.Rows.Count == 0)
+                    {
+                        int ColumnCount =  Columns.Count;
+
+                        if (DisplaySerailNo == true)
+                        {
+                            ColumnCount = ColumnCount + 1;
+                        }
+
+
+                        html.Append("<tr>");
+
+                        html.Append("<td colspan=" + ColumnCount + " style='text-align:center' >");
+                        html.Append("No records found.");
+                        html.Append("</td>");
+
+
+                        html.Append("</tr>");
+
+                        //html.Append("<tr><td colspan=" + ColumnCount + "></td>No Items Found!</tr>");
+
+                    }
+
+
                     int rowIndex = 0;
 
                     foreach (DataRow row in dt.Rows)                 //Building the Data rows.
