@@ -12,7 +12,7 @@
   
   background-color:  #ffffff;
     border: none;
-    
+   
   
     
 }
@@ -28,12 +28,12 @@ tr.odd td {
 table td{
     width:19%!important;
     height:30%!important;
-    padding-left:5px;
-    padding-bottom:5px;
+   padding-top:1em ;
+   padding-bottom:1em;
     margin:5px 5px 5px 5px 5px;
     font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
-    font-size:16px!important;
-
+    font-size:17px!important;
+   
 }
 
 
@@ -49,7 +49,7 @@ table td{
 .tab, tr, td,th {
  
     border: none;
-   
+  
      /*border-collapse:separate;
     border-spacing:0 20px;*/
     
@@ -58,15 +58,15 @@ table td{
 .tab th{
 
      font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;
-    font-size:18px;
-    font-weight:100;
+    font-size:20px;
+    font-weight:bold;
      border: none;
     border-collapse:collapse;
- 
+   color:#0e3782!important;
     text-align:left;
    background-color:white;
    color:black;
-    text-decoration: underline;
+  
 
     /*font-weight:100;
       font-size:20px!important;*/
@@ -193,7 +193,7 @@ table td{
           
                <div  id="ReprtList">
 
-                                     
+                                
 
                                     <div class="col-lg-12">
 

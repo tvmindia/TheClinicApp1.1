@@ -120,7 +120,7 @@ namespace TheClinicApp1._1
 
                     if (ReprtObj.DisplaySerailNo == true)
                     {
-                        html.Append("<td >");
+                        html.Append("<td style='padding-left:10px' >");
                         html.Append(rowIndex);
                         html.Append("</td>");
 
