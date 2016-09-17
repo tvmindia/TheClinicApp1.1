@@ -9,16 +9,16 @@
 
     <style>
      tr.even td {
-  background-color:#e1e6ef;
- 
+  
+  background-color:  #ffffff;
     border: none;
     
   
     
 }
 tr.odd td {
-  background-color:  #ffffff;
  
+ background-color:#e1e6ef;
     border: none;
   
  
@@ -197,8 +197,11 @@ table td{
 
                                     <div class="col-lg-12">
 
+  
+
+
  <div class="col-lg-1"></div>
-    <div class="col-lg-10">  <asp:PlaceHolder ID = "PlaceHolder1" runat="server"  /></div>
+    <div class="col-lg-10"> <h1 style="color:#0e3782">Report List</h1> <asp:PlaceHolder ID = "PlaceHolder1" runat="server"  /></div>
                                         
   <div class="col-lg-1"></div>                                   
                                     
