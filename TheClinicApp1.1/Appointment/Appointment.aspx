@@ -675,8 +675,6 @@ border-bottom-right-radius: 0px;
         }
         function AppendList(date)
         {
-            debugger;
-           
             var FormattedDate=getFormattedDate(date);
             var date=('<span class="Formatdate">'+FormattedDate+'</span>');
             var appList = "Add Appointment For ";
@@ -703,7 +701,6 @@ border-bottom-right-radius: 0px;
         }
         function TimelistOnchange(i)
         {
-            debugger;
             // var i=  $("#ddltimeSlot option:selected").text(); 
             var scheduleId=i.value;
             $("#hdfScheduleID").val(scheduleId);
@@ -772,10 +769,8 @@ border-bottom-right-radius: 0px;
                     }
 
                 }
-
                 $('#calendar').fullCalendar('addEventSource', json);
                 $('#calendar').fullCalendar('rerenderEvents');
-
             }
 
         }
