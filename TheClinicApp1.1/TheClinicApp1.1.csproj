@@ -162,6 +162,7 @@
     <Content Include="css\mui.css" />
     <Content Include="css\normalize.css" />
     <Content Include="css\normalize.min.css" />
+    <Content Include="css\patientAppointment.css" />
     <Content Include="css\style.css" />
     <Content Include="css\TheClinicApp.css" />
     <Content Include="css\timepicki.css" />
