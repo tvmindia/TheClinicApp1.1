@@ -294,8 +294,17 @@ $(document).ready(function () {
                 $("#TimeAvailability").append(html);
                 timeList = "";
             },
-            dayRender: function (date, element) {               
+            dayRender: function (date, element) {
+                debugger;
                 document.getElementById("colorBox").style.display = "block";
+                //var docId = $("#hdfDoctorID").val();
+                //if((docId!="")&&(docId!=undefined))
+                //{
+                //    alert();
+                //    if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length == 0) {
+                //        $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' onclick='CustomClick();' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
+                //    }
+                //}
             },
             eventAfterRender: function (event, element, view) {
                 $(element).removeClass('MaxHght');
@@ -398,6 +407,7 @@ function fillPatientDetails() {
             minute = names[index].allottedTime.split(':')[1];
           
         }
+        debugger;
         minute = minute.replace('PM', '');
         minute = minute.replace('AM', '');
         hours = names[index].allottedTime[0] + names[index].allottedTime[1];
@@ -597,6 +607,7 @@ function refreshList(){
     $('#calendar').fullCalendar('refetchEvents');
 }
 function GetAllottedTime(docId, eventStartDate, id) {
+    debugger;
     var names = GetAllPatientList(id);
     for (var j = 0; j < names.length; j++)
     {
@@ -616,11 +627,19 @@ function GetAllottedTime(docId, eventStartDate, id) {
             var ampm = hours >= 12 ? 'PM' : 'AM';
             var time = names[i].allottedTime + ampm;
             time = time.replace(/\./g, ':');
+            var hh = hours;
             if (time.split(':')[0] == 00) {
                 var d = time.split(':')[0];
                 d = "12";
                 time = d + ":" + time.split(':')[1];
             }
+            if (hours >= 13) {
+                hours = hh - 12;
+                ampm = "PM";
+                time = hours + ":" + time.split(':')[1];
+            }
+            
+            debugger;
             if ((time.split(':')[0].length == 2) && (time.split(':')[0][0])=="0") {
                 time = time.replace(time.split(':')[0][0], '');
             }
