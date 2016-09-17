@@ -537,7 +537,7 @@
 
             <fieldset style="border-radius: 15px!important; border: 2px solid #c7d4f3!important;">
 
-                <legend style="font-family: caviardreams-regular; color: #89a7ef; width: 20%; margin-left: 2%">Advanced Search</legend>
+                <legend style="font-family: caviardreams-regular; color: #89a7ef; width: 14%; margin-left: 2%">Advanced Search</legend>
 
                 <div class="col-lg-7">
 
@@ -570,7 +570,7 @@
 
                      <label for="name" style="text-align: center; color: white;">Refresh</label>
 
-                    <asp:ImageButton ID="imgbtnRefresh" runat="server" OnClientClick="Refresh()"  ImageUrl="../Images/reload.png" Style="cursor: pointer; " OnClick="imgbtnRefresh_Click" ToolTip="Refresh"  />
+                    <asp:ImageButton ID="imgbtnRefresh" runat="server" OnClientClick="Refresh()"  ImageUrl="../Images/circular-arrows-couple.png" Style="cursor: pointer;height:34px" OnClick="imgbtnRefresh_Click" ToolTip="Refresh"  />
                 </div>
 
                     </div>
