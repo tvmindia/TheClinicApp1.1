@@ -581,7 +581,7 @@
 
                         <label for="name" style="text-align: center; color: white;">Conditions</label>
 
-                        <ul id="ulConditions">
+                        <ul id="ulConditions" style="background-color:#e7edf9">
                             <li>No Search Conditions Added!</li>
                         </ul>
                     
