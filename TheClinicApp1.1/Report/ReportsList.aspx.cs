@@ -102,6 +102,27 @@ namespace TheClinicApp1._1
                 html.Append("</tr>");
 
 
+                if (dt.Rows.Count == 0)
+                {
+                    int ColumnCount = Columns.Count+1;
+
+
+
+                    html.Append("<tr style='background-color:#e1e6ef'>");
+
+                    html.Append("<td colspan=" + ColumnCount + " style='text-align:center' >");
+                    html.Append("No records found.");
+                    html.Append("</td>");
+
+
+                    html.Append("</tr>");
+
+                    //html.Append("<tr><td colspan=" + ColumnCount + "></td>No Items Found!</tr>");
+
+                }
+
+
+
                 foreach (DataRow row in dt.Rows)                  //Building the Data rows.
                 {
                     rowIndex = rowIndex + 1;

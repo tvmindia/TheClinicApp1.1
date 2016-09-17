@@ -80,7 +80,9 @@ namespace TheClinicApp1._1.Report
                     {
                         PlaceHolder1.Controls.Add(new Literal { Text = html });
 
-                        htmlRprtObj.LogoURL = "../images/logo-small.png";                   //header
+                        htmlRprtObj.LogoURL = "../Handler/ImageHandler.ashx?ClinicLogoID=" + UA.ClinicID;
+
+                        //htmlRprtObj.LogoURL = "../images/logo-small.png";                   //header
                         htmlRprtObj.Name = UA.Clinic;
 
                         htmlRprtObj.ReportName = clinicReprtObj.ReportName;
