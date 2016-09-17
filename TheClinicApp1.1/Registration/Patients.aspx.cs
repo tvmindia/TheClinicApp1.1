@@ -248,6 +248,7 @@ namespace TheClinicApp1._1.Registration
             dummy.Columns.Add("AppointmentID");
             dummy.Columns.Add("PatientID");
             dummy.Columns.Add("AppointmentStatus");
+            dummy.Columns.Add("IsRegistered");
             dummy.Rows.Add();
             dtgTodaysAppointment.DataSource = dummy;
             dtgTodaysAppointment.DataBind();

@@ -999,7 +999,7 @@
             var TodayAppoRow;
             function TodayAppointmentSuccess(response) 
             {
-                debugger;
+              
                 $(".pgrHistoryAppointment").show();
                
                 var xmlDoc = $.parseXML(response.d);
@@ -1012,11 +1012,8 @@
                 if (AllAppointments.length > 0) {
                    // var tempdd='<select name="hall" id="hall" value="3"><option>Present</option> <option>Cancel</option></select>';
                     $.each(AllAppointments, function () {
-                       
-                        debugger;
-                       
-                        //$("td", TodayAppoRow).eq(1).html($('<img />')
-                        // .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
+                         //$("td", TodayAppoRow).eq(1).html($('<img />')
+                         // .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
                         $("td", TodayAppoRow).eq(2).html($(this).find("Name").text());
                         $("td", TodayAppoRow).eq(3).html($(this).find("Location").text());
@@ -1026,30 +1023,76 @@
                        
                         var appointid=$(this).find("AppointmentID").text();
                         var currntrowobj=$(this);
-                        if(currntrowobj.find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
+                        var registerflag=currntrowobj.find("IsRegistered").text();
+                        var appointstatus=currntrowobj.find("AppointmentStatus").text();
+                        //if(currntrowobj.find("PatientID").text()=='00000000-0000-0000-0000-000000000000')
                         //if(currntrowobj.find("AppointmentStatus").text()=='0')//appointed:0
+                        if(registerflag =='false')
                         {
-  
                             $("td", TodayAppoRow).removeClass("reged");
                             $("td", TodayAppoRow).eq(0).html($('<img />')
                             .attr('src', "" + '../images/NonregisteredUSer.png' + ""));
                             $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="0">Absent</option></select>');
                         }
                         //  if(currntrowobj.find("PatientID").text()!='00000000-0000-0000-0000-000000000000')
-                        if(currntrowobj.find("AppointmentStatus").text()=='1')//present:1
+                        // if(currntrowobj.find("AppointmentStatus").text()=='1')//present:1
+                        debugger;
+                        if(registerflag =='true')
                         {
-                            $("td", TodayAppoRow).addClass("reged");
-                            $("td", TodayAppoRow).eq(0).html($('<img />'));
-                            $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Absent</option></select>');
+                            switch (appointstatus)
+                            {
+                                case "1":
+                                    $("td", TodayAppoRow).addClass("reged");
+                                    $("td", TodayAppoRow).eq(0).html($('<img />')); 
+                                    $("td", TodayAppoRow).eq(1).html('Present');
+                                    break;
+
+                                case "2":
+                                    $("td", TodayAppoRow).addClass("reged");
+                                    $("td", TodayAppoRow).eq(0).html($('<img />')); 
+                                    $("td", TodayAppoRow).eq(1).html('Absent');
+                                    break;
+
+                                case "4": 
+                                    $("td", TodayAppoRow).addClass("reged");
+                                    $("td", TodayAppoRow).eq(0).html($('<img />')); 
+                                    $("td", TodayAppoRow).eq(1).html('Consulted');
+                                    break;
+
+                                default: 
+                                    $("td", TodayAppoRow).addClass("reged");
+                                    $("td", TodayAppoRow).eq(0).html($('<img />'));
+                                    $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Absent</option></select>');
+                            }
+
+                            //if(currntrowobj.find("AppointmentStatus").text()=='1')
+                            //{
+                            //    $("td", TodayAppoRow).addClass("reged");
+                            //    $("td", TodayAppoRow).eq(0).html($('<img />')); 
+                            //    $("td", TodayAppoRow).eq(1).html('Present');
+                            //}
+                            //    if(currntrowobj.find("AppointmentStatus").text()=='4')//consulted:4
+                            //    {
+                            //        $("td", TodayAppoRow).addClass("reged");
+                            //        $("td", TodayAppoRow).eq(0).html($('<img />')); 
+                            //        $("td", TodayAppoRow).eq(1).html('Consulted');
+                            //    }
+                            //else
+                            //{
+                            //    $("td", TodayAppoRow).addClass("reged");
+                            //    $("td", TodayAppoRow).eq(0).html($('<img />'));
+                            //    $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Absent</option></select>');
+                            //}
                         }
-                        if(currntrowobj.find("AppointmentStatus").text()=='4')//consulted:4
-                        {
-                            $("td", TodayAppoRow).addClass("reged");
-                            $("td", TodayAppoRow).eq(0).html($('<img />')); 
-                            $("td", TodayAppoRow).eq(1).html('Consulted');
-                        }
+                        //if(currntrowobj.find("AppointmentStatus").text()=='4')//consulted:4
+                        //{
+                        //    $("td", TodayAppoRow).addClass("reged");
+                        //    $("td", TodayAppoRow).eq(0).html($('<img />')); 
+                        //    $("td", TodayAppoRow).eq(1).html('Consulted');
+                        //}
                         $("td", TodayAppoRow).eq(7).html(currntrowobj.find("PatientID").text());
                         $("td", TodayAppoRow).eq(8).html($(this).find("AppointmentStatus").text());
+                        $("td", TodayAppoRow).eq(9).html($(this).find("IsRegistered").text());
                         $("[id*=dtgTodaysAppointment]").append(TodayAppoRow);
                         TodayAppoRow = $("[id*=dtgTodaysAppointment] tr:last-child").clone(true);
                     });
@@ -1099,7 +1142,11 @@
                     $(this).find("td").eq(AppointStatusColumn.index()).css("display", "none");
                 });
 
-              
+                var IsRegisteredColumn = $("[id*=dtgTodaysAppointment] th:contains('IsRegistered')");
+                IsRegisteredColumn.css("display", "none");
+                $("[id*=dtgTodaysAppointment] tr").each(function () {
+                    $(this).find("td").eq(IsRegisteredColumn.index()).css("display", "none");
+                });
             };
 
             TodayAppoRow = null;
@@ -1524,6 +1571,7 @@ function AppointmentIsAbsent(Appointments)
                                         <asp:BoundField DataField="AppointmentID" HeaderText="AppointmentID"></asp:BoundField>
                                         <asp:BoundField DataField="PatientID" HeaderText="PatientID"></asp:BoundField>
                                         <asp:BoundField DataField="AppointmentStatus" HeaderText="AppointmentStatus"></asp:BoundField>
+                                        <asp:BoundField DataField="IsRegistered" HeaderText="IsRegistered"></asp:BoundField>
 
                                     </Columns>
                                 </asp:GridView>
