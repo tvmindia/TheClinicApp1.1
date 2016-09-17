@@ -19,7 +19,9 @@
     <script src="../js/timepicki.js"></script>
     <link href="../css/timepicki.css" rel="stylesheet" />
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
+    <script src="../js/bootstrap.min.js"></script>
      <style>
+        
         body {
             margin: 40px 10px;
             padding: 0;
@@ -34,6 +36,12 @@ display: block; float: left; text-align: center;
             max-width: 900px;
             margin: 0 auto;
         }
+        .drop
+   {
+        border-radius:5px;
+        border-color:lightgray;
+        
+    }
         /*td.fc-day.ui-widget-content.fc-today.ui-state-highlight {
             background-color: #a8d9f3;
         }*/
@@ -47,6 +55,9 @@ display: block; float: left; text-align: center;
         border-color:lightgray !important;
         
     }
+         select {
+    color: black;
+}
         .foo {
   float: left;
   width: 10px;
@@ -730,32 +741,54 @@ border-bottom-right-radius: 0px;
             }
             
             DoctorID = e.value;
-            $("#hdfDoctorID").val(DoctorID);
-            BindCalendar(DoctorID);
-            var jsonDrSchedule = {};
+            if(DoctorID!="--Select--")
+            {
+                $("#hdfDoctorID").val(DoctorID);
+                BindCalendar(DoctorID);
+                var jsonDrSchedule = {};
 
-            ////var Doctor = new Object();
-            ////Doctor.DoctorID = DoctorID;
+                ////var Doctor = new Object();
+                ////Doctor.DoctorID = DoctorID;
 
-            $('#hdnIsDrChanged').val("Yes");
+                $('#hdnIsDrChanged').val("Yes");
 
-            jsonDrSchedule = BindFullCalendarEvents(DoctorID);
-            if (jsonDrSchedule != undefined) {
+                jsonDrSchedule = BindFullCalendarEvents(DoctorID);
+                if (jsonDrSchedule != undefined) {
 
-                json = jsonDrSchedule;
+                    json = jsonDrSchedule;
 
-                ////BindScheduledDates();
+                    ////BindScheduledDates();
 
-                //---------------* Refreshing calender(By removing current json and adding the new one) *------------------//
-                //if ($('#calendar').find("#imgSelect").length != 0)
-                //{
+                    //---------------* Refreshing calender(By removing current json and adding the new one) *------------------//
+                    //if ($('#calendar').find("#imgSelect").length != 0)
+                    //{
               
-               // }
+                    // }
+                    $('#calendar').fullCalendar('removeEvents');
+
+                    // --- 1.previous events are retreived from  hiddenfield hdnAllEvents
+                    //---- 2.then event bg color is removed
+
+                    var Events = $('#hdnAllEvents').val(); //retrieve array
+
+                    if (Events != null && Events != "") {
+                        EventsToBeRemoved = JSON.parse(Events);
+
+                        for (var i = 0; i < EventsToBeRemoved.length; i++) {
+
+                            $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeClass('ui-state-highlight');
+                            $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeAttr('background-color');
+
+                        }
+
+                    }
+                    $('#calendar').fullCalendar('addEventSource', json);
+                    $('#calendar').fullCalendar('rerenderEvents');
+                }
+            }
+            else
+            {
                 $('#calendar').fullCalendar('removeEvents');
-
-                // --- 1.previous events are retreived from  hiddenfield hdnAllEvents
-                //---- 2.then event bg color is removed
-
                 var Events = $('#hdnAllEvents').val(); //retrieve array
 
                 if (Events != null && Events != "") {
@@ -769,8 +802,6 @@ border-bottom-right-radius: 0px;
                     }
 
                 }
-                $('#calendar').fullCalendar('addEventSource', json);
-                $('#calendar').fullCalendar('rerenderEvents');
             }
 
         }
@@ -837,9 +868,9 @@ border-bottom-right-radius: 0px;
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" >
                             <div class="grey_sec">
-                                <div class="search_div">
-                                     <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus"></asp:DropDownList>
-                                </div>
+                               <%-- <div class="search_div">--%>
+                                     <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" CssClass="drop" Width="210px" style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
+                               <%-- </div>--%>
                                 <ul class="top_right_links" >
                                     <li><a class="save" href="#"><span></span>Save</a></li>
                                     <li><a class="new" href="#"><span></span>New</a></li>

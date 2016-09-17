@@ -275,7 +275,7 @@ namespace TheClinicApp1._1.Appointment
                 ddlDoctor.DataBind();
                 if (ddlDoctor.Items.Count != 1)//checking number of doctors.if there is only one doctor, no need of select 
                 {
-                    ddlDoctor.Items.Insert(0, "--Select--");
+                    ddlDoctor.Items.Insert(0, "--Select Doctor--");
                 }
             }
 

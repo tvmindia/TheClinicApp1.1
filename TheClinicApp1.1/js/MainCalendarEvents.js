@@ -326,11 +326,21 @@ $(document).ready(function () {
             },
 
             eventMouseover: function (calEvent, jsEvent) {
+                debugger;
+                var dateString = moment(calEvent.start).format('YYYY-MM-DD');
+                //tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' + 'title: ' + ': ' + calEvent.title + '</br>' + 'start: ' + ': ' + calEvent.start + '</div>';
+
+
+                //$('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").append(tooltip);
+                //var dateString = moment(calEvent.start._i).format('YYYY-MM-DD');
+                //if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length == 1) {
+                //    $(".fc-day-number").append("<img id='imgSelect' src='../Images/add.png' title='Add Schedule' background-repeat: no-repeat !important; style='float: left;cursor:pointer;height:10px!important' />")
+                //}
             },
 
             eventMouseout: function (calEvent, jsEvent) {
                 $(this).css('z-index', 8);
-                $('.tooltipevent').remove();
+                $('.tooltiptopicevent').remove();
             },
 
             eventLimit: true, // allow "more" link when too many events
@@ -351,9 +361,9 @@ $(document).ready(function () {
                
 
                 if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length == 0) {
-                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' onclick='CustomClick();' style='float: left;	background-repeat: no-repeat;cursor:pointer;height:10px!important' />")
+                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' onclick='CustomClick();' style='float: left;	background-repeat: no-repeat !important;cursor:pointer !important;height:10px!important' />")
                 }
-                
+              
                 },
             events: json,
             viewDisplay: function getDate(date) {
