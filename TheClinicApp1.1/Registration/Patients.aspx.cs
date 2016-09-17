@@ -331,30 +331,31 @@ namespace TheClinicApp1._1.Registration
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
             PatientObj.ClinicID = UA.ClinicID;
-            DataSet dsPatient = PatientObj.GetPatientDetailsByID();
+            //DataSet dsPatient =
+            PatientObj.GetPatientDetailsByID();
 
 
             string jsonResult = null;
-            DataSet ds = null;
-            ds = dsPatient;
+           // DataSet ds = null;
+            //ds = dsPatient;
 
             //Converting to Json
             JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
-            Dictionary<string, object> childRow;
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow row in ds.Tables[0].Rows)
-                {
-                    childRow = new Dictionary<string, object>();
-                    foreach (DataColumn col in ds.Tables[0].Columns)
-                    {
-                        childRow.Add(col.ColumnName, row[col]);
-                    }
-                    parentRow.Add(childRow);
-                }
-            }
-            jsonResult = jsSerializer.Serialize(parentRow);
+           // List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+            //Dictionary<string, object> childRow;
+            //if (ds.Tables[0].Rows.Count > 0)
+           // {
+                //foreach (DataRow row in ds.Tables[0].Rows)
+                //{
+                   // childRow = new Dictionary<string, object>();
+                  //  foreach (DataColumn col in ds.Tables[0].Columns)
+                 //   {
+                  //      childRow.Add(col.ColumnName, row[col]);
+                 //   }
+                //    parentRow.Add(childRow);
+               // }
+           // }
+            jsonResult = jsSerializer.Serialize(PatientObj);
 
             return jsonResult; //Converting to Json
         }

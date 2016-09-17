@@ -303,7 +303,7 @@
             $(function () {
                 $("[id*=GridViewTokenlist] td:eq(0)").click(function () { 
                     
-                  
+                  debugger;
                     PatientID = $(this).closest('tr').find('td:eq(6)').text();
 
                     var UniqueID  = $(this).closest('tr').find('td:eq(7)').text();
@@ -337,6 +337,7 @@
             //-------------------------------- *END : VIEW Button Click * ------------------------- //
 
             function GetPatientDetailsByID(Patient) {
+                debugger;
                 var ds = {};
                 var table = {};
                 var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
@@ -346,30 +347,21 @@
             }
 
             function BindControlsWithPatientDetails(Records) {
-                $.each(Records, function (index, Records) {
-                   
-                    $("#<%=lblPatientName.ClientID %>").text(Records.Name);
-                    $("#<%=lblDoctor.ClientID %>").text(Records.DOCNAME);
+                   debugger;
+                    $("#<%=lblPatientName.ClientID %>").text(Records.Name);                 
                     $("#<%=lblFileNum.ClientID %>").text(Records.FileNumber);
                     $("#<%=lblGenderDis.ClientID %>").text(Records.Gender);
                     $("#<%=HiddenField1.ClientID %>").val(Records.PatientID); 
+                    $("#<%=HiddenField2.ClientID %>").val(Records.FileID);
                     $("#<%=HiddenPatientID.ClientID %>").val(Records.PatientID); 
-                 
+                    $("#<%=lblAgeCount.ClientID %>").text(Records.Age) ;
                     var patientid = Records.PatientID;
-                   
-                    //---- Age Calculation By substracting DOB year from Current year
-
-                    var DOB = new Date(Date.parse(ConvertJsonToDate(Records.DOB),"MM/dd/yyyy"));
-                    var Age = (new Date().getFullYear() )-   (DOB.getFullYear());
-                    $("#<%=lblAgeCount.ClientID %>").text(Age) ;
-
                     var   imagetype =Records.ImageType;
-
                     var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
 
                     if (imagetype != '')
                     {
-                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
+                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + Records.PatientID;
                     }
                     else
                     {
@@ -377,7 +369,6 @@
                     }
 
                     $("#DoctrClose").click();
-                });
             }
 
 

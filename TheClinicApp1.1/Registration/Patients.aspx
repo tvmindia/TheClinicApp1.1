@@ -14,14 +14,12 @@
                 border-left: 5px solid #a94442;
                 padding-left: 15px;
             }
-
-                #errors li {
-                    list-style-type: none;
-                }
-
-                    #errors li:before {
-                        content: '\b7\a0';
-                    }
+            #errors li {
+                list-style-type: none;
+            }
+            #errors li:before {
+               content: '\b7\a0';
+            }
         </style>
 
         <style>
@@ -67,8 +65,7 @@
                     font-size: 16px;
                 }
                  .reged{background-color: #ECFCEA!important;} 
-
-                .even{background-color: white;} 
+                 .even{background-color: white;} 
 
                 
             
@@ -318,10 +315,11 @@
             }
 
             function GetPatientDetailsByID(Patient) {
+                debugger;
                 var ds = {};
                 var table = {};
                 var data = "{'PatientObj':" + JSON.stringify(Patient) + "}";
-                ds = getJsonData(data, "../Registration/Patients.aspx/GetAppointedPatientDetails");
+                ds = getJsonData(data, "../Registration/Patients.aspx/BindPatientDetailsOnEditClick");
                 table = JSON.parse(ds.d);
                 return table;
             }
@@ -334,13 +332,12 @@
                 table = JSON.parse(ds.d);
                 return table;
             }
-
+            //Click event function for search patient and bind
             function BindPatientDetails()
             {
                 var jsonPatient = {};
                 var SearchItem = $('#txtSearch').val();
                 var Patient = new Object();
-
                 if(SearchItem != '')
                 { 
                     Patient.Name = SearchItem;
@@ -351,11 +348,9 @@
                           
                         BindPatient(jsonPatient);
                     }
-
-                }      
-
+                }
             }
-
+            //Get Whole data using json and server side code  search
             function GetPatientDetails(Patient) {
 
                 var ds = {};
@@ -365,10 +360,9 @@
                 table = JSON.parse(ds.d);
                 return table;
             }
-
+            //Bind Registration form from search
             function BindPatient(Records)
             {
-              
                 $("#<%=txtName.ClientID %>").val(Records.Name);
                 $("#<%=txtAge.ClientID %>").val(Records.Age);
                 $("#<%=txtAddress.ClientID %>").val(Records.Address);
@@ -377,8 +371,6 @@
                 $("#<%=txtOccupation.ClientID %>").val(Records.Occupation);
                 $("#<%=Hdnimagetype.ClientID %>").val(Records.ImageType);
                 $("#<%=HiddenField1.ClientID %>").val(Records.PatientID);
-           
-
                 if (Records.Gender ==  "Male") {
                     $("#<%=rdoMale.ClientID %>").prop('checked', true);
                 }
@@ -387,35 +379,22 @@
                 }
 
                 $("#<%=ddlMarital.ClientID %> option:contains(" + Records.MaritalStatus + ")").attr('selected', 'selected');
-
-
                 var   imagetype =Records.ImageType;
                 var patientid = Records.PatientID;
-                var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
-
-             if (imagetype != '')
-             {
-                      
-
-                 ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
-             }
-             else
-             {
-                 ProfilePic.src = "../images/UploadPic1.png";
-             }
-
-             var DOB = new Date(Date.parse(ConvertJsonToDate(Records.DOB),"MM/dd/yyyy"));
-             var Age = (new Date().getFullYear() )-   (DOB.getFullYear());
-
-             $("#<%=txtAge.ClientID %>").val(parseInt(Age)) ;
-               
+                var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>");
+                if (imagetype != '')
+                {
+                    ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + Records.PatientID;
                 }
+                else
+                {
+                   ProfilePic.src = "../images/UploadPic1.png";
+                }
+            }
 
-
+            //Bind Registration form from Edit click in modal popup
             function BindControlsWithPatientDetails(Records) 
             {
-                    $.each(Records, function (index, Records) {
-                   
                     $("#<%=txtName.ClientID %>").val(Records.Name);
                     $("#<%=txtAge.ClientID %>").val(Records.Age);
                     $("#<%=txtAddress.ClientID %>").val(Records.Address);
@@ -434,28 +413,20 @@
 
                     $("#<%=ddlMarital.ClientID %> option:contains(" + Records.MaritalStatus + ")").attr('selected', 'selected');
 
-                    var   imagetype =Records.ImageType;
+                    var imagetype =Records.ImageType;
                     var patientid =  Records.PatientID;
                     var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
 
                     if (imagetype != '')
                     {
-                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
+                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + Records.PatientID;
                     }
                     else
                     {
                         ProfilePic.src = "../images/UploadPic1.png";
                     }
-
-                    var DOB = new Date(Date.parse(ConvertJsonToDate(Records.DOB),"MM/dd/yyyy"));
-                    var Age = (new Date().getFullYear() )-   (DOB.getFullYear());
-
-                    $("#<%=txtAge.ClientID %>").val(parseInt(Age)) ;
-                });
-
-                $("#AllRegistrationClose").click();
-
-            }
+                    $("#AllRegistrationClose").click();
+                }
 
 
 
@@ -604,6 +575,7 @@
             //------------------------------- * All Registration Edit Click * -------------------------------//
 
             $(function () {
+                debugger;
                 $("[id*=GridView1] td:eq(0)").click(function () { 
 
                     PatientID = $(this).closest('tr').find('td:eq(5)').text();
@@ -654,6 +626,7 @@
             //------------------------------- * Today's Appointment Edit Click * -------------------------------//
 
             $(function () {
+                debugger;
                 $("[id*=dtgTodaysAppointment] td:eq(0)").click(function () { 
                    
                     if($(this).closest('tr').find('td:eq(7)').text()=='00000000-0000-0000-0000-000000000000')//patientid
@@ -873,6 +846,7 @@
                         if(parseInt(GridRowCount,10)>="99")
                         {
                             $("#<%=lblRegCount.ClientID %>").text("99+");
+                            $("#<%=lblRegCount.ClientID %>").css('font-size','11px');
                         }
                         else
                         {
@@ -1253,8 +1227,8 @@ function AppointmentIsAbsent(Appointments)
                 <div class="grey_sec">
                     <div class="search_div">
 
-                        <input class="field" type="search" id="txtSearch" onblur="bindPatient()" name="txtSearch" placeholder="Search patient..." />
-                        <input class="button" type="button" id="btnSearch" value="Search" runat="server" onserverclick="btnSearch_ServerClick" disabled />
+                        <input class="field" type="search" id="txtSearch" name="txtSearch" placeholder="Search patient..." />
+                        <input class="button" type="button" id="btnSearch" value="Search" runat="server" disabled="disabled"/>
                     </div>
                     <ul class="top_right_links">
                         <li>
