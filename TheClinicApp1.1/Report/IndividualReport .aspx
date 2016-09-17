@@ -463,6 +463,12 @@
 
         }
 
+        function BackToReportList()
+        {
+
+            window.top.location.href = "ReportsList.aspx"; 
+           
+        }
 
     </script>
 
@@ -483,9 +489,17 @@
                  <tr>
 
                      <td style="width:90%"></td>
-                      <td style="width:3%">  <img src="../Images/back-button.png" style="cursor: pointer;width:50px!important;height:30px!important" title="Back"  align="right"  /></td>
-                      <td style="width:3%">  <img src="../Images/printer.png" style="cursor: pointer;width:50px!important;height:30px!important" title="Print"  align="right" onclick="return PrintPanel();" /></td>
-                      <td style="width:4%"> <img src="../Images/up-arrow.png" id="UpIcon" style="cursor: pointer; display: none;width:40px!important;height:30px!important" title="Hide"  align="right" />
+                      <td style="width:3%">  
+                         
+    <img src="../Images/back-button.png" style="cursor: pointer;width:40px!important;height:30px!important" title="Back" onclick="BackToReportList()"  align="right"  />
+
+                          
+                          
+                         
+
+                      </td>
+                      <td style="width:3%">  <img src="../Images/printer.png" style="cursor: pointer;width:40px!important;height:30px!important" title="Print"  align="right" onclick="return PrintPanel();" /></td>
+                      <td style="width:3%"> <img src="../Images/up-arrow.png" id="UpIcon" style="cursor: pointer; display: none;width:40px!important;height:30px!important" title="Hide"  align="right" />
                             <img src="../Images/searchPanel.png"  id="searchIcon" style="cursor: pointer;width:40px!important;height:30px!important" title="Search" align="right" />
                       </td>
 

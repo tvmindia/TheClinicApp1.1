@@ -289,7 +289,7 @@ border-radius: 50%;
 }
 
 a.all_registration_link {position: fixed; top: 350px; right: 17px; display: inline-block; z-index: 9999; width: 62px; height: 62px;}
-a.all_registration_link span.count {font-size:11px;position: absolute; top: -15px; right: 5px; background: #079ad3; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
+a.all_registration_link span.count {position: absolute; top: -15px; right: 5px; background: #079ad3; color: #fff; padding: 2px; width: 24px; height: 24px; text-align: center; line-height: 20px;
 -webkit-border-radius: 50%;
 -moz-border-radius: 50%;
 border-radius: 50%;

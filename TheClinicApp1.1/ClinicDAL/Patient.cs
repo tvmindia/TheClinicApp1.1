@@ -66,6 +66,11 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+        public string Age
+        {
+            get;
+            set;
+        }
         public string Address
         {
             get;
@@ -1079,10 +1084,11 @@ namespace TheClinicApp1._1.ClinicDAL
 
         }
 
-        public DataSet GetPatientDetailsByID()
+        public void GetPatientDetailsByID()
         {
-
-            DataSet ds = null;
+            DateTime date = DateTime.Now;
+            int year = date.Year;
+            DataTable ds = null;
             SqlConnection con = null;
             dbConnection dcon = new dbConnection();
             con = dcon.GetDBConnection();
@@ -1091,10 +1097,31 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = cmd;
-            ds = new DataSet();
+            ds = new DataTable();
             adapter.Fill(ds);
+            if(ds.Rows.Count>0)
+            {
+                 foreach (DataRow row in ds.Rows)
+                 {
+                    DateTime dt = Convert.ToDateTime(row["DOB"].ToString());
+                    int Agenow = year - dt.Year;
+                    Name=row["Name"].ToString();
+                    Age=Agenow.ToString();
+                    Gender=row["Gender"].ToString();
+                    Address = row["Address"].ToString();
+                    Phone = row["Phone"].ToString();
+                    Email = row["Email"].ToString();
+                    MaritalStatus = row["MaritalStatus"].ToString();
+                    Occupation = row["Occupation"].ToString();
+                    PatientID = Guid.Parse(row["PatientID"].ToString());
+                    ImageType = row["ImageType"].ToString();
+                    FileNumber = row["FileNumber"].ToString();
+                    FileID = Guid.Parse(row["FileID"].ToString());
+
+                 }
+                
+            }
             con.Close();
-            return ds;
 
         }
 
