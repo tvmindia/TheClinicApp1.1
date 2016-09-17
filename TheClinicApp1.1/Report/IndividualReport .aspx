@@ -335,7 +335,7 @@
                     liHTML =   column + " = "+value ;
                 }
 
-                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width:55%;overflow:hidden;text-overflow:hidden" >'+liHTML+'</div>'+" " +'<div  style="width:10%"><img style="cursor: pointer; width: 13px; height: 6px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
+                li.innerHTML =  '<div style="flex-flow: wrapfloat: inherit;display: inline-flex;width:100%"><div style="width:55%;overflow:hidden;text-overflow:hidden" >'+liHTML+'</div>'+" " +'<div  style="width:10%"><img style="cursor: pointer; width: 13px; height: 9px;" src="../Images/delete-cross.png" title="Remove this condition" onclick="RemoveConditionsFromArray('+i+')"/></div></div>';
 
                
                 WhereCondition.push(Condition);
@@ -652,14 +652,16 @@
 
     <%--<asp:Button ID="btnPrint" runat="server" Text="Print" class="btn btn-primary button"  OnClientClick="return PrintPanel();" />--%>
 
-
-
+   
     <asp:Panel ID="pnlContents" runat="server">
-
+      
         <div class="col-lg-12">
 
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
+                <br />
+
+                
                 <asp:PlaceHolder ID="PlaceHolder3" runat="server" />
             </div>
 
