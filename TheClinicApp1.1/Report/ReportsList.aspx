@@ -191,7 +191,7 @@ table td{
       </div>--%>
 
           
-               <div class="row field_row" id="ReprtList">
+               <div  id="ReprtList">
 
                                      
 
