@@ -484,8 +484,8 @@
 
                      <td style="width:90%"></td>
                       <td style="width:3%">  <img src="../Images/printer.png" style="cursor: pointer;width:50px!important;height:30px!important" title="Print"  align="right" onclick="return PrintPanel();" /></td>
-                      <td style="width:4%"> <img src="../Images/up-arrow.png" id="UpIcon" style="cursor: pointer; display: none;width:50px!important;height:30px!important" title="Hide"  align="right" />
-                            <img src="../Images/searchPanel.png"  id="searchIcon" style="cursor: pointer;width:50px!important;height:30px!important" title="Search" align="right" />
+                      <td style="width:4%"> <img src="../Images/up-arrow.png" id="UpIcon" style="cursor: pointer; display: none;width:40px!important;height:30px!important" title="Hide"  align="right" />
+                            <img src="../Images/searchPanel.png"  id="searchIcon" style="cursor: pointer;width:40px!important;height:30px!important" title="Search" align="right" />
                       </td>
 
                      <%-- 
@@ -553,7 +553,7 @@
                             <asp:TextBox ID="txtvalue" runat="server" Width="100%"></asp:TextBox>
                         </div>
 
-                        <div class="col-lg-2 ">
+                        <div class="col-lg-1 ">
 
                             <label for="name" style="color: white">Add</label>
 
@@ -565,6 +565,13 @@
 
                             <%--<img id="imgAddIcon" src="../Images/swipe-to-right.png" onclick="return AddCondition();" alt="" style="cursor: pointer; width: 15px; height: 15px;" />--%>
                         </div>
+
+                           <div class="col-lg-1">
+
+                     <label for="name" style="text-align: center; color: white;">Refresh</label>
+
+                    <asp:ImageButton ID="imgbtnRefresh" runat="server" OnClientClick="Refresh()"  ImageUrl="../Images/reload.png" Style="cursor: pointer; " OnClick="imgbtnRefresh_Click" ToolTip="Refresh"  />
+                </div>
 
                     </div>
 
@@ -580,12 +587,7 @@
                     
                 </div>
 
-                <div class="col-lg-1">
-
-                     <label for="name" style="text-align: center; color: white;">Refresh</label>
-
-                    <asp:ImageButton ID="imgbtnRefresh" runat="server" OnClientClick="Refresh()"  ImageUrl="../Images/reload.png" Style="cursor: pointer; " OnClick="imgbtnRefresh_Click" ToolTip="Refresh"  />
-                </div>
+             
 
                 <div class="col-lg-12">
 
