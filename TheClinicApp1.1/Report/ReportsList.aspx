@@ -45,8 +45,7 @@ table td{
     font-weight:100;
 }*/
 
-
-.tab, tr, td,th {
+.tab tr td th {
  
     border: none;
   
