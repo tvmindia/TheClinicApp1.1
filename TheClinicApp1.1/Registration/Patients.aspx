@@ -64,7 +64,9 @@
                     font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
                     font-size: 16px;
                 }
-                 .reged{background-color: #ECFCEA!important;} 
+                 .reged{background-color: #ECFCEA!important;}
+                 .presnt {background-color:	#eaecfc!important;}
+                 .absent {background-color: #fceaec !important;}
                  .even{background-color: white;} 
 
                 
@@ -1003,10 +1005,22 @@
                         //if(currntrowobj.find("AppointmentStatus").text()=='0')//appointed:0
                         if(registerflag =='false')
                         {
-                            $("td", TodayAppoRow).removeClass("reged");
-                            $("td", TodayAppoRow).eq(0).html($('<img />')
-                            .attr('src', "" + '../images/NonregisteredUSer.png' + ""));
-                            $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="0">Absent</option></select>');
+                            switch (appointstatus)
+                            {
+                                case "2":
+                                    $("td", TodayAppoRow).addClass("absent");
+                                $("td", TodayAppoRow).eq(0).html($('<img />')); 
+                                $("td", TodayAppoRow).eq(1).html('Absent');
+                                break;
+                                default: 
+                                    $("td", TodayAppoRow).removeClass("reged");
+                                    $("td", TodayAppoRow).eq(0).html($('<img />')
+                                    .attr('src', "" + '../images/NonregisteredUSer.png' + ""));
+                                    $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="0">Absent</option></select>');
+
+                            }
+
+                          
                         }
                         //  if(currntrowobj.find("PatientID").text()!='00000000-0000-0000-0000-000000000000')
                         // if(currntrowobj.find("AppointmentStatus").text()=='1')//present:1
@@ -1016,13 +1030,13 @@
                             switch (appointstatus)
                             {
                                 case "1":
-                                    $("td", TodayAppoRow).addClass("reged");
+                                    $("td", TodayAppoRow).addClass("presnt");
                                     $("td", TodayAppoRow).eq(0).html($('<img />')); 
                                     $("td", TodayAppoRow).eq(1).html('Present');
                                     break;
 
                                 case "2":
-                                    $("td", TodayAppoRow).addClass("reged");
+                                    $("td", TodayAppoRow).addClass("absent");
                                     $("td", TodayAppoRow).eq(0).html($('<img />')); 
                                     $("td", TodayAppoRow).eq(1).html('Absent');
                                     break;
