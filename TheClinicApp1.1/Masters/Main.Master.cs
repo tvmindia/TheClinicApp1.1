@@ -50,7 +50,7 @@ namespace TheClinicApp1._1.Masters
             }
             if(lblClinic!=null)
             {
-                lblClinic.Text = "ClinicLite";
+                lblClinic.Text = "";
             }
                        
             lblUser.Text = "👤 " + Login + " ";

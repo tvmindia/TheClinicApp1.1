@@ -68,6 +68,12 @@
                  .presnt {background-color:	#eaecfc!important;}
                  .absnt {background-color: #fceaec!important;}
                  .even{background-color: white;} 
+                 .imagelogo{
+                     position: absolute;
+                     top: -34%;
+                     left: 36%;
+                     height: 120%;
+                 }
 
                 
             
@@ -256,14 +262,12 @@
                 }
 
             }
-        
+    
             function OpenModal(id){
                 if(id=='1')            
                 {
                     $('#txtSearchPatient').val('');
-
                     $('#myModal').modal('show');
-
                     GetAllPatients(1);
                 }
                 else if(id==2)
@@ -278,7 +282,6 @@
                     $('#TodaysAppointment').modal('show');
                     GetTodayPatientAppointments(1);
                 }
-
             }
         </script>
         <script>
@@ -1270,7 +1273,7 @@ function AppointmentIsAbsent(Appointments)
                     <li id="log" runat="server"><a class="logout" name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
 
                 </ul>
-                <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
+                <p class="copy"><img class="imagelogo" src="../Logo.png" /><asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
             </div>
 
             <!-- Right Main Section -->

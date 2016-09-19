@@ -554,7 +554,7 @@
                                  <div class="row field_row" id="dropdivclinic" runat="server" visible="false">
                                     <div class="col-lg-8">
                                         <label for="name">Select Clinic</label>
-                                         <asp:DropDownList ID="ddlGroup" runat="server" Width="100%" Height="31px" AutoPostBack="true" OnSelectedIndexChanged="ddlGroup_SelectedIndexChanged" CssClass="drop">             
+                                         <asp:DropDownList ID="ddlGroup" runat="server" Width="100%" Height="31px" OnSelectedIndexChanged="ddlGroup_SelectedIndexChanged" CssClass="drop">             
                                      </asp:DropDownList>
                                     </div>
                                 </div>
