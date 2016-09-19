@@ -144,9 +144,9 @@ $(document).ready(function () {
             editable: false,
             viewRender: function (view, element) {
 
-                var add_url = '<a class="tip add-task" title="" href="#"\n\
-        data-original-title="Dodaj zadanie" onClick="CustomClick();" style="height:25px;margin-left:100px;margin-top:50px;"><img src="../img/add.png" width="25px;"/></a>';
-                $(".fc-more-cell").prepend(add_url);
+        //        var add_url = '<a class="tip add-task" title="" href="#"\n\
+        //data-original-title="Dodaj zadanie" onClick="CustomClick();" style="height:25px;margin-left:100px;margin-top:50px;"><img src="../img/add.png" width="25px;"/></a>';
+        //        $(".fc-more-cell").prepend(add_url);
                 
             },
             eventDrop: function (event, delta, revertFunc) {
@@ -328,14 +328,15 @@ $(document).ready(function () {
             eventMouseover: function (calEvent, jsEvent) {
                 debugger;
                 var dateString = moment(calEvent.start).format('YYYY-MM-DD');
+                
                 //tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' + 'title: ' + ': ' + calEvent.title + '</br>' + 'start: ' + ': ' + calEvent.start + '</div>';
 
 
                 //$('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").append(tooltip);
                 //var dateString = moment(calEvent.start._i).format('YYYY-MM-DD');
-                //if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length == 1) {
-                //    $(".fc-day-number").append("<img id='imgSelect' src='../Images/add.png' title='Add Schedule' background-repeat: no-repeat !important; style='float: left;cursor:pointer;height:10px!important' />")
-                //}
+                if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length == 1) {
+                    $('#calendar').find(".fc-day #imgSelect").css('cursor', 'pointer');
+                }
             },
 
             eventMouseout: function (calEvent, jsEvent) {
@@ -358,10 +359,27 @@ $(document).ready(function () {
                 //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#b3d4fc!important' });
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
-               
+                debugger;
 
-                if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length == 0) {
-                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' onclick='CustomClick();' style='float: left;	background-repeat: no-repeat !important;cursor:pointer !important;height:10px!important' />")
+                if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length ==0) {
+
+                //if ($('#calendar').find('.fc-day[data-date="' + dateString + '"]'))
+                //{
+                //    $(".fc-day-number").append("<img id='imgSelect' src='../Images/add.png' title='Add Schedule' style='float: left;cursor:pointer;height:10px!important' />")
+                //}
+                //else
+                //{
+                //    $(".fc-day-number").find("#imgSelect").remove();
+                //}
+
+
+                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment'  style='float: left;	background-repeat: no-repeat !important;cursor:pointer !important;height:10px!important' />")
+
+                    //$(".fc-day-number").append("<img id='imgSelect' src='../Images/add.png' title='Add Schedule' style='float: left;cursor:pointer;height:10px!important' />")
+                    //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' onclick='CustomClick();' style='float: left;	background-repeat: no-repeat !important;cursor:pointer !important;height:10px!important' />")
+                    //if ($('.fc-day[data-date="' + dateString + '"]')== 1) {
+                    //    $('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").remove();
+                    //}
                 }
               
                 },
@@ -377,7 +395,8 @@ $(document).ready(function () {
                 else {
                     $(".fc-button-prev").css("display", "inline-block");
                 }
-               
+                $('img').css('cursor', 'pointer');
+                //$('.fc-view').find('td').css('cursor', 'pointer');
             }
             
         });

@@ -424,7 +424,8 @@
             }
             
             DoctorID = e.value;
-            if(DoctorID!="--Select--")
+            
+            if(DoctorID!="--Select Doctor--")
             {
                 $("#hdfDoctorID").val(DoctorID);
                 BindCalendar(DoctorID);
