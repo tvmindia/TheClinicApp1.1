@@ -217,7 +217,7 @@
                     }
                     else
                     {
-                        alert("Please select a time");             
+                        alert("Please select appointment time");             
                     }
                    
                 }
