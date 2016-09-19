@@ -66,7 +66,7 @@
                 }
                  .reged{background-color: #ECFCEA!important;}
                  .presnt {background-color:	#eaecfc!important;}
-                 .absent {background-color: #fceaec !important;}
+                 .absnt {background-color: #fceaec!important;}
                  .even{background-color: white;} 
 
                 
@@ -83,6 +83,8 @@
         <script src="../js/DeletionConfirmation.js"></script>
         <script src="../js/Messages.js"></script>
         <script src="../js/Dynamicgrid.js"></script>
+        <script src="../js/moment.min.js"></script>
+        <script src="../Scripts/Common/Common.js"></script>
         <!---   Script for fileupload preview & FileType Checking  Created By:Thomson Kattingal --->
         <script type="text/javascript">
             function showpreview(input) 
@@ -994,7 +996,7 @@
                         $("td", TodayAppoRow).eq(2).html($(this).find("Name").text());
                         $("td", TodayAppoRow).eq(3).html($(this).find("Location").text());
                         $("td", TodayAppoRow).eq(4).html($(this).find("Mobile").text());
-                        $("td", TodayAppoRow).eq(5).html($(this).find("AllottingTime").text());
+                        $("td", TodayAppoRow).eq(5).html(ConvertTimeFormatFrom24hrTo12hr($(this).find("AllottingTime").text()));
                         $("td", TodayAppoRow).eq(6).html($(this).find("AppointmentID").text());
                        
                         var appointid=$(this).find("AppointmentID").text();
@@ -1008,12 +1010,17 @@
                             switch (appointstatus)
                             {
                                 case "2":
-                                    $("td", TodayAppoRow).addClass("absent");
+                                    $("td", TodayAppoRow).removeClass("reged");
+                                    $("td", TodayAppoRow).removeClass("absnt");
+                                    $("td", TodayAppoRow).removeClass("presnt");
+                                    $("td", TodayAppoRow).addClass("absnt");
                                 $("td", TodayAppoRow).eq(0).html($('<img />')); 
                                 $("td", TodayAppoRow).eq(1).html('Absent');
                                 break;
                                 default: 
                                     $("td", TodayAppoRow).removeClass("reged");
+                                    $("td", TodayAppoRow).removeClass("absnt");
+                                    $("td", TodayAppoRow).removeClass("presnt");
                                     $("td", TodayAppoRow).eq(0).html($('<img />')
                                     .attr('src', "" + '../images/NonregisteredUSer.png' + ""));
                                     $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="0">Absent</option></select>');
@@ -1024,30 +1031,51 @@
                         }
                         //  if(currntrowobj.find("PatientID").text()!='00000000-0000-0000-0000-000000000000')
                         // if(currntrowobj.find("AppointmentStatus").text()=='1')//present:1
-                        debugger;
+                       
                         if(registerflag =='true')
                         {
                             switch (appointstatus)
                             {
+                                case "0":
+                                    $("td", TodayAppoRow).removeClass("reged");
+                                    $("td", TodayAppoRow).removeClass("absnt");
+                                    $("td", TodayAppoRow).removeClass("presnt");
+                                    $("td", TodayAppoRow).eq(0).html($('<img />'));
+                                    $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Absent</option></select>');
+                                break;
+
+
                                 case "1":
+                                    $("td", TodayAppoRow).removeClass("reged");
+                                    $("td", TodayAppoRow).removeClass("absnt");
+                                    $("td", TodayAppoRow).removeClass("presnt");
                                     $("td", TodayAppoRow).addClass("presnt");
                                     $("td", TodayAppoRow).eq(0).html($('<img />')); 
                                     $("td", TodayAppoRow).eq(1).html('Present');
                                     break;
 
                                 case "2":
-                                    $("td", TodayAppoRow).addClass("absent");
+                                    $("td", TodayAppoRow).removeClass("reged");
+                                    $("td", TodayAppoRow).removeClass("absnt");
+                                    $("td", TodayAppoRow).removeClass("presnt");
+                                    $("td", TodayAppoRow).addClass("absnt");
                                     $("td", TodayAppoRow).eq(0).html($('<img />')); 
                                     $("td", TodayAppoRow).eq(1).html('Absent');
                                     break;
 
                                 case "4": 
+                                    $("td", TodayAppoRow).removeClass("reged");
+                                    $("td", TodayAppoRow).removeClass("absnt");
+                                    $("td", TodayAppoRow).removeClass("presnt");
                                     $("td", TodayAppoRow).addClass("reged");
                                     $("td", TodayAppoRow).eq(0).html($('<img />')); 
                                     $("td", TodayAppoRow).eq(1).html('Consulted');
                                     break;
 
                                 default: 
+                                    $("td", TodayAppoRow).removeClass("reged");
+                                    $("td", TodayAppoRow).removeClass("absnt");
+                                    $("td", TodayAppoRow).removeClass("presnt");
                                     $("td", TodayAppoRow).addClass("reged");
                                     $("td", TodayAppoRow).eq(0).html($('<img />'));
                                     $("td", TodayAppoRow).eq(1).html('<select id=' + appointid +' name="Action" onchange="DDAction(this);"><option value="-1">--Select--</option><option value="1">Present</option><option value="0">Absent</option></select>');

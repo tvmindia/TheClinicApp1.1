@@ -1066,7 +1066,7 @@ namespace TheClinicApp1._1.ClinicDAL
              }
              if (ScheduleID == "")
              {
-                 throw new Exception("AppointmentID is Empty!!");
+                 throw new Exception("ScheduleID is Empty!!");
              }
              try
              {
