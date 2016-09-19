@@ -1068,7 +1068,7 @@ $(document).mouseup(function (e) {
         $.each(Records, function (index, Records) {
 
         
-            var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
+            var html = '<tr><td>' + Records.Name + '</td><td>' +ConvertTimeFormatFrom24hrTo12hr( Records.AllottingTime )+ '</td></tr>';
 
             $("#tbodyPatients").append(html);
            
