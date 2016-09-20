@@ -128,8 +128,8 @@ table
 </style>
 
 
-     <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
-    <%--<link href="../css/main.css" rel="stylesheet" />--%>
+    <%-- <link href="../css/TheClinicApp.css" rel="stylesheet" />
+    <link href="../css/main.css" rel="stylesheet" />--%>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <%--<script src="../js/bootstrap.min.js"></script>--%>
@@ -571,9 +571,9 @@ table
                                                     </ItemTemplate>
                                                 </asp:TemplateField>--%>
 
-                                   <asp:BoundField DataField="Name" HeaderText="Name">
+                                   <asp:BoundField DataField="Name" HeaderText="Name" ItemStyle-CssClass="Match">
                                 </asp:BoundField>
-                                <asp:BoundField DataField="Role" HeaderText="Assigned Role">                                   
+                                <asp:BoundField DataField="Role" HeaderText="Assigned Role" ItemStyle-CssClass="Match">                                   
                                 </asp:BoundField>                           
                                    
                                    <asp:BoundField DataField="UserID" HeaderText="UserID">   
