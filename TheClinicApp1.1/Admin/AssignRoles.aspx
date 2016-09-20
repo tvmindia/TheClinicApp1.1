@@ -322,7 +322,14 @@ table
 
                     $("td", row).eq(0).html($(this).find("FirstName").text());
 
-                    $("td", row).eq(1).html($(this).find("RoleNames").text());
+                    if ($(this).find("RoleNames").text() != "") {
+                        $("td", row).eq(1).html($(this).find("RoleNames").text());
+                    }
+
+                    else
+                    {
+                        $("td", row).eq(1).html('No roles');
+                    }
                    
                     $("td", row).eq(2).html($(this).find("UserID").text());
                   
