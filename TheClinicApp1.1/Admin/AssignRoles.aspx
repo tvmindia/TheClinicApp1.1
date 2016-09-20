@@ -552,10 +552,10 @@ table
                     <div class="col-lg-12" style="height: 480px">
 
                         <div class="col-lg-12" style="height: 40px">
-                          <%--  <div class="search_div">
+                            <div class="search_div">
                                 <input class="field1" type="text" placeholder="Search with Name.." id="txtSearchAssignedRole" />
                                 <input class="button3" type="button" value="Search" />
-                            </div>--%>
+                            </div>
                         </div>
 
 
