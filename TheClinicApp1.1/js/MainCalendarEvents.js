@@ -9,6 +9,7 @@ var schID = "";
 var checkItems = "";
 var scheduleId = "";
 $(document).ready(function () {
+    
     $('.alert_close').click(function () {
         $(this).parent(".alert").hide();
     });
@@ -322,11 +323,34 @@ $(document).ready(function () {
 
                     }
                 }
+                var dateString = moment(event.start).format('DD');
+
+                $('.fc-day-number').each(function () {
+
+                    var dayDate = moment(event.start).format('YYYY-MM-DD');
+
+                    var day = $(this).text();
+                    var dayTemp = day;
+
+                    if (day < 10) {
+                        day = "0" + day;
+                    }
+
+                    if (dateString == day) {
+
+                        if ($(this).attr('data-date') == dayDate) {
+
+                            $(this).html(dayTemp + "<img id='imgSelect' src='../Images/add.png' title='Add Appointment'  style='float: left;	background-repeat: no-repeat !important;cursor:pointer !important;height:10px!important' />");
+                        }
+
+                    }
+
+                });
               
             },
 
             eventMouseover: function (calEvent, jsEvent) {
-                debugger;
+               
                 var dateString = moment(calEvent.start).format('YYYY-MM-DD');
                 
                 //tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' + 'title: ' + ': ' + calEvent.title + '</br>' + 'start: ' + ': ' + calEvent.start + '</div>';
@@ -359,27 +383,14 @@ $(document).ready(function () {
                 //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#b3d4fc!important' });
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').addClass('ui-state-highlight')
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').css({ 'background-color': '#deedf7!important' });
-                debugger;
+               
 
                 if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length ==0) {
 
-                //if ($('#calendar').find('.fc-day[data-date="' + dateString + '"]'))
-                //{
-                //    $(".fc-day-number").append("<img id='imgSelect' src='../Images/add.png' title='Add Schedule' style='float: left;cursor:pointer;height:10px!important' />")
-                //}
-                //else
-                //{
-                //    $(".fc-day-number").find("#imgSelect").remove();
-                //}
 
 
                 $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment'  style='float: left;	background-repeat: no-repeat !important;cursor:pointer !important;height:10px!important' />")
-
-                    //$(".fc-day-number").append("<img id='imgSelect' src='../Images/add.png' title='Add Schedule' style='float: left;cursor:pointer;height:10px!important' />")
-                    //$('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment' onclick='CustomClick();' style='float: left;	background-repeat: no-repeat !important;cursor:pointer !important;height:10px!important' />")
-                    //if ($('.fc-day[data-date="' + dateString + '"]')== 1) {
-                    //    $('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").remove();
-                    //}
+              
                 }
               
                 },
