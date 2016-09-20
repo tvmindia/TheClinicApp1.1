@@ -463,6 +463,35 @@
                             $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeClass('ui-state-highlight');
                             $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeAttr('background-color');
 
+          var dateString = moment(EventsToBeRemoved[i]).format('DD');
+             
+                $('.fc-day-number').each(function () {
+                  
+                    var dayDate = moment(EventsToBeRemoved[i]).format('YYYY-MM-DD');
+                   
+                    var day = $(this).text();
+                    var dayTemp = day;
+                  
+                    if (day < 10)
+                    {
+                        day = "0" + day;
+                    }
+
+                    if (dateString == day) {
+                        
+                        if ($(this).attr('data-date') == dayDate ) {
+    
+                            $(this).html(dayTemp );
+                        }
+                       
+                    }
+
+                });
+
+
+
+
+
                         }
 
                     }
