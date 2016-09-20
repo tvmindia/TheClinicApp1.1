@@ -4,13 +4,13 @@
 
 <style type="text/css">
 
-table
+ #chkDiv table
 {
     width:150px!important;
     border-color:rgb(169, 169, 169);
     border:none!important;   
 }
- table td
+#chkDiv table td
 {
      border-top:none!important;
      height:31px!important;
@@ -45,7 +45,7 @@ table
     width:100%;
 }
 
-.modal table td {
+/*.modal table td {
     text-align: left;
     height:auto;
     border-top:1px solid lightgrey!important;
@@ -86,7 +86,7 @@ table
 {
     width:525px!important;
    
-}
+}*/
 @media (max-width:1168px)
 {
     .search_div input.field1 {
@@ -128,8 +128,8 @@ table
 </style>
 
 
-     <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
-    <%--<link href="../css/main.css" rel="stylesheet" />--%>
+    <%-- <link href="../css/TheClinicApp.css" rel="stylesheet" />
+    <link href="../css/main.css" rel="stylesheet" />--%>
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="../js/vendor/jquery-1.11.1.min.js"></script>
     <%--<script src="../js/bootstrap.min.js"></script>--%>
@@ -524,7 +524,7 @@ table
   
     <div class="col-lg-4" >  
         <label for="name">Role</label>	
-        <div class="checkbox checkboxlist col-sm-4"" >
+        <div class="checkbox checkboxlist col-sm-4"" id="chkDiv" >
 			 <asp:CheckBoxList ID="chklstRoles" runat="server"  ></asp:CheckBoxList>
 		</div>
         </div>
@@ -571,9 +571,9 @@ table
                                                     </ItemTemplate>
                                                 </asp:TemplateField>--%>
 
-                                   <asp:BoundField DataField="Name" HeaderText="Name">
+                                   <asp:BoundField DataField="Name" HeaderText="Name" ItemStyle-CssClass="Match">
                                 </asp:BoundField>
-                                <asp:BoundField DataField="Role" HeaderText="Assigned Role">                                   
+                                <asp:BoundField DataField="Role" HeaderText="Assigned Role" ItemStyle-CssClass="Match">                                   
                                 </asp:BoundField>                           
                                    
                                    <asp:BoundField DataField="UserID" HeaderText="UserID">   
