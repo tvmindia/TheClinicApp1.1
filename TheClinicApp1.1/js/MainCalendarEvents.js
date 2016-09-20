@@ -316,43 +316,33 @@ $(document).ready(function () {
                     }
                 }
 
-                debugger;
+               
+                //------------------------------ * Adding + Icon in calender cells having events * ---------------------------//
 
-                var dateString = moment(event.start).format('DD');
+                //full calender paints dates by class fc-day-number( it holds values like 1,2, 3....)
+                //loop through fc day number, check that having an event, then add + icon
+
+                var dateString = moment(event.start).format('DD');             // Access DD part of event date
 
                 $('.fc-day-number').each(function () {
 
-                    var dayDate = moment(event.start).format('YYYY-MM-DD');
+                    var dayDate = moment(event.start).format('YYYY-MM-DD');    // Access  event date
 
-                    var day = $(this).text();
-                    var dayTemp = day;
+                    var day = $(this).text();                                  // particular fc number
+                    var dayTemp = day;                                         // day value is stored to this temporary variable for later usage
 
-                    if (day < 10) {
+                    if (day < 10) {                                           // event date holds DD part of  eventdate in 2 digit form, so for eaziness to compare ,fc-day-number also cahnges to same format
                         day = "0" + day;
                     }
 
-                    if (dateString == day) {
-                        debugger;
-
-                        //var c= $(this).attr('data-date');
+                    if (dateString == day) {                                 // checking whether fc-day-number text and event date dd part are equal
+                        
 
 
-
-                        if ($(this).attr('data-date') == dayDate) {
+                        if ($(this).attr('data-date') == dayDate) {          // checking whether event date and particular date are equal, it means , the date having event,then add + icon
 
                             $(this).html(dayTemp + "<img id='imgSelect' src='../Images/add.png' title='Add Appointment'  style='float: left;	background-repeat: no-repeat !important;cursor:pointer !important;height:10px!important' />");
                         }
-
-
-
-
-
-                        //if ($(this).attr('data-date') != dayDate) {
-                        //    debugger;
-
-                        //    $(this).html(dayTemp);
-                        //}
-
 
                     }
 
