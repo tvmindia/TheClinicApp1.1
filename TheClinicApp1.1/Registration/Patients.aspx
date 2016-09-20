@@ -724,6 +724,7 @@
             };
 
             function GetTodayPatients(pageIndex) {
+               
                 $.ajax({
                     type: "POST",
                     url: "../Registration/Patients.aspx/ViewAndFilterTodayPatients",
@@ -733,17 +734,18 @@
                     success: TodayRegistrationSuccess,
                     failure: function (response) {
 
-                        alert(response.d);
+                        //alert(response.d);
                     },
                     error: function (response) {
 
-                        alert(response.d);
+                        //alert(response.d);
                     }
                 });
             }
 
             function GetTodayPatientAppointments(pageIndex)
             {
+              
                 $.ajax({
                     type: "POST",
                     url: "../Registration/Patients.aspx/ViewAndFilterTodayPatientAppointments",
@@ -753,11 +755,11 @@
                     success: TodayAppointmentSuccess,
                     failure: function (response) {
 
-                        alert(response.d);
+                       // alert(response.d);
                     },
                     error: function (response) {
 
-                        alert(response.d);
+                       // alert(response.d);
                     }
                 });
             }
