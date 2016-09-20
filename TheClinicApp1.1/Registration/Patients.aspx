@@ -71,7 +71,7 @@
                  .imagelogo{
                      position: absolute;
                      top: -34%;
-                     left: 36%;
+                     left: 0%;
                      height: 120%;
                  }
 
