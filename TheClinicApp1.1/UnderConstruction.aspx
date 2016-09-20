@@ -31,7 +31,7 @@ padding: 250px 650px 500px 250px;
             <asp:Image runat="server" ImageUrl="~/images/dbError.png" />
         </div>
         <div class="col-lg-10">
-             <asp:Label runat="server" CssClass="ErrorMsg" ID="lblErrorMsg" Text="Error Establishing a Database Connection..!!!"></asp:Label>
+             <asp:Label runat="server" CssClass="ErrorMsg" ID="lblErrorMsg" Text="DATABASE ERROR: CONNECTION FAILED! <br/>Unable to connect to the database..!!!"></asp:Label>
         </div>
     </div>
         </div>
