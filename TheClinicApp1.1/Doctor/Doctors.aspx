@@ -25,6 +25,9 @@
         <script src="../js/fileinput.js"></script>
          <script src="../js/DeletionConfirmation.js"></script>
         <script src="../js/Messages.js"></script>
+          <script src="../js/moment.min.js"></script>
+        <script src="../Scripts/Common/Common.js"></script>
+
         <script>
             function BindMedunitbyMedicneName(ControlNo) 
             {   
@@ -864,15 +867,12 @@
                         $("td", rowDoctor).eq(3).html($(this).find("Name").text());
 
 
-                        $("td", rowDoctor).eq(4).html($(this).find("DateTime").text());
+                        $("td", rowDoctor).eq(4).html(ConvertTimeFormatFrom24hrTo12hr($(this).find("DateTime").text()));
                       
 
                         if (($(this).find("IsProcessed").text()=="true")|| ($(this).find("IsProcessed").text()=="4")){
                             $("td", rowDoctor).addClass("selected_row");
-
                             $("td", rowDoctor).eq(5).html("Yes");
-
-                          
                         }
                         if (($(this).find("IsProcessed").text() == "false")|| ($(this).find("IsProcessed").text()=="1")) {
                             $("td", rowDoctor).removeClass("selected_row");
