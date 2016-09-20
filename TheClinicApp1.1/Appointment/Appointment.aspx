@@ -462,38 +462,30 @@
 
                             $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeClass('ui-state-highlight');
                             $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeAttr('background-color');
-
-                            //------------------------------ * Removing + Icon in calender cells not having events * ---------------------------//
-
-                            //full calender paints dates by class fc-day-number( it holds values like 1,2, 3....)
-                            //loop through fc day number,remove + icon from  EventsToBeRemoved
-
-
-                            var dateString = moment(EventsToBeRemoved[i]).format('DD');   // Access DD part of event (to be removed) date
+                            var dateString = moment(EventsToBeRemoved[i]).format('DD');
              
-                $('.fc-day-number').each(function () {
+                            $('.fc-day-number').each(function () {
                   
-                    var dayDate = moment(EventsToBeRemoved[i]).format('YYYY-MM-DD');     // Access  event(to be removed) date
+                                var dayDate = moment(EventsToBeRemoved[i]).format('YYYY-MM-DD');
                    
-                    var day = $(this).text();                                            // particular fc number
-                    var dayTemp = day;                                                   // day value is stored to this temporary variable for later usage
+                                var day = $(this).text();
+                                var dayTemp = day;
                   
-                    if (day < 10)                                                       // event date holds DD part of  eventdate in 2 digit form, so for eaziness to compare ,fc-day-number also cahnges to same format
-                    {
-                        day = "0" + day;
-                    }
+                                if (day < 10)
+                                {
+                                    day = "0" + day;
+                                }
 
-                    if (dateString == day) {                                          // checking whether fc-day-number text and event date dd part are equal  
+                                if (dateString == day) {
                         
-                        if ($(this).attr('data-date') == dayDate ) {                 // checking whether event(to be removed) date and particular date are equal, it means , the date not having event,then remove + icon
+                                    if ($(this).attr('data-date') == dayDate ) {
     
-                            $(this).html(dayTemp );
-                        }
+                                        $(this).html(dayTemp );
+                                    }
                        
-                    }
+                                }
 
-                });
-
+                            }); 
                         }
 
                     }

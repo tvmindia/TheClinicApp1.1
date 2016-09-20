@@ -20,6 +20,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Providers.Entities;
 using System.Web.UI;
 using TheClinicApp1._1.ClinicDAL;
 
@@ -195,21 +196,29 @@ namespace TheClinicApp1._1.ClinicDAL
                
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetLoginDetails", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@LoginName", SqlDbType.NVarChar, 50).Value = LoginName;
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = cmd;
-                dt = new DataTable();
-                adapter.Fill(dt);
-                con.Close();
-                
+               
+                    SqlCommand cmd = new SqlCommand("GetLoginDetails", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@LoginName", SqlDbType.NVarChar, 50).Value = LoginName;
+                    SqlDataAdapter adapter = new SqlDataAdapter();
+                    adapter.SelectCommand = cmd;
+                    dt = new DataTable();
+                    adapter.Fill(dt);
+                    con.Close();
+               
             }
             catch (Exception ex)
             {
+                if (con == null)
+                {
+                    HttpContext.Current.Session["dbError"] = "Error";
+                    HttpContext.Current.Response.Redirect("../underConstruction.aspx?cause=dbDown", true);
+                }
+                else
+                { 
                 var page = HttpContext.Current.CurrentHandler as Page;
                 eObj.ErrorData(ex, page);
-
+                    }
                 //eObj.Description = ex.Message;
                 //eObj.Module = Module;
 
