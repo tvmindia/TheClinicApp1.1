@@ -202,7 +202,6 @@
     <Content Include="images\categories-512 copy.png" />
     <Content Include="images\Check.png" />
     <Content Include="images\circular-arrows-couple.png" />
-    <Content Include="images\clinic.JPG" />
     <Content Include="images\ClinicEdit.PNG" />
     <Content Include="images\delete-cross.png" />
     <Content Include="images\Deleteicon1.png" />
@@ -216,8 +215,6 @@
     <Content Include="images\First.png" />
     <Content Include="images\gggg.png" />
     <Content Include="images\hand.png" />
-    <Content Include="images\HerbeInWhite.jpg" />
-    <Content Include="images\HerbNew.jpg" />
     <Content Include="images\HideSearch.png" />
     <Content Include="images\ic_security_black_24dp_1x.png" />
     <Content Include="images\ic_security_white_24dp_1x.png" />
@@ -258,7 +255,6 @@
     <Content Include="images\prev.gif" />
     <Content Include="images\Previous.png" />
     <Content Include="images\printer.png" />
-    <Content Include="images\profile_pic.png" />
     <Content Include="images\records.png" />
     <Content Include="images\refresh.png" />
     <Content Include="images\registerd.png" />
