@@ -771,11 +771,12 @@ namespace TheClinicApp1._1.Admin
          #region Page Load
 
          protected void Page_Load(object sender, EventArgs e)
-        {
+        {  
+             
             BindDummyRow();
 
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-         
+            hdnLoginedUserID.Value = UA.UserID.ToString();
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
