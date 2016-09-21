@@ -99,7 +99,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     html.Append("</br>");
                     html.Append("<table>");            //Table start.
 
-                    html.Append("<tr>");                           //Building the Header row.
+                    html.Append("<tr><thead>");                           //Building the Header row.
 
                     if (DisplaySerailNo == true)
                     {
@@ -143,7 +143,7 @@ namespace TheClinicApp1._1.ClinicDAL
                         }
                     }
 
-                    html.Append("</tr>");
+                    html.Append("</tr></thead>");
 
                     if (dt.Rows.Count == 0)
                     {
