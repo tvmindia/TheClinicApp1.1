@@ -198,7 +198,7 @@
         $(function () {
             $("[id*=dtgDoctors] td:eq(0)").click(function () {
 
-                $("#<%=txtLoginName.ClientID %>").attr("readonly", true);
+                $("#<%=txtLoginName.ClientID %>").attr("readonly", "readonly");
 
                 if ($(this).text() == "") {
 
