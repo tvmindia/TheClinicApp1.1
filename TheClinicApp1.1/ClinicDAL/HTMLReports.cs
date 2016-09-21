@@ -175,15 +175,18 @@ namespace TheClinicApp1._1.ClinicDAL
                     {
                         rowIndex = rowIndex + 1;
 
-                        if (rowIndex % 2 == 0)
-                        {
-                            html.Append("<tr class='even' style=' background-color: #e1e6ef;!important'>");
-                        }
 
-                        else
-                        {
-                            html.Append("<tr class='odd' style=' background-color: #ffffff;'>");
-                        }
+                        html.Append("<tr>");
+
+                        //if (rowIndex % 2 == 0)
+                        //{
+                        //    html.Append("<tr class='even' style=' background-color: #e1e6ef;!important'>");
+                        //}
+
+                        //else
+                        //{
+                        //    html.Append("<tr class='odd' style=' background-color: #ffffff;'>");
+                        //}
 
                         if (DisplaySerailNo == true)
                         {
@@ -212,7 +215,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                                         else
                                         {
-                                            html.Append("<td style='width:" + ColumnWidth + "%!important'>");
+                                            html.Append("<td style='width:" + ColumnWidth + "%!important;'>");
                                             html.Append(row[column.ColumnName]);
                                             html.Append("</td>");
                                         }
