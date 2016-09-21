@@ -5,8 +5,10 @@
     <script src="../Scripts/bootstrap.min.js"></script>
     <link href="../css/bootstrap-multiselect.css" rel="stylesheet" />
     <script src="../js/bootstrap-multiselect.js"></script>
-    <script src="../js/ASPSnippets_Pager.min.js"></script>
+    <%--<script src="../js/ASPSnippets_Pager.min.js"></script>--%>
     <script src="../js/Messages.js"></script>
+     <link href="../css/TheClinicApp.css" rel="stylesheet" />
+    
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -273,6 +275,14 @@
             
         }
     }
+
+</script>
+
+    <script src="../js/jquery-1.8.3.min.js"></script>
+    <script src="../js/ASPSnippets_Pager.min.js"></script>
+
+    <script>
+
     var ClinicID = '';
 
     //---getting data as json-----//
@@ -367,10 +377,16 @@
 
         GetClinic(1);
     });
-    $("[id*=txtSearch]").click("keyup", function () {
-        debugger;
-        GetClinic(parseInt(1));
-    });
+   // $("#txtSearch").click("keyup", function () {
+      //  debugger;
+      //  GetClinic(parseInt(1));
+  //  });
+
+$( "#txtSearch" ).keyup(function() { 
+   GetClinic(parseInt(1));
+});
+
+
     $(".Pager .page").live("click", function () {
         GetClinic(parseInt($(this).attr('page')));
     });
