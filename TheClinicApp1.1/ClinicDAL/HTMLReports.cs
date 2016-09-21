@@ -103,7 +103,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                     if (DisplaySerailNo == true)
                     {
-                        html.Append("<th style='width:1%;background-color: #5681e6;'>");
+                        html.Append("<th style='width:1%;'>");
                         html.Append("Sl.No.");
                         html.Append("</th>");
                     }
@@ -121,14 +121,14 @@ namespace TheClinicApp1._1.ClinicDAL
 
                                     if (ColumnWidth == 0)
                                     {
-                                        html.Append("<th style='background-color: #5681e6;'>");
+                                        html.Append("<th>");
                                         html.Append(column.ColumnName);
                                         html.Append("</th>");
                                     }
 
                                     else
                                     {
-                                        html.Append("<th style='width:" + ColumnWidth + "%!important;background-color: #5681e6;'>");
+                                        html.Append("<th style='width:" + ColumnWidth + "%!important;'>");
                                         html.Append(column.ColumnName);
                                         html.Append("</th>");
                                     }
@@ -137,7 +137,7 @@ namespace TheClinicApp1._1.ClinicDAL
                          }
                         else
                         {
-                            html.Append("<th style='background-color: #5681e6;'>");                    //Use default columns
+                            html.Append("<th>");                    //Use default columns
                             html.Append(column.ColumnName);
                             html.Append("</th>");
                         }
