@@ -90,8 +90,10 @@
             });
 
             $(".save").click(function () {
+debugger;
                 var start="";
                 var end="";
+var appointmentNo="";
                 var appointmentDate=$("#txtAppointmentDate").val();
                 var name=$("#txtPatientName").val();
                 var mobile=$("#txtPatientMobile").val();
@@ -100,6 +102,17 @@
                 var Time=$( "input:checked" ).val();
                 var patientID=$("#hdfPatientID").val();
                 var regEx = /^[+-]?\d+$/;
+                /*var apointmentNoCollection=$("#hdfAppointmentNoCollection").val();
+var num=parseInt(apointmentNoCollection.split(',').length);
+                for(var index=0;index < num-1;index++)
+                {
+                  appointmentNoData=apointmentNoCollection.split('+')[0];
+                      if(appointmentNoData==Time)
+                        {
+                           appointmentNo=apointmentNoCollection[index].split('+')[1];
+                           appointmentNo=appointmentNo.split(',')[0];
+                        }
+                 }*/
                 debugger;
                 var timeLength= $("#hdfTimeListLength").val();
                 if(mobile.match(regEx)&&mobile.length>=5)
@@ -119,7 +132,7 @@
                         Appointments.ScheduleID=scheduleID;
                         Appointments.AllottingTime=Time;
                         Appointments.PatientID=patientID;
-                    
+                 
                         var ds={};
                         ds=InsertPatientAppointment(Appointments);
                         if(ds.status=="1")
@@ -323,7 +336,7 @@
         }
         function BindSlotDropDown(title,eventDate)
         {
-            debugger;
+            
             bindTitle=title;
             var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
             
@@ -344,7 +357,7 @@
         }
         function SlotDropDownOnchange(title,eventDate)
         {
-            debugger;
+          
             bindTitle=title;
             var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
             if(eventDate!=$("#hdEventDate").val())
@@ -766,6 +779,7 @@
                 <input type="hidden" id="hdfEndTime" />
                 <input type="hidden" id="hdfPatientID" />
                 <input type="hidden" id="hdfTimeListLength" />
+                <input type="hidden" id="hdfAppointmentNoCollection" />
             </div>
         </div>
 

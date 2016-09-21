@@ -29,6 +29,7 @@ $(document).ready(function () {
             selectable: true,
             selectHelper: true,
             select: function (start, end) {
+                $("#hdfAppointmentNoCollection").val("");
                 var dateString = moment(start).format('YYYY-MM-DD');
                 if ($('.fc-day[data-date="' + dateString + '"]').find("#imgSelect").length != 0)
                 {
@@ -114,6 +115,7 @@ $(document).ready(function () {
                     document.getElementById("TimeAvailability").style.display = "block";
                     title = "";
                     var docId = $("#hdfDoctorID").val();
+                    debugger;
                     var timeList = GetAllottedTime(docId, eventStartDate, scheduleId);
                     var timeCount = timeList.length - 1;
                     if (timeCount == 0) {
@@ -125,6 +127,7 @@ $(document).ready(function () {
                         document.getElementById("NoSlots").style.display = 'none';
                     }
                     var html = "";
+                    var appointmentno = [];
                     for (index = 0; index < timeList.length - 1; index++) {
                         checkItems = timeList.length - 1;
                         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
@@ -133,8 +136,11 @@ $(document).ready(function () {
                         endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
                         var StartAndEnd = startTime + "-" + endTime;                   
                         html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+                        var num = parseInt(index) + 1;
+                        appointmentno.push(StartAndEnd + "+" + num);
+                  
                     }
-                   
+                    $("#hdfAppointmentNoCollection").val(appointmentno);
                     $("#TimeAvailability").append(html);
                     timeList = "";
                 }
@@ -179,6 +185,7 @@ $(document).ready(function () {
                 AppendListForDayClick(dayClickFormat);
             },
             eventClick: function (calEvent, jsEvent, view) {
+                $("#hdfAppointmentNoCollection").val("");
                 clearTextBoxes();
                 clearDropDown();
                 showDropDown();
@@ -282,7 +289,9 @@ $(document).ready(function () {
                     document.getElementById("NoSlots").style.display = 'none';
                 }
                 var html = "";
+                var appointmentno = [];
                 for (index = 0; index < timeList.length - 1; index++) {
+                    debugger;
                     checkItems = timeList.length - 1;
                     var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
                     startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
@@ -290,8 +299,11 @@ $(document).ready(function () {
                     endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
                     var StartAndEnd = startTime + "-" + endTime;
                     html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+                    //appointmentno =appointmentno+","+ StartAndEnd + index + 1;
+                    var num = parseInt(index) + 1;
+                    appointmentno.push(StartAndEnd + "+" + num);
                 }
-                
+                $("#hdfAppointmentNoCollection").val(appointmentno);
                 $("#TimeAvailability").append(html);
                 timeList = "";
             },
@@ -744,6 +756,7 @@ function clearTextBoxes()
     $("#txtSearch").val("");
     $("#txtAppointmentDate").val("");
     $("#hdfPatientID").val("");
+  
     document.getElementById("txtPatientName").disabled = '';
     document.getElementById("txtPatientPlace").disabled = '';
 }
