@@ -139,6 +139,14 @@ namespace TheClinicApp1._1.Appointment
                 {
                     ddlDoctor.Items.Insert(0, "-- Select Doctor --");
                 }
+                else{
+                    if (ds.Tables[0].Rows.Count ==0)
+                {
+                  hdnDoctorID.Value =  ds.Tables[0].Rows[0]["DoctorID"].ToString();
+                }
+                }
+               
+
             }
 
         }

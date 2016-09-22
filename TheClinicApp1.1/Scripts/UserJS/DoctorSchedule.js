@@ -98,7 +98,8 @@ $(document).mouseup(function (e) {
             header: {
                 left: 'prev,next today myCustomButton',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right:''//Hide week year view
+              //  right: 'month,agendaWeek,agendaDay'
             },
 
             defaultDate: today,
