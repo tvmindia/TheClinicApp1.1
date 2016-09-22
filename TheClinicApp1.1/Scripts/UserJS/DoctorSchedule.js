@@ -1241,9 +1241,11 @@ $(document).mouseup(function (e) {
             Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
             Doctor.Starttime = document.getElementById('txtStartTime').value.replace(/ /g, '');
             Doctor.Endtime = document.getElementById('txtEndTime').value.replace(/ /g, '');
+
             Doctor.StartTimeOnEdit = ConvertTimeTo12HrWithMer(StartTimeOnEdit).replace(/ /g, '');;
             Doctor.EndTimeOnEdit = ConvertTimeTo12HrWithMer(EndTimeOnEdit).replace(/ /g, '');
-            
+            Doctor.DoctorID = DoctorID;
+            Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value.trim();
 
             AllotedStartTimes.remove(StartTimeOnEdit);
             AllotedEndTimes.remove(EndTimeOnEdit);

@@ -377,13 +377,145 @@ namespace TheClinicApp1._1.Appointment
 
                         if (DocObj.StartTimeOnEdit != DocObj.StartTime || DocObj.EndTimeOnEdit != DocObj.EndTime) // Validation is only required if time has changed
                         {
-                        DataSet dsAppointedpatients = DocObj.GetAllPatientDetails();
-                        int NoOfPatients = dsAppointedpatients.Tables[0].Rows.Count;
+                            //int appointmentMinutes = 0;
+                            //int patientLimit = 0;
+                            //string startAppointment = "";
+                            //string endAppointment = "";
+                            //string startDuration = "";
+                            //string endDuration = "";
+                            //TimeSpan duration = new TimeSpan();
 
-                        if (NoOfPatients > 0)
-                        {
-                            isSccheduleIDUsed = true;
-                        }
+                            //DataSet ds = null;
+                            //ds = DocObj.GetDoctorAvailability();
+                            //int count = ds.Tables[0].Rows.Count;
+                            //if (ds.Tables[0].Rows.Count > 0)
+                            //{
+                            //    startAppointment = ds.Tables[0].Rows[0]["Starttime"].ToString();
+                            //    endAppointment = ds.Tables[0].Rows[0]["Endtime"].ToString();
+                            //    patientLimit = Convert.ToInt32(ds.Tables[0].Rows[0]["PatientLimit"].ToString());
+                            //    string endHour = endAppointment.Split(':')[0];
+                            //    string startHour = startAppointment.Split(':')[0];
+                            //    if (endHour == "24")
+                            //    {
+
+                            //        endDuration = "23:59";
+                            //    }
+                            //    if (startHour == "24")
+                            //    {
+                            //        startDuration = "23:59";
+                            //    }
+                            //    if (endDuration != "")
+                            //    {
+                            //        duration = DateTime.Parse(endDuration).Subtract(DateTime.Parse(startAppointment));
+                            //        int endMinute = Convert.ToInt32(endAppointment.Split(':')[1]) + 1;
+                            //        int startMinute = Convert.ToInt32(startAppointment.Split(':')[1]);
+                            //        int totalminute = endMinute - startMinute;
+                            //        totalminute = Math.Abs(totalminute);
+                            //        string time = "00:" + totalminute;
+                            //        TimeSpan ts = TimeSpan.Parse(time);
+                            //        duration = duration.Add(ts);
+
+                            //    }
+                            //    else if (startDuration != "")
+                            //    {
+                            //        duration = DateTime.Parse(endAppointment).Subtract(DateTime.Parse(startDuration));
+                            //        int endMinute = Convert.ToInt32(endAppointment.Split(':')[1]) + 1;
+                            //        int startMinute = Convert.ToInt32(startAppointment.Split(':')[1]);
+                            //        int totalminute = endMinute - startMinute;
+                            //        totalminute = Math.Abs(totalminute);
+                            //        string time = "00:" + totalminute;
+                            //        TimeSpan ts = TimeSpan.Parse(time);
+                            //        duration = duration.Add(ts);
+                            //    }
+                            //    else if (startDuration != "" && endDuration != "")
+                            //    {
+                            //        duration = DateTime.Parse(endDuration).Subtract(DateTime.Parse(startDuration));
+                            //        int endMinute = Convert.ToInt32(endAppointment.Split(':')[1]) + 1;
+                            //        int startMinute = Convert.ToInt32(startAppointment.Split(':')[1]);
+                            //        int totalminute = endMinute - startMinute;
+                            //        totalminute = Math.Abs(totalminute);
+                            //        string time = "00:" + totalminute;
+                            //        TimeSpan ts = TimeSpan.Parse(time);
+                            //        duration = duration.Add(ts);
+                            //    }
+                            //    else
+                            //    {
+                            //        duration = DateTime.Parse(endAppointment).Subtract(DateTime.Parse(startAppointment));
+                            //    }
+
+                            //    appointmentMinutes = Convert.ToInt32(duration.TotalMinutes);
+                            //    appointmentMinutes = appointmentMinutes / patientLimit;
+
+                            //    Appointments AppointObj = new Appointments();
+
+                            //    DataSet dsAllotedStartTimes = null;
+                            //    AppointObj.ClinicID = UA.ClinicID.ToString();
+                            //    AppointObj.ScheduleID = DocObj.DocScheduleID;
+                            //    dsAllotedStartTimes = AppointObj.GetAppointedPatientDetailsByScheudleID();
+
+                            // //   duration = duration.ToString("HH:mm");
+
+                            //    foreach (DataRow dr in dsAllotedStartTimes.Tables[0].Rows)
+                            //    {
+                            //        string SchedduleStartTime = DocObj.correctStartTime(DocObj.StartTime);
+                            //        string ScheduleEndTime = DocObj.correctStartTime(DocObj.EndTime);
+
+                            //        string AllotedStarttime = dr["AllottingTime"].ToString();
+                            //        AllotedStarttime = AllotedStarttime.Substring(0, AllotedStarttime.LastIndexOf(":"));
+
+
+                            //        int AllotedStarttimeHr = Convert.ToInt32(AllotedStarttime.Split(':')[0]);
+                            //        int AllotedStarttimeMin = Convert.ToInt32(AllotedStarttime.Split(':')[1]);
+
+                            //        int SchedduleStartTimeHr = Convert.ToInt32(SchedduleStartTime.Split(':')[0]);
+                            //        int SchedduleStartTimeMin = Convert.ToInt32(SchedduleStartTime.Split(':')[1]);
+
+                            //        string AllotedEndTime = DateTime.Today.Add(TimeSpan.Parse(dr["AllottingTime"].ToString()).Add(duration)).ToString("hh:mm");
+
+
+                            //        int AllotedEndtimeHr = Convert.ToInt32(AllotedEndTime.Split(':')[0]);
+                            //        int AllotedEndtimeMin = Convert.ToInt32(AllotedEndTime.Split(':')[1]);
+
+                            //        int SchedduleEndTimeHr = Convert.ToInt32(ScheduleEndTime.Split(':')[0]);
+                            //        int SchedduleEndTimeMin = Convert.ToInt32(ScheduleEndTime.Split(':')[1]);
+
+
+                            //        if (AllotedStarttimeHr < SchedduleStartTimeHr || AllotedEndtimeHr > SchedduleEndTimeHr)
+                            //        {
+                            //            isSccheduleIDUsed = true;
+                            //            break;
+                            //        }
+                            //        if (AllotedStarttimeHr == SchedduleStartTimeHr)
+                            //        {
+                            //            if (AllotedStarttimeMin < SchedduleStartTimeMin)
+                            //            {
+                            //                isSccheduleIDUsed = true;
+                            //            break;
+                            //            }
+                            //        }
+
+                            //        if (AllotedEndtimeHr == SchedduleEndTimeHr)
+                            //        {
+                            //             if (AllotedEndtimeMin > SchedduleEndTimeMin)
+                            //            {
+                            //                isSccheduleIDUsed = true;
+                            //            break;
+                            //            }
+                            //        }
+
+                                    
+                            //    }
+
+                            //}
+
+
+                            DataSet dsAppointedpatients = DocObj.GetAllPatientDetails();
+                            int NoOfPatients = dsAppointedpatients.Tables[0].Rows.Count;
+
+                            if (NoOfPatients > 0)
+                            {
+                                isSccheduleIDUsed = true;
+                            }
                         }
                         //  isSccheduleIDUsed = DocObj.CheckDoctorScheduleAllotedForPatientAppointment();
 
