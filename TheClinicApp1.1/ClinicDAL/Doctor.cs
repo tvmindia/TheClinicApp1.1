@@ -230,6 +230,17 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+        public string StartTimeOnEdit
+        {
+            get;
+            set;
+        }
+        public string EndTimeOnEdit
+        {
+            get;
+            set;
+        }
+
         public string CreatedBy
         {
             get;

@@ -1198,11 +1198,30 @@ $(document).mouseup(function (e) {
         return this;
     };
 
+    function ConvertTimeTo12HrWithMer(time)
+    {
+        var TimeIn24hrFormat = time;
+        var hourEnd = TimeIn24hrFormat.indexOf(":");
+        var H = +TimeIn24hrFormat.substr(0, hourEnd);
+        var h = H % 12 || 12;
+        var ampm = parseInt(H) < 12 ? "AM" : "PM";
+        //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+        if (parseInt(H) == 0) {
+
+            ampm = "AM";
+        }
+
+
+        TimeIn12hrFormat = moment(time, ["h:mm A"]).format("hh : mm : ") + ampm;
+       
+        return TimeIn12hrFormat;
+    }
+
+
     function AddSchedule() {
     
 
-      
-    
+       
         var JsonNewSchedule = {};
         var Isalloted = false;
 
@@ -1212,6 +1231,9 @@ $(document).mouseup(function (e) {
     
             //------------ * UPDATE CASE * ----------------//
 
+          
+           
+
             var JsonUpdatedSchedule = {};
 
             var Doctor = new Object();
@@ -1219,7 +1241,9 @@ $(document).mouseup(function (e) {
             Doctor.PatientLimit = parseInt(document.getElementById('txtMaxAppoinments').value);
             Doctor.Starttime = document.getElementById('txtStartTime').value.replace(/ /g, '');
             Doctor.Endtime = document.getElementById('txtEndTime').value.replace(/ /g, '');
-
+            Doctor.StartTimeOnEdit = ConvertTimeTo12HrWithMer(StartTimeOnEdit).replace(/ /g, '');;
+            Doctor.EndTimeOnEdit = ConvertTimeTo12HrWithMer(EndTimeOnEdit).replace(/ /g, '');
+            
 
             AllotedStartTimes.remove(StartTimeOnEdit);
             AllotedEndTimes.remove(EndTimeOnEdit);

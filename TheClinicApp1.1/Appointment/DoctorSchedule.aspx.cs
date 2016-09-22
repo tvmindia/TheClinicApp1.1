@@ -375,6 +375,8 @@ namespace TheClinicApp1._1.Appointment
                         DocObj.ClinicID = UA.ClinicID.ToString();
                         DocObj.UpdatedBy = UA.userName;
 
+                        if (DocObj.StartTimeOnEdit != DocObj.StartTime || DocObj.EndTimeOnEdit != DocObj.EndTime) // Validation is only required if time has changed
+                        {
                         DataSet dsAppointedpatients = DocObj.GetAllPatientDetails();
                         int NoOfPatients = dsAppointedpatients.Tables[0].Rows.Count;
 
@@ -382,7 +384,7 @@ namespace TheClinicApp1._1.Appointment
                         {
                             isSccheduleIDUsed = true;
                         }
-
+                        }
                         //  isSccheduleIDUsed = DocObj.CheckDoctorScheduleAllotedForPatientAppointment();
 
                         if (isSccheduleIDUsed == false)
