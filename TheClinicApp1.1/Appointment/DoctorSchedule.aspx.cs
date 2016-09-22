@@ -361,6 +361,7 @@ namespace TheClinicApp1._1.Appointment
         [System.Web.Services.WebMethod]
         public static string UpdateDoctorSchedule(TheClinicApp1._1.ClinicDAL.Doctor DocObj)
         {
+            bool isSccheduleIDUsed = false;
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -373,7 +374,27 @@ namespace TheClinicApp1._1.Appointment
                     {
                         DocObj.ClinicID = UA.ClinicID.ToString();
                         DocObj.UpdatedBy = UA.userName;
-                        DocObj.status = DocObj.UpdateDoctorSchedule().ToString();
+
+                        DataSet dsAppointedpatients = DocObj.GetAllPatientDetails();
+                        int NoOfPatients = dsAppointedpatients.Tables[0].Rows.Count;
+
+                        if (NoOfPatients > 0)
+                        {
+                            isSccheduleIDUsed = true;
+                        }
+
+                        //  isSccheduleIDUsed = DocObj.CheckDoctorScheduleAllotedForPatientAppointment();
+
+                        if (isSccheduleIDUsed == false)
+                        {
+                            DocObj.status = DocObj.UpdateDoctorSchedule().ToString();
+                        }
+                        else
+                        {
+                            DocObj.status = "0";
+                        }
+
+                     
                     }
                 }
                 else

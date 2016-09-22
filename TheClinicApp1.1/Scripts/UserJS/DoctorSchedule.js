@@ -1450,11 +1450,14 @@ $(document).mouseup(function (e) {
                                         }
 
                                         else {
-                                            var lblclass = Alertclasses.danger;
-                                            var lblmsg = msg.ScheduleSaveFailure;
-                                            var lblcaptn = Caption.FailureMsgCaption;
 
-                                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                                            validation(AlertMsgs.AlreadyAlloted);
+
+                                            //var lblclass = Alertclasses.danger;
+                                            //var lblmsg = msg.ScheduleSaveFailure;
+                                            //var lblcaptn = Caption.FailureMsgCaption;
+
+                                            //DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
                                            
                                         }
 
