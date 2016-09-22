@@ -1041,6 +1041,7 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlCommand cmd = new SqlCommand("SearchPatientWithName", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = SearchName;
+            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = cmd;
             dt = new DataTable();
