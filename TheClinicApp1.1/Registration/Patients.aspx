@@ -185,9 +185,9 @@
 
                     //var FileName =    ui.item.desc.split('|')[0].split('📰')[1];
                     // var Address =  ui.item.desc.split('|')[1];
-                    //var MobileNo = ui.item.desc.split('|')[2];
+                    var MobileNo = ui.item.desc.split('|')[2];
 
-                    BindPatientDetails();
+                    BindPatientDetails(MobileNo);
                         document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
 
 
@@ -345,7 +345,7 @@
                 return table;
             }
             //Click event function for search patient and bind
-            function BindPatientDetails()
+            function BindPatientDetails(MobileNo)
             {
                 var jsonPatient = {};
                 var SearchItem = $('#txtSearch').val();
@@ -353,7 +353,7 @@
                 if(SearchItem != '')
                 { 
                     Patient.Name = SearchItem;
-                    //Patient.Phone = MobileNo;
+                    Patient.Phone = MobileNo;
                     jsonPatient = GetPatientDetails(Patient);
                     if (jsonPatient != undefined)
                     {

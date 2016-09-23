@@ -1042,7 +1042,7 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = SearchName;
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-            //cmd.Parameters.Add("@MobileNo", SqlDbType.NVarChar, 50).Value = Phone;
+            cmd.Parameters.Add("@MobileNo", SqlDbType.NVarChar, 50).Value = Phone;
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = cmd;
             dt = new DataTable();
