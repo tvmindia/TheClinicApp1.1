@@ -739,7 +739,9 @@ $(document).mouseup(function (e) {
 
     function GetScheduleByDrID(drID) {
       
-    
+        document.getElementById('hdnScheduleID').value = "";
+        $('#hdnIsDeletionByDate').val('');
+
     DoctorID = drID;
 
     var jsonDrSchedule = {};
@@ -993,7 +995,7 @@ $(document).mouseup(function (e) {
     }
 
     function RemoveTime(ScheduleID) {
-       
+        document.getElementById('hdnScheduleID').value = "";
         document.getElementById('hdnScheduleID').value = ScheduleID;
 
     var DeletionConfirmation = ConfirmDelete(false);
@@ -1385,7 +1387,7 @@ $(document).mouseup(function (e) {
 
                                         JsonNewSchedule = JsonUpdatedSchedule;
 
-                                        document.getElementById('hdnScheduleID').value = "";
+                                       // document.getElementById('hdnScheduleID').value = "";
                                     }
 
 
@@ -1599,7 +1601,7 @@ $(document).mouseup(function (e) {
 
     function CancelAllSchedules($this)
     {
-     
+        document.getElementById('hdnScheduleID').value = ""
         var DeletionConfirmation = ConfirmDelete(false);
         if (DeletionConfirmation == true) {
         date =    $($this).closest('td').prev('td').text();

@@ -58,9 +58,35 @@
         var DoctorID = '';
 
         $(document).ready(function () {
+            debugger;
+            if ( $("#<%=ddlDoctor.ClientID%> option:selected").text()!="-- Select Doctor --") {
+                $('#hdnDoctorName').val($("#<%=ddlDoctor.ClientID%> option:selected").text());
+                DoctorID = $("#<%=ddlDoctor.ClientID%> option:selected").val();
 
-        
+                BindCalender(false);
 
+                //var jsonDrSchedule = {};
+
+                //var Doctor = new Object();
+                //Doctor.DoctorID = DoctorID;
+
+                //$('#hdnIsDrChanged').val("Yes");
+
+                //jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                //if (jsonDrSchedule != undefined) {
+
+                //    json = jsonDrSchedule;
+
+                //    BindScheduledDates();
+
+                //    //---------------* Refreshing calender(By removing current json and adding the new one) *------------------//
+
+                //    $('#calendar').fullCalendar('removeEvents');
+                //    $('#calendar').fullCalendar('addEventSource', json);
+                //    $('#calendar').fullCalendar('rerenderEvents');
+                //}
+            }
+            
 
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
@@ -149,27 +175,27 @@
             
         }
 
-        //-- This method is invoked while changing doctor
-        function SetDropdown(e) {
+        //-- This method is invoked while changing doctor(using doctor dropdown) or in document.ready
+        //-- If method is invoked while changing doctor(using doctor dropdown) , value of variable 'isDropdownItemChanged' will be true
+        //-- If method is invoked in document.ready  value of variable 'isDropdownItemChanged' will set to false
+        function BindCalender(e,isDropdownItemChanged) {
 
-           
-            $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
-
+            if (isDropdownItemChanged == true) {
+                $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
+                DoctorID = e.value;
+            }
+            
             ClearControls();
-            DoctorID = e.value;
-
+            
             var jsonDrSchedule = {};
-
             var Doctor = new Object();
             Doctor.DoctorID = DoctorID;
-
             $('#hdnIsDrChanged').val("Yes");
 
             jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
             if (jsonDrSchedule != undefined) {
 
                 json = jsonDrSchedule;
-
                 BindScheduledDates();
 
                 //---------------* Refreshing calender(By removing current json and adding the new one) *------------------//
@@ -183,22 +209,14 @@
 
                 if (Events != null && Events != "") {
                     EventsToBeRemoved = JSON.parse(Events);
-
                     for (var i = 0; i < EventsToBeRemoved.length; i++) {
-
                         $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeClass('ui-state-highlight');
                         $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeAttr('background-color');
-
                     }
-
                 }
-
                 $('#calendar').fullCalendar('addEventSource', json);
                 $('#calendar').fullCalendar('rerenderEvents');
-
             }
-
-
         }
 
         function ClearControls() {
@@ -286,7 +304,7 @@
 
                                 <%--<asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>--%>
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" CssClass="drop" Width="210px" style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="BindCalender(this,true)" CssClass="drop" Width="210px" style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
                                 <%--CssClass="drop"--%> 
 
 

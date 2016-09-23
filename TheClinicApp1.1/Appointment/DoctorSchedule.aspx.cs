@@ -466,7 +466,9 @@ namespace TheClinicApp1._1.Appointment
                                 DataSet dsAllotedStartTimes = null;
                                 AppointObj.ClinicID = UA.ClinicID.ToString();
                                 AppointObj.ScheduleID = DocObj.DocScheduleID;
-                                dsAllotedStartTimes = AppointObj.GetAppointedPatientDetailsByScheudleID();
+
+                                dsAllotedStartTimes = DocObj.GetAllPatientDetails();
+                               // dsAllotedStartTimes = AppointObj.GetAppointedPatientDetailsByScheudleID();
 
                                 //   duration = duration.ToString("HH:mm");
 
