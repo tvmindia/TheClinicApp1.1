@@ -997,6 +997,10 @@ $(document).mouseup(function (e) {
     function RemoveTime(ScheduleID) {
         document.getElementById('hdnScheduleID').value = "";
         document.getElementById('hdnScheduleID').value = ScheduleID;
+        $("#txtStartTime").val("");
+        $("#txtEndTime").val("");
+        $("#txtMaxAppoinments").val("");
+
 
     var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
@@ -1602,6 +1606,12 @@ $(document).mouseup(function (e) {
     function CancelAllSchedules($this)
     {
         document.getElementById('hdnScheduleID').value = ""
+        $("#txtStartTime").val("");
+        $("#txtEndTime").val("");
+        $("#txtMaxAppoinments").val("");
+
+
+
         var DeletionConfirmation = ConfirmDelete(false);
         if (DeletionConfirmation == true) {
         date =    $($this).closest('td').prev('td').text();
