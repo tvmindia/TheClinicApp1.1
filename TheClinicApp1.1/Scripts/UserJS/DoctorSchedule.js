@@ -1322,18 +1322,6 @@ $(document).mouseup(function (e) {
                                         //------------ * UPDATE CASE * ----------------//
 
 
-
-                                        //if ((StartTimeOnEdit.replace(/ /g, ''))==(moment(document.getElementById('txtStartTime').value, ["h:mm A"]).format("HH:mm")) ) {
-
-                                        //    Doctor.Starttime = StartTimeOnEdit;
-
-                                        //}
-
-                                        //if ((EndTimeOnEdit.replace(/ /g, '')) == (moment(document.getElementById('txtEndTime').value, ["h:mm A"]).format("HH:mm"))) {
-
-                                        //    Doctor.Endtime = EndTimeOnEdit;
-
-                                        //}
                                         JsonUpdatedSchedule = UpadteDrSchedule(Doctor);
 
                                         JsonNewSchedule = JsonUpdatedSchedule;
@@ -1397,9 +1385,7 @@ $(document).mouseup(function (e) {
                                             var lblcaptn = Caption.SuccessMsgCaption;
 
                                             DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
-
-
-                                        }
+                                          }
 
                                         else {
 
@@ -1424,45 +1410,33 @@ $(document).mouseup(function (e) {
                             }
                             else {
                                 validation(AlertMsgs.EndTimeRequired);
+                         }
 
-                            }
-
-
-                        }
+ }
                         else {
 
                             validation(AlertMsgs.StartTimeRequired);
-                           
                         }
                 
                     }
                     else
-                    {
-
-                        validation(AlertMsgs.MaxAppoinmentRequired);
+                    { validation(AlertMsgs.MaxAppoinmentRequired);
                     }
                 
-
-               
                 }
 
                 else
                 {
                     validation(AlertMsgs.DateRequired);
-
-                }
+ }
             }
 
             else {
                 validation(AlertMsgs.validNumber);
-              
-
-            }
-
-        }
+             }
+  }
        
-
-    }
+ }
 
     function validation(ErrorMsg)
     {
