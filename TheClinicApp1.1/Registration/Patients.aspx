@@ -181,8 +181,13 @@
                         return false;
                     },
                     select: function( event, ui ) {
+                        debugger;
 
-                        BindPatientDetails();
+                    //var FileName =    ui.item.desc.split('|')[0].split('📰')[1];
+                    // var Address =  ui.item.desc.split('|')[1];
+                    //var MobileNo = ui.item.desc.split('|')[2];
+
+                    BindPatientDetails();
                         document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
 
 
@@ -348,7 +353,7 @@
                 if(SearchItem != '')
                 { 
                     Patient.Name = SearchItem;
-
+                    //Patient.Phone = MobileNo;
                     jsonPatient = GetPatientDetails(Patient);
                     if (jsonPatient != undefined)
                     {
