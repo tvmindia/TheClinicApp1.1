@@ -102,23 +102,16 @@ var appointmentNo="";
                 var Time=$( "input:checked" ).val();
                 var patientID=$("#hdfPatientID").val();
                 var regEx = /^[+-]?\d+$/;
-                /*var apointmentNoCollection=$("#hdfAppointmentNoCollection").val();
-var num=parseInt(apointmentNoCollection.split(',').length);
-                for(var index=0;index < num-1;index++)
-                {
-                  appointmentNoData=apointmentNoCollection.split('+')[0];
-                      if(appointmentNoData==Time)
-                        {
-                           appointmentNo=apointmentNoCollection[index].split('+')[1];
-                           appointmentNo=appointmentNo.split(',')[0];
-                        }
-                 }*/
+       
                 debugger;
                 var timeLength= $("#hdfTimeListLength").val();
                 if(mobile.match(regEx)&&mobile.length>=5)
                 {
                     if($( "input:checked" ).val()!=undefined)
                     {
+                        appointmentNo=Time.split('+')[1];
+                        Time=Time.split('+')[0];
+                        
                         Time=Time.split('-')[0];
                         if(Time.split(':')[0].length==1)
                         {
@@ -132,7 +125,7 @@ var num=parseInt(apointmentNoCollection.split(',').length);
                         Appointments.ScheduleID=scheduleID;
                         Appointments.AllottingTime=Time;
                         Appointments.PatientID=patientID;
-                 
+                        Appointments.appointmentno=appointmentNo;
                         var ds={};
                         ds=InsertPatientAppointment(Appointments);
                         if(ds.status=="1")
