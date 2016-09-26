@@ -232,7 +232,7 @@
                 document.getElementById('<%=imgEmailAvailable.ClientID %>').style.display = "none";
                 document.getElementById('<%=imgEmailUnAvailable.ClientID %>').style.display = "none";
 
-                $("#<%=txtLoginName.ClientID %>").attr("readonly", true);
+                    $("#<%=txtLoginName.ClientID %>").attr("readonly", "readonly");
 
                 if ($(this).text() == "") {
                     var jsonResult = {};
