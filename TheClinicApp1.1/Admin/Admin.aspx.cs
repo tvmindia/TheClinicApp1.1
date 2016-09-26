@@ -119,8 +119,10 @@ namespace TheClinicApp1._1.Admin
         #region User
 
         #region Add User To User Table
-        public void AddUserToUserTable()
+        public int AddUserToUserTable()
         {
+            int rslt = 0;
+
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             userObj.firstName = txtFirstName.Value.TrimStart();
@@ -156,7 +158,7 @@ namespace TheClinicApp1._1.Admin
             {
                 //INSERT
 
-                userObj.AddUser();
+                rslt=  userObj.AddUser();
                 hdnUserID.Value = userObj.UserID.ToString();
 
                 //if (rdoDoctor.Checked == true)
@@ -171,10 +173,10 @@ namespace TheClinicApp1._1.Admin
                 //UPDATE
 
                 userObj.UserID = Guid.Parse(hdnUserID.Value);
-                userObj.UpdateuserByUserID();
+                rslt= userObj.UpdateuserByUserID();
                 
             }
-             
+            return rslt;
         }
 
         #endregion Add User To User Table
@@ -314,8 +316,10 @@ namespace TheClinicApp1._1.Admin
         #endregion GetRoleIDOFDoctor
 
         #region Add User To Doctor Table
-        public void AddUserToDoctorTable()
+        public int AddUserToDoctorTable()
         {
+            int rslt = 0;
+
             bool IsDoctor = false;
 
         UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -357,7 +361,7 @@ namespace TheClinicApp1._1.Admin
 
                         IsDoctor = true;
                          mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
-                         mstrObj.UpdateDoctors();
+                      rslt=   mstrObj.UpdateDoctors();
                         
                     }
 
@@ -373,7 +377,7 @@ namespace TheClinicApp1._1.Admin
                         }
 
                       
-                        mstrObj.InsertDoctors();
+                     rslt=   mstrObj.InsertDoctors();
                     }
 
 
@@ -383,8 +387,8 @@ namespace TheClinicApp1._1.Admin
             //    mstrObj.UsrID = Guid.Parse(hdnUserID.Value);
             //    mstrObj.InsertDoctors();
             //}
-          
-            
+
+            return rslt;
            
         }
 
@@ -682,15 +686,8 @@ namespace TheClinicApp1._1.Admin
                         UserDeleted = true;
                     }
                         }
-
-
                   }
-
-
                         //DeleteUserByUserID(UserID);
-
-
-                   
 
                 }
 
@@ -700,8 +697,7 @@ namespace TheClinicApp1._1.Admin
             {
                 //DeleteAssignedRoleByUserID(UserID);
                 userObj.UserID = Guid.Parse(UsrID);
-
-                 result = userObj.DeleteUserByUserIDForWM();
+                result = userObj.DeleteUserByUserIDForWM();
 
                 if (result == 1)
                 {
@@ -763,7 +759,6 @@ namespace TheClinicApp1._1.Admin
          }
          #endregion BindUserDetailsOnEditClick
 
-
         #endregion Methods
 
          #region Events
@@ -772,7 +767,6 @@ namespace TheClinicApp1._1.Admin
 
          protected void Page_Load(object sender, EventArgs e)
         {  
-             
             BindDummyRow();
 
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
@@ -784,7 +778,6 @@ namespace TheClinicApp1._1.Admin
             {
                 BindDropDownGroupforDoc();
             }
-            
         }
 
         #endregion Page Load
@@ -797,6 +790,8 @@ namespace TheClinicApp1._1.Admin
         /// <param name="e"></param>
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            int rslt = 0;
+
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
 
@@ -810,11 +805,10 @@ namespace TheClinicApp1._1.Admin
 		 
                 if (rdoNotDoctor.Checked == true)
                 {
-                    AddUserToUserTable();    //INSERT Case  //---------*User is not doctor , operation :add user to user table 
+                    rslt=   AddUserToUserTable();    //INSERT Case  //---------*User is not doctor , operation :add user to user table 
 
-                    if (hdnUserID.Value != string.Empty) 
+                    if (hdnUserID.Value != string.Empty && rslt == 1) 
                     {
-
                         //----------Case of UPDATE : user has to be deleted from (1).USER table and conditionally from  [ (2).USER In ROLES   (3).Doctor ]
 
                         Guid UserID = Guid.Parse(hdnUserID.Value);
@@ -830,9 +824,19 @@ namespace TheClinicApp1._1.Admin
                     {
                         if (rdoDoctor.Checked == true)
                         {
-                            AddUserToUserTable();
-                            AddUserToDoctorTable();
-                            AddUserRole();
+                          rslt=   AddUserToUserTable();
+
+                          if (rslt == 1)
+                          {
+                           rslt =   AddUserToDoctorTable();
+
+                           if (rslt == 1)
+                           {
+                               AddUserRole(); 
+                           }
+
+                          }
+
                         }
                     }
 
@@ -961,8 +965,7 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Events
 
-
-        #region Bind Gridview
+         #region Bind Gridview
         public void BindGriewWithDetailsOfAllUsers()
         {
             userObj.ClinicID = UA.ClinicID;
