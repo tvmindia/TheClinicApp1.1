@@ -506,6 +506,8 @@ namespace TheClinicApp1._1.Admin
             }
 
 
+            //-------------------- * Rebinding checkbox list *----------------------//
+
             roleObj.UserID = new Guid(ddlUsers.SelectedValue);
 
             roleObj.ClinicID = UA.ClinicID;
