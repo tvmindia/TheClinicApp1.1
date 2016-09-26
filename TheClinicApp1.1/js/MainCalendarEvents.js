@@ -117,6 +117,7 @@ $(document).ready(function () {
                     var docId = $("#hdfDoctorID").val();
                     debugger;
                     var timeList = GetAllottedTime(docId, eventStartDate, scheduleId);
+                    debugger;
                     var timeCount = timeList.length - 1;
                     if (timeCount == 0) {
                         document.getElementById("TimeAvailability").innerHTML = '';
@@ -127,20 +128,24 @@ $(document).ready(function () {
                         document.getElementById("NoSlots").style.display = 'none';
                     }
                     var html = "";
-                    var appointmentno = [];
+                    var appointmentNo = "";
+                    var chkValue = "";
                     for (index = 0; index < timeList.length - 1; index++) {
                         checkItems = timeList.length - 1;
                         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
                         startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
+                        appointmentNo = startTime.split('+')[1];
+                        startTime = startTime.split('+')[0];
                         var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
                         endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
-                        var StartAndEnd = startTime + "-" + endTime;                   
-                        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
-                        var num = parseInt(index) + 1;
-                        appointmentno.push(StartAndEnd + "+" + num);
+                        endTime = endTime.split('+')[0];
+                        var StartAndEnd = startTime + "-" + endTime;
+                        chkValue = StartAndEnd + "+" + appointmentNo;
+                        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+                       
                   
                     }
-                    $("#hdfAppointmentNoCollection").val(appointmentno);
+                    //$("#hdfAppointmentNoCollection").val(appointmentno);
                     $("#TimeAvailability").append(html);
                     timeList = "";
                 }
@@ -276,6 +281,7 @@ $(document).ready(function () {
                 var docId = $("#hdfDoctorID").val();
                 debugger;
                 var timeList = GetAllottedTime(docId, eventStartDate, scheduleId);
+                debugger;
                 $("#hdfTimeListLength").val(timeList.length);
                 var timeCount = timeList.length - 1;
                 if (timeCount == 0)
@@ -289,21 +295,24 @@ $(document).ready(function () {
                     document.getElementById("NoSlots").style.display = 'none';
                 }
                 var html = "";
-                var appointmentno = [];
+                var appointmentNo = "";
+                var chkValue = "";
                 for (index = 0; index < timeList.length - 1; index++) {
                     debugger;
                     checkItems = timeList.length - 1;
                     var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
                     startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
+                    appointmentNo = startTime.split('+')[1];
+                    startTime = startTime.split('+')[0];
                     var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
                     endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
+                    endTime = endTime.split('+')[0];
                     var StartAndEnd = startTime + "-" + endTime;
-                    html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+                    chkValue = StartAndEnd + "+" + appointmentNo;
+                    html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
                     //appointmentno =appointmentno+","+ StartAndEnd + index + 1;
-                    var num = parseInt(index) + 1;
-                    appointmentno.push(StartAndEnd + "+" + num);
                 }
-                $("#hdfAppointmentNoCollection").val(appointmentno);
+                //$("#hdfAppointmentNoCollection").val(appointmentno);
                 $("#TimeAvailability").append(html);
                 timeList = "";
             },
@@ -527,16 +536,21 @@ function fillPatientDetails() {
         document.getElementById("NoSlots").style.display = 'none';
     }
     var html = "";
+    var appointmentNo = "";
+    var chkValue = "";
     for (index = 0; index < timeList.length - 1; index++) {
         checkItems = timeList.length - 1;
         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
         startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
-
+        appointmentNo = startTime.split('+')[1];
+        startTime = startTime.split('+')[0];
 
         var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
         endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
+        endTime = endTime.split('+')[0];
         var StartAndEnd = startTime + "-" + endTime;
-        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime'  id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+        chkValue = StartAndEnd + "+" + appointmentNo;
+        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime'  id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
     }
     
     $("#TimeAvailability").append(html);
@@ -550,16 +564,21 @@ function RereshTimeCheckBox()
     var docId = $("#hdfDoctorID").val();
     var timeList = GetAllottedTime(docId, eventStartDate, scheduleId);
     var html = "";
+    var appointmentNo = "";
+    var chkValue = "";
     for (index = 0; index < timeList.length - 1; index++) {
         checkItems = timeList.length - 1;
         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
         startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
-
+        appointmentNo = startTime.split('+')[1];
+        startTime = startTime.split('+')[0];
 
         var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
         endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
+        endTime = endTime.split('+')[0];
         var StartAndEnd = startTime + "-" + endTime;
-        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime'  id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+        chkValue = StartAndEnd + "+" + appointmentNo;
+        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime'  id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
     }
     document.getElementById("availableSlot").style.display = "block";
     document.getElementById("TimeAvailability").style.display = "block";
@@ -606,14 +625,20 @@ function refreshTime(){
     var scheduleID = $("#hdfScheduleID").val();
     var timeList = GetAllottedTime(docId, eventStartDate, scheduleID);
     var html = "";
+    var appointmentNo = "";
+    var chkValue = "";
     for (index = 0; index < timeList.length - 1; index++) {
         checkItems = timeList.length - 1;
         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
         startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
+        appointmentNo = startTime.split('+')[1];
+        startTime = startTime.split('+')[0];
         var endTime = timeList[index + 1].split(' ')[1] + " " + timeList[index + 1].split(' ')[2];
         endTime = endTime.split(':')[0] + ":" + endTime.split(':')[1] + endTime.split(' ')[1];
+        endTime = endTime.split('+')[0];
         var StartAndEnd = startTime + "-" + endTime;
-        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + StartAndEnd + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+        chkValue = StartAndEnd + "+" + appointmentNo;
+        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
     }
     $("#TimeAvailability").append(html);
     timeList = "";
@@ -670,9 +695,20 @@ function GetAllottedTime(docId, eventStartDate, id) {
     }
     names = names.filter(Boolean);
     var timeList = GetAllTimeAvailability(docId, eventStartDate, id);
+    for (index = 0; index < timeList.length; index++) {
+        var appointTime = timeList[index]+"+"+parseInt(index+1);
+        timeList[index] = '';
+        //Array.prototype.splice.apply(timeList, [index, index].concat(appointTime));
+        
+        timeList.splice(index, 0, appointTime);
+        appointTime = '';
+        timeList=timeList.filter(Boolean);
+    }
+    debugger;
     for (index = 0; index < timeList.length - 1; index++) {
         checkItems = timeList.length - 1;
         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
+        startTime = startTime.split('+')[0];
         startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
         for (var i = 0; i < names.length; ++i) {
             var hours = names[i].allottedTime.split(':')[0];
