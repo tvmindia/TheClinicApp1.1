@@ -376,7 +376,7 @@
             function BindPatient(Records)
             {
                 $("#<%=txtName.ClientID %>").val(Records.Name);
-                $("#<%=txtAge.ClientID %>").val(Records.Age);
+                $("#<%=txtAge.ClientID %>").val(Records.PatientAge);
                 $("#<%=txtAddress.ClientID %>").val(Records.Address);
                 $("#<%=txtMobile.ClientID %>").val(Records.Phone);
                 $("#<%=txtEmail.ClientID %>").val(Records.Email);

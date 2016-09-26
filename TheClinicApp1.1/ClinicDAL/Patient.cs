@@ -132,7 +132,11 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-
+        public int PatientAge
+        {
+            get;
+            set;
+        }
 
         #endregion Patientproperty
 
@@ -1060,6 +1064,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 MaritalStatus = dr["MaritalStatus"].ToString();
                 Occupation = dr["Occupation"].ToString();
                 ImageType = dr["ImageType"].ToString();
+
+                DateTime date = DateTime.Now;
+                int year = date.Year;
+                DateTime DT = DOB;
+                PatientAge = year - DT.Year;
+                 
+                //DOB = Convert.ToDateTime(Age.ToString());
             }
             con.Close();        
 
