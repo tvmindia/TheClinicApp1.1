@@ -627,9 +627,9 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Delete User By UserID
 
 
-        public string DeleteUserByUserIDForWM()
+        public int DeleteUserByUserIDForWM()
         {
-            string result = string.Empty;
+            int result = 0;
 
             SqlConnection con = null;
             try
@@ -650,7 +650,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add(Output);
                 cmd.ExecuteNonQuery();
 
-                result = Output.Value.ToString();
+                result = Convert.ToInt32(Output.Value.ToString());
 
             }
             catch (Exception ex)

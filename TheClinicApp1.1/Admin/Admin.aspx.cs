@@ -610,7 +610,7 @@ namespace TheClinicApp1._1.Admin
          [WebMethod]
         public static bool DeleteUserByID(string UsrID)
         {
-             string result= string.Empty;
+            int result = 0;
 
             bool UserDeleted = false;
 
@@ -649,13 +649,13 @@ namespace TheClinicApp1._1.Admin
                     roleObj.UserID = Guid.Parse(UsrID);
                   result=   roleObj.DeleteAssignedRoleByUserIDForWM();
 
-                  if (result != string.Empty)
+                  if (result == 1)
                   {
 
                       mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
                         result=     mstrObj.DeleteDoctorByIDForWM(true);
 
-                        if (result != string.Empty)
+                        if (result ==1)
                         {
                              roleObj.UserID = Guid.Parse(UsrID);
                              roleObj.ClinicID = UA.ClinicID;
@@ -677,7 +677,7 @@ namespace TheClinicApp1._1.Admin
 
                     result = userObj.DeleteUserByUserIDForWM();
 
-                    if (result != string.Empty)
+                    if (result ==1)
                     {
                         UserDeleted = true;
                     }
@@ -703,7 +703,7 @@ namespace TheClinicApp1._1.Admin
 
                  result = userObj.DeleteUserByUserIDForWM();
 
-                if (result != string.Empty)
+                if (result == 1)
                 {
                     UserDeleted = true;
                 }
