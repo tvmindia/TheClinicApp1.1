@@ -524,7 +524,7 @@
   
     <div class="col-lg-4" >  
         <label for="name">Role</label>	
-        <div class="checkbox checkboxlist col-sm-4"" id="chkDiv" >
+        <div class="checkbox checkboxlist col-sm-4" id="chkDiv" >
 			 <asp:CheckBoxList ID="chklstRoles" runat="server"  ></asp:CheckBoxList>
 		</div>
         </div>
