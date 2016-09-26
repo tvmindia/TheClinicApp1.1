@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="SAdmin.aspx.cs" Inherits="TheClinicApp1._1.Admin.SAdmin" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+     <link href="../css/TheClinicApp.css" rel="stylesheet" />
+
     <script src="../js/jquery-1.9.1.min.js"></script>
 
     <script src="../js/JavaScript_selectnav.js"></script>
@@ -10,7 +13,7 @@
 
     <script src="../js/bootstrap-multiselect.js"></script>
 
-    <script src="../js/ASPSnippets_Pager.min.js"></script>
+    <%--<script src="../js/ASPSnippets_Pager.min.js"></script>--%>
 
     <script src="../js/Messages.js"></script>
 
@@ -214,7 +217,8 @@
         </div>
     </div>
     
-
+     <script src="../js/jquery-1.8.3.min.js"></script>
+    <script src="../js/ASPSnippets_Pager.min.js"></script>
          <script>
              function showpreview(input) {
                  debugger;
@@ -373,10 +377,15 @@
 
         GetClinic(1);
     });
-    $("[id*=txtSearch]").click("keyup", function () {
-        debugger;
-        GetClinic(parseInt(1));
-    });
+ //   $("[id*=txtSearch]").click("keyup", function () {
+      //  debugger;
+       // GetClinic(parseInt(1));
+   // });
+
+$( "#txtSearch" ).keyup(function() { 
+   GetClinic(parseInt(1));
+});
+
     $(".Pager .page").live("click", function () {
         GetClinic(parseInt($(this).attr('page')));
     });
@@ -482,4 +491,6 @@
     }
    
 </script>
+
+      <script src="../js/bootstrap-multiselect.js"></script>
 </asp:Content>
