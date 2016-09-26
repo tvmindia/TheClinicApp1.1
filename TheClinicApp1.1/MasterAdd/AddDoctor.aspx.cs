@@ -101,7 +101,7 @@ namespace TheClinicApp1._1.MasterAdd
             RoleAssign roleObj = new RoleAssign();
             User userObj = new User();
 
-            string result = string.Empty;
+            int result = 0;
             bool DoctorDeleted = false;
 
             ClinicDAL.UserAuthendication UA;
@@ -125,14 +125,14 @@ namespace TheClinicApp1._1.MasterAdd
                 roleObj.UserID = Guid.Parse(UserID);
                 result=   roleObj.DeleteAssignedRoleByUserIDForWM();
 
-                if (result != string.Empty)
+                if (result == 1)
                 {
                     //delete doctor
                     mstrObj.DoctorID = Guid.Parse(DoctorID);
-                    mstrObj.DeleteDoctorByIDForWM();
+                    result=mstrObj.DeleteDoctorByIDForWM();
 
 
-                    if (result != string.Empty)
+                    if (result == 1)
                     {
                         //delete user
 

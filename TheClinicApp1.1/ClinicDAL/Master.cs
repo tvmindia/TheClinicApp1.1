@@ -967,9 +967,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Delete Doctor By DoctorID
 
-        public string DeleteDoctorByIDForWM(bool rdoNotDoctor = false)
+        public int DeleteDoctorByIDForWM(bool rdoNotDoctor = false)
         {
-            string result = string.Empty;
+            int result = 0;
             SqlConnection con = null;
             try
             {
@@ -990,15 +990,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add(Output);
                 cmd.ExecuteNonQuery();
 
-
                 if (rdoNotDoctor == true)
                 {
-
-                 result =     Output.Value.ToString();
+                    result = Convert.ToInt32(Output.Value.ToString());
                 }
-
-
-
 
             }
             catch (Exception ex)
