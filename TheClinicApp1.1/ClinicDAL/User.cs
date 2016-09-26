@@ -295,8 +295,9 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion GetUserDetailsByLoginName
 
         #region AddUser
-        public void AddUser()
+        public int AddUser()
         {
+             int rslt =0;
             dbConnection dcon = new dbConnection();
 
             try
@@ -340,7 +341,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
-                    int rslt = Convert.ToInt32(Output.Value.ToString());
+                     rslt = Convert.ToInt32(Output.Value.ToString());
 
                     if (rslt == 2 || rslt == 3)
                     {
@@ -389,6 +390,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return rslt;
         }
         #endregion AddUsers
 
@@ -524,8 +527,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Update User By UserID
 
-        public void UpdateuserByUserID()
+        public int UpdateuserByUserID()
         {
+            int rslt = 0;
             dbConnection dcon = new dbConnection();
 
             try
@@ -568,7 +572,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //var page = HttpContext.Current.CurrentHandler as Page; //successfull
                     //eObj.SavedSuccessMessage(page);
 
-                    int rslt = Convert.ToInt32(Output.Value.ToString());
+                     rslt = Convert.ToInt32(Output.Value.ToString());
 
 
                     if (rslt == 1)
@@ -614,6 +618,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return rslt;
         }
 
         #endregion Update User By UserID

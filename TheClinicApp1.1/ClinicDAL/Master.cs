@@ -698,8 +698,9 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Validate Doctor Name
 
         #region AddDoctors
-        public void InsertDoctors()
+        public int InsertDoctors()
         {
+            int rslt = 0;
             SqlConnection con = null;
             try
             {
@@ -740,7 +741,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
-                    int rslt = Convert.ToInt32(Output.Value.ToString());
+                     rslt = Convert.ToInt32(Output.Value.ToString());
 
                     if (rslt == 1)
                     {
@@ -782,13 +783,14 @@ namespace TheClinicApp1._1.ClinicDAL
 
             }
 
-
+            return rslt;
         }
         #endregion AddDoctors
 
         #region Update Doctors
-        public void UpdateDoctors()
+        public int UpdateDoctors()
         {
+            int rslt = 0;
             dbConnection dcon = null;
 
             try
@@ -821,6 +823,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
+                    rslt = Convert.ToInt32(Output.Value.ToString());
                     var page = HttpContext.Current.CurrentHandler as Page;   //successfull
                     eObj.SavedSuccessMessage(page);
 
@@ -848,7 +851,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return rslt;
         }
 
 
