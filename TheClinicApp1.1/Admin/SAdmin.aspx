@@ -1,11 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/Main.Master" AutoEventWireup="true" CodeBehind="SAdmin.aspx.cs" Inherits="TheClinicApp1._1.Admin.SAdmin" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="../js/jquery-1.9.1.min.js"></script>
+
     <script src="../js/JavaScript_selectnav.js"></script>
+
     <script src="../Scripts/bootstrap.min.js"></script>
+
     <link href="../css/bootstrap-multiselect.css" rel="stylesheet" />
+
     <script src="../js/bootstrap-multiselect.js"></script>
+
     <script src="../js/ASPSnippets_Pager.min.js"></script>
+
     <script src="../js/Messages.js"></script>
 
 </asp:Content>
