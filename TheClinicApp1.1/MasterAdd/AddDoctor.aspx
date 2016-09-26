@@ -577,7 +577,10 @@
                                 </div>
                                 <div class="row field_row">
                                     <div class="col-lg-8">
-                                        <label for="name">Email</label><input id="txtEmail" runat="server" type="text" name="name" onchange="EmailIDDuplicationCheck(this)" />
+                                        <label for="name">Email</label>
+                                        
+                                        <input id="txtEmail" runat="server" type="email" name="email" onchange="EmailIDDuplicationCheck(this)" />
+                                        <%--<input id="txtEmail" runat="server" type="text" name="name" onchange="EmailIDDuplicationCheck(this)" />--%>
                                           <span class="tooltip2">
                                         <asp:Image ID="imgEmailAvailable" runat="server"  ImageUrl="~/Images/newfff.png" style="display:none"/>
                                                 <span class="tooltiptext2">Email ID  is Available</span>
