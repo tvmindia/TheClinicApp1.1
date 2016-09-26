@@ -34,6 +34,12 @@
             background-position-x: 5px;
             color: inherit;
         }
+
+         
+           .selected_row {
+            background-color: #d3d3d3!important;
+        }
+   
     </style>
 
     <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -44,6 +50,7 @@
     <script src="../js/DeletionConfirmation.js"></script>
    <script src="../js/Dynamicgrid.js"></script>
     <script src="../js/Messages.js"></script>
+    
     <script>
         $(document).ready(function () {
 
@@ -200,7 +207,9 @@
 
                 $("#<%=txtLoginName.ClientID %>").attr("readonly", "readonly");
 
-                if ($(this).text() == "") {
+                if ($(this).closest('tr').find('td:eq(6)').text() != $('#<%=hdnLoginedUserID.ClientID%>').val()) {
+
+                //if ($(this).text() == "") {
 
                     var jsonResult = {};
                     DoctorID = $(this).closest('tr').find('td:eq(5)').text();
@@ -253,8 +262,8 @@
         $(function () {
             $("[id*=dtgDoctors] td:eq(1)").click(function () {
                
-
-                if ($(this).text() == "") {
+                if ($(this).closest('tr').find('td:eq(6)').text() != $('#<%=hdnLoginedUserID.ClientID%>').val()) { 
+                //if ($(this).text() == "") {
                     var DeletionConfirmation = ConfirmDelete();
                     if (DeletionConfirmation == true) {
                         DoctorID = $(this).closest('tr').find('td:eq(5)').text();
@@ -362,7 +371,7 @@
             if (Doctors.length > 0) {
 
                 $.each(Doctors, function () {
-                    
+                    debugger;
                     var medicine = $(this);
                     
                     $("td", row).eq(0).html($('<img />')
@@ -376,7 +385,30 @@
                     $("td", row).eq(3).html($(this).find("Phone").text());
                     $("td", row).eq(4).html($(this).find("Email").text());
                     $("td", row).eq(5).html($(this).find("DoctorID").text());
-                    $("td", row).eq(6).html($(this).find("UserID").text());
+
+                  if ($(this).find("UserID").text() == $('#<%=hdnLoginedUserID.ClientID%>').val()) {
+                        $("td", row).addClass("selected_row");
+                        $("td", row).eq(6).html($(this).find("UserID").text());
+                        $("td", row).eq(0).html($('<img />')
+                     .attr('src', "" + '../images/Editicon1.png' + "")).removeClass('CursorShow');
+
+                        $("td", row).eq(1).html($('<img />')
+                   .attr('src', "" + '../images/Deleteicon1.png' + "")).removeClass('CursorShow');
+
+                    }
+                    else {
+                        $("td", row).removeClass("selected_row");
+                        $("td", row).eq(6).html($(this).find("UserID").text());
+
+                        $("td", row).eq(0).html($('<img />')
+                    .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
+
+                        $("td", row).eq(1).html($('<img />')
+                  .attr('src', "" + '../images/Deleteicon1.png' + "")).removeClass('CursorShow');
+
+
+                    }
+
 
                     $("[id*=dtgDoctors]").append(row);
                     row = $("[id*=dtgDoctors] tr:last-child").clone(true);
@@ -623,5 +655,6 @@
 
     <asp:HiddenField ID="hdnDrID" runat="server" />
     <asp:HiddenField ID="hdnUserID" runat="server" />
+    <asp:HiddenField ID="hdnLoginedUserID" runat="server" /> 
 
 </asp:Content>

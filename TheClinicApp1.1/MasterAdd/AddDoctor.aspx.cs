@@ -514,6 +514,7 @@ namespace TheClinicApp1._1.MasterAdd
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             mstrObj.ClinicID = UA.ClinicID;
+            hdnLoginedUserID.Value = UA.UserID.ToString();
 
             BindDummyRow();
             //if (!IsPostBack)
