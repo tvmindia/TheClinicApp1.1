@@ -183,8 +183,9 @@ namespace TheClinicApp1._1.Admin
 
         #region Delete User By UserID
 
-        public void DeleteUserByUserID(Guid UserID)
+        public int DeleteUserByUserID(Guid UserID)
         {
+            int rslt = 0;
             string msg = string.Empty;
             var page = HttpContext.Current.CurrentHandler as Page;
 
@@ -197,16 +198,26 @@ namespace TheClinicApp1._1.Admin
             foreach (DataRow dr in dtAssignedRoles.Rows)
             {
                 roleObj.RoleID = Guid.Parse(dr["RoleID"].ToString());
-                DeleteAssignedRoleByUserID(UserID);
+                rslt=  DeleteAssignedRoleByUserID(UserID);
             }
 
-
-
+            if (dtAssignedRoles.Rows.Count == 0)
+            {
+                 userObj.UserID = UserID;
+                 rslt = userObj.DeleteUserByUserID();
+            }
+            else
+            {
+                if (rslt == 1)
+                {
+                    userObj.UserID = UserID;
+                    rslt = userObj.DeleteUserByUserID();
+                }
+            }
                     
             //if (dtAssignedRoles.Rows.Count == 0)
             //{
-            userObj.UserID = UserID;
-            userObj.DeleteUserByUserID();
+           
             //}
 
             //else
@@ -214,6 +225,9 @@ namespace TheClinicApp1._1.Admin
             //    msg = Messages.AlreadyUsedForDeletion;
             //    eObj.DeletionNotSuccessMessage(page, msg);
             //}
+
+
+            return rslt;
         }
 
         #endregion Delete User By UserID
@@ -402,6 +416,7 @@ namespace TheClinicApp1._1.Admin
         /// <param name="UserID"></param>
         public void DeleteDoctorByUserID(Guid UserID)
         {
+            int rslt = 0;
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
             var page = HttpContext.Current.CurrentHandler as Page;
@@ -430,17 +445,19 @@ namespace TheClinicApp1._1.Admin
                 else
                 {
                     roleObj.RoleID = Guid.Parse(GetRoleIDOFDoctor());
-                    DeleteAssignedRoleByUserID(UserID);
+                    rslt=DeleteAssignedRoleByUserID(UserID);
 
+                    if (rslt ==1)
+                    {
                     mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
-                    mstrObj.DeleteDoctorByID(true);
+                    rslt = mstrObj.DeleteDoctorByID(true);
 
-                    if ( hdnDeleteButtonClick.Value == "True")
+                    if ( hdnDeleteButtonClick.Value == "True" && rslt == 1)
                     {
                         DeleteUserByUserID(UserID);
                     }
 
-               
+                    }
                 }
 
             }
@@ -515,10 +532,12 @@ namespace TheClinicApp1._1.Admin
 
         #region Delete Assigned role By UserID
 
-        public void DeleteAssignedRoleByUserID(Guid UserID)
+        public int DeleteAssignedRoleByUserID(Guid UserID)
         {
+            int rslt = 0;
             roleObj.UserID = UserID;
-            roleObj.DeleteAssignedRoleByUserID();
+            rslt = roleObj.DeleteAssignedRoleByUserID();
+            return rslt;
         }
 
         #endregion Delete Assigned role By UserID

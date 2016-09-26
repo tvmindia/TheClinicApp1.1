@@ -432,10 +432,12 @@ namespace TheClinicApp1._1.MasterAdd
 
         #region Delete Assigned role By UserID
 
-        public void DeleteAssignedRoleByUserID(Guid UserID)
+        public int DeleteAssignedRoleByUserID(Guid UserID)
         {
+            int rslt = 0;
             roleObj.UserID = UserID;
-            roleObj.DeleteAssignedRoleByUserID();
+            rslt =  roleObj.DeleteAssignedRoleByUserID();
+            return rslt;
         }
 
         #endregion Delete Assigned role By UserID
@@ -564,6 +566,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
+            int rslt = 0;
             Errorbox.Attributes.Add("style", "display:none");
 
             string msg = string.Empty;
@@ -595,13 +598,19 @@ namespace TheClinicApp1._1.MasterAdd
          else
             {
                 roleObj.RoleID = Guid.Parse(GetRoleIDOFDoctor());
-                DeleteAssignedRoleByUserID(UserID);
+                rslt =DeleteAssignedRoleByUserID(UserID);
 
+                if (rslt == 1)
+                {
                 mstrObj.DoctorID = DoctorID;
-                mstrObj.DeleteDoctorByID();
+                rslt =  mstrObj.DeleteDoctorByID();
 
-                DeleteUserByUserID(UserID);
+                if (rslt == 1)
+                {
+                    DeleteUserByUserID(UserID); 
+                }
 
+                }
          }
             BindGridview();
 

@@ -679,8 +679,9 @@ namespace TheClinicApp1._1.ClinicDAL
             return result;
         }
 
-        public void DeleteUserByUserID()
+        public int DeleteUserByUserID()
         {
+            int rslt = 0;
             SqlConnection con = null;
             try
             {
@@ -707,6 +708,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
+                    rslt = Convert.ToInt32(Output.Value.ToString());
                     var page = HttpContext.Current.CurrentHandler as Page;  //successfull
                     eObj.DeleteSuccessMessage(page);
 
@@ -735,6 +737,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return rslt;
         }
 
         #endregion Delete User By UserID
