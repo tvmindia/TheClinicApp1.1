@@ -8,6 +8,7 @@ var finaltime = "";
 var schID = "";
 var checkItems = "";
 var scheduleId = "";
+var removeTime = [];
 $(document).ready(function () {
     
     $('.alert_close').click(function () {
@@ -37,6 +38,7 @@ $(document).ready(function () {
                     clearDropDown();
                     showDropDown();
                     var titles = "";
+                    removeTime = [];
                     document.getElementById("TimeAvailability").innerHTML = '';
                     document.getElementById("listBody").innerHTML = '';
                     title = '';
@@ -104,8 +106,10 @@ $(document).ready(function () {
                             title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
                         }
                         else {
+                            
                             title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
                             $("#hdfLastAppointedTime").val(time);
+                            removeTime.push(time);
                         }
                         var parentDiv = document.getElementById("listBody");
                         parentDiv.innerHTML = title;
@@ -130,6 +134,8 @@ $(document).ready(function () {
                     var html = "";
                     var appointmentNo = "";
                     var chkValue = "";
+                    var startAndEndArr = [];
+                    var startAndEndVal = [];
                     for (index = 0; index < timeList.length - 1; index++) {
                         checkItems = timeList.length - 1;
                         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
@@ -141,10 +147,38 @@ $(document).ready(function () {
                         endTime = endTime.split('+')[0];
                         var StartAndEnd = startTime + "-" + endTime;
                         chkValue = StartAndEnd + "+" + appointmentNo;
-                        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
-                       
-                  
+                        startAndEndArr.push(StartAndEnd);
+                        startAndEndVal.push(chkValue);
+                       // html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+
                     }
+                    debugger;
+                    for (var i = 0; i < removeTime.length; i++) {
+                        for (var j = 0; j < startAndEndArr.length; j++) {
+                            var removedStartTime = startAndEndArr[j];
+                            removedStartTime = removedStartTime.replace(':', '.')
+                            var sLength = removedStartTime.split('.')[0].length;
+                            if (sLength == 1) {
+                                removedStartTime = "0" + removedStartTime;
+
+                            }
+                            removedStartTime = removedStartTime.split('-')[0];
+                            if (removeTime[i] == removedStartTime) {
+                                startAndEndArr[j] = '';
+                                startAndEndVal[j] = '';
+                            }
+                            else {
+
+                            }
+                        }
+                        startAndEndArr = startAndEndArr.filter(Boolean);
+                        startAndEndVal = startAndEndVal.filter(Boolean);
+                    }
+                    var len = startAndEndArr.length;
+                    for (var i = 0; i < len; i++) {
+                        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + i + "' value='" + startAndEndVal[i] + "'  /></td><td><label >" + startAndEndArr[i] + "</label></td></tr><table><br/>");
+                    }
+
                     //$("#hdfAppointmentNoCollection").val(appointmentno);
                     $("#TimeAvailability").append(html);
                     timeList = "";
@@ -195,6 +229,7 @@ $(document).ready(function () {
                 clearDropDown();
                 showDropDown();
                 var titles = "";
+                removeTime = [];
                 document.getElementById("TimeAvailability").innerHTML = '';
                 document.getElementById("listBody").innerHTML = '';
                 title = '';
@@ -258,6 +293,7 @@ $(document).ready(function () {
                         m = "0" + m;
                         time = h + "." + m + ampm;
                     }
+                   
                     var s = parseFloat(names[0].allottedTime.replace(':', '.'));
                     $("#hdfStartTime").val(s);
                     if (names[1] != undefined) {
@@ -270,6 +306,7 @@ $(document).ready(function () {
                     else {
                         title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
                         $("#hdfLastAppointedTime").val(time);
+                        removeTime.push(time);
                     }
                     var parentDiv = document.getElementById("listBody");
                     parentDiv.innerHTML = title;
@@ -297,8 +334,10 @@ $(document).ready(function () {
                 var html = "";
                 var appointmentNo = "";
                 var chkValue = "";
+                var startAndEndArr = [];
+                var startAndEndVal = [];
                 for (index = 0; index < timeList.length - 1; index++) {
-                    debugger;
+                    
                     checkItems = timeList.length - 1;
                     var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
                     startTime = startTime.split(':')[0] + ":" + startTime.split(':')[1] + startTime.split(' ')[1];
@@ -309,9 +348,41 @@ $(document).ready(function () {
                     endTime = endTime.split('+')[0];
                     var StartAndEnd = startTime + "-" + endTime;
                     chkValue = StartAndEnd + "+" + appointmentNo;
-                    html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
-                    //appointmentno =appointmentno+","+ StartAndEnd + index + 1;
+                    startAndEndArr.push(StartAndEnd);
+                    startAndEndVal.push(chkValue);
                 }
+                    debugger;
+                    for (var i = 0; i < removeTime.length; i++)
+                    {
+                        for (var j = 0; j < startAndEndArr.length; j++)
+                        {
+                            var removedStartTime = startAndEndArr[j];
+                            removedStartTime = removedStartTime.replace(':', '.')
+                            var sLength = removedStartTime.split('.')[0].length;
+                            if (sLength == 1) {
+                                removedStartTime = "0" + removedStartTime;
+                                
+                            }
+                            removedStartTime = removedStartTime.split('-')[0];
+                            if (removeTime[i] == removedStartTime) {
+                                startAndEndArr[j] = '';
+                                startAndEndVal[j] = '';
+                            }
+                            else {
+                                
+                            }
+                        }
+                        startAndEndArr = startAndEndArr.filter(Boolean);
+                        startAndEndVal = startAndEndVal.filter(Boolean);
+                    }
+                    var len = startAndEndArr.length;
+                    for (var i = 0; i < len; i++)
+                    {
+                        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + i + "' value='" + startAndEndVal[i] + "'  /></td><td><label >" + startAndEndArr[i] + "</label></td></tr><table><br/>");
+                    }
+                    
+                    //appointmentno =appointmentno+","+ StartAndEnd + index + 1;
+                
                 //$("#hdfAppointmentNoCollection").val(appointmentno);
                 $("#TimeAvailability").append(html);
                 timeList = "";
@@ -458,6 +529,7 @@ function fillPatientDetails() {
     document.getElementById("TimeAvailability").innerHTML = '';
     document.getElementById("listBody").innerHTML = '';
     title = '';
+    removeTime = [];
     scheduleId = $("#hdfScheduleID").val();
     AppendList(eventStartDate.split(' ')[0]);
     var names = GetAllPatientList(scheduleId)
@@ -516,6 +588,7 @@ function fillPatientDetails() {
         else {
             title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
             $("#hdfLastAppointedTime").val(time);
+            removeTime.push(time);
         }
         var parentDiv = document.getElementById("listBody");
         parentDiv.innerHTML = title;
@@ -538,6 +611,8 @@ function fillPatientDetails() {
     var html = "";
     var appointmentNo = "";
     var chkValue = "";
+    var startAndEndArr = [];
+    var startAndEndVal = [];
     for (index = 0; index < timeList.length - 1; index++) {
         checkItems = timeList.length - 1;
         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
@@ -550,7 +625,36 @@ function fillPatientDetails() {
         endTime = endTime.split('+')[0];
         var StartAndEnd = startTime + "-" + endTime;
         chkValue = StartAndEnd + "+" + appointmentNo;
-        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime'  id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+        startAndEndArr.push(StartAndEnd);
+        startAndEndVal.push(chkValue);
+        //html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime'  id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+    }
+    debugger;
+    for (var i = 0; i < removeTime.length; i++) {
+        for (var j = 0; j < startAndEndArr.length; j++) {
+            var removedStartTime = startAndEndArr[j];
+            removedStartTime = removedStartTime.replace(':', '.')
+            var sLength = removedStartTime.split('.')[0].length;
+            if (sLength == 1) {
+                removedStartTime = "0" + removedStartTime;
+
+            }
+            removedStartTime = removedStartTime.split('-')[0];
+            if (removeTime[i] == removedStartTime) {
+                startAndEndArr[j] = '';
+                startAndEndVal[j] = '';
+            }
+            else {
+
+            }
+        }
+        startAndEndArr = startAndEndArr.filter(Boolean);
+        startAndEndVal = startAndEndVal.filter(Boolean);
+    }
+    debugger;
+    var len = startAndEndArr.length;
+    for (var i = 0; i < len; i++) {
+        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + i + "' value='" + startAndEndVal[i] + "'  /></td><td><label >" + startAndEndArr[i] + "</label></td></tr><table><br/>");
     }
     
     $("#TimeAvailability").append(html);
@@ -566,6 +670,8 @@ function RereshTimeCheckBox()
     var html = "";
     var appointmentNo = "";
     var chkValue = "";
+    var startAndEndArr = [];
+    var startAndEndVal = [];
     for (index = 0; index < timeList.length - 1; index++) {
         checkItems = timeList.length - 1;
         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
@@ -578,7 +684,35 @@ function RereshTimeCheckBox()
         endTime = endTime.split('+')[0];
         var StartAndEnd = startTime + "-" + endTime;
         chkValue = StartAndEnd + "+" + appointmentNo;
-        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime'  id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+        startAndEndArr.push(StartAndEnd);
+        startAndEndVal.push(chkValue);
+       // html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime'  id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+    }
+    debugger;
+    for (var i = 0; i < removeTime.length; i++) {
+        for (var j = 0; j < startAndEndArr.length; j++) {
+            var removedStartTime = startAndEndArr[j];
+            removedStartTime = removedStartTime.replace(':', '.')
+            var sLength = removedStartTime.split('.')[0].length;
+            if (sLength == 1) {
+                removedStartTime = "0" + removedStartTime;
+
+            }
+            removedStartTime = removedStartTime.split('-')[0];
+            if (removeTime[i] == removedStartTime) {
+                startAndEndArr[j] = '';
+                startAndEndVal[j] = '';
+            }
+            else {
+
+            }
+        }
+        startAndEndArr = startAndEndArr.filter(Boolean);
+        startAndEndVal = startAndEndVal.filter(Boolean);
+    }
+    var len = startAndEndArr.length;
+    for (var i = 0; i < len; i++) {
+        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + i + "' value='" + startAndEndVal[i] + "'  /></td><td><label >" + startAndEndArr[i] + "</label></td></tr><table><br/>");
     }
     document.getElementById("availableSlot").style.display = "block";
     document.getElementById("TimeAvailability").style.display = "block";
@@ -627,6 +761,8 @@ function refreshTime(){
     var html = "";
     var appointmentNo = "";
     var chkValue = "";
+    var startAndEndArr = [];
+    var startAndEndVal = [];
     for (index = 0; index < timeList.length - 1; index++) {
         checkItems = timeList.length - 1;
         var startTime = timeList[index].split(' ')[1] + " " + timeList[index].split(' ')[2];
@@ -638,7 +774,35 @@ function refreshTime(){
         endTime = endTime.split('+')[0];
         var StartAndEnd = startTime + "-" + endTime;
         chkValue = StartAndEnd + "+" + appointmentNo;
-        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+        startAndEndArr.push(StartAndEnd);
+        startAndEndVal.push(chkValue);
+        //html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + index + "' value='" + chkValue + "'  /></td><td><label >" + StartAndEnd + "</label></td></tr><table><br/>");
+    }
+    debugger;
+    for (var i = 0; i < removeTime.length; i++) {
+        for (var j = 0; j < startAndEndArr.length; j++) {
+            var removedStartTime = startAndEndArr[j];
+            removedStartTime = removedStartTime.replace(':', '.')
+            var sLength = removedStartTime.split('.')[0].length;
+            if (sLength == 1) {
+                removedStartTime = "0" + removedStartTime;
+
+            }
+            removedStartTime = removedStartTime.split('-')[0];
+            if (removeTime[i] == removedStartTime) {
+                startAndEndArr[j] = '';
+                startAndEndVal[j] = '';
+            }
+            else {
+
+            }
+        }
+        startAndEndArr = startAndEndArr.filter(Boolean);
+        startAndEndVal = startAndEndVal.filter(Boolean);
+    }
+    var len = startAndEndArr.length;
+    for (var i = 0; i < len; i++) {
+        html = html + ("<table class='tblDates'><tr><td><input type='checkbox' class='chkTime' onClick='" + selectOnlyThis(this.id) + "' id='chk_" + i + "' value='" + startAndEndVal[i] + "'  /></td><td><label >" + startAndEndArr[i] + "</label></td></tr><table><br/>");
     }
     $("#TimeAvailability").append(html);
     timeList = "";
@@ -684,7 +848,6 @@ function refreshList(){
     $('#calendar').fullCalendar('refetchEvents');
 }
 function GetAllottedTime(docId, eventStartDate, id) {
-    debugger;
     var names = GetAllPatientList(id);
     for (var j = 0; j < names.length; j++)
     {
@@ -727,14 +890,14 @@ function GetAllottedTime(docId, eventStartDate, id) {
                 time = hours + ":" + time.split(':')[1];
             }
             
-            debugger;
+           
             if ((time.split(':')[0].length == 2) && (time.split(':')[0][0])=="0") {
                 time = time.replace(time.split(':')[0][0], '');
             }
 
-            if (time == startTime) {
-                timeList[index]='';
-            }
+            //if (time == startTime) {
+            //    timeList[index]='';
+            //}
         }
     }
     timeList = timeList.filter(Boolean);
@@ -742,7 +905,8 @@ function GetAllottedTime(docId, eventStartDate, id) {
 }
 
 function selectOnlyThis(id) {
-    if (id != "") {
+    debugger;
+    if (id != "" && id != undefined) {
         $('input:checkbox').prop('checked', false);
         document.getElementById(id).checked = true;
     }

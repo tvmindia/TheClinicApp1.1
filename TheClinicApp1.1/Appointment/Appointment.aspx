@@ -66,7 +66,8 @@
                     return false;
                 },
                 select: function (event, ui) {
-                BindPatientDetails();
+                    var MobileNo = ui.item.desc.split('|')[2];
+                    BindPatientDetails(MobileNo);
                 return false;
             }
         })
@@ -259,11 +260,11 @@ var appointmentNo="";
             if (document.getElementById("txtSearch").innerText != "")
                 $('#<%=btnSearch.ClientID%>').click();
         }
-        function BindPatientDetails() {   
+        function BindPatientDetails(MobileNo) {   
             var jsonPatient = {};
             var SearchItem = $('#txtSearch').val();
             var Patient = new Object();
-
+            Patient.Phone = MobileNo;
             if (SearchItem != '') {
                 Patient.Name = SearchItem;
 
