@@ -34,11 +34,15 @@
     text-align: center;
     }   
     </style>--%>
-
+    <style>
+           .selected_row {
+            background-color: #d3d3d3!important;
+        }
+    </style>
     <script>
-
+       
         function Validation() {
-          
+            
             if (($('#<%=txtLoginName.ClientID%>').val().trim() == "") || ($('#<%=txtFirstName.ClientID%>').val().trim() == "") || ($('#<%=txtPassword.ClientID%>').val().trim() == "") || ($('#<%=txtConfirmPassword.ClientID%>').val().trim() == "") || ($('#<%=txtPhoneNumber.ClientID%>').val().trim() == "") || ($('#<%=txtEmail.ClientID%>').val().trim() == "")) {
 
                 var lblclass = Alertclasses.danger;
@@ -220,6 +224,7 @@
 
         $(function () {
             $("[id*=dtgViewAllUsers] td:eq(0)").click(function () {
+                if ($(this).closest('tr').find('td:eq(6)').text() != $('#<%=hdnLoginedUserID.ClientID%>').val()) { //Making sure ,not editing the logined user data
 
                 document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                 document.getElementById('<%=imgWebLnames.ClientID %>').style.display = "none";
@@ -227,7 +232,7 @@
                 document.getElementById('<%=imgEmailAvailable.ClientID %>').style.display = "none";
                 document.getElementById('<%=imgEmailUnAvailable.ClientID %>').style.display = "none";
 
-                $("#<%=txtLoginName.ClientID %>").attr("readonly", true);
+                    $("#<%=txtLoginName.ClientID %>").attr("readonly", "readonly");
 
                 if ($(this).text() == "") {
                     var jsonResult = {};
@@ -239,7 +244,7 @@
                       
                         BindUserControls(jsonResult);
                     }
-                }
+                } }
             });
         });
 
@@ -293,13 +298,17 @@
 
         $(function () {
             $("[id*=dtgViewAllUsers] td:eq(1)").click(function () {
-               
-                if ($(this).text() == "") {
-                    var DeletionConfirmation = ConfirmDelete();
-                    if (DeletionConfirmation == true) {
-                        UserID = $(this).closest('tr').find('td:eq(6)').text();
-                        DeleteUserByID(UserID);
-                        //window.location = "StockIn.aspx?HdrID=" + receiptID;
+                
+                if ($(this).closest('tr').find('td:eq(6)').text() != $('#<%=hdnLoginedUserID.ClientID%>').val()) { //Making sure ,not deleting the logined user data
+
+
+                    if ($(this).text() == "") {
+                        var DeletionConfirmation = ConfirmDelete();
+                        if (DeletionConfirmation == true) {
+                            UserID = $(this).closest('tr').find('td:eq(6)').text();
+                            DeleteUserByID(UserID);
+                            //window.location = "StockIn.aspx?HdrID=" + receiptID;
+                        }
                     }
                 }
             });
@@ -397,10 +406,38 @@
                     $("td", row).eq(1).html($('<img />')
                        .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
-                    $("td", row).eq(2).html($(this).find("LoginName").text());
+                  
+
+                    if ($(this).find("UserID").text() == $('#<%=hdnLoginedUserID.ClientID%>').val()) {
+                        $("td", row).addClass("selected_row");
+                        $("td", row).eq(2).html($(this).find("LoginName").text());
+                        $("td", row).eq(0).html($('<img />')
+                     .attr('src', "" + '../images/Editicon1.png' + "")).removeClass('CursorShow');
+
+                        $("td", row).eq(1).html($('<img />')
+                   .attr('src', "" + '../images/Deleteicon1.png' + "")).removeClass('CursorShow');
+
+                    }
+                    else
+                    {
+                        $("td", row).removeClass("selected_row");
+                        $("td", row).eq(2).html($(this).find("LoginName").text());
+
+                        $("td", row).eq(0).html($('<img />')
+                    .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
+
+                        $("td", row).eq(1).html($('<img />')
+                  .attr('src', "" + '../images/Deleteicon1.png' + "")).removeClass('CursorShow');
+
+
+                    }
+
                     $("td", row).eq(3).html($(this).find("FirstName").text());
                     $("td", row).eq(4).html($(this).find("LastName").text());
                     $("td", row).eq(5).html($(this).find("Active").text());
+
+                   
+                   
 
                     $("td", row).eq(6).html($(this).find("UserID").text());
 
@@ -682,12 +719,14 @@
                         <div class="Pager">
                         </div>
                     </div>
-                </div>
+                           </div>
             </div>
         </div>
     </div>
     <%--<asp:HiddenField ID="hdnUserCountChanged" runat="server" value="False"/>--%>
+      <%--<asp:HiddenField ID="hdnLoginUserID" runat="server" />--%>
     <asp:HiddenField ID="hdnUserID" runat="server" />
     <asp:HiddenField ID="hdnDeleteButtonClick" runat="server" />
+      <asp:HiddenField ID="hdnLoginedUserID" runat="server" /> 
 
 </asp:Content>

@@ -71,7 +71,7 @@
                  .imagelogo{
                      position: absolute;
                      top: -34%;
-                     left: 36%;
+                     left: 2%;
                      height: 120%;
                  }
 
@@ -181,8 +181,13 @@
                         return false;
                     },
                     select: function( event, ui ) {
+                        debugger;
 
-                        BindPatientDetails();
+                    //var FileName =    ui.item.desc.split('|')[0].split('📰')[1];
+                    // var Address =  ui.item.desc.split('|')[1];
+                    var MobileNo = ui.item.desc.split('|')[2];
+
+                    BindPatientDetails(MobileNo);
                         document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
 
 
@@ -340,7 +345,7 @@
                 return table;
             }
             //Click event function for search patient and bind
-            function BindPatientDetails()
+            function BindPatientDetails(MobileNo)
             {
                 var jsonPatient = {};
                 var SearchItem = $('#txtSearch').val();
@@ -348,7 +353,7 @@
                 if(SearchItem != '')
                 { 
                     Patient.Name = SearchItem;
-
+                    Patient.Phone = MobileNo;
                     jsonPatient = GetPatientDetails(Patient);
                     if (jsonPatient != undefined)
                     {
@@ -371,7 +376,7 @@
             function BindPatient(Records)
             {
                 $("#<%=txtName.ClientID %>").val(Records.Name);
-                $("#<%=txtAge.ClientID %>").val(Records.Age);
+                $("#<%=txtAge.ClientID %>").val(Records.PatientAge);
                 $("#<%=txtAddress.ClientID %>").val(Records.Address);
                 $("#<%=txtMobile.ClientID %>").val(Records.Phone);
                 $("#<%=txtEmail.ClientID %>").val(Records.Email);
@@ -724,6 +729,7 @@
             };
 
             function GetTodayPatients(pageIndex) {
+               
                 $.ajax({
                     type: "POST",
                     url: "../Registration/Patients.aspx/ViewAndFilterTodayPatients",
@@ -733,17 +739,18 @@
                     success: TodayRegistrationSuccess,
                     failure: function (response) {
 
-                        alert(response.d);
+                        //alert(response.d);
                     },
                     error: function (response) {
 
-                        alert(response.d);
+                        //alert(response.d);
                     }
                 });
             }
 
             function GetTodayPatientAppointments(pageIndex)
             {
+              
                 $.ajax({
                     type: "POST",
                     url: "../Registration/Patients.aspx/ViewAndFilterTodayPatientAppointments",
@@ -753,11 +760,11 @@
                     success: TodayAppointmentSuccess,
                     failure: function (response) {
 
-                        alert(response.d);
+                       // alert(response.d);
                     },
                     error: function (response) {
 
-                        alert(response.d);
+                       // alert(response.d);
                     }
                 });
             }
@@ -1352,7 +1359,10 @@ function AppointmentIsAbsent(Appointments)
                             <div class="col-lg-8">
                                 <div class="row">
                                     <div class="col-lg-8 margin_bottom">
-                                        <label for="name">Name</label><input id="txtName" runat="server" onkeypress="return isnotNumber(event)" type="text" name="name" pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only." />
+                                        <label for="name">Name</label><input id="txtName" runat="server" onkeypress="return isnotNumber(event)" type="text" name="name"  />
+                                        <%--pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only."--%>
+
+
                                     </div>
                                     <div class="col-lg-4 upload_photo_col">
                                         <div class="margin_bottom upload_photo">

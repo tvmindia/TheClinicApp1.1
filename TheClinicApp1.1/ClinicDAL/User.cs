@@ -295,8 +295,9 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion GetUserDetailsByLoginName
 
         #region AddUser
-        public void AddUser()
+        public int AddUser()
         {
+             int rslt =0;
             dbConnection dcon = new dbConnection();
 
             try
@@ -340,7 +341,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
-                    int rslt = Convert.ToInt32(Output.Value.ToString());
+                     rslt = Convert.ToInt32(Output.Value.ToString());
 
                     if (rslt == 2 || rslt == 3)
                     {
@@ -389,6 +390,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return rslt;
         }
         #endregion AddUsers
 
@@ -524,8 +527,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Update User By UserID
 
-        public void UpdateuserByUserID()
+        public int UpdateuserByUserID()
         {
+            int rslt = 0;
             dbConnection dcon = new dbConnection();
 
             try
@@ -568,7 +572,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     //var page = HttpContext.Current.CurrentHandler as Page; //successfull
                     //eObj.SavedSuccessMessage(page);
 
-                    int rslt = Convert.ToInt32(Output.Value.ToString());
+                     rslt = Convert.ToInt32(Output.Value.ToString());
 
 
                     if (rslt == 1)
@@ -614,6 +618,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return rslt;
         }
 
         #endregion Update User By UserID
@@ -621,9 +627,9 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Delete User By UserID
 
 
-        public string DeleteUserByUserIDForWM()
+        public int DeleteUserByUserIDForWM()
         {
-            string result = string.Empty;
+            int result = 0;
 
             SqlConnection con = null;
             try
@@ -644,7 +650,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add(Output);
                 cmd.ExecuteNonQuery();
 
-                result = Output.Value.ToString();
+                result = Convert.ToInt32(Output.Value.ToString());
 
             }
             catch (Exception ex)
@@ -673,8 +679,9 @@ namespace TheClinicApp1._1.ClinicDAL
             return result;
         }
 
-        public void DeleteUserByUserID()
+        public int DeleteUserByUserID()
         {
+            int rslt = 0;
             SqlConnection con = null;
             try
             {
@@ -701,6 +708,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
+                    rslt = Convert.ToInt32(Output.Value.ToString());
                     var page = HttpContext.Current.CurrentHandler as Page;  //successfull
                     eObj.DeleteSuccessMessage(page);
 
@@ -729,6 +737,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return rslt;
         }
 
         #endregion Delete User By UserID

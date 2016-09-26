@@ -15,7 +15,7 @@
 
             var panel = document.getElementById("<%=pnlContents.ClientID %>");
             var printWindow = window.open('');
-            printWindow.document.write('<html><head><title>'+PageTitle+'</title><style type="text/css">@media print  {table { page-break-after:auto } tr    { page-break-inside:avoid; page-break-after:auto } td    { page-break-inside:avoid; page-break-after:auto } thead { display:table-header-group;}  tfoot { display:table-footer-group } table {border-collapse: collapse;border: 1px solid black;border-top: 1px solid white !important; border-right: 1px solid black;border-left: 1px solid black; } table th {border-top: 1px solid black;border-right: 1px solid black;border-left: 1px solid black;border-bottom: 1px solid black;font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 16px;font-weight: 100;}table td {width: 19%;height: auto !important;padding-left: 5px;margin: 5px 5px 5px 5px 5px;font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 14px;} tr.even td {background-color: #e1e6ef; } tr.odd td {background-color: #ffffff;} .footer {color: #0e3782; text-align: right;} .header {color: #0e3782;}p {font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 32px;}.Clinicname {font-family: caviardreams-regular;}.logo1 {margin: 15px 15px 15px 15px;width: 150px;}}</style>');
+            printWindow.document.write('<html><head><title>'+PageTitle+'</title><style type="text/css">@media print  {table { page-break-after:auto } tr    { page-break-inside:avoid; page-break-after:auto } td    { page-break-inside:avoid; page-break-after:auto } thead { display:table-header-group;background-color: #5681e6;color:white}  tfoot { display:table-footer-group } table {border-collapse: collapse;border: 1px solid #D3D3D3;border-top: 1px solid white !important; border-right: 1px solid #D3D3D3;border-left: 1px solid #D3D3D3; } table tr{border-top: 1px solid #D3D3D3;border-right: 1px solid #D3D3D3;border-left: 1px solid #D3D3D3;border-bottom: 1px solid #D3D3D3;} table th {border-top: 1px solid #D3D3D3;border-right: 1px solid #D3D3D3;border-left: 1px solid #D3D3D3;border-bottom: 1px solid #D3D3D3;font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 16px;font-weight: 100;}table td {width: 19%;height: auto !important;padding-left: 5px;margin: 5px 5px 5px 5px 5px;font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 14px; border-right: 1px solid #D3D3D3;} tr.even td {border-color:black!important; } tr.odd td {border-color:black!important;} .footer {color: #0e3782; text-align: right; } .header {color: #0e3782;}p {font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;font-size: 32px;}.Clinicname {font-family: caviardreams-regular;}.logo1 {margin: 15px 15px 15px 15px;width: 150px;-webkit-print-color-adjust: exact;}}</style>');
 
             printWindow.document.write('</head><body >');
             printWindow.document.write(panel.innerHTML);
@@ -36,18 +36,18 @@
         }
         table {
             border-collapse: collapse;
-            border: 1px solid black;
+            border: 1px solid #D3D3D3;
             border-top: 1px solid white !important;
-            border-right: 1px solid black;
-            border-left: 1px solid black;
+            border-right: 1px solid #D3D3D3;
+            border-left: 1px solid #D3D3D3;
         }
 
 
             table th {
-                border-top: 1px solid black;
-                border-right: 1px solid black;
-                border-left: 1px solid black;
-                border-bottom: 1px solid black;
+                border-top: 1px solid #D3D3D3;
+                border-right: 1px solid #D3D3D3;
+                border-left: 1px solid #D3D3D3;
+                border-bottom: 1px solid #D3D3D3;
                 font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
                 font-size: 16px;
                 font-weight: 100;
@@ -60,14 +60,19 @@
                 margin: 5px 5px 5px 5px 5px;
                 font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
                 font-size: 14px;
+                border-right: 1px solid #D3D3D3;
             }
-
+            tr{
+                border-top: 1px solid #D3D3D3;border-right: 1px solid #D3D3D3;border-left: 1px solid #D3D3D3;border-bottom: 1px solid #D3D3D3;
+            }
         tr.even td {
-            background-color: #e1e6ef;
+            /*background-color: #e1e6ef;*/
+            border-color:black!important;
         }
 
         tr.odd td {
-            background-color: #ffffff;
+            /*background-color: #ffffff;*/
+             border-color:black!important;
         }
 
         .footer {

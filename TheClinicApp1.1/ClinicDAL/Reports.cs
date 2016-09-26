@@ -227,7 +227,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     HtmlReprtObj.Columns.Add("Name", 0);
                     HtmlReprtObj.Columns.Add("Address", 0);
                     HtmlReprtObj.Columns.Add("Phone", 0);
-                    HtmlReprtObj.Columns.Add("DOB", 0);
+                    HtmlReprtObj.Columns.Add("Age", 2);
                     HtmlReprtObj.Columns.Add("Email", 0);
                     HtmlReprtObj.Columns.Add("Gender", 0);
                     HtmlReprtObj.Columns.Add("Marital Status", 0);

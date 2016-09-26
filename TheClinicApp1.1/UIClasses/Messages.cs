@@ -71,6 +71,10 @@ namespace TheClinicApp1._1.UIClasses
         }
 
  //----------------* Messages Captions *--------------//
+        public static string DbConnectionError
+       {
+           get { return "Database Connection Error!"; }
+       }
         public static string ExceptionMsgCaption
         {
             get { return "Exception!"; }

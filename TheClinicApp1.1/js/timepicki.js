@@ -260,9 +260,9 @@ function PickTime()
 			            mi = d.getMinutes();
 			            mer = "AM";
 
-			            //if (tim == 12) {
-			            //    mer = "PM";
-			            //}
+			            if (tim == 12) {
+			                mer = "PM";
+			            }
 
 			            if (12 < ti && settings.show_meridian) {
 			                ti -= 12;
@@ -538,9 +538,9 @@ function PickTime()
 					mi = d.getMinutes();
 					mer = "AM";
 
-					//if (tim == 12) {
-					//    mer = "PM";
-					//}
+					if (ti == 12) {
+					    mer = "PM";
+					}
 
 					if (12 < ti  && settings.show_meridian) {
 						ti -= 12;

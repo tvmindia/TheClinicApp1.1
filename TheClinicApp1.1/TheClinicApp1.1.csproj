@@ -142,7 +142,6 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\ClinicappMaster.css" />
-    <Content Include="css\DoctorSchedule.css" />
     <Content Include="css\DrSchedule.css" />
     <Content Include="css\fileinput.css" />
     <Content Include="css\fonts\caviardreams_gdi.svg" />
@@ -203,6 +202,7 @@
     <Content Include="images\Check.png" />
     <Content Include="images\circular-arrows-couple.png" />
     <Content Include="images\ClinicEdit.PNG" />
+    <Content Include="images\dbError.png" />
     <Content Include="images\delete-cross.png" />
     <Content Include="images\Deleteicon1.png" />
     <Content Include="images\Deleteicon2 %283%29.png" />

@@ -66,7 +66,8 @@
                     return false;
                 },
                 select: function (event, ui) {
-                BindPatientDetails();
+                    var MobileNo = ui.item.desc.split('|')[2];
+                    BindPatientDetails(MobileNo);
                 return false;
             }
         })
@@ -90,8 +91,10 @@
             });
 
             $(".save").click(function () {
+debugger;
                 var start="";
                 var end="";
+var appointmentNo="";
                 var appointmentDate=$("#txtAppointmentDate").val();
                 var name=$("#txtPatientName").val();
                 var mobile=$("#txtPatientMobile").val();
@@ -100,12 +103,16 @@
                 var Time=$( "input:checked" ).val();
                 var patientID=$("#hdfPatientID").val();
                 var regEx = /^[+-]?\d+$/;
+       
                 debugger;
                 var timeLength= $("#hdfTimeListLength").val();
                 if(mobile.match(regEx)&&mobile.length>=5)
                 {
                     if($( "input:checked" ).val()!=undefined)
                     {
+                        appointmentNo=Time.split('+')[1];
+                        Time=Time.split('+')[0];
+                        
                         Time=Time.split('-')[0];
                         if(Time.split(':')[0].length==1)
                         {
@@ -119,7 +126,7 @@
                         Appointments.ScheduleID=scheduleID;
                         Appointments.AllottingTime=Time;
                         Appointments.PatientID=patientID;
-                    
+                        Appointments.appointmentno=appointmentNo;
                         var ds={};
                         ds=InsertPatientAppointment(Appointments);
                         if(ds.status=="1")
@@ -253,11 +260,11 @@
             if (document.getElementById("txtSearch").innerText != "")
                 $('#<%=btnSearch.ClientID%>').click();
         }
-        function BindPatientDetails() {   
+        function BindPatientDetails(MobileNo) {   
             var jsonPatient = {};
             var SearchItem = $('#txtSearch').val();
             var Patient = new Object();
-
+            Patient.Phone = MobileNo;
             if (SearchItem != '') {
                 Patient.Name = SearchItem;
 
@@ -323,7 +330,7 @@
         }
         function BindSlotDropDown(title,eventDate)
         {
-            debugger;
+            
             bindTitle=title;
             var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
             
@@ -344,7 +351,7 @@
         }
         function SlotDropDownOnchange(title,eventDate)
         {
-            debugger;
+          
             bindTitle=title;
             var ddl= document.getElementById("<%=ddltimeSlot.ClientID %>");
             if(eventDate!=$("#hdEventDate").val())
@@ -462,7 +469,30 @@
 
                             $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeClass('ui-state-highlight');
                             $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeAttr('background-color');
+                            var dateString = moment(EventsToBeRemoved[i]).format('DD');
+             
+                            $('.fc-day-number').each(function () {
+                  
+                                var dayDate = moment(EventsToBeRemoved[i]).format('YYYY-MM-DD');
+                   
+                                var day = $(this).text();
+                                var dayTemp = day;
+                  
+                                if (day < 10)
+                                {
+                                    day = "0" + day;
+                                }
 
+                                if (dateString == day) {
+                        
+                                    if ($(this).attr('data-date') == dayDate ) {
+    
+                                        $(this).html(dayTemp );
+                                    }
+                       
+                                }
+
+                            }); 
                         }
 
                     }
@@ -743,6 +773,7 @@
                 <input type="hidden" id="hdfEndTime" />
                 <input type="hidden" id="hdfPatientID" />
                 <input type="hidden" id="hdfTimeListLength" />
+                <input type="hidden" id="hdfAppointmentNoCollection" />
             </div>
         </div>
 

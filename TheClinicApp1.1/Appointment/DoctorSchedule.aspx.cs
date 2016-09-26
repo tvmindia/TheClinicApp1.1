@@ -139,6 +139,14 @@ namespace TheClinicApp1._1.Appointment
                 {
                     ddlDoctor.Items.Insert(0, "-- Select Doctor --");
                 }
+                else{
+                    if (ds.Tables[0].Rows.Count ==0)
+                {
+                  hdnDoctorID.Value =  ds.Tables[0].Rows[0]["DoctorID"].ToString();
+                }
+                }
+               
+
             }
 
         }
@@ -361,6 +369,7 @@ namespace TheClinicApp1._1.Appointment
         [System.Web.Services.WebMethod]
         public static string UpdateDoctorSchedule(TheClinicApp1._1.ClinicDAL.Doctor DocObj)
         {
+            bool isSccheduleIDUsed = false;
             UIClasses.Const Const = new UIClasses.Const();
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -373,7 +382,170 @@ namespace TheClinicApp1._1.Appointment
                     {
                         DocObj.ClinicID = UA.ClinicID.ToString();
                         DocObj.UpdatedBy = UA.userName;
-                        DocObj.status = DocObj.UpdateDoctorSchedule().ToString();
+
+                        if (DocObj.StartTimeOnEdit != DocObj.StartTime || DocObj.EndTimeOnEdit != DocObj.EndTime) // Validation is only required if time has changed
+                        {
+                            //-- If appoinments are for this schedule , updation validation is performed 
+                            //-- By checking appoinment minimum time is greater than schedule starting time and appoinment maximum time is less than schedule ending time
+                            //-- Appoinment table contains only Appoinment starting time
+                            //-- Inorder to calculate appoinment end time , DURATION for an appoinment is added to start time
+
+                            //------------- * Calculating  DURATION for an appoinment (Code copied from appoinment page) * -------------- //
+
+                            int appointmentMinutes = 0;
+                            int patientLimit = 0;
+                            string startAppointment = "";
+                            string endAppointment = "";
+                            string startDuration = "";
+                            string endDuration = "";
+                            TimeSpan duration = new TimeSpan();
+
+                            DataSet ds = null;
+                            ds = DocObj.GetDoctorAvailability();
+                            int count = ds.Tables[0].Rows.Count;
+                            if (ds.Tables[0].Rows.Count > 0)
+                            {
+                                startAppointment = ds.Tables[0].Rows[0]["Starttime"].ToString();
+                                endAppointment = ds.Tables[0].Rows[0]["Endtime"].ToString();
+                                patientLimit = Convert.ToInt32(ds.Tables[0].Rows[0]["PatientLimit"].ToString());
+                                string endHour = endAppointment.Split(':')[0];
+                                string startHour = startAppointment.Split(':')[0];
+                                if (endHour == "24")
+                                {
+                                    endDuration = "23:59";
+                                }
+                                if (startHour == "24")
+                                {
+                                    startDuration = "23:59";
+                                }
+                                if (endDuration != "")
+                                {
+                                    duration = DateTime.Parse(endDuration).Subtract(DateTime.Parse(startAppointment));
+                                    int endMinute = Convert.ToInt32(endAppointment.Split(':')[1]) + 1;
+                                    int startMinute = Convert.ToInt32(startAppointment.Split(':')[1]);
+                                    int totalminute = endMinute - startMinute;
+                                    totalminute = Math.Abs(totalminute);
+                                    string time = "00:" + totalminute;
+                                    TimeSpan ts = TimeSpan.Parse(time);
+                                    duration = duration.Add(ts);
+                                }
+                                else if (startDuration != "")
+                                {
+                                    duration = DateTime.Parse(endAppointment).Subtract(DateTime.Parse(startDuration));
+                                    int endMinute = Convert.ToInt32(endAppointment.Split(':')[1]) + 1;
+                                    int startMinute = Convert.ToInt32(startAppointment.Split(':')[1]);
+                                    int totalminute = endMinute - startMinute;
+                                    totalminute = Math.Abs(totalminute);
+                                    string time = "00:" + totalminute;
+                                    TimeSpan ts = TimeSpan.Parse(time);
+                                    duration = duration.Add(ts);
+                                }
+                                else if (startDuration != "" && endDuration != "")
+                                {
+                                    duration = DateTime.Parse(endDuration).Subtract(DateTime.Parse(startDuration));
+                                    int endMinute = Convert.ToInt32(endAppointment.Split(':')[1]) + 1;
+                                    int startMinute = Convert.ToInt32(startAppointment.Split(':')[1]);
+                                    int totalminute = endMinute - startMinute;
+                                    totalminute = Math.Abs(totalminute);
+                                    string time = "00:" + totalminute;
+                                    TimeSpan ts = TimeSpan.Parse(time);
+                                    duration = duration.Add(ts);
+                                }
+                                else
+                                {
+                                    duration = DateTime.Parse(endAppointment).Subtract(DateTime.Parse(startAppointment));
+                                }
+
+                                appointmentMinutes = Convert.ToInt32(duration.TotalMinutes);
+                                appointmentMinutes = appointmentMinutes / patientLimit;
+
+                                //--------- * End of calculation of DURATION for an appoinment. variable 'appointmentMinutes' holds this value * --------//
+
+                                Appointments AppointObj = new Appointments();
+
+                                DataSet dsAllotedStartTimes = null;
+                                AppointObj.ClinicID = UA.ClinicID.ToString();
+                                AppointObj.ScheduleID = DocObj.DocScheduleID;
+
+                                dsAllotedStartTimes = DocObj.GetAllPatientDetails();
+                               // dsAllotedStartTimes = AppointObj.GetAppointedPatientDetailsByScheudleID();
+
+                                //   duration = duration.ToString("HH:mm");
+
+                                if (dsAllotedStartTimes.Tables[0].Rows.Count > 0) // -- Schedule is having Appoinments
+                                {
+
+                                    // --- Check whether Appoinment times are between the new scheduled time
+                                    // --- Otherwise isSccheduleIDUsed will set to true
+                                    // --- if isSccheduleIDUsed is true , updation is not possible, otherwise updation will be performed successfully
+
+                                    int minIndex = 0;
+                                    int maxIndex = dsAllotedStartTimes.Tables[0].Rows.Count-1;
+
+                                    string SchedduleStartTime = DocObj.correctStartTime(DocObj.StartTime);
+                                    string ScheduleEndTime = DocObj.correctStartTime(DocObj.EndTime);
+                                    string AllotedMinStarttime = dsAllotedStartTimes.Tables[0].Rows[minIndex]["AllottingTime"].ToString();
+                                    string AllotedMaxEndTime = DateTime.Today.Add(TimeSpan.Parse(dsAllotedStartTimes.Tables[0].Rows[maxIndex]["AllottingTime"].ToString()).Add(new TimeSpan(0, appointmentMinutes, 0))).ToString("hh:mm");
+
+                                    if (SchedduleStartTime.Contains(':') && ScheduleEndTime.Contains(':') && AllotedMinStarttime.Contains(':') && AllotedMaxEndTime.Contains(':'))
+                                    {
+                                    int SchedduleStartTimeHr = Convert.ToInt32(SchedduleStartTime.Split(':')[0]);
+                                    int SchedduleStartTimeMin = Convert.ToInt32(SchedduleStartTime.Split(':')[1]);
+                                   
+                                    int SchedduleEndTimeHr = Convert.ToInt32(ScheduleEndTime.Split(':')[0]);
+                                    int SchedduleEndTimeMin = Convert.ToInt32(ScheduleEndTime.Split(':')[1]);
+
+                                    //AllotedMinStarttime = AllotedMinStarttime.Substring(0, AllotedMinStarttime.LastIndexOf(":"));
+                                    int AllotedMinStarttimeHr = Convert.ToInt32(AllotedMinStarttime.Split(':')[0]);
+                                    int AllotedMinStarttimeMin = Convert.ToInt32(AllotedMinStarttime.Split(':')[1]);
+                                  
+                                    int AllotedMaxEndtimeHr = Convert.ToInt32(AllotedMaxEndTime.Split(':')[0]);
+                                    int AllotedMaxEndtimeMin = Convert.ToInt32(AllotedMaxEndTime.Split(':')[1]);
+
+                                    if (AllotedMinStarttimeHr < SchedduleStartTimeHr || AllotedMaxEndtimeHr > SchedduleEndTimeHr)
+                                    {
+                                        isSccheduleIDUsed = true;
+                                    }
+                                    if (AllotedMinStarttimeHr == SchedduleStartTimeHr && isSccheduleIDUsed == false)
+                                    {
+                                        if (AllotedMinStarttimeMin < SchedduleStartTimeMin)
+                                        {
+                                            isSccheduleIDUsed = true;
+                                        }
+                                    }
+
+                                    if (AllotedMaxEndtimeHr == SchedduleEndTimeHr && isSccheduleIDUsed == false)
+                                    {
+                                        if (AllotedMaxEndtimeMin > SchedduleEndTimeMin)
+                                        {
+                                            isSccheduleIDUsed = true;
+                                            
+                                        }
+                                    }
+                                    }
+                                }
+                            }
+
+                            //DataSet dsAppointedpatients = DocObj.GetAllPatientDetails();
+                            //int NoOfPatients = dsAppointedpatients.Tables[0].Rows.Count;
+
+                            //if (NoOfPatients > 0)
+                            //{
+                            //    isSccheduleIDUsed = true;
+                            //}
+                        }
+                        //  isSccheduleIDUsed = DocObj.CheckDoctorScheduleAllotedForPatientAppointment();
+
+                        if (isSccheduleIDUsed == false)
+                        {
+                            DocObj.status = DocObj.UpdateDoctorSchedule().ToString();
+                        }
+                        else
+                        {
+                            DocObj.status = "0";
+                        }
+
+                     
                     }
                 }
                 else

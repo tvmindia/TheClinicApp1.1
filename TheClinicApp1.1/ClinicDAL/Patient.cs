@@ -132,7 +132,11 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-
+        public int PatientAge
+        {
+            get;
+            set;
+        }
 
         #endregion Patientproperty
 
@@ -393,9 +397,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@MaritalStatus", SqlDbType.NVarChar, 50).Value = MaritalStatus;
                 pud.Parameters.Add("@Occupation", SqlDbType.NVarChar, 255).Value = Occupation;
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = CreatedBy;
-                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value =cmn.ConvertDatenow(DateTime.Now);
                 pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value =cmn.ConvertDatenow(DateTime.Now);
                 pud.Parameters.Add("@image", SqlDbType.Image, 0).Value = Picupload;
                 pud.Parameters.Add("@ImageType", SqlDbType.NVarChar, 6).Value = ImageType;
                 //@AppointmentID enables the appointed patient to become  registered patient
@@ -478,7 +482,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@MaritalStatus", SqlDbType.NVarChar, 50).Value = MaritalStatus;
                 pud.Parameters.Add("@Occupation", SqlDbType.NVarChar, 255).Value = Occupation;
                 pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value =cmn.ConvertDatenow(DateTime.Now);
 
               
                 
@@ -1041,6 +1045,8 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlCommand cmd = new SqlCommand("SearchPatientWithName", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = SearchName;
+            cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+            cmd.Parameters.Add("@MobileNo", SqlDbType.NVarChar, 50).Value = Phone;
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = cmd;
             dt = new DataTable();
@@ -1058,6 +1064,13 @@ namespace TheClinicApp1._1.ClinicDAL
                 MaritalStatus = dr["MaritalStatus"].ToString();
                 Occupation = dr["Occupation"].ToString();
                 ImageType = dr["ImageType"].ToString();
+
+                DateTime date = DateTime.Now;
+                int year = date.Year;
+                DateTime DT = DOB;
+                PatientAge = year - DT.Year;
+                 
+                //DOB = Convert.ToDateTime(Age.ToString());
             }
             con.Close();        
 

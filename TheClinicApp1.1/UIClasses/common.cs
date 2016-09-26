@@ -60,7 +60,7 @@ namespace TheClinicApp1._1.UIClasses
         {
             get
             {
-                return "../Login/Login.aspx";
+                return "~/Login/Login.aspx";
             }
         }
 

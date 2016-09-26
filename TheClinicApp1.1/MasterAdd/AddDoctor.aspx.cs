@@ -101,7 +101,7 @@ namespace TheClinicApp1._1.MasterAdd
             RoleAssign roleObj = new RoleAssign();
             User userObj = new User();
 
-            string result = string.Empty;
+            int result = 0;
             bool DoctorDeleted = false;
 
             ClinicDAL.UserAuthendication UA;
@@ -125,14 +125,14 @@ namespace TheClinicApp1._1.MasterAdd
                 roleObj.UserID = Guid.Parse(UserID);
                 result=   roleObj.DeleteAssignedRoleByUserIDForWM();
 
-                if (result != string.Empty)
+                if (result == 1)
                 {
                     //delete doctor
                     mstrObj.DoctorID = Guid.Parse(DoctorID);
-                    mstrObj.DeleteDoctorByIDForWM();
+                    result=mstrObj.DeleteDoctorByIDForWM();
 
 
-                    if (result != string.Empty)
+                    if (result == 1)
                     {
                         //delete user
 
@@ -230,8 +230,10 @@ namespace TheClinicApp1._1.MasterAdd
         #endregion Set Default Password
 
         #region Add User To User Table
-        public void AddUserToUserTable()
+        public int AddUserToUserTable()
         {
+            int rslt = 0;
+
             userObj.firstName = txtName.Value.TrimStart();
             userObj.loginName = txtLoginName.Value.TrimStart();
             userObj.lastName = string.Empty;
@@ -252,29 +254,32 @@ namespace TheClinicApp1._1.MasterAdd
             {
                 //INSERT user
 
-                userObj.AddUser();
+                 rslt =   userObj.AddUser();
                 hdnUserID.Value = userObj.UserID.ToString();
             }
             else
             {
                 //UPDATE user
                 userObj.UserID = Guid.Parse(hdnUserID.Value);
-                userObj.UpdateuserByUserID();
+                rslt=  userObj.UpdateuserByUserID();
             }
 
 
-            HttpContext ctx = HttpContext.Current;
-            new Thread(delegate()
+            if (rslt == 1)
             {
-                HttpContext.Current = ctx;
+                HttpContext ctx = HttpContext.Current;
+                new Thread(delegate()
+                {
+                    HttpContext.Current = ctx;
 
-                mailObj.MailSubject = "Login Password";
-                mailObj.msg = password;
-                mailObj.Email = txtEmail.Value;
-                mailObj.FormatAndSendEmail(txtName.Value, UA.Clinic, txtLoginName.Value, password);
-                
-            }).Start();
+                    mailObj.MailSubject = "Login Password";
+                    mailObj.msg = password;
+                    mailObj.Email = txtEmail.Value;
+                    mailObj.FormatAndSendEmail(txtName.Value, UA.Clinic, txtLoginName.Value, password);
 
+                }).Start();
+            }
+            return rslt;
         }
 
         #endregion Add User To User Table
@@ -321,8 +326,10 @@ namespace TheClinicApp1._1.MasterAdd
 
         #region Add Doctor
 
-        public void AddDoctorToDoctorTable()
+        public int AddDoctorToDoctorTable()
         {
+            int rslt = 0;
+
             mstrObj.ClinicID = UA.ClinicID;
             mstrObj.DoctorName = txtName.Value.TrimStart();
             mstrObj.DoctorEmail = txtEmail.Value;
@@ -339,7 +346,7 @@ namespace TheClinicApp1._1.MasterAdd
                     mstrObj.UsrID = Guid.Parse(hdnUserID.Value);
                 }
 
-                mstrObj.InsertDoctors();
+                rslt= mstrObj.InsertDoctors();
                 hdnDrID.Value = mstrObj.DoctorID.ToString();
 
             }
@@ -350,10 +357,12 @@ namespace TheClinicApp1._1.MasterAdd
                 mstrObj.DoctorID = Guid.Parse(hdnDrID.Value);
 
                 mstrObj.updatedBy = UA.userName;
-                mstrObj.UpdateDoctors();
+                rslt=  mstrObj.UpdateDoctors();
                 //}
 
             }
+
+            return rslt;
         }
 
         #endregion  Add Doctor
@@ -423,10 +432,12 @@ namespace TheClinicApp1._1.MasterAdd
 
         #region Delete Assigned role By UserID
 
-        public void DeleteAssignedRoleByUserID(Guid UserID)
+        public int DeleteAssignedRoleByUserID(Guid UserID)
         {
+            int rslt = 0;
             roleObj.UserID = UserID;
-            roleObj.DeleteAssignedRoleByUserID();
+            rslt =  roleObj.DeleteAssignedRoleByUserID();
+            return rslt;
         }
 
         #endregion Delete Assigned role By UserID
@@ -503,6 +514,7 @@ namespace TheClinicApp1._1.MasterAdd
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             mstrObj.ClinicID = UA.ClinicID;
+            hdnLoginedUserID.Value = UA.UserID.ToString();
 
             BindDummyRow();
             //if (!IsPostBack)
@@ -517,15 +529,26 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            int rslt = 0;
             string msg = string.Empty;
 
             var page = HttpContext.Current.CurrentHandler as Page;
 
             if (txtName.Value.TrimStart() != string.Empty || txtEmail.Value.TrimStart() != string.Empty || txtPhoneNumber.Value.TrimStart() != string.Empty)
             {
-                AddUserToUserTable();
-                AddDoctorToDoctorTable();
-                AddUserRole();
+             rslt =   AddUserToUserTable();
+
+             if (rslt == 1)
+             {
+                 rslt=  AddDoctorToDoctorTable();
+
+                 if (rslt == 1)
+                 {
+                     AddUserRole();  
+                 }
+               
+             }
+                
             }
 
             else
@@ -544,6 +567,7 @@ namespace TheClinicApp1._1.MasterAdd
 
         protected void ImgBtnDelete_Click(object sender, ImageClickEventArgs e)
         {
+            int rslt = 0;
             Errorbox.Attributes.Add("style", "display:none");
 
             string msg = string.Empty;
@@ -575,13 +599,19 @@ namespace TheClinicApp1._1.MasterAdd
          else
             {
                 roleObj.RoleID = Guid.Parse(GetRoleIDOFDoctor());
-                DeleteAssignedRoleByUserID(UserID);
+                rslt =DeleteAssignedRoleByUserID(UserID);
 
+                if (rslt == 1)
+                {
                 mstrObj.DoctorID = DoctorID;
-                mstrObj.DeleteDoctorByID();
+                rslt =  mstrObj.DeleteDoctorByID();
 
-                DeleteUserByUserID(UserID);
+                if (rslt == 1)
+                {
+                    DeleteUserByUserID(UserID); 
+                }
 
+                }
          }
             BindGridview();
 

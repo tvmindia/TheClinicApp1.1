@@ -307,6 +307,12 @@ namespace TheClinicApp1._1.Registration
         [System.Web.Services.WebMethod]
         public static string BindPatientDetails(Patient PatientObj)
         {
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            PatientObj.ClinicID = UA.ClinicID;
             PatientObj.GetSearchWithName(PatientObj.Name);
            
             string jsonResult = null;

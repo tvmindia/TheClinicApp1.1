@@ -698,8 +698,9 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion Validate Doctor Name
 
         #region AddDoctors
-        public void InsertDoctors()
+        public int InsertDoctors()
         {
+            int rslt = 0;
             SqlConnection con = null;
             try
             {
@@ -740,7 +741,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
-                    int rslt = Convert.ToInt32(Output.Value.ToString());
+                     rslt = Convert.ToInt32(Output.Value.ToString());
 
                     if (rslt == 1)
                     {
@@ -782,13 +783,14 @@ namespace TheClinicApp1._1.ClinicDAL
 
             }
 
-
+            return rslt;
         }
         #endregion AddDoctors
 
         #region Update Doctors
-        public void UpdateDoctors()
+        public int UpdateDoctors()
         {
+            int rslt = 0;
             dbConnection dcon = null;
 
             try
@@ -821,6 +823,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
+                    rslt = Convert.ToInt32(Output.Value.ToString());
                     var page = HttpContext.Current.CurrentHandler as Page;   //successfull
                     eObj.SavedSuccessMessage(page);
 
@@ -848,7 +851,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
-
+            return rslt;
         }
 
 
@@ -964,9 +967,9 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #region Delete Doctor By DoctorID
 
-        public string DeleteDoctorByIDForWM(bool rdoNotDoctor = false)
+        public int DeleteDoctorByIDForWM(bool rdoNotDoctor = false)
         {
-            string result = string.Empty;
+            int result = 0;
             SqlConnection con = null;
             try
             {
@@ -987,15 +990,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add(Output);
                 cmd.ExecuteNonQuery();
 
-
-                if (rdoNotDoctor == true)
-                {
-
-                 result =     Output.Value.ToString();
-                }
-
-
-
+                //if (rdoNotDoctor == true)
+                //{
+                    result = Convert.ToInt32(Output.Value.ToString());
+                //}
 
             }
             catch (Exception ex)
@@ -1024,8 +1022,9 @@ namespace TheClinicApp1._1.ClinicDAL
             return result;
         }
 
-        public void DeleteDoctorByID(bool rdoNotDoctor = false)
+        public int DeleteDoctorByID(bool rdoNotDoctor = false)
         {
+            int rslt = 0;
             SqlConnection con = null;
             try
             {
@@ -1062,6 +1061,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
+                    rslt = Convert.ToInt32(Output.Value.ToString());
+
                     //successfull
 
                     if (rdoNotDoctor == true)
@@ -1101,6 +1102,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+
+            return rslt;
         }
 
         #endregion Delete Doctor By DoctorID

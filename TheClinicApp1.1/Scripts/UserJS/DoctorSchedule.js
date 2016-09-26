@@ -40,14 +40,11 @@ $(document).mouseup(function (e) {
     if (!container.is(e.target) // if the target of the click isn't the container...
         && container.has(e.target).length === 0) // ... nor a descendant of the container
     {
-
         $("#txtAppointmentDate").css({ border: '1px solid #dbdbdb' }).animate({
             borderWidth: 1
         }, 500);
-
-    }
-
-    document.getElementById("txtStartTime").blur();
+ }
+ document.getElementById("txtStartTime").blur();
     document.getElementById("txtEndTime").blur();
 });
 
@@ -55,25 +52,6 @@ $(document).mouseup(function (e) {
         
     $("#txtStartTime").timepicki();
     $("#txtEndTime").timepicki();
-    
-    //$("#myModal").dialog({
-    //    autoOpen: false,
-    //    closeOnEscape: false,
-    //    draggable: false,
-    //    height: 300,
-    //    width: 500,
-    //    // hide: { effect: "explode", duration: 1000 },
-    //    //modal: true,
-    //    resizable: false,
-    //    show: { effect: "blind", duration: 800 },
-    //    title: "Appoinments",
-    //    dialogClass: 'no-close success-dialog',
-    //    open: function (event, ui) {
-    //        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-    //    }
-    //}).prev(".ui-dialog-titlebar").css("background", "#336699");;
-
- 
     // ---- Get date in yyyy mm dd format , to set default date----- //
 
     Date.prototype.yyyymmdd = function () {
@@ -98,7 +76,8 @@ $(document).mouseup(function (e) {
             header: {
                 left: 'prev,next today myCustomButton',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right:''//Hide week year view
+              //  right: 'month,agendaWeek,agendaDay'
             },
 
             defaultDate: today,
@@ -166,9 +145,9 @@ $(document).mouseup(function (e) {
 
 
             },
-          
+
             editable: false,
-           
+
              eventRender: function (event, element, view) {
                  
                  
@@ -203,14 +182,15 @@ $(document).mouseup(function (e) {
                $('#hdnAllEvents').val(JSON.stringify(allEvents));
 
 
-            },
-         
+             },
+
             dayClick: function (date, jsEvent, view) {
               
               eventStartDate = date.format();
                 eventEndDate = date.format();
 
             },
+
             eventAfterRender: function (event, element) {
               
                 //----* here BG color for evnts are applied by retrieving events from allevents array *-----//
@@ -230,10 +210,6 @@ $(document).mouseup(function (e) {
 
                      $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').addClass('ui-state-highlight')
                      $('#calendar').find('.fc-day[data-date="' + TodayDate + '"]').css({ 'background-color': '#ffd19a!important' });
-
-                
-             //  $('.fc-content').remove();
-              //  element.append("<img  src='../images/hand.png' />");
 
                 $(element).tooltip({
                    
@@ -275,8 +251,7 @@ $(document).mouseup(function (e) {
             eventMouseout: function (calEvent, jsEvent) {
                 $(this).css('z-index', 8);
                 $('.tooltipevent').remove();
-                
-            },
+                 },
 
             eventLimit: true, // allow "more" link when too many events
           
@@ -298,7 +273,6 @@ $(document).mouseup(function (e) {
 
             }
 
-         
            , dayRender: function (date, element) {
               
             document.getElementById("colorBox").style.display = "block";
@@ -443,9 +417,6 @@ $(document).mouseup(function (e) {
     /*Modal dialog OK button click*/
     $('#Okay').click(function () {
 
-        debugger;
-
-      
         if ($('#hdnIsDeletionByDate').val() != "true") {
 
         var Appointments = new Object();
@@ -459,8 +430,6 @@ $(document).mouseup(function (e) {
         var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
         ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelAppoinmentsByScheduleID");
         table = JSON.parse(ds.d);
-
-       
         if (table.status == 1) {
 
             GetScheduledTimesByDate(ClickedDate);
@@ -482,7 +451,6 @@ $(document).mouseup(function (e) {
                 $('#calendar').fullCalendar('refetchEvents');
             }
 
-
             // $('#calendar').fullCalendar('refetchEvents');
         }
         }
@@ -499,8 +467,6 @@ $(document).mouseup(function (e) {
             var data = "{'AppointObj':" + JSON.stringify(Appointments) + "}";
             ds = getJsonData(data, "../Appointment/DoctorSchedule.aspx/CancelAllAppoinmentsByDate");
             table = JSON.parse(ds.d);
-
-
             if (table.status == 1) {
 
               //  GetScheduledTimesByDate(ClickedDate);
@@ -521,8 +487,6 @@ $(document).mouseup(function (e) {
                     $('#calendar').fullCalendar('addEventSource', json);
                     $('#calendar').fullCalendar('refetchEvents');
                 }
-
-
                 // $('#calendar').fullCalendar('refetchEvents');
             }
 
@@ -560,8 +524,7 @@ $(document).mouseup(function (e) {
 
         $('#hdnIsDeletionByDate').val('');
         //$('#myModal').modal('hide');
-        });
-   
+    });
 
     var DefaultReason = CancelReason;
 
@@ -602,9 +565,6 @@ $(document).mouseup(function (e) {
 
             $('#divMsg').append(html);
         });
- 
-
-
 });
 
 /*end of document.ready*/
@@ -738,31 +698,22 @@ $(document).mouseup(function (e) {
 
     function GetScheduleByDrID(drID) {
       
-    
+        document.getElementById('hdnScheduleID').value = "";
+        $('#hdnIsDeletionByDate').val('');
+
     DoctorID = drID;
 
     var jsonDrSchedule = {};
 
     var Doctor = new Object();
     Doctor.DoctorID = drID;
-   // var MonthName = document.getElementById('hdnMonthName').value;
-    
-    //if (MonthName == '') {
-    //    var todaysDate = new Date();
-    //    MonthName =getMonthName( parseInt( todaysDate.getMonth()));
-    //}
-
-    //Doctor.MonthName = MonthName;
+   
     jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
     if (jsonDrSchedule != undefined) {
 
-       
-
         json = jsonDrSchedule;
         BindScheduledDates();
-
-    }
-   
+ }
 }
 
     function BindScheduledDates()
@@ -992,8 +943,12 @@ $(document).mouseup(function (e) {
     }
 
     function RemoveTime(ScheduleID) {
-       
+        document.getElementById('hdnScheduleID').value = "";
         document.getElementById('hdnScheduleID').value = ScheduleID;
+        $("#txtStartTime").val("");
+        $("#txtEndTime").val("");
+        $("#txtMaxAppoinments").val("");
+
 
     var DeletionConfirmation = ConfirmDelete(false);
     if (DeletionConfirmation == true) {
@@ -1198,11 +1153,29 @@ $(document).mouseup(function (e) {
         return this;
     };
 
+    function ConvertTimeTo12HrWithMer(time)
+    {
+        var TimeIn24hrFormat = time;
+        var hourEnd = TimeIn24hrFormat.indexOf(":");
+        var H = +TimeIn24hrFormat.substr(0, hourEnd);
+        var h = H % 12 || 12;
+        var ampm = parseInt(H) < 12 ? "AM" : "PM";
+        //TimeIn12hrFormat = h + TimeIn24hrFormat.substr(hourEnd, 4) + ampm;
+        if (parseInt(H) == 0) {
+
+            ampm = "AM";
+        }
+
+
+        TimeIn12hrFormat = moment(time, ["h:mm A"]).format("hh : mm : ") + ampm;
+       
+        return TimeIn12hrFormat;
+    }
+
     function AddSchedule() {
     
 
-      
-    
+       
         var JsonNewSchedule = {};
         var Isalloted = false;
 
@@ -1212,6 +1185,9 @@ $(document).mouseup(function (e) {
     
             //------------ * UPDATE CASE * ----------------//
 
+          
+           
+
             var JsonUpdatedSchedule = {};
 
             var Doctor = new Object();
@@ -1220,6 +1196,10 @@ $(document).mouseup(function (e) {
             Doctor.Starttime = document.getElementById('txtStartTime').value.replace(/ /g, '');
             Doctor.Endtime = document.getElementById('txtEndTime').value.replace(/ /g, '');
 
+            Doctor.StartTimeOnEdit = ConvertTimeTo12HrWithMer(StartTimeOnEdit).replace(/ /g, '');;
+            Doctor.EndTimeOnEdit = ConvertTimeTo12HrWithMer(EndTimeOnEdit).replace(/ /g, '');
+            Doctor.DoctorID = DoctorID;
+            Doctor.DoctorAvailDate = document.getElementById('txtAppointmentDate').value.trim();
 
             AllotedStartTimes.remove(StartTimeOnEdit);
             AllotedEndTimes.remove(EndTimeOnEdit);
@@ -1342,23 +1322,11 @@ $(document).mouseup(function (e) {
                                         //------------ * UPDATE CASE * ----------------//
 
 
-
-                                        //if ((StartTimeOnEdit.replace(/ /g, ''))==(moment(document.getElementById('txtStartTime').value, ["h:mm A"]).format("HH:mm")) ) {
-
-                                        //    Doctor.Starttime = StartTimeOnEdit;
-
-                                        //}
-
-                                        //if ((EndTimeOnEdit.replace(/ /g, '')) == (moment(document.getElementById('txtEndTime').value, ["h:mm A"]).format("HH:mm"))) {
-
-                                        //    Doctor.Endtime = EndTimeOnEdit;
-
-                                        //}
                                         JsonUpdatedSchedule = UpadteDrSchedule(Doctor);
 
                                         JsonNewSchedule = JsonUpdatedSchedule;
 
-                                        document.getElementById('hdnScheduleID').value = "";
+                                       // document.getElementById('hdnScheduleID').value = "";
                                     }
 
 
@@ -1367,6 +1335,8 @@ $(document).mouseup(function (e) {
 
                                         if (JsonNewSchedule.status == "1") {
                                             //SUCCESS
+
+                                            document.getElementById('hdnScheduleID').value = "";
 
                                             var jsonDeatilsByDate = {};
 
@@ -1387,36 +1357,6 @@ $(document).mouseup(function (e) {
                                                     $("#txtStartTime").val("");
                                                     $("#txtEndTime").val("");
                                                     $("#txtMaxAppoinments").val("");
-
-
-
-                                                    //d = new Date();
-                                                    //ti = d.getHours();
-
-                                                    //mi = d.getMinutes();
-                                                    //mer = "AM";
-
-                                                    ////if (tim == 12) {
-                                                    ////    mer = "PM";
-                                                    ////}
-
-                                                    //if (12 < ti ) {
-                                                    //    ti -= 12;
-                                                    //    mer = "PM";
-                                                    //}
-
-                                                  
-                                                    //var x = document.getElementsByClassName("txtAddNew");
-                                                    //var i;
-                                                    //for (i = 0; i < x.length; i++) {
-                                                    //    var ele = x[i];
-
-                                                    //    ele.attr('data-timepicki-tim', ti);
-                                                    //    ele.attr('data-timepicki-mini', mi);
-                                                    //    ele.attr('data-timepicki-meri', mer);
-
-
-                                                    //}
 
                                                     BindScheduledDates();
 
@@ -1445,13 +1385,14 @@ $(document).mouseup(function (e) {
                                             var lblcaptn = Caption.SuccessMsgCaption;
 
                                             DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
-
-
-                                        }
+                                          }
 
                                         else {
+
+                                          //  validation(AlertMsgs.AlreadyAlloted);
+
                                             var lblclass = Alertclasses.danger;
-                                            var lblmsg = msg.ScheduleSaveFailure;
+                                            var lblmsg = msg.ScheduleUpdateFailure;
                                             var lblcaptn = Caption.FailureMsgCaption;
 
                                             DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
@@ -1469,45 +1410,33 @@ $(document).mouseup(function (e) {
                             }
                             else {
                                 validation(AlertMsgs.EndTimeRequired);
+                         }
 
-                            }
-
-
-                        }
+ }
                         else {
 
                             validation(AlertMsgs.StartTimeRequired);
-                           
                         }
                 
                     }
                     else
-                    {
-
-                        validation(AlertMsgs.MaxAppoinmentRequired);
+                    { validation(AlertMsgs.MaxAppoinmentRequired);
                     }
                 
-
-               
                 }
 
                 else
                 {
                     validation(AlertMsgs.DateRequired);
-
-                }
+ }
             }
 
             else {
                 validation(AlertMsgs.validNumber);
-              
-
-            }
-
-        }
+             }
+  }
        
-
-    }
+ }
 
     function validation(ErrorMsg)
     {
@@ -1518,7 +1447,6 @@ $(document).mouseup(function (e) {
         DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
 
     }
-
 
     function AddDrSchedule(Doctor) {
         var ds = {};
@@ -1569,7 +1497,11 @@ $(document).mouseup(function (e) {
 
     function CancelAllSchedules($this)
     {
-     
+        document.getElementById('hdnScheduleID').value = ""
+        $("#txtStartTime").val("");
+        $("#txtEndTime").val("");
+        $("#txtMaxAppoinments").val("");
+
         var DeletionConfirmation = ConfirmDelete(false);
         if (DeletionConfirmation == true) {
         date =    $($this).closest('td').prev('td').text();
@@ -1619,12 +1551,9 @@ $(document).mouseup(function (e) {
                         if (jsonDrSchedule != undefined) {
 
                             $('#calendar').fullCalendar('removeEventSource', json);
-
-                           
                             var Events = json;
 
                             if (Events != null && Events != "") {
-
 
                                 Records = Events;
                                 $.each(Records, function (index, Records) {
@@ -1635,26 +1564,7 @@ $(document).mouseup(function (e) {
 
                                 })
                             }
-                                //$.each(Events, function (index, Events) {
-
-
-                                //    $('#calendar').find('.fc-day[data-date="' + Events[i] + '"]').removeClass('ui-state-highlight');
-                                //    $('#calendar').find('.fc-day[data-date="' + Events[i] + '"]').removeAttr('background-color');
-
-
-                                //})
-
-
-                                
-
-                           
-
-
-
-
-
-
-
+                               
                             json = jsonDrSchedule;
 
                             $('#calendar').fullCalendar('addEventSource', json);
@@ -1667,39 +1577,23 @@ $(document).mouseup(function (e) {
                 var lblclass = Alertclasses.sucess;
                 var lblmsg = msg.ScheduleCancelSuccessFull;
                 var lblcaptn = Caption.SuccessMsgCaption;
-
                 DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
-
-            }
+                 }
 
             else {
                 OpenModal();
 
                 ClickedDate = DrAvaildate;
                 $('#hdnIsDeletionByDate').val(true);
-              
-                //  $("#tblPatients tr").remove();
-
                 $("#tbodyPatients tr").remove();
 
-                //$('tblPatients tr:not(:first)').remove();
-              
                 Records = JsonCancellAll;
                 PatientDetails = Records;
                 $.each(Records, function (index, Records) {
-
-
-                    var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
-
-                    $("#tbodyPatients").append(html);
-
-
+                     var html = '<tr><td>' + Records.Name + '</td><td>' + Records.AllottingTime + '</td></tr>';
+                     $("#tbodyPatients").append(html);
                 })
-
-                //alert(" Sorry, Already scheduled an appointment!")
             }
-
-
 
         }
     }

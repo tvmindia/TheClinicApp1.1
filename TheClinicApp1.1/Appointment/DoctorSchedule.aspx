@@ -4,9 +4,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-      <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server" ></asp:ScriptManager>
+    <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server"></asp:ScriptManager>
 
-      <%--<link href="../css/main.css" rel="stylesheet" />--%>  
+    <%--<link href="../css/main.css" rel="stylesheet" />--%>
     <%--<link href="../css/TheClinicApp.css" rel="stylesheet" />--%>
     <script src="../js/JavaScript_selectnav.js"></script>
     <script src="../js/DeletionConfirmation.js"></script>
@@ -26,15 +26,13 @@
     <script src="../Scripts/UserJS/DoctorSchedule.js"></script>
 
     <script src="../js/timepicki.js"></script>
-    
+
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet" />
     <link href="../css/timepicki.css" rel="stylesheet" />
     <%--<script src="../js/jquery-1.9.1.min.js"></script>--%>
     <script src="../js/bootstrap.min.js"></script>
     <link href="../css/DrSchedule.css" rel="stylesheet" />
     <style>
-
-
         /*.fc-content
 {
     display:none;
@@ -58,8 +56,34 @@
         var DoctorID = '';
 
         $(document).ready(function () {
+            debugger;
+            if ($("#<%=ddlDoctor.ClientID%> option:selected").text() != "-- Select Doctor --") {
+                $('#hdnDoctorName').val($("#<%=ddlDoctor.ClientID%> option:selected").text());
+                DoctorID = $("#<%=ddlDoctor.ClientID%> option:selected").val();
 
-        
+                BindCalender(false);
+
+                //var jsonDrSchedule = {};
+
+                //var Doctor = new Object();
+                //Doctor.DoctorID = DoctorID;
+
+                //$('#hdnIsDrChanged').val("Yes");
+
+                //jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
+                //if (jsonDrSchedule != undefined) {
+
+                //    json = jsonDrSchedule;
+
+                //    BindScheduledDates();
+
+                //    //---------------* Refreshing calender(By removing current json and adding the new one) *------------------//
+
+                //    $('#calendar').fullCalendar('removeEvents');
+                //    $('#calendar').fullCalendar('addEventSource', json);
+                //    $('#calendar').fullCalendar('rerenderEvents');
+                //}
+            }
 
 
             $('.alert_close').click(function () {
@@ -93,7 +117,7 @@
         //-- Schedule order is passed to the function
         //-- At time of edit click ,we know the time to be binded , so it will also passed , and this time willo get binded to timepicker
         function SetDefaultTime(inputID, time) {
-         
+
             if (time == null) {
 
                 debugger;
@@ -134,8 +158,7 @@
                 defultTime = timStart + ',' + minsStart + ',' + merStart;
             }
 
-            else
-            {
+            else {
                 defultTime = "";
             }
 
@@ -143,33 +166,33 @@
         }
 
         function OpenModal() {
-           
+
             $('#myModal').modal('show');
-          
-            
+
+
         }
 
-        //-- This method is invoked while changing doctor
-        function SetDropdown(e) {
+        //-- This method is invoked while changing doctor(using doctor dropdown) or in document.ready
+        //-- If method is invoked while changing doctor(using doctor dropdown) , value of variable 'isDropdownItemChanged' will be true
+        //-- If method is invoked in document.ready  value of variable 'isDropdownItemChanged' will set to false
+        function BindCalender(e, isDropdownItemChanged) {
 
-           
-            $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
+            if (isDropdownItemChanged == true) {
+                $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
+                DoctorID = e.value;
+            }
 
             ClearControls();
-            DoctorID = e.value;
 
             var jsonDrSchedule = {};
-
             var Doctor = new Object();
             Doctor.DoctorID = DoctorID;
-
             $('#hdnIsDrChanged').val("Yes");
 
             jsonDrSchedule = GetDoctorScheduleDetailsByDoctorID(Doctor);
             if (jsonDrSchedule != undefined) {
 
                 json = jsonDrSchedule;
-
                 BindScheduledDates();
 
                 //---------------* Refreshing calender(By removing current json and adding the new one) *------------------//
@@ -183,22 +206,14 @@
 
                 if (Events != null && Events != "") {
                     EventsToBeRemoved = JSON.parse(Events);
-
                     for (var i = 0; i < EventsToBeRemoved.length; i++) {
-
                         $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeClass('ui-state-highlight');
                         $('#calendar').find('.fc-day[data-date="' + EventsToBeRemoved[i] + '"]').removeAttr('background-color');
-
                     }
-
                 }
-
                 $('#calendar').fullCalendar('addEventSource', json);
                 $('#calendar').fullCalendar('rerenderEvents');
-
             }
-
-
         }
 
         function ClearControls() {
@@ -286,8 +301,8 @@
 
                                 <%--<asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>--%>
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" CssClass="drop" Width="210px" style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
-                                <%--CssClass="drop"--%> 
+                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="BindCalender(this,true)" CssClass="drop" Width="210px" Style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
+                                <%--CssClass="drop"--%>
 
 
 
@@ -300,17 +315,17 @@
                                     <li><a class="new" href="DoctorSchedule.aspx"><span></span>New</a></li>
                                 </ul>
                             </div>
-                            
-                    <div id="Errorbox" style="height: 30%; display: none;">
-                        <a class="alert_close">X</a>
-                        <div>
-                            <strong>
-                                <span id="lblErrorCaption"></span>
-                              
-                            </strong>
-                            <span id="lblMsgges"></span>
-                        </div>
-                    </div>
+
+                            <div id="Errorbox" style="height: 30%; display: none;">
+                                <a class="alert_close">X</a>
+                                <div>
+                                    <strong>
+                                        <span id="lblErrorCaption"></span>
+
+                                    </strong>
+                                    <span id="lblMsgges"></span>
+                                </div>
+                            </div>
                             <div class="tab_table">
 
                                 <div class="row field_row">
@@ -336,14 +351,16 @@
                                                             <div class="col-lg-12" style="height: 480px;">
                                                                 <div id="divCancellationMsg" class="col-lg-12" style="display: none">
 
-                                                                     
-                                   <table id="tblReason" style="width:100%;font-weight:600;font-size:16px">
-                                       <tr><td style="width:35%">Reason for cancellation</td>
-                                           <td style="width:65%"><input id="txtReason"   type="text" name="name" style="border-color:#aab0d4;"  /></td>
-                                       </tr>
-                                   </table>
-                                   
-                           
+
+                                                                    <table id="tblReason" style="width: 100%; font-weight: 600; font-size: 16px">
+                                                                        <tr>
+                                                                            <td style="width: 35%">Reason for cancellation</td>
+                                                                            <td style="width: 65%">
+                                                                                <input id="txtReason" type="text" name="name" style="border-color: #aab0d4;" /></td>
+                                                                        </tr>
+                                                                    </table>
+
+
 
 
                                                                     <fieldset style="border-radius: 15px!important; border: 2px solid #3661C7!important;">
@@ -354,19 +371,21 @@
 
                                                                             <div class="row field_row">
                                                                                 <div class="col-lg-12" id="divMsg"></div>
-                                                                               <div class="col-lg-12"> <table id="tblSms" style="width:100%!important" >
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th style="width:50%">Name</th>
-                                                                                            <th style="width:50%">Mobile No</th>
-                                                                                        </tr>
-                                                                                    </thead>
+                                                                                <div class="col-lg-12">
+                                                                                    <table id="tblSms" style="width: 100%!important">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th style="width: 50%">Name</th>
+                                                                                                <th style="width: 50%">Mobile No</th>
+                                                                                            </tr>
+                                                                                        </thead>
 
-                                                                                    <tbody id="tbodySms">
-                                                                                    </tbody>
+                                                                                        <tbody id="tbodySms">
+                                                                                        </tbody>
 
 
-                                                                                </table></div>
+                                                                                    </table>
+                                                                                </div>
                                                                             </div>
 
                                                                         </div>
@@ -479,7 +498,7 @@
                                                 </ul>--%>
                                             </div>
 
-                                            
+
 
                                         </div>
                                         <br />

@@ -410,9 +410,9 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Delete Assigned Role By UserID
 
 
-        public string DeleteAssignedRoleByUserIDForWM() 
+        public int DeleteAssignedRoleByUserIDForWM() 
         {
-            string result = string.Empty;
+            int result = 0;
 
             SqlConnection con = null;
             try
@@ -435,7 +435,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add(Output);
                 cmd.ExecuteNonQuery();
 
-                result = Output.Value.ToString();
+                result = Convert.ToInt32(Output.Value.ToString());
 
             }
             catch (Exception ex)
@@ -464,8 +464,9 @@ namespace TheClinicApp1._1.ClinicDAL
             return result;
         }
 
-        public void DeleteAssignedRoleByUserID()
+        public int DeleteAssignedRoleByUserID()
         {
+            int rslt = 0;
             SqlConnection con = null;
             try
             {
@@ -493,6 +494,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
                 else
                 {
+                    rslt = Convert.ToInt32(Output.Value.ToString());
                     var page = HttpContext.Current.CurrentHandler as Page;  //successfull
                     eObj.SavedSuccessMessage(page);
 
@@ -522,6 +524,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 }
 
             }
+            return rslt;
         }
 
         #endregion Delete Assigned Role By UserID
