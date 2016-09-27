@@ -226,34 +226,54 @@ namespace TheClinicApp1._1.Admin
         #region Create ReportList For Clinic
         /// <summary>
         /// To create report list for the clinic 
+        /// method for inserting report list will be called by making sure that, report is not already existing
+        /// If the report is existing , and corresponding checkbox is unchecked, then that report will be deleted
         /// </summary>
         public void CreateReportListForClinic()
         {
             if (hdnClinicID.Value != string.Empty && hdnClinicID.Value != null)
             {
-          
             int Result = 0;
             MasterObj.ClinicID = Guid.Parse(hdnClinicID.Value);
 
-            
                 DataSet dsReportList = MasterObj.GetReportListOfClinic();
 
-                if (dsReportList.Tables[0].Rows.Count > 0)
-                {
-                    foreach (ListItem item in lstRequiredReports.Items)
+              
+                    foreach (ListItem item in lstRequiredReports.Items) 
                     {
-                        DataRow[] ExistingReport = dsReportList.Tables[0].Select("ReportCode = '" + item.Value + "'");
-
-                        if (item.Selected && ExistingReport.Length == 0)
+                        if (dsReportList.Tables[0].Rows.Count > 0) //Checking if report is already existing
                         {
-                            Result = MasterObj.CreateReportListForClinic(item.Value);
 
+                            DataRow[] ExistingReport = dsReportList.Tables[0].Select("ReportCode = '" + item.Value + "'");
+
+                            if (item.Selected && ExistingReport.Length == 0) //New report  (Checking that report is not existing and checkbox is checked)
+                            {
+                                Result = MasterObj.CreateReportListForClinic(item.Value);
+
+                            }
+                            if (item.Selected== false && ExistingReport.Length == 1) //Delete existing report
+                            {
+                                //Code for deleting report
+
+                                Result = MasterObj.DeleteReportOfClinic(item.Value);
+                            }
+                        }
+
+
+                        else
+                        {
+                            if (item.Selected ) //New report  (Checking that checkbox is checked)
+                            {
+                                Result = MasterObj.CreateReportListForClinic(item.Value);
+
+                            }
+                            
                         }
                     }
 
-                }
+                
 
-          
+               
             }
         }
 

@@ -2047,6 +2047,62 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Get ReportList Of Clinic
 
+        #region Delete Report Of Clinic By ReportCode
+
+        public int DeleteReportOfClinic(string ReportCode)
+        {
+            int rslt = 0;
+            SqlConnection con = null;
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "[DeleteReportOfClinicByReportCode]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                cmd.Parameters.Add("@ReportCode", SqlDbType.NVarChar, 30).Value = ReportCode;
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() != "")
+                {
+                    rslt = Convert.ToInt32(Output.Value.ToString());
+                }
+
+            }
+
+
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "DeleteReportOfClinic";
+
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return rslt;
+        }
+
+        #endregion Delete Report Of Clinic By ReportCode
+
         //----------------------------------------*END : Report List *--------------------------------------------//
 
         #endregion Methods
