@@ -239,6 +239,15 @@
     <script src="../js/jquery-1.8.3.min.js"></script>
     <script src="../js/ASPSnippets_Pager.min.js"></script>
     <script>
+
+        $(document).ready(function () {
+            $('.alert_close').click(function () {
+                $(this).parent(".alert").hide();
+            });
+
+        });
+
+
         function showpreview(input) {
             debugger;
             if (input.files && input.files[0]) {
@@ -420,17 +429,6 @@
                  ds = getJsonData(data, "../Admin/SAdmin.aspx/GetReportListOfClinic");
                  table = JSON.parse(ds.d);
                  return table;
-
-                 //$.ajax({
-
-                 //    type: "POST",
-                 //    url: "../Admin/SAdmin.aspx/GetReportListOfClinic",
-                 //    contentType: "application/json; charset=utf-8",
-                 //    dataType: "json",
-                 //    success: BindRequiredRoleList,
-                 //    failure: function (response) { },
-                 //    error: function (response) { }
-                 //});
              }
 
 
@@ -439,32 +437,19 @@
                  var lstRequiredReports = $("#<%=lstRequiredReports.ClientID%>");
 
                  $.each(Records, function (index, Records) {
-
                      var Reports = $("#<%=lstRequiredReports.ClientID%> option");
-                     
-                     Reports.each(function () {
-                         debugger;
-                      
-                         if (Records.ReportCode == $(this).val()) {
-
-                             lstRequiredReports.multiselect('select', Records.ReportCode);
-                            
+                      Reports.each(function () {
+                        if (Records.ReportCode == $(this).val()) {
+                            lstRequiredReports.multiselect('select', Records.ReportCode);
                          }
-                         else
-                         {
-                             $(this).selected = false;
-                         }
-                         
                      });
-
                  });
-
                  }
-
 
                  $(function () {
 
                      GetClinic(1);
+
                  });
                  //   $("[id*=txtSearch]").click("keyup", function () {
                  //  debugger;

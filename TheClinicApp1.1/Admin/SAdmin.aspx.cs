@@ -235,14 +235,25 @@ namespace TheClinicApp1._1.Admin
             int Result = 0;
             MasterObj.ClinicID = Guid.Parse(hdnClinicID.Value);
 
-            foreach (ListItem item in lstRequiredReports.Items)
-            {
-                if (item.Selected)
+            
+                DataSet dsReportList = MasterObj.GetReportListOfClinic();
+
+                if (dsReportList.Tables[0].Rows.Count > 0)
                 {
-                Result =    MasterObj.CreateReportListForClinic(item.Value);
+                    foreach (ListItem item in lstRequiredReports.Items)
+                    {
+                        DataRow[] ExistingReport = dsReportList.Tables[0].Select("ReportCode = '" + item.Value + "'");
+
+                        if (item.Selected && ExistingReport.Length == 0)
+                        {
+                            Result = MasterObj.CreateReportListForClinic(item.Value);
+
+                        }
+                    }
 
                 }
-            }
+
+          
             }
         }
 
