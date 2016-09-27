@@ -238,6 +238,15 @@ namespace TheClinicApp1._1.Admin {
         protected global::System.Web.UI.WebControls.ListBox lstFruits;
         
         /// <summary>
+        /// lstRequiredReports control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lstRequiredReports;
+        
+        /// <summary>
         /// LogPic control.
         /// </summary>
         /// <remarks>

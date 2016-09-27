@@ -151,6 +151,103 @@ namespace TheClinicApp1._1.Admin
 
         #endregion BindDropDownGroupforDoc
 
+        #region Get ReportList Of Clinic
+
+        [WebMethod]
+        public static string GetReportListOfClinic(Master MasterObj)
+        {
+            //Master MasterObj = new Master();
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            string jsonResult = null;
+            DataSet ds = null;
+
+            DataSet dsReportList = MasterObj.GetReportListOfClinic();
+            ds = dsReportList;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+            Dictionary<string, object> childRow;
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    childRow = new Dictionary<string, object>();
+                    foreach (DataColumn col in ds.Tables[0].Columns)
+                    {
+                        childRow.Add(col.ColumnName, row[col]);
+                    }
+                    parentRow.Add(childRow);
+                }
+            }
+            jsonResult = jsSerializer.Serialize(parentRow);
+
+            return jsonResult; //Converting to Json
+
+        }
+
+        #endregion Get ReportList Of Clinic
+
+        #region Bind Required Reports
+
+        public void BindRequiredReports()
+        {
+            if (hdnClinicID.Value != string.Empty && hdnClinicID.Value != null)
+            {
+                MasterObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+                DataSet dsReportList = MasterObj.GetReportListOfClinic();
+
+                if (dsReportList.Tables[0].Rows.Count > 0)
+                {
+                    foreach (ListItem item in lstRequiredReports.Items)
+                    {
+                        DataRow[] ExistingReport = dsReportList.Tables[0].Select("ReportCode = '" + item.Value + "'");
+
+                        if (ExistingReport.Length == 0)
+                        {
+                            item.Selected = false;
+                        }
+
+                        else
+                        {
+                            item.Selected = true;
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+        #endregion Bind Required Reports
+
+        #region Create ReportList For Clinic
+        /// <summary>
+        /// To create report list for the clinic 
+        /// </summary>
+        public void CreateReportListForClinic()
+        {
+            if (hdnClinicID.Value != string.Empty && hdnClinicID.Value != null)
+            {
+          
+            int Result = 0;
+            MasterObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+
+            foreach (ListItem item in lstRequiredReports.Items)
+            {
+                if (item.Selected)
+                {
+                Result =    MasterObj.CreateReportListForClinic(item.Value);
+
+                }
+            }
+            }
+        }
+
+        #endregion Create ReportList For Clinic
+
         #endregion Methods
 
         #region Events
@@ -188,9 +285,6 @@ namespace TheClinicApp1._1.Admin
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            //string message = "";
-            try
-            {
                 if (hdnGroupselect.Value == "Update")
                 {
                     MasterObj.ClinicID = Guid.Parse(hdnClinicID.Value);
@@ -265,13 +359,7 @@ namespace TheClinicApp1._1.Admin
                     BindDropDownGroupforDoc();
                 }
 
-            }
-            catch
-            {
-
-            }
-
-
+                CreateReportListForClinic();
         }
 
         #endregion Save Save Click

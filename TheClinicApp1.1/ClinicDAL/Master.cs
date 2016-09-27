@@ -595,7 +595,6 @@ namespace TheClinicApp1._1.ClinicDAL
 
         #endregion Doctor View Search Paging
 
-
         #region View Doctors
 
         public DataTable ViewDoctors()
@@ -1851,6 +1850,7 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion  View All Units
 
         //----------------------------------------* Unit : End *--------------------------------------------//
+
         #region AddRoles
         public void InsertRole()
         {
@@ -1934,6 +1934,121 @@ namespace TheClinicApp1._1.ClinicDAL
 
         }
         #endregion AddRoles
+
+
+        //----------------------------------------* Report List : Start *--------------------------------------------//
+
+        #region Create ReportList Against Clinic
+
+        public int CreateReportListForClinic(string ReportCode)
+        {
+            int rslt = 0;
+            SqlConnection con = null;
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "[CreateReportListForClinic]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                cmd.Parameters.Add("@ReportCode", SqlDbType.NVarChar, 30).Value = ReportCode;
+                SqlParameter Output = new SqlParameter();
+                Output.DbType = DbType.Int32;
+                Output.ParameterName = "@Status";
+                Output.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(Output);
+                cmd.ExecuteNonQuery();
+                if (Output.Value.ToString() != "")
+                {
+                    rslt = Convert.ToInt32(Output.Value.ToString());
+                }
+
+                //if (Output.Value.ToString() == "") //not successfull   
+                //{
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    eObj.InsertionNotSuccessMessage(page);
+
+                //}
+                //else  //successfull
+                //{
+                //    var page = HttpContext.Current.CurrentHandler as Page;
+                //    eObj.InsertionSuccessMessage(page);
+                //}
+            }
+
+
+            catch (Exception ex)
+            {
+                //var page = HttpContext.Current.CurrentHandler as Page;
+                //eObj.ErrorData(ex, page);
+
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+
+                eObj.UserID = UA.UserID;
+                eObj.Method = "CreateReportListForClinic";
+
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return rslt;
+        }
+
+        #endregion Create ReportList Against Clinic
+
+        #region Get ReportList Of Clinic
+
+        public DataSet GetReportListOfClinic()
+        {
+            SqlConnection con = null;
+            DataSet dsReportList = null;
+            try
+            {
+                dsReportList = new DataSet();
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetReportListOfClinic", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dsReportList);
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+                eObj.Description = ex.Message;
+                eObj.Module = ModuleUnit;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetReportListOfClinic";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return dsReportList;
+        }
+
+        #endregion Get ReportList Of Clinic
+
+        //----------------------------------------*END : Report List *--------------------------------------------//
+
         #endregion Methods
     }
 }
