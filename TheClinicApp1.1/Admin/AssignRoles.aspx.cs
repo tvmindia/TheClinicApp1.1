@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+#region Included Namespaces
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -10,8 +12,8 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
-
 using Messages = TheClinicApp1._1.UIClasses.Messages;
+#endregion Included Namespaces
 
 namespace TheClinicApp1._1.Admin
 {
