@@ -32,7 +32,6 @@ namespace TheClinicApp1._1.Admin
         DataTable dtUsers = null;
         #endregion Global Variables
 
-
         #region Methods
 
         #region AssignRoles View Search Paging
@@ -617,7 +616,6 @@ namespace TheClinicApp1._1.Admin
         
 
         #endregion Events
-
 
         //--NOTE: Below events and functions are not using now
 
