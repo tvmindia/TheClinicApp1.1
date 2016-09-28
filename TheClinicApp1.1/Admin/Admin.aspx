@@ -266,9 +266,10 @@
                 $("#<%=txtLastName.ClientID %>").val(Records.LastName);
                 $("#<%=txtPhoneNumber.ClientID %>").val(Records.PhoneNo);
                 $("#<%=txtEmail.ClientID %>").val(Records.Email);
-                $("#<%=txtEmail.ClientID %>").val(Records.Email);
                 $("#<%=hdnUserID.ClientID %>").val(Records.UserID);
 
+                $("#<%=ddlGroup.ClientID %>").val(Records.ClinicID);
+               
                 if (Records.Active == true) {
                     $("#<%=rdoActiveYes.ClientID %>").prop('checked', true);
                 }
