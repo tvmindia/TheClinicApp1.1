@@ -42,7 +42,9 @@
     <script>
        
         function Validation() {
-            
+            debugger;
+           
+
             if (($('#<%=txtLoginName.ClientID%>').val().trim() == "") || ($('#<%=txtFirstName.ClientID%>').val().trim() == "") || ($('#<%=txtPassword.ClientID%>').val().trim() == "") || ($('#<%=txtConfirmPassword.ClientID%>').val().trim() == "") || ($('#<%=txtPhoneNumber.ClientID%>').val().trim() == "") || ($('#<%=txtEmail.ClientID%>').val().trim() == "")) {
 
                 var lblclass = Alertclasses.danger;
@@ -51,6 +53,18 @@
                 ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
                 return false;
             }
+            else if ($("#<%=ddlGroup.ClientID%> option:selected").text() == "--Select Clinic--")
+            {
+
+                var lblclass = Alertclasses.danger;
+                var lblmsg = AlertMsgs.ClinicRequired;
+                var lblcaptn = Caption.FailureMsgCaption;
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                return false;
+            }
+
+
             else {
                 return true;
             }
@@ -171,14 +185,14 @@
 
     <script type="text/javascript">
 
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-
+        //$(function () {
+        //    $('[data-toggle="tooltip"]').tooltip();
+        //});
            <%-- var gridViewRowCount = document.getElementById("<%= dtgViewAllUsers.ClientID %>").rows.length;
             if (gridViewRowCount >0) {
                 $('table').tablePagination({});
             }--%>
-        });
+       
 
         function SetRequired() {
             document.getElementById('<%=txtLoginName.ClientID %>').required = true;

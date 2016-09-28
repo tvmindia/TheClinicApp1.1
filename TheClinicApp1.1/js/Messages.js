@@ -44,5 +44,6 @@ var AlertMsgs =
         MaxAppoinmentRequired: "Please enter maximum appoinments",
         DateRequired: "Please select a date",
         validNumber: "Please enter a valid number",
-        DrRequired: "Please select a doctor"
+        DrRequired: "Please select a doctor",
+        ClinicRequired: "Please select a clinic"
     }
