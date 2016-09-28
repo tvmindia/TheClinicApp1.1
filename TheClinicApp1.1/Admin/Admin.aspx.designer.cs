@@ -121,6 +121,15 @@ namespace TheClinicApp1._1.Admin {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl liSAdmin;
         
         /// <summary>
+        /// ddlGroup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlGroup;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>
@@ -200,24 +209,6 @@ namespace TheClinicApp1._1.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTokencount;
-        
-        /// <summary>
-        /// dropdivclinic control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dropdivclinic;
-        
-        /// <summary>
-        /// ddlGroup control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlGroup;
         
         /// <summary>
         /// txtLoginName control.
@@ -389,5 +380,14 @@ namespace TheClinicApp1._1.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnLoginedUserID;
+        
+        /// <summary>
+        /// hdnClinicID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnClinicID;
     }
 }

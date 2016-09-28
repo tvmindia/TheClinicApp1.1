@@ -58,14 +58,23 @@ namespace TheClinicApp1._1.Admin
         ///This method is called using AJAX For gridview bind , search , paging
         ///It expects page index and search term which is passed from client side
         ///Page size is declared and initialized in global variable section
-        public static string ViewAndFilterUser(string searchTerm, int pageIndex)
+        public static string ViewAndFilterUser(string searchTerm, int pageIndex, string clinicID)
         {
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
             
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
                 User usrObj = new User();
-                usrObj.ClinicID = UA.ClinicID;
+
+                if (clinicID == string.Empty)
+                {
+                    usrObj.ClinicID = UA.ClinicID; 
+                }
+                else
+                {
+                    usrObj.ClinicID = Guid.Parse(clinicID);
+                }
+                
                 var xml = usrObj.ViewAndFilterUsers(searchTerm, pageIndex, PageSize);
                 return xml;
                         
@@ -97,8 +106,6 @@ namespace TheClinicApp1._1.Admin
         }
 
         #endregion Bind Dummy Row
-
-
 
         #endregion User View Search Paging
 
@@ -140,14 +147,26 @@ namespace TheClinicApp1._1.Admin
                     userObj.isActive = false;
                 }
             }
-            if(dropdivclinic.Visible==true)
+
+
+            if (hdnClinicID.Value != string.Empty)
             {
                 userObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
             }
-            else if(dropdivclinic.Visible==false)
+            else
             {
                 userObj.ClinicID = UA.ClinicID;
             }
+
+
+            //if(dropdivclinic.Visible==true)
+            //{
+            //    userObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
+            //}
+            //else if(dropdivclinic.Visible==false)
+            //{
+            //    userObj.ClinicID = UA.ClinicID;
+            //}
             userObj.createdBy = UA.userName;
             userObj.updatedBy = UA.userName;
             userObj.passWord = CryptObj.Encrypt(txtPassword.Value);
@@ -159,7 +178,13 @@ namespace TheClinicApp1._1.Admin
                 //INSERT
 
                 rslt=  userObj.AddUser();
-                hdnUserID.Value = userObj.UserID.ToString();
+
+                if (rslt == 1)
+                {
+                    hdnUserID.Value = userObj.UserID.ToString();
+                }
+
+               
 
                 //if (rdoDoctor.Checked == true)
                 //{
@@ -190,7 +215,16 @@ namespace TheClinicApp1._1.Admin
             var page = HttpContext.Current.CurrentHandler as Page;
 
             roleObj.UserID = UserID;
-            roleObj.ClinicID = UA.ClinicID;
+
+            if (hdnClinicID.Value != string.Empty)
+	            {
+                    roleObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+	            }
+            else
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+            
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
             //RoleID
@@ -232,76 +266,6 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Delete User By UserID
 
-        #region Refill User Details 
-
-        /// <summary>
-        /// Controls will be refilled on edit click
-        /// </summary>
-        /// <param name="UserID"></param>
-
-        public void RefillUserDetailsOnEditClick(Guid UserID)
-        {
-
-            txtLoginName.Attributes.Add("readonly", "readonly"); //LOGIN NAME READ ONLY in case of edit
-
-            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-
-            userObj.UserID = UserID;
-            userObj.ClinicID = UA.ClinicID;
-            DataTable dtuser = userObj.GetUserDetailsByUserID();
-
-            txtLoginName.Value = dtuser.Rows[0]["LoginName"].ToString();
-            txtFirstName.Value = dtuser.Rows[0]["FirstName"].ToString();
-            txtLastName.Value = dtuser.Rows[0]["LastName"].ToString();
-           // txtPassword.Value = CryptObj.Decrypt(dtuser.Rows[0]["Password"].ToString());
-           // txtConfirmPassword.Value = CryptObj.Decrypt(dtuser.Rows[0]["Password"].ToString());
-            txtPassword.Value = string.Empty;
-
-            txtPhoneNumber.Value = dtuser.Rows[0]["PhoneNo"].ToString();
-
-            txtEmail.Value = dtuser.Rows[0]["Email"].ToString();
-            bool isActive = Convert.ToBoolean(dtuser.Rows[0]["Active"].ToString());
-
-            if (isActive)
-            {
-                rdoActiveYes.Checked = true;
-                rdoActiveNo.Checked = false;
-            }
-            else
-            {
-                rdoActiveNo.Checked = true;
-                rdoActiveYes.Checked = false;
-            }
-
-            userObj.ClinicID = UA.ClinicID;
-            userObj.firstName = dtuser.Rows[0]["FirstName"].ToString();
-
-                     mstrObj.UsrID = UserID;
-                    mstrObj.ClinicID = UA.ClinicID;
-                    DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
-
-                    if (dtDoctor.Rows.Count > 0) //Checking whether user is doctor , then activate Isdoctor YES radio button
-                    {
-                        //-----User Is Doctor
-                        rdoDoctor.Checked = true;
-                        rdoNotDoctor.Checked = false;
-                       
-                    }
-
-                    else
-                    {
-
-                        //--- User Is Not a doctor
-
-                        rdoNotDoctor.Checked = true;
-                        rdoDoctor.Checked = false;
-
-                    }
-
-        }
-
-        #endregion Refill User Details
-
         #endregion User
 
         //---* To DOCTOR *--//
@@ -319,10 +283,28 @@ namespace TheClinicApp1._1.Admin
             string DoctorRoleID = string.Empty;
 
               UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            userObj.ClinicID = UA.ClinicID;
 
+              if (hdnClinicID.Value != string.Empty)
+              {
+                  userObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+
+              }
+              else
+              {
+                  userObj.ClinicID = UA.ClinicID;
+              }
+
+              if (hdnClinicID.Value != string.Empty)
+              {
+                  mstrObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+
+              }
+              else
+              {
+                  mstrObj.ClinicID = UA.ClinicID;
+              }
             //DoctorRoleID = userObj.GetRoleIDOfDoctor();
-            mstrObj.ClinicID = UA.ClinicID;
+           
             DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
             return DoctorRoleID;
         }
@@ -339,14 +321,25 @@ namespace TheClinicApp1._1.Admin
         UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
         mstrObj.loginName = txtLoginName.Value.TrimStart();
-        if (dropdivclinic.Visible == true)
+
+
+        if (hdnClinicID.Value != string.Empty)
         {
             mstrObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
         }
-        else if (dropdivclinic.Visible == false)
+        else
         {
             mstrObj.ClinicID = UA.ClinicID;
         }
+
+        //if (dropdivclinic.Visible == true)
+        //{
+        //    mstrObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
+        //}
+        //else if (dropdivclinic.Visible == false)
+        //{
+        //    mstrObj.ClinicID = UA.ClinicID;
+        //}
             //mstrObj.ClinicID = UA.ClinicID;
             mstrObj.DoctorName = txtFirstName.Value.TrimStart();
             mstrObj.DoctorPhone = txtPhoneNumber.Value;
@@ -358,14 +351,25 @@ namespace TheClinicApp1._1.Admin
                 {
 
                     mstrObj.UsrID = Guid.Parse(hdnUserID.Value);
-                    if (dropdivclinic.Visible == true)
+
+                    if (hdnClinicID.Value != string.Empty)
                     {
                         mstrObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
                     }
-                    else if (dropdivclinic.Visible == false)
+                    else
                     {
                         mstrObj.ClinicID = UA.ClinicID;
                     }
+
+
+                    //if (dropdivclinic.Visible == true)
+                    //{
+                    //    mstrObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
+                    //}
+                    //else if (dropdivclinic.Visible == false)
+                    //{
+                    //    mstrObj.ClinicID = UA.ClinicID;
+                    //}
                     //mstrObj.ClinicID = UA.ClinicID;
                     DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
 
@@ -421,8 +425,17 @@ namespace TheClinicApp1._1.Admin
             string msg = string.Empty;
             var page = HttpContext.Current.CurrentHandler as Page;
 
+            if (hdnClinicID.Value != string.Empty)
+            {
+                mstrObj.ClinicID = Guid.Parse(hdnClinicID.Value);
 
-            mstrObj.ClinicID = UA.ClinicID;
+            }
+
+            else
+            {
+                mstrObj.ClinicID = UA.ClinicID;
+            }
+            
             mstrObj.UsrID = UserID;
             DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
 
@@ -444,10 +457,15 @@ namespace TheClinicApp1._1.Admin
 
                 else
                 {
-                    roleObj.RoleID = Guid.Parse(GetRoleIDOFDoctor());
-                    rslt=DeleteAssignedRoleByUserID(UserID);
+                    string DrRoleID = GetRoleIDOFDoctor();
 
-                    if (rslt ==1)
+                    if (DrRoleID!= string.Empty)
+                    {
+                        roleObj.RoleID = Guid.Parse(DrRoleID);
+                        rslt = DeleteAssignedRoleByUserID(UserID);
+                    }
+
+                    if ( (rslt == 1) || (DrRoleID== string.Empty))
                     {
                     mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
                     rslt = mstrObj.DeleteDoctorByID(true);
@@ -492,29 +510,52 @@ namespace TheClinicApp1._1.Admin
         public void AddUserRole()
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            if (dropdivclinic.Visible == true)
+
+
+            if (hdnClinicID.Value != string.Empty)
             {
                 roleObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
             }
-            else if (dropdivclinic.Visible == false)
+            else
             {
                 roleObj.ClinicID = UA.ClinicID;
             }
+
+            //if (dropdivclinic.Visible == true)
+            //{
+            //    roleObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
+            //}
+            //else if (dropdivclinic.Visible == false)
+            //{
+            //    roleObj.ClinicID = UA.ClinicID;
+            //}
             //roleObj.ClinicID = UA.ClinicID;
 
             string roleid = GetRoleIDOFDoctor();
 
+            if (roleid != string.Empty)
+            {
             roleObj.RoleID = Guid.Parse(roleid);
             roleObj.CreatedBy = UA.userName;
             roleObj.UserID = Guid.Parse(hdnUserID.Value);
-            if (dropdivclinic.Visible == true)
+
+            if (hdnClinicID.Value != string.Empty)
             {
                 roleObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
             }
-            else if (dropdivclinic.Visible == false)
+            else
             {
                 roleObj.ClinicID = UA.ClinicID;
             }
+
+            //if (dropdivclinic.Visible == true)
+            //{
+            //    roleObj.ClinicID = Guid.Parse(ddlGroup.SelectedValue);
+            //}
+            //else if (dropdivclinic.Visible == false)
+            //{
+            //    roleObj.ClinicID = UA.ClinicID;
+            //}
             //roleObj.ClinicID = UA.ClinicID;
 
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
@@ -525,7 +566,7 @@ namespace TheClinicApp1._1.Admin
             {
                 roleObj.AssignRole();
             }
-
+            }
         }
 
         #endregion Assign Role
@@ -549,7 +590,7 @@ namespace TheClinicApp1._1.Admin
         #region CheckUserIsDoctor
 
         [WebMethod]
-        public static bool CheckUserIsDoctor(string UsrID)
+        public static bool CheckUserIsDoctor(string UsrID, string clinicID)
         {
             bool IsDoctor = false;
 
@@ -560,7 +601,17 @@ namespace TheClinicApp1._1.Admin
 
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             mstrObj.UsrID = Guid.Parse(UsrID);
-                    mstrObj.ClinicID = UA.ClinicID;
+
+            if (clinicID!= string.Empty)
+            {
+                mstrObj.ClinicID = Guid.Parse(clinicID);
+            }
+            else
+            {
+                mstrObj.ClinicID = UA.ClinicID;
+            }
+
+                    
                     DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
 
                     if (dtDoctor.Rows.Count > 0) //Checking whether user is doctor , then activate Isdoctor YES radio button
@@ -603,7 +654,7 @@ namespace TheClinicApp1._1.Admin
         #region ValidateEmailID
         [WebMethod]
         ///Checking login name duplication
-        public static bool ValidateEmailID(string Email)
+        public static bool ValidateEmailID(string Email, string clinicID)
         {
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
@@ -613,7 +664,16 @@ namespace TheClinicApp1._1.Admin
 
             usrObj.Email = Email;
 
-            usrObj.ClinicID = UA.ClinicID;
+            if (clinicID != string.Empty)
+            {
+                usrObj.ClinicID = Guid.Parse(clinicID);
+            }
+            else
+            {
+                usrObj.ClinicID = UA.ClinicID;
+            }
+
+           
 
             if (usrObj.ValidateEmailID())
             {
@@ -631,7 +691,7 @@ namespace TheClinicApp1._1.Admin
         #region Delete User By UserID
 
          [WebMethod]
-        public static bool DeleteUserByID(string UsrID)
+        public static bool DeleteUserByID(string UsrID, string clinicID)
         {
             int result = 0;
 
@@ -645,7 +705,16 @@ namespace TheClinicApp1._1.Admin
             ClinicDAL.RoleAssign roleObj = new RoleAssign();
             ClinicDAL.User userObj = new ClinicDAL.User();
 
-            mstrObj.ClinicID = UA.ClinicID;
+            if (clinicID != string.Empty)
+            {
+                mstrObj.ClinicID = Guid.Parse(clinicID);
+            }
+            else
+            {
+                mstrObj.ClinicID = UA.ClinicID;
+            }
+
+           
             mstrObj.UsrID = Guid.Parse(UsrID);
             DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
 
@@ -661,18 +730,35 @@ namespace TheClinicApp1._1.Admin
                 {
                  
                     string DoctorRoleID = string.Empty;
-                    userObj.ClinicID = UA.ClinicID;
+
+                    if (clinicID != string.Empty)
+                    {
+                        userObj.ClinicID = Guid.Parse(clinicID);
+                        mstrObj.ClinicID = Guid.Parse(clinicID);
+                    }
+                    else
+                    {
+                        userObj.ClinicID = UA.ClinicID;
+                        mstrObj.ClinicID = UA.ClinicID;
+                    }
+
+                    
 
                     //DoctorRoleID = userObj.GetRoleIDOfDoctor();
-                    mstrObj.ClinicID = UA.ClinicID;
+                    
                     DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
 
-                    roleObj.RoleID = Guid.Parse(DoctorRoleID);
+                    if (DoctorRoleID != string.Empty)
+                    {
+                        roleObj.RoleID = Guid.Parse(DoctorRoleID);
 
-                    roleObj.UserID = Guid.Parse(UsrID);
-                  result=   roleObj.DeleteAssignedRoleByUserIDForWM();
+                        roleObj.UserID = Guid.Parse(UsrID);
+                        result = roleObj.DeleteAssignedRoleByUserIDForWM();
 
-                  if (result == 1)
+                    }
+
+                   
+                  if (result == 1 || DoctorRoleID == string.Empty)
                   {
 
                       mstrObj.DoctorID = Guid.Parse(dtDoctor.Rows[0]["DoctorID"].ToString());
@@ -681,7 +767,18 @@ namespace TheClinicApp1._1.Admin
                         if (result ==1)
                         {
                              roleObj.UserID = Guid.Parse(UsrID);
-                             roleObj.ClinicID = UA.ClinicID;
+
+                             if (clinicID != string.Empty)
+                             {
+                                
+                                 roleObj.ClinicID = Guid.Parse(clinicID);
+                             }
+                             else
+                             {
+                                 roleObj.ClinicID = UA.ClinicID;
+                             }
+
+                            
                              DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
                     //RoleID
@@ -740,7 +837,7 @@ namespace TheClinicApp1._1.Admin
          /// <param name=""></param>
          /// <returns></returns>
          [System.Web.Services.WebMethod]
-         public static string BindUserDetailsOnEditClick(User userObj)
+         public static string BindUserDetailsOnEditClick(User userObj, string clinicID)
          { 
 
              ClinicDAL.UserAuthendication UA;
@@ -748,7 +845,15 @@ namespace TheClinicApp1._1.Admin
 
              UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
-             userObj.ClinicID = UA.ClinicID;
+             if (clinicID != string.Empty)
+             {
+                 userObj.ClinicID = Guid.Parse(clinicID);
+             }
+             else
+             {
+                 userObj.ClinicID = UA.ClinicID;
+             }
+            
              DataSet dtuser = userObj.GetUserDetailsByUserIDForWM();
 
 
@@ -782,13 +887,23 @@ namespace TheClinicApp1._1.Admin
 
          #region Events
 
-         #region Page Load
+        #region Page Load
 
          protected void Page_Load(object sender, EventArgs e)
         {  
             BindDummyRow();
 
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            if (UA.userName != "sadmin")
+            {
+               ddlGroup.Visible = false;
+            }
+            else
+            {
+                ddlGroup.Visible = true;
+            }
+
             hdnLoginedUserID.Value = UA.UserID.ToString();
             string msg = string.Empty;
 
@@ -912,21 +1027,121 @@ namespace TheClinicApp1._1.Admin
         }
 
         #endregion Logout
-       
-        //#region Paging
-        //protected void dtgViewAllUsers_PreRender(object sender, EventArgs e)
-        //{
-        //    dtgViewAllUsers.UseAccessibleHeader = false;
 
-        //    if (dtgViewAllUsers.Rows.Count > 0)
-        //    {
-        //        dtgViewAllUsers.HeaderRow.TableSection = TableRowSection.TableHeader;
-        //    }   
+        #region Bind Clinic Dropdown
 
-           
-        //}
+        public void BindDropDownGroupforDoc()
+        {
 
-        //#endregion Paging
+            DataTable dt = new DataTable();
+            dt = MasterObj.GetAllClinics();
+            ddlGroup.DataSource = dt;
+            ddlGroup.DataTextField = "Name";
+            ddlGroup.DataValueField = "ClinicID";
+            ddlGroup.DataBind();
+            ddlGroup.Items.Insert(0, new ListItem("--Select Clinic--", "-1"));
+        }
+
+        #endregion Bind Clinic Dropdown
+
+        #region Clinic Dropdown Selected Index Changed
+
+        protected void ddlGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //---   *ClinicID generally accessed from UA, If clinic changed ClinicID will be saved to  hiddenfield 'hdnClinicID' *--//
+
+            hdnClinicID.Value = ddlGroup.SelectedValue;
+
+            //DataSet ds;
+            //string ClinicID = ddlGroup.SelectedValue;
+            //ds = ClinicObj.ViewClinic(ClinicID);
+
+            //if (ds.Tables[0].Rows.Count > 0)
+            //{
+            //    DataRow dr = ds.Tables[0].Rows[0];
+            //    string Clinic_Name = dr["Name"].ToString();
+
+            //    //hdnClinicName.Value = Clinic_Name;
+            //    //ClinicDAL.UserAuthendication UA_Changed = new ClinicDAL.UserAuthendication(UA.userName, ClinicID, Clinic_Name);
+            //    //if (UA_Changed.ValidUser)
+            //    //{
+            //    //    Session[Const.LoginSession] = UA_Changed;
+            //    //}
+            //}
+        }
+
+        #endregion Clinic Dropdown Selected Index Changed
+
+        #endregion Events
+
+        //--NOTE: Below events and functions are not using now
+
+        #region Paging
+        protected void dtgViewAllUsers_PreRender(object sender, EventArgs e)
+        {
+            dtgViewAllUsers.UseAccessibleHeader = false;
+
+            if (dtgViewAllUsers.Rows.Count > 0)
+            {
+                dtgViewAllUsers.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+
+
+        }
+
+        #endregion Paging
+
+        #region Bind Gridview
+        public void BindGriewWithDetailsOfAllUsers()
+        {
+            userObj.ClinicID = UA.ClinicID;
+            DataTable dtUsers = userObj.GetDetailsOfAllUsers();
+
+            if (dtUsers != null)
+            {
+                dtgViewAllUsers.DataSource = dtUsers;
+                dtgViewAllUsers.DataBind();
+
+                lblCaseCount.Text = dtgViewAllUsers.Rows.Count.ToString();
+
+            }
+
+            foreach (GridViewRow myRow in dtgViewAllUsers.Rows)
+            {
+                ImageButton EditButton = myRow.Cells[0].Controls[1] as ImageButton;
+                ImageButton DeleteButton = myRow.Cells[1].Controls[1] as ImageButton;
+
+                string name = myRow.Cells[2].Text;
+
+                if (EditButton != null && DeleteButton != null && name == UA.userName)
+                {
+                    EditButton.Enabled = false;
+                    DeleteButton.Enabled = false;
+
+                    //EditButton.ToolTip = Messages.EditImageButtonDisabled;
+                    //DeleteButton.ToolTip = Messages.DeleteImageButtonDisabled;
+
+                    EditButton.ImageUrl = "~/images/Editicon2 (2).png";
+                    DeleteButton.ImageUrl = "~/images/Deleteicon2 (3).png";
+
+
+                }
+                else
+                {
+                    EditButton.Enabled = true;
+                    DeleteButton.Enabled = true;
+
+                    EditButton.ImageUrl = "~/images/Editicon1.png";
+                    DeleteButton.ImageUrl = "~/images/Deleteicon1.png";
+
+
+                }
+
+            }
+
+        }
+
+        #endregion Bind Gridview
 
         #region Update Image Button Click
         protected void ImgBtnUpdate_Click(object sender, ImageClickEventArgs e)
@@ -982,88 +1197,75 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Delete Image Button Click
 
-        #endregion Events
+        #region Refill User Details
 
-         #region Bind Gridview
-        public void BindGriewWithDetailsOfAllUsers()
+        /// <summary>
+        /// Controls will be refilled on edit click
+        /// </summary>
+        /// <param name="UserID"></param>
+
+        public void RefillUserDetailsOnEditClick(Guid UserID)
         {
+
+            txtLoginName.Attributes.Add("readonly", "readonly"); //LOGIN NAME READ ONLY in case of edit
+
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+            userObj.UserID = UserID;
             userObj.ClinicID = UA.ClinicID;
-            DataTable dtUsers = userObj.GetDetailsOfAllUsers();
+            DataTable dtuser = userObj.GetUserDetailsByUserID();
 
-            if (dtUsers != null)
+            txtLoginName.Value = dtuser.Rows[0]["LoginName"].ToString();
+            txtFirstName.Value = dtuser.Rows[0]["FirstName"].ToString();
+            txtLastName.Value = dtuser.Rows[0]["LastName"].ToString();
+            // txtPassword.Value = CryptObj.Decrypt(dtuser.Rows[0]["Password"].ToString());
+            // txtConfirmPassword.Value = CryptObj.Decrypt(dtuser.Rows[0]["Password"].ToString());
+            txtPassword.Value = string.Empty;
+
+            txtPhoneNumber.Value = dtuser.Rows[0]["PhoneNo"].ToString();
+
+            txtEmail.Value = dtuser.Rows[0]["Email"].ToString();
+            bool isActive = Convert.ToBoolean(dtuser.Rows[0]["Active"].ToString());
+
+            if (isActive)
             {
-                dtgViewAllUsers.DataSource = dtUsers;
-                dtgViewAllUsers.DataBind();
+                rdoActiveYes.Checked = true;
+                rdoActiveNo.Checked = false;
+            }
+            else
+            {
+                rdoActiveNo.Checked = true;
+                rdoActiveYes.Checked = false;
+            }
 
-                lblCaseCount.Text = dtgViewAllUsers.Rows.Count.ToString();
+            userObj.ClinicID = UA.ClinicID;
+            userObj.firstName = dtuser.Rows[0]["FirstName"].ToString();
+
+            mstrObj.UsrID = UserID;
+            mstrObj.ClinicID = UA.ClinicID;
+            DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
+
+            if (dtDoctor.Rows.Count > 0) //Checking whether user is doctor , then activate Isdoctor YES radio button
+            {
+                //-----User Is Doctor
+                rdoDoctor.Checked = true;
+                rdoNotDoctor.Checked = false;
 
             }
 
-            foreach (GridViewRow myRow in dtgViewAllUsers.Rows)
+            else
             {
-                ImageButton EditButton = myRow.Cells[0].Controls[1] as ImageButton;
-                ImageButton DeleteButton = myRow.Cells[1].Controls[1] as ImageButton;
 
-                string name = myRow.Cells[2].Text;
+                //--- User Is Not a doctor
 
-                if (EditButton != null && DeleteButton != null && name == UA.userName)
-                {
-                    EditButton.Enabled = false;
-                    DeleteButton.Enabled = false;
-
-                    //EditButton.ToolTip = Messages.EditImageButtonDisabled;
-                    //DeleteButton.ToolTip = Messages.DeleteImageButtonDisabled;
-
-                    EditButton.ImageUrl = "~/images/Editicon2 (2).png";
-                    DeleteButton.ImageUrl = "~/images/Deleteicon2 (3).png";
-
-
-                }
-                else
-                {
-                    EditButton.Enabled = true;
-                    DeleteButton.Enabled = true;
-
-                    EditButton.ImageUrl = "~/images/Editicon1.png";
-                    DeleteButton.ImageUrl = "~/images/Deleteicon1.png";
-
-
-                }
+                rdoNotDoctor.Checked = true;
+                rdoDoctor.Checked = false;
 
             }
 
         }
 
-        #endregion Bind Gridview
+        #endregion Refill User Details
 
-        public void BindDropDownGroupforDoc()
-        {
-
-            DataTable dt = new DataTable();
-            dt = MasterObj.GetAllClinics();
-            ddlGroup.DataSource = dt;
-            ddlGroup.DataTextField = "Name";
-            ddlGroup.DataValueField = "ClinicID";
-            ddlGroup.DataBind();
-            ddlGroup.Items.Insert(0, new ListItem("--Select Clinic--", "-1"));
-        }
-
-        protected void ddlGroup_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DataSet ds;
-            string ClinicID = ddlGroup.SelectedValue;
-            ds=ClinicObj.ViewClinic(ClinicID);
-           
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                DataRow dr = ds.Tables[0].Rows[0];
-                string Clinic_Name = dr["Name"].ToString();               
-                ClinicDAL.UserAuthendication UA_Changed = new ClinicDAL.UserAuthendication(UA.userName, ClinicID, Clinic_Name);
-                if (UA_Changed.ValidUser)
-                {
-                    Session[Const.LoginSession] = UA_Changed;
-                }
-            }
-        }
     }
 }

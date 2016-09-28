@@ -124,7 +124,10 @@
         color: inherit;
 
     }
-
+     select
+        {
+            color:black!important;
+        }
 </style>
 
 
@@ -447,6 +450,11 @@
 
                         <div role="tabpanel" class="tab-pane active" id="stock_in">
                             <div class="grey_sec">
+
+                                <asp:DropDownList ID="ddlClinic" onchange="ChangeClinic(this)" runat="server" CssClass="drop" Width="225px" Style="font-family: Arial, Verdana, Tahoma;">
+                                     </asp:DropDownList>
+                                
+
                               <%--  <div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
                                     <input class="button" type="submit" value="Search" />
@@ -512,6 +520,7 @@
 
 
 <div class="">     
+
 
 <div class="row field_row">  
     <div style="height:40px;"></div>

@@ -116,6 +116,21 @@ namespace TheClinicApp1._1.Admin
 
         #endregion Bind Users Dropdown
 
+        #region Bind Clinic Dropdown
+
+        public void BindClinicDropdown()
+        {
+            DataTable dt = new DataTable();
+            dt = mstrObj.GetAllClinics();
+            ddlClinic.DataSource = dt;
+            ddlClinic.DataTextField = "Name";
+            ddlClinic.DataValueField = "ClinicID";
+            ddlClinic.DataBind();
+            ddlClinic.Items.Insert(0, new ListItem("--Select Clinic--", "-1"));
+        }
+
+        #endregion Bind Clinic Dropdown
+
         #region Bind Roles Dropdown
 
         public void BindRolesDropdown()
@@ -400,15 +415,25 @@ namespace TheClinicApp1._1.Admin
             var page = HttpContext.Current.CurrentHandler as Page;
             string msg = string.Empty;
 
+            if (UA.userName != "sadmin")
+            {
+                ddlClinic.Visible = false;
+            }
+            else
+            {
+                ddlClinic.Visible = true;
+            }
+
+
             if (!Page.IsPostBack)
             {
                 BindDummyRow();
 
                 //BindGriewWithDetailsOfAssignedRoles();
 
-
                 BindUsersDropdown();
                 BindRolesDropdown();
+                BindClinicDropdown();
 
             }
 

@@ -38,6 +38,12 @@
            .selected_row {
             background-color: #d3d3d3!important;
         }
+
+            select
+        {
+            color:black!important;
+        }
+
     </style>
     <script>
        
@@ -95,7 +101,10 @@
             name = name.trim();
             if (name != "") {
                 //name = name.replace(/\s/g, '');
-                PageMethods.ValidateEmailID(name, OnSuccess, onError);
+
+                var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
+
+                PageMethods.ValidateEmailID(name,clinicID, OnSuccess, onError);
 
                 function OnSuccess(response, userContext, methodName) {
                     var LnameImage = document.getElementById('<%=imgEmailAvailable.ClientID %>');
@@ -266,7 +275,9 @@
         function GetUserDetailsByUserID(User) {
             var ds = {};
             var table = {};
-            var data = "{'userObj':" + JSON.stringify(User) + "}";
+            var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
+
+            var data = "{'userObj':" + JSON.stringify(User) + ",'clinicID':" + JSON.stringify(clinicID) + "}";
             ds = getJsonData(data, "../Admin/Admin.aspx/BindUserDetailsOnEditClick");
             table = JSON.parse(ds.d);
             return table;
@@ -290,8 +301,8 @@
                 else {
                     $("#<%=rdoActiveNo.ClientID %>").prop('checked', true);
                 }
-
-                PageMethods.CheckUserIsDoctor(Records.UserID, OnSuccess, onError);
+                var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
+                PageMethods.CheckUserIsDoctor(Records.UserID,clinicID, OnSuccess, onError);
 
                 function OnSuccess(response, userContext, methodName) {
 
@@ -321,7 +332,10 @@
                         var DeletionConfirmation = ConfirmDelete();
                         if (DeletionConfirmation == true) {
                             UserID = $(this).closest('tr').find('td:eq(6)').text();
-                            DeleteUserByID(UserID);
+
+                            var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
+
+                            DeleteUserByID(UserID, clinicID);
                             //window.location = "StockIn.aspx?HdrID=" + receiptID;
                         }
                     }
@@ -329,10 +343,10 @@
             });
         });
 
-        function DeleteUserByID(UserID) { //------* Delete Receipt Header by receiptID (using webmethod)
+        function DeleteUserByID(UserID, clinicID) { //------* Delete Receipt Header by receiptID (using webmethod)
 
             if (UserID != "") {
-                PageMethods.DeleteUserByID(UserID, OnSuccess, onError);
+                PageMethods.DeleteUserByID(UserID,clinicID, OnSuccess, onError);
 
                 function OnSuccess(response, userContext, methodName) {
                   
@@ -381,11 +395,13 @@
         };
         function GetUsers(pageIndex) {
 
+            var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
+
             $.ajax({
 
                 type: "POST",
                 url: "../Admin/Admin.aspx/ViewAndFilterUser",
-                data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+                data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + ',clinicID: "' + clinicID + '"}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: OnSuccess,
@@ -480,6 +496,7 @@
                     $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchTerm() + "</span>"));
                 });
             } else {
+
                 var empty_row = row.clone(true);
                 $("td:first-child", empty_row).attr("colspan", $("td", row).length);
                 $("td:first-child", empty_row).attr("align", "center");
@@ -488,6 +505,12 @@
                 $("[id*=dtgViewAllUsers]").append(empty_row);
 
                 $(".Pager").hide();
+
+                if ($('#txtSearch').val() == '') {
+                   
+                    $("#<%=lblCaseCount.ClientID %>").text(0);
+                }
+
             }
 
 
@@ -504,6 +527,24 @@
             $('#txtSearch').val('');
             GetUsers(parseInt(1));
         }
+
+        function ChangeClinic(e)
+        {
+            if ($("#<%=ddlGroup.ClientID%> option:selected").text() != "--Select Clinic--")
+            {
+                $("#<%=hdnClinicID.ClientID %>").val(e.value);
+                
+            }
+
+            else
+            {
+                $("#<%=hdnClinicID.ClientID %>").val("");
+
+            }
+
+            GetUsers(parseInt(1));
+        }
+
 
     </script>
 
@@ -572,6 +613,10 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="stocks">
                             <div class="grey_sec">
+
+                                     <asp:DropDownList ID="ddlGroup" onchange="ChangeClinic(this)" runat="server" CssClass="drop" Width="225px" Style="font-family: Arial, Verdana, Tahoma;">             
+                                     </asp:DropDownList>
+                                   
                                 <%--<div class="search_div">
                                     <input class="field" type="search" placeholder="Search here..." id="txtSearch" />
                                     <input class="button" type="submit" value="Search" />
@@ -603,13 +648,7 @@
                             </div>
 
                             <div class="tab_table">
-                                 <div class="row field_row" id="dropdivclinic" runat="server" visible="false">
-                                    <div class="col-lg-8">
-                                        <label for="name">Select Clinic</label>
-                                         <asp:DropDownList ID="ddlGroup" runat="server" Width="100%" Height="31px" OnSelectedIndexChanged="ddlGroup_SelectedIndexChanged" CssClass="drop">             
-                                     </asp:DropDownList>
-                                    </div>
-                                </div>
+                                
                                 <div class="row field_row">
                                     <div class="col-lg-8">
                                         <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" name="name" onchange="LoginNameCheck(this)" />
@@ -743,5 +782,9 @@
     <asp:HiddenField ID="hdnUserID" runat="server" />
     <asp:HiddenField ID="hdnDeleteButtonClick" runat="server" />
       <asp:HiddenField ID="hdnLoginedUserID" runat="server" /> 
+    
+      <asp:HiddenField ID="hdnClinicID" runat="server" Value="" /> <%----- *ClinicID generally accessed from UA, If clinic changed ClinicID will be saved to this hiddenfield  *--%>
+    
+    <%--<asp:HiddenField ID="hdnClinicName" runat="server" Value="" />--%>
 
 </asp:Content>
