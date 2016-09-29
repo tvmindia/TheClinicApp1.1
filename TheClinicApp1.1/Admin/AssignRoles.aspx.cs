@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -40,15 +41,24 @@ namespace TheClinicApp1._1.Admin
         ///This method is called using AJAX For gridview bind , search , paging
         ///It expects page index and search term which is passed from client side
         ///Page size is declared and initialized in global variable section
-        public static string ViewAndFilterAssignedRoles(string searchTerm, int pageIndex)
+        public static string ViewAndFilterAssignedRoles(string searchTerm, int pageIndex, string clinicID)
         {
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
 
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
-            RoleAssign roleObj = new RoleAssign(); ;
-            roleObj.ClinicID = UA.ClinicID;
+            RoleAssign roleObj = new RoleAssign();
+
+            if (clinicID == string.Empty)
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+            else
+            {
+                roleObj.ClinicID = Guid.Parse(clinicID);
+            }
+
             var xml = roleObj.ViewAndFilterAssignedRoles(searchTerm, pageIndex, PageSize);
             return xml;
 
@@ -91,7 +101,15 @@ namespace TheClinicApp1._1.Admin
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string loginedUserID = UA.UserID.ToString();
 
-            roleObj.ClinicID = UA.ClinicID;
+            if (hdnClinicID.Value != string.Empty)
+            {
+                roleObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+            }
+            else
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+            
             dtUsers = roleObj.GetDetailsOfAllUsers();
             ViewState["dtUsers"] = dtUsers;
 
@@ -135,7 +153,15 @@ namespace TheClinicApp1._1.Admin
 
         public void BindRolesDropdown()
         {
-            roleObj.ClinicID = UA.ClinicID;
+            if (hdnClinicID.Value != string.Empty)
+            {
+                roleObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+            }
+            else
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+
             DataTable dtRoles = roleObj.GetDetailsOfAllRoles();
             DataTable dtgRoles = dtRoles.Copy();
             //foreach(DataRow dr in dtgRoles.Rows)
@@ -154,22 +180,167 @@ namespace TheClinicApp1._1.Admin
             chklstRoles.DataSource = dtgRoles;
             chklstRoles.DataBind();
             
-
-            //chklstRoles.Items.Insert(0, "--Select--");
-
-
-
-
-
-            //ddlRoles.DataTextField = "RoleName";
-            //ddlRoles.DataValueField = "RoleID";
-            //ddlRoles.DataSource = dtRoles;
-            //ddlRoles.DataBind();
-            //ddlRoles.Items.Insert(0, "--Select--");
         }
 
         #endregion Bind Roles Dropdown
 
+        #region Get Users
+
+        [WebMethod]
+        public static List<ListItem> GetUsers(string clinicID)
+        {
+            RoleAssign roleObj = new RoleAssign();
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+
+            DataTable dt = new DataTable();
+
+            if (clinicID !=string.Empty)
+            {
+                roleObj.ClinicID = Guid.Parse(clinicID);
+            }
+            else
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+
+            dt = roleObj.GetDetailsOfAllUsers();
+
+            List<ListItem> Users = new List<ListItem>();
+
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                  Users.Add(new ListItem
+                  {
+                    Value= dt.Rows[i]["UserID"].ToString(),
+                    Text = dt.Rows[i]["LoginName"].ToString()
+                              
+                 });
+            }
+
+
+            return Users;
+
+            //string query = "SELECT CustomerId, Name FROM Customers";
+            //string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+            //using (SqlConnection con = new SqlConnection(constr))
+            //{
+            //    using (SqlCommand cmd = new SqlCommand(query))
+            //    {
+            //        List<ListItem> customers = new List<ListItem>();
+            //        cmd.CommandType = CommandType.Text;
+            //        cmd.Connection = con;
+            //        con.Open();
+            //        using (SqlDataReader sdr = cmd.ExecuteReader())
+            //        {
+            //            while (sdr.Read())
+            //            {
+            //                customers.Add(new ListItem
+            //                {
+            //                    Value = sdr["CustomerId"].ToString(),
+            //                    Text = sdr["Name"].ToString()
+            //                });
+            //            }
+            //        }
+            //        con.Close();
+            //        return customers;
+            //    }
+            //}
+        }
+
+        #endregion Get Users
+
+        #region Get Roles
+        [WebMethod]
+        public static List<ListItem> GetRoles(string clinicID)
+        {
+            RoleAssign roleObj = new RoleAssign();
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            DataTable dt = new DataTable();
+
+            if (clinicID != string.Empty)
+            {
+                roleObj.ClinicID = Guid.Parse(clinicID);
+            }
+            else
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+             dt = roleObj.GetDetailsOfAllRoles();
+            
+            List<ListItem> Roles = new List<ListItem>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Roles.Add(new ListItem
+                {
+                    Value = dt.Rows[i]["RoleID"].ToString(),
+                    Text = dt.Rows[i]["RoleName"].ToString()
+
+                });
+            }
+
+
+            return Roles;
+
+        }
+
+        #endregion Get Roles
+
+        #region Get Assigned Roles
+
+        [WebMethod]
+        public static string GetAssignedRoles(RoleAssign roleObj, string clinicID)
+        {
+            //Master MasterObj = new Master();
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            string jsonResult = null;
+            DataTable dt = null;
+
+            if (clinicID != string.Empty)
+            {
+                roleObj.ClinicID = Guid.Parse(clinicID.ToString());
+            }
+            else
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+            
+            DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+
+            dt = dtAssignedRoles;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+            Dictionary<string, object> childRow;
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    childRow = new Dictionary<string, object>();
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                        childRow.Add(col.ColumnName, row[col]);
+                    }
+                    parentRow.Add(childRow);
+                }
+            }
+            jsonResult = jsSerializer.Serialize(parentRow);
+
+            return jsonResult; //Converting to Json
+
+        }
+
+        #endregion Get Assigned Roles
 
         #endregion General Methods
 
@@ -186,9 +357,21 @@ namespace TheClinicApp1._1.Admin
             string DoctorRoleID = string.Empty;
 
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            userObj.ClinicID = UA.ClinicID;
 
-            mstrObj.ClinicID = UA.ClinicID;
+            if (hdnClinicID.Value != string.Empty)
+            {
+                userObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+                mstrObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+            }
+            else
+            {
+                userObj.ClinicID = UA.ClinicID;
+
+                mstrObj.ClinicID = UA.ClinicID;
+            }
+
+
+          
             //DoctorRoleID = userObj.GetRoleIDOfDoctor();
             DoctorRoleID = mstrObj.GetRoleIDOfDoctor();
 
@@ -205,10 +388,22 @@ namespace TheClinicApp1._1.Admin
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
             userObj.UserID = UserID;
-            userObj.ClinicID = UA.ClinicID;
+
+            if (hdnClinicID.Value != string.Empty)
+	{
+        userObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+        mstrObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+	}
+
+            else
+            {
+                userObj.ClinicID = UA.ClinicID;
+                mstrObj.ClinicID = UA.ClinicID;
+            }
+            
             DataTable dtuser = userObj.GetUserDetailsByUserID();
 
-            mstrObj.ClinicID = UA.ClinicID;
+           
             mstrObj.DoctorName = dtuser.Rows[0]["FirstName"].ToString();
             mstrObj.DoctorPhone = dtuser.Rows[0]["PhoneNo"].ToString();
             mstrObj.DoctorEmail = dtuser.Rows[0]["Email"].ToString();
@@ -236,8 +431,15 @@ namespace TheClinicApp1._1.Admin
             string msg = string.Empty;
             var page = HttpContext.Current.CurrentHandler as Page;
 
-
-            mstrObj.ClinicID = UA.ClinicID;
+            if (hdnClinicID.Value != string.Empty)
+            {
+                mstrObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+            }
+            else
+            {
+                mstrObj.ClinicID = UA.ClinicID;
+            }
+            
             mstrObj.UsrID = UserID;
             DataTable dtDoctor = mstrObj.GetDoctorDetailsByUserID();
 
@@ -257,7 +459,14 @@ namespace TheClinicApp1._1.Admin
                   
                     roleObj.UserID = new Guid(ddlUsers.SelectedValue);
 
-                    roleObj.ClinicID = UA.ClinicID;
+                    if (hdnClinicID.Value != string.Empty)
+                    {
+                        roleObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+                    }
+                    else{
+                         roleObj.ClinicID = UA.ClinicID;
+                    }
+                   
                     DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
                     if (dtAssignedRoles.Rows.Count > 0)
@@ -292,7 +501,15 @@ namespace TheClinicApp1._1.Admin
 
                         roleObj.UserID = new Guid(ddlUsers.SelectedValue);
 
-                        roleObj.ClinicID = UA.ClinicID;
+                        if (hdnClinicID.Value != string.Empty)
+                        {
+                            roleObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+                        }
+                        else
+                        {
+                            roleObj.ClinicID = UA.ClinicID;
+                        }
+                       
                         dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
                         foreach (ListItem item in chklstRoles.Items)
@@ -354,7 +571,15 @@ namespace TheClinicApp1._1.Admin
         {
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
 
-            roleObj.ClinicID = UA.ClinicID;
+            if (hdnClinicID.Value != string.Empty)
+            {
+                roleObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+            }
+            else
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+           
 
             string roleid = RoleID.ToString();
 
@@ -398,6 +623,10 @@ namespace TheClinicApp1._1.Admin
         }
 
         #endregion Delete Assigned role By UserID And RoleID
+
+        #region Get Role Assigned
+
+        #endregion Get Role Assigned
 
         #endregion USER IN ROLE
 
@@ -464,31 +693,70 @@ namespace TheClinicApp1._1.Admin
          
         protected void btSave_ServerClick(object sender, EventArgs e)
         {
+            var SelectedRoles = hdnSelectedRoles.Value;
+            string[] Roles = new string[] { };
+
+            if (SelectedRoles.Contains('|'))
+            {
+               Roles  = SelectedRoles.Split('|');
+
+            }
+           
+            if ((ddlUsers.SelectedValue != "--Select--" && ddlUsers.SelectedValue != string.Empty) || (hdnSelectedUservalue.Value != string.Empty))
+            {
             int rslt = 0;
+            string SelectedUserID = string.Empty;
             string msg = string.Empty;
 
+            if (hdnSelectedUservalue.Value != string.Empty)
+            {
+                SelectedUserID = hdnSelectedUservalue.Value;
+            }
+            else
+            {
+               SelectedUserID =  ddlUsers.SelectedValue;
+            }
             var page = HttpContext.Current.CurrentHandler as Page;
 
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+                
 
-            Guid UserID = new Guid(ddlUsers.SelectedValue);
+            Guid UserID = new Guid(SelectedUserID);
             roleObj.UserID = UserID;
 
-            roleObj.ClinicID = UA.ClinicID;
+            if (hdnClinicID.Value != string.Empty)
+            {
+                roleObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+            }
+            else
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+           
             roleObj.CreatedBy = UA.userName;
 
-            roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+            roleObj.UserID = new Guid(SelectedUserID);
 
             roleObj.UserID = UserID;
 
-            roleObj.ClinicID = UA.ClinicID;
-            DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+            if (hdnClinicID.Value != string.Empty)
+            {
+                roleObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+            }
+            else
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
 
+            //roleObj.ClinicID = UA.ClinicID;
+            DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
             foreach (ListItem item in chklstRoles.Items)
             {
+                int pos = Array.IndexOf(Roles, item.Text);
 
-                if (item.Selected) //Checkbox ticked
+
+                if (item.Selected || pos> -1) //Checkbox ticked
                 {
                     DataRow[] RoleAssigned = dtAssignedRoles.Select("RoleID = '" + item.Value + "'"); //CHecking whether user has already this role, if not , assigns  role for the user
 
@@ -534,42 +802,62 @@ namespace TheClinicApp1._1.Admin
 
             //-------------------- * Rebinding checkbox list *----------------------//
 
-            roleObj.UserID = new Guid(ddlUsers.SelectedValue);
+            //roleObj.UserID = new Guid(SelectedUserID);
 
-            roleObj.ClinicID = UA.ClinicID;
-             dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+            //if (hdnClinicID.Value != string.Empty)
+            //{
+            //    roleObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+            //}
+            //else
+            //{
+            //    roleObj.ClinicID = UA.ClinicID;
+            //}
 
-            if (dtAssignedRoles.Rows.Count > 0)
-            {
-                foreach (ListItem item in chklstRoles.Items)
-                {
-                    DataRow[] RoleAssigned = dtAssignedRoles.Select("RoleID = '" + item.Value + "'");
 
-                    if (RoleAssigned.Length == 0)
-                    {
-                        item.Selected = false;
-                    }
+            //roleObj.ClinicID = UA.ClinicID;
+            // dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
-                    else
-                    {
-                        item.Selected = true;
-                    }
-                }
+            //if (dtAssignedRoles.Rows.Count > 0)
+            //{
+            //    foreach (ListItem item in chklstRoles.Items)
+            //    {
+            //        DataRow[] RoleAssigned = dtAssignedRoles.Select("RoleID = '" + item.Value + "'");
 
-            }
-            else
-            {
-                foreach (ListItem item in chklstRoles.Items)
-                {
-                    item.Selected = false;
-                }
-            }
+            //        if (RoleAssigned.Length == 0)
+            //        {
+            //            item.Selected = false;
+            //        }
+
+            //        else
+            //        {
+            //            item.Selected = true;
+            //        }
+            //    }
+
+            //}
+            //else
+            //{
+            //    foreach (ListItem item in chklstRoles.Items)
+            //    {
+            //        item.Selected = false;
+            //    }
+            //}
           
 
 
             //BindGriewWithDetailsOfAssignedRoles();
 
             //hdnUserCountChanged.Value = "True";
+            }
+
+
+            BindUsersDropdown();
+            BindRolesDropdown();
+
+            //hdnClinicID.Value = string.Empty;
+            hdnSelectedRoles.Value = string.Empty;
+            hdnSelectedUservalue.Value = string.Empty;
+
         }
 
         #endregion Save Click
@@ -580,9 +868,20 @@ namespace TheClinicApp1._1.Admin
         {
             Errorbox.Attributes.Add("style", "display:none");
 
+            if (ddlUsers.SelectedValue != "--Select--")
+	{
             roleObj.UserID = new Guid(ddlUsers.SelectedValue);
 
-            roleObj.ClinicID = UA.ClinicID;
+            if (hdnClinicID.Value != string.Empty)
+            {
+                roleObj.ClinicID = Guid.Parse(hdnClinicID.Value);
+            }
+            else
+            {
+                roleObj.ClinicID = UA.ClinicID;
+            }
+
+            
       DataTable dtAssignedRoles =      roleObj.GetAssignedRoleByUserID();
 
       if (dtAssignedRoles.Rows.Count > 0)
@@ -611,7 +910,7 @@ namespace TheClinicApp1._1.Admin
           }
       }
                 
-     
+        }
         }
 
         #endregion Users Dropdown Selected Index Changed

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" AutoEventWireup="true" CodeBehind="AssignRoles.aspx.cs" Inherits="TheClinicApp1._1.Admin.AssignRoles" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Masters/popup.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="AssignRoles.aspx.cs" Inherits="TheClinicApp1._1.Admin.AssignRoles" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
 
@@ -142,10 +142,10 @@
     <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
     <script src="../js/Dynamicgrid.js"></script>
     <script src="../js/Messages.js"></script>
-    
+    <script src="../Scripts/Common/Common.js"></script>
     <script>
         function Validation() {
-          
+           
             if (($('#<%=ddlUsers.ClientID%>').val().trim() == "--Select--")) {
 
 
@@ -258,15 +258,26 @@
       
 
         var UniqueID = '';
-
-      
+        var cellinitial = '';
+        var isPostBack = <%=Convert.ToString(Page.IsPostBack).ToLower()%>;
 
   
       //  -------------*SEARCH AND PAGING SCRIPT------------------------//
 
         $(function () {
 
+           
+
             GetAssignedRoles(1);
+
+            cellinitial = $("[id*=chklstRoles] td").eq(0).clone(true);
+
+            //if (isPostBack == false) {
+            //    BindUsers();
+            //}
+                
+                //BindRoles();
+            
         });
 
         $("[id*=txtSearch]").live("keyup", function () {
@@ -282,10 +293,12 @@
         };
 
         function GetAssignedRoles(pageIndex) {
+            var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
+
             $.ajax({
                 type: "POST",
                 url: "../Admin/AssignRoles.aspx/ViewAndFilterAssignedRoles",
-                data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + '}',
+                data: '{searchTerm: "' + SearchTerm() + '", pageIndex: ' + pageIndex + ',clinicID: "' + clinicID + '"}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: OnSuccess,
@@ -301,7 +314,7 @@
         function OnSuccess(response) {
 
 
-            debugger;
+        
             $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
@@ -313,7 +326,7 @@
             if (AssignedRoles.length > 0) {
                 $.each(AssignedRoles, function () {
                     
-                    debugger;
+                   
                     //$("td", row).eq(0).html('<a href="#">' + $(this).find("MedicineCode").text() + '</a>');
                    
 
@@ -386,12 +399,224 @@
 
         }
 
+        function ChangeClinic(e) {
+            if ($("#<%=ddlClinic.ClientID%> option:selected").text() != "--Select Clinic--") {
+                $("#<%=hdnClinicID.ClientID %>").val(e.value);
+               
+            }
 
-        //$(function() {
-        //    $('#chkveg').multiselect({
-        //        includeSelectAllOption: true
-        //    });
-        //});
+            else {
+                $("#<%=hdnClinicID.ClientID %>").val("");
+
+            }
+
+            GetAssignedRoles(parseInt(1));
+            BindUsers();
+            BindRoles();
+
+            $("#<%=Errorbox.ClientID %>").css("display", "none"); 
+        }
+
+        function  ChangeUser(e)
+        {
+            debugger;
+
+            if ($("#<%=ddlUsers.ClientID%> option:selected").text() != "--Select--") {
+               
+                //selected="selected" 
+              var selecteduserID =  $("#<%=ddlUsers.ClientID%> option:selected").val();
+
+
+                $("#<%=hdnSelectedUservalue.ClientID%>").val(selecteduserID);
+               
+                debugger;
+                
+                var RoleAssign = new Object();
+                RoleAssign.UserID =$("#<%=ddlUsers.ClientID%> option:selected").val();
+                var AssignedRoles ={};
+               
+                AssignedRoles=  GetAssignedRolesByUserID(RoleAssign);
+                var CHK = document.getElementById("<%=chklstRoles.ClientID%>");
+                var checkbox = CHK.getElementsByTagName("input");
+
+                
+                for (var i=0;i<checkbox.length;i++)
+                {
+                    checkbox[i].checked = false;
+                }
+
+                if (AssignedRoles != undefined) {
+
+                    Records = AssignedRoles;
+
+                    $.each(Records, function (index, Records) {
+
+                        for (var i=0;i<checkbox.length;i++)
+                        {
+                            if (Records.RoleID == checkbox[i].value) 
+                            {
+                                checkbox[i].checked = true;
+
+                            }
+
+                        }
+
+                    });
+                }
+
+
+            }
+
+
+
+            //--Select--
+
+            $("#<%=Errorbox.ClientID %>").css("display", "none"); 
+        }
+
+
+        function GetAssignedRolesByUserID(RoleAssign) {
+            var ds = {};
+            var table = {};
+            var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
+
+            var data = "{'roleObj':" + JSON.stringify(RoleAssign) + ",'clinicID':" + JSON.stringify(clinicID) + "}";
+            ds = getJsonData(data, "../Admin/AssignRoles.aspx/GetAssignedRoles");
+            table = JSON.parse(ds.d);
+            return table;
+        }
+
+
+
+        //$(function () {
+
+        function BindUsers()
+        {
+            var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
+            $.ajax({
+                type: "POST",
+                url: "../Admin/AssignRoles.aspx/GetUsers",
+                data: '{clinicID: "' + clinicID + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    var ddlUsers = $("[id*=ddlUsers]");
+                    ddlUsers.empty().append('<option value="0">--Select--</option>');
+                    $.each(r.d, function () {
+                        ddlUsers.append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                }
+            });
+
+        }
+
+       
+        function BindRoles() {
+            var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
+            $.ajax({
+                type: "POST",
+                url: "../Admin/AssignRoles.aspx/GetRoles",
+                data: '{clinicID: "' + clinicID + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    debugger;
+                    var Roles = r.d;
+                    var repeatColumns = parseInt("<%=chklstRoles.RepeatColumns%>");
+                    if (repeatColumns == 0) {
+                        repeatColumns = 1;
+                    }
+
+                        var    cell = $("[id*=chklstRoles] td").eq(0).clone(true);
+                  
+                        if (cell.length == 0) {
+                            cell = cellinitial;
+                        }
+
+                        $("[id*=chklstRoles] tr").remove();
+                    
+                        $.each(Roles, function (i) {
+
+                        var row;
+                        if (i % repeatColumns == 0) {
+                            row = $("<tr />");
+                            $("[id*=chklstRoles] tbody").append(row);
+                        } else {
+                            row = $("[id*=chklstRoles] tr:last-child");
+                        }
+
+                        var checkbox = $("input[type=checkbox]", cell);
+
+                        //Set Unique Id to each CheckBox.
+                        checkbox[0].id = checkbox[0].id.replace("0", i);
+
+                        //Give common name to each CheckBox.
+                        checkbox[0].name = "RoleID";
+
+                        //Set the CheckBox value.
+                        checkbox.val(this.Value);
+                        checkbox.prop('checked', false);
+
+                        var label = cell.find("label");
+                        if (label.length == 0) {
+                            label = $("<label />");
+                        }
+
+                        //Set the 'for' attribute of Label.
+                        label.attr("for", checkbox[0].id);
+
+                        //Set the text in Label.
+                        label.html(this.Text);
+
+                        //Append the Label to the cell.
+                        cell.append(label);
+
+                        //Append the cell to the Table Row.
+                        row.append(cell);
+                        cell = $("[id*=chklstRoles] td").eq(0).clone(true);
+                    });
+
+
+                        $("[id*=chklstRoles] input[type=checkbox]").click(function () {
+                            
+                            if ($(this).is(":checked")) 
+                            {   
+                                var SelectedRoles =   $("#<%=hdnSelectedRoles.ClientID %>").val();
+                                
+                                var cell = $(this).parent();
+                               
+                                var label = cell.find("label");
+
+                                $("#<%=hdnSelectedRoles.ClientID %>").val(SelectedRoles+"|"+label.text());    
+
+                            }
+                            
+                            
+                            //var cell = $(this).parent();
+                            //var hidden = cell.find("input[type=hidden]");
+                            //var label = cell.find("label");
+                            //if ($(this).is(":checked")) {
+                            //    //Add Hidden field if not present.
+                            //    if (hidden.length == 0) {
+                            //        hidden = $("<input type = 'hidden' />");
+                            //        cell.append(hidden);
+                            //    }
+                            //    hidden[0].name = "RoleName";
+ 
+                            //    //Set the Hidden Field value.
+                            //    hidden.val(label.text());
+                            //    cell.append(hidden);
+                            //} 
+                            //else {
+                            //    cell.remove(hidden);
+                            //}
+                        });
+
+
+                }
+            });
+
+        }
 
         </script>
 
@@ -451,7 +676,7 @@
                         <div role="tabpanel" class="tab-pane active" id="stock_in">
                             <div class="grey_sec">
 
-                                <asp:DropDownList ID="ddlClinic" onchange="ChangeClinic(this)" runat="server" CssClass="drop" Width="225px" Style="font-family: Arial, Verdana, Tahoma;">
+                                <asp:DropDownList ID="ddlClinic" onchange="ChangeClinic(this)" runat="server" CssClass="drop" Width="250px" Style="font-family: Arial, Verdana, Tahoma;">
                                      </asp:DropDownList>
                                 
 
@@ -526,7 +751,10 @@
     <div style="height:40px;"></div>
       <div class="col-lg-5">
          <label for="name">User</label>	          
-			 <asp:DropDownList ID="ddlUsers" runat="server" Width="250px" Height="31px" CssClass="drop" AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged">             
+			 <asp:DropDownList ID="ddlUsers" runat="server" Width="250px" Height="31px" CssClass="drop" onchange="ChangeUser(this)" >  
+                 
+                 <%--AutoPostBack="true" OnSelectedIndexChanged="ddlUsers_SelectedIndexChanged"--%>
+                            
           </asp:DropDownList>
 		</div>
 
@@ -534,7 +762,9 @@
     <div class="col-lg-4" >  
         <label for="name">Role</label>	
         <div class="checkbox checkboxlist col-sm-4" id="chkDiv" >
-			 <asp:CheckBoxList ID="chklstRoles" runat="server"  ></asp:CheckBoxList>
+			 <asp:CheckBoxList ID="chklstRoles" runat="server"  >
+               
+			 </asp:CheckBoxList>
 		</div>
         </div>
     </div>
@@ -603,4 +833,8 @@
   </div>
     </div>
       <asp:HiddenField ID="hdnUserCountChanged" runat="server" />
+    <asp:HiddenField ID="hdnClinicID" runat="server" Value="" /> <%----- *ClinicID generally accessed from UA, If clinic changed ClinicID will be saved to this hiddenfield  *--%>
+     <asp:HiddenField ID="hdnSelectedUservalue" runat="server" Value="" />
+     <asp:HiddenField ID="hdnSelectedRoles" runat="server" Value="" />
+
 </asp:Content>
