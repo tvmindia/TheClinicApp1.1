@@ -693,6 +693,7 @@ namespace TheClinicApp1._1.Admin
          
         protected void btSave_ServerClick(object sender, EventArgs e)
         {
+
             var SelectedRoles = hdnSelectedRoles.Value;
             string[] Roles = new string[] { };
 
@@ -749,14 +750,17 @@ namespace TheClinicApp1._1.Admin
             }
 
             //roleObj.ClinicID = UA.ClinicID;
+
+            if (Roles.Length ==0)
+            {
+                
+           
+
             DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
 
             foreach (ListItem item in chklstRoles.Items)
             {
-                int pos = Array.IndexOf(Roles, item.Value);
-
-
-                if (item.Selected || pos> -1) //Checkbox ticked
+                if (item.Selected ) //Checkbox ticked
                 {
                     DataRow[] RoleAssigned = dtAssignedRoles.Select("RoleID = '" + item.Value + "'"); //CHecking whether user has already this role, if not , assigns  role for the user
 
@@ -799,6 +803,35 @@ namespace TheClinicApp1._1.Admin
                 }
             }
 
+            }
+
+
+            for (int i = 0; i < Roles.Length ; i++)
+            {
+                 
+                        //--  (1).If the role is doctor, user is added to doctor doctor table in addition to user in roles (2).If not doctor , added only to user in role
+
+                if (Roles[i].ToString() != string.Empty)
+                {
+                        Guid RoleID = Guid.Parse(Roles[i].ToString());
+
+                        if (Roles[i].ToString() == GetRoleIDOFDoctor())
+                        {
+                          rslt =  AddUserToDoctorTable(UserID);
+
+                          if (rslt == 1)
+                          {
+                                AddUserRole(UserID, RoleID); //Assign dr role
+                          }
+
+                        }
+                        else
+                        {
+                            AddUserRole(UserID, RoleID);  //Assigns role
+                        }
+
+                }
+            }
 
             //-------------------- * Rebinding checkbox list *----------------------//
 

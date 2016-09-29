@@ -179,6 +179,8 @@
        var test = jQuery.noConflict();
         test(document).ready(function () {            
 
+           
+
 <%--            if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
                 GetMedicines(1);
                 $('#<%=hdnUserCountChanged.ClientID %>').val('False');
@@ -271,6 +273,7 @@
             GetAssignedRoles(1);
 
             cellinitial = $("[id*=chklstRoles] td").eq(0).clone(true);
+
 
             //if (isPostBack == false) {
             //    BindUsers();
@@ -511,6 +514,9 @@
 
        
         function BindRoles() {
+
+            alert(1);
+
             var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
             $.ajax({
                 type: "POST",
@@ -550,7 +556,7 @@
                         checkbox[0].id = checkbox[0].id.replace("0", i);
 
                         //Give common name to each CheckBox.
-                        checkbox[0].name = "RoleID";
+                        //checkbox[0].name = "RoleID";
 
                         //Set the CheckBox value.
                         checkbox.val(this.Value);
