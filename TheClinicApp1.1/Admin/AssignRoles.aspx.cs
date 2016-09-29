@@ -753,7 +753,7 @@ namespace TheClinicApp1._1.Admin
 
             foreach (ListItem item in chklstRoles.Items)
             {
-                int pos = Array.IndexOf(Roles, item.Text);
+                int pos = Array.IndexOf(Roles, item.Value);
 
 
                 if (item.Selected || pos> -1) //Checkbox ticked
