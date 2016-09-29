@@ -868,21 +868,39 @@
 
 
                         $("td", rowDoctor).eq(4).html(ConvertTimeFormatFrom24hrTo12hr($(this).find("DateTime").text()));
-                      
+                        var consultstatus=$(this).find("IsProcessed").text();
+                        switch(consultstatus)
+                        {
+                            case "true":
+                            case "4":
+                                $("td", rowDoctor).addClass("selected_row");
+                                $("td", rowDoctor).eq(5).html("Yes");
+                                break;
 
-                        if (($(this).find("IsProcessed").text()=="true")|| ($(this).find("IsProcessed").text()=="4")){
-                            $("td", rowDoctor).addClass("selected_row");
-                            $("td", rowDoctor).eq(5).html("Yes");
+                            case "false":
+                            case "1":
+                                $("td", rowDoctor).removeClass("selected_row");
+                                $("td", rowDoctor).eq(5).html("No");
+                                $("td", rowDoctor).eq(0).html($('<img />')
+                                .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
+                                break;
                         }
-                        if (($(this).find("IsProcessed").text() == "false")|| ($(this).find("IsProcessed").text()=="1")) {
-                            $("td", rowDoctor).removeClass("selected_row");
 
-                            $("td", rowDoctor).eq(5).html("No");
 
-                            $("td", rowDoctor).eq(0).html($('<img />')
-                      .attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
 
-                        }
+                      //  if (($(this).find("IsProcessed").text()=="true")|| ($(this).find("IsProcessed").text()=="4")){
+                      //      $("td", rowDoctor).addClass("selected_row");
+                      //      $("td", rowDoctor).eq(5).html("Yes");
+                      //  }
+                      //  if (($(this).find("IsProcessed").text() == "false")|| ($(this).find("IsProcessed").text()=="1")) {
+                      //      $("td", rowDoctor).removeClass("selected_row");
+
+                      //      $("td", rowDoctor).eq(5).html("No");
+
+                      //      $("td", rowDoctor).eq(0).html($('<img />')
+                      //.attr('src', "" + '../images/paper.png' + "")).addClass('CursorShow');
+
+                      //  }
 
 
                         $("td", rowDoctor).eq(6).html($(this).find("PatientID").text());
