@@ -125,9 +125,15 @@ namespace TheClinicApp1._1.Admin
                     itm.Attributes.Add("disabled", "disabled");
                     itm.Attributes.Add("title",Messages.DisableAssignRole);
                 }
+
             }
             //ddlUsers.Items.FindByValue(loginedUserID).Enabled = false;
+            var sadminItem = ddlUsers.Items.FindByText("sadmin");
 
+            if (sadminItem != null)
+            {
+                ddlUsers.Items.Remove(sadminItem);
+            }
 
             ddlUsers.Items.Insert(0, "--Select--");
         }

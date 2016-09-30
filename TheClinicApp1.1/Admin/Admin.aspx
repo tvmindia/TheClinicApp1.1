@@ -431,6 +431,9 @@
 
                 $.each(Users, function () {
 
+                    if ($(this).find("LoginName").text() != "sadmin") {
+
+
                     $("td", row).eq(0).html($('<img />')
                        .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
 
@@ -474,6 +477,8 @@
 
                     $("[id*=dtgViewAllUsers]").append(row);
                     row = $("[id*=dtgViewAllUsers] tr:last-child").clone(true);
+
+                    }
                 });
                 var pager = xml.find("Pager");
 
