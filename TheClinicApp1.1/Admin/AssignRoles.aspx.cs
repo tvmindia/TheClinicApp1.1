@@ -694,7 +694,7 @@ namespace TheClinicApp1._1.Admin
         protected void btSave_ServerClick(object sender, EventArgs e)
         {
 
-            var SelectedRoles = hdnSelectedRoles.Value;
+            string SelectedRoles = hdnSelectedRoles.Value;
             string[] Roles = new string[] { };
 
             if (SelectedRoles.Contains('|'))
@@ -702,7 +702,17 @@ namespace TheClinicApp1._1.Admin
                Roles  = SelectedRoles.Split('|');
 
             }
-           
+
+            string UnSelectedRoles = hdnUnSelectedRoles.Value;
+            string[] UnRoles = new string[] { };
+
+            if (UnSelectedRoles.Contains('|'))
+            {
+                UnRoles = UnSelectedRoles.Split('|');
+
+            }
+
+
             if ((ddlUsers.SelectedValue != "--Select--" && ddlUsers.SelectedValue != string.Empty) || (hdnSelectedUservalue.Value != string.Empty))
             {
             int rslt = 0;
@@ -750,14 +760,11 @@ namespace TheClinicApp1._1.Admin
             }
 
             //roleObj.ClinicID = UA.ClinicID;
+            DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
+
 
             if (Roles.Length ==0)
             {
-                
-           
-
-            DataTable dtAssignedRoles = roleObj.GetAssignedRoleByUserID();
-
             foreach (ListItem item in chklstRoles.Items)
             {
                 if (item.Selected ) //Checkbox ticked
@@ -806,13 +813,36 @@ namespace TheClinicApp1._1.Admin
             }
 
 
+
+            for (int i = 0; i < UnRoles.Length; i++)
+            {
+
+                //--  (1).If the role is doctor, user is added to doctor doctor table in addition to user in roles (2).If not doctor , added only to user in role
+
+                if (UnRoles[i].ToString() != string.Empty)
+                {
+                    Guid RoleID = Guid.Parse(UnRoles[i].ToString());
+
+                    roleObj.RoleID = RoleID;
+                    DeleteDoctorByUserID(UserID);
+
+                }
+
+
+            }
+
+
+
             for (int i = 0; i < Roles.Length ; i++)
             {
-                 
                         //--  (1).If the role is doctor, user is added to doctor doctor table in addition to user in roles (2).If not doctor , added only to user in role
 
                 if (Roles[i].ToString() != string.Empty)
                 {
+                    DataRow[] RoleAssigned = dtAssignedRoles.Select("RoleID = '" + Roles[i].ToString() + "'");
+
+                    if (RoleAssigned.Length == 0)
+                    {
                         Guid RoleID = Guid.Parse(Roles[i].ToString());
 
                         if (Roles[i].ToString() == GetRoleIDOFDoctor())
@@ -829,9 +859,28 @@ namespace TheClinicApp1._1.Admin
                         {
                             AddUserRole(UserID, RoleID);  //Assigns role
                         }
-
                 }
+                }
+
+                //else
+                //{
+                //    if (Roles[i].ToString() != string.Empty)
+                //    {
+
+                //    DataRow[] RoleAssigned = dtAssignedRoles.Select("RoleID = '" + Roles[i].ToString() + "'"); //If the role unticked was an assigned role , delete from respective tables
+
+                //    if (RoleAssigned.Length > 0)
+                //    {
+                //        roleObj.RoleID = Guid.Parse(Roles[i].ToString());
+                //        DeleteDoctorByUserID(UserID); //Function deleted both assigned role and doctor entry if exists
+                //    }
+
+                //}
+                //}
             }
+
+
+
 
             //-------------------- * Rebinding checkbox list *----------------------//
 

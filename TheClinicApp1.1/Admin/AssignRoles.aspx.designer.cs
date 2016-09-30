@@ -218,5 +218,14 @@ namespace TheClinicApp1._1.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnSelectedRoles;
+        
+        /// <summary>
+        /// hdnUnSelectedRoles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnUnSelectedRoles;
     }
 }

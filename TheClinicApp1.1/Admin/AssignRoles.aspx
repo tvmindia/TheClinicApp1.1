@@ -180,6 +180,57 @@
         test(document).ready(function () {            
 
            
+            $("[id*=chklstRoles] input[type=checkbox]").click(function () {
+                           
+                debugger;
+
+
+                var CHK = document.getElementById("<%=chklstRoles.ClientID%>");
+                var checkbox = CHK.getElementsByTagName("input");
+
+                
+                for (var i=0;i<checkbox.length;i++)
+                {
+                    debugger;
+                    var SelectedRoles =   $("#<%=hdnSelectedRoles.ClientID %>").val();
+                    var UnSelectedRoles = $("#<%=hdnUnSelectedRoles.ClientID %>").val();
+
+                    var roleID = checkbox[i].value;
+                             
+                    if (checkbox[i].checked) {
+                        $("#<%=hdnSelectedRoles.ClientID %>").val(SelectedRoles+"|"+roleID);    
+                    }  
+                    <%--           
+                    else
+                    {
+                        $("#<%=hdnUnSelectedRoles.ClientID %>").val(UnSelectedRoles+"|"+roleID);
+                    }--%>
+                                
+                }
+
+                for (var i=0;i<checkbox.length;i++)
+                {
+                    debugger;
+                    var SelectedRoles =   $("#<%=hdnSelectedRoles.ClientID %>").val();
+                    var UnSelectedRoles = $("#<%=hdnUnSelectedRoles.ClientID %>").val();
+
+                    var roleID = checkbox[i].value;
+                             
+                    if (checkbox[i].checked == false) {
+                        $("#<%=hdnUnSelectedRoles.ClientID %>").val(UnSelectedRoles+"|"+roleID); 
+                    }  
+                               
+                   
+                                
+                }
+            });
+
+
+
+
+
+
+
 
 <%--            if ($('#<%=hdnUserCountChanged.ClientID %>').val() == "True") {
                 GetMedicines(1);
@@ -273,6 +324,9 @@
             GetAssignedRoles(1);
 
             cellinitial = $("[id*=chklstRoles] td").eq(0).clone(true);
+
+
+
 
 
             //if (isPostBack == false) {
@@ -515,7 +569,7 @@
        
         function BindRoles() {
 
-            alert(1);
+         
 
             var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
             $.ajax({
@@ -582,26 +636,7 @@
                     });
 
 
-                        $("[id*=chklstRoles] input[type=checkbox]").click(function () {
-                            
-                            var CHK = document.getElementById("<%=chklstRoles.ClientID%>");
-                            var checkbox = CHK.getElementsByTagName("input");
-
-                
-                            for (var i=0;i<checkbox.length;i++)
-                            {
-                                debugger;
-                                var SelectedRoles =   $("#<%=hdnSelectedRoles.ClientID %>").val();
-                                var roleID = checkbox[i].value;
-                             
-                                if (checkbox[i].checked) {
-                                    $("#<%=hdnSelectedRoles.ClientID %>").val(SelectedRoles+"|"+roleID);    
-                                }  
-                               
-                            }
-
-
-
+                      
 
 
 <%--
@@ -617,7 +652,7 @@
 
                             }
                             --%>
-                        });
+                       
                          
                           
 
@@ -865,6 +900,7 @@
       <asp:HiddenField ID="hdnUserCountChanged" runat="server" />
     <asp:HiddenField ID="hdnClinicID" runat="server" Value="" /> <%----- *ClinicID generally accessed from UA, If clinic changed ClinicID will be saved to this hiddenfield  *--%>
      <asp:HiddenField ID="hdnSelectedUservalue" runat="server" Value="" />
-     <asp:HiddenField ID="hdnSelectedRoles" runat="server" Value="" />
+     <asp:HiddenField ID="hdnSelectedRoles" runat="server" Value="" /> 
+    <asp:HiddenField ID="hdnUnSelectedRoles" runat="server" Value="" />
 
 </asp:Content>
