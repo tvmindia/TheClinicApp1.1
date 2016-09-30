@@ -428,7 +428,11 @@
                          jsonVisit = GetVisitDetailsByvisitID(Visit);
                          if (jsonVisit != undefined) {
                           
-                             BindVisitDetails(jsonVisit);
+                             var history =   BindVisitDetails(jsonVisit);
+
+                             $("#<%=lblNew_history.ClientID %>").text(history);
+
+
                          }
 
                         //----------------------- Binding Visit Attachment Deatils By VisitID
@@ -548,14 +552,24 @@
                 var year = historyDate.getFullYear();
                 debugger;
                 historyDate = day + " " + month + " " + year;
+
+                var history ;
+
                 if(historyDate!="NaN Invalid Date NaN")
                 {
-                    $("#<%=lblNew_history.ClientID %>").text("History: " +historyDate);
+                    history = "History: " +historyDate;
+
+
+                 //   $("#<%=lblNew_history.ClientID %>").text();
                 }
                 else
                 {
-                    $("#<%=lblNew_history.ClientID %>").text("History");
+
+                    history = "History";
+                  //  $("#<%=lblNew_history.ClientID %>").text("History");
                 }
+
+                return history;
             }
 
             function GetPrescriptionDetails(PrescriptionID) {
@@ -1601,6 +1615,8 @@
                     if (jsonVisit != undefined) {
                           
                         BindVisitDetails(jsonVisit);
+
+                        $("#<%=lblNew_history.ClientID %>").text("Current Case");
                     }
 
 
