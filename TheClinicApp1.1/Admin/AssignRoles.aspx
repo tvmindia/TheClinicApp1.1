@@ -188,8 +188,8 @@ $("#<%=hdnUnSelectedRoles.ClientID %>").val("");
 
                 var CHK = document.getElementById("<%=chklstRoles.ClientID%>");
                 var checkbox = CHK.getElementsByTagName("input");
-
-                
+var ChosenRolesArray =[];
+   var UnChosedRolesArray = [];             
                 for (var i=0;i<checkbox.length;i++)
                 {
                     debugger;
@@ -197,9 +197,13 @@ $("#<%=hdnUnSelectedRoles.ClientID %>").val("");
                     var UnSelectedRoles = $("#<%=hdnUnSelectedRoles.ClientID %>").val();
 
                     var roleID = checkbox[i].value;
-                             
+                      
                     if (checkbox[i].checked) {
-                        $("#<%=hdnSelectedRoles.ClientID %>").val(SelectedRoles+"|"+roleID);    
+
+                if ($.inArray(roleID, ChosenRolesArray) == -1) { 
+                        $("#<%=hdnSelectedRoles.ClientID %>").val(SelectedRoles+"|"+roleID); 
+                        ChosenRolesArray.push(roleID)   ;
+                        }
                     }  
                     <%--           
                     else
@@ -218,7 +222,11 @@ $("#<%=hdnUnSelectedRoles.ClientID %>").val("");
                     var roleID = checkbox[i].value;
                              
                     if (checkbox[i].checked == false) {
+
+ if ($.inArray(roleID, UnChosedRolesArray) == -1) { 
                         $("#<%=hdnUnSelectedRoles.ClientID %>").val(UnSelectedRoles+"|"+roleID); 
+                            UnChosedRolesArray.push();
+}
                     }  
                                
                    
