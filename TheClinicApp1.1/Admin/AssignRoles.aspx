@@ -183,7 +183,8 @@
             $("[id*=chklstRoles] input[type=checkbox]").click(function () {
                            
                 debugger;
-
+$("#<%=hdnSelectedRoles.ClientID %>").val("");
+$("#<%=hdnUnSelectedRoles.ClientID %>").val("");
 
                 var CHK = document.getElementById("<%=chklstRoles.ClientID%>");
                 var checkbox = CHK.getElementsByTagName("input");
