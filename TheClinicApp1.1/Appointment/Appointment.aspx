@@ -583,7 +583,7 @@ var appointmentNo="";
                         <div role="tabpanel" class="tab-pane active" >
                             <div class="grey_sec">
                                <%-- <div class="search_div">--%>
-                                     <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" CssClass="drop" Width="210px" style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
+                                     <asp:DropDownList ID="ddlDoctor" runat="server" onchange="SetDropdown(this)" CssClass="drop" Width="210px" style="font-family: Arial, Verdana, Tahoma;font-size:large;"></asp:DropDownList>
                                <%-- </div>--%>
                                 <ul class="top_right_links" >
                                     <li><a class="save" href="#"><span></span>Save</a></li>

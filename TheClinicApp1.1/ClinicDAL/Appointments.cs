@@ -12,6 +12,7 @@ namespace TheClinicApp1._1.ClinicDAL
 {
     public class Appointments
     {
+        common commonObj = new common(); 
         #region global
         ErrorHandling eObj = new ErrorHandling();
         UIClasses.Const Const = new UIClasses.Const();
@@ -741,7 +742,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandText = "ViewAndFilterTodayPatientAppointments";
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 //cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode;
-                cmd.Parameters.Add("@date", SqlDbType.Date).Value = now.ToString("yyyy-MM-dd");
+                cmd.Parameters.Add("@date", SqlDbType.Date).Value =commonObj.ConvertDatenow(now).ToString("yyyy-MM-dd");
                 cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
                 cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
                 cmd.Parameters.AddWithValue("@PageSize", PageSize);

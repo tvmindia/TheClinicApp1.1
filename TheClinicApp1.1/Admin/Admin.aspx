@@ -619,7 +619,7 @@
                         <div role="tabpanel" class="tab-pane active" id="stocks">
                             <div class="grey_sec">
 
-                                     <asp:DropDownList ID="ddlGroup" onchange="ChangeClinic(this)" runat="server" CssClass="drop" Width="250px" Style="font-family: Arial, Verdana, Tahoma;">             
+                                     <asp:DropDownList ID="ddlGroup" onchange="ChangeClinic(this)" runat="server" CssClass="drop" Width="250px" Style="font-family: Arial, Verdana, Tahoma;font-size:large;">             
                                      </asp:DropDownList>
                                    
                                 <%--<div class="search_div">

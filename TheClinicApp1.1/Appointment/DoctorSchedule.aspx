@@ -301,7 +301,7 @@
 
                                 <%--<asp:DropDownList ID="ddlDoctor" runat="server" Width="180px" BackColor="White" ForeColor="#7d6754" Font-Names="Andalus" AutoPostBack="true" OnSelectedIndexChanged="ddlDoctor_SelectedIndexChanged"></asp:DropDownList>--%>
 
-                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="BindCalender(this,true)" CssClass="drop" Width="210px" Style="font-family: Arial, Verdana, Tahoma;"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlDoctor" runat="server" onchange="BindCalender(this,true)" CssClass="drop" Width="210px" Style="font-family: Arial, Verdana, Tahoma;font-size:large;"></asp:DropDownList>
                                 <%--CssClass="drop"--%>
 
 

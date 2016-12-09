@@ -750,7 +750,7 @@ var ChosenRolesArray =[];
                         <div role="tabpanel" class="tab-pane active" id="stock_in">
                             <div class="grey_sec">
 
-                                <asp:DropDownList ID="ddlClinic" onchange="ChangeClinic(this)" runat="server" CssClass="drop" Width="250px" Style="font-family: Arial, Verdana, Tahoma;">
+                                <asp:DropDownList ID="ddlClinic" onchange="ChangeClinic(this)" runat="server" CssClass="drop" Width="250px" Style="font-family: Arial, Verdana, Tahoma;font-size:large;">
                                      </asp:DropDownList>
                                 
 
