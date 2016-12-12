@@ -13,7 +13,8 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
         UIClasses.Const Const = new UIClasses.Const();
-        ClinicDAL.UserAuthendication UA;     
+        ClinicDAL.UserAuthendication UA;
+        common cmn = new common();
 
         #endregion Global Variables
 
@@ -105,7 +106,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@RefNo2", SqlDbType.NVarChar, 255).Value = RefNo2;
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-
+                cmd.Parameters.Add("@CreateDate",SqlDbType.DateTime).Value=cmn.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
 
@@ -163,7 +164,7 @@ namespace TheClinicApp1._1.ClinicDAL
             dbConnection dcon = null;
             try
             {
-                DateTime now = DateTime.Now;
+                //DateTime now = cmn.ConvertDatenow(DateTime.Now);
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
@@ -176,7 +177,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@RefNo2", SqlDbType.NVarChar, 255).Value = RefNo2;
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
 
@@ -593,7 +594,8 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
         UIClasses.Const Const = new UIClasses.Const();
-        ClinicDAL.UserAuthendication UA;  
+        ClinicDAL.UserAuthendication UA;
+        common cmn = new common();
         #endregion Global Variables
 
         #region constructor
@@ -818,7 +820,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
                 cmd.Parameters.Add("@QTY", SqlDbType.Real).Value = QTY;
-
+                cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
 
@@ -875,7 +877,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
             try
             {
-                DateTime now = DateTime.Now;
+                //DateTime now = DateTime.Now;
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
@@ -886,6 +888,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);                 
            
                 cmd.Parameters.Add("@Updatedby", SqlDbType.NVarChar, 255).Value = UpdatedBy;
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@QTY", SqlDbType.Real).Value = QTY;
 
                 cmd.Parameters.Add("@Status", SqlDbType.Int);

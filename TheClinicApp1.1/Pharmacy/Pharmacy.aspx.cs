@@ -29,7 +29,7 @@ namespace TheClinicApp1._1.Pharmacy
         public string RoleName = null;
         public string listFilter = null;
         public string NameBind = null;
-
+        common cmn = new common();
         ErrorHandling eObj = new ErrorHandling();
         PrescriptionDetails PrescriptionObj = new PrescriptionDetails();
         pharmacy pharmacypobj = new pharmacy();
@@ -164,6 +164,7 @@ namespace TheClinicApp1._1.Pharmacy
         {
             ClinicDAL.TokensBooking obj = new ClinicDAL.TokensBooking();
             UIClasses.Const Const = new UIClasses.Const();
+            common cmn = new common();
             ClinicDAL.UserAuthendication UA;
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
             obj.ClinicID = UA.ClinicID.ToString();
@@ -180,7 +181,7 @@ namespace TheClinicApp1._1.Pharmacy
             string ClinicID = Convert.ToString(ds.Tables[0].Rows[0]["ClinicID"]);
             string lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
 
-            DateTime date = DateTime.Now;
+            DateTime date =cmn.ConvertDatenow(DateTime.Now);
             int year = date.Year;
             DateTime DT = Convert.ToDateTime(ds.Tables[0].Rows[0]["DOB"].ToString());
             int Age = year - DT.Year;
@@ -319,7 +320,7 @@ namespace TheClinicApp1._1.Pharmacy
                     issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number(); // Generate Issue Number function call                    
                     issuehdobj.PrescID = hdnPrescID.Value;
                     issuehdobj.IssuedTo = lblPatientName.Text;
-                    issuehdobj.Date = DateTime.Now;
+                    issuehdobj.Date =cmn.ConvertDatenow(DateTime.Now);
                     issuehdobj.CreatedBy = UA.userName;
                     issuehdobj.ClinicID = UA.ClinicID.ToString();
                     ViewState["IssueHdrID"] = issuehdobj.IssueID;
@@ -485,7 +486,7 @@ namespace TheClinicApp1._1.Pharmacy
             lblDoctor.Text = gds.Tables[0].Rows[0][12].ToString();
             lblFileNum.Text = gds.Tables[0].Rows[0][7].ToString();
             lblGenderDis.Text = gds.Tables[0].Rows[0][6].ToString();
-            DateTime date = DateTime.Now;
+            DateTime date =cmn.ConvertDatenow(DateTime.Now);
             int year = date.Year;
             DateTime DT = Convert.ToDateTime(gds.Tables[0].Rows[0][8].ToString());
             int Age = year - DT.Year;

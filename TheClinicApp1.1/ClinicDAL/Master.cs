@@ -11,6 +11,7 @@ namespace TheClinicApp1._1.ClinicDAL
 {
     public class Master
     {
+        common commonObj = new common();
         #region Constructors
         public Master()
         {
@@ -213,6 +214,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = GroupName;
                 pud.Parameters.Add("@Logo", SqlDbType.Image, 0).Value = Logo;
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = Createdby;
+                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
@@ -281,9 +283,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@Phone", SqlDbType.NVarChar, 50).Value = ClinicPhone;
                 pud.Parameters.Add("@Logo", SqlDbType.Image, 0).Value = Logo;
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = Createdby;
-                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = Createdby;
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
@@ -357,7 +359,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Logo", SqlDbType.VarBinary).Value = Logo;
                 cmd.Parameters.Add("@Logosmall", SqlDbType.VarBinary).Value = Logosmall;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
-                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value=DateTime.Now;
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
@@ -718,7 +720,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@Phone", SqlDbType.NVarChar, 255).Value = DoctorPhone;
                 pud.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = createdBy;
-
+                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
+                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
 
                 if (UsrID != Guid.Empty)
                 {
@@ -807,7 +810,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 15).Value = DoctorPhone;
                 cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
-
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
@@ -1350,7 +1353,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
                 pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar,255).Value = createdBy;
-               
+                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
@@ -1432,7 +1435,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Code", SqlDbType.NVarChar, 255).Value = Code;
                 cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 255).Value = Description;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
-
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
@@ -1869,10 +1872,10 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 //pud.Parameters.Add("@RoleID", SqlDbType.UniqueIdentifier).Value = RoleID;
                 pud.Parameters.Add("@RoleName", SqlDbType.NVarChar, 255).Value = RoleName;
-                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 pud.Parameters.Add("@Createdby", SqlDbType.NVarChar, 255).Value = createdBy;
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 pud.Parameters.Add("@Updatedby", SqlDbType.NVarChar, 255).Value = createdBy;
 
                 SqlParameter Output = new SqlParameter();

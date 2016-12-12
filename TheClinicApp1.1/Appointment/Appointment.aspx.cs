@@ -34,6 +34,7 @@ namespace TheClinicApp1._1.Appointment
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
         public string listFilter = null;
+        common cmn = new common();
         #endregion Global Variables
 
         #region Event Properties
@@ -741,7 +742,7 @@ namespace TheClinicApp1._1.Appointment
                 if (Name != string.Empty)
                 {
                     PatientObj.GetSearchWithName(Name);
-                    DateTime date = DateTime.Now;
+                    DateTime date =cmn.ConvertDatenow(DateTime.Now);
                     int year = date.Year;
                     Guid PatientID = PatientObj.PatientID;
                    

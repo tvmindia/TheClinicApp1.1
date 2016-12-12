@@ -10,6 +10,8 @@ namespace TheClinicApp1._1.ClinicDAL
 {
     public class IssueHeaderDetails
     {
+        common cmn = new common();
+
         #region Global Variables
 
         ErrorHandling eObj = new ErrorHandling();
@@ -215,7 +217,7 @@ namespace TheClinicApp1._1.ClinicDAL
         public string Generate_Issue_Number()
         {
 
-            string sDate = DateTime.Now.ToString();
+            string sDate =cmn.ConvertDatenow(DateTime.Now).ToString();
             DateTime datevalue = (Convert.ToDateTime(sDate.ToString()));
             string mn = datevalue.ToString("MMM");
             string yy = datevalue.Year.ToString();
@@ -225,14 +227,13 @@ namespace TheClinicApp1._1.ClinicDAL
             dbConnection dcon = null;          
             try
             {
-                 DateTime now = DateTime.Now;
+                DateTime now =cmn.ConvertDatenow(DateTime.Now);
                 dcon = new dbConnection();
                 dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetTopIssueNO]";
-              
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 SqlParameter OutparmItemId = cmd.Parameters.Add("@String", SqlDbType.NVarChar,50);
                 OutparmItemId.Direction = ParameterDirection.Output;
@@ -299,7 +300,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@IssuedTo", SqlDbType.NVarChar, 255).Value = IssuedTo;
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
                 cmd.Parameters.Add("@IssueNO", SqlDbType.NVarChar, 50).Value = IssueNO;
-
+                
                 if ((PrescID != null) && (PrescID!=string.Empty))
                 {
                     cmd.Parameters.Add("@PrescID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
@@ -307,7 +308,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
@@ -377,7 +378,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@IssuedTo", SqlDbType.NVarChar, 255).Value = IssuedTo;
                 cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = Date;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
 
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
@@ -762,6 +763,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
     public class IssueDetails
     {
+        common cmn = new common();
         string msg = string.Empty;
 
         #region Global Variables
@@ -886,7 +888,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@MedicineName", SqlDbType.NVarChar, 255).Value = MedicineName;               
                 cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
@@ -954,7 +956,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);               
                 cmd.Parameters.Add("@Qty", SqlDbType.Real).Value = Qty;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
 
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;

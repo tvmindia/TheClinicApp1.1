@@ -25,7 +25,7 @@ namespace TheClinicApp1._1.Token
         private static int PageSize = 8;
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
-       
+        common cmn = new common();
         TokensBooking tokenObj = new TokensBooking();
        
         #endregion Global Variables
@@ -42,9 +42,9 @@ namespace TheClinicApp1._1.Token
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-
+            common cmn = new common();
             TokensBooking tokenObj = new TokensBooking();
-            tokenObj.DateTime = DateTime.Now;
+            tokenObj.DateTime = cmn.ConvertDatenow(DateTime.Now);
             tokenObj.ClinicID = UA.ClinicID.ToString();
 
             var xml = tokenObj.ViewAndFilterPatientBooking(searchTerm, pageIndex, PageSize);
@@ -135,7 +135,7 @@ namespace TheClinicApp1._1.Token
         public void gridviewbind()
         {
             //Gridview Binding to Diplay DoctorName,Token No,Patient Name,TIME
-            tokenObj.DateTime = DateTime.Now;
+            tokenObj.DateTime =cmn.ConvertDatenow(DateTime.Now);
 
             DataSet gds = tokenObj.ViewToken();
             GridViewTokenlist.EmptyDataText = "No Records Found";

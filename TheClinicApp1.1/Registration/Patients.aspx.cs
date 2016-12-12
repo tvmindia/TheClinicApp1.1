@@ -35,7 +35,7 @@ namespace TheClinicApp1._1.Registration
         ClinicDAL.UserAuthendication UA;
         Patient PatientObj = new Patient();
         Appointments AppointObj =new Appointments();
-
+        common cmn = new common();
         TokensBooking tok = new TokensBooking();
         ErrorHandling eObj = new ErrorHandling();
         public string listFilter = null;
@@ -431,8 +431,8 @@ namespace TheClinicApp1._1.Registration
             tok.PatientID = patientid;
             tok.DoctorID = doctorid;
             tok.ClinicID = UA.ClinicID.ToString();
-            tok.CreateDate = DateTime.Now;
-            tok.DateTime = DateTime.Now;
+            tok.CreateDate =cmn.ConvertDatenow(DateTime.Now);
+            tok.DateTime = cmn.ConvertDatenow(DateTime.Now);
             tok.CreatedBy = UA.userName;
             return tok.InsertToken();
         }
@@ -449,12 +449,12 @@ namespace TheClinicApp1._1.Registration
 
             try
             {
-
+                common cmn = new common();
                 UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
                 string msg = string.Empty;
                 var page = HttpContext.Current.CurrentHandler as Page;
                 PatientObj.ClinicID = UA.ClinicID;
-                DateTime _date = DateTime.Now;
+                DateTime _date = cmn.ConvertDatenow(DateTime.Now);
                 int parsedValue;
                 if (int.TryParse(txtAge.Value, out parsedValue))
                 {
@@ -623,7 +623,7 @@ namespace TheClinicApp1._1.Registration
                 if (Name !=string.Empty)
                 {
                     PatientObj.GetSearchWithName(Name);            
-                    DateTime date = DateTime.Now;
+                    DateTime date =cmn.ConvertDatenow(DateTime.Now);
                     int year = date.Year;
                     Guid PatientID = PatientObj.PatientID;
                     txtName.Value = PatientObj.Name;
@@ -746,7 +746,7 @@ namespace TheClinicApp1._1.Registration
                 lblFileCount.Text = string.Empty;
                 lblTokencount.Text = string.Empty;
                 divDisplayNumber.Style["display"] = "none";
-                DateTime date = DateTime.Now;
+                DateTime date =cmn.ConvertDatenow(DateTime.Now);
                 int year = date.Year;
                 string[] Patient = e.CommandArgument.ToString().Split(new char[] { '|' });
                 Guid PatientID = Guid.Parse(Patient[0]);

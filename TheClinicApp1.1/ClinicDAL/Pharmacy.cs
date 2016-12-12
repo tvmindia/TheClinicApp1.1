@@ -10,6 +10,7 @@ namespace TheClinicApp1._1.ClinicDAL
 {
     public class pharmacy
     {
+
        #region Precription
 
         #region Global Variables
@@ -71,7 +72,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "ViewAndFilterPatientsInPharmacy";
 
-                cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+                cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value =cmn.ConvertDatenow(now).ToString("yyyy-MM-dd");
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode; 
 
@@ -148,8 +149,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[GetPatientPharmacyDetails]";
 
-                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;               
-                cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = cmn.ConvertDatenow(now).ToString("yyyy-MM-dd");
 
                 sda = new SqlDataAdapter();
                 cmd.ExecuteNonQuery();

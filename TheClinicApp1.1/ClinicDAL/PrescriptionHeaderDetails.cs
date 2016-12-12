@@ -14,8 +14,8 @@ namespace TheClinicApp1._1.ClinicDAL
         #region Global Variables
         ErrorHandling eObj = new ErrorHandling();
         UIClasses.Const Const = new UIClasses.Const();
-        ClinicDAL.UserAuthendication UA; 
-
+        ClinicDAL.UserAuthendication UA;
+        common cmn = new common();
         string Module = "Prescription";
 
         #endregion Global Variables
@@ -94,8 +94,8 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
             cmd.Parameters.Add("@VisitID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(VisitID);
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-          
-            cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+
+            cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = cmn.ConvertDatenow(now).ToString("yyyy-MM-dd");
             cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = CreatedDate;
             cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
             cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value =UpdatedBy;
@@ -145,7 +145,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandText = "[UpdatePrescriptionHeader]";
                 cmd.Parameters.Add("@PrescID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PrescID);
                 cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;
-                cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+                cmd.Parameters.Add("@Date", SqlDbType.NVarChar, 50).Value = cmn.ConvertDatenow(now).ToString("yyyy-MM-dd");
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
                 cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = CreatedDate;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
@@ -265,8 +265,8 @@ namespace TheClinicApp1._1.ClinicDAL
         string Module = "PrescriptionDetails";      
         ErrorHandling eObj = new ErrorHandling();
         UIClasses.Const Const = new UIClasses.Const();
-        ClinicDAL.UserAuthendication UA;      
-    
+        ClinicDAL.UserAuthendication UA;
+        common cmn = new common();
         #endregion Global Variables
 
         public PrescriptionDetails()
@@ -372,6 +372,8 @@ namespace TheClinicApp1._1.ClinicDAL
                  cmd.Parameters.Add("@Timing", SqlDbType.NVarChar, 20).Value = Timing;
                  cmd.Parameters.Add("@Days", SqlDbType.NVarChar, 20).Value = Days;           
                  cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
+                 cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
+                 cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                  cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                  cmd.ExecuteNonQuery();
              }

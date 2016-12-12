@@ -20,6 +20,7 @@ namespace TheClinicApp1._1.ClinicDAL
 {
     public class Patient
     {
+      
         #region Constructor
         public Patient()
         {
@@ -267,11 +268,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "ViewAndFilterTodayRegistration";
-
-
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 //cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode;
-                cmd.Parameters.Add("@CreatedDate", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.NVarChar, 50).Value =cmn.ConvertDatenow(now).ToString("yyyy-MM-dd");
                 cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
                 cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
                 cmd.Parameters.AddWithValue("@PageSize", PageSize);
@@ -756,11 +755,11 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@FileID", SqlDbType.UniqueIdentifier).Value = FileID;
                 pud.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
                 pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-                pud.Parameters.Add("@FileDate", SqlDbType.DateTime).Value = DateTime.Now;               
+                pud.Parameters.Add("@FileDate", SqlDbType.DateTime).Value =cmn.ConvertDatenow(DateTime.Now);               
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = CreatedBy;
-                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                 pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                 pud.Parameters.Add("@FileNumber", SqlDbType.NVarChar, 50).Value = FileNumber;
                 SqlParameter OutputFileNumber = pud.Parameters.Add("@OutFileNumber", SqlDbType.NVarChar, 50);
                 OutputFileNumber.Direction = ParameterDirection.Output;
@@ -958,7 +957,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("ViewDateRegistration", con);
-                cmd.Parameters.Add("@CreatedDate", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.NVarChar, 50).Value =cmn.ConvertDatenow(now).ToString("yyyy-MM-dd");
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlDataAdapter adapter = new SqlDataAdapter();
@@ -1065,7 +1064,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 Occupation = dr["Occupation"].ToString();
                 ImageType = dr["ImageType"].ToString();
 
-                DateTime date = DateTime.Now;
+                DateTime date =cmn.ConvertDatenow(DateTime.Now);
                 int year = date.Year;
                 DateTime DT = DOB;
                 PatientAge = year - DT.Year;
@@ -1099,7 +1098,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
         public void GetPatientDetailsByID()
         {
-            DateTime date = DateTime.Now;
+            DateTime date =cmn.ConvertDatenow(DateTime.Now);
             int year = date.Year;
             DataTable ds = null;
             SqlConnection con = null;

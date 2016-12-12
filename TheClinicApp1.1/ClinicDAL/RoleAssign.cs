@@ -28,7 +28,7 @@ namespace TheClinicApp1._1.ClinicDAL
         ErrorHandling eObj = new ErrorHandling();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
-
+        common cmn = new common();
         #endregion Global Variables
 
         #region Public Properties
@@ -359,7 +359,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@RoleID", SqlDbType.UniqueIdentifier).Value = RoleID;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 cmd.Parameters.Add("@Createdby", SqlDbType.NVarChar, 255).Value = CreatedBy;
-
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
 
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;

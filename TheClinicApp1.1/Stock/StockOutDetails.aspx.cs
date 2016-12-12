@@ -38,6 +38,7 @@ namespace TheClinicApp1._1.Stock
 
         IssueDetails IssuedtlObj = new IssueDetails();
         UIClasses.Const Const = new UIClasses.Const();
+        common cmn = new common();
         ClinicDAL.UserAuthendication UA;
         IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
         ErrorHandling eObj = new ErrorHandling();
@@ -324,7 +325,7 @@ namespace TheClinicApp1._1.Stock
 
                 if (!IsPostBack)
                 {
-                    var today = DateTime.Now.ToString("dd-MMM-yyyy");
+                    var today = cmn.ConvertDatenow(DateTime.Now).ToString("dd-MMM-yyyy");
 
                     txtDate1.Text = today;
 

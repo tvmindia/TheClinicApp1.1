@@ -22,6 +22,7 @@ namespace TheClinicApp1._1.ClinicDAL
 {
     public class Category
     {
+        common commonObj = new common();
         #region constructor
 
         public Category()
@@ -180,8 +181,8 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = CategoryName; 
-
+                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = CategoryName;
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
@@ -249,6 +250,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd.Parameters.Add("@CategoryID", SqlDbType.UniqueIdentifier).Value = CategoryID;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 255).Value = CategoryName; 
 
                 cmd.Parameters.Add("@Status", SqlDbType.Int);

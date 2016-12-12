@@ -21,6 +21,8 @@ namespace TheClinicApp1._1.ClinicDAL
 {
     public class Doctor
     {
+        common commonObj = new common();
+
         #region Connectionstring
         dbConnection dcon = new dbConnection();
         #endregion Connectionstring
@@ -155,7 +157,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("ViewDateRegistration", con);
-                cmd.Parameters.Add("@CreatedDate", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.NVarChar, 50).Value = commonObj.ConvertDatenow(now).ToString("yyyy-MM-dd");
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = cmd;
@@ -876,7 +878,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar,255).Value = CreatedBy;
-                cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 outParameter = cmd.Parameters.Add("@InsertStatus", SqlDbType.SmallInt);
                 outParameter.Direction = ParameterDirection.Output;
                 outSchedulID = cmd.Parameters.Add("@outID", SqlDbType.UniqueIdentifier);
@@ -1514,6 +1516,7 @@ namespace TheClinicApp1._1.ClinicDAL
     }
     public class CaseFile
     {
+        common commonObj = new common();
         #region global
 
         ErrorHandling eObj = new ErrorHandling();
@@ -1625,11 +1628,11 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@FileID", SqlDbType.UniqueIdentifier).Value = FileID;
                 pud.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = PatientID;
                 pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-                pud.Parameters.Add("@FileDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@FileDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now); ;
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
-                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now); ;
                 pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now); ;
                 pud.Parameters.Add("@FileNumber", SqlDbType.NVarChar, 50).Value = FileNumber;
                 //pud.Parameters.Add("@image", SqlDbType.VarBinary).Value = image; 
                 SqlParameter Output = new SqlParameter();
@@ -1687,9 +1690,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.CommandType = System.Data.CommandType.StoredProcedure;
                 pud.CommandText = "UpdateFile";
                 pud.Parameters.Add("@FileID", SqlDbType.UniqueIdentifier).Value = FileID;
-                pud.Parameters.Add("@FileDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@FileDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now); ;
                 pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = "Thomson";
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now); ;
                 pud.Parameters.Add("@FileNumber", SqlDbType.NVarChar, 50).Value = FileNumber;
                 //SqlParameter OutparamId = pud.Parameters.Add("@OutparamId", SqlDbType.SmallInt);
                 //OutparamId.Direction = ParameterDirection.Output;
@@ -2038,7 +2041,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.Parameters.Add("@FileID", SqlDbType.UniqueIdentifier).Value = FileID;
                     pud.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = DoctorID;                   
                     pud.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
-                    pud.Parameters.Add("@Date", SqlDbType.DateTime).Value = DateTime.Now;
+                    pud.Parameters.Add("@Date", SqlDbType.DateTime).Value =cmn.ConvertDatenow(DateTime.Now);
                     pud.Parameters.Add("@Height", SqlDbType.Real).Value =Height;
                     pud.Parameters.Add("@Weight", SqlDbType.Real).Value = Weight;
                     pud.Parameters.Add("@Symptoms", SqlDbType.NVarChar, 255).Value = Symptoms;
@@ -2066,9 +2069,9 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.Parameters.Add("@Others", SqlDbType.NVarChar, 255).Value = Others;
                     pud.Parameters.Add("@PrescriptionID", SqlDbType.UniqueIdentifier).Value = PrescriptionID;
                     pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value =CreatedBy;
-                    pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                    pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                     pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                    pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                    pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                    
                     SqlParameter Output = new SqlParameter();
                     Output.DbType = DbType.Int32;
@@ -2364,7 +2367,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.CommandType = System.Data.CommandType.StoredProcedure;
                     pud.CommandText = "UpdateVisits";
                     pud.Parameters.Add("@VisitID", SqlDbType.UniqueIdentifier).Value = VisitID;
-                    pud.Parameters.Add("@Date", SqlDbType.DateTime).Value = DateTime.Now;
+                    pud.Parameters.Add("@Date", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                     pud.Parameters.Add("@Height", SqlDbType.Real).Value = Height;
                     pud.Parameters.Add("@Weight", SqlDbType.Real).Value = Weight;
                     pud.Parameters.Add("@Symptoms", SqlDbType.NVarChar, 255).Value = Symptoms;
@@ -2391,7 +2394,7 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.Parameters.Add("@RespRate", SqlDbType.NVarChar, 255).Value = RespRate;
                     pud.Parameters.Add("@Others", SqlDbType.NVarChar, 255).Value = Others;
                     pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
-                    pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = DateTime.Now;
+                    pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                     //SqlParameter OutparamId = pud.Parameters.Add("@OutparamId", SqlDbType.SmallInt);
                     //OutparamId.Direction = ParameterDirection.Output;
                     SqlParameter Output = new SqlParameter();
@@ -2547,6 +2550,7 @@ namespace TheClinicApp1._1.ClinicDAL
             #region Visit Attachment Class
             public class VisitAttachment
                 {
+                common cmn = new common();
                     #region global
 
                     ErrorHandling eObj = new ErrorHandling();
@@ -2693,7 +2697,7 @@ namespace TheClinicApp1._1.ClinicDAL
                             cmdInsert.Parameters.AddWithValue("@Name", Name);
                             cmdInsert.Parameters.AddWithValue("@Type", Type);
                             cmdInsert.Parameters.AddWithValue("@Size", Size);
-                            cmdInsert.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
+                            cmdInsert.Parameters.AddWithValue("@CreatedDate", cmn.ConvertDatenow(DateTime.Now));
 
                             result = cmdInsert.ExecuteNonQuery();
                             if (!isFromMobile)
@@ -2783,7 +2787,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                         try
                         {
-                            DateTime now = DateTime.Now;
+                            DateTime now =cmn.ConvertDatenow(DateTime.Now);
 
                             dbConnection dcon = new dbConnection();
                             con = dcon.GetDBConnection();

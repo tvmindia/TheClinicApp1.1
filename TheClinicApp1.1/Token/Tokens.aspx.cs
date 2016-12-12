@@ -23,6 +23,7 @@ namespace TheClinicApp1._1.Token
         #region Global Variables
 
         UIClasses.Const Const = new UIClasses.Const();
+        common cmn = new common();
         ClinicDAL.UserAuthendication UA;
         public string listFilter = null;
         public string RoleName = null;
@@ -96,6 +97,7 @@ namespace TheClinicApp1._1.Token
 
         public static string PatientDetails(string file)
         {
+            common cmn=new common();
             string FileNumber = string.Empty;
             string Name = string.Empty;
             string Gender = string.Empty;
@@ -127,7 +129,7 @@ namespace TheClinicApp1._1.Token
                 lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
 
 
-                DateTime date = DateTime.Now;
+                DateTime date =cmn.ConvertDatenow(DateTime.Now);
                 int year = date.Year;
                 DateTime DT = Convert.ToDateTime(ds.Tables[0].Rows[0]["DOB"].ToString());
                 int Age = year - DT.Year;
@@ -199,7 +201,7 @@ namespace TheClinicApp1._1.Token
                 tokenObj.PatientID = HiddenPatientID.Value;
                 tokenObj.ClinicID = HiddenClinicID.Value;
                 tokenObj.CreatedBy = UA.userName;
-                tokenObj.DateTime = DateTime.Now;
+                tokenObj.DateTime =cmn.ConvertDatenow(DateTime.Now);
                 int tokenNo = tokenObj.InsertToken(); //Function Call Inserting Token
                 lblToken.Text = tokenNo.ToString();
                 lblToken.Visible = true;
@@ -220,7 +222,7 @@ namespace TheClinicApp1._1.Token
                     lblEmail.Text = Convert.ToString(dst.Tables[0].Rows[0]["Email"]);
                     lblLastVisit.Text = Convert.ToString(dst.Tables[0].Rows[0]["LastVisitDate"]);
 
-                    DateTime date = DateTime.Now;
+                    DateTime date =cmn.ConvertDatenow(DateTime.Now);
                     int year = date.Year;
                     DateTime DT = Convert.ToDateTime(dst.Tables[0].Rows[0]["DOB"].ToString());
                     int Age = year - DT.Year;

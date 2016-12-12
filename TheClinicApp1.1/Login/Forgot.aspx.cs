@@ -30,6 +30,7 @@ namespace TheClinicApp1._1.Login
         ClinicDAL.User userObj = new ClinicDAL.User();
         UIClasses.Const Const = new UIClasses.Const();
         ClinicDAL.UserAuthendication UA;
+        common cmn = new common();
         Master mstrobj = new Master();
         MailSending mailObj = new MailSending();
 
@@ -68,7 +69,7 @@ namespace TheClinicApp1._1.Login
                     vcCreatedTime = Convert.ToDateTime(dr["VerificatinCreatedTime"]);
                     UserID = dr["UserID"].ToString();
 
-                    DateTime CurrentTime = DateTime.Now;
+                    DateTime CurrentTime =cmn.ConvertDatenow(DateTime.Now);
                     if ((CurrentTime - vcCreatedTime) < TimeSpan.FromDays(1))
                     {
 
@@ -182,7 +183,7 @@ namespace TheClinicApp1._1.Login
 
                     }
 
-                    DateTime CurrentTime = DateTime.Now;
+                    DateTime CurrentTime =cmn.ConvertDatenow(DateTime.Now);
 
                 }
                 else

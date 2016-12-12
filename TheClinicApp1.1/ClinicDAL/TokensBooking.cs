@@ -93,7 +93,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "ViewAndFilterPatientBooking";
 
-                DateTime now = DateTime.Now;
+                DateTime now =cmn.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = now.ToString("yyyy-MM-dd");
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
 
@@ -162,7 +162,7 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlDataAdapter sda = null;
             try
             {
-                DateTime now = DateTime.Now;
+                DateTime now = cmn.ConvertDatenow(DateTime.Now);
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();
@@ -420,7 +420,9 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
             cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PatientID);        
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
-            cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;        
+            cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
+            cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
+            cmd.Parameters.Add("@DateTime", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
 
             SqlParameter OutparmItemId = cmd.Parameters.Add("@TokenNo", SqlDbType.Int);
             OutparmItemId.Direction = ParameterDirection.Output;            
@@ -470,7 +472,7 @@ namespace TheClinicApp1._1.ClinicDAL
             try
             {
             
-            DateTime now = DateTime.Now;
+            DateTime now =cmn.ConvertDatenow(DateTime.Now);
             dbConnection dcon = new dbConnection();
             con = dcon.GetDBConnection();
             SqlCommand cmd = new SqlCommand();
@@ -527,7 +529,7 @@ namespace TheClinicApp1._1.ClinicDAL
             SqlDataAdapter sda = null;
             try
             {
-                DateTime now = DateTime.Now;
+                DateTime now =cmn.ConvertDatenow(DateTime.Now);
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand();

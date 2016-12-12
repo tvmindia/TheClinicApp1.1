@@ -208,7 +208,8 @@ namespace TheClinicApp1._1.Stock
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
-            rpt.ClinicID = UA.ClinicID.ToString();            
+            rpt.ClinicID = UA.ClinicID.ToString();
+            common cmn = new common();
             string Login = UA.userName;
 
             stok.ClinicID = UA.ClinicID.ToString();
@@ -244,7 +245,7 @@ namespace TheClinicApp1._1.Stock
 
                 if (!IsPostBack)
                 {
-                    var today = DateTime.Now.ToString("dd-MMM-yyyy");
+                    var today =cmn.ConvertDatenow(DateTime.Now).ToString("dd-MMM-yyyy");
                     txtDate1.Value = today;
 
                 }

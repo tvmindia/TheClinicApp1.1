@@ -413,7 +413,7 @@ namespace TheClinicApp1._1.Doctor
             ClinicDAL.UserAuthendication UA;
             UIClasses.Const Const = new UIClasses.Const();
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
-
+            common cmn = new common();
             string Login = UA.userName;
             DataTable dt = new DataTable();
             dt = UA.GetDoctorAndDoctorID(Login);
@@ -424,7 +424,7 @@ namespace TheClinicApp1._1.Doctor
             Guid DoctorID = Guid.Parse(dt.Rows[0]["DoctorID"].ToString());
             tok.DoctorID = DoctorID.ToString();
 
-            tok.DateTime = DateTime.Now;
+            tok.DateTime =cmn.ConvertDatenow(DateTime.Now);
 
             var xml = tok.ViewAndFilterTokenOfDoctors(searchTerm, pageIndex, PageSize);
 
@@ -743,7 +743,7 @@ namespace TheClinicApp1._1.Doctor
             DataTable dt = PatientObj.SelectPatient(); //binding patient Details in header
             dr = dt.NewRow();
             dr = dt.Rows[0];
-            DateTime date = DateTime.Now;
+            DateTime date =cmnObj.ConvertDatenow(DateTime.Now);
             int year = date.Year;
             Guid PatientID = Guid.Parse(dr["PatientID"].ToString());
             lblPatientName.Text = dr["Name"].ToString();
@@ -882,7 +882,7 @@ namespace TheClinicApp1._1.Doctor
                 DataTable dt = PatientObj.SelectPatient();
                 dr = dt.NewRow();
                 dr = dt.Rows[0];
-                DateTime date = DateTime.Now;
+                DateTime date =cmnObj.ConvertDatenow(DateTime.Now);
                 int year = date.Year;
                 Guid PatientID = Guid.Parse(dr["PatientID"].ToString());
                 lblPatientName.Text = dr["Name"].ToString();
@@ -987,7 +987,7 @@ namespace TheClinicApp1._1.Doctor
         public void gridviewbind()
         {
             //Gridview Binding to Diplay DoctorName,Token No,Patient Name,TIME
-            tok.DateTime = DateTime.Now;
+            tok.DateTime =cmnObj.ConvertDatenow(DateTime.Now);
             DataSet gds = tok.DoctorViewToken();
 
             DataRow[] dr = gds.Tables[0].Select("IsProcessed=False");
@@ -1011,6 +1011,7 @@ namespace TheClinicApp1._1.Doctor
                 ClinicDAL.TokensBooking obj = new ClinicDAL.TokensBooking();
                 UIClasses.Const Const = new UIClasses.Const();
                 ClinicDAL.UserAuthendication UA;
+                common cmn = new common();
                 UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
                 obj.ClinicID = UA.ClinicID.ToString();
@@ -1028,7 +1029,7 @@ namespace TheClinicApp1._1.Doctor
                 string ClinicID = Convert.ToString(ds.Tables[0].Rows[0]["ClinicID"]);
                 string lastvisit = Convert.ToString(ds.Tables[0].Rows[0]["LastVisitDate"]);
 
-                DateTime date = DateTime.Now;
+                DateTime date =cmn.ConvertDatenow(DateTime.Now);
                 int year = date.Year;
                 DateTime DT = Convert.ToDateTime(ds.Tables[0].Rows[0]["DOB"].ToString());
                 int Age = year - DT.Year;

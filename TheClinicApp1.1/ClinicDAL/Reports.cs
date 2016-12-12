@@ -28,6 +28,7 @@ namespace TheClinicApp1._1.ClinicDAL
         ClinicDAL.UserAuthendication UA;
         public string Module = "Reports";
         HTMLReports HtmlReprtObj = new HTMLReports();
+        common cmn = new common();
 
         #endregion Global Variables
 
