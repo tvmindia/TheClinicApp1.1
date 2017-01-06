@@ -20,6 +20,9 @@ namespace TheClinicApp1._1
                 Session.Clear();             
             }
             Response.Redirect("~/Login/Login.aspx");
+
+
+
         }
     }
 }
