@@ -24,6 +24,18 @@
     <script>
         var DoctorID="";
         $(document).ready(function () {
+            debugger;
+            var usrRole=$('#<%=hdfUserRole.ClientID%>').val()
+            if(usrRole=="Doctor")
+            {
+                $("#PatientApointment").css("display","none");
+                $("#DoctorSchedule").css("display","none");
+            }
+            if(usrRole=="Receptionist")
+            {
+                $("#MyAppointment").css("display","none");
+            }
+           var role=$('#<%=lblAppointment.ClientID%>').val()
             var bindTitle="";
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
@@ -233,7 +245,10 @@ var appointmentNo="";
                     alert("Please enter a valid mobile number");
                 }
             });
-          
+            $('.nav_menu').click(function () {
+           
+                $(".main_body").toggleClass("active_close");
+            });
         });
     //end of document.ready
 
@@ -529,15 +544,15 @@ var appointmentNo="";
                         <img class="big" id="biglogo" runat="server" src="../images/logo.png" /><img class="small" id="smalllogo" runat="server" src="../images/logo-small.png" /></a>
                 </div>
                 <ul class="menu">
-                     <li id="patients" ><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+                     <li id="patients" ><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Registration</span></a></li>
                      <li id="Appoinments"  class="active"><a name="hello" onclick="selectTile('Appoinments')"><span class="icon Appoinmnts"></span><span class="text">Appoinments</span></a></li>
                     <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
-                    <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+                    <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
                     <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                     <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
                     <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                     <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-                    <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+                    <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
                   
                    
                 </ul>
@@ -570,8 +585,9 @@ var appointmentNo="";
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="Appointment.aspx">Patient Appoinments</a></li>
-                        <li role="presentation" ><a href="DoctorSchedule.aspx">Doctor Schedule</a></li> 
+                        <li role="presentation" id="PatientApointment" class="active"><a href="Appointment.aspx">Patient Appoinments</a></li>
+                        <li role="presentation" id="DoctorSchedule"><a href="DoctorSchedule.aspx">Doctor Schedule</a></li> 
+                        <li role="presentation" id="MyAppointment"><a href="MyAppointments.aspx">My Appointments</a></li>
                         
                        
                         
@@ -758,6 +774,7 @@ var appointmentNo="";
                         </div>
                     </div>
                 </div>
+                    <label style="display:none" id="lblUserRole" runat="server"></label>
             </div>
                 <asp:HiddenField ID="hdfddlDoctorID" runat="server" />
                 <asp:HiddenField ID="hdfDuration" runat="server" />
@@ -774,6 +791,7 @@ var appointmentNo="";
                 <input type="hidden" id="hdfPatientID" />
                 <input type="hidden" id="hdfTimeListLength" />
                 <input type="hidden" id="hdfAppointmentNoCollection" />
+                <input type="hidden" id="hdfUserRole" runat="server" />
             </div>
         </div>
 

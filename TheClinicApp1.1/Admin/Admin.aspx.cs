@@ -97,6 +97,7 @@ namespace TheClinicApp1._1.Admin
             dummy.Columns.Add("LoginName");
             dummy.Columns.Add("FirstName");
             dummy.Columns.Add("LastName");
+            dummy.Columns.Add("RoleName");
             dummy.Columns.Add("Active");
             dummy.Columns.Add("UserID");
 
@@ -838,9 +839,9 @@ namespace TheClinicApp1._1.Admin
          /// <returns></returns>
          [System.Web.Services.WebMethod]
          public static string BindUserDetailsOnEditClick(User userObj, string clinicID)
-         { 
-
-             ClinicDAL.UserAuthendication UA;
+         {
+            ClinicDAL.CryptographyFunctions CryptObj = new CryptographyFunctions();
+            ClinicDAL.UserAuthendication UA;
              UIClasses.Const Const = new UIClasses.Const();
 
              UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
@@ -872,6 +873,10 @@ namespace TheClinicApp1._1.Admin
                      childRow = new Dictionary<string, object>();
                      foreach (DataColumn col in ds.Tables[0].Columns)
                      {
+                        if(col.ColumnName== "Password")
+                        {
+                            row[col] = CryptObj.Decrypt(row[col].ToString());
+                        }
                          childRow.Add(col.ColumnName, row[col]);
                      }
                      parentRow.Add(childRow);

@@ -721,7 +721,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 pud.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
                 pud.Parameters.Add("@CreatedBY", SqlDbType.NVarChar, 255).Value = createdBy;
                 pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
-                pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
+                //pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
 
                 if (UsrID != Guid.Empty)
                 {

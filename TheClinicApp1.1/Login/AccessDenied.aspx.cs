@@ -28,7 +28,7 @@ namespace TheClinicApp1._1.Login
             
             if (Request.QueryString["From"] != null) {
                 From = Request.QueryString["From"].ToString();
-                module.InnerText = From.ToUpper();
+                //module.InnerText = From.ToUpper();
             }
         }
 

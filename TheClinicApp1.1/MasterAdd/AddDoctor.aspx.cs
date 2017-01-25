@@ -694,7 +694,7 @@ namespace TheClinicApp1._1.MasterAdd
                 dtgDoctors.DataSource = dtDoctors;
                 dtgDoctors.DataBind();
 
-                lblCaseCount.Text = dtgDoctors.Rows.Count.ToString();
+                //lblCaseCount.Text = dtgDoctors.Rows.Count.ToString();
             }
 
         }

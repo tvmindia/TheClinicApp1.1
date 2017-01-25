@@ -43,7 +43,18 @@
         {
             color:black!important;
         }
-
+            .drop
+            {
+              
+            }
+.blink {
+  animation: blink .5s step-end infinite alternate;
+}
+@keyframes blink { 
+    0%{box-shadow:0 0 10px #07d8d8;}
+   50% { box-shadow:0 0 20px #41f5ef; }
+       
+}
     </style>
     <script>
        
@@ -84,6 +95,12 @@
             $('.nav_menu').click(function () {
                 $(".main_body").toggleClass("active_close");
             });
+            var selectedClinic = $(".drop").val();
+            debugger;
+            if(selectedClinic=="-1")
+            {
+                $(".clinicDrop").toggleClass('blink');
+            }
         });
 
         function SetIframeSrc(HyperlinkID) {
@@ -246,8 +263,10 @@
 
 
         $(function () {
+        
             $("[id*=dtgViewAllUsers] td:eq(0)").click(function () {
-                if ($(this).closest('tr').find('td:eq(6)').text() != $('#<%=hdnLoginedUserID.ClientID%>').val()) { //Making sure ,not editing the logined user data
+                debugger;
+                if ($(this).closest('tr').find('td:eq(7)').text() != $('#<%=hdnLoginedUserID.ClientID%>').val()) { //Making sure ,not editing the logined user data
 
                 document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                 document.getElementById('<%=imgWebLnames.ClientID %>').style.display = "none";
@@ -259,10 +278,11 @@
 
                 if ($(this).text() == "") {
                     var jsonResult = {};
-                    UserID = $(this).closest('tr').find('td:eq(6)').text();              
+                    UserID = $(this).closest('tr').find('td:eq(7)').text();              
                     var User = new Object();
                     User.UserID = UserID;
                     jsonResult = GetUserDetailsByUserID(User);
+                    debugger;
                     if (jsonResult != undefined) {
                       
                         BindUserControls(jsonResult);
@@ -285,7 +305,7 @@
 
         function BindUserControls(Records) {
             $.each(Records, function (index, Records) {
-
+                debugger;
                 $("#<%=txtLoginName.ClientID %>").val(Records.LoginName);
                 $("#<%=txtFirstName.ClientID %>").val(Records.FirstName);
                 $("#<%=txtLastName.ClientID %>").val(Records.LastName);
@@ -325,13 +345,13 @@
         $(function () {
             $("[id*=dtgViewAllUsers] td:eq(1)").click(function () {
                 
-                if ($(this).closest('tr').find('td:eq(6)').text() != $('#<%=hdnLoginedUserID.ClientID%>').val()) { //Making sure ,not deleting the logined user data
+                if ($(this).closest('tr').find('td:eq(7)').text() != $('#<%=hdnLoginedUserID.ClientID%>').val()) { //Making sure ,not deleting the logined user data
 
 
                     if ($(this).text() == "") {
                         var DeletionConfirmation = ConfirmDelete();
                         if (DeletionConfirmation == true) {
-                            UserID = $(this).closest('tr').find('td:eq(6)').text();
+                            UserID = $(this).closest('tr').find('td:eq(7)').text();
 
                             var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
 
@@ -394,7 +414,7 @@
             return jQuery.trim($("[id*=txtSearch]").val());
         };
         function GetUsers(pageIndex) {
-
+            debugger;
             var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
 
             $.ajax({
@@ -417,7 +437,7 @@
         }
         var row;
         function OnSuccess(response) {
-
+            debugger;
             $(".Pager").show();
           
             var xmlDoc = $.parseXML(response.d);
@@ -430,6 +450,15 @@
             if (Users.length > 0) {
 
                 $.each(Users, function () {
+                    debugger;
+                    if ($(this).find("Active").text() == "true")
+                    {
+                        $("td", row).eq(6).html("Yes");
+                    }
+                    else
+                    {
+                        $("td", row).eq(6).html("No");
+                    }
 
                     if ($(this).find("LoginName").text() != "sadmin") {
 
@@ -468,12 +497,13 @@
 
                     $("td", row).eq(3).html($(this).find("FirstName").text());
                     $("td", row).eq(4).html($(this).find("LastName").text());
-                    $("td", row).eq(5).html($(this).find("Active").text());
+                    $("td", row).eq(5).html($(this).find("RoleName").text());
+                   // $("td", row).eq(5).html($(this).find("Active").text());
 
                    
                    
 
-                    $("td", row).eq(6).html($(this).find("UserID").text());
+                    $("td", row).eq(7).html($(this).find("UserID").text());
 
                     $("[id*=dtgViewAllUsers]").append(row);
                     row = $("[id*=dtgViewAllUsers] tr:last-child").clone(true);
@@ -538,13 +568,13 @@
             if ($("#<%=ddlGroup.ClientID%> option:selected").text() != "--Select Clinic--")
             {
                 $("#<%=hdnClinicID.ClientID %>").val(e.value);
-                
+                $(".clinicDrop").removeClass('blink');
             }
 
             else
             {
                 $("#<%=hdnClinicID.ClientID %>").val("");
-
+                $(".clinicDrop").toggleClass('blink');
             }
 
             GetUsers(parseInt(1));
@@ -562,15 +592,15 @@
                     <img class="big" id="biglogo" runat="server" src="../images/logo.png" /><img id="smalllogo" class="small" runat="server" src="../images/logo-small.png" /></a>
             </div>
             <ul class="menu">
-                <li id="patients"><a name="hello" onclick="selectTile('patients','')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+                <li id="patients"><a name="hello" onclick="selectTile('patients','')"><span class="icon registration"></span><span class="text">Registration</span></a></li>
                  <li id="Appoinments" ><a name="hello" onclick="selectTile('Appoinments')"><span class="icon Appoinmnts"></span><span class="text">Appoinments</span></a></li>
                 <li id="token"><a name="hello" onclick="selectTile('token','')"><span class="icon token"></span><span class="text">Token</span></a></li>
-                <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+                <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
                 <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
                 <li id="admin" class="active" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                 <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-                <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+                <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
                 <li id="log" runat="server"><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
             </ul>
 
@@ -619,7 +649,7 @@
                         <div role="tabpanel" class="tab-pane active" id="stocks">
                             <div class="grey_sec">
 
-                                     <asp:DropDownList ID="ddlGroup" onchange="ChangeClinic(this)" runat="server" CssClass="drop" Width="250px" Style="font-family: Arial, Verdana, Tahoma;font-size:large;">             
+                                     <asp:DropDownList ID="ddlGroup" onchange="ChangeClinic(this)" runat="server" CssClass="drop clinicDrop" Width="250px" Style="font-family: Arial, Verdana, Tahoma;font-size:large;">             
                                      </asp:DropDownList>
                                    
                                 <%--<div class="search_div">
@@ -770,7 +800,9 @@
                                     <asp:BoundField DataField="LoginName" HeaderText="Login Name" ItemStyle-CssClass="Match"></asp:BoundField>
                                     <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-CssClass="Match"></asp:BoundField>
                                     <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-CssClass="Match"></asp:BoundField>
-                                    <asp:BoundField DataField="Active" HeaderText="Active" ItemStyle-CssClass="Match"></asp:BoundField>
+                                     <asp:BoundField DataField="RoleName" HeaderText="Role" ItemStyle-CssClass="Match"/>
+                                     <asp:BoundField DataField="Active" HeaderText="Active" ItemStyle-CssClass="Match"></asp:BoundField>
+                                  
                                     <asp:BoundField DataField="UserID" HeaderText="UserID"></asp:BoundField>
                                 </Columns>
                             </asp:GridView>

@@ -13,7 +13,11 @@ namespace TheClinicApp1._1.Masters
         //string dbError = "";
         ClinicDAL.UserAuthendication UA;
         UIClasses.Const Const = new UIClasses.Const();
-
+       public string masterRole
+        {
+            get;
+            set;
+        }
         protected void Page_Init(object sender, EventArgs e)
         {
 
@@ -36,7 +40,11 @@ namespace TheClinicApp1._1.Masters
                 }
                 else if(UA!=null)
                 {
-                    AccessCheck();
+                    if(hdfPage.Value != currentPage)
+                    {
+                        AccessCheck();
+                    }
+                    
                 }
                 else
                 {
@@ -99,30 +107,95 @@ namespace TheClinicApp1._1.Masters
 
             try
             {
-               
-                List<string> currRole = new List<string>();               
-                currRole = UA.GetRoleName1(UA.userName);                               
+
+                List<string> currRole = new List<string>();
+                currRole = UA.GetRoleName1(UA.userName);
                 string currPage = Const.GetCurrentPageName(Request);
                 string From = "?From=";
                 string redirectURL = "";
-                if(!currRole.Contains(Const.RoleSadmin))
+                
+               if((currRole.Contains(Const.RoleDoctor))&&(currRole.Contains(Const.Receptionist)))
+                {
+                    masterRole = "1";
+                    UA.userInRole = masterRole;
+                    //hdfUserRole.Value = masterRole;
+                }
+
+
+                if (!currRole.Contains(Const.RoleSadmin))
                 {
                     if (currRole.Count == 0) { Response.Redirect(Const.AccessDeniedURL); }
 
                     if (currPage != Const.AccessDenied)
                     {
-                        if (currPage == Const.PatientPage) { }
-                        if (currPage == Const.TokenPage) { }
+                        if (redirectURL == "")
+                        {
+                            if(UA.isFirstLoad == null)
+                            {
+                                redirectURL = Const.DefaultPage(currRole);
+
+                                if (!redirectURL.Contains("/" + currPage))
+                                {
+                                    UA.isFirstLoad = "True";
+                                    Response.Redirect(redirectURL, true);
+                                }
+                            }
+                         
+
+
+                        }
+                        if (currPage == Const.PatientPage) {
+                            if(!currRole.Contains(Const.Receptionist))
+                            {
+                                From = From + currRole[0];
+                                redirectURL = Const.AccessDeniedURL + From;
+                            }
+                        }
+                        if (currPage == Const.TokenPage) {
+                           if(!currRole.Contains(Const.Receptionist))
+                            {
+                                From = From + currRole[0];
+                                redirectURL = Const.AccessDeniedURL + From;
+                            }
+                        }
                         if (currPage == Const.DoctorPage)
                         {
                             if (!currRole.Contains(Const.RoleDoctor))
                             {
-                                From = From + Const.Doctor;
+                                From = From + Const.Receptionist;
                                 redirectURL = Const.AccessDeniedURL + From;
                             }
                         }
-                        if (currPage == Const.PharmacyPage) { }
-                        if (currPage == Const.StockPage) { }
+                        if (currPage == Const.PharmacyPage) {
+                            if(!currRole.Contains(Const.Pharmacy))
+                            {
+                                From = From + currRole[0];
+                                redirectURL = Const.AccessDeniedURL + From;
+                            }
+                        }
+                        if (currPage == Const.StockPage) {
+                            if(!currRole.Contains(Const.StockRole))
+                            {
+                                From = From + currRole[0];
+                                redirectURL = Const.AccessDeniedURL + From;
+                            }
+                        }
+                        if(currPage==Const.AppointmentPage)
+                        {
+                            if((!currRole.Contains(Const.Doctor))&&(!currRole.Contains(Const.Receptionist)))
+                                {
+                                From = From + currRole[0];
+                                redirectURL = Const.AccessDeniedURL + From;
+                            }
+                            if ((currRole.Contains(Const.Doctor)) && !(currRole.Contains(Const.Receptionist)))
+                            {
+                                UA.userInRole = Const.Doctor;
+                            }
+                            if (!(currRole.Contains(Const.Doctor)) && (currRole.Contains(Const.Receptionist)))
+                            {
+                                UA.userInRole = Const.Receptionist;
+                            }
+                        }
 
                         if (currPage == Const.AdminPage)
                         {
@@ -136,29 +209,17 @@ namespace TheClinicApp1._1.Masters
                         //-----------Checking access of report tab ,user with only pharmacist role is not allowed to get report ------------
                         if (currPage == Const.ReportPageURL)
                         {
-                            if (currRole.Count == 1 && currRole.Contains(Const.RolePharmacist))
+                            if (!currRole.Contains(Const.Report))
                             {
                                 From = From + Const.RolePharmacist;
                                 redirectURL = Const.AccessDeniedURL + From;
                             }
-
-
-
-                            //if (currRole.Contains(Const.Patient) || currRole.Contains(Const.Token) || currRole.Contains(Const.Token) || currRole.Contains(Const.Doctor) || currRole.Contains(Const.Stock) || currRole.Contains(Const.Admin) || currRole.Contains(Const.RoleAdministrator)) 
-                            //{
-
-                            //}
-                            //else
-                            //{
-                            //    From = From + Const.RolePharmacist;
-                            //    redirectURL = Const.AccessDeniedURL + From;
-                            //}
                         }
 
 
                         if (currPage == Const.MasterPage)
                         {
-                            if (!(currRole.Contains(Const.RoleAdministrator)))
+                            if ( !(currRole.Contains(Const.StockRole)))
                             {
                                 From = From + Const.Admin;
                                 redirectURL = Const.AccessDeniedURL + From;
@@ -170,14 +231,329 @@ namespace TheClinicApp1._1.Masters
 
                     }
                 }
+
+                if (currRole.Count == 1) {
+                   
+
+                    if (currRole[0] == Const.Pharmacy)
+                    {
+                        
+                        if (currPage == Const.PatientPage)
+                        {
+                            From = From + Const.Pharmacy;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.StockPage)
+                        {
+
+                            From = From + Const.Pharmacy;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.TokenPage)
+                        {
+                            From = From + Const.Pharmacy;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.DoctorPage)
+                        {
+                            From = From + Const.Pharmacy;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.ReportPageURL)
+                        {
+                            From = From + Const.Pharmacy;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.MasterPage)
+                        {
+                            From = From + Const.Pharmacy;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.AppointmentPage)
+                        {
+                            From = From + Const.Pharmacy;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if(currPage==Const.AdminPage)
+                        {
+                            From = From + Const.Pharmacy;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                    }
+                        if (currRole[0] == Const.Receptionist)
+                    {
+                        masterRole = currRole[0].ToString();
+                        UA.userInRole = masterRole;
+                        // hdfUserRole.Value = masterRole;
+                        if (currPage == Const.PharmacyPage)
+                        {
+
+                            From = From + Const.Receptionist;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.StockPage)
+                        {
+
+                            From = From + Const.Receptionist;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+              
+                        if (currPage == Const.TokenPage)
+                        {
+                            From = From + Const.Receptionist;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.DoctorPage)
+                        {
+                            From = From + Const.Receptionist;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.ReportPageURL)
+                        {
+                            From = From + Const.Receptionist;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.MasterPage)
+                        {
+                            From = From + Const.Receptionist;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if(currPage==Const.AdminPage)
+                        {
+                            From = From + Const.Receptionist;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                    }
+                        if (currRole[0] == Const.RoleAdministrator)
+                {
+                    if (currPage == Const.PatientPage)
+                    {
+                        From = From + Const.RoleAdministrator;
+                        redirectURL = Const.AccessDeniedURL + From;
+                        if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                    }
+                    if (currPage == Const.TokenPage)
+                    {
+                        From = From + Const.RoleAdministrator;
+                        redirectURL = Const.AccessDeniedURL + From;
+                        if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                    }
+                    if (currPage == Const.DoctorPage)
+                    {
+                        From = From + Const.RoleAdministrator;
+                        redirectURL = Const.AccessDeniedURL + From;
+                        if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                    }
+                    if (currPage == Const.PharmacyPage)
+                    {
+                        From = From + Const.RoleAdministrator;
+                        redirectURL = Const.AccessDeniedURL + From;
+                        if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                    }
+                    if (currPage == Const.StockPage)
+                    {
+                        From = From + Const.RoleAdministrator;
+                        redirectURL = Const.AccessDeniedURL + From;
+                        if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                    }
+                    if (currPage == Const.ReportPageURL)
+                    {
+                        From = From + Const.RoleAdministrator;
+                        redirectURL = Const.AccessDeniedURL + From;
+                        if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                    }
+                    if (currPage == Const.MasterPage)
+                    {
+                        From = From + Const.RoleAdministrator;
+                        redirectURL = Const.AccessDeniedURL + From;
+                        if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                    }
+                    if (currPage == Const.AppointmentPage)
+                    {
+                        From = From + Const.RoleAdministrator;
+                        redirectURL = Const.AccessDeniedURL + From;
+                        if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                    }
+                }
+                    if (currRole[0] == Const.StockRole)
+                    {
+                        if (currPage == Const.PatientPage)
+                        {
+                            From = From + Const.Stock;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.TokenPage)
+                        {
+                            From = From + Const.Stock;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.DoctorPage)
+                        {
+                            From = From + Const.Stock;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.PharmacyPage)
+                        {
+                            From = From + Const.Stock;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.ReportPageURL)
+                        {
+                            From = From + Const.Stock;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.AppointmentPage)
+                        {
+                            From = From + Const.Stock;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if(currPage==Const.AdminPage)
+                        {
+                            From = From + Const.Stock;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                    }
+                    if (currRole[0] == Const.Report)
+                    {
+                        if (currPage == Const.PatientPage)
+                        {
+                            From = From + Const.Report;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.TokenPage)
+                        {
+                            From = From + Const.Report;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.DoctorPage)
+                        {
+                            From = From + Const.Report;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.StockPage)
+                        {
+
+                            From = From + Const.Report;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.PharmacyPage)
+                        {
+                            From = From + Const.Report;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.AppointmentPage)
+                        {
+                            From = From + Const.Report;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if(currPage==Const.AdminPage)
+                        {
+                            From = From + Const.Report;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.MasterPage)
+                        {
+                            From = From + Const.Report;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                    }
+                        if (currRole[0] == Const.Doctor)
+                    {
+                        masterRole = currRole[0].ToString();
+                        UA.userInRole = masterRole;
+                        // hdfUserRole.Value = masterRole;
+                        if (currPage == Const.PatientPage)
+                        {
+                            From = From + Const.Doctor;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.TokenPage)
+                        {
+                            From = From + Const.Doctor;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.PharmacyPage)
+                        {
+                            From = From + Const.Doctor;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.StockPage)
+                        {
+                            From = From + Const.Doctor;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.ReportPageURL)
+                        {
+                            From = From + Const.Doctor;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if (currPage == Const.MasterPage)
+                        {
+                            From = From + Const.Doctor;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                        if(currPage==Const.AdminPage)
+                        {
+                            From = From + Const.Doctor;
+                            redirectURL = Const.AccessDeniedURL + From;
+                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        }
+                    }
+            }
+
+
+
+                //hdfUserRole.Value = masterRole;
+                ////if (redirectURL != "")
+                ////{
+                ////    redirectURL = Const.DefaultPage(currRole);
                 
+                ////    if (!redirectURL.Contains("/" + currPage))
+                ////    {
+                ////        Response.Redirect(redirectURL, true);
+                ////    }
 
 
-
-                    
+                ////}
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
              //   Response.Redirect(Const.AccessDeniedURL);

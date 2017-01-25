@@ -21,6 +21,11 @@ namespace TheClinicApp1._1.ClinicDAL
         #endregion global
 
         #region Appointment Properties
+        public string userRole
+        {
+            get;
+            set;
+        }
         public string AppointmentID
         {
             get;

@@ -107,7 +107,7 @@ $(document).ready(function () {
                         }
                         else {
                             
-                            title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+                            title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"  title="Cancel"/></td></tr>';
                             $("#hdfLastAppointedTime").val(time);
                             removeTime.push(time);
                         }
@@ -304,7 +304,7 @@ $(document).ready(function () {
                         title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
                     }
                     else {
-                        title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+                        title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')" title="Cancel"/></td></tr>';
                         $("#hdfLastAppointedTime").val(time);
                         removeTime.push(time);
                     }
@@ -586,7 +586,7 @@ function fillPatientDetails() {
             title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
         }
         else {
-            title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+            title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')" title="Cancel"/></td></tr>';
             $("#hdfLastAppointedTime").val(time);
             removeTime.push(time);
         }
@@ -831,7 +831,7 @@ function refreshList(){
             title = title + '<tr><td><label><strike>' + names[index].title + '</strike></label></td></tr>';
         }
         else {
-            title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')"/></td></tr>';
+            title = title + '<tr><td><label>' + names[index].title + '</td><td>' + time + '</label></td><td class="center"><img id="imgDelete" src="../Images/Deleteicon1.png" onclick="RemoveFromList(\'' + names[index].appointmentID + '\')" title="Cancel"/></td></tr>';
         }
         var parentDiv = document.getElementById("listBody");
         parentDiv.innerHTML = title;

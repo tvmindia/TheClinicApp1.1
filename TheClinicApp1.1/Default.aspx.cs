@@ -13,11 +13,13 @@ namespace TheClinicApp1._1
         UIClasses.Const Const = new UIClasses.Const();
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             string log=Request.QueryString["sessionclear"];
             if(log== Const.LogoutSession)
             {
                 Session.Remove(Const.LoginSession);
-                Session.Clear();             
+                Session.Clear();
+               
             }
             Response.Redirect("~/Login/Login.aspx");
 

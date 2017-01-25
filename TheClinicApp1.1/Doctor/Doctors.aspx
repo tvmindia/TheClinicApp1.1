@@ -12,7 +12,14 @@
 .lblDesc{
     width:100px;
 }
- 
+ a.records
+ {
+     top:270px;
+ }
+ a.casehistory_link
+ {
+     top:350px;
+ }
         </style>
 
     <asp:Panel DefaultButton="btnSave" runat="server">
@@ -29,6 +36,7 @@
         <script src="../Scripts/Common/Common.js"></script>
 
         <script>
+          
             function BindMedunitbyMedicneName(ControlNo) 
             {   
                 if (ControlNo >= 0) {
@@ -995,15 +1003,15 @@
                         <img class="big" id="biglogo" runat="server" src="../images/logo.png" /><img id="smalllogo" class="small" runat="server" src="../images/logo-small.png" /></a>
                 </div>
                 <ul class="menu">
-                    <li id="patients"><a name="hello" onclick="selectTile('patients','<%=RoleName%>')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+                    <li id="patients"><a name="hello" onclick="selectTile('patients','<%=RoleName%>')"><span class="icon registration"></span><span class="text">Registration</span></a></li>
                      <li id="Appoinments" ><a name="hello" onclick="selectTile('Appoinments')"><span class="icon Appoinmnts"></span><span class="text">Appoinments</span></a></li>
                     <li id="token"><a name="hello" onclick="selectTile('token','<%=RoleName %>')"><span class="icon token"></span><span class="text">Token</span></a></li>
-                    <li id="doctor" class="active"><a name="hello" onclick="selectTile('doctor','<%=RoleName%>')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+                    <li id="doctor" class="active"><a name="hello" onclick="selectTile('doctor','<%=RoleName%>')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
                     <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName%>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                     <li id="stock"><a name="hello" onclick="selectTile('stock','<%=RoleName%>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
                     <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                     <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-                    <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+                    <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
                     <li id="log" runat="server"><a class="logout" name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
                 </ul>
 
@@ -1044,7 +1052,7 @@
                 <div class="grey_sec">
 
                     <div class="search_div">
-                        <input class="field" id="txtSearch" onblur="  bindPatientDetails();" name="txtSearch" type="search" placeholder="Search patient..." />
+                        <input class="field" id="txtSearch" onblur="bindPatientDetails();" name="txtSearch" type="search" placeholder="Search patient..." />
                         <input type="hidden" id="project-id" />
                         <p id="project-description" style="display: none"></p>
                         <asp:Button ID="btnSearch" runat="server" CssClass="button" Text="Search" disabled />

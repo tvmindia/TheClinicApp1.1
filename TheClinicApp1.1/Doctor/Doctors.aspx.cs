@@ -85,13 +85,17 @@ namespace TheClinicApp1._1.Doctor
             {
                 DataTable dt = new DataTable();
                 dt = UA.GetDoctorAndDoctorID(Login);
-                string DoctorName = dt.Rows[0]["Name"].ToString();
-                Guid DoctorID = Guid.Parse(dt.Rows[0]["DoctorID"].ToString());
-                VisitsObj.DoctorID = DoctorID;
-                PrescriptionHeadObj.DoctorID = DoctorID;
-                tok.DoctorID = DoctorID.ToString();
-                tok.ClinicID = UA.ClinicID.ToString();
-                lblDoctor.Text = "Dr." + DoctorName;
+                if(dt.Rows.Count>0)
+                {
+                    string DoctorName = dt.Rows[0]["Name"].ToString();
+                    Guid DoctorID = Guid.Parse(dt.Rows[0]["DoctorID"].ToString());
+                    VisitsObj.DoctorID = DoctorID;
+                    PrescriptionHeadObj.DoctorID = DoctorID;
+                    tok.DoctorID = DoctorID.ToString();
+                    tok.ClinicID = UA.ClinicID.ToString();
+                    lblDoctor.Text = "Dr." + DoctorName;
+                }
+
 
             }
             //gridviewbind();
@@ -420,9 +424,12 @@ namespace TheClinicApp1._1.Doctor
 
             TokensBooking tok = new ClinicDAL.TokensBooking();
             tok.ClinicID = UA.ClinicID.ToString();
-
-            Guid DoctorID = Guid.Parse(dt.Rows[0]["DoctorID"].ToString());
-            tok.DoctorID = DoctorID.ToString();
+            if(dt.Rows.Count>0)
+            {
+                Guid DoctorID = Guid.Parse(dt.Rows[0]["DoctorID"].ToString());
+                tok.DoctorID = DoctorID.ToString();
+            }
+            
 
             tok.DateTime =cmn.ConvertDatenow(DateTime.Now);
 
@@ -448,7 +455,6 @@ namespace TheClinicApp1._1.Doctor
             dummy.Columns.Add("Name");
             dummy.Columns.Add("DateTime");
             dummy.Columns.Add("IsProcessed");
-
            
             //dummy.Columns.Add("DoctorID");
             dummy.Columns.Add("PatientID");

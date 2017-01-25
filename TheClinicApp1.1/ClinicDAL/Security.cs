@@ -128,12 +128,20 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-
-
+        public string isFirstLoad
+        {
+            get;
+            set;
+        }
+        public string userInRole
+        {
+            get;
+            set;
+        }
         #endregion Properties
-        
-       #region UserAuthendication default constructor
-      public UserAuthendication()
+
+        #region UserAuthendication default constructor
+        public UserAuthendication()
       {
 
       }

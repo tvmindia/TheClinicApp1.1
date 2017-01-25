@@ -13,6 +13,24 @@ namespace TheClinicApp1._1.Login {
     public partial class AccessDenied {
         
         /// <summary>
+        /// biglogo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage biglogo;
+        
+        /// <summary>
+        /// smalllogo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage smalllogo;
+        
+        /// <summary>
         /// admin control.
         /// </summary>
         /// <remarks>
@@ -38,15 +56,6 @@ namespace TheClinicApp1._1.Login {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblClinicName;
-        
-        /// <summary>
-        /// module control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl module;
         
         /// <summary>
         /// lblUserName control.

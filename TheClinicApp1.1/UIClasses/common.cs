@@ -83,6 +83,21 @@ namespace TheClinicApp1._1.UIClasses
             }
         }
 
+        public string Report
+        {
+            get
+            {
+                return "Report";
+            }
+        }
+
+        public string ReportPage
+        {
+            get
+            {
+                return "ReportsList.aspx";
+            }
+        }
 
         public string TokenPage
         {
@@ -170,16 +185,22 @@ namespace TheClinicApp1._1.UIClasses
         {
             get
             {
-                return "doctor";
+                return "Doctor";
             }
         }
 
-
+        public string AppointmentPage
+        {
+            get
+            {
+                return "Appointment.aspx";
+            }
+        }
         public string Pharmacy
         {
             get
             {
-                return "pharmacy";
+                return "Pharmacist";
             }
         }
 
@@ -200,8 +221,20 @@ namespace TheClinicApp1._1.UIClasses
                 return "admin";
             }
         }
-
-       
+        public string Receptionist
+        {
+            get
+            {
+                return "Receptionist";
+            }
+        }
+       public string StockRole
+        {
+            get
+            {
+                return "Stock";
+            }
+        }
 
         public string RoleDoctor
         {
@@ -262,7 +295,39 @@ namespace TheClinicApp1._1.UIClasses
         }
 
 
-
+        public string DefaultPage(List<string> currRole)
+        {
+            string redirectURL = "";
+            if (currRole.Contains(Doctor))
+            {
+                redirectURL ="../Doctor/"+ DoctorPage;
+            }
+            else if(currRole.Contains(RoleAdministrator))
+            {
+                redirectURL = AdminPageUrl;
+            }
+            else if(currRole.Contains(Receptionist))
+            {
+                redirectURL = "../Appointment/" + AppointmentPage;
+            }
+            else if(currRole.Contains(RolePharmacist))
+            {
+                redirectURL = "../Pharmacy/" + PharmacyPage;
+            }
+            else if(currRole.Contains(StockRole))
+            {
+                redirectURL ="../Stock/"+ StockPage;
+            }
+            else if(currRole.Contains(Report))
+            {
+                redirectURL ="../Report/"+ ReportPage;
+            }
+            else
+            {
+                redirectURL = AccessDeniedURL;
+            }
+            return redirectURL;
+        }
 
         public string GetCurrentPageName(HttpRequest Request )
         {

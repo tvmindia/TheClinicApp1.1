@@ -81,6 +81,8 @@ var LogoutConfirmation = ConfirmLogout();
         
         </asp:ContentPlaceHolder>
     </div>
+       
+        <input type="hidden" id="hdfPage" runat="server" />
     </form>
 </body>
 </html>

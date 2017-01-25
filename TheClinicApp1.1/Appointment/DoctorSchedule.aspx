@@ -57,6 +57,16 @@
 
         $(document).ready(function () {
             debugger;
+            var usrRole=$('#<%=hdfUserRole.ClientID%>').val()
+            if(usrRole=="Doctor")
+            {
+                $("#PatientApointment").css("display","none");
+                $("#DoctorSchedule").css("display","none");
+            }
+            if(usrRole=="Receptionist")
+            {
+                $("#MyAppointment").css("display","none");
+            }
             if ($("#<%=ddlDoctor.ClientID%> option:selected").text() != "-- Select Doctor --") {
                 $('#hdnDoctorName').val($("#<%=ddlDoctor.ClientID%> option:selected").text());
                 DoctorID = $("#<%=ddlDoctor.ClientID%> option:selected").val();
@@ -90,6 +100,7 @@
                 $(this).parent(".alert").hide();
             });
             $('.nav_menu').click(function () {
+           
                 $(".main_body").toggleClass("active_close");
             });
 
@@ -250,15 +261,15 @@
                     <img class="big" id="biglogo" runat="server" src="../images/logo.png" /><img id="smalllogo" class="small" runat="server" src="../images/logo-small.png" /></a>
             </div>
             <ul class="menu">
-                <li id="patients"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+                <li id="patients"><a name="hello" onclick="selectTile('patients')"><span class="icon registration"></span><span class="text">Registration</span></a></li>
                 <li id="Appoinments" class="active"><a name="hello" onclick="selectTile('Appoinments')"><span class="icon registration"></span><span class="text">Appoinments</span></a></li>
                 <li id="token"><a name="hello" onclick="selectTile('token')"><span class="icon token"></span><span class="text">Token</span></a></li>
-                <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+                <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
                 <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
                 <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                 <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-                <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+                <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
 
             </ul>
 
@@ -289,9 +300,9 @@
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation"><a href="Appointment.aspx">Patient Appoinments</a></li>
-                        <li role="presentation" class="active"><a href="DoctorSchedule.aspx">Doctor Schedule</a></li>
-
+                        <li role="presentation" id="PatientApointment" ><a href="Appointment.aspx">Patient Appoinments</a></li>
+                        <li role="presentation" id="DoctorSchedule" class="active"><a href="DoctorSchedule.aspx">Doctor Schedule</a></li>
+                         <li role="presentation" id="MyAppointment"><a href="MyAppointments.aspx">My Appointments</a></li>
                     </ul>
 
                     <!-- Tab panes -->
@@ -616,5 +627,6 @@
         <input type="hidden" id="hdnAllEvents" value="" />
         <input type="hidden" id="hdnIsDeletionByDate" value="" />
         <input type="hidden" id="hdnDoctorName" value="" />
+         <input type="hidden" id="hdfUserRole" runat="server" />
     </div>
 </asp:Content>

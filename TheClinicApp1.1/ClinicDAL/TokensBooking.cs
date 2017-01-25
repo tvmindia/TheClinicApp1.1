@@ -421,8 +421,8 @@ namespace TheClinicApp1._1.ClinicDAL
             cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(PatientID);        
             cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
             cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
-            cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
-            cmd.Parameters.Add("@DateTime", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
+            //cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
+            //cmd.Parameters.Add("@DateTime", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
 
             SqlParameter OutparmItemId = cmd.Parameters.Add("@TokenNo", SqlDbType.Int);
             OutparmItemId.Direction = ParameterDirection.Output;            

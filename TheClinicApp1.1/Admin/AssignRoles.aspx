@@ -128,6 +128,14 @@
         {
             color:black!important;
         }
+     .blink {
+   animation: blink .5s step-end infinite alternate;
+}
+@keyframes blink { 
+   0%{box-shadow:0 0 10px #07d8d8;}
+   50% { box-shadow:0 0 20px #41f5ef; }
+}
+
 </style>
 
 
@@ -179,7 +187,7 @@
        var test = jQuery.noConflict();
         test(document).ready(function () {            
 
-           
+            debugger;
             $("[id*=chklstRoles] input[type=checkbox]").click(function () {
                            
                 debugger;
@@ -197,7 +205,7 @@ var ChosenRolesArray =[];
                     var UnSelectedRoles = $("#<%=hdnUnSelectedRoles.ClientID %>").val();
 
                     var roleID = checkbox[i].value;
-                      
+                    debugger;
                     if (checkbox[i].checked) {
 
                 if ($.inArray(roleID, ChosenRolesArray) == -1) { 
@@ -256,7 +264,12 @@ var ChosenRolesArray =[];
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
             });
-
+            var selectedClinic = $(".drop").val();
+            debugger;
+            if(selectedClinic=="-1")
+            {
+                $(".clinicDrop").toggleClass('blink');
+            }
             //$('.table').tablePagination({});
 
             //var rows = $('#<%=dtgViewAllUserInRoles.ClientID%> tr').not('thead tr');
@@ -328,10 +341,10 @@ var ChosenRolesArray =[];
 
         $(function () {
 
-           
+            debugger;
 
             GetAssignedRoles(1);
-
+            debugger;
             cellinitial = $("[id*=chklstRoles] td").eq(0).clone(true);
 
 
@@ -379,7 +392,7 @@ var ChosenRolesArray =[];
         var row;
         function OnSuccess(response)
         {
-
+            debugger;
             $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
@@ -467,12 +480,12 @@ var ChosenRolesArray =[];
         function ChangeClinic(e) {
             if ($("#<%=ddlClinic.ClientID%> option:selected").text() != "--Select Clinic--") {
                 $("#<%=hdnClinicID.ClientID %>").val(e.value);
-               
+                $(".clinicDrop").removeClass('blink');
             }
 
             else {
                 $("#<%=hdnClinicID.ClientID %>").val("");
-
+                $(".clinicDrop").toggleClass('blink');
             }
 
             GetAssignedRoles(parseInt(1));
@@ -578,7 +591,7 @@ var ChosenRolesArray =[];
        
         function BindRoles() {
 
-         
+            debugger;
 
             var clinicID = $("#<%=hdnClinicID.ClientID %>").val();
             $.ajax({
@@ -607,6 +620,7 @@ var ChosenRolesArray =[];
 
                         var row;
                         if (i % repeatColumns == 0) {
+                            debugger;
                             row = $("<tr />");
                             $("[id*=chklstRoles] tbody").append(row);
                         } else {
@@ -701,15 +715,15 @@ var ChosenRolesArray =[];
          <div class="left_part">
          <div class="logo"><a href="#"><img class="big" id="biglogo" runat="server" src="../images/logo.png" /><img id="smalllogo" class="small" runat="server" src="../images/logo-small.png" /></a></div>
          <ul class="menu">
-         <li  id="patients" ><a name="hello" onclick="selectTile('patients','')"><span class="icon registration"></span><span class="text">Patient</span></a></li>
+         <li  id="patients" ><a name="hello" onclick="selectTile('patients','')"><span class="icon registration"></span><span class="text">Registration</span></a></li>
          <li id="Appoinments" ><a name="hello" onclick="selectTile('Appoinments')"><span class="icon Appoinmnts"></span><span class="text">Appoinments</span></a></li>
          <li id="token"><a name="hello" onclick="selectTile('token','')"><span class="icon token"></span><span class="text">Token</span></a></li>
-         <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
+         <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
          <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
          <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
          <li id="admin" class="active" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
          <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-         <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+         <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
          <li id="log" runat="server"><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
          </ul>
          
@@ -750,7 +764,7 @@ var ChosenRolesArray =[];
                         <div role="tabpanel" class="tab-pane active" id="stock_in">
                             <div class="grey_sec">
 
-                                <asp:DropDownList ID="ddlClinic" onchange="ChangeClinic(this)" runat="server" CssClass="drop" Width="250px" Style="font-family: Arial, Verdana, Tahoma;font-size:large;">
+                                <asp:DropDownList ID="ddlClinic" onchange="ChangeClinic(this)" runat="server" CssClass="drop clinicDrop" Width="250px" Style="font-family: Arial, Verdana, Tahoma;font-size:large;">
                                      </asp:DropDownList>
                                 
 

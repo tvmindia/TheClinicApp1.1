@@ -62,7 +62,7 @@
         }
 
         td:first-child {
-            width: 50px !important;
+            width: 100% !important;
         }
 
         .selected_row {
@@ -86,16 +86,17 @@
         //-------------------------------- * Delete Button Click * ------------------------- //
 
         $(function () {
+            debugger;
             $("[id*=GridViewTokenlist] td:eq(0)").click(function () {
-
-                var isProcessed = $(this).closest('tr').find('td:eq(5)').text();
+                debugger;
+                var isProcessed = $(this).closest('tr').find('td:eq(6)').text();
 
 
                 if (isProcessed == "No") {
                     if ($(this).text() == "") {
                         var DeletionConfirmation = ConfirmDelete();
                         if (DeletionConfirmation == true) {
-                            UniqueID = $(this).closest('tr').find('td:eq(6)').text();
+                            UniqueID = $(this).closest('tr').find('td:eq(7)').text();
                             DeleteTokenByUniqueID(UniqueID);
 
                         }
@@ -174,7 +175,7 @@
         var row;
 
         function OnSuccess(response) {
-
+            debugger;
             $(".Pager").show();
             var xmlDoc = $.parseXML(response.d);
             var xml = $(xmlDoc);
@@ -186,18 +187,20 @@
             }
             $("[id*=GridViewTokenlist] tr").not($("[id*=GridViewTokenlist] tr:first-child")).remove();
             if (PatientBooking.length > 0) {
+                debugger;
                 $.each(PatientBooking, function () {
-
+                    debugger;
                     $("td", row).eq(1).html($(this).find("DOCNAME").text());
                     $("td", row).eq(2).html($(this).find("TokenNo").text());
                     $("td", row).eq(3).html($(this).find("Name").text());
-                    $("td", row).eq(4).html($(this).find("Date").text());
+                    $("td", row).eq(4).html($(this).find("Phone").text());
+                    $("td", row).eq(5).html($(this).find("Date").text());
                     //$("td", row).eq(5).html($(this).find("IsProcessed").text());
-                    $("td", row).eq(6).html($(this).find("UniqueID").text());
-
+                    $("td", row).eq(7).html($(this).find("UniqueID").text());
+                   
                     if ($(this).find("IsProcessed").text() == "true") {
                         $("td", row).addClass("selected_row");
-                        $("td", row).eq(5).html("Yes");
+                        $("td", row).eq(6).html("Yes");
                         $("td", row).eq(0).html($('<img />')
                      .attr('src', "" + '../images/Deleteicon1.png' + "")).removeClass('CursorShow');
 
@@ -205,7 +208,7 @@
                     }
                     if ($(this).find("IsProcessed").text() == "false") {
                         $("td", row).removeClass("selected_row");
-                        $("td", row).eq(5).html("No");
+                        $("td", row).eq(6).html("No");
 
                         $("td", row).eq(0).html($('<img />')
                     .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
@@ -293,9 +296,12 @@
                     <asp:BoundField HeaderText="Doctor" DataField="DOCNAME" ItemStyle-CssClass="Match" />
                     <asp:BoundField HeaderText="Token No" DataField="TokenNo" ItemStyle-CssClass="Match" />
                     <asp:BoundField HeaderText="Patient" DataField="Name" ItemStyle-CssClass="Match" />
+                     <asp:BoundField HeaderText="Mobile" DataField="Phone" ItemStyle-CssClass="Match" />
                     <asp:BoundField HeaderText="Time" DataField="Date" ItemStyle-CssClass="Match" />
                     <asp:BoundField HeaderText="Consulted" DataField="IsProcessed" ItemStyle-CssClass="Match" />
+                  
                     <asp:BoundField HeaderText="UniqueID" DataField="UniqueID" ItemStyle-CssClass="Match" />
+                     
                 </Columns>
 
             </asp:GridView>

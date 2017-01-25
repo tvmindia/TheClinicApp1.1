@@ -878,6 +878,11 @@ namespace TheClinicApp1._1.Appointment
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            if (UA != null)
+            {
+                hdfUserRole.Value = UA.userInRole;
+            }
             if (!IsPostBack)
             {
                 BindDoctorDropdown();

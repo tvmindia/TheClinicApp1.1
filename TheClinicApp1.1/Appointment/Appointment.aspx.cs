@@ -35,6 +35,7 @@ namespace TheClinicApp1._1.Appointment
         ClinicDAL.UserAuthendication UA;
         public string listFilter = null;
         common cmn = new common();
+        ClinicDAL.Appointments appointObj = new ClinicDAL.Appointments();
         #endregion Global Variables
 
         #region Event Properties
@@ -709,6 +710,12 @@ namespace TheClinicApp1._1.Appointment
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+            if (UA != null)
+            {
+                hdfUserRole.Value = UA.userInRole;
+            }
+            
             listFilter = null;
             listFilter = BindName();
             if (!IsPostBack)

@@ -67,8 +67,10 @@ namespace TheClinicApp1._1.Token
             dummy.Columns.Add("DOCNAME");
             dummy.Columns.Add("TokenNo");
             dummy.Columns.Add("Name");
+            dummy.Columns.Add("Phone");
             dummy.Columns.Add("Date");
             dummy.Columns.Add("IsProcessed");
+           
 
             dummy.Columns.Add("UniqueID");
 
@@ -160,7 +162,7 @@ namespace TheClinicApp1._1.Token
                     DeleteButton.ImageUrl = "~/images/Deleteicon1.png";
                 }
             }
-            GridViewTokenlist.Columns[5].Visible=false;
+            GridViewTokenlist.Columns[6].Visible=false;
         }
 
         #endregion gridviewbind

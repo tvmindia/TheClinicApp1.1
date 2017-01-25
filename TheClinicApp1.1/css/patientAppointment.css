@@ -314,3 +314,8 @@ border-bottom-right-radius: 0px;
  }
  .tblTimes   tr:nth-child(even) {background: #ebf0f3}
       .tblDates   tr:nth-child(even) {background: #ebf0f3} 
+
+#imgDelete
+{
+    cursor:pointer;
+}
