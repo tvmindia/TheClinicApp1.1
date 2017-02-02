@@ -20,6 +20,17 @@
  {
      top:350px;
  }
+ .ViewMore
+ {
+         margin-left: 228px;
+ }
+.modal table td
+{
+    border:none;
+}
+ #PatientDetailstbl tr:nth-child(even) {
+            background: #ebf0f3;
+        }
         </style>
 
     <asp:Panel DefaultButton="btnSave" runat="server">
@@ -125,7 +136,7 @@
                 debugger;
                 var ictrl;
                 var check=0;
-                var regex = /^[a-zA-Z0-9,.;:"'@#$%*+! ]{0,255}$/;
+                var regex = /^[a-zA-Z0-9,.;(){}:"'@#$%*+! ]{0,255}$/;
                 var ctrl =[];
                 var domelement = document.querySelectorAll("input[type=text],textarea");
                 var domcount=0;
@@ -216,7 +227,15 @@
                 {                                   
                     PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
                 }
-
+                  debugger;
+<%--                if($("#<%=HiddenPatientID.ClientID %>").val()=="")
+                {
+                    $(".ViewMore").css("display","none")
+                }
+                else
+                {
+                    $(".ViewMore").css("display","")
+                }--%>
                 function OnSuccess(response, userContext, methodName) 
                 {                         
                     var string1 = new Array();
@@ -243,7 +262,11 @@
 
                         var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
                         ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
-                       
+                        $(".ViewMore").css("display","")
+                    }
+                    else
+                    {
+                        $(".ViewMore").css("display","none")
                     }
 
                 }          
@@ -252,6 +275,7 @@
                 }   
                 
                 ResetToNewCase();
+              
             }
 
            
@@ -519,7 +543,7 @@
 
             function test()
             {
-                alert(1);
+               // alert(1);
             }
 
             function BindVisitDetails(Records) {
@@ -592,11 +616,11 @@
                     success: PrescriptionSuccess,
                     failure: function (response) {
 
-                        alert(response.d);
+                       // alert(response.d);
                     },
                     error: function (response) {
 
-                        alert(response.d);
+                      //  alert(response.d);
                     }
                 });
             }
@@ -663,11 +687,11 @@
                     success: HistorySuccess,
                     failure: function (response) {
 
-                        alert(response.d);
+                       // alert(response.d);
                     },
                     error: function (response) {
 
-                        alert(response.d);
+                      //  alert(response.d);
                     }
                 });
             }
@@ -833,11 +857,11 @@
                     success: OnSuccess,
                     failure: function (response) {
 
-                        alert(response.d);
+                       // alert(response.d);
                     },
                     error: function (response) {
 
-                        alert(response.d);
+                       // alert(response.d);
                     }
                 });
             }
@@ -990,8 +1014,34 @@
                 GetBookingsForDoctor(parseInt(1));
 
             }
-
-
+            function BindPatientDetails()
+            {
+                debugger;
+                var patientid = $("#<%=HiddenPatientID.ClientID %>").val();
+                 var Patient = new Object();
+                 Patient.PatientID = patientid;
+                       
+                    jsonResult = GetPatientDetailsByID(Patient);
+                    if (jsonResult != undefined) {
+                          
+                        BindModalWithPatientDetails(jsonResult); 
+                    }
+                      
+            }
+            function BindModalWithPatientDetails(jsonResult)
+            {
+                $("#lblPName").text(jsonResult.Name);
+                $("#lblPGender").text(jsonResult.Gender);
+                $("#lblPAge").text(jsonResult.Age);
+                $("#lblPAddress").text(jsonResult.Address);
+                $("#lblPPhone").text(jsonResult.Phone);
+                $("#lblPEmail").text(jsonResult.Email);
+                $("#lblPMarital").text(jsonResult.MaritalStatus);
+                $("#lblPOccupation").text(jsonResult.Occupation);
+                var patientid = $("#<%=HiddenPatientID.ClientID %>").val();
+                 var ProfilePic = document.getElementById("<%=PatientProfilePic.ClientID%>")  ;
+                ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
+            }
        </script>
 
         <!-- #main-container -->
@@ -1099,7 +1149,7 @@
                                 <label>Doctor</label><asp:Label ID="lblDoctor" runat="server" Text=""></asp:Label>
                             </div>
                         </div>
-
+                        <a class="ViewMore" data-toggle="modal" data-target="#PatientDetails" onclick="return BindPatientDetails();">View More..</a>
                     </div>
 
                     <div class="prescription_grid" style="padding-left:0px !important; max-width: 1000px !important;">
@@ -1491,6 +1541,75 @@
             </div>
         </div>
 
+         <div id="PatientDetails" class="modal fade" role="dialog">
+            <div class="modal-dialog" style="min-width: 550px">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="border-color: #3661C7;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="PatientClose"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title">Patient Details</h3>
+                    </div>
+                    
+                    <div class="modal-body" style="overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+
+                    <div class="col-lg-12" style="height: 480px">
+
+
+                        <div class="col-lg-12" style="height: 400px">
+                            
+                            <table id="PatientDetailstbl" style="border:none">
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                         <img id="PatientProfilePic" src="../images/UploadPic1.png" width="80" height="80" runat="server" />
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td><label>Name : </label></td>
+                                    <td><label id="lblPName"></label></td>
+                                </tr>
+                                    <tr>
+                                    <td><label>Gender : </label></td>
+                                    <td><label id="lblPGender"></label></td>
+                                </tr>
+                                     <tr>
+                                    <td><label>Age : </label></td>
+                                    <td><label id="lblPAge"></label></td>
+                                </tr>
+                                          <tr>
+                                    <td><label>Address : </label></td>
+                                    <td><label id="lblPAddress"></label></td>
+                                </tr>
+                                         <tr>
+                                    <td><label>Phone : </label></td>
+                                    <td><label id="lblPPhone"></label></td>
+                                </tr>
+                                       <tr>
+                                    <td><label>Email : </label></td>
+                                    <td><label id="lblPEmail"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Marital : </label></td>
+                                    <td><label id="lblPMarital"></label></td>
+                                </tr>
+                                  <tr>
+                                    <td><label>Occupation : </label></td>
+                                    <td><label id="lblPOccupation"></label></td>
+                                </tr>
+                            </table>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+
+            </div>
+        </div>
+
         <script src="../js/vendor/jquery-1.11.1.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/jquery-ui.js"></script>
@@ -1695,6 +1814,15 @@
                         return false;
                     }
                 });	
+                debugger;
+               if($("#<%=HiddenPatientID.ClientID %>").val()=="")
+                {
+                    $(".ViewMore").css("display","none")
+                }
+                else
+                {
+                    $(".ViewMore").css("display","")
+                }
             });
                
         
@@ -1747,7 +1875,7 @@
       
                         $( "#project-description" ).html( ui.item.desc );        
 
-                        //bindPatientDetails();
+                        bindPatientDetails();
                         document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                         return false;
                     }

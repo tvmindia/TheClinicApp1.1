@@ -51,24 +51,76 @@
 
         function Validation() {
          
-            if (($('#<%=txtmedicineName.ClientID%>').val().trim() == "") || ($('#<%=txtCode.ClientID%>').val().trim() == "") || ($('#<%=txtOrderQuantity.ClientID%>').val().trim() == "")) {
-
-
-                var lblclass = Alertclasses.danger;
-                var lblmsg = msg.Requiredfields;
-                var lblcaptn = Caption.Confirm;
-
-                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
-
-                return false;
-            }
-            else {
-
+            var fieldBool = FieldsValidation();
+            if(fieldBool==true)
+            {
                 return true;
             }
+            else
+            {
+                return false;
+            }
+     
         }
 
+         function FieldsValidation()
+            {
+                    try
+                    {
+                        //$('#Displaydiv').remove();
+                        var name = $('#<%=txtmedicineName.ClientID%>');
+                        var code = $('#<%=txtCode.ClientID%>');
+                        var orderQuantity = $('#<%=txtOrderQuantity.ClientID%>');
+                       
 
+                        var container = [
+                            { id: name[0].id, name: name[0].name, Value: name[0].value },
+                            { id: code[0].id, name: code[0].name, Value: code[0].value },
+                            { id: orderQuantity[0].id, name: orderQuantity[0].name, Value: orderQuantity[0].value },
+                        ];
+
+                        var j = 0;
+       
+                        for (var i = 0; i < container.length; i++) {
+                            if (container[i].Value == "") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "95% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+               
+                            }
+                            else if (container[i].Value == "-1") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "93% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+             
+                            }
+                        }
+                        if (j == '1') {
+                           var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.Requiredfields;
+                    var lblcaptn = Caption.Confirm;
+                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+                            return false;
+                        }
+                        if (j == '0') {
+          
+                            //saveMember();
+                            return true;
+                        }
+                    }
+                    catch(e)
+                    {
+                        //noty({ type: 'error', text: e.message });
+                    }
+   
+                
+            }
         $(document).ready(function () {
 
 
@@ -97,7 +149,11 @@
             $(".main_body").toggleClass("active_close");
         });
 
-
+        $('input[type=text],input[type=number]').on('focus', function () {
+            debugger;
+            $(this).css({ borderColor: '#dbdbdb' });
+            $("#Errorbox").hide(1000);
+        });
         });
 
     //---------------* Function to check medicine name duplication *-----------------//
@@ -534,7 +590,7 @@
                                 </ul>
                             </div>
 
-                            <div id="Errorbox" style="display: none;" runat="server">
+                            <div id="Errorbox" style="display: none;" runat="server" ClientIDMode="Static">
                                 <a class="alert_close">X</a>
                                 <div>
                                     <strong>

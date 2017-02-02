@@ -555,7 +555,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@PhoneNo", SqlDbType.NVarChar, 30).Value = PhoneNo;
 
                 cmd.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = updatedBy;
-                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
+                //cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
 
 
                 SqlParameter Output = new SqlParameter();

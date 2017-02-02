@@ -468,10 +468,17 @@ border-bottom-right-radius: 3px;
 	-webkit-transition: all 500ms ease-in-out;
 }
 
-.logo {display: block; padding: 19px 0; text-align: center; background: #fff; height: 26px; overflow: hidden; box-sizing: content-box;}
+.logo {display: block; padding: 19px 0; text-align: center; background: #fff; /*height: 26px;*/ overflow: hidden; box-sizing: content-box;}
 .logo a {display: inline-block;}
 
-.logo .big {display: block;}
+.logo .big {
+    display: block;
+    /*margin-top:-14px;*/
+      max-height: 80px;
+    max-width: 260px;
+    min-width:250px;
+    position: relative;
+}
 .logo .small {display: none;}
 
 .active_close .logo .big {display: none;}

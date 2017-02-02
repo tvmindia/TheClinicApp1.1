@@ -13,7 +13,7 @@ function getJsonData(data, page) {
         dataType: "json"
 
     }).done(function (data) {
-
+        debugger;
         //     $("#loadingimage").hide();
         jsonResult = data;
     });

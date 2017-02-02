@@ -132,6 +132,16 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+        public string AppointmentDayValue
+        {
+            get;
+            set;
+        }
+        public string appointmentStartDate
+        {
+            get;
+            set;
+        }
         #endregion Appointment Properties
 
         #region Appointment Methods
@@ -1110,11 +1120,114 @@ namespace TheClinicApp1._1.ClinicDAL
              return ds;
 
          }
-         #endregion GetAppointedPatientDetailsByScheudleID
+        #endregion GetAppointedPatientDetailsByScheudleID
 
-            #endregion Appointment Methods
+        #endregion Appointment Methods
 
+        #region MyAppointment Methods
+        #region GetAppointedPatientDetailsForMyAppointments
+        public DataTable GetAppointedPatientDetailsForMyAppointments()
+        {
+            SqlConnection con = null;
+            DataTable dt = null;
+            SqlDataAdapter sda = null;
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            if (DoctorID == "")
+            {
+                throw new Exception("DoctorID is Empty!!");
+            }
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetPatientDetailsForMyAppointments]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
+                cmd.Parameters.Add("@AppointmentDate", SqlDbType.Date).Value = AppointmentDate;
+                sda = new SqlDataAdapter(cmd);
+                dt = new DataTable();
+                sda.Fill(dt);
+            }
 
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAppointedPatientDetailsByScheudleID";
+                eObj.InsertError();
+            }
 
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return dt;
+
+        }
+        #endregion GetAppointedPatientDetailsByScheudleID
+
+        #region GetAppointmentDatesandPatientCount
+        public DataTable GetAppointmentDatesandPatientCountForMyAppointment()
+        {
+            if (ClinicID == "")
+            {
+                throw new Exception("ClinicID is Empty!!");
+            }
+            dbConnection dcon = null;
+            SqlCommand cmd = null;
+            SqlDataAdapter sda = null;
+            DataTable dt = null;
+            try
+            {
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                cmd = new SqlCommand();
+                sda = new SqlDataAdapter();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetAppointmentDatesandCountBasedOnDate]";
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@DoctorID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(DoctorID);
+                cmd.Parameters.Add("@AppointmentValue", SqlDbType.NVarChar, 1).Value = AppointmentDayValue;
+                if(appointmentStartDate!=null)
+                {
+                    cmd.Parameters.Add("@AppointmentStartDate", SqlDbType.Date).Value = Convert.ToDateTime(appointmentStartDate);
+                }
+                sda.SelectCommand = cmd;
+                dt = new DataTable();
+                sda.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetAppointmentDatesandCount";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+            }
+            return dt;
+        }
+
+        #endregion GetAllPatientAppointmentDetailsByClinicID
+        #endregion MyAppointment Methods
     }
 }

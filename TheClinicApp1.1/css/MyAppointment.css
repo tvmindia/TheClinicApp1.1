@@ -1,0 +1,133 @@
+﻿        .drop
+   {
+        border-radius:5px;
+        border-color:lightgray;
+        
+    }
+
+        body
+        {
+             margin: 40px 10px;
+            padding: 0;
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            font-size: 14px;
+        }
+        select
+        {
+            color:black;
+        }
+        .rdo{
+           max-width:14px;
+        }
+        table td
+        {
+            border:none;
+            border-top:none;
+            border-left:none;
+            /*width:250px;*/       
+
+        }
+.form_area {
+    height: auto;
+    width : 450px;
+}
+.inputs_table  input[type="text"] {
+    width: 200px;       
+}
+
+label  {
+    white-space: nowrap;
+}
+.blink {
+  animation: blink .5s step-end infinite alternate;
+}
+@keyframes blink { 
+    0%{box-shadow:0 0 10px #07d8d8;}
+   50% { box-shadow:0 0 20px #41f5ef; }
+       
+}
+ .name_field {background: #3661c7; /*padding: 10px 20px;*/ text-align: left; font-size: 18px; line-height: 38px; font-weight: 500; color: #fff; text-transform: uppercase; /*font-family:'roboto-bold';*/ overflow: hidden; position: relative;}
+       .card_white {padding: 15px; display: block; font-family:'roboto-light';}
+       .card_white .field_label {display: block; clear: both; color: #000; font-size: 15px;}
+.card_white .field_label label {width: 21%; display: inline-block; position: relative; margin: 0 20px 0 0; color: #000; font-size: 15px;}
+.card_white .field_label label:after {position: absolute; top: 0; bottom: 0; right: 0; content: ":";}
+.card_white .field_label a {color: #000;}
+
+.cards
+{
+    padding:1px;
+    min-width:600px;
+    display:inline-block;
+}
+#patientTable
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #99c4e0;
+    text-align: center;
+    /*height:140px;*/
+}
+.trAppNo
+{
+    background-color:aliceblue;
+}
+.AppointmentDateAndCount
+{
+    text-align:center;
+    min-height:350px;
+}
+label.noAppointments
+{
+    padding:30px;
+    border:1px solid #99c4e0;
+    /*min-height:200px;*/
+    text-align:center;
+}
+input#txtStartDate {
+    width: 265px;
+}
+
+
+.rdoLabel
+{
+    margin-top: -21px;
+    margin-left: 16px;
+}
+.fa
+{
+    cursor:pointer;
+}
+.lead {
+    font-size: 18px !important;
+    min-height: 35px;
+    text-align: center;
+}
+.tdLabel1
+{
+    text-align:left;
+    padding-top:5px;
+    padding-left:4px;
+}
+.tdLabel2
+{
+    position:absolute;
+    margin-top:-9px;
+    margin-left:-445px;
+    min-width: 46px;
+    width: 140px;
+    text-align: left;
+    overflow: hidden;
+}
+.tdLabel3
+{
+      position:absolute;
+    margin-top:-9px;
+    margin-left:-290px;
+}
+.tdLabel4
+{
+text-align: center;
+    margin-top: -7px;
+    position: absolute;
+    margin-left: -160px;
+}

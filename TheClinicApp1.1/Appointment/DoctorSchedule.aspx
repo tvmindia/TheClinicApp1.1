@@ -32,18 +32,23 @@
     <%--<script src="../js/jquery-1.9.1.min.js"></script>--%>
     <script src="../js/bootstrap.min.js"></script>
     <link href="../css/DrSchedule.css" rel="stylesheet" />
-    <style>
-        /*.fc-content
-{
-    display:none;
+        <style>
+        .blink {
+  animation: blink .5s step-end infinite alternate;
 }
-.fc-time {
-    display:none;
+@keyframes blink { 
+    0%{box-shadow:0 0 10px #07d8d8;}
+   50% { box-shadow:0 0 20px #41f5ef; }
+       
 }
-
-.fc-day-grid-event .fc-time{
-    display:none;
-}*/
+label.noAppointments {
+    border: 1px solid #62bbe9;
+    width: 520px;
+    margin-left: 15px;
+    text-align: center;
+    padding: 173px;
+    min-height:445px;
+}
     </style>
 
     <%--var isPostBack = <%=Convert.ToString(Page.IsPostBack).ToLower()%>;--%>
@@ -57,6 +62,13 @@
 
         $(document).ready(function () {
             debugger;
+            var selectedDoc = $("#<%=ddlDoctor.ClientID%> option:selected").text();
+            debugger;
+            if (selectedDoc == "-- Select Doctor --") {
+                $("#ContentPlaceHolder1_ddlDoctor").toggleClass('blink');
+                $(".token_id_card").css("display", "none");
+                $(".noAppointments").css("display", "");
+            }
             var usrRole=$('#<%=hdfUserRole.ClientID%>').val()
             if(usrRole=="Doctor")
             {
@@ -187,7 +199,18 @@
         //-- If method is invoked while changing doctor(using doctor dropdown) , value of variable 'isDropdownItemChanged' will be true
         //-- If method is invoked in document.ready  value of variable 'isDropdownItemChanged' will set to false
         function BindCalender(e, isDropdownItemChanged) {
-
+            var selectedDoc = e.value;
+            debugger;
+            if (selectedDoc == "-- Select Doctor --") {
+                $("#ContentPlaceHolder1_ddlDoctor").toggleClass('blink');
+                $(".token_id_card").css("display", "none");
+                $(".noAppointments").css("display", "");
+            }
+            else {
+                $("#ContentPlaceHolder1_ddlDoctor").removeClass('blink');
+                $(".token_id_card").css("display", "");
+                $(".noAppointments").css("display", "none");
+            }
             if (isDropdownItemChanged == true) {
                 $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
                 DoctorID = e.value;
@@ -300,7 +323,7 @@
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" id="PatientApointment" ><a href="Appointment.aspx">Patient Appoinments</a></li>
+                        <li role="presentation" id="PatientApointment" ><a href="Appointment.aspx">Book Appoinments</a></li>
                         <li role="presentation" id="DoctorSchedule" class="active"><a href="DoctorSchedule.aspx">Doctor Schedule</a></li>
                          <li role="presentation" id="MyAppointment"><a href="MyAppointments.aspx">My Appointments</a></li>
                     </ul>
@@ -602,7 +625,7 @@
                                                 </div>
 
                                             </div>
-
+                                            <label class="noAppointments">Please Select Doctor..!!!</label>
                                         </div>
                                     </div>
                                 </div>

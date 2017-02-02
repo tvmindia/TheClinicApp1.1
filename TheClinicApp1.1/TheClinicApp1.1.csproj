@@ -146,8 +146,10 @@
     <Content Include="css\ClinicappMaster.css" />
     <Content Include="css\DrSchedule.css" />
     <Content Include="css\fileinput.css" />
+    <Content Include="css\font-awesome.css" />
     <Content Include="css\fonts\caviardreams_gdi.svg" />
     <Content Include="css\fonts\centurygothic-bold_gdi.svg" />
+    <Content Include="css\fonts\fontawesome-webfont.svg" />
     <Content Include="css\fonts\raleway-semibold_gdi.svg" />
     <Content Include="css\fonts\roboto-bold_gdi.svg" />
     <Content Include="css\fonts\roboto-light_gdi.svg" />
@@ -162,6 +164,7 @@
     <Content Include="css\Masterw3.css" />
     <Content Include="css\materialize.min.css" />
     <Content Include="css\mui.css" />
+    <Content Include="css\MyAppointment.css" />
     <Content Include="css\normalize.css" />
     <Content Include="css\normalize.min.css" />
     <Content Include="css\patientAppointment.css" />
@@ -360,6 +363,11 @@
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-1.12.0.min.js" />
     <Content Include="Scripts\jquery-1.3.2.min.js" />
+    <Content Include="css\fonts\fontawesome-webfont.eot" />
+    <Content Include="css\fonts\fontawesome-webfont.ttf" />
+    <Content Include="css\fonts\fontawesome-webfont.woff" />
+    <Content Include="css\fonts\fontawesome-webfont.woff2" />
+    <Content Include="css\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\web deploy profile.pubxml" />
     <None Include="Scripts\jquery-1.8.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -385,6 +393,7 @@
     <Content Include="Scripts\selectize.js" />
     <Content Include="Scripts\UserJS\Appointment.js" />
     <Content Include="Scripts\UserJS\DoctorSchedule.js" />
+    <Content Include="Scripts\UserJS\MyAppointment.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
     <Content Include="Scripts\WebForms\GridView.js" />

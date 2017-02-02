@@ -25,15 +25,28 @@
         var DoctorID="";
         $(document).ready(function () {
             debugger;
-            var usrRole=$('#<%=hdfUserRole.ClientID%>').val()
+            var selectedDoc = $("#hdfDoctorID").val();
+            debugger;
+            if (selectedDoc == "") {
+                $("#ContentPlaceHolder1_ddlDoctor").toggleClass('blink');
+                $("#PatientReg").css("display","none");
+                $("#AppointmentList").css("display","none");
+                $(".noAppointments").css("display","");
+            }
+            var usrRole=$("#hdfUserRole").val()
             if(usrRole=="Doctor")
             {
                 $("#PatientApointment").css("display","none");
                 $("#DoctorSchedule").css("display","none");
+                document.getElementById("MyAppointment").className = 'active'
+                window.location.href = "../Appointment/MyAppointments.aspx";
+                
             }
             if(usrRole=="Receptionist")
             {
                 $("#MyAppointment").css("display","none");
+                $("#MyAppointment").addClass("active");
+                selectTile("MyAppointments","Doctor");
             }
            var role=$('#<%=lblAppointment.ClientID%>').val()
             var bindTitle="";
@@ -428,7 +441,21 @@ var appointmentNo="";
 
             debugger;
             //  $('#hdnDoctorName').val(e.options[e.selectedIndex].text);
-
+            var selectedDoc =e.value;
+            debugger;
+            if (selectedDoc == "--Select Doctor--") {
+                $("#ContentPlaceHolder1_ddlDoctor").toggleClass('blink');
+                $("#PatientReg").css("display","none");
+                $("#AppointmentList").css("display","none");
+                $(".noAppointments").css("display","");
+            }
+            else
+            {
+                $("#ContentPlaceHolder1_ddlDoctor").removeClass('blink');
+                $("#PatientReg").css("display","");
+                $("#AppointmentList").css("display","");
+                $(".noAppointments").css("display","none");
+            }
             clearDropDown();
             hideDropDown();
             clearTextBoxes();
@@ -534,9 +561,51 @@ var appointmentNo="";
             }
 
         }
-        
+        function NewPatientBind(e)
+        {
+            $(".PatientNewTr").css("display","");
+            $(".PatientOldTr").css("display","none");
+        }
+        function OldPatientBind(e)
+        {
+            $(".PatientNewTr").css("display","none");
+            $(".PatientOldTr").css("display","");
+        }
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || (charCode > 57)|| (charCode==08))) {
+                return false;
+            }
+            return true;
+        }
 
     </script>
+    <style>
+        .blink {
+  animation: blink .5s step-end infinite alternate;
+}
+@keyframes blink { 
+    0%{box-shadow:0 0 10px #07d8d8;}
+   50% { box-shadow:0 0 20px #41f5ef; }
+       
+}
+label.noAppointments {
+    border: 1px solid #62bbe9;
+    width: 505px;
+    margin-left: 554px;
+    text-align: center;
+    padding: 173px;
+    min-height:445px;
+}
+.rdo{
+    max-width: 14px;
+}
+.rdoLabel {
+    margin-top: -21px;
+    margin-left: 16px;
+}
+    </style>
     <div class="main_body">
             <div class="left_part">
                 <div class="logo">
@@ -585,7 +654,7 @@ var appointmentNo="";
                 <div class="page_tab">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" id="PatientApointment" class="active"><a href="Appointment.aspx">Patient Appoinments</a></li>
+                        <li role="presentation" id="PatientApointment" class="active"><a href="Appointment.aspx">Book Appoinments</a></li>
                         <li role="presentation" id="DoctorSchedule"><a href="DoctorSchedule.aspx">Doctor Schedule</a></li> 
                         <li role="presentation" id="MyAppointment"><a href="MyAppointments.aspx">My Appointments</a></li>
                         
@@ -653,6 +722,7 @@ var appointmentNo="";
                                     </div>
                              
                                           <div class="col-lg-6" style="height: 100%;">
+                                               
                                                <div id="PatientReg">
                                                    <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
                                                        <asp:Label runat="server" ID="lblAppointment" Text="Add Appointment"></asp:Label>
@@ -699,6 +769,23 @@ var appointmentNo="";
                                                           </td>
                                                       </tr>
                                                       <tr>
+                                                          <td> <label >Patient Type</label></td>
+                                                          <td>
+                                                              <table>
+                                                                  <tr>
+                                                                      <td><input type="radio" class="rdo" onclick="return OldPatientBind(this);" name="patientType" value="1" checked="" />
+                                                                           <label class="rdoLabel">Existing</label>
+                                                                      </td>
+                                                                      <td><input type="radio" class="rdo" onclick="return NewPatientBind(this);" name="patientType" value="2" />
+                                                                           <label class="rdoLabel">New</label>
+                                                                      </td>
+                                                                  </tr>
+                                                              </table>
+                                                                                                                            
+                                                          </td>
+                                                         
+                                                      </tr>
+                                                      <tr class="PatientOldTr">
                                                           <td><%-- <asp:Label ID="lblPatient" runat="server" Text="Patient:"></asp:Label>--%>
                                                               <label>Patient</label>
                                                           </td>
@@ -714,7 +801,7 @@ var appointmentNo="";
                                                           </td>
                                                           
                                                       </tr>
-                                                      <tr>
+                                                      <tr class="PatientNewTr" style="display:none;">
                                                           <td>
                                                              <%-- <asp:Label ID="lblPatientName" runat="server" Text="Name:"></asp:Label>--%>
                                                               <label>Name</label>
@@ -733,7 +820,7 @@ var appointmentNo="";
                                                               <label>Mobile</label>
                                                           </td>
                                                           <td>
-                                                              <input type="text" id="txtPatientMobile" class="txtBox"/>
+                                                              <input type="text" id="txtPatientMobile" onkeypress="return isNumber(event)" class="txtBox" pattern="^[0-9+-]*$"/>
                                                               <%--<asp:TextBox ID="txtPatientMobile" runat="server"></asp:TextBox>--%>
                                                               <br />
                                                           </td>
@@ -754,6 +841,8 @@ var appointmentNo="";
                                                  </div>
                                                  
                                               </div>
+                                          
+                                  
                                               <br />
                                               <div id="AppointmentList" >
                                                   <div class="name_field" style="background-color: #99c4e0!important; text-transform: none">
@@ -766,7 +855,9 @@ var appointmentNo="";
        
     </div>
                                               </div>
-                                             
+                                              </div>
+                                             <label class="noAppointments">Please Select Doctor..!!!</label>
+                                                
                                           </div>
                                         </div>
                               </div>
@@ -791,8 +882,8 @@ var appointmentNo="";
                 <input type="hidden" id="hdfPatientID" />
                 <input type="hidden" id="hdfTimeListLength" />
                 <input type="hidden" id="hdfAppointmentNoCollection" />
-                <input type="hidden" id="hdfUserRole" runat="server" />
+                <input type="hidden" id="hdfUserRole" ClientIDMode="Static" runat="server" />
             </div>
-        </div>
+        
 
 </asp:Content>

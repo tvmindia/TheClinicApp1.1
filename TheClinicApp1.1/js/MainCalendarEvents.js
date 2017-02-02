@@ -10,7 +10,9 @@ var checkItems = "";
 var scheduleId = "";
 var removeTime = [];
 $(document).ready(function () {
-    
+    var usrRole=$("#hdfUserRole").val()
+    if (usrRole != "Doctor") {
+  
     $('.alert_close').click(function () {
         $(this).parent(".alert").hide();
     });
@@ -481,7 +483,7 @@ $(document).ready(function () {
 
 
 
-                $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment'  style='float: left;	background-repeat: no-repeat !important;cursor:pointer !important;height:10px!important' />")
+                    $('#calendar').find('.fc-day[data-date="' + dateString + '"]').append("<img id='imgSelect' src='../Images/add.png' title='Add Appointment'  style='float: left;	background-repeat: no-repeat !important;cursor:pointer !important;height:10px!important' />")
               
                 }
               
@@ -508,10 +510,13 @@ $(document).ready(function () {
         selectOnlyThis(this.id);
     });
     $('.loader').delay(3150).fadeOut('slow');
-  
+    }
 });
 /*end of document.ready*/
-
+//function AddEvent()
+//{
+//    return alert();
+//}
 function ConvertTimeFormatFrom24hrTo12hr(Time) {
     var TimeIn24hrFormat = Time;
     var hourEnd = TimeIn24hrFormat.indexOf(":");

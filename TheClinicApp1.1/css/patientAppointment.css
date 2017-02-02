@@ -319,3 +319,7 @@ border-bottom-right-radius: 0px;
 {
     cursor:pointer;
 }
+.cards
+{
+    width:50px;
+}

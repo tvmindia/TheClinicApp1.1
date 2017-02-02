@@ -168,21 +168,24 @@ namespace TheClinicApp1._1.Appointment
                 DataSet ds = null;
                 DocObj.ClinicID = UA.ClinicID.ToString();
                 ds = DocObj.GetDoctorScheduleDetailsByDoctorID();
-
-                int count = ds.Tables[0].Rows.Count;
-                for (int i = 0; i <= count - 1; i++)
+                if(ds!=null)
                 {
-                    events.Add(new Event()
+                    int count = ds.Tables[0].Rows.Count;
+                    for (int i = 0; i <= count - 1; i++)
                     {
-                        id = ds.Tables[0].Rows[i]["event_id"].ToString(),
-                       // title = ds.Tables[0].Rows[i]["title"].ToString(),
-                   //    title = "",
-                        start = ds.Tables[0].Rows[i]["event_start"].ToString(),
-                        end = ds.Tables[0].Rows[i]["event_end"].ToString(),
-                        StartTime = ds.Tables[0].Rows[i]["Starttime"].ToString(),
-                        EndTime = ds.Tables[0].Rows[i]["Endtime"].ToString()
-                    });
+                        events.Add(new Event()
+                        {
+                            id = ds.Tables[0].Rows[i]["event_id"].ToString(),
+                            // title = ds.Tables[0].Rows[i]["title"].ToString(),
+                            //    title = "",
+                            start = ds.Tables[0].Rows[i]["event_start"].ToString(),
+                            end = ds.Tables[0].Rows[i]["event_end"].ToString(),
+                            StartTime = ds.Tables[0].Rows[i]["Starttime"].ToString(),
+                            EndTime = ds.Tables[0].Rows[i]["Endtime"].ToString()
+                        });
+                    }
                 }
+       
 
             }
 
@@ -230,18 +233,22 @@ namespace TheClinicApp1._1.Appointment
 
                 List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
                 Dictionary<string, object> childRow;
-                if (ds.Tables[0].Rows.Count > 0)
+                if(ds!=null)
                 {
-                    foreach (DataRow row in ds.Tables[0].Rows)
+                    if (ds.Tables[0].Rows.Count > 0)
                     {
-                        childRow = new Dictionary<string, object>();
-                        foreach (DataColumn col in ds.Tables[0].Columns)
+                        foreach (DataRow row in ds.Tables[0].Rows)
                         {
-                            childRow.Add(col.ColumnName, row[col].ToString());
+                            childRow = new Dictionary<string, object>();
+                            foreach (DataColumn col in ds.Tables[0].Columns)
+                            {
+                                childRow.Add(col.ColumnName, row[col].ToString());
+                            }
+                            parentRow.Add(childRow);
                         }
-                        parentRow.Add(childRow);
                     }
                 }
+           
                 return jsSerializer.Serialize(parentRow);
             }
 

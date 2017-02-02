@@ -210,15 +210,23 @@
                 $('.nav_menu').click(function () {
                     $(".main_body").toggleClass("active_close");
                 });
-            
+                $('input[type=text],input[type=number]').on('focus', function () {
+                    debugger;
+                    $(this).css({ borderColor: '#dbdbdb' });
+                  $("#Errorbox").hide(1000);
+                });
+                $('textarea,select').on('focus', function () {
+                    $(this).css({ borderColor: '#dbdbdb' });
+                    $("#Errorbox").hide(1000);
+                });
             }); 
  //-----------------------------------------------------------------------------------script validation Author: Thomson Kattingal-----------------------------------//       
             function validate()
             {
-             
+                debugger;
                 var ictrl;
                 var check=0;
-                var regex = /^[a-zA-Z0-9,.;:"'@#$%*+! ]{0,255}$/;
+                var regex = /^[a-zA-Z0-9,.;:()"'@#$%*+! ]{0,255}$/;
                 var ctrl =[];
                 var domelement = document.querySelectorAll("input[type=text],textarea");
                 var domcount=0;
@@ -256,24 +264,96 @@
                 var boolValue= validate();
                 if(boolValue==true)
                 {
-                     debugger;
-                if( ($('#<%=txtName.ClientID%>').val()=="")||  ($('#<%=txtAge.ClientID%>').val()=="") )
+                    debugger;
+                    var FieldsBool=FieldsValidation();
+                    if(FieldsBool==true)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+              <%--  if( ($('#<%=txtName.ClientID%>').val()=="")||  ($('#<%=txtAge.ClientID%>').val()=="") )
                 {
+                    if($('#<%=txtName.ClientID%>').val()=="")
+                    {
+                        $('#<%=txtName.ClientID%>').focus();
+                    }
+                    else if($('#<%=txtAge.ClientID%>').val()=="")
+                    {
+                        $('#<%=txtAge.ClientID%>').focus();
+                    }
+                    
                     var lblclass = Alertclasses.danger;
                     var lblmsg = msg.Requiredfields;
                     var lblcaptn = Caption.Confirm;
                     ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
                     return false;
-                }
-                else
-                {
-                    return true;
-                }
+                }--%>
+                //else
+                //{
+                //    return true;
+                //}
                 }
                
 
             }
-    
+            function FieldsValidation()
+            {
+                    try
+                    {
+                        //$('#Displaydiv').remove();
+                        var name = $('#<%=txtName.ClientID%>');
+                        var age = $('#<%=txtAge.ClientID%>');
+
+                        var container = [
+                            { id: name[0].id, name: name[0].name, Value: name[0].value },
+                            { id: age[0].id, name: age[0].name, Value: age[0].value },
+                        ];
+
+                        var j = 0;
+       
+                        for (var i = 0; i < container.length; i++) {
+                            if (container[i].Value == "") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "95% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+               
+                            }
+                            else if (container[i].Value == "-1") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "93% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+             
+                            }
+                        }
+                        if (j == '1') {
+                           var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.Requiredfields;
+                    var lblcaptn = Caption.Confirm;
+                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+                            return false;
+                        }
+                        if (j == '0') {
+          
+                            //saveMember();
+                            return true;
+                        }
+                    }
+                    catch(e)
+                    {
+                        //noty({ type: 'error', text: e.message });
+                    }
+   
+                
+            }
             function OpenModal(id){
                 if(id=='1')            
                 {
@@ -595,7 +675,7 @@
             $(function () {
                 debugger;
                 $("[id*=GridView1] td:eq(0)").click(function () { 
-
+                    debugger;
                     PatientID = $(this).closest('tr').find('td:eq(5)').text();
                        
                     document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
@@ -1343,7 +1423,7 @@ function AppointmentIsAbsent(Appointments)
                 </div>
                 <div class="right_form">
 
-                    <div id="Errorbox" style="height: 30%; display: none;" runat="server">
+                    <div id="Errorbox" style="height: 30%; display: none;" ClientIDMode="Static" runat="server">
                         <a class="alert_close">X</a>
                         <div>
                             <strong>

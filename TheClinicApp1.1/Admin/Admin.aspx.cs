@@ -873,10 +873,10 @@ namespace TheClinicApp1._1.Admin
                      childRow = new Dictionary<string, object>();
                      foreach (DataColumn col in ds.Tables[0].Columns)
                      {
-                        if(col.ColumnName== "Password")
-                        {
-                            row[col] = CryptObj.Decrypt(row[col].ToString());
-                        }
+                        //if(col.ColumnName== "Password")
+                        //{
+                        //    row[col] = CryptObj.Decrypt(row[col].ToString());
+                        //}
                          childRow.Add(col.ColumnName, row[col]);
                      }
                      parentRow.Add(childRow);
@@ -930,7 +930,7 @@ namespace TheClinicApp1._1.Admin
         protected void btnSave_Click(object sender, EventArgs e)
         {
             int rslt = 0;
-
+            hdfEditOrNew.Value = "0";
             UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
             string msg = string.Empty;
 

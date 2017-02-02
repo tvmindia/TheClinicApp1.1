@@ -310,10 +310,10 @@ namespace TheClinicApp1._1.ClinicDAL
                     //html.Append("</div>");
 
 
-                    html.Append("<div style='float:left;width:20%'>");
-                    html.Append("<img  src='" + LogoURL + "'/>");
+                    html.Append("<div style='float:left;padding:2px;'>");
+                    html.Append("<img style='min-width:20px;max-width:150px;height:auto;'  src='" + LogoURL + "'/>");
                     html.Append("<div>");
-                    html.Append("<span class='Clinicname'> " + Name + "</span>");
+                    //html.Append("<span class='Clinicname'> " + Name + "</span>");
                     html.Append("</div>");
                     html.Append("</div>");
 

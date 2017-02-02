@@ -62,13 +62,15 @@
             debugger;
            
 
-            if (($('#<%=txtLoginName.ClientID%>').val().trim() == "") || ($('#<%=txtFirstName.ClientID%>').val().trim() == "") || ($('#<%=txtPassword.ClientID%>').val().trim() == "") || ($('#<%=txtConfirmPassword.ClientID%>').val().trim() == "") || ($('#<%=txtPhoneNumber.ClientID%>').val().trim() == "") || ($('#<%=txtEmail.ClientID%>').val().trim() == "")) {
+            if (($('#<%=txtLoginName.ClientID%>').val().trim() == "") || ($('#<%=txtFirstName.ClientID%>').val().trim() == "") ||  ($('#<%=txtPhoneNumber.ClientID%>').val().trim() == "") || ($('#<%=txtEmail.ClientID%>').val().trim() == "")) {
 
                 var lblclass = Alertclasses.danger;
                 var lblmsg = msg.Requiredfields;
                 var lblcaptn = Caption.Confirm;
                 ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
                 return false;
+                
+
             }
             else if ($("#<%=ddlGroup.ClientID%> option:selected").text() == "--Select Clinic--")
             {
@@ -80,7 +82,19 @@
 
                 return false;
             }
-
+                var isUpdate = $("#hdfEditOrNew").val();
+                debugger;
+                if (isUpdate != "1")
+                {
+                    if(($('#<%=txtPassword.ClientID%>').val().trim() == "") ||($('#<%=txtConfirmPassword.ClientID%>').val().trim() == ""))
+                    {
+                              var lblclass = Alertclasses.danger;
+                var lblmsg = msg.Requiredfields;
+                var lblcaptn = Caption.Confirm;
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+                return false;
+                    }
+                }
 
             else {
                 return true;
@@ -223,8 +237,8 @@
         function SetRequired() {
             document.getElementById('<%=txtLoginName.ClientID %>').required = true;
             document.getElementById('<%=txtFirstName.ClientID %>').required = true;
-            document.getElementById('<%=txtPassword.ClientID %>').required = true;
-            document.getElementById('<%=txtConfirmPassword.ClientID %>').required = true;
+      <%--      document.getElementById('<%=txtPassword.ClientID %>').required = true;
+            document.getElementById('<%=txtConfirmPassword.ClientID %>').required = true;--%>
             document.getElementById('<%=txtLoginName.ClientID %>').required = true;
             document.getElementById('<%=txtEmail.ClientID %>').required = true;
 
@@ -266,6 +280,7 @@
         
             $("[id*=dtgViewAllUsers] td:eq(0)").click(function () {
                 debugger;
+                $("#hdfEditOrNew").val("1");
                 if ($(this).closest('tr').find('td:eq(7)').text() != $('#<%=hdnLoginedUserID.ClientID%>').val()) { //Making sure ,not editing the logined user data
 
                 document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
@@ -312,7 +327,8 @@
                 $("#<%=txtPhoneNumber.ClientID %>").val(Records.PhoneNo);
                 $("#<%=txtEmail.ClientID %>").val(Records.Email);
                 $("#<%=hdnUserID.ClientID %>").val(Records.UserID);
-
+<%--                $("#<%=txtConfirmPassword.ClientID %>").val(Records.Password);
+                $("#<%=txtPassword.ClientID %>").val(Records.Password);--%>
                 $("#<%=ddlGroup.ClientID %>").val(Records.ClinicID);
                
                 if (Records.Active == true) {
@@ -597,7 +613,7 @@
                 <li id="token"><a name="hello" onclick="selectTile('token','')"><span class="icon token"></span><span class="text">Token</span></a></li>
                 <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
                 <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
-                <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
+                <li id="stock" ><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
                 <li id="admin" class="active" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                 <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
                 <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
@@ -709,16 +725,16 @@
 
                                 <div class="row field_row">
                                     <div class="col-lg-4 ">
-                                        <label for="name">Password</label><input id="txtPassword" runat="server" type="password" name="name" autocomplete="off" />
+                                        <label for="name">Password</label><input id="txtPassword" runat="server" type="password" name="name"  />
                                     </div>
                                     <div class="col-lg-4 ">
-                                        <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name" autocomplete="off" onkeyup="PassowrdEqualityCheck()" />
+                                        <label for="name">Re-Type Password</label><input id="txtConfirmPassword" runat="server" type="password" name="name"  onkeyup="PassowrdEqualityCheck()" />
                                     </div>
                                 </div>
 
                                 <div class="row field_row">
                                     <div class="col-lg-4 ">
-                                        <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" onkeypress="return isNumber(event)" name="name" pattern="^[0-9+-]*$" />
+                                        <label for="name">Phone</label><input id="txtPhoneNumber" runat="server" type="text" onkeypress="return isNumber(event)" name="name" />
                                     </div>
                                     <div class="col-lg-4 ">
                                         <label for="name">Email</label><input id="txtEmail" runat="server" type="email" name="name"  onchange="EmailIDDuplicationCheck(this)" />
@@ -821,7 +837,7 @@
       <asp:HiddenField ID="hdnLoginedUserID" runat="server" /> 
     
       <asp:HiddenField ID="hdnClinicID" runat="server" Value="" /> <%----- *ClinicID generally accessed from UA, If clinic changed ClinicID will be saved to this hiddenfield  *--%>
-    
+    <input type="hidden" id="hdfEditOrNew" value="" runat="server" ClientIDMode="Static"/>
     <%--<asp:HiddenField ID="hdnClinicName" runat="server" Value="" />--%>
 
 </asp:Content>
