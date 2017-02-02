@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace TheClinicApp1._1.Login
@@ -30,6 +31,33 @@ namespace TheClinicApp1._1.Login
                 From = Request.QueryString["From"].ToString();
                 //module.InnerText = From.ToUpper();
             }
+            if(UA!=null)
+            {
+                string currentLi = UA.currentPage;
+                if(currentLi== "Tokens")
+                {
+                    currentLi = "token";
+                }
+                if(currentLi== "Categories")
+                {
+                    currentLi = "master";
+                }
+                if(currentLi== "Appointment")
+                {
+                    currentLi = "Appoinments";
+                }
+                if(currentLi== "Doctors")
+                {
+                    currentLi = "doctor";
+                }
+                if(currentLi== "ReportsList")
+                {
+                    currentLi = "Repots";
+                }
+                HtmlControl li= (HtmlControl)list.FindControl(currentLi);
+                li.Attributes["class"] = "active";
+            }
+            //patients.Attributes["class"] = "active";
         }
 
         protected void LogoutButton_Click(object sender, ImageClickEventArgs e)

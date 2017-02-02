@@ -57,22 +57,69 @@
 }
     </style>
     <script>
+         function FieldsValidation()
+         {
+             debugger;
+                    try
+                    {
+                        //$('#Displaydiv').remove();
+                        var lName = $('#<%=txtLoginName.ClientID%>');
+                        var fName = $('#<%=txtFirstName.ClientID%>');
+                        var phone = $('#<%=txtPhoneNumber.ClientID%>'); 
+                         var email = $('#<%=txtEmail.ClientID%>');
+
+                        var container = [
+                            { id: lName[0].id, name: lName[0].name, Value: lName[0].value },
+                            { id: fName[0].id, name: fName[0].name, Value: fName[0].value },
+                            { id: phone[0].id, name: phone[0].name, Value: phone[0].value },
+                            { id: email[0].id, name: email[0].name, Value: email[0].value },
+                        ];
+
+                        var j = 0;
        
+                        for (var i = 0; i < container.length; i++) {
+                            if (container[i].Value == "") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "95% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+               
+                            }
+                            else if (container[i].Value == "-1") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "93% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+             
+                            }
+                        }
+                        if (j == '1') {
+                           var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.Requiredfields;
+                    var lblcaptn = Caption.Confirm;
+                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+                            return false;
+                        }
+                        if (j == '0') {
+          
+                            //saveMember();
+                            return true;
+                        }
+                    }
+                    catch(e)
+                    {
+                        //noty({ type: 'error', text: e.message });
+                    }
+   
+                
+            }
         function Validation() {
             debugger;
-           
-
-            if (($('#<%=txtLoginName.ClientID%>').val().trim() == "") || ($('#<%=txtFirstName.ClientID%>').val().trim() == "") ||  ($('#<%=txtPhoneNumber.ClientID%>').val().trim() == "") || ($('#<%=txtEmail.ClientID%>').val().trim() == "")) {
-
-                var lblclass = Alertclasses.danger;
-                var lblmsg = msg.Requiredfields;
-                var lblcaptn = Caption.Confirm;
-                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
-                return false;
-                
-
-            }
-            else if ($("#<%=ddlGroup.ClientID%> option:selected").text() == "--Select Clinic--")
+                        if ($("#<%=ddlGroup.ClientID%> option:selected").text() == "--Select Clinic--")
             {
 
                 var lblclass = Alertclasses.danger;
@@ -81,26 +128,98 @@
                 ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
 
                 return false;
-            }
+                        }
+
+          
                 var isUpdate = $("#hdfEditOrNew").val();
                 debugger;
                 if (isUpdate != "1")
                 {
-                    if(($('#<%=txtPassword.ClientID%>').val().trim() == "") ||($('#<%=txtConfirmPassword.ClientID%>').val().trim() == ""))
+                    var passwordMatchBool=PasswordValidation();
+                    if(passwordMatchBool==true)
                     {
-                              var lblclass = Alertclasses.danger;
-                var lblmsg = msg.Requiredfields;
-                var lblcaptn = Caption.Confirm;
-                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
-                return false;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
 
             else {
-                return true;
+                    var fieldBool = FieldsValidation();
+                    if (fieldBool == true) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+
             }
         }
+         function PasswordValidation()
+            {
+                    try
+                    {
+                           var lName = $('#<%=txtLoginName.ClientID%>');
+                        var fName = $('#<%=txtFirstName.ClientID%>');
+                        var phone = $('#<%=txtPhoneNumber.ClientID%>'); 
+                         var email = $('#<%=txtEmail.ClientID%>');
+                        var password = $('#<%=txtPassword.ClientID%>');
+                        var confirmPasword = $('#<%=txtConfirmPassword.ClientID%>');
+                      
+                        var container = [
+                              { id: lName[0].id, name: lName[0].name, Value: lName[0].value },
+                            { id: fName[0].id, name: fName[0].name, Value: fName[0].value },
+                            { id: phone[0].id, name: phone[0].name, Value: phone[0].value },
+                            { id: email[0].id, name: email[0].name, Value: email[0].value },
+                            { id: password[0].id, name: password[0].name, Value: password[0].value },
+                            { id: confirmPasword[0].id, name: confirmPasword[0].name, Value: confirmPasword[0].value },
+                           
+                        ];
 
+                        var j = 0;
+       
+                        for (var i = 0; i < container.length; i++) {
+                            if (container[i].Value == "") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "95% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+               
+                            }
+                            else if (container[i].Value == "-1") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "93% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+             
+                            }
+                        }
+                        if (j == '1') {
+                           var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.Requiredfields;
+                    var lblcaptn = Caption.Confirm;
+                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+                            return false;
+                        }
+                        if (j == '0') {
+          
+                            //saveMember();
+                            return true;
+                        }
+                    }
+                    catch(e)
+                    {
+                        //noty({ type: 'error', text: e.message });
+                    }
+   
+                
+            }
         $(document).ready(function () {
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
@@ -115,6 +234,12 @@
             {
                 $(".clinicDrop").toggleClass('blink');
             }
+            
+            $('input[type=text],input[type=password]').on('focus', function () {
+                debugger;
+                $(this).css({ borderColor: '#dbdbdb' });
+                $("#Errorbox").hide(1000);
+            });
         });
 
         function SetIframeSrc(HyperlinkID) {
@@ -614,9 +739,9 @@
                 <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
                 <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock" ><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-                <li id="admin" class="active" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+                <li id="admin" class="active" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                 <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-                <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
+                <li id="master" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
                 <li id="log" runat="server"><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
             </ul>
 
@@ -680,7 +805,7 @@
                                 </ul>
                             </div>
 
-                            <div id="Errorbox" style="height: 30%; display: none;" runat="server">
+                            <div id="Errorbox" style="height: 30%; display: none;" runat="server"  ClientIDMode="Static">
                                 <a class="alert_close">X</a>
                                 <div>
                                     <strong>

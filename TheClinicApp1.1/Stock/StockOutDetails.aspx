@@ -46,7 +46,11 @@
             
         });           
          
-
+        $('input[type=text],input[type=number]').on('focus', function () {
+            debugger;
+            $(this).css({ borderColor: '#dbdbdb' });
+            $("#Errorbox").hide(1000);
+        });
             
             //date picker
             
@@ -182,20 +186,73 @@
 
 
     <script>
-         
+           function FieldsValidation()
+            {
+                    try
+                    {
+                        var issueNo = $('#<%=txtIssueNO.ClientID%>');
+                        var issuedTo = $('#<%=txtIssuedTo.ClientID%>');
+                         var date = $('#<%=txtDate1.ClientID%>');
+                        var medicine = $("#txtMedicine0");
+                        var quantity=$("#txtQuantity0");
+                        var container = [
+                              { id: issueNo[0].id, name: issueNo[0].name, Value: issueNo[0].value },
+                              { id: issuedTo[0].id, name: issuedTo[0].name, Value: issuedTo[0].value },
+                               { id: date[0].id, name: date[0].name, Value: date[0].value },
+                                { id: medicine[0].id, name: medicine[0].name, Value: medicine[0].value },
+                              { id: quantity[0].id, name: quantity[0].name, Value: quantity[0].value },
+                        ];
+
+                        var j = 0;
+       
+                        for (var i = 0; i < container.length; i++) {
+                            if (container[i].Value == "") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "95% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+               
+                            }
+                            else if (container[i].Value == "-1") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "93% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+             
+                            }
+                        }
+                        if (j == '1') {
+                           var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.Requiredfields;
+                    var lblcaptn = Caption.Confirm;
+                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+                            return false;
+                        }
+                        if (j == '0') {
+          
+                            //saveMember();
+                            return true;
+                        }
+                    }
+                    catch(e)
+                    {
+                        //noty({ type: 'error', text: e.message });
+                    }
+   
+                
+            }
+        
         
         function Validation() {
 
             debugger;
-            if (($('#<%=txtIssueNO.ClientID%>').val().trim() == "")  || ($('#<%=txtIssuedTo.ClientID%>').val().trim() == "")|| ($('#<%=txtDate1.ClientID%>').val().trim() == "") ) {
-
-                var lblclass = Alertclasses.danger;
-                var lblmsg = msg.Requiredfields;
-                var lblcaptn = Caption.Confirm;
-
-                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
-
-
+            var fieldBool = FieldsValidation();
+            if(fieldBool==false)
+            {
                 return false;
             }
             else {
@@ -203,21 +260,7 @@
                
 
                 GetTextBoxValues('<%=hdnTextboxValues.ClientID %>','<%=hdnRemovedIDs.ClientID %>');
-
-                if($('#<%=hdnTextboxValues.ClientID%>').val().trim() != "" || $('#<%=hdnRemovedIDs.ClientID%>').val().trim() != ""  )
-                {
-                    return true;
-                }
-                else{
-                    var lblclass = Alertclasses.danger;
-                    var lblmsg = msg.Requiredfields;
-                    var lblcaptn = Caption.Confirm;
-
-                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
-
-                    return false;
-                }
-              
+                return true;
             }
 
         }
@@ -391,7 +434,7 @@
 
 
 
-                            <div id="Errorbox" style="display: none;" runat="server">
+                            <div id="Errorbox" style="display: none;" runat="server" ClientIDMode="Static">
                                 <a class="alert_close">X</a>
                                 <div>
                                     <strong>

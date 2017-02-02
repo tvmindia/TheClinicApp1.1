@@ -111,6 +111,11 @@ namespace TheClinicApp1._1.Masters
                 List<string> currRole = new List<string>();
                 currRole = UA.GetRoleName1(UA.userName);
                 string currPage = Const.GetCurrentPageName(Request);
+                if(currPage!=string.Empty)
+                {
+                    UA.currentPage = currPage.Split('.')[0];
+                }
+                
                 string From = "?From=";
                 string redirectURL = "";
                 

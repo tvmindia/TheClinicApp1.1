@@ -105,8 +105,8 @@
                                 <div class="col-lg-8">
                                     <div style="margin-bottom: 3%" id="rdbdiv">
                                         <label for="name">
-                                            <asp:RadioButton ID="rdoDoctor" runat="server" GroupName="Doctor" Text="New Group" CssClass="checkbox-inline" onclick="hello(1)" />
-                                            <asp:RadioButton ID="rdoNotDoctor" runat="server" GroupName="Doctor" Text="Existing Group" CssClass="checkbox-inline" onclick="hello(2)" Checked="true" />
+                                            <asp:RadioButton ID="rdoDoctor" runat="server" GroupName="Doctor" Text="New Group" CssClass="checkbox-inline" onclick="RadioButtonGroupChange(1)" />
+                                            <asp:RadioButton ID="rdoNotDoctor" runat="server" GroupName="Doctor" Text="Existing Group" CssClass="checkbox-inline" onclick="RadioButtonGroupChange(2)" Checked="true" />
                                         </label>
                                         <asp:HiddenField ID="hdnGroupselect" ClientIDMode="Static" runat="server" Value="Exist" />
                                     </div>
@@ -241,7 +241,63 @@
     <script src="../js/jquery-1.8.3.min.js"></script>
     <script src="../js/ASPSnippets_Pager.min.js"></script>
     <script>
+        function Validation()
+        {
+           
+        }
+          function NewGroupValidation()
+            {
+                    try
+                    {
+                           var groupName = $('#<%=txtGroupName.ClientID%>');
+                      
+                        var container = [
+                              { id: groupName[0].id, name: groupName[0].name, Value: groupName[0].value },
+                           
+                        ];
 
+                        var j = 0;
+       
+                        for (var i = 0; i < container.length; i++) {
+                            if (container[i].Value == "") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "95% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+               
+                            }
+                            else if (container[i].Value == "-1") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "93% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+             
+                            }
+                        }
+                        if (j == '1') {
+                           var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.Requiredfields;
+                    var lblcaptn = Caption.Confirm;
+                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+                            return false;
+                        }
+                        if (j == '0') {
+          
+                            //saveMember();
+                            return true;
+                        }
+                    }
+                    catch(e)
+                    {
+                        //noty({ type: 'error', text: e.message });
+                    }
+   
+                
+            }
         $(document).ready(function () {
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
@@ -305,7 +361,7 @@
 
 
 
-             function hello(num) {
+             function RadioButtonGroupChange(num) {
                  debugger;
                  if (num == 1) {
                      $('#ExistingGroup').hide();

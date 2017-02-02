@@ -146,6 +146,7 @@
         <%--<script src="../js/jquery.tablePagination.0.1.js"></script>--%>
         <script type="text/javascript">
             $(document).ready( function (){
+            
                 var ac=null;
                 ac = <%=listFilter %>;
 

@@ -138,6 +138,11 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
+        public string currentPage
+        {
+            get;
+            set;
+        }
         #endregion Properties
 
         #region UserAuthendication default constructor

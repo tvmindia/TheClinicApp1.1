@@ -12,13 +12,14 @@ var masterPageURL = '../MasterAdd/Categories.aspx';
 function selectTile(id, RoleName) {
      
     debugger;
-      var tileList = ['patients','Appoinments','token', 'doctor', 'pharmacy', 'stock', 'ContentPlaceHolder1_admin', 'ContentPlaceHolder1_master'];
+      var tileList = ['patients','Appoinments','token', 'doctor', 'pharmacy', 'stock', 'admin', 'master'];
       var Url = [patientPageURL,AppoinmentsPageURL,tokenPageURL, doctorPageURL, pharmacyPageURL, stockPageURL,adminPageURL,masterPageURL];
 
       document.getElementById(id).className = 'active'
 
     for (i = 0; i < tileList.length; i++) {
         if (id == tileList[i]) {
+            debugger;
             window.location.href = Url[i];
 
 
@@ -30,6 +31,7 @@ function selectTile(id, RoleName) {
 
     }
 }
+
 
 function activateTabSelection(id) {
 

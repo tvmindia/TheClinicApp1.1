@@ -153,8 +153,18 @@
     <script src="../Scripts/Common/Common.js"></script>
     <script>
         function Validation() {
-           
-            if (($('#<%=ddlUsers.ClientID%>').val().trim() == "--Select--")) {
+            debugger;
+                        if ($("#<%=ddlClinic.ClientID%> option:selected").text() == "--Select Clinic--")
+            {
+
+                var lblclass = Alertclasses.danger;
+                var lblmsg = AlertMsgs.ClinicRequired;
+                var lblcaptn = Caption.FailureMsgCaption;
+                ErrorMessagesDisplay('<%=lblErrorCaption.ClientID %>', '<%=lblMsgges.ClientID %>', '<%=Errorbox.ClientID %>', lblclass, lblcaptn, lblmsg);
+
+                return false;
+                        }
+          else if (($('#<%=ddlUsers.ClientID%>').val().trim() == "--Select--") ||($('#<%=ddlUsers.ClientID%>').val().trim() == "0")) {
 
 
                 var lblclass = Alertclasses.danger;
@@ -170,6 +180,7 @@
             }
 
         }
+
     </script>    
 
 </asp:Content>
