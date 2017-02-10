@@ -820,7 +820,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Unit", SqlDbType.NVarChar, 15).Value = Unit;
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 255).Value = CreatedBy;
                 cmd.Parameters.Add("@QTY", SqlDbType.Real).Value = QTY;
-               // cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
+                cmd.Parameters.Add("@CreateDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;
 

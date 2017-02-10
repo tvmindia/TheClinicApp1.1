@@ -313,12 +313,12 @@ namespace TheClinicApp1._1.Masters
                             if (redirectURL != "") { Response.Redirect(redirectURL, true); }
                         }
               
-                        if (currPage == Const.TokenPage)
-                        {
-                            From = From + Const.Receptionist;
-                            redirectURL = Const.AccessDeniedURL + From;
-                            if (redirectURL != "") { Response.Redirect(redirectURL, true); }
-                        }
+                        //if (currPage == Const.TokenPage)
+                        //{
+                        //    From = From + Const.Receptionist;
+                        //    redirectURL = Const.AccessDeniedURL + From;
+                        //    if (redirectURL != "") { Response.Redirect(redirectURL, true); }
+                        //}
                         if (currPage == Const.DoctorPage)
                         {
                             From = From + Const.Receptionist;

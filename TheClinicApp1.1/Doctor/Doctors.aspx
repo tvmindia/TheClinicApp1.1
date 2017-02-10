@@ -23,6 +23,7 @@
  .ViewMore
  {
          margin-left: 228px;
+         color:#3661c7 !important;
  }
 .modal table td
 {
@@ -125,7 +126,7 @@
             }
                     
             function FillTextboxUsingXml(){   
-                debugger;
+               
                 GetClientIDOfRemovedID('<%=hdnRemovedIDs.ClientID%>','<%=hdnRowCount.ClientID%>');
             RefillMedicineTextboxesWithXmlData('<%=hdnXmlData.ClientID%>');
 
@@ -133,7 +134,7 @@
 //--------------------------------------------------------------------------script validation------------------------------------------------//
             function validate()
             {
-                debugger;
+               
                 var ictrl;
                 var check=0;
                 var regex = /^[a-zA-Z0-9,.;(){}:"'@#$%*+! ]{0,255}$/;
@@ -185,8 +186,7 @@
             $("#<%=lblNew_history.ClientID %>").text("New Case");
             $("#<%=VistImagePreview.ClientID %> img").remove();
             $('.lblDesc').remove();
-
-
+           
         }
 
 
@@ -216,7 +216,7 @@
             //Calls the function to bind history using PatientID
 
             function bindPatientDetails()
-            {   debugger;
+            {  
                  
                 var PatientName = document.getElementById("project-description").innerText;            
                             
@@ -227,7 +227,7 @@
                 {                                   
                     PageMethods.PatientDetails(fileNO, OnSuccess, onError);  
                 }
-                  debugger;
+                 
 <%--                if($("#<%=HiddenPatientID.ClientID %>").val()=="")
                 {
                     $(".ViewMore").css("display","none")
@@ -340,7 +340,8 @@
                     
                   debugger;
                     PatientID = $(this).closest('tr').find('td:eq(6)').text();
-
+                    var currentValue=$(this).closest('tr').find('td:eq(1)').text();
+                    
                     var UniqueID  = $(this).closest('tr').find('td:eq(7)').text();
                     $("#HdfUniqueID").val(UniqueID);
 
@@ -406,7 +407,16 @@
                     $("#DoctrClose").click();
             }
 
+            function GetDate(str)
+            {
+                debugger;
+                var arr = str.split(" ");
+                var months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
+                var month = months.indexOf(arr[1].toLowerCase());
+
+                return new Date(parseInt(arr[2]), month, parseInt(arr[0]));
+            }
 //------------------------------------------------- * History Edit Click * ------------------------------------//
 
             var FileID ='';
@@ -446,7 +456,7 @@
                         FileID = $(this).closest('tr').find('td:eq(3)').text();
                         VisitID = $(this).closest('tr').find('td:eq(4)').text();
                         PrescriptionID = $(this).closest('tr').find('td:eq(5)').text();
-
+                        $("#hdnEditedNo").val($(this).closest('tr').find('td:eq(2)').text());
 
                         $("#<%=HdnPrescID.ClientID %>").val(PrescriptionID);
                         $("#<%=HdnForVisitID.ClientID %>").val(VisitID);
@@ -482,6 +492,19 @@
                         //----------------------- Binding Prescription Details
                         GetPrescriptionDetails(PrescriptionID);
 
+                    }
+                    if($(this).parent().parent().children().index($(this).parent())==1)
+                    {
+                        debugger;
+                        if($("#hdnCheckDate").val()==$("#hdnEditedNo").val())
+                        {
+                            if($("#IsToday").val()=="Yes" && $("#IsFirstPage").val()=="Yes")
+                        {
+                            $("#<%=lblNew_history.ClientID %>").text("Current Case");
+                        }
+                        }
+                        
+                          
                     }
                 });
             });
@@ -698,9 +721,9 @@
             
             var HistoryRow= null;
             function HistorySuccess(response) {
-                
+                debugger;
                 $(".pgrHistory").show();
-                
+                var i=0;
                 var xmlDoc = $.parseXML(response.d);
                 var xml = $(xmlDoc);
                 var Visits = xml.find("Visits");
@@ -716,7 +739,7 @@
                 if (Visits.length > 0) {
 
                     $.each(Visits, function () {
-                      
+                        debugger;
                         $("td", HistoryRow).eq(0).html($('<img />')
                            .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
                          
@@ -724,7 +747,13 @@
                         $("td", HistoryRow).eq(1).html($(this).find("Remarks").text());
 
                         $("td", HistoryRow).eq(2).html($(this).find("CrDate").text());
-                       
+                        if(i==0)
+                        {
+                            $("#hdnCurrentLength").val($(this).find("CrDate").text());
+                            $("#hdnCheckDate").val($(this).find("CrDate").text());
+                        }
+                        
+                        
                         $("td", HistoryRow).eq(3).html($(this).find("FileID").text());
 
                         $("td", HistoryRow).eq(4).html($(this).find("VisitID").text());
@@ -732,6 +761,7 @@
 
                         $("[id*=GridViewVisitsHistory]").append(HistoryRow);
                         HistoryRow = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+                        i=i+1;
                     });
                     var pager = xml.find("Pager");
 
@@ -759,6 +789,43 @@
                         var searchPattern = new RegExp('(' + SearchInVisit() + ')', 'ig');
                         $(this).html($(this).text().replace(searchPattern, "<span class = 'highlight'>" + SearchInVisit() + "</span>"));
                     });
+                    if(pager.find("PageIndex").text()=="1")
+                    {
+                        debugger;
+                        $("#IsFirstPage").val("Yes");
+                        if($("#hdnCurrentLength").val()!="")
+                        {
+                            var newdate= GetDate($("#hdnCurrentLength").val());
+                            var today=new Date();
+                            if(newdate.getDate()==today.getDate())
+                            {
+                                if(newdate.getMonth()==today.getMonth())
+                                {
+                                    if(newdate.getFullYear()==today.getFullYear())
+                                    {
+                                        $("#IsToday").val("Yes");
+                                    }
+                                    else
+                                    {
+                                        $("#IsToday").val("No");
+                                    }
+                                }
+                                else
+                                {
+                                    $("#IsToday").val("No");
+                                }
+                            }
+                            else
+                            {
+                                $("#IsToday").val("No");
+                            }
+                        }
+                       
+                    }
+                    else
+                    {
+                        $("#IsFirstPage").val("No");
+                    }
                 } 
                 
                else {
@@ -828,7 +895,7 @@
                 GetBookingsForDoctor(1);
             });
             $("[id*=txtSearchINGridview]").live("keyup", function () {
-              
+               
                 //Search in Token table
 
                 GetBookingsForDoctor(parseInt(1));
@@ -867,7 +934,7 @@
             }
             var rowDoctor;
             function OnSuccess(response) {
-                debugger;
+              
 
                 $(".Pager").show();
                 var xmlDoc = $.parseXML(response.d);
@@ -882,7 +949,7 @@
                 if (DoctorTokens.length > 0) {
 
                     $.each(DoctorTokens, function () {
-                        debugger;
+                       
 
                         $("td", rowDoctor).eq(0).html($('<img />')
                       .attr('src', "" + '../images/paper.png' + "")).removeClass('CursorShow');
@@ -894,7 +961,9 @@
                         }
                         else
                         {
+                            debugger;
                             $("td", rowDoctor).eq(1).html($(this).find("TokenNo").text());
+                            
                         }
 
 
@@ -918,13 +987,13 @@
                         switch(consultstatus)
                         {
                             case "true":
-                            case "4":
+                            case "1":
                                 $("td", rowDoctor).addClass("selected_row");
                                 $("td", rowDoctor).eq(5).html("Yes");
                                 break;
 
                             case "false":
-                            case "1":
+                            case "0":
                                 $("td", rowDoctor).removeClass("selected_row");
                                 $("td", rowDoctor).eq(5).html("No");
                                 $("td", rowDoctor).eq(0).html($('<img />')
@@ -953,7 +1022,7 @@
 
                         
                         $("td", rowDoctor).eq(7).html($(this).find("UniqueID").text());
-
+                      
                          $("[id*=GridViewTokenlist]").append(rowDoctor);
                       
                          rowDoctor = $("[id*=GridViewTokenlist] tr:last-child").clone(true);
@@ -1016,7 +1085,7 @@
             }
             function BindPatientDetails()
             {
-                debugger;
+             
                 var patientid = $("#<%=HiddenPatientID.ClientID %>").val();
                  var Patient = new Object();
                  Patient.PatientID = patientid;
@@ -1041,6 +1110,100 @@
                 var patientid = $("#<%=HiddenPatientID.ClientID %>").val();
                  var ProfilePic = document.getElementById("<%=PatientProfilePic.ClientID%>")  ;
                 ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + patientid;
+            }
+
+            function Validation()
+            {
+                var i=0;
+               
+                if($("#lblPatientName").text()!="Patient Name")
+                {
+                    //personal
+                    if($("#bowel").val()!=""||$("#appettie").val()!=""||$("#micturation").val()!=""||$("#sleep").val()!=""||$("#symptoms").val()!="")
+                    {
+                        i=1;
+                    }
+                        //systematic examination
+                    else if($("#cardiovascular").val()!=""||$("#nervoussystem").val()!=""||$("#musculoskeletal").val()!="")
+                    {
+                        i=1;
+                    }
+                        //General Examination
+                    else if($("#palloe").val()!=""||$("#icterus").val()!=""||$("#clubbing").val()!=""||$("#cyanasis").val()!=""||$("#lymphGen").val()!=""||$("#edima").val()!="")
+                    {
+                        i=1;
+                    }
+                        //Diagnosis
+                    else if($("#diagnosys").val()!="")
+                    {
+                        i=1;
+                    }
+                        //Remarks
+                    else if($("#remarks").val()!="")
+                    {
+                        i=1;
+                    }
+                        //Clinical Details
+                    else if($("#pulse").val()!=""||$("#bp").val()!=""||$("#tounge").val()!=""||$("#heart").val()!=""||$("#lymphnodes").val()!=""||$("#resp_rate").val()!=""||$("#others").val()!="")
+                    {
+                        i=1;
+                    }
+                        //Case Images
+                    else if($("#FileUpload1").val()!="")
+                    {
+                        i=1;
+                    }
+                        //Prescription Section
+                    else if($("#txtMedName0").val()!=""&&$("#txtMedQty0").val()!=""&&$("#txtMedDos0").val()!=""&&$("#txtMedTime0").val()!=""&&($("#txtMedDay0").val()!=""))
+                    {
+                        i=1;
+                    }
+                    else
+                    {
+                        if($("#txtMedName0").val()!=""&&$("#txtMedQty0").val()=="")
+                        {
+                            $("#txtMedQty0").css("borderColor","red");
+                        }
+                        if($("#txtMedName0").val()!=""&&$("#txtMedDos0").val()=="")
+                        {
+                            $("#txtMedDos0").css("borderColor","red")
+                        }
+                        if($("#txtMedName0").val()!=""&&$("#txtMedTime0").val()=="")
+                        {
+                            $("#txtMedTime0").css("borderColor","red")
+                        }
+                        if($("#txtMedName0").val()!=""&&$("#txtMedDay0").val()=="")
+                        {
+                            $("#txtMedDay0").css("borderColor","red")
+                        }
+                    }
+                    if(i==1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        var lblclass = Alertclasses.danger;
+                        var lblmsg = msg.FillAtleastOneField;
+                        var lblcaptn = Caption.Confirm;
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+                        return false;
+                    }
+                }
+                else
+                {
+                    var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.SelectPatient;
+                        var lblcaptn = Caption.Confirm;
+                        ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+                        return false;
+                }
+            }
+            function RemoveStyle(e)
+            {
+              
+                document.getElementById(e.id).style.borderColor = "#dbdbdb";
+                $("#Errorbox").hide(1000);
             }
        </script>
 
@@ -1111,15 +1274,12 @@
 
                     <ul class="top_right_links">
                         <li>
-                            <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="return GetTextBoxValuesPresLocal();"  OnClick="btnSave_Click" /></li>
+                            <asp:Button ID="btnSave" runat="server" Text="save" CssClass="button1" OnClientClick="return Validation();" OnClick="btnSave_Click" /></li>
                         <li><a class="new" href="#" id="btnNew" runat="server" onclick="reset();" onserverclick="btnNew_ServerClick"><span></span>New</a></li>
                     </ul>
 
                 </div>
-
-                <div class="right_form">
-
-                    <div id="Errorbox" style="height: 30%; display: none;" runat="server">
+                <div id="Errorbox"  ClientIDMode="Static" style="display: none;" runat="server">
                         <a class="alert_close">X</a>
                         <div>
                             <strong>
@@ -1128,10 +1288,13 @@
                             <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
+                <div class="right_form">
+
+                    
 
                     <div class="token_id_card">
                         <div class="name_field">
-                            <img id="ProfilePic" src="../images/UploadPic1.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" runat="server" Text="Patient Name"></asp:Label>
+                            <img id="ProfilePic" src="../images/UploadPic1.png" width="80" height="80" runat="server" /><asp:Label ID="lblPatientName" ClientIDMode="Static" runat="server" Text="Patient Name"></asp:Label>
                         </div>
                         <div class="light_grey">
                             <div class="col3_div">
@@ -1169,14 +1332,14 @@
                                         <div class="col-lg-7">
                                             <label for="height">Height</label>
                                             <div class="input-group spinner height" data-trigger="spinner" id="customize-spinner">
-                                                <input type="text" class="form-control text-center" id="txtHeightFeet" runat="server" data-min="0" data-max="100" data-step="1" onkeypress="return isNumber(event)"/>
+                                                <input type="text" class="form-control text-center" id="txtHeightFeet" ClientIDMode="Static" runat="server" data-min="0" data-max="100" data-step="1" onkeypress="return isNumber(event)"/>
                                                 <div class="input-group-addon">
                                                     <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                     <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
                                                 </div>
                                             </div>
                                             <div class="input-group spinner height" data-trigger="spinner" id="customize-spinner">
-                                                <input type="text" class="form-control text-center" id="txtHeightInch" runat="server" data-min="0" data-max="100" data-step="1" onkeypress="return isNumber(event)" />
+                                                <input type="text" class="form-control text-center" id="txtHeightInch" ClientIDMode="Static" runat="server" data-min="0" data-max="100" data-step="1" onkeypress="return isNumber(event)" />
                                                 <div class="input-group-addon">
                                                     <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                     <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
@@ -1186,7 +1349,7 @@
                                         <div class="col-lg-5">
                                             <label for="weight">Weight</label>
                                             <div class="input-group spinner weight" data-trigger="spinner" id="customize-spinner">
-                                                <input type="text" class="form-control text-center" id="txtWeight" runat="server" data-min="0" data-max="200" data-step="1" onkeypress="return isNumber(event)"/>
+                                                <input type="text" class="form-control text-center" id="txtWeight" runat="server" ClientIDMode="Static" data-min="0" data-max="200" data-step="1" onkeypress="return isNumber(event)"/>
                                                 <div class="input-group-addon">
                                                     <a href="" class="spin-up" data-spin="up"><i class="fa fa-caret-up"></i></a>
                                                     <a href="" class="spin-down" data-spin="down"><i class="fa fa-caret-down"></i></a>
@@ -1196,25 +1359,25 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="bowel">Bowel</label><input id="bowel" type="text" name="bowel" runat="server" />
+                                    <label for="bowel">Bowel</label><input id="bowel" ClientIDMode="Static" type="text" name="bowel" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="appettie">Appetite</label><input id="appettie" type="text" name="appettie" runat="server" />
+                                    <label for="appettie">Appetite</label><input id="appettie" ClientIDMode="Static" type="text" name="appettie" runat="server" />
                                 </div>
                             </div>
 
                             <div class="row field_row">
                                 <div class="col-lg-4">
-                                    <label for="micturation">Micturition</label><input id="micturation" type="text" name="micturation" runat="server" />
+                                    <label for="micturation">Micturition</label><input id="micturation" ClientIDMode="Static" type="text" name="micturation" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="sleep">Sleep</label><input id="sleep" type="text" name="sleep" runat="server" />
+                                    <label for="sleep">Sleep</label><input id="sleep" type="text" ClientIDMode="Static" name="sleep" runat="server" />
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <label for="symptoms">Symptoms</label><textarea id="symptoms" runat="server"></textarea>
+                                    <label for="symptoms">Symptoms</label><textarea id="symptoms" ClientIDMode="Static" runat="server"></textarea>
                                 </div>
                             </div>
 
@@ -1224,13 +1387,13 @@
                         <div>
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <label for="cardiovascular">Cardiovascular</label><input id="cardiovascular" type="text" name="cardiovascular" runat="server" />
+                                    <label for="cardiovascular">Cardiovascular</label><input id="cardiovascular" type="text" name="cardiovascular"  ClientIDMode="Static" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="nervoussystem">Nervous System</label><input id="nervoussystem" type="text" name="nervoussystem" runat="server" />
+                                    <label for="nervoussystem">Nervous System</label><input id="nervoussystem" type="text" name="nervoussystem"  ClientIDMode="Static" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="musculoskeletal">Musculoskeletal</label><input id="musculoskeletal" type="text" name="musculoskeletal" runat="server" />
+                                    <label for="musculoskeletal">Musculoskeletal</label><input id="musculoskeletal" type="text" name="musculoskeletal"  ClientIDMode="Static" runat="server" />
                                 </div>
                             </div>
                         </div>
@@ -1239,24 +1402,24 @@
                         <div>
                             <div class="row field_row">
                                 <div class="col-lg-4">
-                                    <label for="palloe">Pallor</label><input id="palloe" type="text" name="palloe" runat="server" />
+                                    <label for="palloe">Pallor</label><input id="palloe" ClientIDMode="Static" type="text" name="palloe" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="icterus">Icterus</label><input id="icterus" type="text" name="icterus" runat="server" />
+                                    <label for="icterus">Icterus</label><input id="icterus" ClientIDMode="Static" type="text" name="icterus" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="clubbing">Clubbing</label><input id="clubbing" type="text" name="clubbing" runat="server" />
+                                    <label for="clubbing">Clubbing</label><input id="clubbing" ClientIDMode="Static" type="text" name="clubbing" runat="server" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <label for="cyanasis">Cyanosis</label><input id="cyanasis" type="text" name="cyanasis" runat="server" />
+                                    <label for="cyanasis">Cyanosis</label><input id="cyanasis" ClientIDMode="Static" type="text" name="cyanasis" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="lymphnodes">Lymph Nodes</label><input id="lymphGen" type="text" name="lymphGen" runat="server" />
+                                    <label for="lymphnodes">Lymph Nodes</label><input id="lymphGen" ClientIDMode="Static" type="text" name="lymphGen" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="edima">Edema</label><input id="edima" type="text" name="edima" runat="server" />
+                                    <label for="edima">Edema</label><input id="edima" type="text" ClientIDMode="Static" name="edima" runat="server" />
                                 </div>
                             </div>
                         </div>
@@ -1265,7 +1428,7 @@
                         <div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <label for="diagnosys">Diagnosis</label><textarea id="diagnosys" runat="server"></textarea>
+                                    <label for="diagnosys">Diagnosis</label><textarea id="diagnosys" ClientIDMode="Static" runat="server"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1274,7 +1437,7 @@
                         <div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <label for="remarks">Remarks</label><textarea id="remarks" runat="server"></textarea>
+                                    <label for="remarks">Remarks</label><textarea id="remarks" ClientIDMode="Static" runat="server"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1283,29 +1446,29 @@
                         <div>
                             <div class="row field_row">
                                 <div class="col-lg-4">
-                                    <label for="pulse">Pulse</label><input id="pulse" type="text" name="pulse" runat="server" />
+                                    <label for="pulse">Pulse</label><input id="pulse" ClientIDMode="Static" type="text" name="pulse" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="bp">Blood Pressure</label><input id="bp" type="text" name="bp" runat="server" />
+                                    <label for="bp">Blood Pressure</label><input id="bp" ClientIDMode="Static" type="text" name="bp" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="tounge">Tounge</label><input id="tounge" type="text" name="tounge" runat="server" />
+                                    <label for="tounge">Tounge</label><input id="tounge" ClientIDMode="Static" type="text" name="tounge" runat="server" />
                                 </div>
                             </div>
                             <div class="row field_row">
                                 <div class="col-lg-4">
-                                    <label for="heart">Heart</label><input id="heart" type="text" name="heart" runat="server" />
+                                    <label for="heart">Heart</label><input id="heart" ClientIDMode="Static" type="text" name="heart" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="lymphnodes">Lymph Nodes</label><input id="lymphnodes" type="text" name="lymphnodes" runat="server" />
+                                    <label for="lymphnodes">Lymph Nodes</label><input id="lymphnodes" ClientIDMode="Static" type="text" name="lymphnodes" runat="server" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="resp_rate">Respiratory Rate</label><input id="resp_rate" type="text" name="resp_rate" runat="server" />
+                                    <label for="resp_rate">Respiratory Rate</label><input id="resp_rate" ClientIDMode="Static" type="text" name="resp_rate" runat="server" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <label for="others">Others</label><textarea id="others" runat="server"></textarea>
+                                    <label for="others">Others</label><textarea id="others" ClientIDMode="Static" runat="server"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1317,7 +1480,7 @@
                                     <label for="Imgdesc">Image Description</label><textarea id="Imgdesc" runat="server"></textarea>
                                     <%-- Multiple Upload Functions --%>
 
-                                    <asp:FileUpload ID="FileUpload1" ForeColor="Red" Font-Size="12px" runat="server" onchange="OnUpload();" />
+                                    <asp:FileUpload ID="FileUpload1" ClientIDMode="Static" ForeColor="Red" Font-Size="12px" runat="server" onchange="OnUpload();" />
                                 </div>
                                 <div class="col-lg-8">
                                     <div id="VistImagePreview" runat="server">
@@ -1342,17 +1505,17 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input id="txtMedName0" type="text" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
+                                            <input id="txtMedName0" type="text" onclick="RemoveStyle(this);" class="input" onblur="BindMedunitbyMedicneName('0')" onfocus="autocompleteonfocus(0)" /></td>
                                         <td>
-                                            <input id="txtMedQty0" onkeypress="return isNumber(event)" type="text" class="input" /></td>
+                                            <input id="txtMedQty0" onclick="RemoveStyle(this);" onkeypress="return isNumber(event)" type="text" class="input" /></td>
                                         <td>
                                             <input id="txtMedUnit0" class="input" readonly="true" type="text" onfocus="focusplz(0)" /></td>
                                         <td>
-                                            <input id="txtMedDos0" type="text" class="input" /></td>
+                                            <input id="txtMedDos0" onclick="RemoveStyle(this);" type="text" class="input" /></td>
                                         <td>
-                                            <input id="txtMedTime0" type="text" class="input" /></td>
+                                            <input id="txtMedTime0" onclick="RemoveStyle(this);" type="text" class="input" /></td>
                                         <td>
-                                            <input id="txtMedDay0" type="text" class="input" /></td>
+                                            <input id="txtMedDay0" onclick="RemoveStyle(this);" type="text" class="input" /></td>
                                         <td style="background: #E6E5E5">
                                             <input type="button" value="-" class="bt1" onclick="ClearAndRemove1()" style="width: 20px;" accesskey="-" /></td>
                                         <td style="background: #E6E5E5">
@@ -1666,7 +1829,7 @@
 
             var test=jQuery.noConflict();
             test(document).ready(function () {
-                debugger;
+               
                 //$('.myWebsiteTable').find('table').length
                 var flag=$('#initPresc').find('table').length;
                 if(flag===0)
@@ -1677,7 +1840,7 @@
 
                 $(".imgdelete").live({
                     click: function (e) {// Clear controls
-                        debugger;
+                       
 
                         //Conditions[i].split("=")[0];
 
@@ -1814,7 +1977,7 @@
                         return false;
                     }
                 });	
-                debugger;
+              
                if($("#<%=HiddenPatientID.ClientID %>").val()=="")
                 {
                     $(".ViewMore").css("display","none")
@@ -1897,6 +2060,9 @@
     </asp:Panel>
 
   <asp:HiddenField ID="HdfUniqueID" ClientIDMode="Static" runat="server" />
-
-
+    <input type="hidden" value="" id="hdnEditedNo" />
+    <input type="hidden" value="" id="hdnCurrentLength" />
+    <input type="hidden" value="" id="IsFirstPage" />
+    <input type="hidden" value="" id="IsToday" />
+    <input type="hidden" value="" id="hdnCheckDate" />
 </asp:Content>

@@ -11,7 +11,7 @@ using System.Web.UI;
 using System.Drawing;
 using System.Web.UI.WebControls;
 using TheClinicApp1._1.ClinicDAL;
-using System.Web.Script.Serialization; 
+using System.Web.Script.Serialization;
 
 #endregion Namespaces
 
@@ -85,6 +85,35 @@ namespace TheClinicApp1._1.Pharmacy
 
             GridViewPharmacylist.DataSource = dummy;
             GridViewPharmacylist.DataBind();
+        }
+
+        #endregion Pharmacy View Search Paging
+
+        #region Bind Dummy Row
+
+        /// <summary>
+        /// To implement search in gridview(on keypress) :Gridview is converted to table and
+        /// Its first row (of table header) is created using this function
+        /// </summary>
+        private void BindDummyIssuedPrescRow()
+        {
+            DataTable dummyIssued = new DataTable();
+
+            //dummy.Columns.Add("Edit");
+            dummyIssued.Columns.Add(" ");
+            dummyIssued.Columns.Add("DOCNAME");
+            dummyIssued.Columns.Add("Name");
+            dummyIssued.Columns.Add("CreatedDate");
+            //dummy.Columns.Add("IsProcessed");
+            dummyIssued.Columns.Add("DoctorID");
+            dummyIssued.Columns.Add("PatientID");
+            dummyIssued.Columns.Add("IssueID");
+            dummyIssued.Columns.Add("IssueNO");
+
+            dummyIssued.Rows.Add();
+
+            GridViewIssuedPresc.DataSource = dummyIssued;
+            GridViewIssuedPresc.DataBind();
         }
 
         #endregion Pharmacy View Search Paging
@@ -244,6 +273,51 @@ namespace TheClinicApp1._1.Pharmacy
         }
         #endregion BindSearch
 
+        #region Bind Issued Prescriptions On Edit Click
+        /// <summary>
+        /// To get specific order details by orderid for the editing purpose
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [System.Web.Services.WebMethod]
+        public static string BindIssuedPrescriptionsOnEditClick(pharmacy pharmacypobj)
+        {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            pharmacypobj.ClinicID = UA.ClinicID;
+            DataSet dtPharmacy = pharmacypobj.GetIssuedPrescriptionDetails();
+
+
+            string jsonResult = null;
+            DataSet ds = null;
+            ds = dtPharmacy;
+
+            //Converting to Json
+            JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+            List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+            Dictionary<string, object> childRow;
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    childRow = new Dictionary<string, object>();
+                    foreach (DataColumn col in ds.Tables[0].Columns)
+                    {
+                        childRow.Add(col.ColumnName, row[col]);
+                    }
+                    parentRow.Add(childRow);
+                }
+            }
+            jsonResult = jsSerializer.Serialize(parentRow);
+
+            return jsonResult; //Converting to Json
+        }
+        #endregion Bind Issued Prescriptions On Edit Click
+
         #region Get MedicineDetails By Medicine Name
 
         [WebMethod]
@@ -269,6 +343,234 @@ namespace TheClinicApp1._1.Pharmacy
 
         #endregion Get MedicineDetails By Medicine Name
 
+        #region Issued Prescriptions View Search Paging
+        [WebMethod]
+        ///This method is called using AJAX For gridview bind , search , paging
+        ///It expects page index and search term which is passed from client side
+        ///Page size is declared and initialized in global variable section
+        public static string ViewAndFilterIssuedPrescriptions(string searchTerm, int pageIndex)
+       {
+
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+
+            Stocks stocksObj = new Stocks();
+            stocksObj.ClinicID = UA.ClinicID.ToString();
+
+            var xml = stocksObj.ViewAndFilterIssuedPrescriptions(searchTerm, pageIndex, PageSize);
+
+            return xml;
+        }
+
+
+
+
+        #endregion Issued Prescriptions View Search Paging
+
+        #region StockRolePasswordCheck
+        [WebMethod]
+        public static string StockRolePasswordCheck(pharmacy pharmacypobj)
+        {
+            ClinicDAL.CryptographyFunctions CryptObj = new CryptographyFunctions();
+            ClinicDAL.UserAuthendication UA;
+            UIClasses.Const Const = new UIClasses.Const();
+            UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+            pharmacypobj.ClinicID = UA.ClinicID;
+            pharmacypobj.password = CryptObj.Encrypt(pharmacypobj.password);
+            string IsStockRole = pharmacypobj.StockRolePasswordCheck();
+           
+            return IsStockRole;
+        }
+
+        #endregion Get Prescription Details Xml
+
+        #region StockOutOperations
+        public void StockOutOperations()
+        {
+            IssueHeaderDetails IssuehdrObj = new IssueHeaderDetails();
+            DataTable dtIssuehdr = null;
+            string msg = string.Empty;
+            string issueid = "";
+            try
+            {
+                if ((hdnIssuedTo.Value != string.Empty) && (hdnDate.Value != string.Empty) && (hdnIssueNo.Value != string.Empty))
+                {
+                    if (hdnIssueNo.Value != "")
+                    {
+                        UA = (ClinicDAL.UserAuthendication)Session[Const.LoginSession];
+
+                        if (hdnRemovedIDs.Value != string.Empty)
+                        {
+
+                            //----------------- * CASE : DELETE *-----------------------------------//
+
+                            string hdRemovedIDValue = hdnRemovedIDs.Value;
+
+                            string[] RemovedIDs = hdRemovedIDValue.Split(',');
+
+                            for (int i = 0; i < RemovedIDs.Length - 1; i++)
+                            {
+
+                                if ((RemovedIDs[i] != "") || (RemovedIDs[i] != string.Empty))
+                                {
+
+                                    IssueDetails DetailObj = new IssueDetails();
+                                    string UniqueId = RemovedIDs[i].ToString();
+
+                                    //string medId =   DetailObj.GetMedicineIDByUniqueID(Guid.Parse(UniqueId));
+
+                                    DetailObj.ClinicID = UA.ClinicID.ToString();
+                                    DetailObj.DeleteIssueDetails(UniqueId);
+                                    hdnRemovedIDs.Value = "";
+
+                                }
+                            }
+
+                        }
+                        if (hdnRemovedIDs.Value == string.Empty)
+                        {
+                            if (hdnTextboxValues.Value != "")
+                            {
+                                if(hdnIssuedID.Value!="")
+                                {
+                                    issueid = hdnIssuedID.Value;
+
+                             
+
+
+                                 
+                                }
+                               
+                                    if ((hdnIssueNo.Value != string.Empty) && (hdnIssuedTo.Value != string.Empty) && (hdnDate.Value != string.Empty))
+                                    {
+                                        
+
+                                      
+                                    
+
+                                        string last = string.Empty;
+
+
+
+
+                                        string values = hdnTextboxValues.Value;
+
+                                        string[] Rows = values.Split('$');
+
+
+
+                                        for (int i = 0; i < Rows.Length - 1; i++)
+                                        {
+                                            IssueDetails IssuedtlObj = new IssueDetails(); //Object is created in loop as each entry should have different uniqueID
+
+                                            IssuedtlObj.ClinicID = UA.ClinicID.ToString();
+                                            IssuedtlObj.CreatedBy = UA.userName;
+
+
+                                            string[] tempRow = Rows;
+
+                                            last = tempRow[i].Split('|').Last();
+
+                                            string[] columns = tempRow[i].Split('|');
+
+                                            if (last == string.Empty || last == "")
+                                            {
+
+                                                //----------------- * CASE : INSERT *-----------------------------------//
+                                                if ((columns[0] != null) && (columns[4] != null))
+                                                {
+
+
+                                                    IssuedtlObj.MedicineName = columns[0];
+                                                    IssuedtlObj.Unit = columns[1];
+                                                    IssuedtlObj.Qty = Convert.ToInt32(columns[4]);
+
+                                                    IssuedtlObj.CreatedBy = UA.userName; ;
+                                                    IssuedtlObj.ClinicID = UA.ClinicID.ToString();
+
+                                                    if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
+                                                    {
+                                                        IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
+                                                    }
+                                                    IssuedtlObj.InsertIssueDetails();
+
+                                                }
+                                            }
+
+                                            if (last != string.Empty)
+                                            {
+                                                //----------------- * CASE : UPDATE *---------------------------------//
+
+                                                if ((columns[0] != null) && (columns[4] != null))
+                                                {
+                                                    string uniqueID = last;
+                                                    IssueDetails UpIssueDtlObj = new IssueDetails(new Guid(uniqueID));
+                                                    UpIssueDtlObj.ClinicID = UA.ClinicID.ToString();
+
+
+                                                    DataSet dsIDT = UpIssueDtlObj.GetIssueDetailsByUniqueID(uniqueID);
+
+                                                    if (dsIDT.Tables[0].Rows.Count > 0)
+                                                    {
+
+                                                        string CurrentQty = dsIDT.Tables[0].Rows[0]["QTY"].ToString();
+
+                                                        if (CurrentQty != string.Empty)
+                                                        {
+
+
+
+
+                                                            int ChangingQty = Convert.ToInt32(dsIDT.Tables[0].Rows[0]["QTY"]);
+
+
+                                                            if (ChangingQty != Convert.ToInt32(columns[4]))
+                                                            {
+
+
+                                                                UpIssueDtlObj.Qty = Convert.ToInt32(columns[4]);
+                                                                UpIssueDtlObj.UpdatedBy = UA.userName;
+
+                                                                //string medicineID = IssuedtlObj.GetMedcineIDByMedicineName(columns[0]);
+
+                                                                UpIssueDtlObj.UpdateIssueDetails(uniqueID);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                        }
+
+
+
+
+                                    }
+                                
+                                
+                            }
+                        }
+                       
+                    }
+                }
+                else
+                {
+                    var page = HttpContext.Current.CurrentHandler as Page;
+
+                    msg =UIClasses.Messages.ConfirmInput;
+
+                    eObj.InsertionNotSuccessMessage(page, msg);
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        #endregion StockOutOperations
+
         #endregion Methods
 
         #region Events
@@ -277,6 +579,7 @@ namespace TheClinicApp1._1.Pharmacy
         protected void Page_Load(object sender, EventArgs e)
         {
             BindDummyRow();
+            BindDummyIssuedPrescRow();
 
             List<string> RoleName = new List<string>();
             DataTable dtRols = new DataTable();
@@ -291,7 +594,7 @@ namespace TheClinicApp1._1.Pharmacy
             NameBind = null;
             NameBind = BindName();
             //gridviewbind();
-            btnSave.Attributes.Add("onclick", "return  GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "','" + lblErrorCaption.ClientID + "','" + Errorbox.ClientID + "','" + lblMsgges.ClientID + "');");
+            //btnSave.Attributes.Add("OnClientClick", "return  GetTextBoxValuesPres('" + hdnTextboxValues.ClientID + "','" + lblErrorCaption.ClientID + "','" + Errorbox.ClientID + "','" + lblMsgges.ClientID + "');");
         }
         #endregion Pageload
 
@@ -303,81 +606,82 @@ namespace TheClinicApp1._1.Pharmacy
         {
             string msg = string.Empty;
             DataRow dr = null;
-
-            if (HiddenPatientID.Value != "" || Patientidtorefill.Value != "")
-            {
-                if (hdnTextboxValues.Value != "")
+                if (HiddenPatientID.Value != "" || Patientidtorefill.Value != "")
                 {
-                    if (HiddenPatientID.Value != "")
+                    if (hdnTextboxValues.Value != "")
                     {
-                        patobj.PatientID = Guid.Parse(HiddenPatientID.Value);
-                        DataTable dt = patobj.SelectPatient();              // Select Patient function call                    
-                        dr = dt.NewRow();
-                        dr = dt.Rows[0];
-                        lblPatientName.Text = dr["Name"].ToString();
-                    }
-                    issuehdobj.ClinicID = UA.ClinicID.ToString();
-                    issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number(); // Generate Issue Number function call                    
-                    issuehdobj.PrescID = hdnPrescID.Value;
-                    issuehdobj.IssuedTo = lblPatientName.Text;
-                    issuehdobj.Date =cmn.ConvertDatenow(DateTime.Now);
-                    issuehdobj.CreatedBy = UA.userName;
-                    issuehdobj.ClinicID = UA.ClinicID.ToString();
-                    ViewState["IssueHdrID"] = issuehdobj.IssueID;
-
-                    issuehdobj.InsertIssueHeader();                           // insert issue header function call  
-
-                    string last = string.Empty;
-                    string values = hdnTextboxValues.Value;
-                    string[] Rows = values.Split('$');
-
-                    for (int i = 0; i < Rows.Length - 1; i++)
-                    {
-                        IssueDetails IssuedtlObj = new IssueDetails();       //Object is created in loop as each entry should have different uniqueID
-                        string[] tempRow = Rows;
-                        string[] columns = tempRow[i].Split('|');
-                        IssuedtlObj.MedicineName = columns[0];
-                        IssuedtlObj.Qty = Convert.ToInt32(columns[1]);
-                        IssuedtlObj.CreatedBy = UA.userName;
-                        IssuedtlObj.ClinicID = UA.ClinicID.ToString();
-                        if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
+                        if (HiddenPatientID.Value != "")
                         {
-                            IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
+                            patobj.PatientID = Guid.Parse(HiddenPatientID.Value);
+                            DataTable dt = patobj.SelectPatient();              // Select Patient function call                    
+                            dr = dt.NewRow();
+                            dr = dt.Rows[0];
+                            lblPatientName.Text = dr["Name"].ToString();
                         }
-                        IssuedtlObj.InsertIssueDetails();                       // insert issue Details function call  
+                        issuehdobj.ClinicID = UA.ClinicID.ToString();
+                        issuehdobj.IssueNO = issuehdobj.Generate_Issue_Number(); // Generate Issue Number function call                    
+                        issuehdobj.PrescID = hdnPrescID.Value;
+                        issuehdobj.IssuedTo = lblPatientName.Text;
+                        issuehdobj.Date = cmn.ConvertDatenow(DateTime.Now);
+                        issuehdobj.CreatedBy = UA.userName;
+                        issuehdobj.ClinicID = UA.ClinicID.ToString();
+                        ViewState["IssueHdrID"] = issuehdobj.IssueID;
+
+                        issuehdobj.InsertIssueHeader();                           // insert issue header function call  
+
+                        string last = string.Empty;
+                        string values = hdnTextboxValues.Value;
+                        string[] Rows = values.Split('$');
+
+                        for (int i = 0; i < Rows.Length - 1; i++)
+                        {
+                            IssueDetails IssuedtlObj = new IssueDetails();       //Object is created in loop as each entry should have different uniqueID
+                            string[] tempRow = Rows;
+                            string[] columns = tempRow[i].Split('|');
+                            IssuedtlObj.MedicineName = columns[0];
+                            IssuedtlObj.Qty = Convert.ToInt32(columns[1]);
+                            IssuedtlObj.CreatedBy = UA.userName;
+                            IssuedtlObj.ClinicID = UA.ClinicID.ToString();
+                            if (ViewState["IssueHdrID"] != null && ViewState["IssueHdrID"].ToString() != string.Empty)
+                            {
+                                IssuedtlObj.IssueID = Guid.Parse(ViewState["IssueHdrID"].ToString());
+                            }
+                            IssuedtlObj.InsertIssueDetails();                       // insert issue Details function call  
+                        }
+                        // hdnsave.Value = "saved";
+                        //lblPatientName.Text = "PATIENT_NAME";
+                        //lblAgeCount.Text = "AGE";
+                        //lblGenderDis.Text = "GENDER";
+                        //lblFileNum.Text = "FILE NO";
+                        //lblDoctor.Text = "";
+                        //HiddenPatientID.Value = "";
+                        //Patientidtorefill.Value = "";
+                        //ProfilePic.Src = "../images/UploadPic1.png";
                     }
-                    // hdnsave.Value = "saved";
-                    //lblPatientName.Text = "PATIENT_NAME";
-                    //lblAgeCount.Text = "AGE";
-                    //lblGenderDis.Text = "GENDER";
-                    //lblFileNum.Text = "FILE NO";
-                    //lblDoctor.Text = "";
-                    //HiddenPatientID.Value = "";
-                    //Patientidtorefill.Value = "";
-                    //ProfilePic.Src = "../images/UploadPic1.png";
+                    else
+                    {
+                        var page = HttpContext.Current.CurrentHandler as Page;
+                        msg = "Please fill all the fields ";
+                        eObj.InsertionNotSuccessMessage(page, msg);
+                    }
                 }
                 else
                 {
                     var page = HttpContext.Current.CurrentHandler as Page;
-                    msg = "Please fill all the fields ";
+                    msg = "Patient Details not found ";
                     eObj.InsertionNotSuccessMessage(page, msg);
-                }
-            }
-            else
-            {
-                var page = HttpContext.Current.CurrentHandler as Page;
-                msg = "Patient Details not found ";
-                eObj.InsertionNotSuccessMessage(page, msg);
 
-                if (Patientidtorefill.Value != "")
-                {
-                    pharmacypobj.PatientID = Guid.Parse(Patientidtorefill.Value);
-                    DataSet MedicinList = pharmacypobj.PrescriptionDetails();
-                    var xml = MedicinList.GetXml();
-                    hdnXmlData.Value = xml;
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
+                    if (Patientidtorefill.Value != "")
+                    {
+                        pharmacypobj.PatientID = Guid.Parse(Patientidtorefill.Value);
+                        DataSet MedicinList = pharmacypobj.PrescriptionDetails();
+                        var xml = MedicinList.GetXml();
+                        hdnXmlData.Value = xml;
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "func", "FillTextboxUsingXml();", true);
+                    }
                 }
-            }
+            
+             
         }
 
         #endregion Save Button Click
@@ -517,5 +821,24 @@ namespace TheClinicApp1._1.Pharmacy
 
         #endregion ImageBUtton Click
 
+        protected void btnCheckPassword_ServerClick(object sender, EventArgs e)
+        {
+          
+        }
+
+        protected void btnCheckPassword_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Unnamed_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnCheckPassword_Click1(object sender, EventArgs e)
+        {
+            StockOutOperations();
+        }
     }
 }

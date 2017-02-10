@@ -555,7 +555,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@PhoneNo", SqlDbType.NVarChar, 30).Value = PhoneNo;
 
                 cmd.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = updatedBy;
-                //cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
 
 
                 SqlParameter Output = new SqlParameter();
@@ -860,9 +860,9 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@VerificationCode", SqlDbType.NVarChar, 20).Value = verificationCode;
                 cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = Email;
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                cmd.Parameters.Add("@VerificatinCreatedTime",SqlDbType.DateTime).Value= cmn.ConvertDatenow(DateTime.Now);
 
-
-                SqlParameter Output = new SqlParameter();
+            SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";
                 Output.Direction = ParameterDirection.Output;

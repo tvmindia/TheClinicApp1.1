@@ -115,11 +115,11 @@ function clickStockAdd(id) {
      //ADD new row with fields needed.
    
     $(container).append('<div id="div' + iCnt + '"><table  style="width:100%;border:0;"><tr>'
-       + '<td><input id="txtMedicine' + iCnt + '" class="input" type="text"  onblur="BindControlsByMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
+       + '<td><input id="txtMedicine' + iCnt + '" class="input" type="text"  onblur="BindControlsByMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')" onclick="RemoveStyle(this);" /></td>'
        + '<td><input id="txtUnit' + iCnt + '" readonly="true" class="input "  type="text"  /></td>'
        + '<td><input id="txtCode' + iCnt + '" readonly="true" class="input "  type="text" /></td>'
        + '<td><input id="txtCategory' + iCnt + '" readonly="true" class="input "  type="text" /></td>'
-       + '<td><input id="txtQuantity' + iCnt + '" onkeypress="return isNumber(event)" class="input" min="1" type="number"  onblur="CheckMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" autocomplete="off" /></td>'
+       + '<td><input id="txtQuantity' + iCnt + '" onclick="RemoveStyle(this);" onkeypress="return isNumber(event)" class="input" min="1" type="number"  onblur="CheckMedicineIsOutOfStock(' + iCnt + ')" onfocus="RemoveWarning(' + iCnt + ')" autocomplete="off" /></td>'
        + '<td><input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" accesskey="-" /></td>'
        + '<td><input type="button" id="btAdd' + iCnt + '" value="+" onclick="clickStockAdd(' + iCnt + ')" class="bt" style="width:20px" accesskey="+" /></td>'
        + '<td><input id="hdnDetailID' + iCnt + '" type="hidden" /> <input id="hdnQty' + iCnt + '" type="hidden" /></td>'
@@ -139,6 +139,12 @@ function clickStockAdd(id) {
 
 
     last = last + 1;
+}
+function RemoveStyle(e)
+{
+    debugger;
+    document.getElementById(e.id).style.borderColor = "#dbdbdb";
+    $("#Errorbox").hide(1000);
 }
 function DocPrescription() {
     //Check div exist and if then remove
@@ -172,13 +178,13 @@ function visib(f) {
 function clickAdd(id) {
     iCnt = iCnt + 1;
     // ADD new row with fields needed.
-    $(container).append('<div id="div' + iCnt + '"><table class="table" style="width:100%;">'
+    $(container).append('<div id="div' + iCnt + '"><table id="tblMedicine" class="table" style="width:100%;">'
              + ' <td ><input id="txtMedName' + iCnt + '" type="text" class="input"  onblur="BindMedunitbyMedicneName(' + iCnt + ')" onfocus="autocompleteonfocus(' + iCnt + ')"  /></td>'
-                + '<td ><input id="txtMedQty' + iCnt + '" type="text" onkeypress="return isNumber(event)" class="input" onfocus="focuscontrol(' + iCnt + ')" title="Red Color Indicates No Stock" onkeyup="CheckPharmacyMedicineIsOutOfStock(' + iCnt + ')" onchange="RemoveWarningPharm(' + iCnt + ')" autocomplete="off"/></td>'
-                + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true"  class="input" type="text" onfocus="focusplz(' + iCnt + ')" /></td>'
-                + '<td ><input id="txtMedDos' + iCnt + '" type="text" class="input"/></td>'
-                + '<td><input id="txtMedTime' + iCnt + '" type="text" class="input"/></td>'
-                 + '<td><input id="txtMedDay' + iCnt + '" type="text" class="input"/></td>'
+                + '<td ><input id="txtMedQty' + iCnt + '" type="text" onclick="RemoveStyle(this);" onkeypress="return isNumber(event)" class="input" onfocus="focuscontrol(' + iCnt + ')" title="Red Color Indicates No Stock" onkeyup="CheckPharmacyMedicineIsOutOfStock(' + iCnt + ')" onchange="RemoveWarningPharm(' + iCnt + ')" autocomplete="off"/></td>'
+                + '<td ><input id="txtMedUnit' + iCnt + '"  readonly="true" onclick="RemoveStyle(this);"  class="input" type="text" onfocus="focusplz(' + iCnt + ')" /></td>'
+                + '<td ><input id="txtMedDos' + iCnt + '" type="text" onclick="RemoveStyle(this);" class="input"/></td>'
+                + '<td><input id="txtMedTime' + iCnt + '" type="text" onclick="RemoveStyle(this);" class="input"/></td>'
+                 + '<td><input id="txtMedDay' + iCnt + '" type="text" onclick="RemoveStyle(this);" class="input"/></td>'
                  + '<td style="background:#E6E5E5" class="add">'
                  + '<input type="button" id="btRemove' + iCnt + '" class="bt1" value="-" onclick="clickdelete(' + iCnt + ')" style="width:20px" accesskey="-" /></td>'
                  + '<td style="background:#E6E5E5" class="add">'
@@ -888,7 +894,7 @@ function RefillPresMedicineTextboxesWithXmlData(hdnXmlData) {
 var divValue, values = '';
 //------------ *   Function to get textbox values -- stores textbox values into hidden field when data is submitted *-----------//
 function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsgges) {
-
+    debugger;
     values = '';
     var i = 1;
     $('.input').each(function () {
@@ -937,8 +943,7 @@ function GetTextBoxValuesPres(hdnTextboxValues, lblErrorCaption, Errorbox,lblMsg
 
     }
     document.getElementById(hdnTextboxValues).value = values;
-    
-
+   
 }
 
 function RemoveWarningPharm(ControlNo) {

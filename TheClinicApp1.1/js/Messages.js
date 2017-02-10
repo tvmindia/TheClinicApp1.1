@@ -14,7 +14,10 @@
     AppointmentSaveFailure: "Appointment not added.Please Try Again",
     AppointmentCancelSuccessFull: "Appointment Cancelled Successfully",
     AppointmentCancelFailure: "Appointment not cancelled.Please Try Again",
-    ScheduleUpdateFailure: "This schedule has appoinments.Can't be changed"
+    ScheduleUpdateFailure: "This schedule has appoinments.Can't be changed",
+    FillAtleastOneField: "Please fill atleast one field",
+    SelectPatient: "Please select patient",
+    IncorrectStockPassword:"Incorrect Password.Try Again"
    
 }
 
@@ -45,5 +48,7 @@ var AlertMsgs =
         DateRequired: "Please select a date",
         validNumber: "Please enter a valid number",
         DrRequired: "Please select a doctor",
+        ValidMobile: "Please enter a valid mobile number",
+        NameRequired:"Please enter patient name",
         ClinicRequired: "Please select a clinic"
     }

@@ -721,7 +721,19 @@
             GetUsers(parseInt(1));
         }
 
-
+        function LoginNameValidation(event)
+        {
+            var regex = new RegExp("^([a-zA-Z0-9 _-]+)$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                event.preventDefault();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     </script>
 
     <div class="main_body">
@@ -827,7 +839,7 @@
                                 
                                 <div class="row field_row">
                                     <div class="col-lg-8">
-                                        <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" name="name" onchange="LoginNameCheck(this)" />
+                                        <label for="name">Login Name</label><input id="txtLoginName" runat="server" type="text" onkeypress="return LoginNameValidation(event);" name="name" onchange="LoginNameCheck(this)" />
                                         <span class="tooltip2">
                                             <asp:Image ID="imgWebLnames" runat="server" ImageUrl="~/Images/newfff.png" Style="display: none" />
                                             <span class="tooltiptext2">Login name is Available</span>
@@ -841,10 +853,10 @@
 
                                 <div class="row field_row">
                                     <div class="col-lg-4 ">
-                                        <label for="name">First Name</label><input id="txtFirstName" runat="server" type="text" name="name" />
+                                        <label for="name">First Name</label><input id="txtFirstName" onkeypress="return isnotNumber(event)" ClientIDMode="Static" runat="server" type="text" name="name" />
                                     </div>
                                     <div class="col-lg-4 ">
-                                        <label for="name">Last Name</label><input id="txtLastName" runat="server" type="text" name="name" />
+                                        <label for="name">Last Name</label><input id="txtLastName" onkeypress="return isnotNumber(event)" ClientIDMode="Static" runat="server" type="text" name="name" />
                                     </div>
                                 </div>
 

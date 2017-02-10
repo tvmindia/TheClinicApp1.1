@@ -186,6 +186,45 @@
 
 
     <script>
+        function TextFieldsValidation()
+        {
+            var i=0;
+            var j=0;
+            debugger;
+            $(".tblMedicine tbody tr td input:text,input[type=number]").each(function() {
+                debugger;
+                var txtBox= this.id;
+             
+                if(txtBox.includes("txtQuantity"))
+                {
+                    if(this.value=="")
+                    {
+                        this.style.borderColor = "red";
+                        this.style.backgroundPosition = "95% center";
+                        this.style.backgroundRepeat = "no-repeat";
+                        j=1;
+                    }
+                    if($("#txtMedicine"+i).val()=="")
+                    {
+                        $("#txtMedicine"+i).css("borderColor","red");
+                        $("#txtMedicine"+i).css("backgroundPosition","95% center");
+                        $("#txtMedicine"+i).css("backgroundRepeat","no-repeat");
+                        j=1;
+                    }
+                    i=i+1;
+                }
+           
+            });
+
+            if(j==1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
            function FieldsValidation()
             {
                     try
@@ -193,14 +232,12 @@
                         var issueNo = $('#<%=txtIssueNO.ClientID%>');
                         var issuedTo = $('#<%=txtIssuedTo.ClientID%>');
                          var date = $('#<%=txtDate1.ClientID%>');
-                        var medicine = $("#txtMedicine0");
-                        var quantity=$("#txtQuantity0");
+                        
                         var container = [
                               { id: issueNo[0].id, name: issueNo[0].name, Value: issueNo[0].value },
                               { id: issuedTo[0].id, name: issuedTo[0].name, Value: issuedTo[0].value },
                                { id: date[0].id, name: date[0].name, Value: date[0].value },
-                                { id: medicine[0].id, name: medicine[0].name, Value: medicine[0].value },
-                              { id: quantity[0].id, name: quantity[0].name, Value: quantity[0].value },
+                               
                         ];
 
                         var j = 0;
@@ -230,6 +267,7 @@
                     var lblmsg = msg.Requiredfields;
                     var lblcaptn = Caption.Confirm;
                     ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+                            TextFieldsValidation();
                             return false;
                         }
                         if (j == '0') {
@@ -257,10 +295,17 @@
             }
             else {
 
+                var medicineFieldsBool=TextFieldsValidation();
+                if(medicineFieldsBool==false)
+                {
+                    return false;
+                }
+                else
+                {
+                     GetTextBoxValues('<%=hdnTextboxValues.ClientID %>','<%=hdnRemovedIDs.ClientID %>');
+                     return true;
+                }
                
-
-                GetTextBoxValues('<%=hdnTextboxValues.ClientID %>','<%=hdnRemovedIDs.ClientID %>');
-                return true;
             }
 
         }
@@ -376,9 +421,9 @@
                 <li id="doctor"><a name="hello" onclick="selectTile('doctor','<%=RoleName %>')"><span class="icon doctor"></span><span class="text">Doctor</span></a></li>
                 <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName %>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock" class="active"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-              <li id="admin" runat="server" visible="false"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+              <li id="admin" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
               <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-              <li id="master" runat="server" visible="false"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
+              <li id="master" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Master</span></a></li>
               <li id="log" runat="server"><a class="logout" name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
             </ul>
 
@@ -498,7 +543,7 @@
                                     </tr>
                                 </table>
                                 <div class="">
-                                    <table  style="width: 100%; border: 0;">
+                                    <table  style="width: 100%; border: 0;" class="tblMedicine">
                                         <tbody>
                                             <tr>
                                                 <th>Medicine</th>

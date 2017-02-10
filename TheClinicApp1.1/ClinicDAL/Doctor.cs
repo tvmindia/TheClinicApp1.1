@@ -878,7 +878,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
 
                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar,255).Value = CreatedBy;
-                cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
+                cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value  = commonObj.ConvertDatenow(DateTime.Now);
                 outParameter = cmd.Parameters.Add("@InsertStatus", SqlDbType.SmallInt);
                 outParameter.Direction = ParameterDirection.Output;
                 outSchedulID = cmd.Parameters.Add("@outID", SqlDbType.UniqueIdentifier);

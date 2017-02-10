@@ -121,15 +121,6 @@ namespace TheClinicApp1._1.Token {
         protected global::System.Web.UI.WebControls.Button btnBookToken;
         
         /// <summary>
-        /// Div1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
-        
-        /// <summary>
         /// Errorbox control.
         /// </summary>
         /// <remarks>
@@ -155,6 +146,15 @@ namespace TheClinicApp1._1.Token {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMsgges;
+        
+        /// <summary>
+        /// Div1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
         
         /// <summary>
         /// lblPatientName control.

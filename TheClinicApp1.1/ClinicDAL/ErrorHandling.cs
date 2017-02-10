@@ -35,6 +35,7 @@ namespace TheClinicApp1._1.ClinicDAL
         //    ErrorID = Guid.NewGuid();
         //}
 
+        common cmn = new common();
 
         #region Global Variables
 
@@ -102,7 +103,7 @@ namespace TheClinicApp1._1.ClinicDAL
 
                 cmd.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserID;
 
-
+                cmd.Parameters.Add("@Date",SqlDbType.DateTime).Value= cmn.ConvertDatenow(DateTime.Now);
 
                 cmd.Parameters.Add("@Status", SqlDbType.Int);
                 cmd.Parameters["@Status"].Direction = ParameterDirection.Output;

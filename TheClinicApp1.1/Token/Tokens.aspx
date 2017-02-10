@@ -199,9 +199,9 @@
                     <li id="doctor"><a name="hello" onclick="selectTile('doctor','<%=RoleName %>')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
                     <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','<%=RoleName %>')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                     <li id="stock"><a name="hello" onclick="selectTile('stock','<%=RoleName %>')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-                    <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+                    <li id="admin" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','<%=RoleName %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                     <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-                    <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
+                    <li id="master" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
                     <li id="log" runat="server"><a class="logout" name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
                 </ul>
 
@@ -246,14 +246,7 @@
                         <li style="display: none"><a class="new" href="Tokens.aspx"><span></span>New</a></li>
                     </ul>
                 </div>
-                  <div class="" style="padding-top:20px;padding-left:50px;" id="Div1" runat="server">
-                            <label>Search & Select a Patient, then Book Token </label>
-                        </div>
-
-                <div class="right_form">                    
-                 
-                      
-                        <div id="Errorbox" style="display: none;" runat="server">
+                  <div id="Errorbox" style="display: none;" runat="server">
                             <a class="alert_close">X</a>
                             <div>
                                 <strong>
@@ -261,7 +254,15 @@
                                 </strong>
                                 <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
                             </div>
-                        </div>                        
+                        </div>    
+                  <div class="" style="padding-top:20px;padding-left:50px;" id="Div1" runat="server">
+                            <label>Search & Select a Patient, then Book Token </label>
+                        </div>
+
+                <div class="right_form">                    
+                 
+                      
+                                          
                   
 
                     <div style="height: 40px"></div>

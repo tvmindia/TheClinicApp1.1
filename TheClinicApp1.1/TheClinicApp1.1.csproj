@@ -248,6 +248,10 @@
     <Content Include="images\newTick copy.png" />
     <Content Include="images\next.gif" />
     <Content Include="images\Next.png" />
+    <Content Include="images\nologo1.jpg" />
+    <Content Include="images\nologo5.png" />
+    <Content Include="images\nologo6.png" />
+    <Content Include="images\nologo7.png" />
     <Content Include="images\NonregisteredUSer.png" />
     <Content Include="images\OutOfStock%281%29.png" />
     <Content Include="images\package_icon13.png" />
@@ -257,6 +261,7 @@
     <Content Include="images\pharmacy.png" />
     <Content Include="images\Pill_New%281%29.png" />
     <Content Include="images\plus1.png" />
+    <Content Include="images\prescriptionissued.png" />
     <Content Include="images\prev.gif" />
     <Content Include="images\Previous.png" />
     <Content Include="images\printer.png" />

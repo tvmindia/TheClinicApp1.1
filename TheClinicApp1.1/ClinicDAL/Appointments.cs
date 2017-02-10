@@ -596,10 +596,10 @@ namespace TheClinicApp1._1.ClinicDAL
             {
                 throw new Exception("ClinicID is Empty!!");
             }
-            if (AppointmentID == "")
-            {
-                throw new Exception("AppointmentID is Empty!!");
-            }
+            //if (AppointmentID == "")
+            //{
+            //    throw new Exception("AppointmentID is Empty!!");
+            //}
             try
             {
                 dcon = new dbConnection();
@@ -608,7 +608,10 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Connection = dcon.SQLCon;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "[AppointedPatientConsultDoctorStatusByAppointmentID]";
-                cmd.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(AppointmentID);
+                if(AppointmentID!="")
+                {
+                    cmd.Parameters.Add("@AppointmentID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(AppointmentID);
+                }
                 cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                 cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(System.DateTime.Now);

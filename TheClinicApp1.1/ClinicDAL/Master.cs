@@ -810,7 +810,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 15).Value = DoctorPhone;
                 cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 255).Value = DoctorEmail;
                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 255).Value = updatedBy;
-                //cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
+                cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = commonObj.ConvertDatenow(DateTime.Now);
                 SqlParameter Output = new SqlParameter();
                 Output.DbType = DbType.Int32;
                 Output.ParameterName = "@Status";

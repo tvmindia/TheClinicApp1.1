@@ -47,7 +47,16 @@ namespace TheClinicApp1._1.ClinicDAL
             get;
             set;
         }
-    
+        public string password
+        {
+            get;
+            set;
+        }
+    public string IssueID
+        {
+            get;
+            set;
+        }
         #endregion DoctorPrescriptionproperty
 
         #region Methods
@@ -284,7 +293,109 @@ namespace TheClinicApp1._1.ClinicDAL
         }
 
         #endregion PrescriptionDetails
-        
+
+
+        #region StockRolePasswordCheck
+
+        public string StockRolePasswordCheck()
+        {
+
+            SqlConnection con = null;
+            SqlDataAdapter sda = null;
+            SqlParameter outflag = null;
+            try
+            {
+
+                DateTime now = DateTime.Now;
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[CheckStockRole]";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                cmd.Parameters.Add("@Password", SqlDbType.NVarChar, 40).Value = password;
+                outflag = cmd.Parameters.Add("@Status", SqlDbType.Int);
+                outflag.Direction = ParameterDirection.Output;
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetPatientPharmacyDetails";
+                eObj.InsertError();
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+
+            }
+            return outflag.Value.ToString();
+
+        }
+
+        #endregion StockRolePasswordCheck
+
+        #region GetIssuedPrescriptionDetails
+
+        public DataSet GetIssuedPrescriptionDetails()
+        {
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+            try
+            {
+
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[GetIssuedPrescriptionDetailsForPharmacy]";
+
+                //cmd.Parameters.Add("@PatientID", SqlDbType.UniqueIdentifier).Value =PatientID;
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = ClinicID;
+                cmd.Parameters.Add("@IssueID", SqlDbType.UniqueIdentifier).Value =Guid.Parse(IssueID);
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds, "Medicines");
+            }
+
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "GetIssuedPrescriptionDetails";
+                eObj.InsertError();
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Dispose();
+                }
+            }
+            return ds;
+        }
+
+        #endregion GetIssuedPrescriptionDetails
+
         #endregion Methods
 
         #endregion Precription

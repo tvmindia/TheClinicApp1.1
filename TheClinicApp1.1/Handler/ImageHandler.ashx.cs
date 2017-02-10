@@ -77,7 +77,7 @@ namespace TheClinicApp.Handler
                     else
                     {
                         context.Response.ContentType = "image/png";
-                        context.Response.WriteFile("../images/logoThri.png");
+                        context.Response.WriteFile("../images/nologo1.jpg");
                     }
 
                 }
@@ -97,7 +97,7 @@ namespace TheClinicApp.Handler
                     else
                     {
                         context.Response.ContentType = "image/png";
-                        context.Response.WriteFile("../images/logoThri.png");
+                        context.Response.WriteFile("../images/nologo7.png");
                     }
 
                 }

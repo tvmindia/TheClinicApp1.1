@@ -51,6 +51,13 @@
            
            
 }
+input:-webkit-autofill {
+    /* background-color: transparent !important; */
+    -webkit-box-shadow: 0 0 0 1000px rgba(111, 109, 109, 0.18) inset !important;
+    /* -webkit-box-shadow: none; */
+    /* opacity: 0.75; */
+    /* transition: background-color 5000s ease-in-out 0s !important; */
+}
     </style>
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
     <script src="../js/jquery-1.12.0.min.js"></script>
@@ -72,33 +79,36 @@
     <link href="../css/Masterw3.css" rel="stylesheet" />
 </head>
 <body class="Semitransparent_1">
-     <form id="form1" runat="server">
+    <%-- <form id="form1" runat="server" autocomplete="off">--%>
     <div class="logo" >
         <img src="../Logo.png"  style="width:50px"/>        
     </div>    
-    <div class="login">         
+    <div class="login" id="loginRowFluid">       
+        <form id="form1" runat="server" autocomplete="off">  
+            <h3>Sign In</h3>
         <div class="input-field">
-          <input id="username" runat="server" type="text"  class="validate" style="color:white;font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif" autocomplete="off" />
-          <label for="username" class="captions" id="user">User Name</label>
+          <input id="username" runat="server" placeholder="User Name" type="text"  class="validate" style="height:2rem!important;color:white;font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif" autocomplete="off" />
+        <%--  <label for="username" class="captions" id="user">User Name</label>--%>
         </div>                
         <div class="input-field">
-          <input id="password" type="password" class="validate" runat="server" style="color:white;" autocomplete="off" />
-          <label for="password" class="captions" id="pass">Password</label>
+          <input id="password" type="password" class="validate" placeholder="Password" runat="server" style="height:2rem!important;color:white;" autocomplete="off" />
+        <%--  <label for="password" class="captions" id="pass">Password</label>--%>
         </div>
        
      <div class="input-field col s12" style="text-align:right">
 
-          <button class="btn waves-effect waves-light" type="submit" name="action" id="logins">Login</button>       
+          <button class="btn waves-effect waves-light" type="submit" name="action" id="logins" autofocus>LOGIN</button>       
      </div>  
  
 
         <div  class="loginerrormessage">
             <asp:Label   ID="lblmsg" runat="server" Text=""></asp:Label>
 
-        </div>     
+        </div>  
+            </form>   
 </div>
 
-    </form>
+   <%-- </form>--%>
     <button id="bt_forgot" onclick="SetIframeSrc('AllRegistrationIframe'),document.getElementById('id01').style.display='block'" class="w3-btn" style="background-color:transparent;color:white;">Forget Password?</button> 
         <div id="id01" class="w3-modal" runat="server">
   <span onclick="document.getElementById('id01').style.display='none'" 

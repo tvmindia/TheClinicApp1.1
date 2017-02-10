@@ -804,7 +804,7 @@ namespace TheClinicApp1._1.Doctor
             string Unit = "";
           
 
-            if (ds.Tables[0].Rows.Count > 0)
+            if (ds!=null)
             {
                 Unit = Convert.ToString(ds.Tables[0].Rows[0]["Unit"]);
               

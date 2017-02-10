@@ -131,140 +131,226 @@ var appointmentNo="";
        
                 debugger;
                 var timeLength= $("#hdfTimeListLength").val();
-                if(mobile.match(regEx)&&mobile.length>=5)
+                if(appointmentDate!="")
                 {
-                    if($( "input:checked" ).val()!=undefined)
+                    $("#Errorbox").css("display","none");
+                    if(name!="")
                     {
-                        appointmentNo=Time.split('+')[1];
-                        Time=Time.split('+')[0];
+                        $("#Errorbox").css("display","none");
+                    if(mobile.match(regEx)&&mobile.length>=5)
+                    {
+                        if($( "input:checked" ).val()!=undefined )
+                        {
+                            appointmentNo=Time.split('+')[1];
+                            Time=Time.split('+')[0];
                         
-                        Time=Time.split('-')[0];
-                        if(Time.split(':')[0].length==1)
-                        {
-                            Time="0"+Time;
-                        }
-                        var Appointments=new Object();
-                        Appointments.AppointmentDate=appointmentDate;
-                        Appointments.Name=name;
-                        Appointments.Mobile=mobile;
-                        Appointments.Location=place;
-                        Appointments.ScheduleID=scheduleID;
-                        Appointments.AllottingTime=Time;
-                        Appointments.PatientID=patientID;
-                        Appointments.appointmentno=appointmentNo;
-                        var ds={};
-                        ds=InsertPatientAppointment(Appointments);
-                        if(ds.status=="1")
-                        {
-                            refreshList();
-                            fillPatientDetails();
-                            var lblclass = Alertclasses.sucess;
-                            var lblmsg = msg.AppointmentSaveSuccessFull;
-                            var lblcaptn = Caption.SuccessMsgCaption;
+                            Time=Time.split('-')[0];
+                            if(Time.split(':')[0].length==1)
+                            {
+                                Time="0"+Time;
+                            }
+                            var Appointments=new Object();
+                            Appointments.AppointmentDate=appointmentDate;
+                            Appointments.Name=name;
+                            Appointments.Mobile=mobile;
+                            Appointments.Location=place;
+                            Appointments.ScheduleID=scheduleID;
+                            Appointments.AllottingTime=Time;
+                            Appointments.PatientID=patientID;
+                            Appointments.appointmentno=appointmentNo;
+                            var ds={};
+                            ds=InsertPatientAppointment(Appointments);
+                            if(ds.status=="1")
+                            {
+                                refreshList();
+                                fillPatientDetails();
+                                var lblclass = Alertclasses.sucess;
+                                var lblmsg = msg.AppointmentSaveSuccessFull;
+                                var lblcaptn = Caption.SuccessMsgCaption;
 
-                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                                DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                            }
+                            else
+                            {
+                                validation(msg.AppointmentSaveFailure);
+                            }
                         }
-                        else
+                        else if(timeLength=="2")
                         {
-                            var lblclass = Alertclasses.sucess;
-                            var lblmsg = msg.AppointmentSaveFailure;
-                            var lblcaptn = Caption.FailureMsgCaption;
-
-                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
-                        }
-                    }
-                    else if(timeLength=="2")
-                    {
-                        start=$("#hdfStartTime").val();
-                        start=parseFloat(start);
-                        end=$("#hdfEndTime").val();
-                        end=parseFloat(end);
-                        start = end-start;
-                        var duration=start.toString();
-                        var d1=parseInt(duration.split('.')[0]);
-                        var d2=parseInt(duration.split('.')[1]);
-                        var a = $("#hdfLastAppointedTime").val();
-                        var hours=a.split('.')[0];
-                        var minute=a.split('.')[1];
-                        hours=parseInt(hours);
-                        if (a.includes('PM') && hours < 12) {
-                            hours = parseInt(hours) + 12;
-                            a = hours + '.' + minute;
-                        }
-                        var alot1=parseInt(a.split('.')[0]);
-                        var alot2=parseInt(a.split('.')[1]);
-                        var hourTotal=d1+alot1;
-                        var minTotal=d2+alot2;
-                        var remainingminuteTotal=null;
-                        if(minTotal>60)
-                        {
-                            remainingminuteTotal=60-minTotal;
-                            hourTotal=hourTotal+1;
-                            minTotal=remainingminuteTotal;
-                            minTotal=minTotal.toString();
-                            minTotal=minTotal.replace('-','');
-                        }
-                        a=hourTotal+":"+minTotal;
-                        a=a.toString();
-                        var j = parseInt(a.split(':')[0]);                                 
-                        if(a.split(':')[1].length==1)
-                        {
-                            var d= a.split('.')[1];
-                            d="0"+d;
-                            Time=a.split('.')[0]+":"+d;
-                        }
-                        else
-                        {
-                            Time=a;
-                        }
-                        var Appointments=new Object();
-                        Appointments.AppointmentDate=appointmentDate;
-                        Appointments.Name=name;
-                        Appointments.Mobile=mobile;
-                        Appointments.Location=place;
-                        Appointments.ScheduleID=scheduleID;
-                        Appointments.AllottingTime=Time;
-                        Appointments.PatientID=patientID;
+                            start=$("#hdfStartTime").val();
+                            start=parseFloat(start);
+                            end=$("#hdfEndTime").val();
+                            end=parseFloat(end);
+                            start = end-start;
+                            var duration=start.toString();
+                            var d1=parseInt(duration.split('.')[0]);
+                            var d2=parseInt(duration.split('.')[1]);
+                            var a = $("#hdfLastAppointedTime").val();
+                            var hours=a.split('.')[0];
+                            var minute=a.split('.')[1];
+                            hours=parseInt(hours);
+                            if (a.includes('PM') && hours < 12) {
+                                hours = parseInt(hours) + 12;
+                                a = hours + '.' + minute;
+                            }
+                            var alot1=parseInt(a.split('.')[0]);
+                            var alot2=parseInt(a.split('.')[1]);
+                            var hourTotal=d1+alot1;
+                            var minTotal=d2+alot2;
+                            var remainingminuteTotal=null;
+                            if(minTotal>60)
+                            {
+                                remainingminuteTotal=60-minTotal;
+                                hourTotal=hourTotal+1;
+                                minTotal=remainingminuteTotal;
+                                minTotal=minTotal.toString();
+                                minTotal=minTotal.replace('-','');
+                            }
+                            a=hourTotal+":"+minTotal;
+                            a=a.toString();
+                            var j = parseInt(a.split(':')[0]);                                 
+                            if(a.split(':')[1].length==1)
+                            {
+                                var d= a.split('.')[1];
+                                d="0"+d;
+                                Time=a.split('.')[0]+":"+d;
+                            }
+                            else
+                            {
+                                Time=a;
+                            }
+                            var Appointments=new Object();
+                            Appointments.AppointmentDate=appointmentDate;
+                            Appointments.Name=name;
+                            Appointments.Mobile=mobile;
+                            Appointments.Location=place;
+                            Appointments.ScheduleID=scheduleID;
+                            Appointments.AllottingTime=Time;
+                            Appointments.PatientID=patientID;
                     
-                        var ds={};
-                        ds=InsertPatientAppointment(Appointments);
-                        if(ds.status=="1")
-                        {
-                            refreshList();
-                            fillPatientDetails();
-                            var lblclass = Alertclasses.sucess;
-                            var lblmsg = msg.AppointmentSaveSuccessFull;
-                            var lblcaptn = Caption.SuccessMsgCaption;
+                            var ds={};
+                            ds=InsertPatientAppointment(Appointments);
+                            if(ds.status=="1")
+                            {
+                                refreshList();
+                                fillPatientDetails();
+                                var lblclass = Alertclasses.sucess;
+                                var lblmsg = msg.AppointmentSaveSuccessFull;
+                                var lblcaptn = Caption.SuccessMsgCaption;
 
-                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                                DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                            }
+                            else
+                            {
+                                validation(msg.AppointmentSaveFailure);
+                            }
                         }
                         else
                         {
-                            var lblclass = Alertclasses.sucess;
-                            var lblmsg = msg.AppointmentSaveFailure;
-                            var lblcaptn = Caption.FailureMsgCaption;
-
-                            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+                            alert("Please select appointment time");             
                         }
+                   
                     }
                     else
                     {
-                        alert("Please select appointment time");             
+                        validation(AlertMsgs.ValidMobile);
                     }
-                   
                 }
                 else
                 {
-                    alert("Please enter a valid mobile number");
+                        validation(AlertMsgs.NameRequired);
                 }
+                }
+                else
+                {
+                    validation(AlertMsgs.DateRequired);
+                }
+              
             });
             $('.nav_menu').click(function () {
            
                 $(".main_body").toggleClass("active_close");
             });
         });
-    //end of document.ready
+        //end of document.ready
+        function validation(ErrorMsg)
+        {
+            var lblclass = Alertclasses.danger;
+            var lblmsg = ErrorMsg;
+            var lblcaptn = Caption.FailureMsgCaption;
 
+            DisplayAlertMessages(lblclass, lblcaptn, lblmsg);
+
+        }
+          function FieldsValidation()
+          {
+              var appointmentDate = $("#txtAppointmentDate");
+              var search = $("txtSearch");
+              var patientName = $("#txtPatientName");
+              var patientMobile=$("#txtPatientMobile");
+              var isNew=$("#isNewOrOld").val();
+                    try
+                    {
+                        if(isNew=="1")
+                        {
+                            var container = [
+                                                   { id: appointmentDate[0].id, name: appointmentDate[0].name, Value: appointmentDate[0].value },
+                                                   { id: patientName[0].id, name: patientName[0].name, Value: patientName[0].value },
+                                                   { id: patientMobile[0].id, name: patientMobile[0].name, Value: patientMobile[0].value },
+                            ];
+                        }
+                        else
+                        {
+                            var container = [
+                                                   { id: appointmentDate[0].id, name: appointmentDate[0].name, Value: appointmentDate[0].value },
+                                                   { id: search[0].id, name: search[0].name, Value: search[0].value },
+                                                   { id: patientMobile[0].id, name: patientMobile[0].name, Value: patientMobile[0].value },
+                            ];
+                        }
+                    
+
+                        var j = 0;
+       
+                        for (var i = 0; i < container.length; i++) {
+                            if (container[i].Value == "") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "95% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+               
+                            }
+                            else if (container[i].Value == "-1") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "93% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+             
+                            }
+                        }
+                        if (j == '1') {
+                           var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.Requiredfields;
+                    var lblcaptn = Caption.Confirm;
+                  <%--  ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);--%>
+                            return false;
+                        }
+                        if (j == '0') {
+          
+                            //saveMember();
+                            return true;
+                        }
+                    }
+                    catch(e)
+                    {
+                        //noty({ type: 'error', text: e.message });
+                    }
+   
+                
+            }
     function InsertPatientAppointment(Appointments)
     {
      
@@ -563,13 +649,23 @@ var appointmentNo="";
         }
         function NewPatientBind(e)
         {
+            $("#isNewOrOld").val("1");
             $(".PatientNewTr").css("display","");
             $(".PatientOldTr").css("display","none");
         }
         function OldPatientBind(e)
         {
+            $("#isNewOrOld").val("0");
             $(".PatientNewTr").css("display","none");
             $(".PatientOldTr").css("display","");
+        }
+        function isnotNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode ==32)|| (charCode==08)) {
+                return true;
+            }
+            return false;
         }
         function isNumber(evt) {
             evt = (evt) ? evt : window.event;
@@ -619,9 +715,9 @@ label.noAppointments {
                     <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
                     <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                     <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-                    <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+                    <li id="admin" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=admin.ClientID %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                     <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-                    <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
+                    <li id="master" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
                   
                    
                 </ul>
@@ -675,7 +771,7 @@ label.noAppointments {
                                     <li><a class="new" href="#"><span></span>New</a></li>
                                 </ul>
                             </div>
-                                    <div id="Errorbox" style="height: 30%; display: none;">
+                                    <div id="Errorbox" style="height: 30%; display: none;" >
                         <a class="alert_close">X</a>
                         <div>
                             <strong>
@@ -807,7 +903,7 @@ label.noAppointments {
                                                               <label>Name</label>
                                                           </td>
                                                           <td>
-                                                              <input type="text" id="txtPatientName" class="txtBox" />
+                                                              <input type="text" id="txtPatientName" class="txtBox" onkeypress="return isnotNumber(event)"/>
                                                              <%-- <asp:TextBox ID="txtPatientName" runat="server"></asp:TextBox>--%>
                                                               <br />
                                                           </td>
@@ -883,6 +979,7 @@ label.noAppointments {
                 <input type="hidden" id="hdfTimeListLength" />
                 <input type="hidden" id="hdfAppointmentNoCollection" />
                 <input type="hidden" id="hdfUserRole" ClientIDMode="Static" runat="server" />
+        <input type="hidden" id="isNewOrOld" value="" />
             </div>
         
 

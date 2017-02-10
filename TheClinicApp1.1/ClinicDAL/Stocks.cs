@@ -1154,6 +1154,79 @@ namespace TheClinicApp1._1.ClinicDAL
         }
         #endregion CheckMedicineIDIsUsed  
 
+        #region Issued Prescription View Search Paging
+        public string ViewAndFilterIssuedPrescriptions(string searchTerm, int pageIndex, int PageSize)
+        {
+            dbConnection dcon = null;
+            DataSet ds = null;
+            SqlDataAdapter sda = null;
+
+            var xml = string.Empty;
+            try
+            {
+
+                dcon = new dbConnection();
+                dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dcon.SQLCon;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "[ViewAndDisplayIssuedPrescriptions]";
+
+                cmd.Parameters.Add("@ClinicID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ClinicID);
+                cmd.Parameters.Add("@DateTime", SqlDbType.NVarChar, 50).Value = cmn.ConvertDatenow(DateTime.Now).ToString("yyyy-MM-dd");
+
+                cmd.Parameters.AddWithValue("@SearchTerm", searchTerm);
+                cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                cmd.Parameters.Add("@FormatCode", SqlDbType.Int).Value = cmn.DateTimeFormatCode;
+                cmd.Parameters.Add("@RecordCount", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                sda = new SqlDataAdapter();
+                cmd.ExecuteNonQuery();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds, "IssuedPrescriptions");
+
+
+                //-----------Paging Section 
+
+                DataTable dt = new DataTable("Pager");
+                dt.Columns.Add("PageIndex");
+                dt.Columns.Add("PageSize");
+                dt.Columns.Add("RecordCount");
+                dt.Rows.Add();
+                dt.Rows[0]["PageIndex"] = pageIndex;
+                dt.Rows[0]["PageSize"] = PageSize;
+                dt.Rows[0]["RecordCount"] = cmd.Parameters["@RecordCount"].Value;
+                ds.Tables.Add(dt);
+
+                xml = ds.GetXml();
+
+
+            }
+            catch (Exception ex)
+            {
+                UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
+                eObj.Description = ex.Message;
+                eObj.Module = Module;
+                eObj.UserID = UA.UserID;
+                eObj.Method = "ViewAndFilterIssuedPrescriptions";
+                eObj.InsertError();
+            }
+
+            finally
+            {
+                if (dcon.SQLCon != null)
+                {
+                    dcon.DisconectDB();
+                }
+
+            }
+
+            return xml;
+        }
+        #endregion Issued Prescription View Search Paging
+
         #endregion Methods
     }
 }

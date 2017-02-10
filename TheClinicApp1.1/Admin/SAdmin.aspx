@@ -7,7 +7,9 @@
     <script src="../js/jquery-1.9.1.min.js"></script>
 
     <script src="../js/JavaScript_selectnav.js"></script>
-
+            <script src="../js/DeletionConfirmation.js"></script>
+        <script src="../js/Messages.js"></script>
+        <script src="../js/Dynamicgrid.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
 
     <link href="../css/bootstrap-multiselect.css" rel="stylesheet" />
@@ -33,9 +35,9 @@
                 <li id="doctor"><a name="hello" onclick="selectTile('doctor','')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
                 <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy','')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                 <li id="stock"><a name="hello" onclick="selectTile('stock','')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-                <li id="admin" class="active" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+                <li id="admin" class="active" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=admin.ClientID %>','')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                 <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-                <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
+                <li id="master" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
                 <li id="log" runat="server"><a name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
             </ul>
             <p class="copy">&copy;<asp:Label ID="lblClinicName" runat="server" Text="Trithvam Ayurvedha"></asp:Label></p>
@@ -90,7 +92,7 @@
                                 </ul>
                             </div>
 
-                            <div id="Errorbox" style="display: none;" runat="server">
+                            <div id="Errorbox" style="display: none;" runat="server"  ClientIDMode="Static">
                                 <a class="alert_close">X</a>
                                 <div>
                                     <strong>
@@ -105,30 +107,30 @@
                                 <div class="col-lg-8">
                                     <div style="margin-bottom: 3%" id="rdbdiv">
                                         <label for="name">
-                                            <asp:RadioButton ID="rdoDoctor" runat="server" GroupName="Doctor" Text="New Group" CssClass="checkbox-inline" onclick="RadioButtonGroupChange(1)" />
-                                            <asp:RadioButton ID="rdoNotDoctor" runat="server" GroupName="Doctor" Text="Existing Group" CssClass="checkbox-inline" onclick="RadioButtonGroupChange(2)" Checked="true" />
+                                            <asp:RadioButton ID="rdoDoctor" runat="server" GroupName="Doctor" ClientIDMode="Static" Text="New Group" CssClass="checkbox-inline" onclick="RadioButtonGroupChange(1)" />
+                                            <asp:RadioButton ID="rdoNotDoctor" runat="server" GroupName="Doctor" ClientIDMode="Static" Text="Existing Group" CssClass="checkbox-inline" onclick="RadioButtonGroupChange(2)" Checked="true" />
                                         </label>
                                         <asp:HiddenField ID="hdnGroupselect" ClientIDMode="Static" runat="server" Value="Exist" />
                                     </div>
                                     <div style="margin-top: 1%; margin-bottom: 1%; display: none;" id="NewGroup">
-                                        <label for="location">Group Name</label><input id="txtGroupName" runat="server" type="text" name="name" />
+                                        <label for="location">Group Name</label><input id="txtGroupName" ClientIDMode="Static" runat="server" type="text" name="name" />
                                     </div>
                                     <div style="margin-bottom: 1%" id="ExistingGroup">
                                         <label for="name">Select Group</label>
-                                        <asp:DropDownList ID="ddlGroup" runat="server" Width="100%" Height="31px" CssClass="drop">
+                                        <asp:DropDownList ID="ddlGroup" ClientIDMode="Static" runat="server" Width="100%" Height="31px" CssClass="drop">
                                         </asp:DropDownList>
                                     </div>
                                     <div style="margin-bottom: 1%">
-                                        <label for="name">Clinic Name</label><input id="txtClinicName" runat="server" type="text" name="name" onchange="LoginNameCheck(this)" />
+                                        <label for="name">Clinic Name</label><input id="txtClinicName" runat="server" type="text" name="name" ClientIDMode="Static" onchange="LoginNameCheck(this)" />
                                     </div>
                                     <div style="margin-bottom: 1%">
-                                        <label for="location">Clinic Location</label><input id="txtLocation" runat="server" type="text" name="name" />
+                                        <label for="location">Clinic Location</label><input id="txtLocation" ClientIDMode="Static" runat="server" type="text" name="name" />
                                     </div>
                                     <div style="margin-bottom: 1%">
-                                        <label for="address">Clinic Address</label><input id="txtAddress" runat="server" type="text" name="name" />
+                                        <label for="address">Clinic Address</label><input id="txtAddress" ClientIDMode="Static" runat="server" type="text" name="name" />
                                     </div>
                                     <div style="margin-bottom: 1%">
-                                        <label for="phone">Clinic Phone</label><input id="txtPhone" runat="server" type="text" name="name" />
+                                        <label for="phone">Clinic Phone</label><input id="txtPhone" runat="server" ClientIDMode="Static" type="text" name="name" onkeypress="return isNumber(event)" minlength="5" pattern="\d*" />
                                     </div>
                                     <div style="margin-bottom: 1%" id="DivMultiRoles">
                                         <label for="phone">Select Required Roles</label>
@@ -241,21 +243,61 @@
     <script src="../js/jquery-1.8.3.min.js"></script>
     <script src="../js/ASPSnippets_Pager.min.js"></script>
     <script>
+        function ClearControls()
+        {
+            $("#txtGroupName").val("");
+            $("#txtClinicName").val("");
+            $("#txtLocation").val("");
+            $("#txtAddress").val("");
+            $("#txtPhone").val("");
+        }
         function Validation()
         {
-           
-        }
-          function NewGroupValidation()
+            debugger;
+            var fieldsValidationBool = FieldsValidation();
+            if(fieldsValidationBool==true)
             {
-                    try
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        function FieldsValidation()
+        {
+               try
                     {
-                           var groupName = $('#<%=txtGroupName.ClientID%>');
-                      
-                        var container = [
-                              { id: groupName[0].id, name: groupName[0].name, Value: groupName[0].value },
-                           
-                        ];
+                //$('#Displaydiv').remove();
 
+                        var clinicName = $('#<%=txtClinicName.ClientID%>');
+                        var location = $('#<%=txtLocation.ClientID%>');
+                        var address = $('#<%=txtAddress.ClientID%>');
+                        var phone = $('#<%=txtPhone.ClientID%>');
+                   var groupName = $('#<%=txtGroupName.ClientID%>');
+                   var ddlGroupName=$('#<%=ddlGroup.ClientID%>');
+                if (document.getElementById('rdoDoctor').checked == true)
+                {
+                    var container = [
+                                                { id: clinicName[0].id, name: clinicName[0].name, Value: clinicName[0].value },
+                                                { id: location[0].id, name: location[0].name, Value: location[0].value },
+                                                { id: address[0].id, name: address[0].name, Value: address[0].value },
+                                                { id: phone[0].id, name: phone[0].name, Value: phone[0].value },
+                                                { id: groupName[0].id, name: groupName[0].name, Value: groupName[0].value },
+                    ];
+                }
+                else
+                {
+                    var container = [
+                            { id: clinicName[0].id, name: clinicName[0].name, Value: clinicName[0].value },
+                            { id: location[0].id, name: location[0].name, Value: location[0].value },
+                            { id: address[0].id, name: address[0].name, Value: address[0].value },
+                            { id: phone[0].id, name: phone[0].name, Value: phone[0].value },
+                             { id: ddlGroupName[0].id, name: ddlGroupName[0].name, Value: ddlGroupName[0].value },
+                    ];
+                }
+                        
+                       
                         var j = 0;
        
                         for (var i = 0; i < container.length; i++) {
@@ -295,14 +337,21 @@
                     {
                         //noty({ type: 'error', text: e.message });
                     }
-   
-                
-            }
+        }
         $(document).ready(function () {
             $('.alert_close').click(function () {
                 $(this).parent(".alert").hide();
             });
-
+            $('input[type=text]').on('focus', function () {
+                debugger;
+                $(this).css({ borderColor: '#dbdbdb' });
+                $("#Errorbox").hide(1000);
+            });
+            $('select').on('focus', function () {
+                debugger;
+                $(this).css({ borderColor: '#dbdbdb' });
+              
+            });
         });
 
 
@@ -362,6 +411,7 @@
 
 
              function RadioButtonGroupChange(num) {
+                 ClearControls();
                  debugger;
                  if (num == 1) {
                      $('#ExistingGroup').hide();

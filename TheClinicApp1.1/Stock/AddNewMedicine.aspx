@@ -30,7 +30,8 @@
 
 
     <script src="../js/jquery-1.12.0.min.js"></script>
-    
+     <script src="../js/Messages.js"></script>
+        <script src="../js/Dynamicgrid.js"></script>
     <script>  
         $(document).ready(function () {
          
@@ -46,6 +47,17 @@
                  CodeAvailableImage.style.display = "none";
                  var CodeUnavailableImage = document.getElementById('<%=imgCodeUnavailable.ClientID %>');
                  CodeUnavailableImage.style.display = "none";
+
+                 $('input[type=text],input[type=number]').on('focus', function () {
+                     debugger;
+                     $(this).css({ borderColor: '#dbdbdb' });
+                     $("#Errorbox").hide(1000);
+                 });
+                 $('select').on('focus', function () {
+                     debugger;
+                     $(this).css({ borderColor: '#dbdbdb' });
+
+                 });
 
   $('.alert_close').click(function () {
                 
@@ -206,11 +218,6 @@
             document.getElementById('<%=ddlCategory.ClientID %>').value = "--Select--";
             document.getElementById('<%=ddlUnits.ClientID %>').value = "--Select--";
 
-
-          document.getElementById('<%=RequiredFieldValidator1.ClientID %>').style.color = "white";
-            document.getElementById('<%=RequiredFieldValidator2.ClientID %>').style.color = "white";
-            document.getElementById('<%=RequiredFieldValidator3.ClientID %>').style.color = "white";
-            document.getElementById('<%=RequiredFieldValidator4.ClientID %>').style.color = "white";
             document.getElementById('<%=RegularExpressionValidator1.ClientID %>').style.color = "white";
  
 
@@ -227,15 +234,86 @@
 
         function SetValidatorColor()
         {
-            document.getElementById('<%=RequiredFieldValidator1.ClientID %>').style.color = "red";
-            document.getElementById('<%=RequiredFieldValidator2.ClientID %>').style.color = "red";
-            document.getElementById('<%=RequiredFieldValidator3.ClientID %>').style.color = "red";
-            document.getElementById('<%=RequiredFieldValidator4.ClientID %>').style.color = "red";
+          
             document.getElementById('<%=RegularExpressionValidator1.ClientID %>').style.color = "red";
         }
       
+        function Validation()
+        {
+            debugger;
+            var BoolValue = FieldsValidation();
+            if(BoolValue==true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+         function FieldsValidation()
+         {
+             debugger;
+               try
+                    {
+                //$('#Displaydiv').remove();
 
-
+                   var medicineName = $('#<%=txtmedicineName.ClientID%>');
+                   var code = $('#<%=txtCode.ClientID%>');
+                   var category = $('#<%=ddlCategory.ClientID%>');
+                   var units = $('#<%=ddlUnits.ClientID%>');
+                   var orderQuantity = $('#<%=txtOrderQuantity.ClientID%>');
+                
+                    var container = [
+                            { id: medicineName[0].id, name: medicineName[0].name, Value: medicineName[0].value },
+                            { id: code[0].id, name: code[0].name, Value: code[0].value },
+                            { id: category[0].id, name: category[0].name, Value: category[0].value },
+                            { id: units[0].id, name: units[0].name, Value: units[0].value },
+                             { id: orderQuantity[0].id, name: orderQuantity[0].name, Value: orderQuantity[0].value },
+                    ];
+                
+                        
+                       
+                        var j = 0;
+       
+                        for (var i = 0; i < container.length; i++) {
+                            if (container[i].Value == "") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "95% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+               
+                            }
+                            else if (container[i].Value == "--Select--") {
+                                j = 1;
+               
+                                var txtB = document.getElementById(container[i].id);
+                                txtB.style.borderColor = "red";
+                                txtB.style.backgroundPosition = "93% center";
+                                txtB.style.backgroundRepeat = "no-repeat";
+             
+                            }
+                        }
+                        if (j == '1') {
+                           var lblclass = Alertclasses.danger;
+                    var lblmsg = msg.Requiredfields;
+                    var lblcaptn = Caption.Confirm;
+                    ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
+                            return false;
+                        }
+                        if (j == '0') {
+          
+                            //saveMember();
+                            return true;
+                        }
+                    }
+                    catch(e)
+                    {
+                        //noty({ type: 'error', text: e.message });
+                    }
+        }
 
     </script>
 </asp:Content>
@@ -251,7 +329,7 @@
         <ContentTemplate>--%>
  <div class="main_body">
 
-          <div id="Errorbox"  style="display:none;"  runat="server" ><a class="alert_close">X</a>
+          <div id="Errorbox"  style="display:none;"  ClientIDMode="Static" runat="server" ><a class="alert_close">X</a>
                     <div>
                             <strong> <asp:Label ID="lblErrorCaption" runat="server" Text=""></asp:Label> </strong>
                                  <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
@@ -277,11 +355,6 @@
                     </td>
                     <td >
                         <asp:TextBox ID="txtmedicineName" runat="server" onchange="CheckMedicineNameDuplication(this)" required></asp:TextBox>
-                        <asp:RequiredFieldValidator id="RequiredFieldValidator3" runat="server"
-  ControlToValidate="txtmedicineName"
-  ErrorMessage="Please fill out this field"
-  ForeColor="Red">
-</asp:RequiredFieldValidator>
                     </td>
 
                     <td style="width:10%;border:none;">
@@ -293,17 +366,17 @@
                         <asp:Image ID="errorLnames" runat="server"  ImageUrl="~/Images/newClose.png" />
                          <span class="tooltiptext1">Medicine Name  is Unavailable</span>
                     </span>
-                    </td>                                    
+                        <br />
+                        <br />
+                      
+                    </td>  
+                                                      
                 </tr>
+            
                 <tr>
                     <td >Medicine Code</td>
                     <td >
                         <asp:TextBox ID="txtCode" runat="server"   onchange="CheckMedicineCodeDuplication(this)" required></asp:TextBox>
-                         <asp:RequiredFieldValidator id="RequiredFieldValidator4" runat="server"
-  ControlToValidate="txtCode"
-  ErrorMessage="Please fill out this field"
-  ForeColor="Red">
-</asp:RequiredFieldValidator>
                     </td>
                     <td >
                        <span class="tooltip1">
@@ -314,6 +387,9 @@
                         <asp:Image ID="imgCodeUnavailable" runat="server"  ImageUrl="~/Images/newClose.png" />
                         <span class="tooltiptext1">Medicine Code  is Unavailable</span>
                     </span>
+                          <br />
+                        <br />
+                        <br />
                     </td>
                 </tr>
 
@@ -324,21 +400,12 @@
                             <ContentTemplate>
                                 <asp:DropDownList ID="ddlCategory" CssClass="Dropdown" runat="server" AutoPostBack="true">
                                 </asp:DropDownList>
-                                  <asp:RequiredFieldValidator
-             ID="RequiredFieldValidator1"
-             runat="server"
-             ControlToValidate="ddlCategory"
-             InitialValue="--Select--"
-             ErrorMessage="* Please select an item."
-             ForeColor="Red"
-            
-             >
-        </asp:RequiredFieldValidator>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-
+                     
                     </td>
-                    <td ></td>
+                    <td >  <br />
+                        </td>
 
                 </tr>
 
@@ -349,16 +416,6 @@
                             <ContentTemplate>
                                 <asp:DropDownList ID="ddlUnits" CssClass="Dropdown" runat="server" AutoPostBack="true">
                                 </asp:DropDownList>
-                                 <asp:RequiredFieldValidator
-             ID="RequiredFieldValidator2"
-             runat="server"
-             ControlToValidate="ddlUnits"
-             InitialValue="--Select--"
-             ErrorMessage="* Please select an item."
-             ForeColor="Red"
-            
-             >
-        </asp:RequiredFieldValidator>
                                   </ContentTemplate>
                         </asp:UpdatePanel>
                         <%--<asp:TextBox ID="txtUnit" runat="server" required></asp:TextBox>--%>
@@ -374,7 +431,9 @@
                             Text="Please enter a valid unit!"
                             runat="server" />--%>
                     </td>
-                   <td></td>
+                   <td>  <br />
+                        <br />
+                        <br /></td>
                 </tr>
 
                 <tr>
@@ -410,7 +469,7 @@
     <div class="grey_sec" style="bottom:0!important;left:0!important;right:0!important;position:absolute!important;">
       <ul class="top_right_links">
                                    
-                                    <li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" onclick="SetValidatorColor();"  ><span></span>Save</a></li>
+                                    <li><a class="save" id="btnSave" runat="server" onserverclick="btnSave_ServerClick" onclick="return Validation();"  ><span></span>Save</a></li>
                                     <li><a class="new" id="btnNew"   runat="server" onserverclick="btnNew_ServerClick"  onclick="ClearControls();"><span></span>New</a></li>
        <%--<li><a class="new" id="btnNew" href="AddNewMedicine.aspx"><span></span>New</a></li>--%>
                                 </ul>

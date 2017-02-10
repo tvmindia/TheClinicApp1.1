@@ -226,8 +226,8 @@
             {
                 debugger;
                 var ictrl;
-                var check=0;
-                var regex = /^[a-zA-Z0-9,.;:()"'@#$%*+! ]{0,255}$/;
+                var check=1;
+                var regex = /^[a-zA-Z0-9,.;:"'()@#$%*+! ]{0,255}$/;
                 var ctrl =[];
                 var domelement = document.querySelectorAll("input[type=text],textarea");
                 var domcount=0;
@@ -240,18 +240,22 @@
                 {
                     if (regex.test(ctrl[ictrl])) 
                     {
-                        check=1;
                     }
                     else {
+                        check=0;
                         document.getElementById('<%=Errorbox.ClientID%>').style.display="block";  
                         document.getElementById('<%=Errorbox.ClientID%>').className="alert alert-danger";
                         document.getElementById('<%=lblErrorCaption.ClientID%>').innerHTML="Warning!";         
                         document.getElementById('<%=lblMsgges.ClientID%>').innerHTML="We can't accept brackets or parentheses";
-                        check=0;
-                        return false;
+                       
+                       
                     }
                 }
-                if(check==1){
+                if(check==0){
+                    return false;
+                }
+                else
+                {
                     return true;
                 }
             }
@@ -296,6 +300,10 @@
                 //{
                 //    return true;
                 //}
+                }
+                else
+                {
+                    return false;
                 }
                
 
@@ -1361,9 +1369,9 @@ function AppointmentIsAbsent(Appointments)
                     <li id="doctor"><a name="hello" onclick="selectTile('doctor')"><span class="icon doctor"></span><span class="text">Doctor's OP</span></a></li>
                     <li id="pharmacy"><a name="hello" onclick="selectTile('pharmacy')"><span class="icon pharmacy"></span><span class="text">Pharmacy</span></a></li>
                     <li id="stock"><a name="hello" onclick="selectTile('stock')"><span class="icon stock"></span><span class="text">Stock</span></a></li>
-                    <li id="admin" runat="server"><a name="hello" onclick="selectTile('<%=admin.ClientID %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
+                    <li id="admin" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=admin.ClientID %>')"><span class="icon admin"></span><span class="text">Admin</span></a></li>
                     <li id="Repots"><a name="hello" href="../Report/ReportsList.aspx"><span class="icon report"></span><span class="text">Reports</span></a></li>
-                    <li id="master" runat="server"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
+                    <li id="master" runat="server" ClientIDMode="Static"><a name="hello" onclick="selectTile('<%=master.ClientID %>','')"><span class="icon master"></span><span class="text">Masters</span></a></li>
                     <li id="log" runat="server"><a class="logout" name="hello" id="Logout" runat="server" onserverclick="Logout_ServerClick"><span class="icon logout"></span><span class="text">Logout</span></a></li>
 
                 </ul>
@@ -1422,9 +1430,7 @@ function AppointmentIsAbsent(Appointments)
                         <li><a class="new" href="Patients.aspx" runat="server" id="btnNew"><span></span>New</a></li>
                     </ul>
                 </div>
-                <div class="right_form">
-
-                    <div id="Errorbox" style="height: 30%; display: none;" ClientIDMode="Static" runat="server">
+                  <div id="Errorbox" style="display: none;" ClientIDMode="Static" runat="server">
                         <a class="alert_close">X</a>
                         <div>
                             <strong>
@@ -1433,7 +1439,7 @@ function AppointmentIsAbsent(Appointments)
                             <asp:Label ID="lblMsgges" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
-                    <div class="alert alert-info" id="divDisplayNumber" visible="false" runat="server">
+                 <div class="alert alert-info" id="divDisplayNumber" visible="false" runat="server">
                         <a class="alert_close">X</a>
                         <div>
                             <div>
@@ -1441,6 +1447,10 @@ function AppointmentIsAbsent(Appointments)
                             </div>
                         </div>
                     </div>
+                <div class="right_form">
+
+                  
+                   
                     <div class="registration_form">
                         <div class="row field_row">
                             <div class="col-lg-8">
