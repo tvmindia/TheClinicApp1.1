@@ -247,6 +247,15 @@ namespace TheClinicApp1._1.Doctor {
         protected global::System.Web.UI.WebControls.HiddenField HiddenField2;
         
         /// <summary>
+        /// symptoms control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea symptoms;
+        
+        /// <summary>
         /// txtHeightFeet control.
         /// </summary>
         /// <remarks>
@@ -310,13 +319,67 @@ namespace TheClinicApp1._1.Doctor {
         protected global::System.Web.UI.HtmlControls.HtmlInputText sleep;
         
         /// <summary>
-        /// symptoms control.
+        /// desire control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea symptoms;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText desire;
+        
+        /// <summary>
+        /// aversion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText aversion;
+        
+        /// <summary>
+        /// Intolerance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Intolerance;
+        
+        /// <summary>
+        /// thirst control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText thirst;
+        
+        /// <summary>
+        /// thermal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText thermal;
+        
+        /// <summary>
+        /// pastHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea pastHistory;
+        
+        /// <summary>
+        /// familyHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea familyHistory;
         
         /// <summary>
         /// cardiovascular control.

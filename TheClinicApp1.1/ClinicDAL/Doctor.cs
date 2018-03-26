@@ -1996,6 +1996,41 @@ namespace TheClinicApp1._1.ClinicDAL
                 get;
                 set;
             }
+            public string Desire
+            {
+                get;
+                set;
+            }
+            public string Aversion
+            {
+                get;
+                set;
+            }
+            public string Intolerance
+            {
+                get;
+                set;
+            }
+            public string Thirst
+            {
+                get;
+                set;
+            }
+            public string Thermal
+            {
+                get;
+                set;
+            }
+            public string PastHistory
+            {
+                get;
+                set;
+            }
+            public string FamilyHistory
+            {
+                get;
+                set;
+            }
             public Guid PrescriptionID
             {
                 get;
@@ -2072,7 +2107,14 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
                     pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                     pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
-                   
+                    pud.Parameters.Add("@Desire", SqlDbType.NVarChar, 510).Value = Desire;
+                    pud.Parameters.Add("@Aversion", SqlDbType.NVarChar, 510).Value = Aversion;
+                    pud.Parameters.Add("@Intolerance", SqlDbType.NVarChar, 510).Value = Intolerance;
+                    pud.Parameters.Add("@Thirst", SqlDbType.NVarChar, 510).Value = Thirst;
+                    pud.Parameters.Add("@Thermal", SqlDbType.NVarChar, 510).Value = Thermal;
+                    pud.Parameters.Add("@PastHistory", SqlDbType.NVarChar, -1).Value = PastHistory;
+                    pud.Parameters.Add("@FamilyHistory", SqlDbType.NVarChar, -1).Value = FamilyHistory;
+
                     SqlParameter Output = new SqlParameter();
                     Output.DbType = DbType.Int32;
                     Output.ParameterName = "@Status";
@@ -2175,8 +2217,13 @@ namespace TheClinicApp1._1.ClinicDAL
                         RespRate = dr["RespRate"].ToString();
                         Others = dr["Others"].ToString();
                         Date = Convert.ToDateTime((dr["CreatedDate"]));
-
-
+                        Desire = dr["Desire"].ToString();
+                        Aversion = dr["Aversion"].ToString();
+                        Intolerance = dr["Intolerance"].ToString();
+                        Thermal = dr["Thermal"].ToString();
+                        Thirst = dr["Thirst"].ToString();
+                        PastHistory = dr["PastHistory"].ToString();
+                        FamilyHistory = dr["FamilyHistory"].ToString();
                     }
                     
                    }
@@ -2395,6 +2442,13 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.Parameters.Add("@Others", SqlDbType.NVarChar, 255).Value = Others;
                     pud.Parameters.Add("@UpdatedBY", SqlDbType.NVarChar, 255).Value = UpdatedBy;
                     pud.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = cmn.ConvertDatenow(DateTime.Now);
+                    pud.Parameters.Add("@Desire", SqlDbType.NVarChar, 510).Value = Desire;
+                    pud.Parameters.Add("@Aversion", SqlDbType.NVarChar, 510).Value = Aversion;
+                    pud.Parameters.Add("@Intolerance", SqlDbType.NVarChar, 510).Value = Intolerance;
+                    pud.Parameters.Add("@Thirst", SqlDbType.NVarChar, 510).Value = Thirst;
+                    pud.Parameters.Add("@Thermal", SqlDbType.NVarChar, 510).Value = Thermal;
+                    pud.Parameters.Add("@PastHistory", SqlDbType.NVarChar, -1).Value = PastHistory;
+                    pud.Parameters.Add("@FamilyHistory", SqlDbType.NVarChar, -1).Value = FamilyHistory;
                     //SqlParameter OutparamId = pud.Parameters.Add("@OutparamId", SqlDbType.SmallInt);
                     //OutparamId.Direction = ParameterDirection.Output;
                     SqlParameter Output = new SqlParameter();

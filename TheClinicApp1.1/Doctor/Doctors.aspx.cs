@@ -164,6 +164,13 @@ namespace TheClinicApp1._1.Doctor
                     VisitsObj.LymphClinic = (lymphnodes.Value != "") ? lymphnodes.Value.ToString() : null;
                     VisitsObj.RespRate = (resp_rate.Value != "") ? resp_rate.Value.ToString() : null;
                     VisitsObj.Others = (others.Value != "") ? others.Value.ToString() : null;
+                    VisitsObj.Desire= (desire.Value != "") ? desire.Value.ToString() : null;
+                    VisitsObj.Aversion = (aversion.Value != "") ? aversion.Value.ToString() : null;
+                    VisitsObj.Intolerance = (Intolerance.Value != "") ? Intolerance.Value.ToString() : null;
+                    VisitsObj.Thirst = (thirst.Value != "") ? thirst.Value.ToString() : null;
+                    VisitsObj.Thermal = (thermal.Value != "") ? thermal.Value.ToString() : null;
+                    VisitsObj.PastHistory = (pastHistory.Value != "") ? pastHistory.Value.ToString() : null;
+                    VisitsObj.FamilyHistory = (familyHistory.Value != "") ? familyHistory.Value.ToString() : null;
 
                     //appointed patient appointment status to 4 ie consulted
                     AppointObj = new Appointments();
