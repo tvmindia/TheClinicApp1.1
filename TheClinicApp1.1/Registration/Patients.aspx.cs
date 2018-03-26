@@ -76,7 +76,8 @@ namespace TheClinicApp1._1.Registration
             dummy.Columns.Add("Name");
             dummy.Columns.Add("Address");
             dummy.Columns.Add("Phone");
-            dummy.Columns.Add("PatientID"); 
+            dummy.Columns.Add("PatientID");
+            dummy.Columns.Add("FileNumber");
             dummy.Rows.Add();
 
             GridView1.DataSource = dummy;
@@ -203,6 +204,7 @@ namespace TheClinicApp1._1.Registration
             dummy.Columns.Add("Address");
             dummy.Columns.Add("Phone");
             dummy.Columns.Add("PatientID");
+            dummy.Columns.Add("FileNumber");
             dummy.Rows.Add();
 
             dtgViewTodaysRegistration.DataSource = dummy;

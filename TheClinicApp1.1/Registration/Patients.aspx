@@ -20,6 +20,7 @@
             #errors li:before {
                content: '\b7\a0';
             }
+            table { white-space: nowrap; overflow: hidden; text-overflow:ellipsis; }
         </style>
 
         <style>
@@ -478,6 +479,8 @@
                 $("#<%=txtOccupation.ClientID %>").val(Records.Occupation);
                 $("#<%=Hdnimagetype.ClientID %>").val(Records.ImageType);
                 $("#<%=HiddenField1.ClientID %>").val(Records.PatientID);
+                $("#lblFileNumberDisplay").show();
+                $("#spanFileNumber").text(Records.FileNumber)
                 if (Records.Gender ==  "Male") {
                     $("#<%=rdoMale.ClientID %>").prop('checked', true);
                 }
@@ -510,7 +513,8 @@
                     $("#<%=txtOccupation.ClientID %>").val(Records.Occupation);
                     $("#<%=Hdnimagetype.ClientID %>").val(Records.ImageType);
                     $("#<%=HiddenField1.ClientID %>").val(Records.PatientID);
-           
+                    $("#lblFileNumberDisplay").show();
+                    $("#spanFileNumber").text(Records.FileNumber)
                     if (Records.Gender ==  "Male") {
                         $("#<%=rdoMale.ClientID %>").prop('checked', true);
                     }
@@ -941,7 +945,7 @@
                         $("td", row).eq(4).html($(this).find("Phone").text());
                       
                         $("td", row).eq(5).html($(this).find("PatientID").text());
-
+                        $("td", row).eq(6).html($(this).find("FileNumber").text());
                         $("[id*=GridView1]").append(row);
                         row = $("[id*=GridView1] tr:last-child").clone(true);
                     });
@@ -1030,7 +1034,7 @@
                         $("td", TodayRegRow).eq(4).html($(this).find("Phone").text());
                       
                         $("td", TodayRegRow).eq(5).html($(this).find("PatientID").text());
-
+                        $("td", TodayRegRow).eq(6).html($(this).find("FileNumber").text());
                         $("[id*=dtgViewTodaysRegistration]").append(TodayRegRow);
                         TodayRegRow = $("[id*=dtgViewTodaysRegistration] tr:last-child").clone(true);
                     });
@@ -1456,6 +1460,7 @@ function AppointmentIsAbsent(Appointments)
                             <div class="col-lg-8">
                                 <div class="row">
                                     <div class="col-lg-8 margin_bottom">
+                                        <label for="FileNumber" id="lblFileNumberDisplay" style="display:none;text-shadow:1px 1px 2px #3661c7;">📁 File Number: <span id="spanFileNumber"></span></label>
                                         <label for="name">Name</label><input id="txtName" runat="server" onkeypress="return isnotNumber(event)" type="text" name="name"  />
                                         <%--pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only."--%>
 
@@ -1556,6 +1561,7 @@ function AppointmentIsAbsent(Appointments)
                                         <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" ItemStyle-CssClass="Match"></asp:BoundField>
                                         <asp:BoundField DataField="Phone" HeaderText="Phone" SortExpression="Phone" ItemStyle-CssClass="Match"></asp:BoundField>
                                         <asp:BoundField DataField="PatientID" HeaderText="PatientID"></asp:BoundField>
+                                        <asp:BoundField DataField="FileNumber" HeaderText="FileNumber"></asp:BoundField>
 
 
                                     </Columns>
@@ -1638,6 +1644,8 @@ function AppointmentIsAbsent(Appointments)
                                         <asp:BoundField DataField="Address" HeaderText="Address"></asp:BoundField>
                                         <asp:BoundField DataField="Phone" HeaderText="Phone"></asp:BoundField>
                                         <asp:BoundField DataField="PatientID" HeaderText="PatientID"></asp:BoundField>
+                                        <asp:BoundField DataField="FileNumber" HeaderText="FileNumber"></asp:BoundField>
+
                                     </Columns>
                                 </asp:GridView>
                             </div>

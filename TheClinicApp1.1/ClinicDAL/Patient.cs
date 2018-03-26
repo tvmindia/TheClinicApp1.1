@@ -843,7 +843,8 @@ namespace TheClinicApp1._1.ClinicDAL
         //***Generate File Number***//
         #region Generate_File_Number
         public string Generate_File_Number()
-        {            
+        {
+            string fileNumberPrefix = System.Web.Configuration.WebConfigurationManager.AppSettings["FileNumberPrefix"];
             string NUM;
             string FileNO=string.Empty;
             dbConnection dcon = null;
@@ -869,12 +870,12 @@ namespace TheClinicApp1._1.ClinicDAL
                     int x = Convert.ToInt32(NUM.Substring(NUM.IndexOf('-') + 1));
                     x = x + 1;
                     x.ToString();
-                    FileNO = "FF-" + x;
+                    FileNO = fileNumberPrefix + "-" + x;
                 }
                 else
                 {
                     int x = 1000;
-                     FileNO = "FF-" + x;
+                     FileNO = fileNumberPrefix + "-" + x;
                 }
              }
             catch (Exception ex)
@@ -1063,7 +1064,7 @@ namespace TheClinicApp1._1.ClinicDAL
                 MaritalStatus = dr["MaritalStatus"].ToString();
                 Occupation = dr["Occupation"].ToString();
                 ImageType = dr["ImageType"].ToString();
-
+                FileNumber = dr["FileNumber"].ToString();
                 DateTime date =cmn.ConvertDatenow(DateTime.Now);
                 int year = date.Year;
                 DateTime DT = DOB;
