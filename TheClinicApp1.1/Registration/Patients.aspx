@@ -480,6 +480,7 @@
                 $("#<%=Hdnimagetype.ClientID %>").val(Records.ImageType);
                 $("#<%=HiddenField1.ClientID %>").val(Records.PatientID);
                 $("#lblFileNumberDisplay").show();
+                if(Records.FileNumber!=null)
                 $("#spanFileNumber").text(Records.FileNumber)
                 if (Records.Gender ==  "Male") {
                     $("#<%=rdoMale.ClientID %>").prop('checked', true);
@@ -1458,9 +1459,14 @@ function AppointmentIsAbsent(Appointments)
                     <div class="registration_form">
                         <div class="row field_row">
                             <div class="col-lg-8">
+                                  <div class="row">   <div class="col-lg-8 margin_bottom">
+                                      <label for="FileNumber" id="lblFileNumberDisplay"  class="text" style="color:#e05d46;font-size:16px;text-decoration:underline">File Number&nbsp;:&nbsp; <span id="spanFileNumber"></span></label>
+                                                      </div>
+                                       
+                                  </div>
                                 <div class="row">
                                     <div class="col-lg-8 margin_bottom">
-                                        <label for="FileNumber" id="lblFileNumberDisplay" style="display:none;text-shadow:1px 1px 2px #3661c7;">📁 File Number: <span id="spanFileNumber"></span></label>
+                                       
                                         <label for="name">Name</label><input id="txtName" runat="server" onkeypress="return isnotNumber(event)" type="text" name="name"  />
                                         <%--pattern="^\S+[A-z][A-z\.\s]+$" title="⚠ The Name is required and it allows alphabets only."--%>
 
