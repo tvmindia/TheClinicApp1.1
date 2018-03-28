@@ -20,7 +20,7 @@
             #errors li:before {
                content: '\b7\a0';
             }
-            table tr td { white-space: nowrap; overflow: hidden; text-overflow:ellipsis;width:50px }
+            table tr td { white-space: nowrap; overflow: hidden; text-overflow:ellipsis; }
         </style>
 
         <style>
@@ -939,11 +939,11 @@
                         $("td", row).eq(1).html($('<img id="ImgBtnDelete" />')
                          .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
-                        $("td", row).eq(2).html($(this).find("Name").text());
-                        $("td", row).eq(3).html($(this).find("Address").text());
+                        $("td", row).eq(2).html($(this).find("Name").text().substr(0,12)+"..");
+                        $("td", row).eq(3).html($(this).find("Address").text().substr(0,12)+"..");
 
 
-                        $("td", row).eq(4).html($(this).find("Phone").text());
+                        $("td", row).eq(4).html($(this).find("Phone").text().substr(0,12)+"..");
                       
                         $("td", row).eq(5).html($(this).find("PatientID").text());
                         $("td", row).eq(6).html($(this).find("FileNumber").text());
@@ -1008,7 +1008,7 @@
 
             var TodayRegRow;
             function TodayRegistrationSuccess(response) {
-
+                debugger;
                 $(".pgrHistory").show();
                
                 var xmlDoc = $.parseXML(response.d);
@@ -1021,18 +1021,18 @@
                 if (AllRegistration.length > 0) {
                     
                     $.each(AllRegistration, function () {
-                      
+                        debugger;
                         $("td", TodayRegRow).eq(0).html($('<img />')
                            .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
 
                         $("td", TodayRegRow).eq(1).html($('<img />')
                          .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
-                        $("td", TodayRegRow).eq(2).html($(this).find("Name").text());
-                        $("td", TodayRegRow).eq(3).html($(this).find("Address").text());
+                        $("td", TodayRegRow).eq(2).html($(this).find("Name").text().substr(0,12)+"..");
+                        $("td", TodayRegRow).eq(3).html($(this).find("Address").text().substr(0,12)+"..");
 
 
-                        $("td", TodayRegRow).eq(4).html($(this).find("Phone").text());
+                        $("td", TodayRegRow).eq(4).html($(this).find("Phone").text().substr(0,12)+"..");
                       
                         $("td", TodayRegRow).eq(5).html($(this).find("PatientID").text());
                         $("td", TodayRegRow).eq(6).html($(this).find("FileNumber").text());
@@ -1103,9 +1103,9 @@
                          //$("td", TodayAppoRow).eq(1).html($('<img />')
                          // .attr('src', "" + '../images/Deleteicon1.png' + "")).addClass('CursorShow');
 
-                        $("td", TodayAppoRow).eq(2).html($(this).find("Name").text());
-                        $("td", TodayAppoRow).eq(3).html($(this).find("Location").text());
-                        $("td", TodayAppoRow).eq(4).html($(this).find("Mobile").text());
+                        $("td", TodayAppoRow).eq(2).html($(this).find("Name").text().substr(0,12)+"..");
+                        $("td", TodayAppoRow).eq(3).html($(this).find("Location").text().substr(0,12)+"..");
+                        $("td", TodayAppoRow).eq(4).html($(this).find("Mobile").text().substr(0,12)+"..");
                         $("td", TodayAppoRow).eq(5).html(ConvertTimeFormatFrom24hrTo12hr($(this).find("AllottingTime").text()));
                         $("td", TodayAppoRow).eq(6).html($(this).find("AppointmentID").text());
                        
