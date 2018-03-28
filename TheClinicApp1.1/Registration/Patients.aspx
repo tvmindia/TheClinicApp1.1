@@ -943,7 +943,7 @@
                         $("td", row).eq(3).html($(this).find("Address").text().substr(0,12)+"..");
 
 
-                        $("td", row).eq(4).html($(this).find("Phone").text().substr(0,12)+"..");
+                        //$("td", row).eq(4).html($(this).find("Phone").text().substr(0,12)+"..");
                       
                         $("td", row).eq(5).html($(this).find("PatientID").text());
                         $("td", row).eq(6).html($(this).find("FileNumber").text());
