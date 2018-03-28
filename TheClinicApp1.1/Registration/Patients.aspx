@@ -20,7 +20,7 @@
             #errors li:before {
                content: '\b7\a0';
             }
-            table { white-space: nowrap; overflow: hidden; text-overflow:ellipsis; }
+            table tr td { white-space: nowrap; overflow: hidden; text-overflow:ellipsis;width:50px }
         </style>
 
         <style>
@@ -187,9 +187,9 @@
 
                     //var FileName =    ui.item.desc.split('|')[0].split('📰')[1];
                     // var Address =  ui.item.desc.split('|')[1];
-                    var MobileNo = ui.item.desc.split('|')[2];
+                        var FileNumber = ui.item.desc.split('|')[0].replace("📰 ","");
 
-                    BindPatientDetails(MobileNo);
+                        BindPatientDetails(FileNumber);
                         document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
 
 
@@ -441,7 +441,7 @@
                 return table;
             }
             //Click event function for search patient and bind
-            function BindPatientDetails(MobileNo)
+            function  BindPatientDetails(FileNumber)
             {
                 var jsonPatient = {};
                 var SearchItem = $('#txtSearch').val();
@@ -449,7 +449,7 @@
                 if(SearchItem != '')
                 { 
                     Patient.Name = SearchItem;
-                    Patient.Phone = MobileNo;
+                    Patient.FileNumber = FileNumber;
                     jsonPatient = GetPatientDetails(Patient);
                     if (jsonPatient != undefined)
                     {
@@ -1460,7 +1460,7 @@ function AppointmentIsAbsent(Appointments)
                         <div class="row field_row">
                             <div class="col-lg-8">
                                   <div class="row">   <div class="col-lg-8 margin_bottom">
-                                      <label for="FileNumber" id="lblFileNumberDisplay"  class="text" style="color:#e05d46;font-size:16px;text-decoration:underline">File Number&nbsp;:&nbsp; <span id="spanFileNumber"></span></label>
+                                      <label for="FileNumber" id="lblFileNumberDisplay"  class="text" style="display:none;color:#e05d46;font-size:16px;text-decoration:underline">File Number&nbsp;:&nbsp; <span id="spanFileNumber"></span></label>
                                                       </div>
                                        
                                   </div>

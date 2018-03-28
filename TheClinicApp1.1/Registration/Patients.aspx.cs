@@ -315,7 +315,7 @@ namespace TheClinicApp1._1.Registration
             UA = (ClinicDAL.UserAuthendication)HttpContext.Current.Session[Const.LoginSession];
 
             PatientObj.ClinicID = UA.ClinicID;
-            PatientObj.GetSearchWithName(PatientObj.Name);
+            PatientObj.GetSearchWithName(PatientObj.FileNumber);
            
             string jsonResult = null;
 
