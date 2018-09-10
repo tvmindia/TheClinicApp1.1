@@ -571,6 +571,7 @@
                 }
 
                 function BindVisitDetails(Records) {
+
                     if(Records.Height.toString().split('.')[0]){
                         $("#<%=txtHeightFeet.ClientID %>").val(Records.Height.toString().split('.')[0]);
                     }
