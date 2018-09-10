@@ -364,6 +364,15 @@ namespace TheClinicApp1._1.Doctor {
         protected global::System.Web.UI.HtmlControls.HtmlInputText thermal;
         
         /// <summary>
+        /// sweat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText sweat;
+        
+        /// <summary>
         /// pastHistory control.
         /// </summary>
         /// <remarks>
@@ -380,6 +389,24 @@ namespace TheClinicApp1._1.Doctor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTextArea familyHistory;
+        
+        /// <summary>
+        /// menstrualHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea menstrualHistory;
+        
+        /// <summary>
+        /// regionals control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea regionals;
         
         /// <summary>
         /// cardiovascular control.
@@ -463,6 +490,15 @@ namespace TheClinicApp1._1.Doctor {
         protected global::System.Web.UI.HtmlControls.HtmlInputText edima;
         
         /// <summary>
+        /// investigation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea investigation;
+        
+        /// <summary>
         /// diagnosys control.
         /// </summary>
         /// <remarks>
@@ -470,6 +506,15 @@ namespace TheClinicApp1._1.Doctor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTextArea diagnosys;
+        
+        /// <summary>
+        /// miasmaticDiagnosys control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea miasmaticDiagnosys;
         
         /// <summary>
         /// remarks control.

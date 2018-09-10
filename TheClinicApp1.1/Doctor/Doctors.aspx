@@ -185,15 +185,15 @@
                 //   $('input[type=hidden]').val(''); 
 
                 $("#<%=lblNew_history.ClientID %>").text("New Case");
-            $("#<%=VistImagePreview.ClientID %> img").remove();
-            $('.lblDesc').remove();
+                $("#<%=VistImagePreview.ClientID %> img").remove();
+                $('.lblDesc').remove();
            
-        }
+            }
 
 
-        function CheckEmpty()
-        {                
-            if(($('#<%=txtHeightFeet.ClientID%>').val() != '')&&($('#<%=txtHeightInch.ClientID%>').val()!='')&&($('#<%=txtWeight.ClientID%>').val()!=''))
+            function CheckEmpty()
+            {                
+                if(($('#<%=txtHeightFeet.ClientID%>').val() != '')&&($('#<%=txtHeightInch.ClientID%>').val()!='')&&($('#<%=txtWeight.ClientID%>').val()!=''))
             {
                 $('#<%=txtHeightFeet.ClientID%>').val('');
                 $('#<%=txtHeightInch.ClientID%>').val('');
@@ -337,7 +337,7 @@
             //Calls the function to bind history ,by patientID
 
             $(function () {
-                $("[id*=GridViewTokenlist] td:eq(0)").click(function () { 
+                $("[id*=GridViewTokenlist] td:eq(0)").click(function () {
                     
                     debugger;
                     PatientID = $(this).closest('tr').find('td:eq(6)').text();
@@ -386,7 +386,7 @@
             function BindControlsWithPatientDetails(Records) {
                 debugger;
                 $("#<%=lblPatientName.ClientID %>").text(Records.Name);                 
-                   $("#<%=lblFileNum.ClientID %>").text(Records.FileNumber);
+                $("#<%=lblFileNum.ClientID %>").text(Records.FileNumber);
                 $("#<%=lblGenderDis.ClientID %>").text(Records.Gender);
                 $("#<%=HiddenField1.ClientID %>").val(Records.PatientID); 
                 $("#<%=HiddenField2.ClientID %>").val(Records.FileID);
@@ -396,119 +396,119 @@
                 var   imagetype =Records.ImageType;
                 var ProfilePic = document.getElementById("<%=ProfilePic.ClientID%>")  ;
 
-                    if (imagetype != '')
-                    {
-                        ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + Records.PatientID;
-                    }
-                    else
-                    {
-                        ProfilePic.src = "../images/UploadPic1.png";
-                    }
-
-                    $("#DoctrClose").click();
-                }
-
-                function GetDate(str)
+                if (imagetype != '')
                 {
-                    debugger;
-                    var arr = str.split(" ");
-                    var months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-
-                    var month = months.indexOf(arr[1].toLowerCase());
-
-                    return new Date(parseInt(arr[2]), month, parseInt(arr[0]));
+                    ProfilePic.src = "../Handler/ImageHandler.ashx?PatientID=" + Records.PatientID;
                 }
-                //------------------------------------------------- * History Edit Click * ------------------------------------//
+                else
+                {
+                    ProfilePic.src = "../images/UploadPic1.png";
+                }
 
-                var FileID ='';
-                var VisitID = '';
-                var PrescriptionID ='';
+                $("#DoctrClose").click();
+            }
 
-                ///On clicking history's EDIT button 
-                //visit details are binded by visitID
-                //Visit Attachment details are binded by visistID
-                //Prescription details are binded by prescriptionID
-                //(patient Detils are already binded)
+            function GetDate(str)
+            {
+                debugger;
+                var arr = str.split(" ");
+                var months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 
-                $(function () {
-                    $("[id*=GridViewVisitsHistory] td:eq(0)").click(function () {
+                var month = months.indexOf(arr[1].toLowerCase());
+
+                return new Date(parseInt(arr[2]), month, parseInt(arr[0]));
+            }
+            //------------------------------------------------- * History Edit Click * ------------------------------------//
+
+            var FileID ='';
+            var VisitID = '';
+            var PrescriptionID ='';
+
+            ///On clicking history's EDIT button 
+            //visit details are binded by visitID
+            //Visit Attachment details are binded by visistID
+            //Prescription details are binded by prescriptionID
+            //(patient Detils are already binded)
+
+            $(function () {
+                $("[id*=GridViewVisitsHistory] td:eq(0)").click(function () {
                     
-                        debugger;
+                    debugger;
 
-                        $("#HistoryClose").click();
+                    $("#HistoryClose").click();
 
-                        //$("#VistImagePreview").find("img").remove(); 
+                    //$("#VistImagePreview").find("img").remove(); 
 
-                        //$("#VistImagePreview").empty();
+                    //$("#VistImagePreview").empty();
 
-                        //$("#VistImagePreview img:last-child").remove()
+                    //$("#VistImagePreview img:last-child").remove()
 
-                        // reset();
-                        //   ResetToNewCase();
+                    // reset();
+                    //   ResetToNewCase();
                     
-                        DocPrescription();
+                    DocPrescription();
 
-                        document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
+                    document.getElementById('<%=Errorbox.ClientID %>').style.display = "none";
                     
-                     if ($(this).text() == "") {
-                         var jsonVisit = {};
-                         var jsonVisitAttchmnt = {};
+                        if ($(this).text() == "") {
+                            var jsonVisit = {};
+                            var jsonVisitAttchmnt = {};
 
-                         FileID = $(this).closest('tr').find('td:eq(3)').text();
-                         VisitID = $(this).closest('tr').find('td:eq(4)').text();
-                         PrescriptionID = $(this).closest('tr').find('td:eq(5)').text();
-                         $("#hdnEditedNo").val($(this).closest('tr').find('td:eq(2)').text());
+                            FileID = $(this).closest('tr').find('td:eq(3)').text();
+                            VisitID = $(this).closest('tr').find('td:eq(4)').text();
+                            PrescriptionID = $(this).closest('tr').find('td:eq(5)').text();
+                            $("#hdnEditedNo").val($(this).closest('tr').find('td:eq(2)').text());
 
-                         $("#<%=HdnPrescID.ClientID %>").val(PrescriptionID);
-                        $("#<%=HdnForVisitID.ClientID %>").val(VisitID);
-                        $("#<%=HiddenField2.ClientID %>").val(FileID); 
-                        //------------------------ Binding Visit Deatils By VisitID
+                            $("#<%=HdnPrescID.ClientID %>").val(PrescriptionID);
+                         $("#<%=HdnForVisitID.ClientID %>").val(VisitID);
+                         $("#<%=HiddenField2.ClientID %>").val(FileID); 
+                         //------------------------ Binding Visit Deatils By VisitID
 
-                        var Visit = new Object();
-                        Visit.VisitID = VisitID;
-                        Visit.PrescriptionID=PrescriptionID;
+                         var Visit = new Object();
+                         Visit.VisitID = VisitID;
+                         Visit.PrescriptionID=PrescriptionID;
 
-                        jsonVisit = GetVisitDetailsByvisitID(Visit);
-                        if (jsonVisit != undefined) {
+                         jsonVisit = GetVisitDetailsByvisitID(Visit);
+                         if (jsonVisit != undefined) {
                           
-                            var history =   BindVisitDetails(jsonVisit);
+                             var history =   BindVisitDetails(jsonVisit);
 
-                            $("#<%=lblNew_history.ClientID %>").text(history);
+                             $("#<%=lblNew_history.ClientID %>").text(history);
 
 
-                         }
+                        }
 
-                        //----------------------- Binding Visit Attachment Deatils By VisitID
+                         //----------------------- Binding Visit Attachment Deatils By VisitID
 
-                         var   VisitAttachment = new Object();
-                         VisitAttachment.VisitID = VisitID;
+                        var   VisitAttachment = new Object();
+                        VisitAttachment.VisitID = VisitID;
 
-                         jsonVisitAttchmnt = GetAttachmentDetailsByvisitID(VisitAttachment)
+                        jsonVisitAttchmnt = GetAttachmentDetailsByvisitID(VisitAttachment)
 
-                         if (jsonVisitAttchmnt != undefined) {
+                        if (jsonVisitAttchmnt != undefined) {
                           
-                             BindAttachment(jsonVisitAttchmnt);
-                         }
+                            BindAttachment(jsonVisitAttchmnt);
+                        }
 
-                        //----------------------- Binding Prescription Details
-                         GetPrescriptionDetails(PrescriptionID);
+                         //----------------------- Binding Prescription Details
+                        GetPrescriptionDetails(PrescriptionID);
 
-                     }
-                    if($(this).parent().parent().children().index($(this).parent())==1)
-                    {
-                        debugger;
-                        if($("#hdnCheckDate").val()==$("#hdnEditedNo").val())
+                    }
+                        if($(this).parent().parent().children().index($(this).parent())==1)
                         {
-                            if($("#IsToday").val()=="Yes" && $("#IsFirstPage").val()=="Yes")
+                            debugger;
+                            if($("#hdnCheckDate").val()==$("#hdnEditedNo").val())
                             {
-                                $("#<%=lblNew_history.ClientID %>").text("Current Case");
+                                if($("#IsToday").val()=="Yes" && $("#IsFirstPage").val()=="Yes")
+                                {
+                                    $("#<%=lblNew_history.ClientID %>").text("Current Case");
                             }
                         }
                         
                           
                     }
+                    });
                 });
-            });
 
             function GetVisitDetailsByvisitID(Visit) {
                 debugger;
@@ -549,12 +549,12 @@
                     img.appendTo(  $("#<%=VistImagePreview.ClientID %>"));
                       
 
-                        var Deleteimg = $('<img id="Delete#'+AttchmntID+'">');
+                    var Deleteimg = $('<img id="Delete#'+AttchmntID+'">');
                     
-                        Deleteimg.attr('src',"../images/Deleteicon1.png");
-                        Deleteimg.attr("class", "imgdelete");
+                    Deleteimg.attr('src',"../images/Deleteicon1.png");
+                    Deleteimg.attr("class", "imgdelete");
 
-                        Deleteimg.appendTo(  $("#<%=VistImagePreview.ClientID %>"));
+                    Deleteimg.appendTo(  $("#<%=VistImagePreview.ClientID %>"));
 
 
                         if(Records.Description!=null)
@@ -571,60 +571,69 @@
                 }
 
                 function BindVisitDetails(Records) {
-                
-                    $("#<%=txtHeightFeet.ClientID %>").val(Records.Height);
-                $("#<%=txtWeight.ClientID %>").val(Records.Weight);
-                $("#<%=bowel.ClientID %>").val(Records.Bowel);
-                $("#<%=appettie.ClientID %>").val(Records.Appettie);
-                $("#<%=micturation.ClientID %>").val(Records.Micturation);
-                $("#<%=sleep.ClientID %>").val(Records.Sleep);
-                $("#<%=symptoms.ClientID %>").val(Records.Symptoms);
-                $("#<%=cardiovascular.ClientID %>").val(Records.Cardiovascular);
-                $("#<%=nervoussystem.ClientID %>").val(Records.Nervoussystem);
-                $("#<%=musculoskeletal.ClientID %>").val(Records.Musculoskeletal);
-                $("#<%=palloe.ClientID %>").val(Records.Palloe);
-                $("#<%=icterus.ClientID %>").val(Records.Icterus);
-                $("#<%=clubbing.ClientID %>").val(Records.Clubbing);
-                $("#<%=cyanasis.ClientID %>").val(Records.Cyanasis);
-                $("#<%=lymphGen.ClientID %>").val(Records.LymphGen);
-                $("#<%=edima.ClientID %>").val(Records.Edima);
-                $("#<%=diagnosys.ClientID %>").val(Records.Diagnosys);
-                $("#<%=remarks.ClientID %>").val(Records.Remarks);
-                $("#<%=pulse.ClientID %>").val(Records.Pulse);
-                $("#<%=bp.ClientID %>").val(Records.Bp);
-                $("#<%=tounge.ClientID %>").val(Records.Tounge);
-                $("#<%=heart.ClientID %>").val(Records.Heart);
-                $("#<%=lymphnodes.ClientID %>").val(Records.LymphClinic);
-                $("#<%=resp_rate.ClientID %>").val(Records.RespRate);
-                $("#<%=others.ClientID %>").val(Records.Others);
-                $("#<%=desire.ClientID %>").val(Records.Desire);
-                $("#<%=aversion.ClientID %>").val(Records.Aversion);
-                $("#<%=Intolerance.ClientID %>").val(Records.Intolerance);
-                $("#<%=thirst.ClientID %>").val(Records.Thirst);
-                $("#<%=thermal.ClientID %>").val(Records.Thermal);
-                $("#<%=pastHistory.ClientID %>").val(Records.PastHistory);
-                $("#<%=familyHistory.ClientID %>").val(Records.FamilyHistory);
+                    if(Records.Height.toString().split('.')[0]){
+                        $("#<%=txtHeightFeet.ClientID %>").val(Records.Height.toString().split('.')[0]);
+                    }
+                    if(Records.Height.toString().split('.')[1]){
+                        $("#<%=txtHeightInch.ClientID %>").val(Records.Height.toString().split('.')[1]);
+                    }
+                    $("#<%=txtWeight.ClientID %>").val(Records.Weight);
+                    $("#<%=bowel.ClientID %>").val(Records.Bowel);
+                    $("#<%=appettie.ClientID %>").val(Records.Appettie);
+                    $("#<%=micturation.ClientID %>").val(Records.Micturation);
+                    $("#<%=sleep.ClientID %>").val(Records.Sleep);
+                    $("#<%=symptoms.ClientID %>").val(Records.Symptoms);
+                    $("#<%=cardiovascular.ClientID %>").val(Records.Cardiovascular);
+                    $("#<%=nervoussystem.ClientID %>").val(Records.Nervoussystem);
+                    $("#<%=musculoskeletal.ClientID %>").val(Records.Musculoskeletal);
+                    $("#<%=palloe.ClientID %>").val(Records.Palloe);
+                    $("#<%=icterus.ClientID %>").val(Records.Icterus);
+                    $("#<%=clubbing.ClientID %>").val(Records.Clubbing);
+                    $("#<%=cyanasis.ClientID %>").val(Records.Cyanasis);
+                    $("#<%=lymphGen.ClientID %>").val(Records.LymphGen);
+                    $("#<%=edima.ClientID %>").val(Records.Edima);
+                    $("#<%=diagnosys.ClientID %>").val(Records.Diagnosys);
+                    $("#<%=remarks.ClientID %>").val(Records.Remarks);
+                    $("#<%=pulse.ClientID %>").val(Records.Pulse);
+                    $("#<%=bp.ClientID %>").val(Records.Bp);
+                    $("#<%=tounge.ClientID %>").val(Records.Tounge);
+                    $("#<%=heart.ClientID %>").val(Records.Heart);
+                    $("#<%=lymphnodes.ClientID %>").val(Records.LymphClinic);
+                    $("#<%=resp_rate.ClientID %>").val(Records.RespRate);
+                    $("#<%=others.ClientID %>").val(Records.Others);
+                    $("#<%=desire.ClientID %>").val(Records.Desire);
+                    $("#<%=aversion.ClientID %>").val(Records.Aversion);
+                    $("#<%=Intolerance.ClientID %>").val(Records.Intolerance);
+                    $("#<%=thirst.ClientID %>").val(Records.Thirst);
+                    $("#<%=thermal.ClientID %>").val(Records.Thermal);
+                    $("#<%=pastHistory.ClientID %>").val(Records.PastHistory);
+                    $("#<%=familyHistory.ClientID %>").val(Records.FamilyHistory);
+                    $("#<%=menstrualHistory.ClientID %>").val(Records.MenstrualHistory);
+                    $("#<%=regionals.ClientID %>").val(Records.Regionals);
+                    $("#<%=investigation.ClientID %>").val(Records.Investigation);
+                    $("#<%=miasmaticDiagnosys.ClientID %>").val(Records.MiasmaticDiagnosys);
+                    $("#<%=sweat.ClientID %>").val(Records.Sweat);
                     
 
-                var historyDate= new Date(Date.parse(ConvertJsonToDate(Records.Date),"MM/dd/yyyy"));
-                var month = historyDate.getMonth() + 1;
+                    var historyDate= new Date(Date.parse(ConvertJsonToDate(Records.Date),"MM/dd/yyyy"));
+                    var month = historyDate.getMonth() + 1;
               
-                locale = "en-us",
-                month =  historyDate.toLocaleString(locale, { month: "short" });
+                    locale = "en-us",
+                    month =  historyDate.toLocaleString(locale, { month: "short" });
 
-                var day = historyDate.getDate();
-                var year = historyDate.getFullYear();
-                debugger;
-                historyDate = day + " " + month + " " + year;
+                    var day = historyDate.getDate();
+                    var year = historyDate.getFullYear();
+                    debugger;
+                    historyDate = day + " " + month + " " + year;
 
-                var history ;
+                    var history ;
 
-                if(historyDate!="NaN Invalid Date NaN")
-                {
-                    history = "History: " +historyDate;
+                    if(historyDate!="NaN Invalid Date NaN")
+                    {
+                        history = "History: " +historyDate;
 
 
-                    //   $("#<%=lblNew_history.ClientID %>").text();
+                        //   $("#<%=lblNew_history.ClientID %>").text();
                 }
                 else
                 {
@@ -633,33 +642,33 @@
                     //  $("#<%=lblNew_history.ClientID %>").text("History");
                 }
 
-                return history;
-            }
+                    return history;
+                }
 
-            function GetPrescriptionDetails(PrescriptionID) {
+                function GetPrescriptionDetails(PrescriptionID) {
 
-                $.ajax({
+                    $.ajax({
 
-                    type: "POST",
-                    url: "../Doctor/Doctors.aspx/GetPrescriptionDetailsXml",
-                    data: '{PrescriptionID: "' + PrescriptionID + '"}',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: PrescriptionSuccess,
-                    failure: function (response) {
+                        type: "POST",
+                        url: "../Doctor/Doctors.aspx/GetPrescriptionDetailsXml",
+                        data: '{PrescriptionID: "' + PrescriptionID + '"}',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: PrescriptionSuccess,
+                        failure: function (response) {
 
-                        // alert(response.d);
-                    },
-                    error: function (response) {
+                            // alert(response.d);
+                        },
+                        error: function (response) {
 
-                        //  alert(response.d);
-                    }
-                });
-            }
+                            //  alert(response.d);
+                        }
+                    });
+                }
            
-            function PrescriptionSuccess(response) {
+                function PrescriptionSuccess(response) {
               
-                $("#<%=hdnXmlData.ClientID %>").val(response.d) ;
+                    $("#<%=hdnXmlData.ClientID %>").val(response.d) ;
 
                 var xmlDoc = $.parseXML(response.d);
                 var xml = $(xmlDoc);
@@ -702,88 +711,88 @@
                 }
 
             });
-               function SearchInVisit() {
+                function SearchInVisit() {
                
-                   return jQuery.trim($("[id*=txtSearchVisit]").val());
-               };
+                    return jQuery.trim($("[id*=txtSearchVisit]").val());
+                };
 
-               function GetHistory(pageIndex,PatientID) {
+                function GetHistory(pageIndex,PatientID) {
 
-                   $.ajax({
+                    $.ajax({
 
-                       type: "POST",
-                       url: "../Doctor/Doctors.aspx/GetHistory",
-                       data: '{searchTerm: "' + SearchInVisit() + '", pageIndex: ' + pageIndex + ', PatientID: "' + PatientID + '"}',
-                       contentType: "application/json; charset=utf-8",
-                       dataType: "json",
-                       success: HistorySuccess,
-                       failure: function (response) {
+                        type: "POST",
+                        url: "../Doctor/Doctors.aspx/GetHistory",
+                        data: '{searchTerm: "' + SearchInVisit() + '", pageIndex: ' + pageIndex + ', PatientID: "' + PatientID + '"}',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: HistorySuccess,
+                        failure: function (response) {
 
-                           // alert(response.d);
-                       },
-                       error: function (response) {
+                            // alert(response.d);
+                        },
+                        error: function (response) {
 
-                           //  alert(response.d);
-                       }
-                   });
-               }
+                            //  alert(response.d);
+                        }
+                    });
+                }
             
-               var HistoryRow= null;
-               function HistorySuccess(response) {
-                   debugger;
-                   $(".pgrHistory").show();
-                   var i=0;
-                   var xmlDoc = $.parseXML(response.d);
-                   var xml = $(xmlDoc);
-                   var Visits = xml.find("Visits");
+                var HistoryRow= null;
+                function HistorySuccess(response) {
+                    debugger;
+                    $(".pgrHistory").show();
+                    var i=0;
+                    var xmlDoc = $.parseXML(response.d);
+                    var xml = $(xmlDoc);
+                    var Visits = xml.find("Visits");
 
              
-                   if (HistoryRow == null) {
+                    if (HistoryRow == null) {
 
-                       HistoryRow = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+                        HistoryRow = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
 
 
-                   }
-                   $("[id*=GridViewVisitsHistory] tr").not($("[id*=GridViewVisitsHistory] tr:first-child")).remove();
-                   if (Visits.length > 0) {
+                    }
+                    $("[id*=GridViewVisitsHistory] tr").not($("[id*=GridViewVisitsHistory] tr:first-child")).remove();
+                    if (Visits.length > 0) {
 
-                       $.each(Visits, function () {
-                           debugger;
-                           $("td", HistoryRow).eq(0).html($('<img />')
-                              .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
+                        $.each(Visits, function () {
+                            debugger;
+                            $("td", HistoryRow).eq(0).html($('<img />')
+                               .attr('src', "" + '../images/Editicon1.png' + "")).addClass('CursorShow');
                          
-                           //$("td", row).eq(1).html($(this).find("TokenNo").text());
-                           $("td", HistoryRow).eq(1).html($(this).find("Remarks").text());
+                            //$("td", row).eq(1).html($(this).find("TokenNo").text());
+                            $("td", HistoryRow).eq(1).html($(this).find("Remarks").text());
 
-                           $("td", HistoryRow).eq(2).html($(this).find("CrDate").text());
-                           if(i==0)
-                           {
-                               $("#hdnCurrentLength").val($(this).find("CrDate").text());
-                               $("#hdnCheckDate").val($(this).find("CrDate").text());
-                           }
+                            $("td", HistoryRow).eq(2).html($(this).find("CrDate").text());
+                            if(i==0)
+                            {
+                                $("#hdnCurrentLength").val($(this).find("CrDate").text());
+                                $("#hdnCheckDate").val($(this).find("CrDate").text());
+                            }
                         
                         
-                           $("td", HistoryRow).eq(3).html($(this).find("FileID").text());
+                            $("td", HistoryRow).eq(3).html($(this).find("FileID").text());
 
-                           $("td", HistoryRow).eq(4).html($(this).find("VisitID").text());
-                           $("td", HistoryRow).eq(5).html($(this).find("PrescriptionID").text());
+                            $("td", HistoryRow).eq(4).html($(this).find("VisitID").text());
+                            $("td", HistoryRow).eq(5).html($(this).find("PrescriptionID").text());
 
-                           $("[id*=GridViewVisitsHistory]").append(HistoryRow);
-                           HistoryRow = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
-                           i=i+1;
+                            $("[id*=GridViewVisitsHistory]").append(HistoryRow);
+                            HistoryRow = $("[id*=GridViewVisitsHistory] tr:last-child").clone(true);
+                            i=i+1;
+                        });
+                        var pager = xml.find("Pager");
+
+                        $.each(pager, function ()
+                        {
+                            $("#<%=HiddenField2.ClientID %>").val($(this).find("FILEID").text()); 
+
                        });
-                       var pager = xml.find("Pager");
 
-                       $.each(pager, function ()
-                       {
-                           $("#<%=HiddenField2.ClientID %>").val($(this).find("FILEID").text()); 
+                       if ($('#txtSearchVisit').val() == '') {
+                           var GridRowCount = pager.find("RecordCount").text();
 
-                    });
-
-                    if ($('#txtSearchVisit').val() == '') {
-                        var GridRowCount = pager.find("RecordCount").text();
-
-                        $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
+                           $("#<%=lblCaseCount.ClientID %>").text(GridRowCount);
                     }
 
                     $(".pgrHistory").ASPSnippets_Pager({
@@ -869,7 +878,7 @@
                 }
 
 
-                //-------- Hiding Columns fileid ,visitid,prescriptionid
+                   //-------- Hiding Columns fileid ,visitid,prescriptionid
 
                 var FileIDColumn = $("[id*=GridViewVisitsHistory] th:contains('FileID')");
                 FileIDColumn.css("display", "none");
@@ -1205,15 +1214,15 @@
                     var lblmsg = msg.SelectPatient;
                     var lblcaptn = Caption.Confirm;
                     ErrorMessagesDisplay('<%=lblErrorCaption.ClientID%>','<%=lblMsgges.ClientID%>','<%=Errorbox.ClientID%>' ,lblclass,lblcaptn,lblmsg);
-                        return false;
-                    }
+                    return false;
                 }
-                function RemoveStyle(e)
-                {
+            }
+            function RemoveStyle(e)
+            {
               
-                    document.getElementById(e.id).style.borderColor = "#dbdbdb";
-                    $("#Errorbox").hide(1000);
-                }
+                document.getElementById(e.id).style.borderColor = "#dbdbdb";
+                $("#Errorbox").hide(1000);
+            }
         </script>
 
         <!-- #main-container -->
@@ -1414,6 +1423,13 @@
                                 </div>
                             </div>
 
+                            <div class="row field_row">
+
+                                <div class="col-lg-4">
+                                    <label for="sweat">Sweat</label><input id="sweat" type="text" clientidmode="Static" name="sweat" runat="server" />
+                                </div>
+                            </div>
+
                         </div>
                         <h3>Past History</h3>
                         <div>
@@ -1431,8 +1447,26 @@
                                     <label for="familyHistory">Family History</label><textarea id="familyHistory" clientidmode="Static" runat="server"></textarea>
                                 </div>
                             </div>
-
                         </div>
+
+                        <h3>Menstrual History</h3>
+                        <div>
+                            <div class="row field_row">
+                                <div class="col-lg-12">
+                                    <label for="menstrualHistory">Menstrual History</label><textarea id="menstrualHistory" clientidmode="Static" runat="server"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Regionals</h3>
+                        <div>
+                            <div class="row field_row">
+                                <div class="col-lg-12">
+                                    <label for="regionals">Regionals</label><textarea id="regionals" clientidmode="Static" runat="server"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         <h3>Systematic Examination</h3>
                         <div>
                             <div class="row">
@@ -1473,12 +1507,29 @@
                                 </div>
                             </div>
                         </div>
+                        <h3>Investigation</h3>
+                        <div>
+                            <div class="row field_row">
+                                <div class="col-lg-12">
+                                    <label for="investigation">Investigation</label><textarea id="investigation" clientidmode="Static" runat="server"></textarea>
+                                </div>
+                            </div>
+                        </div>
 
                         <h3>Diagnosis</h3>
                         <div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label for="diagnosys">Diagnosis</label><textarea id="diagnosys" clientidmode="Static" runat="server"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Miasmatic Diagnosis</h3>
+                        <div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="miasmaticDiagnosys">Miasmatic Diagnosis</label><textarea id="miasmaticDiagnosys" clientidmode="Static" runat="server"></textarea>
                                 </div>
                             </div>
                         </div>

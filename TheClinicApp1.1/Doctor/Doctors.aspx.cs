@@ -128,6 +128,15 @@ namespace TheClinicApp1._1.Doctor
                     VisitsObj.FileID = Guid.Parse(HiddenField2.Value);
                     int parsedValuefeet;
                     int parsedValueinch;
+                    if (txtHeightFeet.Value.ToString() == ""  )
+                    {
+                        txtHeightFeet.Value="0";
+                        
+                    }
+                    if (txtHeightInch.Value.ToString() == "")
+                    {
+                        txtHeightInch.Value = "0";
+                    }
                     if ((int.TryParse(txtHeightFeet.Value.ToString().Trim(), out parsedValuefeet)) && (int.TryParse(txtHeightInch.Value.ToString().Trim(), out parsedValueinch)))
                     {
                         if (parsedValuefeet >= 0)
@@ -171,6 +180,11 @@ namespace TheClinicApp1._1.Doctor
                     VisitsObj.Thermal = (thermal.Value != "") ? thermal.Value.ToString() : null;
                     VisitsObj.PastHistory = (pastHistory.Value != "") ? pastHistory.Value.ToString() : null;
                     VisitsObj.FamilyHistory = (familyHistory.Value != "") ? familyHistory.Value.ToString() : null;
+                    VisitsObj.MenstrualHistory = (menstrualHistory.Value != "") ? menstrualHistory.Value.ToString() : null;
+                    VisitsObj.Regionals = (regionals.Value != "") ? regionals.Value.ToString() : null;
+                    VisitsObj.Investigation = (investigation.Value != "") ? investigation.Value.ToString() : null;
+                    VisitsObj.MiasmaticDiagnosys = (miasmaticDiagnosys.Value != "") ? miasmaticDiagnosys.Value.ToString() : null;
+                    VisitsObj.Sweat = (sweat.Value != "") ? sweat.Value.ToString() : null;
 
                     //appointed patient appointment status to 4 ie consulted
                     AppointObj = new Appointments();
@@ -937,7 +951,8 @@ namespace TheClinicApp1._1.Doctor
 
 
             CaseFileObj.GetVisits();
-            txtHeightFeet.Value = CaseFileObj.Height.ToString();
+            txtHeightFeet.Value = CaseFileObj.Height.ToString();//.Split('.')[0];
+            //txtHeightInch.Value = CaseFileObj.Height.ToString().Split('.')[1];
             txtWeight.Value = CaseFileObj.Weight.ToString();
             bowel.Value = CaseFileObj.Bowel;
             appettie.Value = CaseFileObj.Appettie;

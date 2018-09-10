@@ -2021,12 +2021,37 @@ namespace TheClinicApp1._1.ClinicDAL
                 get;
                 set;
             }
+            public string Sweat
+            {
+                get;
+                set;
+            }
             public string PastHistory
             {
                 get;
                 set;
             }
             public string FamilyHistory
+            {
+                get;
+                set;
+            }
+            public string MenstrualHistory
+            {
+                get;
+                set;
+            }
+            public string Regionals
+            {
+                get;
+                set;
+            }
+            public string Investigation
+            {
+                get;
+                set;
+            }
+            public string MiasmaticDiagnosys
             {
                 get;
                 set;
@@ -2114,6 +2139,11 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.Parameters.Add("@Thermal", SqlDbType.NVarChar, 510).Value = Thermal;
                     pud.Parameters.Add("@PastHistory", SqlDbType.NVarChar, -1).Value = PastHistory;
                     pud.Parameters.Add("@FamilyHistory", SqlDbType.NVarChar, -1).Value = FamilyHistory;
+                    pud.Parameters.Add("@MenstrualHistory", SqlDbType.NVarChar, -1).Value = MenstrualHistory;
+                    pud.Parameters.Add("@Regionals", SqlDbType.NVarChar, -1).Value = Regionals;
+                    pud.Parameters.Add("@Investigation", SqlDbType.NVarChar, -1).Value = Investigation;
+                    pud.Parameters.Add("@MiasmaticDiagnosys", SqlDbType.NVarChar, -1).Value = MiasmaticDiagnosys;
+                    pud.Parameters.Add("@Sweat", SqlDbType.NVarChar, 255).Value = Sweat;
 
                     SqlParameter Output = new SqlParameter();
                     Output.DbType = DbType.Int32;
@@ -2216,6 +2246,7 @@ namespace TheClinicApp1._1.ClinicDAL
                         LymphClinic = dr["LymphClinic"].ToString();
                         RespRate = dr["RespRate"].ToString();
                         Others = dr["Others"].ToString();
+                        Edima = dr["Edima"].ToString();
                         Date = Convert.ToDateTime((dr["CreatedDate"]));
                         Desire = dr["Desire"].ToString();
                         Aversion = dr["Aversion"].ToString();
@@ -2224,6 +2255,11 @@ namespace TheClinicApp1._1.ClinicDAL
                         Thirst = dr["Thirst"].ToString();
                         PastHistory = dr["PastHistory"].ToString();
                         FamilyHistory = dr["FamilyHistory"].ToString();
+                        MenstrualHistory = dr["MenstrualHistory"].ToString();
+                        Regionals = dr["Regionals"].ToString();
+                        Investigation = dr["Investigation"].ToString();
+                        MiasmaticDiagnosys = dr["MiasmaticDiagnosys"].ToString();
+                        Sweat = dr["Sweat"].ToString();
                     }
                     
                    }
@@ -2449,6 +2485,11 @@ namespace TheClinicApp1._1.ClinicDAL
                     pud.Parameters.Add("@Thermal", SqlDbType.NVarChar, 510).Value = Thermal;
                     pud.Parameters.Add("@PastHistory", SqlDbType.NVarChar, -1).Value = PastHistory;
                     pud.Parameters.Add("@FamilyHistory", SqlDbType.NVarChar, -1).Value = FamilyHistory;
+                    pud.Parameters.Add("@MenstrualHistory", SqlDbType.NVarChar, -1).Value = MenstrualHistory;
+                    pud.Parameters.Add("@Regionals", SqlDbType.NVarChar, -1).Value = Regionals;
+                    pud.Parameters.Add("@Investigation", SqlDbType.NVarChar, -1).Value = Investigation;
+                    pud.Parameters.Add("@MiasmaticDiagnosys", SqlDbType.NVarChar, -1).Value = MiasmaticDiagnosys;
+                    pud.Parameters.Add("@Sweat", SqlDbType.NVarChar, 255).Value = Sweat;
                     //SqlParameter OutparamId = pud.Parameters.Add("@OutparamId", SqlDbType.SmallInt);
                     //OutparamId.Direction = ParameterDirection.Output;
                     SqlParameter Output = new SqlParameter();
