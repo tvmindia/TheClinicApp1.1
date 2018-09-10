@@ -628,6 +628,8 @@ namespace TheClinicApp1._1.Doctor
         {
             var xml = string.Empty;
 
+
+
            ClinicDAL.Doctor DoctorObj = new ClinicDAL.Doctor();
 
             DataSet GridBindVisits = null;
